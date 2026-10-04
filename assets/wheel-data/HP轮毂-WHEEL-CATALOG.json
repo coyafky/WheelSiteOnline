@@ -1,0 +1,1915 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/HP轮毂",
+    "models": 15,
+    "variants": 185,
+    "images": 31,
+    "sourceGeneratedAt": "2026-09-22",
+    "filter": "仅保留有图片的轮毂（图片名与编号一致）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "1110",
+      "sizes": [
+        "15*7"
+      ],
+      "pcds": [
+        "4*100"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "黑色车面",
+        "枪灰车面",
+        "亚黑全涂装",
+        "高亮黑全涂装",
+        "高亮银全涂装",
+        "银色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "11101570A1M",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "11101570A2M",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车面"
+        },
+        {
+          "productionCode": "11101570A1S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "11101570A2S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "11101570A3S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮银全涂装"
+        },
+        {
+          "productionCode": "11101570A3M",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1112",
+      "sizes": [
+        "15*7"
+      ],
+      "pcds": [
+        "4*100"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "黑色车面",
+        "亚黑全涂装",
+        "高亮黑全涂装",
+        "高亮银全涂装",
+        "古铜全涂装",
+        "枪灰车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "1112157001M",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "1112157001S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1112157002S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1112157003S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮银全涂装"
+        },
+        {
+          "productionCode": "1112157004S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜全涂装"
+        },
+        {
+          "productionCode": "1112157002M",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1165",
+      "sizes": [
+        "17*7.5",
+        "18*8",
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*114.3",
+        "5*100",
+        "5*112"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "银色全涂装",
+        "高亮黑全涂装",
+        "亚黑全涂装",
+        "磨砂古铜全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "HP39177501S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39177502S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39177503S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP39177504S",
+          "size": "17*7.5",
+          "pcd": "5*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39177505S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39177506S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39177507S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP39188001S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP39188002S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39188003S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39188004S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP39188005S",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39188006S",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39198501S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP39198502S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39198503S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39198504S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP39198505S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "HP39198506S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP39198507S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1166",
+      "sizes": [
+        "16*7",
+        "17*7.5",
+        "18*8",
+        "19*8.5"
+      ],
+      "pcds": [
+        "4*100",
+        "5*114.3",
+        "5*100",
+        "5*112"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "亚黑全涂装",
+        "高亮黑全涂装",
+        "黑色车面",
+        "磨砂古铜全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "HP40167001S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40167002S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40167001M",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40167003S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40167004S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40167002M",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40167005S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP40177501S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40177502S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40177501M",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40177502M",
+          "size": "17*7.5",
+          "pcd": "5*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40177503M",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40177503S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40188001S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40188002S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40188001M",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40188003S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP40188004S",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40188002M",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40188005S",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40198501S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP40198502S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40198501M",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40198503S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂装"
+        },
+        {
+          "productionCode": "HP40198504S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP40198502M",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "HP40198505S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1409",
+      "sizes": [
+        "15*6.5"
+      ],
+      "pcds": [
+        "4*100"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "黑色车边",
+        "枪灰车边",
+        "白色车边",
+        "银色车边",
+        "磨砂古铜车边",
+        "金色车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "1409156502W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车边"
+        },
+        {
+          "productionCode": "1409156503W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车边"
+        },
+        {
+          "productionCode": "1409156504W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色车边"
+        },
+        {
+          "productionCode": "1409156505W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车边"
+        },
+        {
+          "productionCode": "1409156506W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜车边"
+        },
+        {
+          "productionCode": "1409156507W",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "金色车边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1415",
+      "sizes": [
+        "15*6.5"
+      ],
+      "pcds": [
+        "4*100"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "哑黑全涂装",
+        "枪灰全涂装",
+        "黑色车面",
+        "高亮黑全涂装",
+        "高亮银全涂装",
+        "古铜色全涂装",
+        "白色全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "1415156502S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "哑黑全涂装"
+        },
+        {
+          "productionCode": "1415156503S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰全涂装"
+        },
+        {
+          "productionCode": "1415156501M",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "1415156504S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1415156505S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮银全涂装"
+        },
+        {
+          "productionCode": "1415156506S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜色全涂装"
+        },
+        {
+          "productionCode": "1415156507S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1543",
+      "sizes": [
+        "14*5.5"
+      ],
+      "pcds": [
+        "4*100"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "磨砂古铜车边",
+        "黑色车边",
+        "高亮黑车边",
+        "银色车边",
+        "白色车边",
+        "金色车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "3011145501W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜车边"
+        },
+        {
+          "productionCode": "3011145502W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车边"
+        },
+        {
+          "productionCode": "3011145503W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑车边"
+        },
+        {
+          "productionCode": "3011145504W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车边"
+        },
+        {
+          "productionCode": "3011145505W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色车边"
+        },
+        {
+          "productionCode": "3011145506W",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "金色车边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1601",
+      "sizes": [
+        "15*7",
+        "16*7",
+        "17*7.5",
+        "18*8"
+      ],
+      "pcds": [
+        "4*100",
+        "5*114.3",
+        "5*100",
+        "5*112"
+      ],
+      "offsets": [
+        35
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "磨砂古铜全涂",
+        "亚黑全涂装",
+        "高亮黑全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "1601157006S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "1601157007S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1601157008S",
+          "size": "15*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601167005S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "1601167006S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1601167007S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601167008S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "1601167009S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1601167010S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601177506S",
+          "size": "17*7.5",
+          "pcd": "5*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601177507S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "1601177508S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1601177509S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601188006S",
+          "size": "18*8",
+          "pcd": "5*112",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "1601188007S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "1601188008S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1601188009S",
+          "size": "18*8",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1663",
+      "sizes": [
+        "13*5.5",
+        "14*5.5",
+        "15*6.5",
+        "16*7"
+      ],
+      "pcds": [
+        "4*100",
+        "5*114.3"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "银色车边车碗口",
+        "亚黑车边车碗口",
+        "古铜车边车碗口",
+        "枪灰车边车碗口",
+        "白色车边车碗口",
+        "石墨灰车边车碗口",
+        "黑色+车边车碗口",
+        "枪灰+车边车碗口",
+        "白色+车边车碗口",
+        "银色+车边车碗口",
+        "磨砂古铜+车边车碗口",
+        "金色+车边车碗口",
+        "银色全涂装",
+        "亚黑全涂装",
+        "古铜色全涂装",
+        "枪灰色全涂装",
+        "白色全涂装",
+        "石墨灰全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "1663135501UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车边车碗口"
+        },
+        {
+          "productionCode": "1663135502UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑车边车碗口"
+        },
+        {
+          "productionCode": "1663135503UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜车边车碗口"
+        },
+        {
+          "productionCode": "1663135504UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车边车碗口"
+        },
+        {
+          "productionCode": "1663135505UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色车边车碗口"
+        },
+        {
+          "productionCode": "1663135506UW",
+          "size": "13*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "石墨灰车边车碗口"
+        },
+        {
+          "productionCode": "1663145501UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色+车边车碗口"
+        },
+        {
+          "productionCode": "1663145502UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰+车边车碗口"
+        },
+        {
+          "productionCode": "1663145503UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色+车边车碗口"
+        },
+        {
+          "productionCode": "1663145504UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色+车边车碗口"
+        },
+        {
+          "productionCode": "1663145505UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜+车边车碗口"
+        },
+        {
+          "productionCode": "1663145506UW",
+          "size": "14*5.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "金色+车边车碗口"
+        },
+        {
+          "productionCode": "16631565A1UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车边车碗口"
+        },
+        {
+          "productionCode": "16631565A2UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑车边车碗口"
+        },
+        {
+          "productionCode": "16631565A3UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜车边车碗口"
+        },
+        {
+          "productionCode": "16631565A4UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车边车碗口"
+        },
+        {
+          "productionCode": "16631565A5UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色车边车碗口"
+        },
+        {
+          "productionCode": "16631565A6UW",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "石墨灰车边车碗口"
+        },
+        {
+          "productionCode": "1663167005S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "1663167006S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1663167007S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜色全涂装"
+        },
+        {
+          "productionCode": "1663167008S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰色全涂装"
+        },
+        {
+          "productionCode": "1663167009S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色全涂装"
+        },
+        {
+          "productionCode": "1663167010S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "石墨灰全涂装"
+        },
+        {
+          "productionCode": "1663167011S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色全涂装"
+        },
+        {
+          "productionCode": "1663167012S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "1663167013S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "古铜色全涂装"
+        },
+        {
+          "productionCode": "1663167014S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰色全涂装"
+        },
+        {
+          "productionCode": "1663167015S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色全涂装"
+        },
+        {
+          "productionCode": "1663167016S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "石墨灰全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "2241",
+      "sizes": [
+        "16*7"
+      ],
+      "pcds": [
+        "4*100",
+        "5*114.3"
+      ],
+      "offsets": [
+        35
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "亚黑全涂装+碗口铣字",
+        "高亮黑全涂装+碗口铣字",
+        "银色全涂装+碗口铣字",
+        "枪灰车面+碗口铣字",
+        "金色全涂装+碗口铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "HP41167001SX",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167002SX",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167003SX",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "银色全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167009SX",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "枪灰车面+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167004SX",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "金色全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167005SX",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167006SX",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167007SX",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "金色全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167008SX",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "银色全涂装+碗口铣字"
+        },
+        {
+          "productionCode": "HP41167010SX",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 35,
+          "centerBore": 73.1,
+          "finish": "枪灰车面+碗口铣字"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "2330",
+      "sizes": [
+        "18*8.5"
+      ],
+      "pcds": [
+        "5*114.3",
+        "5*112"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "磨砂古铜全涂",
+        "亚黑全涂装",
+        "高亮黑全涂装",
+        "黑色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "3015188510S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "3015188511S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "3015188512S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "3015188503M",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "3015188513S",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "3015188504M",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "2335",
+      "sizes": [
+        "15*6.5",
+        "16*7"
+      ],
+      "pcds": [
+        "4*100",
+        "5*114.3"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "磨砂古铜全涂",
+        "亚黑全涂装",
+        "高亮黑全涂装",
+        "白色全涂装",
+        "黑色车面",
+        "枪灰车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "30171565A1S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "30171565A2S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "30171565A3S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "30171565A4S",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色全涂装"
+        },
+        {
+          "productionCode": "30171565A1M",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "30171565A2M",
+          "size": "15*6.5",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车面"
+        },
+        {
+          "productionCode": "30171670A1S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "30171670A2S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "30171670A3S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "30171670A4S",
+          "size": "16*7",
+          "pcd": "4*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "白色全涂装"
+        },
+        {
+          "productionCode": "30171670A5S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "30171670A6S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "30171670A7S",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "30171670A1M",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "30171670A2M",
+          "size": "16*7",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "8034",
+      "sizes": [
+        "18*8.5"
+      ],
+      "pcds": [
+        "5*114.3",
+        "5*112"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "金色车边+银色钮钉",
+        "银色车边+银色钮钉",
+        "黑色车边+银色钮钉",
+        "枪灰色车边+银色钮钉",
+        "高亮黑车边+银色钮钉"
+      ],
+      "variants": [
+        {
+          "productionCode": "8034188501W",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "金色车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188502W",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "银色车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188503W",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "黑色车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188504W",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "枪灰色车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188505W",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188506W",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑车边+银色钮钉"
+        },
+        {
+          "productionCode": "8034188507W",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "金色车边+银色钮钉"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "HP28",
+      "sizes": [
+        "17*7.5",
+        "18*8.5",
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*114.3",
+        "5*100",
+        "5*112"
+      ],
+      "offsets": [
+        38
+      ],
+      "centerBores": [
+        73.1
+      ],
+      "finishes": [
+        "磨砂古铜全涂",
+        "亚黑全涂装",
+        "高亮黑全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "HP281775A1S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "HP281775A2S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP281775A3S",
+          "size": "17*7.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281775A4S",
+          "size": "17*7.5",
+          "pcd": "5*100",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281775A5S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281775A6S",
+          "size": "17*7.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP281885A1S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "HP281885A2S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP281885A3S",
+          "size": "18*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281885A4S",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281885A5S",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "HP281885A6S",
+          "size": "18*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP281985A1S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "HP281985A2S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        },
+        {
+          "productionCode": "HP281985A3S",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281985A4S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "高亮黑全涂装"
+        },
+        {
+          "productionCode": "HP281985A5S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "磨砂古铜全涂"
+        },
+        {
+          "productionCode": "HP281985A6S",
+          "size": "19*8.5",
+          "pcd": "5*112",
+          "offset": 38,
+          "centerBore": 73.1,
+          "finish": "亚黑全涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "HP45",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "磨砂古铜+亚黑边",
+        "银色全涂装+亚黑边",
+        "亚黑全涂装+车筋条",
+        "亚光枪灰+亚黑边"
+      ],
+      "variants": [
+        {
+          "productionCode": "HP45178501ST",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "磨砂古铜+亚黑边"
+        },
+        {
+          "productionCode": "HP45178502ST",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "银色全涂装+亚黑边"
+        },
+        {
+          "productionCode": "HP45178501M",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "亚黑全涂装+车筋条"
+        },
+        {
+          "productionCode": "HP45178503ST",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "亚光枪灰+亚黑边"
+        }
+      ],
+      "suitableVehicles": []
+    }
+  ]
+}

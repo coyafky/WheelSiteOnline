@@ -1,0 +1,353 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Fenghuai design tokens
+   ---------------------------------------------------------------------------
+   Palette direction: warm graphite/steel base with a forge-amber accent.
+   Deliberately distinct from the reference site's slate+red scheme.
+   Fonts are declared in layout.tsx via next/font (Barlow Condensed display,
+   Inter text) so there is no webfont round-trip through a CDN.
+--------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-text), ui-sans-serif,
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: var(--font-display);
+
+  /* Brand scale, exposed to Tailwind utilities (bg-ink, text-steel, ...) */
+  --color-ink: var(--fh-ink);
+  --color-hero: var(--fh-hero);
+  --color-graphite: var(--fh-graphite);
+  --color-panel: var(--fh-panel);
+  --color-steel: var(--fh-steel);
+  --color-muted: var(--fh-muted);
+  --color-soft: var(--fh-soft);
+  --color-forge: var(--fh-forge);
+  --color-forge-deep: var(--fh-forge-deep);
+  --color-forge-soft: var(--fh-forge-soft);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  /* Layout containers */
+  --container-fh: 1180px;
+  --container-fh-wide: 1440px;
+}
+
+:root {
+  /* Brand palette */
+  --fh-ink: #0b0f16;
+  /**
+   * Hero base — a step DEEPER than ink.
+   *
+   * Hero photography needs a darker plate than the ink used by page-body
+   * sections, otherwise a photographic background reads washed-out. This value
+   * existed in the codebase since the first hero (as a raw `#05070b` hex in
+   * home-hero.tsx / gallery-band.tsx) but was never tokenised. Promoting it
+   * gives the design system an honest name for a real requirement instead of
+   * an exception nobody recorded. See DESIGN.md §6.
+   */
+  --fh-hero: #05070a;
+  --fh-graphite: #151a23;
+  --fh-panel: #1f2733;
+  --fh-steel: #5d6a7d;
+  --fh-muted: #dfe3ea;
+  --fh-soft: #f5f7fa;
+  --fh-forge: #c2650a;
+  --fh-forge-deep: #8a4406;
+  --fh-forge-soft: #fdf3e7;
+
+  /* shadcn surface mapping */
+  --background: #ffffff;
+  --foreground: var(--fh-ink);
+  --card: #ffffff;
+  --card-foreground: var(--fh-ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--fh-ink);
+  --primary: var(--fh-ink);
+  --primary-foreground: #ffffff;
+  --secondary: var(--fh-soft);
+  --secondary-foreground: var(--fh-ink);
+  --muted: var(--fh-soft);
+  --muted-foreground: var(--fh-steel);
+  --accent: var(--fh-forge);
+  --accent-foreground: #ffffff;
+  --destructive: #b42318;
+  --border: var(--fh-muted);
+  --input: var(--fh-muted);
+  --ring: var(--fh-forge);
+  --radius: 6px;
+
+  /* Motion system — mirrored from the reference blueprint so the feel matches
+     while the values stay ours to tune. */
+  --motion-duration-reveal: 760ms;
+  --motion-duration-parallax: 120ms;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-distance-reveal: 14px;
+  --motion-stagger-step: 80ms;
+  --motion-parallax-y: 8px;
+}
+
+.dark {
+  --background: var(--fh-ink);
+  --foreground: #f2f4f8;
+  --card: var(--fh-graphite);
+  --card-foreground: #f2f4f8;
+  --popover: var(--fh-graphite);
+  --popover-foreground: #f2f4f8;
+  --primary: #f2f4f8;
+  --primary-foreground: var(--fh-ink);
+  --secondary: var(--fh-panel);
+  --secondary-foreground: #f2f4f8;
+  --muted: var(--fh-panel);
+  --muted-foreground: #97a3b6;
+  --accent: #e07c14;
+  --accent-foreground: var(--fh-ink);
+  --border: rgb(255 255 255 / 0.12);
+  --input: rgb(255 255 255 / 0.16);
+  --ring: #e07c14;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Display face is used for headings, eyebrow labels and buttons */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--fh-forge);
+    color: #fff;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Layout helpers
+--------------------------------------------------------------------------- */
+
+@utility container-fh {
+  width: min(calc(100% - 40px), var(--container-fh));
+  margin-inline: auto;
+}
+
+@utility container-fh-wide {
+  width: min(calc(100% - 32px), var(--container-fh-wide));
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion system: scroll reveal + parallax
+   The `motion-ready` class is added by JS so content stays visible when JS is
+   unavailable (progressive enhancement). Reduced-motion users never get it.
+--------------------------------------------------------------------------- */
+
+/* FAIL-VISIBLE BY DESIGN.
+   Content is visible unless a revealed-scroll state is positively established
+   by JS. The previous fail-hidden approach (hide in CSS, reveal in JS) meant any
+   delay, error or missed observer left whole sections permanently blank — an
+   unacceptable trade on a content site. So: the animation is opt-in, the content
+   is not. */
+
+.motion-ready [data-reveal] {
+  transition:
+    opacity var(--motion-duration-reveal) var(--motion-ease-out),
+    transform var(--motion-duration-reveal) var(--motion-ease-out),
+    filter var(--motion-duration-reveal) var(--motion-ease-out);
+}
+
+.motion-ready [data-reveal-group] > * {
+  transition:
+    opacity var(--motion-duration-reveal) var(--motion-ease-out),
+    transform var(--motion-duration-reveal) var(--motion-ease-out),
+    filter var(--motion-duration-reveal) var(--motion-ease-out);
+  transition-delay: calc(var(--motion-order, 0) * var(--motion-stagger-step));
+}
+
+/* The hidden state is scoped to `[data-motion-armed]`, which the hook sets on
+   <html> only once its observers are genuinely attached. If the hook never
+   runs, nothing is ever hidden. */
+.motion-ready[data-motion-armed] [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance-reveal), 0);
+  filter: blur(3px);
+}
+
+.motion-ready[data-motion-armed] [data-reveal-group]:not(.is-revealed) > * {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance-reveal), 0);
+  filter: blur(3px);
+}
+
+.motion-ready [data-reveal].is-revealed,
+.motion-ready [data-reveal-group].is-revealed > * {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.motion-ready [data-parallax-media] {
+  --motion-parallax-offset: 0px;
+  transform: translate3d(0, var(--motion-parallax-offset), 0);
+  transition: transform var(--motion-duration-parallax) linear;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-ready [data-reveal],
+  .motion-ready [data-reveal-group] > *,
+  .motion-ready [data-parallax-media] {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reusable brand primitives
+--------------------------------------------------------------------------- */
+
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fh-forge);
+}
+
+@utility btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /**
+   * A pill CTA is a single label, never a paragraph. Without this, "Request a
+   * Quote" wraps to two lines inside the 74px header bar — and worse, the
+   * wrap is invisible in English until the label grows in another locale.
+   */
+  white-space: nowrap;
+  min-height: 48px;
+  padding-inline: 26px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+@utility btn-pill-solid {
+  @apply btn-pill;
+  background: var(--fh-forge);
+  border: 2px solid var(--fh-forge);
+  color: #fff;
+}
+
+@utility btn-pill-outline {
+  @apply btn-pill;
+  background: transparent;
+  border: 2px solid currentColor;
+  color: currentColor;
+}
+
+/* Attention nudge for the persistent quote button */
+/**
+ * Hero Ken Burns — an almost-imperceptible slow zoom on the background slide.
+ *
+ * Never more than 1.04: the goal is a sense that the image is alive, not a
+ * visible zoom. Disabled under prefers-reduced-motion (hero PageSpec AC-10).
+ */
+@keyframes fh-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+.fh-kenburns {
+  animation: fh-kenburns 9000ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fh-kenburns {
+    animation: none;
+  }
+}
+
+@keyframes fh-nudge {
+  0%,
+  86% {
+    transform: translateY(0);
+  }
+  92% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

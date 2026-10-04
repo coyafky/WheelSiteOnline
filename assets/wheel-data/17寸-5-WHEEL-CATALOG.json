@@ -1,0 +1,646 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/17寸轮毂-5",
+    "models": 17,
+    "variants": 30,
+    "images": 30,
+    "sourceGeneratedAt": "2026-09-22",
+    "filter": "仅保留有图片的轮毂（图片名与编号一致）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "01301",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘",
+        "原铝+原铝压盘",
+        "哑灰+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "01301178001W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        },
+        {
+          "productionCode": "01301178002W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "原铝+原铝压盘"
+        },
+        {
+          "productionCode": "01301178003W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰+原铝压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "01701",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘",
+        "哑灰+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "01701178001W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        },
+        {
+          "productionCode": "01701178002W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰+原铝压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2300901",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑光枪灰+原铝色防脱环"
+      ],
+      "variants": [
+        {
+          "productionCode": "2300901",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑光枪灰+原铝色防脱环"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2301701",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "原铝+原铝压盘",
+        "哑黑+原铝压盘",
+        "哑灰+原铝压盘",
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "230170101",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "原铝+原铝压盘"
+        },
+        {
+          "productionCode": "230170102",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+原铝压盘"
+        },
+        {
+          "productionCode": "230170103",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰+原铝压盘"
+        },
+        {
+          "productionCode": "230170104",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2301702",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑灰+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "2301702",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰+原铝压盘"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2302001",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "2302001",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+原铝压盘"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2302002",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑光枪灰铣亮字+原铝压盘",
+        "哑光枪灰+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "230200201",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑光枪灰铣亮字+原铝压盘"
+        },
+        {
+          "productionCode": "230200202",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑光枪灰+原铝压盘"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2303001",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+原铝压盘",
+        "原铝+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "230300101",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+原铝压盘"
+        },
+        {
+          "productionCode": "230300102",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "原铝+原铝压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2508034",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "2508034",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "212",
+      "suitableVehicles": []
+    },
+    {
+      "model": "26030034",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "26030034",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "26080034",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "原铝+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "26080034",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "原铝+原铝压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "AG803",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "AG803178501W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250803",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "L250803",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "长城炮/坦克/北京212",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250915",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "L250915",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "长城炮/坦克/北京212",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250952",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑灰+原铝压盘",
+        "哑黑+哑黑压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25095201",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰+原铝压盘"
+        },
+        {
+          "productionCode": "L25095202",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+哑黑压盘"
+        }
+      ],
+      "styleName": "长城炮/坦克/北京212",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L251046",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑铣亮字+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "L251046",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑铣亮字+原铝压盘"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZM2505007",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "哑黑全涂+哑黑压盘",
+        "哑黑+原铝压盘",
+        "哑灰全涂+原铝压盘",
+        "透明红+透明红压盘",
+        "原铝+原铝压盘"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZM250500701",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑全涂+哑黑压盘"
+        },
+        {
+          "productionCode": "ZM250500702",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑黑+原铝压盘"
+        },
+        {
+          "productionCode": "ZM250500703",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "哑灰全涂+原铝压盘"
+        },
+        {
+          "productionCode": "ZM250500704",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "透明红+透明红压盘"
+        },
+        {
+          "productionCode": "ZM250500705",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "原铝+原铝压盘"
+        }
+      ],
+      "styleName": "坦克300",
+      "suitableVehicles": []
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/越野款轮毂",
+    "models": 3,
+    "variants": 5,
+    "images": 0,
+    "sourceGeneratedAt": "2026-09-25",
+    "filter": "无图片轮毂（待补图，替代模式用占位图）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "H3178F",
+      "hasImage": false,
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "亚黑全涂+筋",
+        "轮缘铣亮字",
+        "打砂亚古铜+筋",
+        "深枪灰+筋"
+      ],
+      "variants": [
+        {
+          "productionCode": "H3178F189001W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "亚黑全涂+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "H3178F189002W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "打砂亚古铜+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "H3178F189003W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "深枪灰+筋/轮缘铣亮字"
+        }
+      ]
+    },
+    {
+      "model": "ZT2010",
+      "hasImage": false,
+      "sizes": [
+        "20*10"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        20
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "高亮黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZT20102010001W",
+          "size": "20*10",
+          "pcd": "6*139.7",
+          "offset": 20,
+          "centerBore": 106.1,
+          "finish": "高亮黑全涂"
+        }
+      ],
+      "brand": "44048"
+    },
+    {
+      "model": "None",
+      "hasImage": false,
+      "sizes": [
+        "15*8"
+      ],
+      "pcds": [
+        "6*114.3"
+      ],
+      "offsets": [],
+      "centerBores": [
+        66.1
+      ],
+      "finishes": [
+        "黑色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "未编号",
+          "size": "15*8",
+          "pcd": "6*114.3",
+          "offset": null,
+          "centerBore": 66.1,
+          "finish": "黑色车面"
+        }
+      ],
+      "styleName": "RP15207"
+    }
+  ]
+}

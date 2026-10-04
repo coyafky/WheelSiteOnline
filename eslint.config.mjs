@@ -1,0 +1,36 @@
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Underscore-prefixed parameters/variables are intentionally unused
+  // (e.g. the inquiry `assignOwner` seam keeps its full signature for the
+  // real routing implementation). Respect the convention instead of
+  // sprinkling eslint-disable directives.
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    // Third-party skill assets — copied from a sibling project, not our source.
+    // Linting them reports their style, not our code. See SKILLS/README.md.
+    "SKILLS/**",
+    // Read-only data pack (JSON + images). Not source.
+    "assets/**",
+    "resources/**",
+  ]),
+]);
+
+export default eslintConfig;

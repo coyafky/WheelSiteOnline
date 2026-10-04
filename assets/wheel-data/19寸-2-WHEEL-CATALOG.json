@@ -1,0 +1,376 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/19寸轮毂-2",
+    "models": 11,
+    "variants": 14,
+    "images": 14,
+    "sourceGeneratedAt": "2026-09-22",
+    "filter": "仅保留有图片的轮毂（图片名与编号一致）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "260201003",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260201003",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 110.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260201007",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*108"
+      ],
+      "offsets": [
+        18
+      ],
+      "centerBores": [
+        60.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260201007",
+          "size": "19*8.5",
+          "pcd": "5*108",
+          "offset": 18,
+          "centerBore": 60.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "捷途",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260201008",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*114.3"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        66.5
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260201008",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 25,
+          "centerBore": 66.5,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "猛龙",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260202002",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260202002",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 110.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260202006",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*108"
+      ],
+      "offsets": [
+        18
+      ],
+      "centerBores": [
+        60.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260202006",
+          "size": "19*8.5",
+          "pcd": "5*108",
+          "offset": 18,
+          "centerBore": 60.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "捷途",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260202007",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*114.3"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        66.5
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260202007",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 25,
+          "centerBore": 66.5,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "猛龙",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260203002",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260203002",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 110.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260203006",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*108"
+      ],
+      "offsets": [
+        18
+      ],
+      "centerBores": [
+        60.1
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260203006",
+          "size": "19*8.5",
+          "pcd": "5*108",
+          "offset": 18,
+          "centerBore": 60.1,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "捷途",
+      "suitableVehicles": []
+    },
+    {
+      "model": "260203007",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "5*114.3"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        66.5
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "260203007",
+          "size": "19*8.5",
+          "pcd": "5*114.3",
+          "offset": 25,
+          "centerBore": 66.5,
+          "finish": "哑黑"
+        }
+      ],
+      "styleName": "猛龙",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250905",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        100
+      ],
+      "finishes": [
+        "哑黑全涂",
+        "哑灰全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25090501",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 100,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25090502",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 100,
+          "finish": "哑灰全涂"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250906",
+      "sizes": [
+        "19*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        100
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂",
+        "原铝"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25090601",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 100,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25090602",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 100,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25090603",
+          "size": "19*8.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 100,
+          "finish": "原铝"
+        }
+      ],
+      "styleName": "坦克",
+      "suitableVehicles": []
+    }
+  ]
+}

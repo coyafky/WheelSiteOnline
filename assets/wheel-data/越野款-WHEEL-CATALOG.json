@@ -1,0 +1,1568 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/越野款轮毂",
+    "models": 42,
+    "variants": 77,
+    "images": 123,
+    "sourceGeneratedAt": "2026-09-22",
+    "filter": "仅保留有图片的轮毂（图片名与编号一致）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "1010",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.2
+      ],
+      "finishes": [
+        "哑黑车边",
+        "半哑黑车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "1010178501W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.2,
+          "finish": "哑黑车边"
+        },
+        {
+          "productionCode": "1010178502W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.2,
+          "finish": "半哑黑车边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "13173",
+      "sizes": [
+        "16*6.5"
+      ],
+      "pcds": [
+        "5*139.7"
+      ],
+      "offsets": [],
+      "centerBores": [
+        108.1
+      ],
+      "finishes": [
+        "哑光古铜+铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "13173166501W",
+          "size": "16*6.5",
+          "pcd": "5*139.7",
+          "offset": null,
+          "centerBore": 108.1,
+          "finish": "哑光古铜+铣字"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "166175",
+      "sizes": [
+        "16*7.5"
+      ],
+      "pcds": [
+        "6*130"
+      ],
+      "offsets": [],
+      "centerBores": [
+        75
+      ],
+      "finishes": [
+        "黑色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "166175167501W",
+          "size": "16*7.5",
+          "pcd": "6*130",
+          "offset": null,
+          "centerBore": 75,
+          "finish": "黑色车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "1743",
+      "sizes": [
+        "18*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "黑色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "1743187501W",
+          "size": "18*7.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 106.1,
+          "finish": "黑色车面"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    },
+    {
+      "model": "177206",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110
+      ],
+      "finishes": [
+        "30°哑黑全涂",
+        "白色全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "177206178501W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110,
+          "finish": "30°哑黑全涂"
+        },
+        {
+          "productionCode": "177206178502W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110,
+          "finish": "白色全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "2304",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        108
+      ],
+      "finishes": [
+        "哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "2304179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 108,
+          "finish": "哑黑"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "5217",
+      "sizes": [
+        "17*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110
+      ],
+      "finishes": [
+        "珍珠黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "5217177501W",
+          "size": "17*7.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110,
+          "finish": "珍珠黑"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "5432",
+      "sizes": [
+        "16*7"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        10
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "黑色+(III工程)铣亮字+50%哑光透明金油"
+      ],
+      "variants": [
+        {
+          "productionCode": "5432167001W",
+          "size": "16*7",
+          "pcd": "6*139.7",
+          "offset": 10,
+          "centerBore": 110.1,
+          "finish": "黑色+(III工程)铣亮字+50%哑光透明金油"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "6007",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [],
+      "centerBores": [
+        100.1
+      ],
+      "finishes": [
+        "黑色车面",
+        "黑色车边+橙色精油边",
+        "黑色车边+绿色精油边"
+      ],
+      "variants": [
+        {
+          "productionCode": "6007179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": null,
+          "centerBore": 100.1,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "6007179002W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": null,
+          "centerBore": 100.1,
+          "finish": "黑色车边+橙色精油边"
+        },
+        {
+          "productionCode": "6007179003W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": null,
+          "centerBore": 100.1,
+          "finish": "黑色车边+绿色精油边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "61143",
+      "sizes": [
+        "16*6.5"
+      ],
+      "pcds": [
+        "5*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        108,
+        108.1
+      ],
+      "finishes": [
+        "亚光古铜车亮线+铣字",
+        "黑色车亮线+铣字",
+        "哑光枪灰车亮线+铣字",
+        "白色车亮边+铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "61143166501W",
+          "size": "16*6.5",
+          "pcd": "5*139.7",
+          "offset": 0,
+          "centerBore": 108,
+          "finish": "亚光古铜车亮线+铣字"
+        },
+        {
+          "productionCode": "61143166502W",
+          "size": "16*6.5",
+          "pcd": "5*139.7",
+          "offset": 0,
+          "centerBore": 108,
+          "finish": "黑色车亮线+铣字"
+        },
+        {
+          "productionCode": "61143166503W",
+          "size": "16*6.5",
+          "pcd": "5*139.7",
+          "offset": 0,
+          "centerBore": 108,
+          "finish": "哑光枪灰车亮线+铣字"
+        },
+        {
+          "productionCode": "61143166504W",
+          "size": "16*6.5",
+          "pcd": "5*139.7",
+          "offset": 0,
+          "centerBore": 108.1,
+          "finish": "白色车亮边+铣字"
+        }
+      ],
+      "brand": "安驰",
+      "suitableVehicles": []
+    },
+    {
+      "model": "645",
+      "sizes": [
+        "18*8",
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        30,
+        0
+      ],
+      "centerBores": [
+        106,
+        106.1
+      ],
+      "finishes": [
+        "黑色全涂+辐条铣字+耳部铣字+耳部铣槽描红",
+        "黑色全涂+辐条铣字+轮缘铣字",
+        "#086古铜全涂+辐条铣字+轮缘铣字",
+        "深枪灰全涂+辐条铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "645188001W",
+          "size": "18*8",
+          "pcd": "6*139.7",
+          "offset": 30,
+          "centerBore": 106,
+          "finish": "黑色全涂+辐条铣字+耳部铣字+耳部铣槽描红"
+        },
+        {
+          "productionCode": "645189002W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "黑色全涂+辐条铣字+轮缘铣字"
+        },
+        {
+          "productionCode": "645189003W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "#086古铜全涂+辐条铣字+轮缘铣字"
+        },
+        {
+          "productionCode": "645189004W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "深枪灰全涂+辐条铣字"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "660",
+      "sizes": [
+        "16*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.2,
+        106.1
+      ],
+      "finishes": [
+        "磨砂古铜（1138细砂）车边重力+透明古铜+辐条铣字",
+        "古铜车边+古铜精油边+辐条洗字",
+        "半亚黑+铣字（辐条字描红）",
+        "黑色车边+铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "660168501W",
+          "size": "16*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.2,
+          "finish": "磨砂古铜（1138细砂）车边重力+透明古铜+辐条铣字"
+        },
+        {
+          "productionCode": "660168502W",
+          "size": "16*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "古铜车边+古铜精油边+辐条洗字"
+        },
+        {
+          "productionCode": "660168503W",
+          "size": "16*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "半亚黑+铣字（辐条字描红）"
+        },
+        {
+          "productionCode": "660168504W",
+          "size": "16*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "黑色车边+铣字"
+        }
+      ],
+      "styleName": "越野",
+      "suitableVehicles": []
+    },
+    {
+      "model": "76033",
+      "sizes": [
+        "17*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        30
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "银色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "76033177501W",
+          "size": "17*7.5",
+          "pcd": "6*139.7",
+          "offset": 30,
+          "centerBore": 106.2,
+          "finish": "银色车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "8233",
+      "sizes": [
+        "18*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        20
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "深枪灰+铣刻字(VIILK RACING ORIGINAL)+描红刻字",
+        "黑色+铣刻字(VIILK RACING ORIGINAL)+描红刻字"
+      ],
+      "variants": [
+        {
+          "productionCode": "8233188001W",
+          "size": "18*8",
+          "pcd": "6*139.7",
+          "offset": 20,
+          "centerBore": 106.1,
+          "finish": "深枪灰+铣刻字(VIILK RACING ORIGINAL)+描红刻字"
+        },
+        {
+          "productionCode": "8233188002W",
+          "size": "18*8",
+          "pcd": "6*139.7",
+          "offset": 20,
+          "centerBore": 106.1,
+          "finish": "黑色+铣刻字(VIILK RACING ORIGINAL)+描红刻字"
+        }
+      ],
+      "styleName": "A3755-006、A3807-006",
+      "suitableVehicles": []
+    },
+    {
+      "model": "8997",
+      "sizes": [
+        "18*8"
+      ],
+      "pcds": [
+        "5*150"
+      ],
+      "offsets": [],
+      "centerBores": [
+        110.5
+      ],
+      "finishes": [
+        "中银"
+      ],
+      "variants": [
+        {
+          "productionCode": "8997188001W",
+          "size": "18*8",
+          "pcd": "5*150",
+          "offset": null,
+          "centerBore": 110.5,
+          "finish": "中银"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "DIM6007",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7",
+        "6*135"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110,
+        87.1
+      ],
+      "finishes": [
+        "黑色车面（不车边）"
+      ],
+      "variants": [
+        {
+          "productionCode": "DIM6007179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110,
+          "finish": "黑色车面（不车边）"
+        },
+        {
+          "productionCode": "DIM6007179002W",
+          "size": "17*9",
+          "pcd": "6*135",
+          "offset": 0,
+          "centerBore": 87.1,
+          "finish": "黑色车面（不车边）"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "DX013",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        1,
+        0
+      ],
+      "centerBores": [
+        108.1,
+        110.1
+      ],
+      "finishes": [
+        "哑黑全塗+耳部铣槽",
+        "铣字",
+        "古铜全塗+耳部铣槽"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX013178501W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 1,
+          "centerBore": 108.1,
+          "finish": "哑黑全塗+耳部铣槽/铣字"
+        },
+        {
+          "productionCode": "DX013178502W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 1,
+          "centerBore": 108.1,
+          "finish": "古铜全塗+耳部铣槽/铣字"
+        },
+        {
+          "productionCode": "DX013178503W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "古铜全塗+耳部铣槽/铣字"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "DX027",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        1
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "半哑黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX027179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 1,
+          "centerBore": 110.1,
+          "finish": "半哑黑"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "DX065",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX065179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": null,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "DX125",
+      "sizes": [
+        "15*7"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        5
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "古铜",
+        "半哑黑",
+        "全哑枪灰"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX125157001W",
+          "size": "15*7",
+          "pcd": "6*139.7",
+          "offset": 5,
+          "centerBore": 110.1,
+          "finish": "古铜"
+        },
+        {
+          "productionCode": "DX125157002W",
+          "size": "15*7",
+          "pcd": "6*139.7",
+          "offset": 5,
+          "centerBore": 110.1,
+          "finish": "半哑黑"
+        },
+        {
+          "productionCode": "DX125157003W",
+          "size": "15*7",
+          "pcd": "6*139.7",
+          "offset": 5,
+          "centerBore": 110.1,
+          "finish": "全哑枪灰"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "DX141",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "磨砂古铜(1138细砂)车边旋压+透明古铜+辐条铣亮字+耳部铣亮字+耳部铣亮线"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX141179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "磨砂古铜(1138细砂)车边旋压+透明古铜+辐条铣亮字+耳部铣亮字+耳部铣亮线"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "DX144",
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "黑色全涂+辐条铣字"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX144189001W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "黑色全涂+辐条铣字"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "DX189",
+      "sizes": [
+        "15*8",
+        "17*9",
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "半哑黑全涂",
+        "哑黑 matt black",
+        "古铜+哑黑边 bronze+blackring",
+        "枪灰+哑黑边 matt gray +blackring"
+      ],
+      "variants": [
+        {
+          "productionCode": "DX189158001W",
+          "size": "15*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "半哑黑全涂"
+        },
+        {
+          "productionCode": "DX189179002W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑 matt black"
+        },
+        {
+          "productionCode": "DX189179003W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "古铜+哑黑边 bronze+blackring"
+        },
+        {
+          "productionCode": "DX189179004W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "枪灰+哑黑边 matt gray +blackring"
+        },
+        {
+          "productionCode": "DX189189005W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑 matt black"
+        },
+        {
+          "productionCode": "DX189189006W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "古铜+哑黑边 bronze+blackring"
+        },
+        {
+          "productionCode": "DX189189007W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "枪灰+哑黑边 matt gray +blackring"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "H3178F[F915OK]",
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "银色车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "H3178F[F915OK]",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.2,
+          "finish": "银色车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "H578D",
+      "sizes": [
+        "18*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "高亮黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "H578D187501W",
+          "size": "18*7.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 106.2,
+          "finish": "高亮黑全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "JT1807",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        15
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "JT1807179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 15,
+          "centerBore": 110.1,
+          "finish": "哑黑涂装"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "LC2715",
+      "sizes": [
+        "15*6.5"
+      ],
+      "pcds": [
+        "6*170"
+      ],
+      "offsets": [
+        15
+      ],
+      "centerBores": [
+        134.6
+      ],
+      "finishes": [
+        "蓝色窗口全车亮"
+      ],
+      "variants": [
+        {
+          "productionCode": "LC2715156501W",
+          "size": "15*6.5",
+          "pcd": "6*170",
+          "offset": 15,
+          "centerBore": 134.6,
+          "finish": "蓝色窗口全车亮"
+        }
+      ],
+      "brand": "五十铃",
+      "suitableVehicles": []
+    },
+    {
+      "model": "LR3178X",
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "亚黑全涂+筋",
+        "轮缘铣亮字",
+        "打砂亚古铜+筋",
+        "深枪灰+筋"
+      ],
+      "variants": [
+        {
+          "productionCode": "LR3178X189001W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "亚黑全涂+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "LR3178X189002W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "打砂亚古铜+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "LR3178X189003W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "深枪灰+筋/轮缘铣亮字"
+        }
+      ],
+      "styleName": "Work-S1",
+      "suitableVehicles": []
+    },
+    {
+      "model": "MGWDX582",
+      "sizes": [
+        "18*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "白色全涂旋压+内槽铣亮字",
+        "亮光古铜(5＃古铜)全涂重力旋压+内槽铣亮字"
+      ],
+      "variants": [
+        {
+          "productionCode": "MGWDX58201",
+          "size": "18*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "白色全涂旋压+内槽铣亮字"
+        },
+        {
+          "productionCode": "MGWDX58202",
+          "size": "18*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "亮光古铜(5＃古铜)全涂重力旋压+内槽铣亮字"
+        }
+      ],
+      "suitableVehicles": [],
+      "process": "旋压"
+    },
+    {
+      "model": "OR003",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "5*127",
+        "6*114.3"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.6,
+        66.1
+      ],
+      "finishes": [
+        "亚黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "OR003179001W",
+          "size": "17*9",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.6,
+          "finish": "亚黑全涂"
+        },
+        {
+          "productionCode": "OR003179002W",
+          "size": "17*9",
+          "pcd": "6*114.3",
+          "offset": 0,
+          "centerBore": 66.1,
+          "finish": "亚黑全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "RH10018",
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "亮黑全涂+筋",
+        "轮缘铣亮字",
+        "电镀灰+车亮碗口+筋",
+        "电镀灰+车亮碗口",
+        "车边+筋铣亮字"
+      ],
+      "variants": [
+        {
+          "productionCode": "RH10018189001W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "亮黑全涂+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "RH10018189002W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "电镀灰+车亮碗口+筋/轮缘铣亮字"
+        },
+        {
+          "productionCode": "RH10018189003W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "电镀灰+车亮碗口/车边+筋铣亮字"
+        }
+      ],
+      "styleName": "TE37",
+      "suitableVehicles": []
+    },
+    {
+      "model": "SY5006",
+      "sizes": [
+        "15*6"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        45
+      ],
+      "centerBores": [
+        78.1
+      ],
+      "finishes": [
+        "银色全涂装"
+      ],
+      "variants": [
+        {
+          "productionCode": "SY5006156001W",
+          "size": "15*6",
+          "pcd": "6*139.7",
+          "offset": 45,
+          "centerBore": 78.1,
+          "finish": "银色全涂装"
+        }
+      ],
+      "styleName": "2015五菱征程",
+      "suitableVehicles": []
+    },
+    {
+      "model": "XF086",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1,
+        100.1
+      ],
+      "finishes": [
+        "30°哑黑车边",
+        "30°哑光枪灰087车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "XF086178501W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "30°哑黑车边"
+        },
+        {
+          "productionCode": "XF086178502W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 100.1,
+          "finish": "30°哑黑车边"
+        },
+        {
+          "productionCode": "XF086178503W",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "30°哑光枪灰087车边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "XTX017",
+      "sizes": [
+        "17*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110
+      ],
+      "finishes": [
+        "哑黑车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "XTX017179001W",
+          "size": "17*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110,
+          "finish": "哑黑车边"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "XY148",
+      "sizes": [
+        "18*9"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106
+      ],
+      "finishes": [
+        "亮灰色+刻字"
+      ],
+      "variants": [
+        {
+          "productionCode": "XY148189001W",
+          "size": "18*9",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106,
+          "finish": "亮灰色+刻字"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZT704",
+      "sizes": [
+        "17*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        25
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "黑色车面",
+        "枪灰车面"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZT704177501W",
+          "size": "17*7.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 106.2,
+          "finish": "黑色车面"
+        },
+        {
+          "productionCode": "ZT704177502W",
+          "size": "17*7.5",
+          "pcd": "6*139.7",
+          "offset": 25,
+          "centerBore": 106.2,
+          "finish": "枪灰车面"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZT713",
+      "sizes": [
+        "17*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        30
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "高亮黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZT713177501W",
+          "size": "17*7.5",
+          "pcd": "6*139.7",
+          "offset": 30,
+          "centerBore": 106.2,
+          "finish": "高亮黑全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZT824",
+      "sizes": [
+        "18*7.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        20
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "高亮黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZT824187501W",
+          "size": "18*7.5",
+          "pcd": "6*139.7",
+          "offset": 20,
+          "centerBore": 106.1,
+          "finish": "高亮黑全涂"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZX443178504S",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "全涂装（枪灰5#）"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZX443178504S",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": null,
+          "centerBore": 106.1,
+          "finish": "全涂装（枪灰5#）"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZY543",
+      "sizes": [
+        "15*6"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        29
+      ],
+      "centerBores": [
+        67.1
+      ],
+      "finishes": [
+        "中闪银全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZY543156001W",
+          "size": "15*6",
+          "pcd": "6*139.7",
+          "offset": 29,
+          "centerBore": 67.1,
+          "finish": "中闪银全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZY554",
+      "sizes": [
+        "15*6"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        28
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "中闪银全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZY554156001W",
+          "size": "15*6",
+          "pcd": "6*139.7",
+          "offset": 28,
+          "centerBore": 106.2,
+          "finish": "中闪银全涂"
+        }
+      ],
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZY867",
+      "sizes": [
+        "18*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        30
+      ],
+      "centerBores": [
+        106.2
+      ],
+      "finishes": [
+        "中闪银全涂",
+        "高亮黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZY867188001W",
+          "size": "18*8",
+          "pcd": "6*139.7",
+          "offset": 30,
+          "centerBore": 106.2,
+          "finish": "中闪银全涂"
+        },
+        {
+          "productionCode": "ZY867188002W",
+          "size": "18*8",
+          "pcd": "6*139.7",
+          "offset": 30,
+          "centerBore": 106.2,
+          "finish": "高亮黑全涂"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    }
+  ]
+}

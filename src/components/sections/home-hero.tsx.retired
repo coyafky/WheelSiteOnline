@@ -1,0 +1,63 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { site } from "@/content/site";
+
+/**
+ * Full-viewport homepage hero.
+ *
+ * The background is a layered CSS composition (radial forge glow + graphite
+ * base) rather than a photographic asset, so the hero is complete and
+ * reviewable before real photography exists. Swap `.hero-art` for a `<picture>`
+ * plus `data-parallax-media` when Fenghuai supplies a banner image.
+ */
+export function HomeHero() {
+  return (
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      data-reveal
+      className="relative isolate grid min-h-[100svh] items-center overflow-hidden bg-[#05070b]"
+    >
+      <div className="hero-art pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(5,7,11,0.86)_0%,rgba(5,7,11,0.62)_46%,rgba(5,7,11,0.18)_100%)]"
+        aria-hidden="true"
+      />
+
+      <div className="container-fh pb-20 pt-[140px] lg:pb-28 lg:pt-[168px]">
+        <div className="max-w-[820px]">
+          <p className="eyebrow">{site.tagline}</p>
+
+          <h1
+            id="hero-title"
+            className="mt-6 font-display text-[clamp(3rem,10vw,7.5rem)] font-800 uppercase leading-[0.86] tracking-[-0.02em] text-white"
+          >
+            <span className="block">Custom</span>
+            <span className="block text-forge">Forged Wheels</span>
+            <span className="mt-2 block font-display text-[clamp(1.35rem,3.6vw,2.6rem)] font-600 uppercase leading-[1.05] tracking-[0.01em] text-white/85">
+              Engineered for
+              <br className="sm:hidden" /> Aggressive Fitment
+            </span>
+          </h1>
+
+          <p className="mt-8 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
+            Monoblock, two-piece and off-road forged wheels built to your
+            fitment and finished to your specification. Supplying dealers,
+            distributors and wheel brands across North America, Europe and the
+            GCC — direct from our own production line.
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link href="/products" className="btn-pill-solid">
+              View wheel range
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link href="/contact" className="btn-pill-outline !text-white">
+              Request a quote
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

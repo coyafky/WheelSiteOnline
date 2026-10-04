@@ -1,0 +1,4 @@
+interface:
+  display_name: "SEO Market Research"
+  short_description: "Evidence-first B2B search market research"
+  default_prompt: "Use $seo-market-research to research a B2B market and produce an evidence-backed page map before site construction."

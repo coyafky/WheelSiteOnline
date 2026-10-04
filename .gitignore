@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+.next/
+out/
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# Local settings (not project config)
+.claude/settings.local.json
+
+# User-specific skills (not part of the template)
+.claude/skills/customize/
+.claude/skills/release/
+
+# Local temp files
+temp/
+.alma-snapshots
+
+# 供应商原始资料（含水印，授权未确认，不进入公共仓库）
+3家公司的PPT资料/
+
+# 原始数据下载包（72MB，与 assets/ 重复）
+resources/wheel-data-pack/
+
+# 轮毂 webp 大图（57MB，与 public/images/wheels 重复，构建不依赖 assets 图片）
+assets/wheel-images-webp/
+
+# 本地 WordPress 实验场数据（数据库与上传文件，不进入公共仓库）
+local-wp/db-data/
+local-wp/wp-data/
+local-wp/local-credentials.txt

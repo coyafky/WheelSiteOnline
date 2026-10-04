@@ -1,0 +1,802 @@
+{
+  "metadata": {
+    "sourceDocument": "蓝辉画册轮毂-左/17寸轮毂-2",
+    "models": 21,
+    "variants": 38,
+    "images": 36,
+    "sourceGeneratedAt": "2026-09-22",
+    "filter": "仅保留有图片的轮毂（图片名与编号一致）",
+    "excludedFields": [
+      "MOQ",
+      "库存",
+      "待发货",
+      "价格",
+      "库位"
+    ]
+  },
+  "models": [
+    {
+      "model": "2200201",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*127"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.6
+      ],
+      "finishes": [
+        "哑光黑"
+      ],
+      "variants": [
+        {
+          "productionCode": "2200201",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.6,
+          "finish": "哑光黑"
+        }
+      ],
+      "styleName": "牧马人",
+      "suitableVehicles": []
+    },
+    {
+      "model": "2200202",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*127"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.6
+      ],
+      "finishes": [
+        "哑光灰"
+      ],
+      "variants": [
+        {
+          "productionCode": "2200202",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.6,
+          "finish": "哑光灰"
+        }
+      ],
+      "styleName": "牧马人",
+      "suitableVehicles": []
+    },
+    {
+      "model": "23023011",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑",
+        "哑灰"
+      ],
+      "variants": [
+        {
+          "productionCode": "2302301101",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑"
+        },
+        {
+          "productionCode": "2302301102",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "25070591",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "25070591",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "84",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "哑灰全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "84178001W",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "哑灰全涂"
+        }
+      ],
+      "styleName": "霸道",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L20910",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*127"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.5
+      ],
+      "finishes": [
+        "原铝色"
+      ],
+      "variants": [
+        {
+          "productionCode": "L20910178501W",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "原铝色"
+        }
+      ],
+      "styleName": "牧马人",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250908",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂",
+        "原铝色"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25090801",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25090802",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25090803",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "原铝色"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250910",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*127"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.5
+      ],
+      "finishes": [
+        "哑黑全涂",
+        "哑灰全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25091001",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25091002",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "哑灰全涂"
+        }
+      ],
+      "styleName": "牧马人",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250911",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*150"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L250911",
+          "size": "17*8.5",
+          "pcd": "5*150",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250912",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*114.3"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        66.5
+      ],
+      "finishes": [
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L250912",
+          "size": "17*8.5",
+          "pcd": "5*114.3",
+          "offset": 0,
+          "centerBore": 66.5,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "哈佛猛龙",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250913",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "哑黑全涂",
+        "原铝色"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25091301",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25091302",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "原铝色"
+        }
+      ],
+      "styleName": "丰田、丰田塔库玛",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250914",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*135"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        87.1
+      ],
+      "finishes": [
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L250914",
+          "size": "17*8.5",
+          "pcd": "6*135",
+          "offset": 0,
+          "centerBore": 87.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "福特猛禽",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250946",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        106.1
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25094601",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25094602",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 106.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250947",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25094701",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25094702",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "BJ40/途乐Y60/Y61",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250948",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*135"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        87.1
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25094801",
+          "size": "17*8.5",
+          "pcd": "6*135",
+          "offset": 0,
+          "centerBore": 87.1,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25094802",
+          "size": "17*8.5",
+          "pcd": "6*135",
+          "offset": 0,
+          "centerBore": 87.1,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "福特猛禽",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250949",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*114.3"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        66.5
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑黑全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25094901",
+          "size": "17*8.5",
+          "pcd": "5*114.3",
+          "offset": 0,
+          "centerBore": 66.5,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25094902",
+          "size": "17*8.5",
+          "pcd": "5*114.3",
+          "offset": 0,
+          "centerBore": 66.5,
+          "finish": "哑黑全涂"
+        }
+      ],
+      "styleName": "哈佛猛龙",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250950",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*127"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        71.5
+      ],
+      "finishes": [
+        "哑黑全涂",
+        "原铝色",
+        "哑灰全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25095001",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25095002",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "原铝色"
+        },
+        {
+          "productionCode": "L25095003",
+          "size": "17*8.5",
+          "pcd": "5*127",
+          "offset": 0,
+          "centerBore": 71.5,
+          "finish": "哑灰全涂"
+        }
+      ],
+      "styleName": "牧马人",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L250951",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "5*150"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑全涂",
+        "哑灰全涂"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25095101",
+          "size": "17*8.5",
+          "pcd": "5*150",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25095102",
+          "size": "17*8.5",
+          "pcd": "5*150",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰全涂"
+        }
+      ],
+      "styleName": "丰田",
+      "suitableVehicles": []
+    },
+    {
+      "model": "L251211",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑灰全涂",
+        "哑灰车边",
+        "哑黑全涂",
+        "哑黑车边"
+      ],
+      "variants": [
+        {
+          "productionCode": "L25121101",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰全涂"
+        },
+        {
+          "productionCode": "L25121102",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰车边"
+        },
+        {
+          "productionCode": "L25121103",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑全涂"
+        },
+        {
+          "productionCode": "L25121104",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑车边"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "Y2504008",
+      "sizes": [
+        "17*8.5"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "哑黑",
+        "哑灰"
+      ],
+      "variants": [
+        {
+          "productionCode": "Y250400801",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑黑"
+        },
+        {
+          "productionCode": "Y250400802",
+          "size": "17*8.5",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "哑灰"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    },
+    {
+      "model": "ZM2506067BJ",
+      "sizes": [
+        "17*8"
+      ],
+      "pcds": [
+        "6*139.7"
+      ],
+      "offsets": [
+        0
+      ],
+      "centerBores": [
+        110.1
+      ],
+      "finishes": [
+        "半哑黑+电镀铆钉",
+        "半哑灰+电镀铆钉"
+      ],
+      "variants": [
+        {
+          "productionCode": "ZM2506067BJ01",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "半哑黑+电镀铆钉"
+        },
+        {
+          "productionCode": "ZM2506067BJ02",
+          "size": "17*8",
+          "pcd": "6*139.7",
+          "offset": 0,
+          "centerBore": 110.1,
+          "finish": "半哑灰+电镀铆钉"
+        }
+      ],
+      "styleName": "BJ40",
+      "suitableVehicles": []
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# 本地 WordPress 内容后台 —— 实验场（DEC-028 本地先行）
+#
+# 用途：把 3 家供应商 PPT 的图片/文案录入 WP，验证内容结构，供 Next.js
+#       前端经 REST API 读取。数据不进入远程，直到本地验收通过。
+#
+# 启动：docker compose -f local-wp/docker-compose.yml up -d
+# 访问：http://localhost:8081  （8080 已被本机 php 进程占用）
+# 媒体导入源：容器内 /ppts（挂载 3家公司的PPT资料，只读）
+
+services:
+  db:
+    # 本机已有 mysql:8.0 镜像，避免拉取 8.4 的网络等待；本地实验足够
+    image: mysql:8.0
+    container_name: fh-wp-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp_local_only
+      MYSQL_ROOT_PASSWORD: root_local_only
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db-data:/var/lib/mysql
+    ports:
+      - "33061:3306"
+
+  wp:
+    image: wordpress:php8.3-apache
+    container_name: fh-wp
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp_local_only
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+    volumes:
+      - ./wp-data:/var/www/html
+      # 只读挂载 PPT 素材目录，供 wp-cli 导入媒体（路径见下方 cli 服务说明）
+      - ../3家公司的PPT资料:/ppts:ro
+    ports:
+      - "8081:80"
+
+  # wp-cli 操作入口：docker compose -f local-wp/docker-compose.yml run --rm cli wp <命令>
+  # 例：docker compose -f local-wp/docker-compose.yml run --rm cli wp media import /ppts/A航鹏画册/...
+  cli:
+    image: wordpress:cli
+    container_name: fh-wp-cli
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp_local_only
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wp-data:/var/www/html
+      - ../3家公司的PPT资料:/ppts:ro
+    user: "33:33"
