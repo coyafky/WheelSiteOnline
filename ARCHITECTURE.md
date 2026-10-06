@@ -1,782 +1,325 @@
-# 独立站模块架构规范
+# 峰徊独立站现行架构总纲
 
-## 2026-10-04 首发规划补充（先于旧描述阅读）
+更新：2026-10-05。本文是系统结构正本，描述模块、接缝、数据流和不可破坏的约束。
 
-用户确认深圳峰徊公司按 PPT，与蓝辉为共同股东下不同法人；四线平行，服务海外 B/C 客户，英文优先。目标 2026-11-04、整体运行维护约 1000 元/月。旧文中的“只做 B2B”与“单一工厂主体”不再适用。
+- 业务范围与目标：[`PROJECT.md`](PROJECT.md)
+- 当前完成度与阻断项：[`STATUS.md`](STATUS.md)
+- 决策理由：[`DECISIONS.md`](DECISIONS.md)
+- 页面施工：[`PAGE-SPECS/README.md`](PAGE-SPECS/README.md)
+- 架构阅读导航：[`ARCHITECTURE/README.md`](ARCHITECTURE/README.md)
 
-结构目标登记：
+本文使用三种状态：**已实现**表示代码或数据当前存在；**已设计**表示契约已定但尚未完整接线；**待确认**表示依赖业务事实、授权或运行时验证。规划不得写成现成功能。
 
-- L3 保留类型化内容接缝，补齐异步读取、真实产品/变体、来源/图权与审核。WordPress/MySQL 为内容事实源，产品与变体独立记录；当前静态数组尚未被接通的 WP 读取函数替换。
-- L5 采用英文根路径，首期不提供 cookie 切换的公开双语页面；后续中文用独立 URL。沿用 `/resources`，增加旋压/锻造入口并防止与型号动态路由冲突；10–20 个候选轮毂获准后首发，三条能力页不得补虚构 SKU。
-- L6 推荐独立 PostgreSQL，询盘、明细快照、分配和邮件发件箱同事务保存；受保护发送器和签名回调处理投递。匿名询盘读取须关闭。服务端是运行时边界，不依赖 `standalone` 本身提供业务正确性。
-- L7 保留 OpenNext，推荐 Cloudflare Workers 样机；WordPress/PHP/MySQL 独立托管；媒体/缓存/询盘存储分别管理。正式服务商、驱动、恢复套餐需验证，尚未购入或实施。
-- 页面施工按 [本轮逐视口规格](PAGE-SPECS/2026-10-04-launch-viewport-spec.md) 执行；素材来自 [核验登记](outputs/site-launch-plan/03-content-and-assets.md)，不把预览图和 PPT 宣传语视为已批准资料。
+## 1. 系统目标与业务边界
 
-详图与数据库契约见 [首发计划](outputs/site-launch-plan/README.md) 与 [数据库设计](outputs/site-launch-plan/02-data-and-inquiry-design.md)。技术组合为待实现建议；本轮未更改运行代码或 `src/content/types.ts`。决策理由见 DEC-023–025。下文 2026-10-01 的现状和数量保留作历史，不作为此次重新验证结果。
+网站是深圳峰徊科技有限公司面向海外 B/C 客户的英文优先询盘站。四条产品线平行：
 
-> **本文件是本站「有哪些模块、每个模块归谁管、数据从哪来」的单一事实源。**
->
-> 任何新增页面、新增字段、接入新的内容源，都必须先在这里登记。
-> 本文件只描述**架构**（模块边界与数据流），不描述**进度**（进度看 `STATUS.md`），
-> 也不描述**决策理由**（理由看 `DECISIONS.md`），更不描述**设计**（设计看 `DESIGN.md`）。
+1. 轮毂：旋压轮毂、锻造轮毂和经过审核的真实型号；
+2. 新能源三电铝制品；
+3. 定制铝制品；
+4. 自密封轮胎。
 
-- 版本：v1.1
-- 建立日期：2026-10-01 ｜ 最近更新：2026-10-01（新增文档四层分工、视口驱动设计引用、
-  三条非轮毂产品线、`src/lib/{wordpress,inquiry,i18n}` 三层、图片资产以实体文件为准）
-- 适用仓库：`WordpressWheelSIte`（丰怀锻造轮毂独立站）
+深圳峰徊承担网站品牌、项目接洽和协调角色。蓝辉与两家供应商是不同资料主体。共同股东或合作关系不能自动转移工厂、专利、证书、图片、车型适配、测试结果或售后承诺。每项公开主张都要绑定实际主体和证据。
 
----
+站点完成内容展示、真实产品浏览、项目询盘和技术文章发布。首期不做在线支付、订单管理、客户账户、自研 CRM、AI 客服、公开工程文件上传或未经核准的车型适配保证。
 
-## 0. 三条不可违反的前提
+## 2. 系统全景
 
-在读任何模块之前，先接受这三条。它们约束了下文全部设计。
+```mermaid
+flowchart LR
+  Visitor[海外 B/C 访客]
+  Editor[内容编辑]
+  Sales[销售或项目负责人]
+  Evidence[只读产品数据与供应商资料]
 
-**① 本站是「四条平行产品线」的 B/C 询盘站，首期海外英文优先。**
+  subgraph Delivery[交付层]
+    CDN[CDN 与 OpenNext 目标运行时]
+  end
 
-这是本项目最容易搞错的一点。实测语料库与兄弟项目 IA
-（`site-architecture.md`）确认，产品平台共 **四条**：
+  subgraph Web[Next.js 16 应用]
+    Pages[App Router 页面与 SEO]
+    Content[类型化内容接缝]
+    Catalogue[轮毂目录与发布适配器]
+    Inquiry[询盘域与 API]
+  end
 
-| 产品线 | 英文 | 现有资产 |
-|---|---|---|
-| 轮毂 | Wheels | **充足**（1349 型号 / 2757 图） |
-| 新能源三电壳体 | EV Powertrain Housings | 仅语料 |
-| 铝制品定制 | Custom Aluminum Components | 仅语料 |
-| 自修复安全轮胎（洛克 LOAKE） | Safety Tires | 仅语料 |
+  subgraph ContentBackend[内容后台]
+    WP[Headless WordPress]
+    MySQL[(WordPress MySQL)]
+  end
 
-**四条线在层级、字号、交互、卡片尺寸上平行。轮毂可以有更多子类和单品，
-但不得被设置成其他三条线的父级。**
+  subgraph LeadBackend[询盘后台]
+    PG[(询盘 CPT · 同库)]
+    Outbox[事务发件箱与发送器]
+    Mail[邮件服务与事件回调]
+  end
 
-**② 前端 UI 克隆自竞品，可借鉴结构，不得搬运内容。**
-详见 `DEC-010`。任何模块的文案与图片都必须是丰怀的。
-
-**③ 未确认的数据不作为规格发布。**
-详见 `DEC-004`。**注意：这条现在有了新的含义** —— 我们拿到了真实产品的
-PCD / ET / CB / 尺寸数据（见 §3.2），所以「未确认」的判定标准从「我们没有」
-变成了「**是否为该型号的实际生产数据**」。系列通用值不得冒充型号规格。
-
----
-
-## 1. 模块总览
-
-站点由 **7 个模块层**构成。每层有明确的职责与唯一数据源。
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  L7  交付与运维     部署 / 域名 / 监测 / 回滚                  │
-├─────────────────────────────────────────────────────────────┤
-│  L6  询盘管线       表单 → 持久化 → 分配 → 邮件               │
-├─────────────────────────────────────────────────────────────┤
-│  L5  页面与路由     33 个路由模板 → 静态产物                  │
-├─────────────────────────────────────────────────────────────┤
-│  L4  展示组件       卡片 / 画廊 / 表格 / 计算器                │
-├─────────────────────────────────────────────────────────────┤
-│  L3  内容与数据层   src/content/*  ← 唯一接缝                 │
-│                     + src/lib/{wordpress,inquiry,i18n}        │
-├─────────────────────────────────────────────────────────────┤
-│  L2  资产层         assets/ 图片 / 数据 / 语料                │
-├─────────────────────────────────────────────────────────────┤
-│  L1  规范与档案     AGENTS / PROJECT / STATUS / DECISIONS     │
-│                     / ARCHITECTURE / DESIGN / PAGE-SPECS      │
-└─────────────────────────────────────────────────────────────┘
+  Visitor --> CDN --> Pages
+  Pages --> Content
+  Pages --> Catalogue
+  Pages --> Inquiry
+  Editor --> WP --> MySQL
+  WP --> Content
+  Evidence --> Catalogue
+  Inquiry --> PG --> Outbox --> Mail --> Sales
+  Mail --> PG
 ```
 
-**依赖方向严格自上而下。** L5 不得直接读 `assets/`，必须经 L3。
-L3 不得依赖 L4/L5。违反依赖方向的改动一律视为架构错误。
+图中 WordPress、询盘 CPT（同库）、事务发件箱和 OpenNext 属于目标生产架构。当前代码已有 WordPress 读取接口、轮毂生成目录和询盘 API，但页面接线、生产持久化和 OpenNext 配置尚未完成。
 
----
+## 3. 模块与接缝
 
-## 2. L1 · 规范与档案层
+模块应在小接口后隐藏复杂实现。页面组件只知道稳定视图模型，不知道数据来自本地 TypeScript、WordPress、供应商 JSON 或数据库。
 
-### 2.0 ★ 四类文档的职责边界（2026-10-01 定案）
+| 模块 | 接缝/接口 | 当前适配器 | 目标适配器 | 状态 |
+|---|---|---|---|---|
+| 站点内容 | `src/content/*.ts` 与 `src/content/types.ts` | 本地类型化对象 | WordPress 响应适配为相同类型 | 接缝已实现，页面仍以本地内容为主 |
+| WordPress 读取 | `wpCollection` / `wpItem` | mock fallback | 受认证的 REST 读取、缓存与重验证 | 读取模块已实现，页面未系统接入 |
+| 轮毂事实 | `WheelCatalogue` / `WheelModel` / `WheelVariant` | 生成的 `wheel-catalogue.ts` | 同一事实数据 + WordPress 发布覆盖层 | 真实目录已生成，现有页面仍读虚构 SKU |
+| 发布资格 | 公开 `WheelCatalogueCard/Detail` 视图 | `hasImage` 技术标记 | 图片、图权、供货、规格、名称和批准状态共同决定 | 已设计，覆盖层待实现 |
+| 询盘写入 | `POST /api/inquiries` | 进程内 Map | WordPress CPT `fh_inquiry` + 事务 outbox（DEC-055） | API 已实现，生产持久化待实现 |
+| 邮件投递 | `send(record)` | 无 key 时 mock；有 key 时 Resend HTTP | outbox worker + accepted/delivered/bounced/unknown 回调 | 直发代码存在，闭环待实现 |
+| 国际化 | 类型化字典与 cookie | `en/zh` cookie 切换 | 首发英文；后续独立语言 URL 需另决策 | 已实现基础，首发不开放中文 SEO |
+| 部署 | Next.js 服务端能力 | `output: "standalone"` | OpenNext 目标平台 | 当前可本地 Node 运行，OpenNext 未配置 |
 
-本仓库的「怎么记录」由**四类文档**分管。**它们互不复制，只互相引用。**
+新增第二个数据来源时，在既有接缝增加适配器。不得让多个页面分别理解 WordPress 字段、供应商 JSON 或邮件服务响应。
 
-| 文档 | 回答的问题 | 性质 | 更新频率 |
-|---|---|---|---|
-| `ARCHITECTURE/` + **本文件** | **是什么形状** —— 模块边界、数据流、页面结构 | 结构 | 中频 |
-| `DECISIONS.md` | **为什么是这个形状** —— 决策与取舍 | 理由 | 中频 |
-| **`DESIGN.md`**（项目根） | **页面现在长什么样、为什么好看** —— 从已跑页面反推的**设计正本** | **沉淀**（不是禁令清单） | 低频 |
-| **`PAGE-SPECS/`** | **照着搭什么** —— 按路由命名的页面施工图 | 施工图 | 高频 |
+## 4. 依赖方向
 
-**边界规则（三条）：**
-
-1. **`DESIGN.md` 是「存量」，`PAGE-SPECS/` 是「增量」。**
-   `DESIGN.md` 只记录**已经跑起来的页面里反推出**的好设计（当前 26 个页面），
-   不制定新规则、不设新限制（`DEC-019`）；`PAGE-SPECS/` 写新页面**怎么搭**，
-   好设计验证成功后**回流**到 `DESIGN.md`。
-2. **`ARCHITECTURE/page-architecture/` 与 `PAGE-SPECS/` 的分工**：
-   前者说「**为什么这样设计**」（内容与布局的理由，与竞品对照），
-   后者说「**照着搭什么**」（放哪个组件、吃什么 props、什么栅格）。
-   **施工图不重复理由，需要理由时链接过去。**（`DEC-015`）
-3. **数值的唯一来源是 `src/app/globals.css`。** `DESIGN.md` 只写用法不抄数值；
-   `PAGE-SPECS/` 引用 `globals.css` 行号。
-
-### 2.1 档案文件
-
-| 文件 | 职责 | 更新频率 |
-|---|---|---|
-| `AGENTS.md` | agent 行为契约 | 低频 |
-| `PROJECT.md` | 项目为什么存在 | 极低频 |
-| `STATUS.md` | 现在做到哪了 | 高频 |
-| `DECISIONS.md` | 为什么这样决定 | 中频 |
-| **`ARCHITECTURE.md`** | **本文件 · 模块架构** | 中频 |
-| **`DESIGN.md`** | **设计正本（见 2.0）** | 低频 |
-
-**规则**：本文件说「**是什么形状**」，`DECISIONS.md` 说「**为什么是这个形状**」，
-`DESIGN.md` 说「**长什么样**」。改架构要同时改本文件与 `DECISIONS.md`。
-
-### 2.2 ★ 设计原则引用：视口驱动设计（全站第一原则）
-
-> **本条原则高于网站其余所有设计内容。它与视觉无关，决定的是「页面上该有什么」。**
-
-**不在此复制，权威正文在 `DESIGN.md` §0.5。** 架构层面只引用三条结论：
-
-| 结论 | 出处 | 架构含义 |
-|---|---|---|
-| **一个视口 = 一个核心问题**（1 主信息 + 1 主视觉 + 1 主行动 + 0–2 次行动） | `DESIGN.md` §0.5.1 | 讨论「这一页放几个 Section」之前，先问「这一屏要回答哪个问题」 |
-| **★ 合并或删除律**：两个连续 Section 没回答两个不同问题 → **合并或删除** | `DESIGN.md` §0.5.2 | 这是一条**删除授权**，不是排版偏好 —— 它直接决定 §6 页面骨架的段数 |
-| **询盘组件必须完整落在一个视口内**（含提交按钮） | `DESIGN.md` §0.5.4 | 询盘页的视口划分**由表单尺寸决定**，不是先定视口再塞表单 |
-
-**⚠️ 与 `PAGE-SPECS/` 的待办**：`DESIGN.md §0.5.6` 已声明规格的轴心应改为
-**「视口 → 段 → 组件 → 内容」**，但现有规格仍按「第 N 段」写 ——
-**文档与规格当前不一致**，属已知待办（见 `STATUS.md` In Progress）。
-
----
-
-## 3. L2 · 资产层 `assets/`
-
-**本层是只读输入。** 任何代码不得就地修改 `assets/` 下的文件。
-
-### 3.1 目录结构（2026-10-01 建立）
-
-```
-assets/
-├── README.md                     来源说明
-├── wheel-data/                   轮毂产品 JSON（19 个 + pending 9 个）
-│   ├── WHEEL-CATALOG-ALL.json    全量索引 ★ 主数据源
-│   ├── 15寸~20寸-WHEEL-CATALOG.json   按尺寸分册
-│   ├── HP/WHEEL-CATALOG / 越野款      按款式分册
-│   └── pending-images/           待补图片清单（1518 个型号待补图）
-├── wheel-images-webp/            2757 张图（57 MB）★ 唯一图片格式
-├── site-data/
-│   ├── generated-wheel-data.json         生成物（1.8 MB）
-│   ├── generated-wheel-data-webp.json    生成物（1.4 MB）
-│   ├── asset-manifest.json               ★ 图片资产真相（2772 条，按实体文件扫描）
-│   ├── image-registry.json               图片注册表（253 条，⚠️ 已失效，见 3.5）
-│   └── 峰徊科技独立站-中英内容语料库.md    ★ 文案语料底座（43 KB）
-├── _non-webp-archive/            5 个位图归档（站点不再引用，见 3.4）
-└── preview-media/                15 个 webp 站点预览媒体
-```
-
-> **命名来源**：`public/images/` 下的实拍图已整理为
-> `wheels/`（2757）、`preview/`（15）、`hero/`（3 张汽车背景）、`cards/`
-> （4 张产品线卡）。
-
-### 3.4 ★ WebP 是唯一图片格式（2026-10-01 定案）
-
-**PNG 原图（1.1 GB / 2757 张）已删除**，只保留 WebP（57 MB）。
-
-- `resources/` 从 **1.2 GB → 72 MB**；`assets/` 72 MB
-- WebP 与 PNG 原本一一对应，删 PNG **不丢任何型号**
-- `preview-media/` 现为 **15 张 webp**；原 3 张位图（`custom` / `ev` / `tire`）
-  属于**站点预览图、不是轮毂产品图**，本日连同另外 2 个位图一并移入
-  `assets/_non-webp-archive/`（站点只留 webp）
-
-**纪律**：任何新增轮毂图**只进 WebP**。不要再引入 PNG 原图到本仓库 ——
-原图如有需要，回源项目 `深圳公司的独立站搭建` 取。
-
-### 3.5 ★ 图片资产以实体文件为准（2026-10-01 更正）
-
-**`image-registry.json` 的 253 条记录全部指向 `assets/image/...`，而该目录
-不存在。** 这个索引是按一个**已消失的图片库**生成的，长期误导了资产判断
-（曾据此错误地把 253 条刷成 `public:true`，发现后已回滚）。
-现已全数标记为 `no-asset`（诚实标注「索引有此条目、实体不存在」）。
-
-**权威来源改为 `assets/site-data/asset-manifest.json`** —— 按**实际文件扫描**
-生成，实测 **2772 条**（2757 轮毂图 + 15 preview-media），全部 `public: true`。
-
-**纪律**：**任何关于「我们有哪些图」的判断，一律以 `asset-manifest.json`
-或文件系统实测为准，不得引用 `image-registry.json`。** 见 `DEC-018`。
-
-### 3.2 ★ 轮毂主数据结构（实测）
-
-`WHEEL-CATALOG-ALL.json` 的 `metadata`：
-
-```
-models: 1349 ｜ variants: 3485 ｜ images: 2757
-filter: 仅保留有图片的轮毂（图片名与编号一致）
-excludedFields: MOQ / 库存 / 待发货 / 价格 / 库位   ← 刻意排除，不得回填
-```
-
-单个 model 结构：
-
-```jsonc
-{
-  "model": "1081X",
-  "sizes": ["15*7"],            // 直径*宽度
-  "pcds": ["4*100"],
-  "offsets": [35],
-  "centerBores": [73.1],
-  "finishes": ["白色全涂装", "枪灰全涂装"],
-  "variants": [                  // ★ 真正的最小可下单单位
-    { "productionCode": "1081X157001W", "size": "15*7", "pcd": "4*100",
-      "offset": 35, "centerBore": 73.1, "finish": "白色全涂装" }
-  ],
-  "styleName": "WEDS TC005 旋压工艺",
-  "suitableVehicles": [],        // ⚠️ 全量为空，1349/1349
-  "process": "旋压",
-  "sizeCategory": "15寸"
-}
-```
-
-**字段覆盖率（实测，决定哪些能上前端）**：
-
-| 字段 | 覆盖 | 能否做筛选 |
-|---|---|---|
-| `model` / `sizes` / `pcds` / `offsets` / `centerBores` / `finishes` / `variants` | 1349 / 1349 | ✅ 可 |
-| `sizeCategory` | 1349 / 1349 | ✅ 可 |
-| `styleName` | **762** / 1349 | ⚠️ 缺 587，只能做「有则显示」 |
-| `process` | **512** / 1349 | ⚠️ 缺 837，不能当必填筛选项 |
-| `suitableVehicles` | **0** / 1349 | ❌ **完全不能做车型适配** |
-
-**分布实测（供筛选项设计）**：
-
-- 尺寸：18寸 362 ｜ 19寸 335 ｜ 17寸 149 ｜ **15寸 106** ｜ 20寸 80 ｜ 16寸 75 ｜ 越野款 42
-- 工艺：旋压 350 ｜ 低压 142 ｜ 低压+旋压 20 ｜ **未标注 837**
-- PCD 前五：5\*114.3 (662) ｜ 5\*112 (439) ｜ 6\*139.7 (193) ｜ 4\*100 (177) ｜ 5\*120 (144)
-- 表面处理前五：高亮黑 195 ｜ 黑色车面 137 ｜ 哑黑+哑黑压盘 66 ｜ 哑黑全涂 60 ｜ 高亮黑车边 56
-
-> ⚠️ **`sizeCategory` 里混着分册名而非尺寸**：存在 `17寸-2`/`17寸-3`/`17寸-4`/`17寸-5`
-> 与 `18寸-2/3/4`、`HP`、`19寸-2`、`20寸-2`。这是**源分册遗留**，不是真实尺寸。
-> 数据清洗时须归一化到 `{15,16,17,18,19,20}寸` + 独立的 `HP`/`越野款` 标记。
-
-### 3.3 ★ 图片命名规则 —— 文件名即产品代码
-
-**这是权威规则。** 图片文件名**就是轮毂的产品代码**，不是随手起的名字。
-
-```
-<尺寸前缀>-<产品代码>[-<序号>].webp
-```
-
-| 例子 | 拆解 |
-|---|---|
-| `15-1081x.webp` | 15寸 ｜ 产品代码 `1081X` |
-| `15-1081x-2.webp` / `-3` / `-4` / `-5` | 同一代码的多角度图 |
-| `17-3-2507065.webp` | 分册前缀 `17-3` ｜ 代码 `2507065` |
-| `off-road-rh10018-3.webp` | 越野款 ｜ 代码 `rh10018` |
-
-**提取规则**：剥掉**尺寸前缀**（`15-` / `17-3-` / `off-road-` / `hp-`）
-与**末尾序号**（`-2` / `-3`…），剩下的就是产品代码，小写归一化后
-**对应 `models[].model`**。
-
-**实测匹配率：2185 / 2757 = 79.3%**
-
-**图片命名变体实测分布**（2757 张）：
-
-| 首段前缀 | 张数 |
-|---|---|
-| `15` `16` `17` `18` `19` `20`（纯尺寸） | 大部分 |
-| `17-2` / `17-3` / `17-4` / `17-5` | 分册前缀（对应 `sizeCategory` 的脏值） |
-| `18-2` / `18-3` / `18-4`、`19-2`、`20-2` | 同上 |
-| `off`（off-road） | **123 张** |
-| `hp` | **31 张** |
-
-### 3.3.1 ⚠️ 未匹配的 572 张（21%）
-
-按首段分组：`18`:168 ｜ `17`:146 ｜ `off`:123 ｜ `19`:62 ｜ `hp`:31 ｜
-`20`:22 ｜ `16`:18 ｜ `15`:2
-
-两类原因：
-
-1. **越野款 / HP 款整批在 `models[]` 里没有对应记录**（`off` 123 + `hp` 31
-   = 154 张）→ 图有、型号表没有
-2. **分册前缀类**（`17-2-*` 等）→ 其 `model` 可能登记在别的分册里，
-   或名称格式不同
-
-**这 572 张不能假定"没有型号"** —— 需要回源项目核对。
-在核清之前，这些图**只可用于画廊展示，不得绑定到某个 SKU**（绑定错 =
-给客户看错产品）。
-
-### 3.3.2 命名纪律
-
-- **全部小写**，匹配时一律小写归一化
-- **WebP 是唯一线上格式**（PNG 已于 2026-10-01 删除，见 §3.4）
-- 匹配逻辑的机器可读版本在 `image-registry.json`，但**该索引已失效**（见 3.5）——
-  判断图片是否存在，一律以 `asset-manifest.json` 为准
-- **不要重命名图片文件** —— 文件名是产品代码，改名即断链
-
-### 3.4 语料库（文案唯一底座）
-
-`site-data/峰徊科技独立站-中英内容语料库.md`（43 KB）结构：
-
-| 部分 | 内容 | 规模 |
-|---|---|---|
-| 第一部分 | 产品与行业术语表 | 162 条（含中英对照 + 来源 + 页码 + 证据片段） |
-| 第二部分 | 行业词汇 / 常用词组 | 60+ 条（品牌定位/产品/工程/质量/市场/商业/品牌宣传） |
-| 第三部分 | 可复用文案句子库 | 40+ 条（品牌公司/轮毂/EV三电/安全轮胎/洛克/航鹏） |
-
-**来源**：《深圳峰徊科技｜中英双语企业宣传画册 v5》PPTX 23 页 ｜
-《2024洛克项目介绍》PDF 26 页 ｜ 《航鹏画册组最终稿》PDF 6 页
-
-> **纪律**：站点上任何文案必须能追溯到语料库某一条，或由丰怀新提供。
-> 不得自行创作产品卖点。**注意语料库混有「航鹏」与「洛克」两个第三方品牌
-> 的内容** —— 用于本站时须确认其可用性（见 §8 待确认项）。
-
----
-
-## 4. L3 · 内容与数据层 `src/content/` ★ 唯一接缝
-
-### 4.1 契约
-
-```
-src/content/types.ts      类型契约（改它 = 改数据源契约）
-src/content/*.ts          30 个内容模块（实测）
-```
-
-**不可破坏的性质**：把一个模块替换成 API 调用（WordPress），**必须不需要
-修改任何组件**。见 `DEC-001`。这是全项目最重要的一条约束。
-
-### 4.1.1 与 L3 并列的三个运行时库（2026-10-01 新增）
-
-`src/lib/` 下新增**三个库**，它们不替换 `src/content/` 接缝，而是**供
-接缝在将来切换到真实数据源时使用**，以及承载 `src/content/` 无法表达的
-运行时行为（读写、发信、locale）：
-
-```
-src/lib/wordpress/    Headless WP 读取层
-  types.ts  client.ts  index.ts
-  └─ mode: "mock"（默认）｜"live" —— ★ 切 live 只改 client.ts 一个文件
-  └─ 在 mock 模式下，每次调用都从本地 fixture 解析；站上一切可离线跑通
-
-src/lib/inquiry/      询盘域（三条纪律，见 §7.1）
-  types.ts  store.ts  mailer.ts  validate.ts  index.ts
-  └─ store.ts   持久化（mock 内存 / 将来 DB）
-  └─ mailer.ts  send() 是可替换接缝，将来换 Resend 只改这一个文件
-
-src/lib/i18n/         中英双语层
-  types.ts  index.ts  use-t.ts  dictionaries/{en,zh,index}.ts
-  └─ index.ts     getLocale() —— ⚠️ 用 next/headers，服务端专用
-  └─ use-t.ts     createT(locale) —— client-safe
-```
-
-> **⚠️ 关键结构约束（造成过构建失败，务必遵守）**：
-> `src/lib/i18n/index.ts` 导入 `next/headers`（服务端专用）。因此
-> **client 组件只能从 `src/lib/i18n/use-t.ts` 导入**，而 `use-t.ts`
-> **只能从 `dictionaries/index.ts` 这个桶导入字典**。若 client 组件
-> 误 import `./index`，会把 `next/headers` 拖进 client bundle →
-> 构建报错 *"You're importing a component that needs next/headers"*。
-
-**依赖方向**：`src/content/` 与 `src/lib/{wordpress,inquiry,i18n}` 同属 L3，
-可互相协作；**它们都不得依赖 L4/L5**。
-
-### 4.2 模块清单与数据来源映射
-
-| 模块 | 承载什么 | 未来来源 | 当前状态 |
-|---|---|---|---|
-| `types.ts` | 全部类型契约 | — | ⚠️ **缺规格字段，见 4.3** |
-| `site.ts` | 站点名/导航/页脚/联系信息 | WP `site-settings` | ⚠️ **`primaryNav` 仍是竞品结构**（见 §6.2）；footer 已改四条线 |
-| `products.ts` | 产品**系列**（monoblock/two-piece/off-road） | WP `product-lines` | **须重写为四条线**（实测仍是 3 个虚构系列） |
-| `wheel-skus.ts` | 轮毂单品（实测 18 个） | WP `products` | **须扩到 1349** |
-| `homepage-hero.ts`（新） | 首页 Hero 内容数据 | WP pages | 本日新增 |
-| `ev-components.ts` / `custom-aluminum.ts` / `safety-tires.ts`（新） | 三条非轮毂线能力页内容 | WP pages | 本日新增，**大量数据待丰怀确认** |
-| `custom-development.ts` / `request-a-quote.ts` / `thank-you.ts`（新） | 定制开发 / 询盘 / 提交成功 | WP pages | 本日新增 |
-| `wheel-designs.ts` | 22 个设计 | WP `design-series` | 须按 `styleName` 重建 |
-| `finishes.ts` | 表面处理 | WP taxonomy | 须对齐真实 **679 个**值（须分 4 组） |
-| `fitment.ts` | 车型适配（安全关键） | 工程签字 | ⚠️ `suitableVehicles` 全空 |
-| `gallery.ts` / `builds.ts` | 改装案例 | WP `builds` | 须真实素材 |
-| `faq.ts` / `resources.ts` / `faq` 系列 | 知识文章 | WP `posts` | 须重写 |
-| `legal.ts` | 政策文件 | 律师 | ⚠️ 48 处 PLACEHOLDER（全库共 98 处） |
-| `tools.ts` | 偏距计算器预设 | 本地 | 已可用 |
-| `process.ts` / `capabilities.ts` | 制造工艺 | WP pages | 须对齐四条线 |
-| `private-label.ts` / `dealer-programs.ts` | 经销商/贴牌 | WP pages | 须重写 |
-| `contact.ts` | 询盘文案 | WP `inquiry-settings` | 已可用 |
-
-### 4.3 ★ 当前最大缺口：类型层缺规格
-
-**实测 `types.ts` 的 `WheelSku` 只有**：
-`sku / name / family / spokes / construction / finishes / summary /
-description / applications / hasRender`（+ 图片字段）
-
-**没有** `size` / `pcd` / `offset` / `centerBore` / `process` / `variant`。
-
-而 `assets/` 里**全都有**。这意味着：**资产层比类型层更完整。**
-
-> **架构动作（P0）**：Type 须新增规格字段，让数据层能承载真实数据。
-> 这是所有下游（筛选、询盘快照、SKU 页）的前置条件。
-> **不做这一步，轮毂目录只能是个静态图册。**
-
----
-
-## 5. L4 · 展示组件层 `src/components/`
-
-```
-components/
-├── ui/                     shadcn 原语
-├── sections/               页面区块组合
-│   ├── home-hero.tsx.retired   ⚠️ 旧 Hero（已退役，保留待清）
-│   ├── page-hero.tsx           ★ 通用页首深色 hero（本日新增）
-│   ├── product-showcase.tsx    四条产品线（本日由「三宫格」改造）
-│   ├── trust-strip.tsx / gallery-band.tsx / dealer-cta.tsx
-├── home/hero/               ★ 首页 Hero 专用（本日新增）
-│   ├── home-hero.tsx           品牌独占一屏（回答「我们是谁」）
-│   ├── hero-background.tsx     背景（汽车图 + 深色 + 光晕）
-│   ├── hero-product-card.tsx   产品线卡
-│   └── hero-product-grid.tsx   四卡栅格
-├── product-card.tsx        ← 单一产品卡片（hasRender 模式）
-├── wheel-gallery.tsx       轮毂设计画廊
-├── offset-calculator.tsx   ★ 偏距计算器（已可用，公式经独立基准验证）
-├── process-explorer.tsx    制造流程浏览器
-├── prose-article.tsx       长文排版
-├── legal-document.tsx      政策文件排版
-├── site-header.tsx / site-footer.tsx
-├── language-switcher.tsx   ★ 语言切换（写 `fh-locale` cookie，本日新增）
-├── quote-context-bar.tsx   ★ 询盘上下文条（本日新增）
-├── inquiry-form.tsx        询盘表单（提交到 `/api/inquiries`）
-├── floating-quote.tsx      常驻悬浮 CTA（`HIDDEN_ON = ["/contact"]`）
-├── site-motion.tsx         ★ 动效控制器（见 5.2）
-└── …                       三条能力线组件（本日新增）：
-                            part-group-cards / boundary-table / param-table /
-                            mechanism-steps / input-type-cards /
-                            process-diagram / faq-accordion / route-block /
-                            data-notice / capacity-stats
-```
-
-> 实测 `src/components/` 下共 **40 个 `.tsx`**（含 `ui/` 原语），
-> 组件清单的完整版本在 `PAGE-SPECS/_components.md`。
-
-### 5.1 设计令牌
-
-统一定义在 `src/app/globals.css`。**组件内绝不出现裸 hex 值。**
-**数值的唯一来源是 `globals.css`** —— `DESIGN.md` 只写用法不抄数值，
-`PAGE-SPECS/` 引用行号。
-
-| 令牌 | 用途 |
-|---|---|
-| `text-ink` / `bg-ink` | 石墨主色（`#0b0f16`）——**页首身份段 / 图底 / 页脚** |
-| `text-hero` / `bg-hero` | ★ **本日新增**（`#05070a`）—— 收编第 4 阶深色（原裸 hex `#05070b`） |
-| `text-steel` / `bg-soft` | 钢灰次级 / 浅底交替色 |
-| `text-forge` | 炉火琥珀强调（`#c2650a`）——**全站唯一的彩** |
-| `text-forge-deep` | 深底上的可点文字 hover · 警示标签 |
-| `bg-forge-soft` | ★ **段级 token**：全站唯一浅橙段（`DealerCta`）—— 拿它当卡片底会稀释「开始转化」信号 |
-
-**⚠️ 命名陷阱**：`--fh-muted` 名字像文字色，**实际只绑 border/input**；
-正文次级色是 `steel`。`graphite` / `panel` 已定义但**零使用**（只服务未启用的
-`.dark`）。详见 `DESIGN.md` §1.1–§1.2、§6。
-
-### 5.2 动效契约
-
-两个效果，**声明式**，由属性驱动：
-
-- **滚动显现**：`data-reveal`（区块）/ `data-reveal-group`（容器，子元素错峰）
-- **视差**：`data-parallax-media`（±8px，rAF 节流）
-
-**必须保持**：挂在 JS 添加的 `motion-ready` 类之下（无 JS 内容仍可见）；
-`prefers-reduced-motion` 下全关。**禁止在页面里手写 IntersectionObserver** ——
-违反此条曾造成整站空白事故（`docs/BLANK-PAGE-AUDIT.md`）。
-
-### 5.3 资产兜底
-
-`hasRender` 标志模式：无图时渲染品牌占位，**不发 404 请求**。
-资产到位后翻转标志，**不要删除兜底分支**。
-
----
-
-## 6. L5 · 页面与路由层 `src/app/`
-
-### 6.1 现状（实测 **33 个 `src/app/**/page.tsx`**）
-
-> 实测命令：`find src/app -name page.tsx | wc -l` → **33**。
-> 本日由 26 增至 33（新增 3 条产品线 + 3 个功能页 + 1 个改名页）。
-
-```
-/                                    首页
-/products                            目录入口
-/products/[slug]                     系列（⚠️ 仍是 monoblock / two-piece / off-road）
-/products/wheels                     SKU 索引（18 个）
-/products/wheels/[sku]               单品详情
-/products/ev-components              ★ 新能源三电壳体（本日新增）
-/products/custom-aluminum            ★ 铝制品定制（本日新增）
-/products/safety-tires               ★ 自修复安全轮胎（本日新增）
-/capabilities                        ★ 制造与质量（本日由 /manufacturing 改名）
-/manufacturing                       ← 旧路由，保留并 **307 重定向**到 /capabilities
-/custom-development                  ★ 定制开发（本日新增）
-/request-a-quote                     ★ 独立询盘页（本日新增）
-/thank-you                           ★ 提交成功页（本日新增）
-/gallery  /gallery/wheels  /gallery/finishes    画廊（本阶段不做，代码保留）
-/tools  /tools/offset-calculator     工具（本阶段不做，代码保留）
-/fitment  /fitment/[platform]        适配（降级，无数据）
-/dealers  /dealers/private-label     经销商 / 贴牌
-/about                               关于
-/contact                             询盘
-/resources  /resources/[slug]        资源文章
-/resources/bolt-patterns  /resources/bolt-patterns/[pattern]   孔距指南
-/support/{warranty,returns,shipping,terms,privacy}   政策
-```
-
-**`/manufacturing` → `/capabilities` 的重定向**由 `manufacturing/page.tsx`
-里的 `redirect()` 实现（Server Component 请求时 **307**），**不是**
-`next.config` 的静态重定向 —— 这样能保住旧 URL 的收录与既有链接。
-
-**★ 本阶段明确不做的页（用户 2026-10-01 定案）**：
-`/gallery`、`/gallery/finishes`、`/tools`、`/tools/offset-calculator`
-—— 不进本轮施工范围，**代码保留不删**（见 `CHANGELOG.md` 「暂缓」）。
-
-### 6.2 ★ 信息架构需要重构（不是改字）
-
-**竞品的 IA 是按竞品业务切的。丰怀是四条平行产品线。** 目标 IA（对齐
-兄弟项目 `site-architecture.md`，且那里已确认过）：
-
-```
-/                                        首页
-/products                                产品中心（四条线平行入口）
-├── /products/wheels                     轮毂
-│   ├── /products/wheels/series/[series]     设计系列
-│   └── /products/wheels/[model]             单品
-├── /products/ev-components              新能源三电壳体
-├── /products/custom-aluminum            铝制品定制
-└── /products/safety-tires               自修复安全轮胎
-/capabilities                            制造与质量
-/custom-development                      定制开发
-/insights  /insights/[slug]              技术与见解
-/about  /contact  /request-a-quote       关于 / 联系 / 获取报价
-/thank-you  /privacy-policy
-```
-
-**映射动作（本日进度）**：
-
-| 现路由 | 动作 | 状态 |
-|---|---|---|
-| `/products/ev-components` `/custom-aluminum` `/safety-tires` | 新增三条产品线 | ✅ **已完成**（本日） |
-| `/capabilities` | 由 `/manufacturing` 改名 + 旧路重定向 | ✅ **已完成**（本日） |
-| `/custom-development` `/request-a-quote` `/thank-you` | 新增功能页 | ✅ **已完成**（本日） |
-| `/products/[slug]`（3 个虚构系列） | → **重建为四条平行产品线** | ❌ **未做**（`products.ts` 仍是 3 系列） |
-| `/products/wheels/[sku]`（18 个） | → 扩容至 1349 model / 3485 variant | ❌ 未做 |
-| `/gallery/wheels` | → 并入 `/products/wheels` 的筛选，或保留为独立灵感页 | ⏸ 本阶段不做 |
-| `/fitment/*` | ⚠️ **保留但降级**（`suitableVehicles` 全空，无可发布数据） | ⏸ 降级保留 |
-| `/dealers/private-label` | → 保留，对齐语料库「商业与合作」 | ✅ 保留 |
-| `/resources/*` | → 更名 `/insights/*`，对齐内容中心 | ❌ 未做 |
-
-**⚠️ 已知不一致（本日）**：`site.ts` 的 **`primaryNav`（header 下拉）仍是旧结构**
-—— Products 下拉仍是 `All Wheels / Monoblock / Two-Piece / Off-Road`，
-**没有三条能力线**；而 **footer 已改**为四条产品线。**两边不一致。**
-（见 `STATUS.md` In Progress / Blockers）
-
-### 6.3 渲染策略
-
-当前 `next.config.ts` = `output: "standalone"`，**33 路由全静态预渲染**
-（`/api/inquiries` 是唯一运行时路由）。
-**部署走 OpenNext**（`DEC-009`）。**严禁改成 `output: "export"`** ——
-那会让 `/api/inquiries` 完全不可用。
-
-### 6.4 国际化（i18n）与 URL 结构
-
-**语言切换用 cookie（`fh-locale`），不是 `[locale]` 路由段。**
-`src/lib/i18n/index.ts` 的 `getLocale()` 读 cookie；`language-switcher.tsx`
-写 cookie 并刷新服务端组件。
-
-- **理由**：给 33 个路由各加一层 `[locale]` 段是**另一次迁移**，本轮不做。
-- **⚠️ 已知代价**：**中英文没有独立 URL** —— 对 SEO 的双语收录不利。
-  这是一个**已记账的取舍**，不是疏漏（见 `STATUS.md` Open Questions）。
-
-
-
----
-
-## 7. L6 · 询盘管线
-
-**定位：不是后台，是单向数据管道。** 见 `DEC-003`。无运营界面，
-进数据 → 分配 → 发信，就此结束。
-
-```
-[产品页 / 目录页]
-      ↓  携带 model + variant + 已选规格
-[Inquiry Cart]  （会话内，可加多件）
+```text
+项目事实与证据
       ↓
-[Request Quote 表单]
+类型化内容 / 产品视图 / 询盘契约
       ↓
-POST /api/inquiries        ← 本项目唯一的运行时 API
+页面组件与 SEO
       ↓
-  ┌───┴────┐
-  ↓        ↓
-[数据库]  [Resend 邮件]
-  ↓        ↓
-持久化   业务员收件（Reply-To = 客户邮箱，可直接回复）
+Next.js 路由与运行时适配器
+      ↓
+WordPress / 数据库 / 邮件 / 部署平台
 ```
 
-### 7.1 数据模型（三条纪律）
+允许的依赖：
 
-1. **先落库，再发信。** 邮件失败不得丢失询盘。
-2. **存快照，不存引用。** 询盘里要固化当时的规格快照 —— 产品数据会变，
-   历史询盘不能跟着变。
-3. **规格字段分三段**（因 `WheelSku` 缺字段，见 4.3）：
-   - **真实存在字段**：model / finish / variant productionCode
-   - **客户自填字段**：尺寸 / 数量 / 车型 / 备注
-   - **待补的规格字段**：pcd / et / cb（类型补齐后转为真实字段）
+- 页面从 `src/content`、目录查询模块和服务端用例读取数据；
+- 内容适配器依赖 WordPress 客户端；
+- 询盘路由依赖验证、仓储和邮件接口；
+- sitemap 与目录、详情使用同一个公开产品集合。
 
-### 7.2 状态（2026-10-01 更新）
+禁止的依赖：
 
-| 项 | 状态 |
+- React 展示组件直接读取 WordPress 原始响应或供应商文件；
+- 客户端组件导入服务端存储、密钥或邮件实现；
+- 页面绕过公开集合直接使用全部 1349 个型号；
+- 询盘表单根据客户端 URL 自行认定型号/variant 合法；
+- 邮件结果反向决定询盘是否成功保存。
+
+## 5. 内容、证据与媒体架构
+
+### 5.1 事实来源
+
+```text
+assets/ 只读原件
+  → resources/ 提取、核验、截图与来源记录
+  → WordPress 草稿：主体、来源、图权、alt、caption、批准状态
+  → src/content 视图契约
+  → 页面公开模块
+```
+
+`assets/` 不就地修改。`resources/` 保存过程证据；`outputs/` 保存可评审成果；批准后的公开派生图片进入 `public/` 或未来媒体 CDN。用户已批准当前 WordPress 媒体库 157 张图片作为可读取选图候选；它们只有在 PageSpec/内容对象明确映射后才实际进入页面。图片可读取不等于图片关联的性能、认证、产能或法律主张已经批准。
+
+每项媒体至少需要：来源文件/页码、哈希或稳定标识、实际主体、产品线、允许用途、图权状态、替代文本、说明文字和批准状态。
+
+### 5.2 内容接缝
+
+所有营销文案和页面数据进入 `src/content/*.ts` 的稳定接口，组件不硬编码。切换到 WordPress 时，适配器返回同样的视图模型，页面和组件无需修改。
+
+首页、About 与 Capabilities 已实现 live 媒体接缝：共用 `src/lib/wordpress/media.ts` 把 WordPress 的图片 URL、alt 与 caption 归一化为 `MediaAsset`；页面适配器分别组装稳定的 `HomepageContent`、`AboutContent` 与 `WheelManufacturingCapabilities`。CMS 未启用或临时不可用时，回退到同一张批准媒体的 `public/` 派生版本。其他页面仍待接入，不能据此声称全站已经由 WordPress 驱动。
+
+生产 `WP_MODE=live` 后：
+
+- CMS 配置不完整应阻止发布或明确失败；
+- CMS 临时故障可以使用最后一次成功且仍有效的批准内容；
+- 撤回、过期或安全相关状态必须立即失效，不能被旧缓存继续标成可供；
+- 预览内容与公开内容分离，草稿不能进入 sitemap。
+
+### 5.3 主体和主张
+
+工厂照片只证明照片中可见场景及已核准主体。用户已确认相关制造公司属于同一实际控制人体系，因此品牌层公开页面可以使用“我们的制造基地 / our manufacturing bases”；合同、发票、认证、专利和测试报告仍按实际法人主体与适用范围展示。About、Capabilities 和四产品线页面复用同一主体与证据记录，避免同一事实出现不同口径。
+
+## 6. 产品目录与发布架构
+
+### 6.1 原始事实与公开集合
+
+轮毂基线为 1349 个型号、3485 条变体。当前 1073 个型号匹配到图片，276 个无图。`hasImage` 只表示技术匹配，不等于获得销售和发布批准。
+
+公开资格必须同时满足：
+
+```text
+hasImage = true
+AND publicationStatus = approved
+AND imageRightsStatus = approved
+AND supplyStatus = confirmed
+AND specificationStatus = verified
+AND 至少一个 approved variant
+```
+
+无图、无权、未确认、撤回或没有批准 variant 的型号不生成详情页，不进入目录、筛选、相关推荐或 sitemap；猜中 URL 返回真实 404。数据继续保留在只读事实层，完成审核后再进入公开集合。
+
+三电、定制铝制品和自密封轮胎在没有完整型号数据时发布能力页，不渲染空产品卡或占位详情页。
+
+### 6.2 变体纪律
+
+规格行只能来自同一条实际 `WheelVariant`。尺寸、PCD、ET、中心孔和 finish 不允许跨变体拼接。系列或型号级汇总只用于筛选摘要，不能代替具体配置。
+
+目录、详情、询盘上下文和 sitemap 必须调用同一个公开集合：
+
+```text
+供应商事实数据
+  → 规范化 WheelModel/WheelVariant
+  → WordPress 发布覆盖层
+  → publishedWheelModels
+  ├─ 目录与筛选
+  ├─ 详情与相关型号
+  ├─ sitemap
+  └─ 询盘服务端上下文复核与快照
+```
+
+## 7. 页面与路由架构
+
+### 7.1 首发页面族
+
+| 页面族 | 主要路由 | 职责 |
+|---|---|---|
+| 公司入口 | `/`、`/about`、`/capabilities` | 四线定位、项目组织、制造关系和证据 |
+| 产品中心 | `/products` | 四条产品线入口 |
+| 轮毂 | `/products/wheels`、`/products/wheels/[model]`、`/products/wheels/flow-formed`、`/products/wheels/forged` | 真实目录、真实变体、工艺能力和型号询盘 |
+| 三条能力线 | `/products/ev-components`、`/products/custom-aluminum`、`/products/safety-tires` | 有范围和证据边界的能力页 |
+| 项目流程 | `/custom-development`、`/request-a-quote`、`/thank-you` | 项目准备、统一询盘和服务端确认 |
+| 内容与政策 | `/resources`、`/resources/[slug]`、`/support/*` | 技术内容、隐私和交易政策 |
+
+现有仓库还保留 gallery、fitment、dealers、tools、insights 等克隆阶段路由。它们属于待审计或暂缓范围；未进入首发导航不代表可以安全公开。上线前必须逐路由决定保留、重定向、`noindex` 或关闭。
+
+### 7.2 页面设计接口
+
+页面由 Page SPEC 定义的视口模块组成。一个主要视口回答一个核心问题，最多一个主行动。询盘步骤必须在正常基准视口中显示完整主按钮；移动键盘、放大和辅助设备允许自然滚动。
+
+页面规格负责“这一页展示什么”；本文负责“数据从哪里来、模块如何依赖”。页面文案不复制到架构总纲。
+
+### 7.3 SEO
+
+- 每条公开 URL 有唯一 title、description、H1、canonical 和 OG 数据；
+- sitemap 只读取批准页面和公开产品集合；
+- `/thank-you`、预览、草稿、未确认产品和无效型号不索引；
+- `NEXT_PUBLIC_APP_URL` 在构建时固化，构建与发布必须核对其实际值；
+- 英文首发使用根路由。cookie 语言切换不构成独立可索引语言版本。
+
+## 8. 询盘架构
+
+### 8.1 产品上下文
+
+首页、产品线、目录和详情都进入同一询盘模块。客户端可以携带产品线、型号、生产代码和显示规格，但这些值只用于体验。服务端根据当前公开集合重新解析并保存不可变快照。
+
+### 8.2 目标写入流程
+
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant A as POST /api/inquiries
+  participant C as Catalogue validator
+  participant D as WordPress CPT
+  participant O as Outbox worker
+  participant M as Mail provider
+
+  B->>A: 表单 + 上下文 + 幂等键 + 隐私版本
+  A->>A: 字段、Origin、限流与反滥用校验
+  A->>C: 复核产品线/型号/variant
+  C-->>A: 批准快照或拒绝
+  A->>D: 同事务写 inquiry/items/snapshot/consent/outbox
+  D-->>A: inquiry number
+  A-->>B: 201 + inquiry number
+  O->>D: 领取 outbox
+  O->>M: 发送通知/回执
+  M-->>D: accepted/delivered/bounced/unknown 事件
+```
+
+数据库事务成功是询盘成功的唯一条件。邮件服务商接受请求、邮件送达和销售已阅读是不同状态。
+
+### 8.3 当前实现与缺口
+
+当前 `POST /api/inquiries` 已有 JSON/字段校验、先保存后发信和错误响应；生产无 `RESEND_API_KEY` 时返回 503。`GET` 无管理 token 时返回 404、错误 token 返回 401。当前 store 是进程内 Map，重启即丢；邮件为同步直发并用一个 `delivered` 布尔值代表结果。
+
+生产前必须增加：询盘 CPT 事务仓储、幂等唯一约束、隐私记录、受控产品快照、outbox worker、邮件事件回调、重试/死信、保留与删除策略、告警和故障演练。
+
+## 9. 运行时与部署架构
+
+### 9.1 当前
+
+- Next.js 16 App Router，`next.config.ts` 使用 `output: "standalone"`；
+- 本地 Node 可运行页面和 `/api/inquiries`；
+- 本地 WordPress Docker 实验场已存在，读取客户端默认 mock；
+- 仓库没有 `@opennextjs/*`、Wrangler 或目标云配置；
+- 根 `Dockerfile` / `docker-compose.yml` 等模板文件已归档（DEC-060）；**仓库中没有生产部署文件**，待 OpenNext 平台确定后新写。
+
+### 9.2 目标
+
+- 静态和缓存页面由 CDN 提供；需要运行时的 API、预览和重验证由 OpenNext 支持；
+- WordPress/PHP/MySQL 与前端独立备份和升级；
+- 询盘与内容同库（WordPress CPT `fh_inquiry`），但经 WP REST 端点写入而非直接读写表；
+- 邮件发送器和回调拥有独立重试、监控和告警；
+- 本地、预发布和正式环境使用相同构建流程和明确环境变量；
+- 发布具备回滚、数据库备份恢复和缓存失效方案。
+
+禁止把 Next.js 改为 `output: "export"`，该模式会移除询盘 API。目标 OpenNext 平台仍需通过本地样机和月度预算验证后决定。
+
+## 10. 安全、隐私与运维
+
+- 浏览器不接触 WordPress 凭据、数据库连接串、邮件密钥或管理 token；
+- 匿名访问只能创建询盘，不能读取客户列表；
+- 日志不得输出邮箱、电话、完整消息、图纸名或请求体；
+- 工程文件不进入 WordPress 公共媒体库；首发不开放上传；
+- 询盘使用 Origin/CSRF 防护、honeypot、限流、幂等和服务端长度/枚举校验；
+- 隐私同意记录政策版本与时间；营销订阅独立且默认不选；
+- 内容、数据库、媒体和构建产物分别备份，并实际演练恢复；
+- canonical、OG、sitemap、关键表单和邮件状态纳入发布后监控。
+
+## 11. 仓库结构与职责
+
+| 路径 | 职责 |
 |---|---|
-| 架构方案 | ✅ 定稿 `docs/plans/inquiry-system-architecture.md` |
-| `src/lib/inquiry/` | ✅ **已建**（`store` / `mailer` / `validate` / `types` / `index`） |
-| `src/app/api/inquiries/route.ts` | ✅ **已建** —— 本项目**唯一**运行时 API；实测 POST **201** / 校验失败 **422** |
-| 执行顺序 | ✅ 已按纪律落码：validate → **persist** → send → record outcome |
-| `runtime` | `nodejs`（依赖 `output: "standalone"`） |
-| DB / 邮件依赖 | ⚠️ **仍是 mock**：`store` 内存持久化、`mailer.send()` 不发真信（零 DB / 零 Resend 依赖） |
-| 表单 | ✅ `inquiry-form.tsx` 已接 `/api/inquiries`（`/contact`、`/request-a-quote`） |
+| `src/app/` | App Router 页面、metadata、sitemap 与运行时路由 |
+| `src/components/` | 只消费稳定接口的展示和交互模块 |
+| `src/content/` | 类型化内容与产品视图接缝 |
+| `src/lib/wordpress/` | WordPress 读取适配器 |
+| `src/lib/inquiry/` | 询盘验证、仓储和邮件接口的当前实现 |
+| `assets/` | 只读产品数据、图片和语料 |
+| `public/` | 已批准或构建产生的公开资源 |
+| `PAGE-SPECS/` | 页面逐视口施工规格 |
+| `resources/` | 调研、来源和核验过程 |
+| `outputs/` | 可评审交付物 |
+| `work/` | queued / active / completed 任务记录 |
+| `archive/` | 被现行正本替代的完整历史 |
 
----
+## 12. 当前差距与实施顺序
 
-## 8. L7 · 交付与运维
+| 优先级 | 差距 | 完成判据 |
+|---:|---|---|
+| 1 | 业务事实与发布授权未冻结 | 正式英文名/域名/邮箱、供应关系、图权和首发型号签字 |
+| 2 | 页面仍使用虚构 SKU 与旧业务文案 | 目录、详情、首页和 sitemap 全部读取批准公开集合，竞品残留为 0 |
+| 3 | WordPress 未接入页面 | 编辑、预览、发布、撤回和缓存失效完整通过 |
+| 4 | 询盘只存内存 | 询盘 CPT 事务、幂等、outbox、邮件事件和故障测试通过 |
+| 5 | OpenNext 尚未落地 | 本地/预发布运行时、环境变量、canonical、回滚和费用验证通过 |
+| 6 | 旧路由可能仍可公开访问 | 每条路由完成保留、重定向、noindex 或关闭决策 |
 
-| 项 | 现状 |
-|---|---|
-| 本地门禁 | `npm run check` = lint + typecheck + build ✅ 全绿 |
-| 部署层 | ❌ **OpenNext 未接入**（零依赖零配置） |
-| `Dockerfile` / `docker-compose.yml` | ⚠️ **仍是克隆模板默认值**（`ai-website-cloner:latest`） |
-| 域名 / TLS | ❌ 未绑定 |
-| 版本控制 | ❌ **当前不是 git 仓库** |
+实施顺序以 [`outputs/site-launch-plan/04-task-cards.md`](outputs/site-launch-plan/04-task-cards.md) 为准。不得为了展示完成度跳过事实、发布或持久化门槛。
 
-### 8.1 两个静默陷阱
+## 13. 架构变更规则
 
-**① `NEXT_PUBLIC_APP_URL`**（`DEC-005`）
-烤进构建产物，静默改写全站 canonical / OG / sitemap。跨机构建部署必须
-**逐项比对烤入值**，不能只看页面 200。
+以下改动先更新本文和 `DECISIONS.md`，再改代码：
 
-**② macOS 专有工具**（`DEC-006`）
-`sips` / `cwebp` 缺失时**静默降级**，产出「构建成功但更差」的结果。
-依赖 macOS 的步骤留在本地，服务器只跑校验与 `next build`。
+- 新增或移除产品线、页面族、数据源或运行时；
+- 修改 `src/content/types.ts`、产品公开资格或询盘契约；
+- 改变 WordPress、产品事实、数据库和邮件的职责；
+- 改变部署平台、缓存、预览、重验证或 URL 语言策略；
+- 引入客户文件上传、账户、支付、CRM 或管理后台。
 
-### 8.2 跨机构建
-
-`next.config.ts` 的 `standalone` 产物会硬编码构建机绝对路径
-（历史教训：`.next/required-server-files.json` 里的 `appDir`）。
-跨机部署须在**同版本 Node 容器内**构建，不能直接搬运 Mac 产物。
-
----
-
-## 9. SKILLS · 开发技能库
-
-`SKILLS/`（3.2 MB，20 个技能）从兄弟项目
-`深圳公司的独立站搭建` 迁移而来。**全部带 `SKILL.md`，来源记录在
-`SKILLS/skills-lock.json`。**
-
-按用途分五组：
-
-| 组 | 技能 | 用在 |
-|---|---|---|
-| **设计品味** | `design-taste-frontend`(`-v1`) / `gpt-taste` / `stitch-design-taste` / `high-end-visual-design` / `minimalist-ui` / `industrial-brutalist-ui` | 前端视觉方向 |
-| **图像与还原** | `image-to-code` / `imagegen-frontend-web` / `imagegen-frontend-mobile` / `impeccable` | 设计稿→代码、B2B 配图 |
-| **改造与迁移** | `redesign-existing-projects` / `migrate-radix-to-base` / `shadcn` / `brandkit` | ★ **前端去竞品化改造正是这组** |
-| **质量与安全** | `open-code-review` / `open-code-review-delegate` / `security-audit` / `full-output-enforcement` | 评审、审计 |
-| **市场研究** | `seo-market-research` | 关键词与竞品情报 |
-
-### 9.1 使用纪律
-
-- **不要绕过技能自造流程。** 技能里是验证过的命令与参数。
-- `open-code-review` 默认模型已规范为 `group/auto-deepseek-v4-flash`
-  （见技能内 `LOCAL-CONFIG.md`）。
-- `security-audit` 的完整流程需要 OS 级沙箱；本机无 Docker/podman 时
-  只能跑只读部分，结论会降级为 `needs_validation`。
-- 技能是**从兄弟项目复制**的，不是软链。两边各自演进，**不要假定同步**。
-
----
-
-## 10. 模块依赖矩阵
-
-| 模块 | 可以依赖 | **禁止依赖** |
-|---|---|---|
-| L2 `assets/` | — | 一切（只读输入） |
-| L3 `src/content/` | L2（构建期导入） | L4 / L5 |
-| L4 `src/components/` | L3 | `assets/` 直读、L5 |
-| L5 `src/app/` | L3 / L4 | `assets/` 直读 |
-| L6 询盘 | L3（快照）| L4 组件内部状态 |
-| L7 运维 | 全部（只读） | — |
-
-**最常见的架构错误**：在 L5 页面里直接 `import` 一个 `assets/*.json`
-去遍历。正确做法是经 L3 的类型化模块。**那条接缝是本站唯一可替换的数据边界。**
-
----
-
-## 11. 待确认项（阻塞架构落地）
-
-| # | 事项 | 阻塞什么 |
-|---|---|---|
-| 1 | `sizeCategory` 归一化规则（`17寸-3` 是否为真实尺寸） | 轮毂筛选器设计 |
-| 2 | `styleName` 缺失的 587 个型号如何归类 | 设计系列页 |
-| 3 | `suitableVehicles` 全空 —— 工程能否补齐 | 车型适配页 |
-| 4 | `process` 未标注的 837 个能否从其他字段推断 | 工艺筛选 |
-| 5 | **572 张图未匹配到型号**（越野款 123 + HP 31 + 分册类） | 图片能否绑定 SKU |
-| 6 | 语料库中「航鹏」「洛克」内容可否用于本站（第三方品牌） | 文案可用范围 |
-| 7 | 四条产品线中三条无图的，何时提供资产 | 产品中心上线 |
-| 8 | **1518 个型号待补图**，是否补齐、补到什么程度 | 目录完整度 |
-| 9 | OpenNext 落在哪个平台 | 部署与询盘运行时 |
-| 10 | `WheelSku` 规格字段的最终形状 | 全部下游 |
-
----
-
-## 11.5 架构文档集 `ARCHITECTURE/` 与文档四层
-
-本文件是**总纲**。逐页与逐模块的落地设计在子目录：
-
-```
-ARCHITECTURE/
-├── README.md                  索引与阅读顺序
-├── page-architecture/         ★ 每一页要说明什么（内容与布局 · 为什么这么设计）
-└── tech-architecture/         ★ 每个模块怎么落地（数据流与技术）
-```
-
-| 文件 | 回答 |
-|---|---|
-| `ARCHITECTURE.md`（本文件） | 模块怎么切、谁不能依赖谁 |
-| `ARCHITECTURE/page-architecture/` | 这一页给谁看、说明什么、什么顺序 |
-| `ARCHITECTURE/tech-architecture/` | 数据从哪来、怎么渲染、坏了会怎样 |
-
-**本日新增的三条文档线（与上表合并看，见 §2.0 的四类边界）**：
-
-| 新增 | 位置 | 回答 |
-|---|---|---|
-| **`DESIGN.md`** | 项目根 | 页面**现在长什么样、为什么好看**（设计正本，**沉淀**） |
-| **`PAGE-SPECS/`** | 项目根 | 新页面**照着搭什么**（按路由命名的施工图） |
-| 三条产品线页面架构 | `ARCHITECTURE/page-architecture/` | `ev-components-page.md` / `custom-aluminum-page.md` / `safety-tires-page.md` |
-
-**`PAGE-SPECS/` 实测结构**：目录内共 **22 个文件** —— 3 份公共文件
-（`README.md` / `_components.md` / `_viewport-audit.md`）+ `index.md` 总表
-+ 18 份页面规格；每份规格固定 7 节，与 `page-architecture/` 的分工是
-「**搭什么** vs **为什么**」。
-
-**改动任一处，四份要同步**（`ARCHITECTURE/` 内部三份 + 涉及设计时的 `DESIGN.md`／
-涉及施工时的 `PAGE-SPECS/`；见 `ARCHITECTURE/README.md` 铁律 ③）。
-
-### ★ 上架门槛（用户 2026-10-01 定案）
-
-**只为「有图」的型号建页面。** 实测：
-
-```
-1349 型号 → 1018 有图（上架）｜331 无图（先不上架）
-```
-
-无图型号不建页、不进列表、不进 sitemap。**不删数据**，图到位后翻转标志即可。
-无数据的产品线（EV三电 / 铝制品 / 安全轮胎）同理 —— **先出能力页，不列型号**。
-
----
-
-## 12. 变更流程
-
-改这个文件之前，先问：
-
-1. **这是架构变化还是实现细节？** 实现细节写进对应代码的注释，不写这里。
-2. **是否违反 §0 三条前提？** 违反则停手，先记录 `DECISIONS.md`。
-3. **是否影响 `assets/` → `src/content/` 的映射？** 影响则同步更新 §4.2 表。
-4. **是否需要新的 `DEC-xxx`？** 见 `AGENTS.md` §9。
-
-**新增模块的登记格式**：
-
-```markdown
-### <模块名>
-- **职责**：
-- **数据源**：
-- **依赖**：
-- **禁止依赖**：
-- **状态**：
-```
+文档与代码不一致时，先在 `STATUS.md` 记录差距。架构文档不能把目标状态伪装成已经实现。

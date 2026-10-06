@@ -138,6 +138,9 @@
 - **影响**：
   - **任何人不得把 `next.config.ts` 改成 `output: "export"`** —— 那会让询盘系统彻底不可用。
   - 当前 `next.config.ts` 是 `output: "standalone"`，`docker-compose.yml` / `Dockerfile` 仍是**克隆模板的默认值**（镜像名 `ai-website-cloner:latest`）→ 这些需要随 OpenNext 落地一并重做。
+    - ⚠️ **2026-10-06 指针（DEC-060）**：那些模板文件已**归档**，仓库中不再有根
+      `Dockerfile` / `docker-compose.yml`。所以本条的执行方式从「重做现有文件」变成
+      「**平台确定后新写**」。决策本身（选 OpenNext、平台待定、禁止 `output: "export"`）不变。
   - **仓库里目前没有任何 OpenNext 依赖或配置**（`@opennextjs/*`、`wrangler` 均不存在）→ 这是待建工作，不是既有能力。
 - **相关**：`next.config.ts`、`docker-compose.yml`、`PROJECT.md` Constraints、`STATUS.md`
 
@@ -245,14 +248,14 @@
   - `ARCHITECTURE/page-architecture/` = 「**为什么这样设计**」（决策、取舍、竞品对照）
   - `PAGE-SPECS/` = 「**照着搭什么**」（骨架、逐块规格、组件、数据契约）
   - 每份规格固定 **7 节**：① 一句话判断 → ② 骨架（段数表 + 组件树）→ ③ 逐块规格（**含真实 TS props 契约**）→ ④ 组件清单（复用 / 新建）→ ⑤ 数据契约 → ⑥ 布局响应式 → ⑦ 待补阻塞
-  - 公共引用集中在 `PAGE-SPECS/_components.md`（现有组件 + 全部设计 token + 图片资产真相）
+  - 公共引用当时集中在 `archive/2026-10-01-document-baseline/PAGE-SPECS/_components.md`（现有组件 + 全部设计 token + 图片资产真相）
 - **理由**：① 施工图必须是**可执行**的 —— 第 ③ 节写真实 TS props 契约，是为了让 developer 不必回头猜组件的接口；② 分离后，改设计决策不必动施工图，改实现细节不必动决策文档，两边不会互相污染；③ 按**路由**命名（而不是按主题）是刻意的：一个 worker 拿到一条路由就能找到唯一对应的那一份规格，不需要先建索引。
 - **影响**：
   - 规格文件数量 **16 → 21 份**（截至 2026-10-01 的统计口径；目录内另含 `README.md` / `_components.md` / `_viewport-audit.md` 三份公共文件）。
   - **新建共享组件的优先级由规格统计得出**（按引用页数排序）：`DataNotice`(6 页) / `RouteBlock`(4) / `ProcessSteps`(4) / `WheelCard`(4) / `FaqAccordion` / `StatStrip` / `CapabilityGrid` …
   - **新增页面必须先出规格再动手** —— 否则第 7 节「待补阻塞」形同虚设，会把不确定性带进写代码阶段。
   - 架构文档中的「为什么」结论若发生变化，需同步回施工图的第 ① 节「一句话判断」。
-- **相关**：`PAGE-SPECS/README.md`、`PAGE-SPECS/_components.md`、`ARCHITECTURE/page-architecture/README.md`、DEC-002
+- **相关**：`archive/2026-10-01-document-baseline/PAGE-SPECS/README.md`、`archive/2026-10-01-document-baseline/PAGE-SPECS/_components.md`、`ARCHITECTURE/page-architecture/README.md`、DEC-002
 
 ---
 
@@ -270,9 +273,9 @@
 - **影响**：
   - 三条线的页面**先以能力页形态上线**，产品数据到位后再把预留位「点亮」（改的是数据层，不是版式）。
   - 新增页面：`/products/{ev-components,custom-aluminum,safety-tires}`。
-  - 这三页的施工图见 `PAGE-SPECS/products/{ev-components,custom-aluminum,safety-tires}.md`。
+  - 这三页当时的施工图见 `archive/2026-10-01-document-baseline/PAGE-SPECS/products/{ev-components,custom-aluminum,safety-tires}.md`。
   - **这三页没有竞品底本这一点要写清** —— 将来若有人拿它们和竞品逐页对比，会发现结构对不上，这是**刻意**的，不是漏做。
-- **相关**：`ARCHITECTURE/page-architecture/ev-components-page.md`、`custom-aluminum-page.md`、`safety-tires-page.md`、`PAGE-SPECS/products/*.md`、DEC-013、DEC-017
+- **相关**：`ARCHITECTURE/page-architecture/ev-components-page.md`、`custom-aluminum-page.md`、`safety-tires-page.md`、`archive/2026-10-01-document-baseline/PAGE-SPECS/products/*.md`、DEC-013、DEC-017
 
 ---
 
@@ -292,7 +295,7 @@
   - ⚠️ **归属未定的品牌（洛克 LOAKE / 航鹏）不得出现在任何已上线页面的「自有产品」语境里** —— 同样的红线适用于其他页面，不只这一页。
   - 归属一旦确认，按对应路径改写 B 节措辞，其余骨架可复用。
   - **任何「先把第三方品牌当自有写上、事后再说」的做法，违反本条。**
-- **相关**：`ARCHITECTURE/page-architecture/safety-tires-page.md`、`PAGE-SPECS/products/safety-tires.md`、DEC-013、`AGENTS.md` §8
+- **相关**：`ARCHITECTURE/page-architecture/safety-tires-page.md`、`archive/2026-10-01-document-baseline/PAGE-SPECS/products/safety-tires.md`、DEC-013、`AGENTS.md` §8
 
 ---
 
@@ -354,12 +357,12 @@
 - **理由**：① 页面的组织单位从「组件」换成「**问题**」之后，「这个段该不该存在」从一个审美争论变成一个**可判定**的问题（能答出删掉会缺什么答案就留，答不出就删）；② 「合并或删除律」比「一屏一件事」严格 —— 它管的不是**一屏放几件**，而是**两屏之间有没有重复回答**，这才是页面冗长的真正来源；③ 明确「一个视口可含多个段」是为了**不把原则用成教条**（左右分栏服务同一个问题是允许的）。
 - **影响**：
   - **这条原则高于 `DESIGN.md` 其余所有内容**，且与视觉无关 —— 它决定的是页面上该有什么。
-  - 直接催生了 **`PAGE-SPECS/_viewport-audit.md`**（122 KB / 实测 123239 字节）：**83 个视口 / 24 条合并建议**。
+  - 直接催生了 **`archive/2026-10-01-document-baseline/PAGE-SPECS/_viewport-audit.md`**（122 KB / 实测 123239 字节）：**83 个视口 / 24 条合并建议**。
   - 已按此原则重做首页 Hero（见 DEC-022）。
   - **⚠️ 重要更正（诚实标注）**：写文档时我一度把用户举例的六屏示例（Who / What / Which wheel / Customize / Trust / Inquiry）写成「**本站认知路径实证**」。用户明确指出「**不是我们现在需要修改的，我只是提供一个例子**」→ **已撤掉**，改为「**格式示例，不是本站既定顺序**」。
   - ⚠️ `_viewport-audit.md` 的**首页章节前提已被证伪**，报告开头已加「**前提更正**」段；读正文前必须先读该段。
   - **任何新增段落都要能回答「它回答了哪个前面没回答过的问题」** —— 答不上来就不该加。
-- **相关**：`DESIGN.md` §0.5（§0.5.1–§0.5.6）、`PAGE-SPECS/_viewport-audit.md`（含「前提更正」）、DEC-021、DEC-022
+- **相关**：`DESIGN.md` §0.5（§0.5.1–§0.5.6）、`archive/2026-10-01-document-baseline/PAGE-SPECS/_viewport-audit.md`（含「前提更正」）、DEC-021、DEC-022
 
 ---
 
@@ -377,10 +380,10 @@
 - **理由**：① 表单被视口截断、提交按钮在下一屏，用户会**以为表单还没完**（不知道这一屏要他做什么）；② 每多一次滚动都是一次放弃的机会，而这里的用户**已经决定要联系了**，摩擦没有换来任何说服收益；③ 表单上下被别的段包裹，等于有**第二件事**在跟「填表」抢注意力（违反 §0.5.1）；④ 选 ③（多步向导）会把一个短表单变成多次决定，反而增加放弃点。
 - **影响**：
   - `/contact` 与 `/request-a-quote` 的**版式优先服从表单尺寸**，不服从「饱满」。
-  - 表单字段纪律（必填 ≤ 3）成为**版式需求**，不只是文案偏好 —— 这与 `PAGE-SPECS/contact.md` 的字段纪律一致。
+  - 表单字段纪律（必填 ≤ 3）成为**版式需求**，不只是文案偏好 —— 这与归档的 `archive/2026-10-01-document-baseline/PAGE-SPECS/contact.md` 字段纪律一致。
   - **这是 `DESIGN.md` 里除 §0.5.1 之外少数带强制性的条款**（明确写了「不可协商」）。
   - 询盘后端相关：先落库再发信、存快照不存引用、上下文随询盘走（见 CHANGELOG 的 `src/lib/inquiry/`）。
-- **相关**：`DESIGN.md` §0.5.4、`PAGE-SPECS/contact.md`、`PAGE-SPECS/request-a-quote.md`、DEC-020
+- **相关**：`DESIGN.md` §0.5.4、`archive/2026-10-01-document-baseline/PAGE-SPECS/contact.md`、`archive/2026-10-01-document-baseline/PAGE-SPECS/request-a-quote.md`、DEC-020
 
 ---
 
@@ -404,8 +407,8 @@
   - 生成 **3 张 Hero 汽车背景图 + 4 张产品线卡图**（micu-image MCP / gpt-image-2），全部 WebP（**36–115 KB**）
   - ⚠️ 顺带修了两个**真 bug**（不是美化）：① `.btn-pill` **缺 `white-space: nowrap`** → header 的 `REQUEST A QUOTE` **折成两行**（106px 高）② **`w-full` 覆盖了 `.container-fh` 的 width** → 首页左右**贴边出血**（左列 x=0、卡片右缘 1440）
   - **`--fh-hero` 成为深色的第 4 阶**，新增深色场景应优先复用它而不是新写 hex。
-  - 首页的视口划分因此改变 —— `PAGE-SPECS/index-home.md` 与 `_viewport-audit.md` 的**首页章节前提随之失效**（已在报告开头加「前提更正」段，见 DEC-020）。
-- **相关**：`PAGE-SPECS/index-home.md`、`DESIGN.md` §0.5 / §1.2、`PAGE-SPECS/_viewport-audit.md`、DEC-020、DEC-021、`AGENTS.md` §7.8
+  - 首页的视口划分因此改变 —— 现已归档的 `PAGE-SPECS/index-home.md` 与 `_viewport-audit.md` 的**首页章节前提随之失效**（已在报告开头加「前提更正」段，见 DEC-020）。
+- **相关**：`archive/2026-10-01-document-baseline/PAGE-SPECS/index-home.md`、`DESIGN.md` §0.5 / §1.2、`archive/2026-10-01-document-baseline/PAGE-SPECS/_viewport-audit.md`、DEC-020、DEC-021、`AGENTS.md` §7.8
 
 > **口径说明（2026-10-01 核准）**：`PAGE-SPECS/` 共 **22 个 .md** =
 > **18 份路由规格** + **3 份公共文件**（`README.md` / `_components.md` / `_viewport-audit.md`）
@@ -474,3 +477,505 @@
 - 理由：克隆遗留代码已证明"看着能跑、处处是坑"；在真实系统上反复改错代价高。本地先行可低成本试错、可回滚。
 - 影响：T04 运行时样机以本地验证优先，远程资源（OpenNext 云、服务器 WordPress、域名、邮箱）全部后置到本地实验通过后；WordPress 安装范围限本地 Docker 样机，远程服务器安装等 T06 本地验收后再议。
 - 相关：`outputs/site-launch-plan/05-code-and-assets-inventory.md`、`04-task-cards.md`。
+
+## DEC-029 · 文档只保留一套现行正本，旧版本整体归档
+
+- 日期：2026-10-04
+- 状态：已执行；首页四张工厂媒体已由用户批准
+- 决定：以 `DOCUMENTATION.md` 为全仓文档入口；重写 `ARCHITECTURE.md` 为简洁现行总纲；`PAGE-SPECS/2026-10-04-launch-viewport-spec.md` 为唯一现行页面施工正本。2026-10-01 的详细架构、按路由规格、视口审计、旧交接、旧实施草案和已被覆盖的旧待办整体迁入 `archive/2026-10-01-document-baseline/`。
+- 理由：新旧业务范围、路由轴和首发数量不同，同时摆在现行目录会使开发模型读取冲突指令。
+- 影响：历史内容完整保留但不再驱动实现；新文档必须归入正本、任务、证据、交付物或历史之一，不能再并列创建另一套“最新版”。
+- 相关：`DOCUMENTATION.md`、`ARCHITECTURE.md`、`PAGE-SPECS/README.md`、`archive/2026-10-01-document-baseline/README.md`。
+
+## DEC-030 · About 的轮毂工厂按合作制造方归属展示
+
+- 日期：2026-10-04
+- 状态：Page SPEC 已建立，代码待实现
+- 决定：About 页用厂区、铸造、机加工、涂装四张图片说明轮毂制造体系；峰徊表述为深圳商务和项目接口，照片及制造能力归属实际制造合作方。公开文案不使用“自有工厂”“厂内生产”等没有法人证据的说法。
+- 理由：用户提供的公司简介和 WordPress 图片足以证明生产场景，但不能证明厂房、专利、认证和全部产能属于深圳峰徊。清楚标注关系能建立信任，也避免主体混淆。
+- 影响：现有 About 中 `in-house`、`our lines`、自有原材料和自有锻造等表述在实现时必须替换；WP 媒体 114/61/78/84 补 alt、caption、来源和批准状态后才能公开。
+- 相关：`PAGE-SPECS/about-wheel-factory.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、`outputs/site-launch-plan/03-content-and-assets.md`。
+
+## DEC-031 · 轮毂制造能力按设计、路线、检查、验证、文件五层展示
+
+- 日期：2026-10-04
+- 状态：Page SPEC 已建立，代码与 WP 元数据待实现
+- 决定：`/capabilities#wheel-manufacturing` 使用 WM01–WM05 五个问题视口。过程检查与型式验证分开；重力铸造、低压铸造、旋压作为路线选项，不拼成统一流水线；证书只在主体、范围和有效期核准后展示。
+- 理由：原画册把大量工艺、参数和证书压在两页中，直接搬上网页会造成信息过载，并把设备照片误读成全部产品的合格证明。按采购判断顺序拆分后，每个视口只有一个核心问题。
+- 影响：现有 Capabilities 页中 `under one roof`、`factory direct`、固定产能/容差和自有工厂表述必须替换。WordPress 多个媒体标题与实际图像错位，实施时按像素核对结果修正，不能按旧标题绑定。
+- 相关：`PAGE-SPECS/capabilities-wheel-manufacturing.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、DEC-030。
+
+## DEC-032 · 锻造轮毂页是定制能力页，装车图不是适配证据
+
+- 日期：2026-10-04
+- 状态：Page SPEC 已建立，代码与 WordPress 元数据待实现
+- 决定：`/products/wheels/forged` 使用 WF01–WF06 六个问题视口，依次说明项目定位、材料评估、锻造成形、后续制造、受控案例和项目输入。没有真实型号数据时不建锻造目录；装车案例只有在图权、项目关系、轮毂型号、实际规格和适配审核都完成后才公开。
+- 理由：画册能够证明锻造、加工和检查场景，但其中的减重比例、万吨设备、材料牌号和品牌车型适配没有足够证据。WordPress 中多张装车图又被错误命名为锻造产品或工艺图，直接按标题调用会发布错误内容。
+- 影响：首发可用 WP 42、29、58、70、30、76 构成完整能力页；镁合金、热锻及装车案例缺图或缺证据时降级/隐藏，不产生破图或空视口。ID 88、56、91 修正为案例候选并保持草稿状态。
+- 相关：`PAGE-SPECS/forged-wheel-customization.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、DEC-030、DEC-031。
+
+## DEC-033 · 自密封轮胎的 8 mm 是测试条件，不是通用损伤保证
+
+- 日期：2026-10-04
+- 状态：Page SPEC 已建立，现有页面代码与 WordPress 元数据待改造
+- 决定：`/products/safety-tires` 使用 T01–T06 六个问题视口，先说明道路中断，再解释自密封机理、8 mm 内部测试条件、研发/生产证据和适用边界。8 mm 只描述测试钉直径，并绑定证据状态；没有型号与完整测试条件时标记为 `supplier-stated`，不得扩写成任意 8 mm 损伤或全系列保证。
+- 理由：用户和供应商资料都明确提出 8 mm，但画册没有提供轮胎型号、测试工况、结果判定和正式报告。国家标准公开系统只确认 GB/T 38510-2020 的名称和现行状态，不能据此证明画册所述 3 mm 条件或具体产品合格。
+- 影响：现有 `safety-tires.ts` 中无报告支撑的温度、噪声、耐磨、湿地等级、`our in-house validation`、道路救援和绝对不中断等表述需要替换。事故图和伤亡统计不进入页面；WordPress 17 张日常场景、机理、测试和研发图片按批准状态使用。
+- 相关：`PAGE-SPECS/self-sealing-tires.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、DEC-023、DEC-025。
+
+## DEC-034 · About 的轮胎工厂按供应商生产环境展示
+
+- 日期：2026-10-04
+- 状态：Page SPEC 已建立，代码与 WordPress 元数据待实现
+- 决定：About 页新增 AT01–AT03 自密封轮胎制造合作方模块，使用七张生产环境图片说明制造关系、可见设备和证据核验。峰徊保持深圳商务/项目接口角色；没有主体和资产文件前，不使用来源页的 `Independent Production` 或自有工厂表述。
+- 理由：设备照片足以支持“供应商资料展示了生产环境”，但不能证明厂房、设备、研发成果和全部工艺归峰徊所有，也不能证明任何轮胎型号的自密封性能或市场合规。
+- 影响：WP 155/159/148/18/16/145/136 作为待批准媒体进入模块；具体工序名称、工厂地点、研发机构合作和设备所有权经供应商确认后才能公开。About 与轮胎产品页共用主体及媒体证据，避免文案漂移。
+- 相关：`PAGE-SPECS/about-self-sealing-tire-factory.md`、`PAGE-SPECS/self-sealing-tires.md`、DEC-030、DEC-033。
+
+## DEC-035 · 轮毂目录借鉴 Vossen 的浏览结构，筛选以真实变体为单位
+
+- 日期：2026-10-04
+- 状态：Page SPEC 与参考快照已建立，代码待实现
+- 决定：`/products/wheels` 借鉴 Vossen 的紧凑目录、常驻筛选和大图产品卡，但改用峰徊真实字段：型号搜索、直径、宽度、PCD 和已记录工艺。规格筛选必须在同一个 `WheelVariant` 上求交集；采用服务端筛选和每页 24 个，不公开价格、车型适配、第三方款式名或未归一化 finish 色板。
+- 理由：峰徊已有 1349 型号/3485 变体和图片，但没有 Vossen 的系列、价格、发布日期和规范 finish 体系。分别筛选尺寸/PCD 集合会拼出不存在的配置；一次渲染 1073 个有图候选也不适合性能、SEO 和审核。
+- 影响：公开目录需要在 `hasImage` 之外叠加发布、供货、规格和图权状态。13 个含异常/复合 PCD 的有图型号修正前不公开；647 个工艺未标注候选保持独立状态；531 种 finish 完成英文化映射前不做筛选/色板。现有虚构 `wheel-skus.ts` 目录必须改接 `WheelModel/WheelVariant`。
+- 相关：`PAGE-SPECS/wheel-catalog.md`、`resources/research/2026-10-04-vossen-wheel-catalog-reference.md`、DEC-013、DEC-027。
+
+## DEC-036 · 轮毂详情借鉴 2N 的首屏询盘结构，但继续使用单图和真实变体
+
+- 日期：2026-10-04
+- 状态：Page SPEC 与参考快照已建立，代码待实现
+- 决定：`/products/wheels/[model]` 借鉴 2N N-501RS 的左图右信息首屏、产品上下文内询盘、finish 说明和相关型号顺序。峰徊详情继续执行 DEC-014 的单张批准主图；客户先选择一个完整批准 `WheelVariant`，再由统一询盘 API 附带 productionCode 和服务端规格快照。多图缩略图、自由尺寸/偏距组合、通用 finish 色点和车型营销不采用。
+- 理由：2N 页面将产品识别和询盘放在同一首屏，转化路径清楚；但它是定制意向收集页，没有峰徊目录中的逐条生产配置。峰徊的优势是 3485 条真实变体，而图片数量、finish 文本和适配证据不支持照搬图库、色板或车型描述。
+- 影响：现有 `[sku]/page.tsx` 必须移除虚构 `WheelSku`、`WheelSketch`、finish 色块、applications 和 family 相关逻辑，改用与目录/sitemap 相同的公开 `WheelModel` 集合。所有规格必须来自同一批准 variant；finish 英文映射完成前只显示批准文本；相关型号按 PCD/直径/工艺的真实字段计算。
+- 相关：`PAGE-SPECS/wheel-detail.md`、`resources/research/2026-10-04-2n-wheel-detail-reference.md`、DEC-014、DEC-035。
+
+## DEC-037 · 三电页只发布三类有图壳体，工艺与照片分别管理证据
+
+- 日期：2026-10-05
+- 状态：Page SPEC 已建立，代码与 WordPress 元数据待实现
+- 决定：`/products/ev-components` 使用 EV01–EV06 六个问题视口。首发只展示水冷电机壳、高压铸造电机壳、电控/逆变器壳体三类有图项目，绑定 WP 38/24/49/20。LPDC、HPDC、摩擦焊、FSW、尺寸和泄漏检测按供应商资料状态管理，照片只证明画面中可见的样件或场景；WP 38 不作为焊接、密封或泄漏检测实拍。电池结构、PDU/OBC、底盘件等更广范围进入定制铝制品的评估范围。
+- 理由：综合画册直接支持三类壳体和相关工程问题，但现有图片不能证明每件产品的制造路线、检测结果或量产状态。把十五类应用都写成现有三电产品会把供应商列举范围误报成产品目录。
+- 影响：现有 `ev-components.ts` 的 15 类部件、X-ray、完整受控流程和未经证实的质量结果需要收敛；材料、公差、泄漏率、产能、认证、客户和车型数字不公开。WordPress 媒体完成主体、类别、图权、alt、caption 与批准状态后才能发布。
+- 相关：`PAGE-SPECS/ev-components.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、`resources/research/2026-10-05-ev-custom-aluminum-source-audit.md`、DEC-023、DEC-025。
+
+## DEC-038 · 定制铝制品是来图来样评估页，工程截图只作方法示例
+
+- 日期：2026-10-05
+- 状态：Page SPEC 已建立，代码与 WordPress 元数据待实现
+- 决定：`/products/custom-aluminum` 使用 CA01–CA07 七个问题视口。首屏以 2D 图纸、3D 数据和物理样件三类输入构成，不使用三电壳体或轮毂图片冒充通用定制产品。资料列出的电机减速器、电控热管理、电池结构、底盘车身四组只作为评估范围。WP 67/31/48 明确标成轮毂几何上的结构分析和铸造模拟方法示例；WP 44 实际是低压铸造设备，不用于证明逆向工程。制造主体、不承接清单、应用范围和图权未确认前页面保持 `noindex,follow`。
+- 理由：当前没有可确认属于非轮毂、非三电项目的定制铝制品实拍，而且四张“设计”文件的名称与实际画面多处错位。工程工具截图能说明方法存在，不能替代项目报告、通用能力边界或客户案例。
+- 影响：现有页面中的镁合金、内部热处理/表面处理、通用腐蚀重复性和竞争对手样件等表述需要删除或降级；样件路线增加所有权和复制权确认。应用卡不显示未知产品照，流程收敛为五个可审核阶段，文件交换在安全流程实现前不提供直接上传。
+- 相关：`PAGE-SPECS/custom-aluminum.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、`resources/research/2026-10-05-ev-custom-aluminum-source-audit.md`、DEC-023、DEC-025、DEC-037。
+
+## DEC-039 · 旋压入口按记录工艺聚合真实型号，不用外观或文案推断工艺
+
+- 日期：2026-10-05
+- 状态：Page SPEC 与数据核验已建立，路由、发布覆盖层和 WordPress 元数据待实现
+- 决定：`/products/wheels/flow-formed` 使用 WFF01–WFF05 五个问题视口。候选集合只接受规范字段 `process=旋压` 或 `process=低压+旋压`；两者分别公开为 `Flow formed` 与 `Low-pressure cast + flow formed`。页面复用真实目录和详情数据，只发布有批准图片、供货状态、完整批准变体、已治理名称与规格的型号。WP 116 只说明供应商资料展示了旋压设备场景。旋压与锻造保持独立路线，不发布通用减重或强度提升。
+- 理由：生成目录当前有 370 个记录旋压路线的型号，其中 330 个匹配到图片、合计 762 条变体，但图片存在不等于可销售授权。`旋压` 字段本身也不能证明毛坯一定来自低压铸造；画册产品图与目录工艺没有可靠一一映射。
+- 影响：需新建缺失路由并建立产品发布覆盖层；列表和详情必须读取同一公开集合，服务端锁定工艺条件。40 个无图候选不上架；第三方款式名、异常 PCD、finish 英文化、图权和供货状态未完成前相应型号保持草稿。没有批准型号时页面保持 `noindex,follow`，不显示空目录或假产品。
+- 相关：`PAGE-SPECS/flow-formed-wheels.md`、`PAGE-SPECS/wheel-catalog.md`、`PAGE-SPECS/wheel-detail.md`、`resources/research/2026-10-05-flow-formed-wheel-source-audit.md`、DEC-013、DEC-014、DEC-035、DEC-036。
+
+## DEC-040 · 首页借鉴 2N 的节奏，重构为四线等权与制造证据叙事
+
+- 日期：2026-10-05
+- 状态：已实现；制造归属表述由 DEC-044 更新
+- 决定：首页使用 H01–H05 五个问题视口：公司级制造 Hero、四条产品线 2×2 入口、六项有范围的制造能力、产品专属制造路线与五阶段交付、统一项目询盘。保留 2N 的全视口深色开场、短能力条、产品视觉、强收口和轻量交互节奏；不复制其品牌、内容、资产、三轮毂结构和 Gallery。当前首页的 `WheelStripSection` 移除，四条线共用一份 `ProductLine[]` 数据。
+- 理由：2N 首页的四段结构能快速建立定位与转化，但其业务只有定制锻造轮毂。峰徊的核心差异是四条平行产品线和多个负责制造主体；继续使用轮毂 Hero、轮毂实物带和 `Four lines, one factory` 会把业务重新讲成单一轮毂厂，并混淆深圳公司与供应商资产关系。
+- 影响：`HomeHero` 改为一个批准制造视觉；`TrustStrip` 删除 `under one roof`、`factory direct` 和无证据能力；`ProductShowcase` 保留 2×2 但按四线 Page SPEC 更新；新增项目组织/制造证据段；`DealerCta` 指向 `/request-a-quote` 并移除结果式承诺。WP 114、61、78、155 已分别绑定轮毂、铝制品和自密封轮胎范围；集团制造归属采用 DEC-044 的最新口径。
+- 相关：`PAGE-SPECS/homepage.md`、`PAGE-SPECS/2026-10-04-launch-viewport-spec.md`、`resources/research/2026-10-05-2n-homepage-reference.md`、DEC-023、DEC-025、DEC-030、DEC-034、DEC-037、DEC-038、DEC-039。
+
+## DEC-041 · 询盘页采用四线两步短表单，成功只由持久化事务决定
+
+- 日期：2026-10-05
+- 状态：Page SPEC 与参考记录已建立，页面、表单和生产后端待改造
+- 决定：`/request-a-quote` 使用 QF01–QF03：低门槛准备提示、项目信息、回复方式；实际提交保持两步，每步业务必填不超过 3 个。表单先区分 B/C 客户和四条产品线，产品页带入的型号/variant 由服务端复核后存不可变快照。首发不上传工程文件。只有 inquiry、上下文、同意记录和 outbox 的数据库事务成功后才返回询盘号；邮件 accepted、delivered、bounced、unknown 单独记录。
+- 理由：2N 的短说明、`What to send`、紧凑表单与直接联系兜底可以降低首次联系门槛，但其页面是轮毂专用。当前峰徊表单仍强制公司、车型、系列和数量，无法覆盖三电、定制铝制品、自密封轮胎和个人客户；当前内存存储与邮件状态也不支持“已安全记录”或“已通知销售”的公开承诺。
+- 影响：`InquiryForm` 需拆成两步并移除 `ProductFamily` 依赖；四条产品线复用全站唯一数据源；公司改为可选，车型和 finish 只在相应上下文出现；增加隐私版本、幂等键、服务端上下文复核与事务 outbox。`/contact` 和嵌入式产品询盘复用同一核心契约，不能再有第二套校验。正式邮箱、隐私政策和持久化未完成前不公开表单成功承诺。
+- 相关：`PAGE-SPECS/request-a-quote.md`、`resources/research/2026-10-05-2n-inquiry-reference.md`、`outputs/site-launch-plan/02-data-and-inquiry-design.md`、DEC-021、DEC-024、DEC-025、DEC-036、DEC-040。
+
+## DEC-042 · 架构文档按现状、目标和待确认三态表达
+
+- 日期：2026-10-05
+- 状态：已执行
+- 决定：`ARCHITECTURE.md` 继续作为系统结构唯一正本，覆盖业务主体、内容与证据、产品发布集合、页面、询盘、运行时和运维；`ARCHITECTURE/README.md` 只做阅读导航；根 `README.md` 作为开发入口。所有架构能力必须标明已实现、已设计或待确认，尤其不能把 WordPress 客户端、内存询盘、`output: "standalone"` 分别写成页面已接 CMS、生产持久化和 OpenNext 已部署。
+- 理由：页面规格和 DEC-023～DEC-041 已把项目从纯轮毂 B2B 原型改成四线 B/C 询盘站，但根 README 仍描述 16 个虚构 SKU、全部静态、没有询盘后端和没有 WordPress 读取层。目标架构与当前实现混写会直接误导后续模型、开发和验收。
+- 影响：README 现在列出真实路由族、环境变量、硬规则与上线阻断项；架构总纲新增当前/目标适配器、公开产品集合、询盘事务、OpenNext 目标和差距表；后续架构改动同步更新总纲、决策和状态。`package.json` 与根 Docker 配置的模板遗留另列任务处理，本次不冒充完成。
+- 相关：`README.md`、`ARCHITECTURE.md`、`ARCHITECTURE/README.md`、`outputs/architecture-alignment-audit.md`、DEC-023、DEC-024、DEC-029、DEC-035～DEC-041。
+
+## DEC-043 · 首页内容契约同时承载媒体批准状态与证据范围
+
+- 日期：2026-10-05
+- 状态：已执行，首页媒体已接 Headless WordPress
+- 决定：新增 `HomepageContent`、`MediaAsset`、`HomepageCapability`、`HomepageStage` 与 `HomepageEvidence` 类型，首页 H01–H05 使用稳定视图模型。媒体只有在 `hasRender=true` 且 `approvalStatus=approved` 时才渲染；`src/lib/wordpress/homepage.ts` 按 `wordpressId` 从 REST API 解析图片 URL、alt 和 caption，CMS 不可用时回退到同一张批准图片的本地派生版本。四条产品线继续读取唯一的 `productLines` 集合。
+- 理由：首页同时涉及峰徊、轮毂制造合作方、铝制品制造方与轮胎供应商。仅用图片路径无法防止候选素材提前公开，也无法表达能力适用范围。把批准状态和证据范围放进内容契约，未来切换到 WordPress 时可以替换数据读取而不改组件。
+- 影响：组件不读取 WordPress 原始 JSON，也不硬编码营销文案。2026-10-05 用户批准首页使用 WP 114、61、78、155；四张媒体已写入英文 alt、caption、批准状态与使用范围。本地 WordPress 使用 localhost 时仅对该显式配置打开 Next.js 本地图片优化，生产域名不放宽本地 IP 防护。
+- 相关：`src/content/types.ts`、`src/content/homepage.ts`、`src/content/product-lines.ts`、DEC-025、DEC-040。
+
+## DEC-044 · 品牌层可使用“我们的制造基地”，法人证据仍按实际主体
+
+- 日期：2026-10-05
+- 状态：用户确认，全站生效
+- 决定：用户确认深圳峰徊与相关制造公司属于同一实际控制人体系。官网品牌层可以使用“我们的工厂”“我们的制造基地”及对应英文 `our manufacturing base(s)`；不再强制使用“合作制造方”作为公开主文案。合同、发票、证书、专利、测试报告、地址和法规声明仍展示实际法人主体与适用范围。
+- 理由：品牌归属与法人主体是两个层次。只写“合作方”会弱化用户已确认的集团制造关系；把所有法人证据混为深圳峰徊又会造成证书与责任主体错误。品牌层统一、证据层精确可以同时满足市场表达和可核验性。
+- 影响：DEC-030、DEC-034、DEC-040 中禁止“自有/我们的工厂”的保守限制由本决策更新。首页先采用新口径；About、Capabilities、轮毂、铝制品和轮胎页面实施时同步调整。不得由集团归属进一步推导未经确认的产能、认证、专利或产品性能。
+- 相关：`ARCHITECTURE.md` §5.3、`PAGE-SPECS/homepage.md`、DEC-030、DEC-034、DEC-040、DEC-043。
+
+## DEC-045 · About 使用双制造基地证据结构与共享 WordPress 媒体适配器
+
+- 日期：2026-10-05
+- 状态：已执行，双端视觉与代码门禁通过
+- 决定：`/about` 按 A01、A02、AF01–AF03、AT01–AT03、A03 重建。公司级章节说明深圳项目接口与四项职责；轮毂章节绑定 WP 114/61/78/84；自密封轮胎章节绑定 WP 155/159/148/18/16/145/136。两组照片只证明可见生产环境，能力、型号、认证和测试仍按项目核验。新增 `AboutContent` 稳定视图模型，并把首页私有媒体解析提升为共享 `resolveWordpressMedia`。
+- 理由：旧 About 包含自有原材料、固定锻造吨位、逐套检测、固定产能和“不是贸易商”等无法核验或继承自竞品业务的叙事。用户已批准工厂图片并确认集团制造归属，页面需要同时表达品牌层制造能力和证据层法人边界。共享适配器避免首页与 About 分别解释 WordPress 原始响应。
+- 影响：React 组件只消费 `AboutContent`，CMS 关闭或超时时回退到同一批准图片的本地 WebP；新增和更新的 11 个 WP 媒体记录包含英文 alt、caption、来源、用途和批准状态。内部 `sourceRef` 保留在内容契约中，不直接显示给普通访客。旧 About 的占位统计、虚构产能、经销商流程和泛化质量承诺全部移除。
+- 相关：`src/content/about.ts`、`src/content/types.ts`、`src/lib/wordpress/media.ts`、`src/lib/wordpress/about.ts`、`PAGE-SPECS/about-wheel-factory.md`、`PAGE-SPECS/about-self-sealing-tire-factory.md`、DEC-030、DEC-034、DEC-043、DEC-044。
+
+## DEC-046 · 当前 WordPress 媒体库统一视为可读取素材
+
+- 日期：2026-10-05
+- 状态：用户确认，已执行
+- 决定：用户确认当前本地 WordPress 媒体库中的 157 张图片均可读取并作为网站选图候选。全部附件已写入 `fh_rights_status=approved`、`fh_approval_status=approved`、批准人和日期；Next.js 的媒体域规则允许读取该 WordPress 的整个 `/wp-content/uploads/**` 路径。页面仍通过 PageSpec 与 `MediaAsset` 映射选择实际展示图片。
+- 理由：逐张阻断图片读取会重复消耗审核成本，且用户已明确确认媒体库图片默认可用。图片可读取与图片对应的营销主张成立是两件事，仍需分开管理。
+- 影响：当前媒体不再因图权状态阻断页面实现；事故图片、证书、品牌案例或低质量素材不会因为“可读取”自动出现在页面。alt、caption、主体、用途、型号、性能、认证和法律主张继续按页面与证据补齐。未来新导入媒体应继承同一可读取策略，同时仍须经 PageSpec 选择后才发布。
+- 相关：`ARCHITECTURE.md` §5.1、DEC-025、DEC-043、DEC-045。
+
+## DEC-047 · Capabilities 按轮毂采购判断重建为五类证据
+
+- 日期：2026-10-05
+- 状态：已实现，双端视觉与代码门禁通过
+- 决定：`/capabilities` 不再作为泛化整厂流水线页，改为 WM01–WM05：工程输入与评估、非线性成形路线、过程检查、三类验证试验、文件证据。公开媒体使用 WP 65/67/96/48、82/116、87/115/101、45/43/39；WP 53/106 仅作为内部证书候选。新增 `WheelManufacturingCapabilities` 稳定内容契约与批量 WordPress 适配器。
+- 理由：旧页把锻造、机加工、涂装、检测和包装串成固定流程，同时展示产能占位、固定容差和未经核准的证书/标准表达，不能回答轮毂采购人员实际关心的“怎样设计、为何选这条路线、检查什么、怎样验证、文件能否对应”。五类证据与画册可见内容一致，也明确区分过程检查和型式验证。
+- 影响：低压铸造保留为无图文字路线，不用重力铸造设备冒充；重力、低压和旋压不画成强制顺序；试验卡不公开载荷、循环、速度、标准或通过结论；证书不做 Logo 墙。CTA 带入 `product_line=wheels` 与 `intent=manufacturing_capability`。旧 `process.ts` 保留供其他未改造路由使用，但 `/capabilities` 不再依赖它。
+- 相关：`src/content/wheel-capabilities.ts`、`src/lib/wordpress/wheel-capabilities.ts`、`src/components/capabilities/wheel-capabilities.tsx`、`PAGE-SPECS/capabilities-wheel-manufacturing.md`、DEC-031、DEC-044、DEC-046。
+
+## DEC-048 · 自密封轮胎把 8 mm 建模为可审计的测试证据
+
+- 日期：2026-10-05
+- 状态：已实现，双端视觉与代码门禁通过
+- 决定：`/products/safety-tires` 按 T01–T06 重建，并新增 `TirePunctureEvidence`、`TireViewport` 与 `SelfSealingTirePage` 内容契约。8 mm 保存为 `objectDiameterMm=8`、`punctureZone=tread`、`status=supplier-stated` 的内部测试条件；未取得具体轮胎型号、尺寸、压力、工况、观察时间、判定标准与正式报告前，不得改成 `verified`。个人客户与渠道/车队使用不同输入提示，但继续提交到同一询盘路由。
+- 理由：旧页把 8 mm 写成“our in-house validation”，同时发布没有报告的响应时间、温度、噪声、耐磨和湿地等级，无法判断数字属于哪个型号和测试条件。把证据从正文中抽离为结构化对象，可以让 WordPress 后续替换数据源而不改组件，也能阻止“测试钉直径”被扩写成“任意 8 mm 损伤保证”。
+- 影响：公开页只使用日常道路场景，不使用事故拼图和伤亡统计；17 张批准媒体通过单次 WordPress REST 请求解析并保留同图 WebP 回退；实验室和产线照片只证明可见环境，不能代替型号报告。旧页的 0.05 s、温度、噪声、耐磨、湿地等级、ECE/DOT 和道路救援承诺已从该路由移除。
+- 相关：`src/content/safety-tires.ts`、`src/content/types.ts`、`src/lib/wordpress/safety-tires.ts`、`src/components/safety-tires/self-sealing-tire-page.tsx`、`PAGE-SPECS/self-sealing-tires.md`、DEC-033、DEC-044、DEC-046。
+
+## DEC-049 · 锻造轮毂页按定制能力契约发布，不生成型号与未审案例
+
+- 日期：2026-10-06
+- 状态：已实现
+- 背景：锻造轮毂资料能支持材料、成形、机加工、表面处理和检查的项目讨论，但没有可公开型号、规格、车型适配、认证、产能或案例授权证据。
+- 决定：新增 `ForgedWheelCustomizationPage` 契约与 `/products/wheels/forged` 能力页，仅发布 WF01–WF04、WF06；WF05 以空数据/未满足证据门槛时整段不渲染。WP 42、29、58、70、30、76 通过单次媒体适配读取，并保留本地 fallback。
+- 理由：能力页可以回答“项目怎样开始”，不会把画册场景误写成可售 SKU 或车型适配承诺；稳定契约让 WordPress 后续替换内容源无需改组件。
+- 影响：后续只有在图权、项目关系、真实型号、核准规格和适配审核齐备时，才能新增 WF05 案例；CTA 必须保留 `product_line=wheels&wheel_process=forged&intent=custom_program`。
+- 相关：`PAGE-SPECS/forged-wheel-customization.md`、`src/content/types.ts`、`src/content/forged-wheel.ts`、`src/lib/wordpress/forged-wheel.ts`、`src/components/forged-wheel/forged-wheel-page.tsx`。
+
+## DEC-050 · 定制铝制品页收敛为来图来样评估，发布门槛由 declinedConfirmed 驱动
+
+- 日期：2026-10-06
+- 状态：已实现
+- 背景：旧版 `/products/custom-aluminum` 把镁合金通用能力、通用热处理、内部涂装（`applied in house`）和「竞争对手零件」写成已确认能力，超出资料来源；FEA、工艺主体与图权也未确认。资料核验记录 `resources/research/2026-10-05-ev-custom-aluminum-source-audit.md` 已逐条指出越界。
+- 决定：新增 `CustomAluminumPage` 契约，把页面改造为 CA01–CA07 的来图/来样评估页：CA01 无产品照片首屏；CA02 四组应用只作 `Assessment scope`；CA03 输入收敛为 2D / 3D / 物理样件并加入所有权与复制权确认；CA04 绑定 WP 67/31/48 并标注轮毂几何证据边界，WP 44 禁用；CA05 八阶段收敛为五个可审核阶段；CA06 三列状态矩阵不公开展示未确认的「不承接」列；CA07 不实现直接文件上传。发布门槛由 `boundary.declinedConfirmed` 驱动：为 false 时路由输出 `robots: { index: false, follow: true }` 且不输出 canonical。
+- 理由：页面承诺的是「能把输入变成零件」的工程过程，不是可下单目录；未确认的不承接范围一旦留空公开，等于对客户承诺「什么都能做」，正是本页要避免的。
+- 影响：`declinedConfirmed` 保持 false 前不得移除 robots 门槛；门槛打开需同时补齐不承接行并把 `publicationStatus` 改为 approved。媒体适配在解析后重新套用本地 alt/caption，因为 WordPress 记录中 WP 48 仍带「reverse engineering」旧描述，会越过本页证据边界。
+- 相关：`PAGE-SPECS/custom-aluminum.md`、`resources/research/2026-10-05-ev-custom-aluminum-source-audit.md`、`src/content/types.ts`、`src/content/custom-aluminum.ts`、`src/lib/wordpress/custom-aluminum.ts`、`src/components/custom-aluminum/custom-aluminum-page.tsx`、`src/app/products/custom-aluminum/page.tsx`。
+
+## DEC-051 · 三电页从 15 个部件类型收敛为三类有图壳体，并首次接入 WordPress 媒体
+
+- 日期：2026-10-06
+- 状态：已实现
+- 背景：旧版 `/products/ev-components` 把三电线扩展成 15 个部件类型（含电池托盘、端板、冷板、模组支架、PDU、OBC、水泵壳体、阀块、油冷壳体），并写入 X-ray 探伤与「铸造到检测一个受控流程而非分包」等**没有本线证据**的主张；页面还把图片直接绑定到 `public/images/ev-components/*.webp`，完全没有 CMS 接缝。资料核验记录 `resources/research/2026-10-05-ev-custom-aluminum-source-audit.md` §4 已逐条点名。
+- 决定：新增 `EvHousingPageContent` / `EvHousingCategory` 契约（`src/content/types.ts`），把页面收敛为 EV01–EV06 的工程评估页，只发布三类有图壳体（`water-cooled-motor` / `die-cast-motor` / `controller-inverter`）；其余应用移出本页，归 `/products/custom-aluminum` 的可评估范围。新增 `src/lib/wordpress/ev-components.ts`，把 WP 38/24/49/20 交给 `resolveWordpressMediaCollection` 单次批量解析，并保留同图本地 WebP 回退。气密、精度、材料与质量体系改为**项目输入/证据要求**（EV05 证据矩阵），不写成已满足的结果。
+- 理由：三电页是能力与工程评估入口，不是库存目录；把 15 个类型写成现有产品会承诺没有证据的供货范围，而 X-ray 与「单一受控流程」属于跨产品线能力，不能被照片或文件名自动证明。
+- 影响：电池托盘、冷板、端板、PDU、OBC 等**不得再回到本页**（组件只渲染 `categories.items`，重现需经内容修改）；WP 38 的 CMS 标题仍是「三电_焊接密封」，与画面（生产区批量壳体）不符，页面不复用该措辞，本地回退图改用 `batch-housings-in-production`；材料牌号、公差、泄漏率、压力、产能、客户、车型与 IATF/ISO 认证在取得证据前不得发布。旧版 6 张 `public/images/ev-components/*.webp` 已归档到 `archive/2026-10-06-ev-components-legacy-images/`。
+- 相关：`PAGE-SPECS/ev-components.md`、`resources/research/2026-10-05-ev-custom-aluminum-source-audit.md`、`src/content/types.ts`、`src/content/ev-components.ts`、`src/lib/wordpress/ev-components.ts`、`src/components/ev-components/ev-components-page.tsx`、`src/app/products/ev-components/page.tsx`。
+
+## DEC-052 · 轮毂公开目录模块以「事实层合并 + WordPress 批准快照」为唯一数据链路
+
+- 日期：2026-10-06
+- 状态：数据链路（导入 → 快照 → 公开集合模块）已实现并验收；目录页与详情页尚未改接
+- 背景：`PAGE-SPECS/wheel-catalog.md` 与 `wheel-detail.md` 的施工前置是「公开集合」，而当时不存在：目录页消费 16 条虚构 `wheel-skus.ts`，详情页消费虚构 `WheelSku`，`publishedWheelModels` 实际只做 `hasImage` 过滤（1073 个技术候选被当成可售数量）。同时本轮全量精读竞品 `meathill/next-wordpress` 后确认其数据层只完成了形状、未接通失效链路，故只借鉴其「单一取数入口 + 防腐层 + tags」的形状，不照搬其降级方向。
+- 决定：建立三层数据链路并全部落盘。
+  1. **事实层（只读正本）** `assets/wheel-data/WHEEL-CATALOG-ALL.json`，1349 条源记录。
+  2. **编辑层（唯一可写正本）** 本地 WordPress CPT `wheel_model`（`scripts/wp-import-wheels.php` 幂等导入，`--prune` 清理包外记录）。
+  3. **批准快照（构建输入，进 git）** `src/content/wheel-publication.json`（`scripts/sync-wheel-publication.py` 从 WP REST 同步，忠实镜像不做资格判定）。
+  4. **公开集合模块** `src/lib/wheels/`（7 文件 1345 行）对页面只暴露四个接口：`getWheelCataloguePage` / `getWheelDetailPage` / `listPublishedWheelSlugs` / `resolvePublishedWheelSelection`。
+  公开资格 = **机器门槛（有图）AND 人工批准（发布/图权/供货/规格核验四项 + 至少一条批准变体 + 合法 slug）**，判定集中在 `publication.ts` 一处，逐条对照 mu-plugin 的 `fh_wheel_is_approved()`，**fail-closed**：缺字段即不通过，快照缺失或为空时公开集合为空，**绝不回退成「所有有图型号」**。
+- 理由：① 快照进 git 使批准可审计、构建确定、WP 故障时仍服务最后一次批准集；② 资格判定单点，避免目录/详情/sitemap/询盘四处漂移；③ `import "server-only"` 是编译期约束，客户端组件一 import 即构建失败，因此本项目**永不需要 CORS**（与竞品为一个尚未做出的购物车决策预留 CORS 形成对照）；④ 规格的唯一真相源保持事实层，WP 只存发布决定，避免「一处改一处漏」。
+- 影响：
+  - **⭐ 合并语义是唯一正确口径**：事实层按「（来源目录, model）」分条，同一 model 横跨多个尺寸目录且各目录变体互不重叠（实测 1349 → **1219** 个唯一型号，`dx008` = 15寸2 + 17寸4 + 18寸3 = 9 变体）。公开型号必须取**并集**。选择器旧版「保留分高的那条记录」丢掉 **257 个变体（734 → 991，26%）**，属真实数据丢失，已修正；`publication.ts` 亦按 model 分组后再判定。未合并时 138 条快照会膨胀成 184 个公开型号、其中 56 条匹配不到任何变体，修正后均为 0。
+  - **首期集合**：138 个型号 / 837 条批准规格（合并后每尺寸 30 个的并集，15 英寸由 28 升至 31，终于够 30）。13 英寸（1 个型号）与 14 英寸（2 个）数据不足，本期无法上架。
+  - **口径提示**：本轮按用户决定 138 条**全部批准**（便于验收分页/筛选/排序）。这与规格「首发 10–20 个」的纪律不一致，**属本地实验口径，上公开环境前必须重新收窄**。
+  - 筛选以 **variant 为交集单位**：同类多选的 OR 必须在**单条 variant 内部**求值，不跨轴拼接；已用合成模型（直径与孔距分属两条 variant）做负向断言证明假阳性被拒。工艺是型号级条件，未标注作为独立分组保留、不计入旋压集合。
+  - 双孔距轮毂按**实际提供的孔距**展开（`5*112, 5*114.3` → `["5x112","5x114.3"]`、`4/5*100` → `["4x100","5x100"]`），否则筛 `5x112` 会漏掉真实适配的轮毂。
+  - **尺寸只接受点号式**：实测全量 3485 条变体的 `size` 100% 是点号式、尺寸码式 0 条，故删除码式分支——它会静默产出错值（品号 `1663` 被读成 16×6）。将来若真出现码式必须带 sheet 语境判定。
+  - **直径与宽度量程不同**（10–26 / 4–14），共用区间会把宽度 8、8.5 全部过滤掉（验收中真实抓到过一次）。
+  - 详情页相关型号算法（spec §10）已实现 PCD+4 / 直径+3 / 工艺+2，**第 4 条「相同 finish family +1」未实现**——531 种原始中文 finish 尚无人工批准映射，从中文原文猜色系属规格明令禁止的推测，故留到映射批准后再加。
+  - 本轮未 commit、未 push、未部署；未修改任何供应商原始资产（`assets/wheel-data/`、`assets/wheel-images-webp/` 零改动）。
+- 相关：`src/lib/wheels/{types,normalize,publication,query,related,public-catalogue,index}.ts`、`src/content/wheel-publication.json`、`scripts/{build-wheel-import.py,sync-wheel-publication.py,select-wheel-first-batch.py,wp-import-wheels.php}`、`local-wp/wp-data/wp-content/mu-plugins/fenghuai-wheels.php`、`outputs/exports/wheel-import-package.json`、`PAGE-SPECS/wheel-catalog.md`、`PAGE-SPECS/wheel-detail.md`、`docs/competitor-next-wordpress-analysis.md`、DEC-013、DEC-014、DEC-028。
+
+## DEC-053 · 轮毂目录页与详情页改接公开集合，退休虚构 wheel-skus
+
+- 日期：2026-10-06
+- 状态：已实现并通过构建与四视口运行时验收
+- 背景：`PAGE-SPECS/wheel-catalog.md` 与 `wheel-detail.md` 都是**替换要求**（§13）—— 两条路由原本消费 16 条虚构 `WheelSku`、`WheelSketch` SVG 示意轮毂、虚构三分类（Monoblock / Two-Piece / Off-Road）、虚构 summary 与 spoke count。数据侧已由 DEC-052 就绪（事实层合并 + WordPress 批准快照 + `src/lib/wheels` 四个接口，验收 59/59），本轮只做接线。
+- 决定：
+  1. `/products/wheels` 改为 Server Component，读 `searchParams` → `getWheelCataloguePage()`；筛选为 `<form method="get">` + checkbox、分页为普通 `<a>`、移动抽屉用原生 `<details>`。**整页 0 个客户端组件**，无 JS 可用。
+  2. `/products/wheels/[sku]` → `[model]`（§13.1 参数语义），读 `getWheelDetailPage()`；`null → notFound()`；`generateStaticParams` 用 `listPublishedWheelSlugs()`。
+  3. `sitemap.ts` 的 16 条虚构 SKU URL 换成 `listPublishedWheelSlugs()`（138 条），并补上 4 条真实存在但漏掉的可索引路由。
+  4. `/api/inquiries` 增加服务端复核步骤（§7）：`bindWheelEnquiry()` 重查 `model + productionCode`。
+  5. 归档 `src/content/wheel-skus.ts` → `archive/2026-10-06-wheel-skus-retired/`。
+- 理由：虚构数据与真实生产记录（1349 条源记录 → 1219 个唯一型号）无任何对应关系；继续并存会让「公开数量」永久说不清。四处（目录 / 详情 / sitemap / 询盘复核）共用同一公开集合，避免集合漂移。
+- 影响：
+  - **验收实测**（真实 standalone 生产实例，非 dev）：
+    - 目录页 `?diameter=18` → noindex + canonical 回基础目录；`?q=zzzzzzzz` → 200 + noindex + 空状态；`?page=99` → **404**、`?page=6` → 200；垃圾参数 → 200 不 500。
+    - 目录页内部数据零泄露：`1073 / 1349 / 3485 / 2705`、商标词、`styleName`、`vehicleHints` 命中数**全为 0**；schema 只有 `ItemList`×1 + `ListItem`×24，**无 Product / Offer**。
+    - 详情页：canonical 不含 `variant`；schema 为 `Product` + `Brand` + `PropertyValue`，**无 `Offer`**；`?variant=FAKE-999` 被忽略且不进渲染 DOM（只在 Next 自身的 RSC 路由状态里）；相关型号恰好 3 个且不含自身；不存在 slug → 404。
+    - **四视口**（1440×900 / 1280×800 / 390×844 / 360×800）两页全部：横向溢出 0、单 H1、0 断图、0 请求失败、0 控制台错误。
+    - **询盘服务端复核**（读库验证）：客户端伪造 `selectedSpec: {size: "HACKED-SIZE"}` + 合法 code → 落库为**服务端真相** `19*8.5 / 5*114.3 / ET35 / CB73.1`；伪造 code → `spec: null` + `variantPending: true`；未公开型号 → 同上；非轮毂产品线 → 原样透传（作用域正确）。
+  - **本轮修掉的两个真缺陷**：
+    1. 详情页询盘表单收到空 `families` 时渲染出**只有两个选项的空「Wheel family」下拉**（虚构三分类的残留）。而规格 §7 的 WD03 字段清单里**本来就没有 family** → 改为 `families.length === 0` 时整块隐藏，数量字段占满整行。
+    2. 筛选栏在**未筛选**时也显示「N models match the current filters」，与事实不符 → 按 `isFiltered` 分支为「N models available」。
+  - **两处与规格的偏差，需知悉**：
+    1. **缓存失效**：规格 §8 要求「发布/撤回/改图后按 tag 重验证」。当前轮毂页面读的是**构建期快照**（DEC-052），运行时没有可失效的缓存 → 发布路径是「跑 `sync-wheel-publication.py` + 重建」。已在 `client.ts` 声明 `WHEEL_PUBLICATION_TAG` 并把 `wpFetch` 扩成接受可选 `tags`（默认空，现有调用方零影响），一旦有页面改读实时 WP 即可直接接上。
+    2. **移动抽屉**：规格 §10 要求「焦点锁定 + Escape 关闭」，而硬约束要求无 JS 可用 —— 二者在无 JS 下不可兼得。当前选「无 JS 可用」（原生 `<details>`，键盘可开合、焦点停留）。真正的 focus trap 需引入客户端组件，属后续增量。
+  - **遗留**：`/products/wheels/flow-formed` 被规格 §4 要求链接，但该页属 `flow-formed-wheels.md` 单独任务、尚未实现 → **目录页上是一条死链**（当前 404）。`WheelSketch` **未归档** —— 它仍被 `/gallery/wheels` 使用，那是另一个 PAGE-SPEC。
+  - `tsconfig.json` 的 `exclude` 补上 `archive`：`include` 是 `**/*.ts`，不加会让归档代码把已失效的 import 拖进 `next build` 的类型检查（本轮实测直接把构建打挂过一次）。
+  - 本轮未 commit、未 push、未部署。
+- 相关：`src/lib/wheels/`（7 文件）、`src/lib/wheels/inquiry-binding.ts`、`src/components/wheels/`（7 组件）、`src/app/products/wheels/page.tsx`、`src/app/products/wheels/[model]/page.tsx`、`src/app/sitemap.ts`、`src/app/api/inquiries/route.ts`、`src/content/wheel-detail.ts`、`src/components/inquiry-form.tsx`、`archive/2026-10-06-wheel-skus-retired/README.md`、`PAGE-SPECS/wheel-catalog.md`、`PAGE-SPECS/wheel-detail.md`、DEC-013、DEC-014、DEC-052。
+
+## DEC-054 · 旋压入口页落地，工艺边界服务端锁定；筛选/分页组件参数化以支持子目录
+
+- 日期：2026-10-06
+- 状态：已实现并通过构建与四视口运行时验收
+- 背景：目录页按 `PAGE-SPECS/wheel-catalog.md` §4 已链接 `/products/wheels/flow-formed`，而该路由不存在 → 成了**全站唯一一条从线上页面点出去会 404 的链接**。`flow-formed-wheels.md` 的施工前置（型号批准覆盖层）已由 DEC-052 解除。
+- 决定：
+  1. 新建 `/products/wheels/flow-formed`，按 WFF01–WFF05 落地。
+  2. **工艺边界由服务端锁定**：`parseCatalogueSearchParams` 解析出的 `process` **被丢弃**，一律覆写为 `FLOW_FORMED_PROCESSES`；本页生成的所有 URL（表单 action、chips、排序隐藏域、分页）**都不含 `process`**。
+  3. **筛选栏与分页组件参数化**（新增 `basePath` + `lockedProcesses`）：`buildCatalogueHref` 增加 `path` 与 `lockedProcesses` 两个可选 override；`WheelCatalogueFilters` / `WheelCatalogueAppliedChips` / `WheelCatalogueSort` / `WheelCataloguePagination` 均接受这两项。全部为**可选参数、默认回落到总目录**，既有调用方行为不变。
+  4. 发布门槛（`src/content/flow-formed-wheels.ts`）：`copyReviewed: false` + `equipmentImageRights: "pending"` → 页面**完整渲染**但输出 `robots: { index: false, follow: true }` 且**不发 canonical**，不进 sitemap。沿用 DEC-050 的 fail-closed 范式。
+- 理由：① 边界若留在 URL 里，改一个参数就能把页面放宽成全站轮毂，且同一结果集会有两个可索引 URL；② 子目录若复用总目录的表单/分页而不带路径，**改筛选或翻页会把访客静默送回总目录**（结果集变大、上下文丢失，肉眼不易察觉）；③ 门槛关闭时仍修好死链，但绝不在文案与图权未确认时让页面进索引。
+- 影响：
+  - **验收实测**（真实 standalone 生产实例）：路由 200 / 越界 404 / 空结果 200 / 垃圾参数 200（21/21 全过）。
+  - **工艺边界实测**：`?process=low-pressure-cast`、`?process=not-specified`、`?process=`、`?process=garbage` 四种注入与无参数**结果集逐字节一致**（md5 相同）；页面 `input[name=process]` = **0**；生成 URL 里 `process=` = **0**；渲染出的工艺标签只有 `Flow Formed` 与 `Low Pressure Cast + Flow Formed` 两种，**无裸 `Low Pressure Cast`**。
+  - **跨页面一致性**：目录页 facet（`Flow Formed` 53 + `Low Pressure Cast + Flow Formed` 9 = **62**）与旋压页总数 **62** 相等；两处逐页卡数都是 24+24+14。
+  - **SEO**：`noindex, follow`、无 canonical、`CollectionPage` + `ItemList`、**无 Offer**；sitemap 不含本页。
+  - **分页回归**：旋压页页码留在 `/products/wheels/flow-formed?page=N`；目录页仍留在 `/products/wheels?page=N`（改动未影响既有行为）。
+  - **四视口**（1440/1280/390/360）：横向溢出 0、单 H1、0 断图、**0 个 `process` 输入**、0 请求失败、0 控制台错误。
+  - **两处对实现方的纠偏**：① 我在派单时把 WP 116 的 alt 错写成 `…for an applicable cast wheel blank`（那是该图在**能力页**的 alt）；实现方按 `flow-formed-wheels.md` §4 第 222 行用了 `…for an applicable wheel program`，并指出本页 §3 步骤 01 明令「只记录旋压时不得推断毛坯」，用 `cast blank` 会自相矛盾 —— **实现方以规格为准覆盖了我的错误指令，这是对的**。② 我最初禁止改动共享分页，实现方因此新写了一套 `FlowFormedPager`；复核后我认为重复实现会漂移，遂**给共享分页补上两个参数并删掉那 99 行重复**。
+  - ⚠️ 本次复核中我**误删过 `FlowFormedCatalogue` 组件**（按注释锚点切除时把夹在中间的导出组件一并删掉），已从 `.next` 构建产物的 sourcemap `sourcesContent` **完整恢复**，随后用精确字符串锚点重做并加了断言。**教训：按注释锚点做区间删除时，必须断言区间内不含要保留的导出符号。**
+  - 本轮未 commit、未 push、未部署。
+- **补充（2026-10-06，用户指令「现在开」）**：`publicationGate` 已置为 `copyReviewed: true` + `equipmentImageRights: "approved"`，页面**开放索引**。
+  - **同时修掉一个联动缺口**：`src/app/sitemap.ts` 此前**不读门槛**，直接翻 flag 会造成不一致状态 —— 页面可索引、却不在 sitemap 里。已改为**读同一个门槛**决定是否收录本页（规格 §7 反过来读就是「门槛通过则应进 sitemap」）。这样两者**再也不会互相矛盾**：一个说「别收录我」的 URL，绝不会出现在一个专为收录而生的文件里。
+  - **双向耦合已实测**：开门态 → 页面 `index, follow` + canonical 自指 + sitemap 177 URL 含本页；临时关回 → `noindex` + **无 canonical** + sitemap 退回 176 URL 且不含本页；随后恢复开门态。
+  - **开门不影响其它 §7 规则**：筛选页与空结果仍 `noindex, follow`、分页仍有自己的 canonical、越界仍 404、工艺边界仍锁死（`?process=` 任一取值仍被忽略）。10/10 断言通过。
+  - `equipmentImageRights` 的放行记的是「按指示清除」；若存在书面文案审核或图权释放文件，应补引在这里。
+- 相关：`src/app/products/wheels/flow-formed/page.tsx`、`src/content/flow-formed-wheels.ts`、`src/lib/wordpress/flow-formed.ts`、`src/components/wheels/flow-formed-page.tsx`、`src/components/wheels/wheel-catalogue-{filters,pagination}.tsx`、`src/lib/wheels/public-catalogue.ts`、`src/lib/wheels/index.ts`、`PAGE-SPECS/flow-formed-wheels.md`、DEC-050、DEC-052、DEC-053。
+
+## DEC-055 · 询盘改存 WordPress CPT：单库 + WordPress 唯一写入点
+
+- 日期：2026-10-06
+- 状态：**后端已实现并端到端验证**（2026-10-06）；两步表单与感谢页仍待做
+- **推翻**：`outputs/site-launch-plan/02-data-and-inquiry-design.md` §1「询盘、快照、分配、邮件记录 → 独立 PostgreSQL」；`ARCHITECTURE.md` 的 `PG[(询盘 PostgreSQL)]` 节点与 DEC-024 相关描述
+- 背景：2026-10-06 讨论询盘持久化方案。原设计是**双库**（WordPress MySQL 存内容 + 独立 PostgreSQL 存询盘），理由是「沿用 WordPress 原生内容生态，同时让询盘事务、邮件重试与内容后台故障相互隔离」。当时的实现状态是进程内 `Map`（重启即丢）。用户提出三项目标：**轮毂数据、询盘数据、后台登录用户数据同库**；**WordPress 可做管理**；**对轮毂 CRUD 后直接控制上架/下架**。
+- 决定：
+  1. **单库** —— 全部落在现有的 `local-wp/docker-compose.yml` 的 MySQL（容器 `fh-wp-db`，库名 `wordpress`）。不新建任何数据库。
+  2. **询盘用 CPT `fh_inquiry`**，与轮毂型号 `wheel_model` 同一模式（`wp_posts` + `wp_postmeta`）。
+  3. **WordPress 是唯一写入点**；Next 侧**不持有任何数据库凭据**。
+  4. **Next 永不直接读写 `wp_*` 表** —— 轮毂 CRUD 走 WP API（`wp_insert_post`），询盘走 WP REST 端点。
+  5. 写入路径：`浏览器 → Next /api/inquiries（公开边界：限流/honeypot/时间陷阱/上下文复核）→ 服务端转发（服务凭据）→ WP REST /fh/v1/inquiries → MySQL`。**浏览器不直连 WP REST**（否则跨源，且要为一个我们不需要的跨源通路开 CORS）。
+- 理由：
+  1. **CPT 决定与双库互斥**。CPT 的数据必然落在 `wp_posts` / `wp_postmeta`。选定 CPT 的那一刻，「询盘存独立 PostgreSQL」在物理上已不可行 —— 这不是取舍，是前提。
+  2. **⭐ 决定性论证：在「WordPress 是唯一写入点」下，第二个库不提供任何隔离。** 用户要求 WordPress 后台能查阅管理询盘 → WP 的 PHP 进程**必须能连上存询盘的那个库** → 于是「WP 被攻破 / 插件漏洞 ⇒ 能读到询盘」这一风险**无论询盘在哪个库都成立**。双库带来的 PII 隔离收益归零。反过来说，双库只有在「Next 独占询盘、WP 完全看不到」时才有价值 —— 而那正是被否掉的方案。
+  3. **原设计要的「隔离」发生在应用层，不在数据库层。** 它担心的「内容后台故障」指 WordPress **应用层**挂掉（插件 PHP fatal、升级失败、mu-plugin 报错）。直写 vs 经 WP REST 的现实差异：WordPress 应用挂了 → 直写方案询盘照常记录，经 WP REST 方案询盘被阻断。而 **MySQL 本身挂掉时两种方案结果一样**。所以单库**不**削弱应用层隔离，反而「经 WP REST 写入」才是唯一真正破坏它的方案。
+  4. **单库消掉了 4 条真实风险**：① DB 凭据爆炸半径（Next 不再需要凭据）② 两个写者一个 schema ③ 表契约「静默」—— REST 是有版本、有错误面的显式契约 ④ DB 端口暴露（`local-wp/docker-compose.yml` 的 `33061:3306` 可以直接取消映射）。
+  5. **容量实测远未到需要分库的量级**：现库 12 表全部 InnoDB / `utf8mb4_unicode_520_ci`；`wp_postmeta` 4377 行 / 1.86 MB，`wheel_model` 138 条 → 3174 条 meta（平均 23 条/型号）。推演到极限（全量 1219 型号 + 5 年询盘）约 **104,000 行 / 44 MB** —— 离单表需要拆分的量级差 2–3 个数量级。
+  6. **`wp_postmeta` 按 meta 过滤不慢**：`meta_key` 有索引；`EXPLAIN` 显示 `type=ref`、`rows=138`（估算），10 万行内毫秒级。EAV 形态在做聚合分析时确实不友好，但**分库也解决不了这一点**（换张表照样要写 SQL），需要时加只读报表视图即可。
+- 影响：
+  - **同时解决上架/下架缺口**：DEC-052 把轮毂发布决定做成了构建期快照 `src/content/wheel-publication.json`，导致「在 wp-admin 改 `publication_status`，前端不变」（需跑 `sync-wheel-publication.py` + 重建）。既然 WP 成为单一真相源，`src/lib/wheels/publication.ts` 在 `WP_MODE=live` 时应从 WP REST 实时读（快照降级为 fallback）。管道已预留（`WHEEL_PUBLICATION_TAG`，DEC-053）。
+  - **必须改的活文档**：`ARCHITECTURE.md`（PG 节点 + 3 张表 + 时序图 + 待办项）、`outputs/site-launch-plan/02-data-and-inquiry-design.md`（§1 表与两段论证、§7.1 事务顺序）、`PROJECT.md`、`README.md`。
+  - **不改写的历史记录**：`outputs/architecture-alignment-audit.md`（2026-10-05 审计）、`work/completed/2026-10-05-request-a-quote-page-spec.md` —— 它们是带日期的记录，本 DEC 取代其结论，但不回改原文。
+  - **仍然保留的约束**：询盘不做公开列表、不按序号公开查询（`02-data-and-inquiry-design.md` §L107）；业务状态与邮件状态分开管理，不得折成一个 `success=true`（同文档 §L119）；WordPress 签名调用重验证端点（同文档 §L87）。
+  - 本轮未 commit、未 push、未部署。
+- **实施结果（2026-10-06）**：
+  - **WordPress 侧**：新增 `local-wp/mu-plugins/fenghuai-inquiries.php`（1511 行）—— CPT `fh_inquiry`（`show_in_rest: false`，询盘不进公开 REST）+ 三张专用表（`fh_inquiry_key` 幂等唯一键 / `fh_inquiry_outbox` 邮件队列带租约 / `fh_inquiry_event` 邮件事件带 provider 事件去重）+ `POST /fh/v1/inquiries`（服务密钥 `hash_equals` 鉴权、未配置密钥 fail-closed 503）+ 后台「询盘」列表页（业务状态可改、邮件状态只读）+ `fh_inquiry_self_check()`。
+  - **Next 侧**：`wpWrite()`（写请求不缓存、失败区分 `not_configured` / `network` / `client` / `server`）、`store.ts` 改用 `InquiryPersistenceError` 异常而非 null 返回、`route.ts` 新增 `persisted` 与 `emailStatus` 字段。
+  - **为什么需要专用表**：`wp_postmeta` **没有唯一约束**，给不了「同一幂等键返回同一询盘号」的硬保证。这是 CPT 路线必须付出的代价，用三张窄表补上。
+  - **⭐ 事务实测（本轮最关键的验证）**：`wp_insert_post()` 是否真能参与可回滚事务，实测给了肯定答案 —— Case A（`wp_insert_post` 失败）→ 500，键行/CPT/meta/outbox 计数**完全不变**；Case B（最后一步 outbox 写入失败）→ 500，**连已写的 CPT 与 meta 一起撤销**。文档 §5 原先标的「张力」已解除，但结论以实测为准、不作普遍保证。
+  - **验收**：`scripts/verify-inquiry-backend.py` **57/57**；`scripts/verify-wheel-cpt.py` 回归 **21/21**；`tsc` / `eslint src` / `next build` 全 0 错误。
+  - **端到端实测（浏览器 → Next → WP → MySQL）**：经 Next 提交 → 201 `persisted:true` → 库里出现 CPT 记录；**服务端复核生效**（客户端伪造 `selectedSpec:{size:"HACKED"}` 被覆盖为真实 `19*8.5 / 5*114.3 / ET35 / CB73.1`）；中文 finish 存取无损（`CHAR_LENGTH 74 < LENGTH 86`，多字节 UTF-8 正确）。
+  - **本轮修掉的一个失败模式**：`getWpRestRoot()` 原先只认 `WP_API_URL` 带 `/wp-json/wp/v2` 后缀的形式，传裸 origin（`http://localhost:8081`）会拼出 `/fh/v1/inquiries` 并返回**裸 `HTTP 404`**，与「路由不存在」无法区分 —— 实测中真的把我带偏过一次。已改为兼容两种形式，且写失败时日志输出**完整 URL**。
+  - **⚠️ 记录一个验收盲区**：`verify-inquiry-backend.py` 的多数断言走进程内 `WP_REST_Request` 派发，**不经过 HTTP 层**，因此测不出 URL 拼接类问题。这正是上面那条 404 靠端到端手工实测才发现的原因。后续若要自动化覆盖，需要一个真的打 Next `/api/inquiries` 的集成用例。
+- 相关：`local-wp/mu-plugins/fenghuai-inquiries.php`、`local-wp/mu-plugins/fenghuai-wheels.php`、`scripts/verify-inquiry-backend.py`、`src/app/api/inquiries/route.ts`、`src/lib/inquiry/`、`src/lib/wordpress/client.ts`、`src/lib/wheels/publication.ts`、`PAGE-SPECS/request-a-quote.md`、DEC-024、DEC-028、DEC-050、DEC-052、DEC-053。
+
+## DEC-056 · mu-plugin 纳入版本控制：跟踪源 + 单向同步进容器
+
+- 日期：2026-10-06
+- 状态：已实现并验证
+- 背景：`local-wp/wp-data/` 是 WordPress 容器的 bind-mount 目标，在 `.gitignore` 第 63 行。mu-plugin `fenghuai-wheels.php` 落在其中，**长期不受版本控制**。而它正是数据库 schema 的唯一所有者（CPT 注册、25 个 meta 声明、REST 端点、后台表单），且 DEC-055 之后还要再加询盘 CPT 与 REST 写端点 —— 等于继续往一个看不见的地方加代码。
+- 决定：跟踪源放 `local-wp/mu-plugins/`（进 git），`local-wp/wp-data/wp-content/mu-plugins/` 降级为**派生产物**；新增 `scripts/sync-mu-plugins.py` 做**单向**同步（`--check` 只校验）。`scripts/verify-wheel-cpt.py` 的 `PLUGIN_PATH` 指向跟踪源。
+- 理由：这与本项目反复踩到的「静默契约」是同一个病 —— Next 侧看不到 schema 变更，只能等运行时炸。把源放进 git 之后，**schema 改动会出现在 `git diff` 里**，可评审、可安装、可回滚。选单向而非双向，是为了避免「哪份是源」的二次歧义。
+- 影响：同步脚本带**回读校验**（复制后重新算 sha256）与**残留清理**（目标里源已删掉的 `.php` 会被清掉，否则旧 plugin 继续运行）。阴性对照已验：故意改一份 → `--check` 正确报不一致并退出码 1。`verify-wheel-cpt.py` 仍 21/21 通过。
+- 相关：`local-wp/mu-plugins/fenghuai-wheels.php`、`scripts/sync-mu-plugins.py`、`scripts/verify-wheel-cpt.py`、`.gitignore`、DEC-055。
+
+## DEC-057 · 修复客户端跳转后的内容不可见（reveal 从「挂载驱动」改为「DOM 驱动」）
+
+- 日期：2026-10-06
+- 状态：已实现并验证
+- 背景：用户报告「页内链接跳转出现白屏」。实测复现并定位：`useSiteMotion()` 原实现是 `useEffect(…, [])`，在**挂载时收集一次** `[data-reveal]` / `[data-reveal-group]` 目标；而 `SiteMotion` 挂在 `src/app/layout.tsx`，App Router **跨客户端导航保持 root layout 挂载** → 收集到的节点列表**永远是第一页的**。此后每一页经站内链接到达时，其 section 从未被任何 `IntersectionObserver` 观察，永久停在 `opacity: 0`。
+- **这违反了一条已写下的设计不变式**（`globals.css` / `DESIGN.md` §1.5）：*"Content is visible unless a revealed-scroll state is **positively established** by JS. The animation is opt-in, the content is not."* 客户端跳转后 `data-motion-armed` 仍然武装，但新内容的 revealed 状态**没有任何 JS 建立过** —— 正是这条原则明令禁止的状态。
+- 实测证据（真实 standalone 生产实例）：
+  | 场景 | reveal 元素 | 隐藏 | 视口内隐藏 |
+  |---|---|---|---|
+  | 硬加载 `/about` | 18 | **0** | 0 |
+  | 客户端跳转 → `/about` +1.2s | 18 | **13** | 2 |
+  | 同上 +7.2s（**已过 5 秒兜底**） | 18 | **13** | 2 ← 纹丝不动 |
+  | 再滚动 400px | 18 | **13** | 3 ← 也救不回来 |
+  | 对照：硬加载 `/contact` | 8 | 2（折叠下方，正常） | 0 |
+- 决定（两层修法）：
+  1. **hook 改为监听 DOM 插入**（`MutationObserver`，`childList + subtree`）而非路径。导航、streamed Suspense 边界、迟挂载的 section 到达方式完全相同，所以这是比「监听 pathname」更一般的修法；**并因此不引入 `usePathname`，hook 与 router 解耦**。
+  2. **5 秒兜底从 JS 定时器改由 CSS 承担**（`fh-reveal-backstop` 关键帧 + `animation-delay: 5s`）。旧 JS 兜底遍历的是挂载时捕获的数组 —— **持有引用就会过期**，实测它确实触发了却什么都没救回。CSS 不持有引用、不需要 JS，连「hook 本身抛错」也覆盖。
+  3. 顺带把 `revealInView()` 从「遍历捕获列表」改为「**每次从 document 实时查询**」—— 同一个失效根源。
+- 职责因此变得更清晰，也更难再退化：**JS 管「滚动到哪显现到哪」（精确、渐进）；CSS 管「任何东西都不许停留隐藏超过 5 秒」（绝对保证）**。一个不变式一个所有者 —— 与 DEC-055 里「两个写者一个 schema」是同一类问题的同一类解法。
+- 影响：
+  - **验收 15/15**（真实 standalone，含硬加载 / 三个客户端跳转 / 超时 / 滚动 / 负对照 / CSS 兜底 / 前进后退 / 移动视口 / reduced-motion）：客户端跳转后视口内隐藏 **0**；`/about` 等 6.5s 后 0；后退 0；移动端 0。
+  - **负对照证明动效没被改坏**：折叠下方 `plain` 10/10 隐藏、`group` 子元素 10/10 隐藏，滚到该处后 0 隐藏 —— 渐进显现仍然精确工作。
+  - **CSS 兜底实测有效**：剥掉全部 `.is-revealed` 模拟「JS 失效」→ 11 个变隐藏 → 6 秒后 **11 → 0**，无需 JS。
+  - **全路由冒烟 20/20**：每条路由 200 / 视口内 0 隐藏 / 0 断图 / 0 控制台错误。
+  - **回归**：轮毂 CPT 21/21 ｜ 询盘后端 57/57 ｜ mu-plugin 同步一致 ｜ `tsc` 0 ｜ `eslint` 0 ｜ `build` 0 错误。
+  - **渲染模式未变**：`○ Static 2 / ƒ Dynamic 39`，与修复前逐项一致（未因改动引入动态渲染）。
+  - **一个需要知情的后果**：第 3 层让「滚动入场」实际上是**时间有界**的 —— 5 秒后无论是否滚动到，全部显现。这是 §1.5 原定取舍（"宁可不动画也不留空洞"），旧的 JS 定时器行为完全相同，已写进 `DESIGN.md` §1.5 与 CSS 注释，以免日后被误当成 bug。
+  - 改动仅 2 个文件：`src/hooks/use-site-motion.ts`（拆分 `useReveal` / `useParallax`）、`src/app/globals.css`（+CSS 兜底）。未 commit、未 push、未部署。
+- 相关：`src/hooks/use-site-motion.ts`、`src/components/site-motion.tsx`、`src/app/layout.tsx`、`src/app/globals.css`、`DESIGN.md`、DEC-055。
+
+## DEC-058 · 轮毂筛选器重构：孔距升为第一轴、Apply 置于顶部、显式多选、长尾收敛
+
+- 日期：2026-10-06
+- 状态：已实现并验证
+- 背景：用户要求「优化好轮毂筛选器的样式，从用户视角来看得方便用户处理」。改动前实测（1440×900）：筛选栏总高 **1144px**，视口 900px；首屏只看得到 `Recorded process` + `Diameter` 两组，`Width` 在 1035px、**`PCD` 在 1367px 完全在视口外**，`Apply filters` 在 **1598px**（勾完 18 寸要滚约 700px 才按得到）。38 个 checkbox（工艺 5 + 直径 6 + 宽度 11 + 孔距 16），桌面/移动各渲染一份。
+- 决定：
+  1. **筛选轴顺序改为 孔距 → 直径 → 宽度 → 工艺**（原为 工艺 → 直径 → 宽度 → 孔距）。
+  2. **`Apply filters` 移到筛选栏最上（固定不滚）**，结果计数与它同区。用户明确要求。
+  3. **显式说明「多选」**：顶部常驻一条左边框注记（纯文字，不依赖 JS），每组 `legend` 在应用后显示 `· N selected`。用户明确要求。
+  4. **孔距加搜索框**（规格 §5.1 原本就要求「可搜索多选」）；**长尾折进原生 `<details>`**。
+  5. **短标签组改多列**（孔距/宽度 2 列、直径 3 列、工艺保持单列因为标签太长）。
+  6. 结构改为「固定头部 + 独立滚动区」：`form` 是 flex 列，`Apply` 在 `shrink-0` 区、筛选在 `flex-1 overflow-y-auto` 区。
+- 理由：
+  - **孔距第一的依据是适配工程，不是审美。** 三个独立来源一致：Discount Tire 官方流程（先验证 bolt pattern）、Curva Concepts（「轮毂必须先物理装上车，这从 bolt pattern 开始；选错，别的都无意义」）、Tire Rack（bolt pattern 是轮毂被列为适配某车前必须核实的项）。
+  - ⭐ **决定性理由是不对称性**：PCD 是这一页上**唯一一个「选错 = 零件直接不可用」的轴** —— `5×114.3` 与 `5×112` 相差 2.3mm，物理装不上、无补救；而直径/宽度/工艺都是偏好区间。中心孔与偏距是同样的硬门槛，但规格 §5.1 首发不做这两项筛选，于是 **PCD 独自承担了「能不能装」的全部职责**。把它放在第 4 位、要滚过 22 个选项才看到，是说不通的。
+  - 反方证据也记下（免得日后被当成疏漏）：Vossen 用 Series/Size/Price、Fitment Industries 画廊用直径优先 —— 但那两个都是**视觉画廊**（用户在看效果），本页是**生产目录**（用户在看能不能装）。**2nforged 仓库里没有任何筛选 UI，线上站点 403 有反爬** —— 它对我们这个能力没有参考价值。
+  - **Apply 必须第一**：它是这一栏唯一的动作，也是唯一「需要按下才生效」的控件。埋在最下等于让人做完所有工作再去找提交键。
+  - **多选必须明说**：同类 OR、跨轴 AND，但用户默认预期是单选；最常见的两种误解是「点 18 寸会不会把 19 寸排除掉」和「再点一个是换还是加」。
+- 影响：
+  - **验收 48/48 全过**（真实 standalone，两套脚本各 23 + 25）：桌面结构 / Apply 可达 / 孔距搜索 / 长尾提交 / 移动 / 无 JS / 旋压页回归 / 全站 20 路由冒烟。
+  - **实测数字**：内容高度 **1377 → 943px（-32%）**；孔距 **16 行 → 5 行**（2 列 × 10 项直显 + 6 项收起）；移动抽屉 **1213 → 1093px**；`Apply` 从 **1598px（视口外）→ 531px（首屏内）**，且滚入筛选区后固定在 126..174 仍可见。
+  - **无 JS 不退化**：38 个 checkbox 全在、2 个 `<details>` 可展开、`Apply` 可用、多选注记可见。**孔距搜索框在无 JS 时「不渲染」** —— 它是客户端组件但会被 SSR，若不门控就会出现一个打字没反应的**假控件**（规格 §11 明令禁止），用 `useSyncExternalStore` 门控（服务端快照 `false` / 客户端 `true`）。
+  - **⭐ 折起来的选项仍然提交**（实测：展开 → 勾 `10.5"` → 收起 → Apply → URL 含 `width=10.5`）。这是长尾折叠能不能做的**前提**，不成立就不能做。
+  - **多选语义实测**：勾 18 + 19 → URL `diameter=18&diameter=19` → 结果 **53** 个（单 18 寸为 42），确认 OR 而非覆盖。
+  - **旋压页回归**：工艺轴仍锁定（`input[name=process]` = 0）、孔距仍是第一组、多选注记也在。
+  - 回滚时若只改顺序：轴顺序集中在 `FilterFields` 里一段带注释的块，移动块即可。
+  - **一处已知行为（不是缺陷）**：每组 `legend` 的 `· N selected` 只在 **Apply 之后**刷新 —— 因为 checkbox 是 uncontrolled（`defaultChecked`），勾选不触发重渲染。要让它在 Apply 前也实时更新，需要把筛选区改成受控客户端组件（可行且仍能保留无 JS 回退，但复杂度上升）。当前判断不值得，因为顶部注记已经承担了「这是多选」的指示职责。
+  - 本轮未 commit、未 push、未部署。
+- 相关：`src/components/wheels/wheel-catalogue-filters.tsx`、`src/components/wheels/pcd-search-group.tsx`、`src/app/products/wheels/page.tsx`、`PAGE-SPECS/wheel-catalog.md` §5.1、DEC-053、DEC-054、DEC-057。
+
+## DEC-059 · 两条虚构画廊路由退场（308 永久重定向 + 归档），finishes 加发布门槛
+
+- 日期：2026-10-06
+- 状态：已实现并验证
+- 背景：`/gallery`、`/gallery/wheels`、`/gallery/finishes` 三条路由**都是占位**，各自的数据文件头部就写着 `PLACEHOLDER`：
+  - `/gallery` 发布 **9 个编造的装车案例**（`src/content/builds.ts`：「BMW G80 M3 / 20x10 / Brushed clear」），而 `public/images/builds/` **0 个文件** —— 9 个案例没有任何一张实拍。
+  - `/gallery/wheels` 发布 **22 个编造的设计名**（`src/content/wheel-designs.ts`：「Gunmetal Retro Five-Spoke」），配 `WheelSketch` SVG 线稿冒充设计图。
+  - `/gallery/finishes` 发布 8 个占位表面处理，**用 CSS 渐变冒充色板** —— 但它**对用户诚实**：明写「illustrative colour representation, not photographs」，并引导索取实物样卡。
+  项目对「虚构数据 + 无素材」的处置范式早已确立（DEC-050 / DEC-053 / DEC-054）：**归档、留 README、有证据才渲染、没证据整段不渲染**。
+- 决定：三条路由分两种处理 —— **两条退场、一条门控**。
+
+  **① 退场（308 永久重定向，不删路由以免 404）**
+
+  | 旧路由 | 目标 | 语义理由 |
+  |---|---|---|
+  | `/gallery`（装车案例/适配参考） | `/fitment` | `/fitment` 就是真实的车型适配参考页 —— 功能等价 |
+  | `/gallery/wheels`（浏览轮毂设计） | `/products/wheels` | 真实的公开轮毂目录 —— 功能等价 |
+
+  用 `permanentRedirect()`（**308**），不是项目里 `/manufacturing`、`/resources` 用的 `redirect()`（**307**）。**差异是有意的**：那两条是「改名」（内容还在、可能再动），这里是**永久退场**（虚构内容不会回来、目标页是唯一正本），必须让爬虫把权重永久转移过去、并停止再考虑旧 URL。
+
+  **② 门控（保留页面，加发布门槛）**
+  `finish-guide.ts` 新增 `finishesPage.publicationGate.finishNamesConfirmed = false` 与 `isFinishesPublishingOpen(gate)`。8 个色名仍是占位、无真实色板实拍，规格 §6.2 要求「finish 未完成英文映射前不生成色板」；页面本身诚实，但**色名未确认前不应进索引**。门槛关闭时：页面**完整渲染**（hero / 诚实注记 / 色板网格全在），metadata 输出 `robots: { index: false, follow: true }` 且**不发 canonical**；`sitemap.ts` **读同一个门槛**决定是否收录（照 DEC-054 的双向耦合写法，二者不会再互相矛盾）。打开条件 = 色名经人工确认并将 `finishNamesConfirmed` 置 `true` —— 这是**唯一**需要改的地方。
+- 理由：
+  1. **授权来源是项目自己的先例，不是本轮偏好。** `src/components/wheel-strip-section.tsx` 的注释原文：`<GalleryBand>` 曾指向 `/gallery`，*"out of scope this phase and has no assets — the link led to an empty page. It was removed rather than kept as a promise the site cannot keep."* —— **首页链接早就因为「没素材、指向空页」被撤掉了**，只是路由本身当时没撤。本轮把这句话补完。
+  2. **归档基线的架构文档已经写明要合并 `/gallery/wheels`。** `archive/2026-10-01-document-baseline/ARCHITECTURE/page-architecture/README.md`：「`/gallery/wheels` → **合并进** `/products/wheels` 的筛选」；`PAGE-SPECS/_components.md` 亦有「`/gallery/wheels`｜存在｜**合并进 `/products/wheels`**」。本轮 308 到 `/products/wheels` 正是执行这条早已写下的决定。
+  3. **308 而非 307 的依据**：退场是终态。307 让爬虫继续把旧 URL 当候选、把权重留在旧地址；308 明确「永久、去新地址」。用错语义是 SEO 上的实质损失，不是风格问题。
+  4. **finishes 不该跟着一起退。** 假的是「编造的案例/设计」，不是「色板是示意」这件事本身 —— 后者已经写在页面上并引导索取实物样卡，是**诚实**的。所以它是**门控**（未确认进不了索引），不是**下架**。
+  5. **入站链接里的 5 处「假声明」必须删，不是改指向。** 它们不只是死链，文案本身在说假话：
+     - `products.ts` 卡片：「Vehicle gallery / **See how each family sits on real platforms**, with the sizes and finishes used on **each build**」→ 案例是编的，「real platforms / each build」是假声明。
+     - `products.ts` 卡片：「Vehicle gallery / Fitment references across performance, luxury and off-road platforms」→ 同样。
+     - `finish-guide.ts` 卡片：「Vehicle gallery / **See how these finishes sit on real platforms**, with the sizes **we built to**」→ 同样。
+     - `fitment.ts` 卡片：「Wheel gallery / Browse **the design catalogue**…」→ 设计目录是编的。
+     - `fitment/page.tsx`、`fitment/[platform]/page.tsx` 的「Browse designs」按钮 → 同上。
+     **改指向解决不了假文案**，所以一律删除卡片/按钮，不做重定向改写。
+- 影响：
+  **① 归档**（`archive/2026-10-06-fictional-galleries/`，镜像 `src/` 路径）：`app/gallery/page.tsx`、`app/gallery/wheels/page.tsx`、`content/builds.ts`、`content/gallery.ts`、`content/wheel-designs.ts`、`components/builds-gallery.tsx`、`components/wheel-gallery.tsx`（含 `WheelSketch`）、`components/sections/gallery-band.tsx`。`src/app/gallery/` 原地保留（因为 `finishes/` 在里面），`/gallery/page.tsx` 即重定向文件。
+
+  **② 归档前的消费方核对（0 处悬空）**：`content/gallery.ts` 仅 `/gallery` 用；`components/wheel-gallery.tsx` 仅 `/gallery/wheels` 用，`WheelSketch` 在 `src/` 内**无其它消费方**；`sections/gallery-band.tsx` **0 处 import**（死组件，已再 grep 确认）；`content/builds.ts`、`components/builds-gallery.tsx` 仅 `/gallery` 用；`content/wheel-designs.ts` 仅被 `/gallery/wheels` 与其自身的 `wheel-gallery.tsx` 用。归档目录已被 `tsconfig.json` 的 `exclude` 排除（DEC-053 已设），不参与 `next build` 类型检查。
+
+  **③ 修正的 5 处假声明文案**（见理由 5），均在原处留了注释说明删除原因与 DEC-059。
+
+  **④ sitemap**：删除 `/gallery`、`/gallery/wheels` 两条；`/gallery/finishes` 改为**读门槛**收录（当前门槛关着 → 不收录）。重定向 URL 永不进 sitemap。
+
+  **⑤ `STATUS.md` 修正两处错误说法**：
+  - 原「`WheelSketch` 未归档：…那是另一个 PAGE-SPEC（轮毂设计画廊）」→ **错**。全量复核（现行 `PAGE-SPECS/`、`PAGE-SPECS/index.md`，及 `archive/*/PAGE-SPECS/`）确认 **`/gallery/*` 从来没有 Page SPEC**；归档基线的 `_viewport-audit.md` 自己写着「规格里没有 `/gallery` 的独立页面规格」，并把 `/gallery` 列在「本阶段不做」表。已改为事实。
+  - 原「✅ 两块画廊：`/gallery`（按车型）与 `/gallery/wheels`（按设计）刻意分开」→ 已改为退场后的状态。
+
+  **⑥ 本轮刻意不做的部分（记为后续，不是遗漏）**：
+  - **不删 `types.ts` 里的死类型**。`BuildEntry` / `WheelDesign` / `SpokePattern` / `WheelConstruction` / `WheelFinish` / `WheelApplication` 本轮后变成死类型（`WheelConstruction` / `WheelFinish` 只被**已退休的** `WheelSku` 用）。死类型无害；改类型 = 改内容契约（AGENTS.md），风险高于收益，留到后续单独处理。`FinishOption` **保留**（`finishes.ts` 在用）。
+  - **不动 `/gallery/finishes` 的视觉与文案**（它本身是诚实的）。因此该页里指向旧 `/gallery` 的两处链接（面包屑 + 「Back to gallery」按钮）**原样保留** —— 它们经 308 仍可达，且改动属于「动 finishes」范畴。⚠️ 这意味着本轮的残留 grep 会在这两处命中 `"/gallery`，属已知且有意为之（见「遗留」）。
+  - **`finishesPathways` 删卡后只剩 1 条**（2 → 1）。本轮未调整其网格（该网格在 `/gallery/finishes` 页面内，属被保护范围），保持 `grid-cols-1 sm:grid-cols-2` 下单卡半宽。**这是否需要调成全宽，留给用户决定**。
+  - **不改写历史记录**：`archive/2026-10-06-wheel-skus-retired/README.md` 与 DEC-053 里同样写着「`WheelSketch` 仍被 `/gallery/wheels` 使用」—— 那是带日期的记录，本 DEC 取代其结论但不回改原文。
+
+  **⑦ 验证**（全部实跑，见交付报告）：`npx tsc --noEmit`、`npx eslint src`、`npm run build` 三者 0 错误；standalone 实测 `/gallery` → **308** `Location: /fitment`、`/gallery/wheels` → **308** `Location: /products/wheels`、`/gallery/finishes` → **200** + `noindex, follow` + **无 canonical**、`/fitment` `/products` `/products/wheels` → **200**；sitemap 不含 `/gallery`、`/gallery/wheels`、`/gallery/finishes`。
+
+  **遗留（记录在案）**：
+  - `/gallery/finishes` 内两处 `<Link href="/gallery">`（面包屑 + 返回按钮）保留，经 308 可达但语义上「Gallery 已不存在」。**未按本轮改动范围处理**（与「不要动 finishes」冲突），留给用户决定是改指向、还是删链接。
+  - `finishesPathways` 单卡半宽的版面，同上待定。
+  - `STATUS.md` 的「3. 旋压入口未实现」条目已与本文件「1.」自相矛盾（flow-formed 已实现），非本轮范围，未改。
+
+  - 本轮未 commit、未 push、未部署。
+- 相关：`src/app/gallery/page.tsx`、`src/app/gallery/wheels/page.tsx`、`src/app/gallery/finishes/page.tsx`、`src/content/finish-guide.ts`、`src/content/finishes.ts`、`src/content/products.ts`、`src/content/fitment.ts`、`src/app/fitment/page.tsx`、`src/app/fitment/[platform]/page.tsx`、`src/app/sitemap.ts`、`src/components/wheel-strip-section.tsx`、`archive/2026-10-06-fictional-galleries/README.md`、`archive/2026-10-06-wheel-skus-retired/README.md`、DEC-050、DEC-053、DEC-054。
+
+### DEC-059 补充 · 复核发现与后续项（同日）
+
+- **复核中我改的两处（agent 按"具体禁令优先"保留，我确认应改为移除）**：
+  `src/app/gallery/finishes/page.tsx` 里还剩两处裸 `/gallery` 链接，**我要求删掉了**：
+  1. **面包屑** `Gallery / {heading}` —— 「Gallery」点下去会 308 到 `/fitment`，**标签与目的地不符**，比没有面包屑更糟；而面包屑的前提是「有父级」，`/gallery/finishes` 现在是孤儿子路由（父级已退役）。
+  2. **「Back to gallery」按钮** —— 没有 gallery 可回了。主 CTA（样品申请）保留。
+- **布局修正**：`finishesPathways` 删卡后只剩 1 条，却仍在 `sm:grid-cols-2` 里 → 半宽孤卡（看起来像漏了一张）。改为**列数随条目数自适应**（≥2 条才分两列）。这是纯布局修正，未发明任何内容。
+- **STATUS.md 另修两处**：
+  - 第 3 条「旋压入口未实现，本轮实测 404」**已过时**（DEC-054 已实现并开放索引）→ 改为事实。
+  - sitemap 条补上本轮画廊变更（两条下架、一条改门槛、当前 174 条）。
+- **复核发现的既有问题（未在本轮处理，记为后续）**：
+  1. **`/gallery/finishes` 的 URL 现在是「孤儿」** —— 它是 `/gallery` 的子路由，而父级已退役。更干净的家是 `/products/wheels/finishes`（表面处理本就是轮毂属性）或顶层 `/finishes`。本轮不动 URL 是为了保住既有链接；门槛关着也不急。**建议后续单独做一次 URL 归位。**
+  2. **`src/content/products.ts:260` 的 `familyResourceLinks` 是死数组** —— 全仓 **0 消费方**（无 `/products/[family]` 路由）。我原先把它当活卡片列进了要修的清单，实际它不渲染。**死内容也是债，值得单独清一次。**
+  3. **`types.ts` 里的死类型**：本轮后 `BuildEntry` / `WheelDesign` / `SpokePattern` / `WheelConstruction` / `WheelFinish` / `WheelApplication` 全部失去消费方；且 `WheelConstruction` / `WheelFinish` **只被 DEC-053 已退休的 `WheelSku` 使用** —— 所以 `WheelSku` 也是死类型。**故意不删**：AGENTS.md 规定「改类型 = 改内容契约」，而删死类型零收益、有风险（`FinishOption` 必须保留，它在用）。留作后续单独处理。
+  4. **`.git/index.lock` 死锁**：复核时发现仓库根有一个 0 字节、无进程持有的 `index.lock`（创建于 15:26），**它挡住了所有 git 写操作**（`git add` 直接 fatal），也影响后续 commit。已确认为死锁（无持有进程、`.git/index` 自 11:01 未变）后**清除**，写操作已恢复。这不是本轮改动引入的，是不知何时的残留。
+
+
+## DEC-060 · 清掉克隆模板脚手架残留：`package.json` 元数据换成本项目自己的，其余归档
+
+- 日期：2026-10-06
+- 状态：已实现并验证
+- 背景：仓库由 `JCodesMore/ai-website-cloner-template` 克隆而来（`DEC-010` 记录了克隆来源与合规边界）。模板自带的一整套元数据与运行时文件**原样留在仓库里**，而其中一部分是**对外可见的错误**（`package.json` 的 name/author/repository 会在 npm 输出、编辑器、任何读它的工具里出现）。任务卡 `work/queued/2026-10-05-template-runtime-metadata-cleanup.md` 早已列出范围，前置条件是「正式 Git 远程仓库和项目名称已确认」。
+- 前置条件核对：git 远程已是**我们自己的** `https://github.com/coyafky/WheelSiteOnline.git`（分支 `main`，HEAD `3ec7af4`）→ 条件满足，可以执行。
+- 决定：
+  1. **`package.json` 换成本项目自己的**（9 个字段）：`name` → `wheel-site-online`｜`version` → `0.1.0`（与 `CHANGELOG.md` 的 `[0.1.0] - 2026-10-01` 对齐）｜`description` 改为四产品线询盘站的实描述｜`author` → `coyaFky`（与 git 身份一致）｜`homepage`/`repository`/`bugs` → 本项目仓库｜`keywords` → 项目相关词。**`scripts` / `dependencies` / `engines` 零改动。**
+  2. **`license` 从 `MIT` 改为 `UNLICENSED`**。理由：项目是 `private: true` 的专有代码，那份 MIT 的版权人是**模板作者**（`Copyright (c) 2025 JCodesMore`），与本仓库无关；`UNLICENSED` 才是 npm 对「无许可/专有」的标准表示。**删掉 LICENSE 文件不等于我们声明了许可。**
+  3. **同步 `package-lock.json`**（`npm install --package-lock-only`）：实测只改了 **5 行**（`name`×2 + `version`×2 + `license`×1），**零依赖版本变动**。
+  4. **归档**（`archive/2026-10-06-template-scaffold-retired/`，8 个文件 + README）：根 `Dockerfile` / `Dockerfile.dev` / `.dockerignore` / `docker-compose.yml` / `LICENSE` / `CONTRIBUTING.md` / `SECURITY.md` / `bun.lock`。
+- 理由：
+  - **Docker 文件归档而非重做**：任务卡前置条件明写「**不在决定前把 Node standalone 或模板 Docker 文件包装成生产架构**」；`ARCHITECTURE.md` §9.1 与 `AGENTS.md` 早已写着它们「不能当生产方案 / 不要当成既有能力」；且**无人引用** —— 本地验证一直走 `.next/standalone` + `node server.js`，没有任何文档或脚本把根 `docker compose` 当运行方式（已 grep 确认）。目标部署层是 OpenNext（DEC-009），平台待定 → 等定了**新写**，不要照抄归档件。
+  - **`CONTRIBUTING` / `SECURITY` 是真错误，不是风格不合**：`CONTRIBUTING.md` 指向 `master` 分支（我们是 `main`）与**模板作者的 Discord 社区**；`SECURITY.md` 正文自称 *"This project is a template rather than a versioned library"*。照文档办事的人会走错。
+  - **`bun.lock` 必须走**：判定 npm 是权威、bun 是误跑，证据来自**仓库自己的文档** —— `README.md` 写 `npm install`、`CONTRIBUTING.md` 写 `npm ci`、`AGENTS.md` 写 `npm run *`、`package.json` 的 `scripts` **零 bun**、无 `packageManager` 字段、无 CI。`package-lock.json` 里出现过 "bun" 只是传递依赖（`is-bun-module`、`bundle-name`）。而 `bun.lock` 的 workspace 名还烤着 `ai-website-clone-template` → 从未随本项目更新。**两个锁文件共存是真实的复现风险**（`bun install` 会读另一个，可能解析出不同版本树）。
+- 影响：
+  - **保留的（有意，不是残留）**：`CHANGELOG.md`（保留模板英文历史 + 中文说明，**用于对照上游**，前一任的明确决定）｜`AGENTS.md` **尾部**的模板原文块（同样带围栏说明）｜`components.json`（shadcn 配置，`shadcn` 是**直接依赖**）｜`.gitattributes`（通用有用：LF 规范化、`.sh` 强制 LF、`.bat`/`.cmd` 强制 CRLF）｜`.nvmrc`(24) + `engines.node`(>=24)（二者一致，本机即 Node 24）。
+  - **`DEC-026` 加了指针**（不改写决策原文）：那条「`docker-compose.yml`/`Dockerfile` 需要随 OpenNext 落地一并重做」的执行方式，从「**重做现有文件**」变成「**平台确定后新写**」。决策本身（选 OpenNext、平台待定、禁止 `output: "export"`）不变。
+  - **更新的现行文档**：`README.md`（部署说明）、`AGENTS.md`（部署层那条）、`ARCHITECTURE.md` §9.1、`STATUS.md` 顶部「2026-10-06 当前状态」第 6 条。
+  - ⚠️ **`STATUS.md` 第 189 行以下是 `## 历史快照：2026-10-01（以下不是本轮实测）`**，其中也提到这些文件（L366 / L439-440 / L435）—— **按项目惯例不改写带日期的历史快照**。它们已被顶部现行段取代。
+  - ⚠️ **`AGENTS.md` 尾部那段模板原文含与本项目冲突的指引**（`Deployment: Vercel` 与 DEC-009 矛盾；`Pixel-perfect emulation`、`Real content — use actual text and assets from the target site` 与证据纪律、DEC-010 相冲）。本轮**保留**，因为：① 它带围栏说明「本项目的工作规范以本文上半部分为准」② 项目对「保留模板原文对照上游」的**先例就是原地保留 + 加说明**（见 `CHANGELOG.md`）。**若日后认为 64 行冲突指引放在 agent 常读文件里风险偏高，可移进本归档目录——这是一个我可以随时执行的改动，等指示。**
+  - 本轮未 commit、未 push、未部署。
+- 相关：`package.json`、`package-lock.json`、`archive/2026-10-06-template-scaffold-retired/README.md`、`work/completed/2026-10-05-template-runtime-metadata-cleanup.md`、`README.md`、`AGENTS.md`、`ARCHITECTURE.md`、`STATUS.md`、DEC-009、DEC-010、DEC-026。

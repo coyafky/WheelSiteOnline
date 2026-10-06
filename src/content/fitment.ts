@@ -336,13 +336,8 @@ export const fitmentResourceLinks: ResourceLink[] = [
     href: "/insights/offset-and-backspacing",
     linkLabel: "Read the guide",
   },
-  {
-    eyebrow: "Design",
-    title: "Wheel gallery",
-    body: "Browse the design catalogue by spoke pattern, construction and finish before you settle the fitment.",
-    href: "/gallery/wheels",
-    linkLabel: "Open the catalogue",
-  },
+  // The "Wheel gallery → /gallery/wheels" card was removed 2026-10-06
+  // (DEC-059): that design catalogue was fictional and is archived.
 ];
 
 /** Other platforms, shown as sibling links. */

@@ -43,6 +43,13 @@ export function buildInquiryContext(
     productionCode: first(params.code) ?? first(params.productionCode),
     series: first(params.series),
     from: first(params.from),
+    // Project-assessment context. `product_line` classifies the line, while
+    // `application` and `input_type` record which group and which input route
+    // the visitor started from — see the custom-aluminum Page SPEC §8.
+    productLine: first(params.product_line),
+    application: first(params.application),
+    inputType: first(params.input_type),
+    intent: first(params.intent),
     selectedSpec: Object.keys(selectedSpec).length > 0 ? selectedSpec : undefined,
   };
 }

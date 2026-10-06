@@ -95,6 +95,12 @@ function buildContext(): InquiryContext {
     productionCode: first("code") ?? first("productionCode"),
     series: first("series"),
     from: first("from"),
+    // Captured from the originating link, not selected by the visitor — see
+    // `InquiryContext` in `lib/inquiry/types.ts`.
+    productLine: first("product_line"),
+    application: first("application"),
+    inputType: first("input_type"),
+    intent: first("intent"),
     selectedSpec: Object.keys(selectedSpec).length > 0 ? selectedSpec : undefined,
   };
 
@@ -526,57 +532,70 @@ export function InquiryForm({
           onChange={(value) => set("vehicle", value)}
         />
 
-        {/* Wheel family select -------------------------------------------- */}
-        <div className="sm:col-span-1">
-          <FieldLabel htmlFor={fieldId("family")} required>
-            Wheel family
-          </FieldLabel>
-          {/* Wrapper is relative so the chevron can sit over the native arrow
-              we removed with `appearance-none`. A real SVG beats an arbitrary
-              `bg-[url(data:…)]` utility here: it is inspectable, themeable and
-              does not depend on Tailwind parsing a data URI. */}
-          <div className="relative">
-            <select
-              id={fieldId("family")}
-              name="family"
-              value={values.family}
-              aria-invalid={attempted && Boolean(errors.family)}
-              aria-describedby={
-                attempted && errors.family ? errorId("family") : undefined
-              }
-              onChange={(event) => set("family", event.target.value)}
-              className={cn(
-                inputClass,
-                "appearance-none pr-12",
-                attempted && errors.family && "border-destructive",
-                !values.family && "text-steel",
-              )}
-            >
-              <option value="">Select a family…</option>
-              {families.map((family) => (
-                <option key={family.slug} value={family.name}>
-                  {family.name}
-                </option>
-              ))}
-              <option value="Not sure yet">Not sure yet — advise me</option>
-            </select>
+        {/* Wheel family select --------------------------------------------
+            §7 (PAGE-SPECS/wheel-detail.md WD03) lists the fields the wheel
+            model enquiry carries, and "wheel family" is not among them: the
+            model + productionCode already identify the product. It is also
+            meaningless here — the family groupings (Monoblock / Two-Piece /
+            Off-Road) were fictional and are being archived.
 
-            <ChevronDown
-              aria-hidden="true"
-              className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-steel"
+            So the block renders only when the caller actually passes a family
+            list (the general /request-a-quote form still does). Without that
+            guard it would be an empty dropdown — two options, neither of them
+            a product. */}
+        {families.length > 0 ? (
+          <div className="sm:col-span-1">
+            <FieldLabel htmlFor={fieldId("family")} required>
+              Wheel family
+            </FieldLabel>
+            {/* Wrapper is relative so the chevron can sit over the native arrow
+                we removed with `appearance-none`. A real SVG beats an arbitrary
+                `bg-[url(data:…)]` utility here: it is inspectable, themeable and
+                does not depend on Tailwind parsing a data URI. */}
+            <div className="relative">
+              <select
+                id={fieldId("family")}
+                name="family"
+                value={values.family}
+                aria-invalid={attempted && Boolean(errors.family)}
+                aria-describedby={
+                  attempted && errors.family ? errorId("family") : undefined
+                }
+                onChange={(event) => set("family", event.target.value)}
+                className={cn(
+                  inputClass,
+                  "appearance-none pr-12",
+                  attempted && errors.family && "border-destructive",
+                  !values.family && "text-steel",
+                )}
+              >
+                <option value="">Select a family…</option>
+                {families.map((family) => (
+                  <option key={family.slug} value={family.name}>
+                    {family.name}
+                  </option>
+                ))}
+                <option value="Not sure yet">Not sure yet — advise me</option>
+              </select>
+
+              <ChevronDown
+                aria-hidden="true"
+                className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-steel"
+              />
+            </div>
+            <FieldError
+              id={errorId("family")}
+              message={attempted ? errors.family : undefined}
             />
           </div>
-          <FieldError
-            id={errorId("family")}
-            message={attempted ? errors.family : undefined}
-          />
-        </div>
+        ) : null}
 
         <Field
           id={fieldId("quantity")}
           name="quantity"
           label="Approximate quantity"
           required
+          className={families.length > 0 ? undefined : "sm:col-span-2"}
           value={values.quantity}
           error={attempted ? errors.quantity : undefined}
           errorId={errorId("quantity")}

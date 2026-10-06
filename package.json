@@ -1,27 +1,29 @@
 {
-  "name": "ai-website-clone-template",
-  "version": "0.5.1",
+  "name": "wheel-site-online",
+  "version": "0.1.0",
   "private": true,
-  "description": "Clone any website into a clean, modern Next.js codebase using AI coding agents",
-  "author": "JCodesMore",
-  "license": "MIT",
+  "description": "Fenghuai (Shenzhen) four-product-line B2B/B2C enquiry website — English-first Next.js front end with a Headless WordPress content back end.",
+  "author": "coyaFky",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template.git"
+    "url": "https://github.com/coyafky/WheelSiteOnline.git"
   },
-  "homepage": "https://github.com/JCodesMore/ai-website-cloner-template",
+  "homepage": "https://github.com/coyafky/WheelSiteOnline",
   "bugs": {
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template/issues"
+    "url": "https://github.com/coyafky/WheelSiteOnline/issues"
   },
   "keywords": [
-    "claude-code",
-    "website-clone",
-    "reverse-engineering",
+    "fenghuai",
+    "wheels",
+    "flow-formed",
+    "forged-wheels",
+    "ev-components",
+    "custom-aluminum",
+    "self-sealing-tires",
     "nextjs",
-    "ai",
-    "template",
-    "tailwindcss",
-    "shadcn-ui"
+    "headless-wordpress",
+    "b2b"
   ],
   "engines": {
     "node": ">=24"

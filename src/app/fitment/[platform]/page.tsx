@@ -105,9 +105,9 @@ export default async function PlatformFitmentPage({
               Send your vehicle details
               <ArrowRight className="size-4" />
             </Link>
-            <Link href="/gallery/wheels" className="btn-pill-outline !text-white">
-              Browse designs
-            </Link>
+            {/* "Browse designs → /gallery/wheels" removed 2026-10-06 (DEC-059):
+                that catalogue was fictional and is archived. The real
+                catalogue is reachable from the navigation and /products. */}
           </div>
         </div>
       </section>

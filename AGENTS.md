@@ -200,9 +200,10 @@ IntersectionObserver。** 两个效果都必须保持挂在 JS 添加的 `motion
 - **严禁把 `next.config.ts` 改成 `output: "export"`。** 纯静态导出下
   `/api/inquiries` 完全不可用 —— 那等于物理上废掉询盘系统，与本项目的业务
   定位直接冲突。
-- 当前 `docker-compose.yml` / `Dockerfile` 仍是**克隆模板的默认值**
-  （镜像名 `ai-website-cloner:latest`），不是本项目的部署方案，需要随
-  OpenNext 落地一并重做。**不要把那些默认值当成既有能力。**
+- 根 `Dockerfile` / `docker-compose.yml` / `Dockerfile.dev` / `.dockerignore`
+  已**归档**到 `archive/2026-10-06-template-scaffold-retired/`（DEC-060）——
+  它们是克隆模板的默认值（镜像名 `ai-website-cloner:latest`），与本项目无关。
+  生产部署文件需在 OpenNext 平台确定后**新写**，不要照抄归档件。
 - 仓库里**目前没有任何 OpenNext 依赖或配置**（`@opennextjs/*`、`wrangler`
   均不存在）。
 

@@ -59,6 +59,26 @@ resources/wheel-data-pack/
 assets/wheel-images-webp/
 
 # 本地 WordPress 实验场数据（数据库与上传文件，不进入公共仓库）
+# WordPress 运行时数据（容器 bind-mount 目标，可再生）
 local-wp/db-data/
 local-wp/wp-data/
 local-wp/local-credentials.txt
+
+# local-wp/.env 被 docker compose 自动读取，里面有询盘服务密钥 —— 绝不进 git。
+# 该文件的模板是 local-wp/.env.example（这个要提交）。
+local-wp/.env
+
+# ⚠️ mu-plugin 的**源**在 local-wp/mu-plugins/（进 git），不在上面被忽略的
+#    wp-data/ 里。它是数据库 schema 的唯一所有者（CPT 注册、meta 声明、
+#    REST 端点），必须受版本控制，否则 schema 改动不可见、部署时也装不上。
+#    改完跑 `python3 scripts/sync-mu-plugins.py` 同步进容器。
+
+# inbox/ 是缓冲区而非永久存储（见 inbox/README.md）。
+# 现有 1.6GB 供应商原始库存表（内嵌实拍图）+ 蓝辉轮毂原始表，与上方
+# 「供应商原始资料」同类：授权未确认，不进公共仓库。只有 README 记录约定。
+inbox/*
+!inbox/README.md
+
+# 工具运行时缓存（可再生，与本项目内容无关）
+.codegraph/
+.playwright-cli/

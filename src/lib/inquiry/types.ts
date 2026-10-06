@@ -39,6 +39,39 @@ export type InquiryContext = {
   selectedSpec?: Record<string, string>;
   series?: string;
   from?: string;
+  /**
+   * `product_line` from the originating URL, e.g. `custom-aluminum`.
+   *
+   * Distinct from `InquiryInput.line`, which the visitor picks in the form and
+   * may leave empty. This one is captured from the link the page generated, so
+   * a project assessment arrives already classified even if the visitor never
+   * touches the line selector.
+   *
+   * Added 2026-10-06 for the custom-aluminum assessment page, whose Page SPEC
+   * (§8) requires the enquiry to carry the application group and the input
+   * type alongside the product line. All four fields are optional, so every
+   * existing caller and stored record remains valid.
+   */
+  productLine?: string;
+  /** Application group the visitor started from, e.g. `motor-reducer`. */
+  application?: string;
+  /** Input route the visitor started from, e.g. `2d-drawing`. */
+  inputType?: string;
+  /** What the enquiry is for, e.g. `project_assessment`. */
+  intent?: string;
+  /**
+   * Wheel enquiries only: the visitor named a model (or a configuration) but the
+   * server could not resolve it against the public collection, so no
+   * specification was recorded.
+   *
+   * Set **by the server** after re-resolving `model + productionCode` — never
+   * trusted from the client. PAGE-SPECS/wheel-detail.md §7 requires this to be
+   * explicit rather than silently dropping the selection, because the lead is
+   * real and someone has to follow up on which configuration was meant.
+   *
+   * Optional, so every existing caller and stored record stays valid.
+   */
+  variantPending?: boolean;
 };
 
 /** A frozen copy of whatever product data the inquiry referenced. */

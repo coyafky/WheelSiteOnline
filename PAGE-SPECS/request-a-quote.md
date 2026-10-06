@@ -1,469 +1,370 @@
-# `/request-a-quote` 页面规格（`/contact` 的「专注态」，不是独立页面）
+# 项目询盘页 Page SPEC
 
-> **路由**：`/request-a-quote`
-> **目标文件**：`src/app/request-a-quote/page.tsx`（**方案 2 推荐**）—— ⚠️ 不存在
-> **渲染**：**Node runtime（非静态导出）** —— 与 `/contact` 共用 `POST /api/inquiries`
-> **数据**：`content/contact.ts` + `content/products.ts` + `content/site.ts` + `WheelModel` 类型
-> **设计依据**：`contact-page.md` §5（合并建议）+ `PAGE-SPECS/contact.md` 附 B.1
+- 路由：`/request-a-quote`
+- 页面类型：四条产品线共用的 B/C 项目询盘入口
+- 视口：QF01–QF03
+- 状态：部分实现（2026-10-06 核验）。路由、来源上下文、统一 `/api/inquiries`、服务端校验、感谢页与受保护的后台列表入口已存在；当前可见表单仍是轮毂长表单，强制车型、轮毂系列和数量，且 `family` 只在浏览器校验、没有写入提交 payload。QF01–QF03 两步四线表单、持久化数据库、幂等提交、独立邮件事件与正式隐私/联系信息仍待实现。
+- 公开语言：英文优先
+- 结构参考：[2N Request Wheel Quote](https://2nforged.com/contact-us/)；只借鉴低门槛说明、短准备清单、紧凑表单和直接联系兜底
+- 后端依据：[数据与询盘设计](../outputs/site-launch-plan/02-data-and-inquiry-design.md)
+- 硬规则：正常基准视口中，每个表单步骤必须连同主按钮完整可见；键盘弹出、200% 放大和辅助设备下允许自然滚动
 
----
+## 1. 页面目标与叙事
 
-## 0. 一句话
+页面只完成一件事：把一个可追踪、可回复的真实项目意向安全写入询盘系统。客户不需要在第一次联系前准备完整工程规格，站点也不能用模糊成功提示掩盖数据库或邮件故障。
 
-**`/request-a-quote` 不是第二个转化页 —— 它是 `/contact` 的「专注态（focused mode）」。**
+`/contact` 负责展示已经确认的公司联系方式和进入询盘的入口；`/request-a-quote` 负责结构化收集项目。两页必须共用同一套字段、验证、持久化和成功状态，不能各自实现一套表单。
 
-同一个 `<InquiryForm>`，同一个后端，**只是外壳不同**：
-
-```
-/contact            通用入口    联系块 + 四线路由 + 起步清单（长）
-        ↕ 同一 <InquiryForm> ↕
-/request-a-quote    专注态      无联系块 · 无导航干扰 · 有「承接区」（短）
-```
-
-**🔴 三条不变量（本页存在的全部理由）**：
-
-1. **只有一个表单组件、只有一个后端** —— `<InquiryForm>` 与 `POST /api/inquiries` 全站唯一，
-   两页**不得各写一份**（竞品的结构性缺陷正是页面上留了两个表单）。
-2. **独立 URL 的理由是「承接」不是「说服」** ——
-   广告落地页/外链需要一个干净的转化 URL，且**必须承接从单品页过来的上下文**。
-3. **与 `/contact` 的 SEO 分工必须写死** —— `title` / `h1` / `canonical` 不得互相竞争
-   （见 §2① 与 §6 #1）。
-
-**⚠️ 本页字段表、`InquiryContext`、后端三条纪律全部见 `PAGE-SPECS/contact.md`** ——
-**本规格不重复定义，只写差异**。凡本文写「同 `/contact` ③」即为**逐字复用**该段。
-
----
-
-<!-- VIEWPORT-SPEC-INJECTED -->
-## 0.5 ★ 视口切分（全页第一原则）
-
-> 判据来自 `../../DESIGN.md` §0.5.1 / §0.5.2 / §0.5.4。
-> 本节由 `scripts/inject-viewport-specs.py` 从 `_viewport-audit.md` §7 生成 —— **不复制结论，只搬事实**。
-
-### 0.5.1 实测现状 vs 规格要求
-
-**代码事实**：`src/app/request-a-quote/page.tsx` 实测 **2 个 `<section>`**（2026-10-02）。
-
-> 审计原文：`PageHero` → （条件）`QuoteContextBar` → ③ 表单 → ④ `DataNotice`。 规格要求四段（`PAGE-SPECS/request-a-quote.md` §1），实测 4 段。
-
-**⚠️ 本规格 §1 的「N 段式」是内容块清单，不是视口切分。** 施工时先按 §0.5.2 定视口，再往视口里放段。
-
-### 0.5.2 视口切分（来自审计）
-
-| 视口 | 核心问题 | 含哪些段 | 主要信息 | 主要视觉 | 主要行动 | 次要行动 | 判定 |
-|---|---|---|---|---|---|---|---|
-| **01** | 在这里能做什么？ | ① `PageHero` | `requestQuoteHero`（eyebrow `QUOTE` + H1 + 1 句） | 深色径向橙光 | `Go to the form` → `#quote-form-title` | 无 | ✅ 合规 |
-| **02** | 你们已经知道什么？ | ② `QuoteContextBar`（条件） | 回显 model + 规格快照 | 浅色边框条 | 「换个型号」→ `/products/wheels` | 无 | ✅ 合规 |
-| **03** | 我要填什么？ | ③ 表单 | `quoteFormHeading` + `InquiryForm` | 表单 | 提交表单 | 无 | ✅ 合规 |
-| **04** | 我的数据怎么处理？ | ④ `DataNotice` | `quoteDataNotice` + `/contact` 文字链 | 纯文字 | 文字链 | 无 | ✅ 合规 |
-
-**判定统计**：✅ 4 ｜ ⚠️ 拥挤 0 ｜ 🔴 违规 0 ｜ 🗑️ 建议合并/删除 0
-
-### 0.5.3 审计给出的处置
-
-✅ 审计未对本页提出处置项。
-
-### 0.5.4 高度预算与询盘整屏
-
-| 项 | 要求 |
-|---|---|
-| 每视口 | ≈ 1 屏（`min-h-svh` 不强制，但一屏一个核心问题） |
-| 🔴 询盘整屏 | 结尾 CTA **必须完整落在一个视口内** （`DESIGN.md` §0.5.4 硬规则），不得让按钮落在折线下 |
-| 深色段 | 深色视口 ≤ 3；深色是入口，不是背景（`DESIGN.md` §1.2） |
-
----
-
-<!-- ASSET-REALIGNMENT-2026-10-02 -->
-## 0.6 ★ 图片资产边界（2026-10-02）
-
-本页是专注态询盘表单，保持无图片或极少装饰图的结构。具体产品视觉由上下文参数和来源页面承担，不能用内容中心九宫格分散表单注意力。
-
-## 1. 页面骨架（四段式 = 五段式减一段）
-
-**对照 `/contact` 的五段式**：删「④ 底部联系块」，把「② 起步清单」压成一行承接句，
-其余不变。
-
-| 序 | 内容块 | 必须性 | 与 `/contact` 的差异 | 就绪度 |
+| 视口 | 客户问题 | 主信息 | 主视觉/交互 | 主行动 |
 |---|---|---|---|---|
-| ① | **专注态页头** | 必须有 | H1/eyebrow 换成报价口径；**去掉三段导语**，只留一句 | ✅ |
-| ② | ★ **承接区** | 必须有 | **本页独有** —— 回显「你从哪来 + 已选了什么」 | ⚠️ 依赖单品页上下文（§4.2） |
-| ③ | ★★ **表单** | 必须有 | **同一个 `<InquiryForm>`**，`context` 预填 | ⚠️ 同 `/contact` ③ |
-| ④ | 极简合规尾 | 必须有 | 替代 `/contact` 的「④ 联系块」——**只放隐私说明 + 一个返回 `/contact` 的链接** | ⚠️ 隐私需律师 |
+| QF01 | 我需要准备到什么程度 | 不必备齐全部规格；按当前产品线显示 3–5 条准备提示 | 轻量标题 + 动态准备卡，不用大幅图片 | 开始填写 / 表单首字段 |
+| QF02 | 我想询问什么 | 客户类型、产品线、来源产品上下文、项目描述、可选数量 | 两步表单第 1 步 | `Continue` |
+| QF03 | 团队怎样回复我 | 姓名、邮箱、国家/市场、条件式公司、可选 Phone/WhatsApp、隐私同意 | 两步表单第 2 步 | `Submit project enquiry` |
 
-```
-/request-a-quote?model=1081X&spec=15*7%204*100...
-├── ① <QuoteHero>             eyebrow + H1「索取报价」+ 一句「表单 1 分钟」
-│       （⚠️ 复用 <ContactHero> 的 props 结构，只是 ledes 变成 1 句 → 见 §3.1）
-├── ② <QuoteContextBar>  ★    承接区：回显来源 + 已选规格 + 「不是这个型号？」改写链接
-├── ③ <InquiryForm>  ★★      props.context 已填 → 第二批字段预填/省填
-└── ④ <DataNotice>           隐私说明 + 「还有别的问题？去 /contact」
-```
+QF01 与 QF02 在桌面可合并进同一屏，但只能共同回答“怎样开始这个项目”。移动端若内容高度不足，准备提示折叠成当前产品线的 3 条，不得把 `Continue` 推出正常视口。
 
-**🔴 本页不做的事**（对照 `/contact` 逐条砍）：
+## 2. 2N 页面模块的取舍
 
-| `/contact` 有 | `/request-a-quote` | 为什么 |
+### 2.1 借鉴
+
+- 页面开头直接说明可以先发已知信息，不制造“规格不完整就不能联系”的压力。
+- `What to send` 与短表单相邻，让客户边看边填。
+- 首次联系字段保持短小，自由描述承担尚未结构化的工程信息。
+- 已确认的直接联系方式放在表单之后，作为网络或表单故障的备用路径。
+
+### 2.2 按峰徊业务重构
+
+| 参考模块 | 峰徊替代 | 验收边界 |
 |---|---|---|
-| ② 三种起步方案清单（`<FirstMessageChecklist>`） | ❌ **删**，压成一句「只需姓名/邮箱/一句话」 | 从单品页/广告来的人**已经有明确目标**，清单是干扰 |
-| ④ 邮箱 / WhatsApp / 电话 / 响应承诺 | ❌ **删**，只留 `DataNotice` | 专注态=不给出走的出口；联系方式是 `/contact` 的职责 |
-| 三段降门槛导语 | ❌ **删**，压成 1 句 | 长导语在专注态里是摩擦 |
-| 页脚 `<DealerCta>` | ⚠️ **可选** | 见 §2④ 纪律：**禁止在表单前后放第二个 CTA** |
+| `Request Wheel Quote` | 跨四条产品线的 `Project enquiry` | 默认不把访客写成轮毂客户 |
+| 轮毂 `What to send` | 随产品线切换的准备提示 | 不向三电、铝制品或轮胎客户询问 VIN |
+| 单页自由表单 | 两步短表单 | 每步必填不超过 3 个，按钮同屏可见 |
+| Email/WhatsApp 跟进承诺 | 已确认回复渠道 + 可验证状态 | 未确认官方 WhatsApp 时不显示号码或响应承诺 |
+| 质量视频/验厂邀请 | 后续按主体和保密条件确认 | 通用询盘页不承诺所有项目均可验厂或直播 |
 
----
+不得复制 2N 的品牌、文案、联系方式、WhatsApp 号码、CSS、车型清单、工厂访问承诺或任何表单默认值。
 
-## 2. 逐块规格
+## 3. 页面入口与上下文
 
-### ① 专注态页头
+### 3.1 入口来源
 
-| 项 | 规格 |
+统一表单接受以下入口：
+
+- 全站 Header、首页 H05、Footer：只有产品线或来源页面上下文；
+- 产品线页：自动带入 `productLine`；
+- 轮毂详情：带入批准的 `model`、`productionCode` 和同一 variant 的规格快照；
+- 轮毂目录：可带入型号，未选择 variant 时不得制造规格快照；
+- `/contact`：带入 `from=contact`，不预选未知产品线。
+
+### 3.2 可见上下文条
+
+有上下文时，QF02 顶部显示可读摘要：
+
+`Enquiring about: {product line} / {model or project type} / {approved configuration}`
+
+客户可以移除或更换产品线，但不需要重新键入已经选过的型号和配置。上下文条是便利信息，不是可信数据源；服务端必须复核型号、生产代码和批准状态，再生成不可变快照。
+
+没有上下文时不显示空条，也不显示 `Coming soon`。
+
+### 3.3 来源归因
+
+内部可记录首个来源 URL、提交页、UTM、referrer 和发生时间，但这些字段：
+
+- 不拼进客户消息正文；
+- 不在成功页 URL 中公开；
+- 不用来绕过服务端产品校验；
+- 按隐私政策规定的期限保存。
+
+## 4. QF01：低门槛说明与准备提示
+
+### 4.1 可直接录入的英文内容
+
+**Eyebrow**：`PROJECT ENQUIRY`
+
+**H1**：`Tell us what you need to source or develop`
+
+**Lead**：`Choose a product line and send what you already know. A model number, drawing status or application description is enough to start the review.`
+
+**Supporting**：`You do not need every specification ready. Missing technical details are confirmed before quotation or production approval.`
+
+**Preparation label**：`Useful details, if available`
+
+### 4.2 动态准备提示
+
+准备提示来自类型化内容，不写死在组件中。每次只显示当前产品线的 3–5 条：
+
+| 产品线 | 提示内容 |
 |---|---|
-| 结构 | `.eyebrow` + `<h1>` + **一句**说明 |
-| eyebrow | `QUOTE`（**≠ `/contact` 的 `CONTACT`**） |
-| H1 | **索取报价** / Request a Quote |
-| 一句说明 | 「填三个字段，一分钟。**浏览时选好的规格已经带上**」 |
-| 容器 | `.container-fh`（1180） |
-| 深色段 | **无** —— 专注态全浅色，越安静越好 |
+| Wheels | model or design reference；recorded configuration or target size；vehicle/application；quantity；destination market |
+| EV aluminum components | part category；2D/3D data status；cooling/sealing/interface requirements；prototype or annual quantity；target market |
+| Custom aluminum | drawing/3D data/sample status；part function；material or performance target；quantity；destination market |
+| Self-sealing tires | tire size/model；vehicle or fleet use；dealer/fleet/individual context；quantity；market and required test documents |
 
-**★ 复用组件**：`<ContactHero>`（`contact.md` §3.2 已计划新建）——
-本页传 `ledes` 长度 1（`/contact` 传 3）。
+如果客户尚未选择产品线，只显示三条通用提示：项目对象、已有资料、预计数量/市场。不得一次铺开四套清单。
 
-```ts
-// src/components/sections/contact-hero.tsx —— 与 /contact 同一组件
-type ContactHeroProps = {
-  eyebrow: string;            // 本页传 "QUOTE"；/contact 传 "CONTACT"
-  title: string;             // 本页传 "索取报价"
-  ledes: string[];           // ★ 本页恰好 1 段；/contact 恰好 3 段
-  ledeRoles?: ("no-prep-needed" | "what-happens-next" | "minimum-viable-input")[];
-  /** ★ 新增（本页需要）：专注态不渲染任何次级出口 */
-  focused?: boolean;         // true → 不渲染任何 ledes 之外的链接/装饰
-};
+### 4.3 布局
+
+- 不使用全屏产品图、轮毂草图或自动轮播。
+- 桌面标题区控制在约 220–280px 高，下面立即进入 QF02。
+- 移动端 H1、Lead、三条提示和首个字段应在一次短滚动内出现。
+- 页面加载后不自动把焦点抢到表单；锚点入口进入页面时可以聚焦 step 标题。
+
+## 5. QF02：我想询问什么
+
+### 5.1 字段
+
+| 字段 | 类型 | 必填 | 规则 |
+|---|---|---:|---|
+| `customerType` | 单选 | 是 | `Business` / `Individual`；不预设 |
+| `productLine` | 单选卡或原生 select | 是 | 四条正式产品线；有合法上下文时预选 |
+| `message` | textarea | 是 | 10–5000 字符；说明需求、应用或问题 |
+| `quantity` | text | 否 | 允许 `prototype`、`10 sets`、`500/year` 等真实表达，不强制纯数字 |
+| `inputsAvailable` | 多选 | 否 | `2D drawing` / `3D data` / `physical sample` / `product code` / `none yet`；按产品线显示 |
+
+本步必填共 3 个。产品上下文来自详情页时仍可见，但不作为第四个让客户重复填写的必填项。
+
+### 5.2 英文内容
+
+- Step：`Step 1 of 2`
+- H2：`What are you asking about?`
+- Message label：`Describe the part, product or result you need`
+- Message help：`Include the application, known specifications, quantity or market if you have them.`
+- 主行动：`Continue`
+
+### 5.3 行为
+
+- 点击 `Continue` 只做本步前端校验，不向服务器创建询盘。
+- 错误显示在字段旁，同时把焦点移到第一个错误；错误摘要不得代替就地说明。
+- 从 QF03 返回时完整保留本步内容和合法产品上下文。
+- 不用 `localStorage` 长期保存姓名、邮箱或消息；同一次页面会话的 React 状态即可。
+- `inputsAvailable` 只说明资料存在，不提供首发文件上传控件。
+
+## 6. QF03：团队怎样回复我
+
+### 6.1 字段
+
+| 字段 | 类型 | 必填 | 规则 |
+|---|---|---:|---|
+| `name` | text | 是 | `autocomplete=name`，1–120 字符 |
+| `email` | email | 是 | `autocomplete=email`，服务端重新验证 |
+| `country` | 国家/市场 select | 是 | 存 ISO 代码与显示名；不使用国旗作为唯一标识 |
+| `company` | text | 否 | B 端选择后显示，C 端隐藏或选填；首轮不因公司为空阻止提交 |
+| `whatsapp` | tel | 否 | 标签写 `Phone or WhatsApp`；客户主动选择该渠道才收集 |
+| `privacyConsent` | checkbox | 是 | 不与营销订阅合并；存版本和同意时间 |
+
+本步业务字段只要求姓名、邮箱和国家；公司保持可选，隐私同意属于提交的合法性门槛。实施前必须通过 390×844 视口验证；若按钮被推出视口，优先折叠可选联系渠道，不能压缩标签或隐私文字。
+
+### 6.2 英文内容
+
+- Step：`Step 2 of 2`
+- H2：`How should we reply?`
+- 隐私同意：`I agree that Fenghuai may use the information provided to review and respond to this enquiry.`
+- 主行动：`Submit project enquiry`
+- 次行动：`Back`
+
+在 `Fenghuai` 或相邻位置链接已批准的隐私政策；政策未完成时不得用空链接，也不得公开表单。
+
+### 6.3 直接联系兜底
+
+表单之后只显示已确认并完成责任人配置的正式销售邮箱。官方 WhatsApp 或电话只有在号码、工作时间、责任人和隐私流程确认后才显示；不展示私人号码或来源公司未授权的联系方式。
+
+兜底文字：`If the form is unavailable, send the same project details to {confirmed sales email}.`
+
+正式邮箱尚未确认时，隐藏整个兜底模块，不能显示 `PLACEHOLDER`。
+
+## 7. 提交、持久化与状态
+
+### 7.1 提交顺序
+
+```text
+客户端校验
+→ 服务端校验与反滥用
+→ 复核产品上下文
+→ 同一数据库事务写 inquiry + item/context snapshot + consent + outbox
+→ 返回 201 和询盘号
+→ 异步发送通知与回执
+→ 邮件事件单独更新 accepted/delivered/bounced/unknown
 ```
 
-**⚠️ SEO 分工（必写死）**：
+只有数据库事务提交成功后才能显示成功。邮件服务商接受请求不等于邮件送达，也不能作为创建询盘的依据。
 
-```ts
-// generateMetadata —— /request-a-quote
-title:  "Request a Quote — Forged & Cast Wheels"      // ⚠️ 不得出现 "Contact"
-description: "Send your wheel requirement in about a minute. Selected size, PCD and finish carry over from the model page you were viewing."
-alternates: { canonical: "/request-a-quote" }
-// /contact 侧：title "Contact — Fenghuai Wheels"，canonical "/contact"
-// 🔴 两页 canonical 各自指向自己，且标题词根不重叠（quote / contact）
-```
+### 7.2 幂等与重复提交
 
-### ② ★ 承接区（本页独有 —— 这是 `/request-a-quote` 存在的核心理由）
+- 客户端进入页面或首次开始填写时生成 `idempotencyKey`；重试复用同一键。
+- 提交后立即禁用按钮并显示明确进行中状态，但服务端仍必须做唯一约束。
+- 同一键重复请求返回同一询盘号，不创建第二条记录或第二封 outbox。
+- 客户修改项目后主动“再提交”需要新的键。
 
-**做法**：把 `InquiryContext`（`contact.md` §2③3.3 已定义，**不重复定义**）
-中**来自 URL 的部分**回显给用户，让他在填表前**确认「你们已经知道了什么」**。
+### 7.3 成功
 
-```
-┌──────────────────────────────────────────────────────┐
-│  YOU CAME FROM                                        │
-│  1081X · 15×7 · 4×100 · ET35 · 白色全涂装              │
-│                                                       │
-│  ✅ 这些规格已经带进下面的表单，不用重填。              │
-│  不是这个型号？  ←  /products/wheels   |   换个型号    │
-└──────────────────────────────────────────────────────┘
-```
+成功后进入 `/thank-you`，使用服务端签发的短期状态或仅包含不可猜测引用标识；URL 不携带姓名、邮箱、公司、消息或规格全文。
 
-| 项 | 规格 |
+- 标题：`Your enquiry has been recorded`
+- 正文：`Reference: {inquiryNumber}. Keep this number for follow-up.`
+- 通知未完成时：`The enquiry is recorded. Email delivery status does not affect this reference.`
+
+不得显示“确认邮件已送达”“销售已经收到”“将在一个工作日回复”等无法验证的结果或 SLA。
+
+### 7.4 失败
+
+| 状态 | 页面行为 |
 |---|---|
-| 组件 | **`<QuoteContextBar>`（需新建，仅本页）** |
-| 显示条件 | **仅当 `context.model \|\| context.selectedSpec` 至少有一样时渲染**；否则整段消失（不留空壳） |
-| 回显内容 | `model` + `selectedSpec` 的**有值字段**（size/pcd/offset/centerBore/finish）——**存快照语义** |
-| 改写出口 | 一个回 `/products/wheels` 的链接 + 一句「不是这个型号？」 |
-| 交互 | **纯展示**，无折叠、无悬停揭示；`[data-reveal]` 单次淡入 |
+| 422 字段错误 | 留在当前步骤，就地提示并聚焦第一个错误 |
+| 409/幂等重放 | 返回原询盘号，不显示重复错误 |
+| 429 超限 | 保留全部输入，说明稍后重试；提供已确认直接渠道 |
+| 数据库/事务失败 | 明确 `Your enquiry was not submitted`，保留输入，不跳成功页 |
+| 网络失败 | 保留输入，允许使用同一幂等键重试 |
+| 数据已存、邮件失败 | 正常显示询盘号，邮件状态单独说明，不要求客户重复提交 |
+
+当前生产路径没有真实持久化配置时，应返回不可用状态并显示诚实失败；不能继续使用内存 Map 后向客户声称“已安全记录”。
+
+## 8. 数据契约
+
+页面组件消费适配后的内容和表单契约，不直接读取 WordPress 原始字段：
 
 ```ts
-// src/components/quote-context-bar.tsx（需新建）
-import type { InquiryContext } from "@/components/inquiry-form"; // ★ 与表单同一个类型
+type ProductLineId =
+  | "wheels"
+  | "ev-components"
+  | "custom-aluminum"
+  | "safety-tires";
 
-type QuoteContextBarProps = {
-  /** ★ 直接吃 <InquiryForm> 的 context —— 单一事实源，不另建类型 */
+type InquiryDraft = {
+  customerType: "business" | "individual";
+  productLine: ProductLineId;
+  message: string;
+  quantity?: string;
+  inputsAvailable: string[];
+  name: string;
+  email: string;
+  countryCode: string;
+  company?: string;
+  whatsapp?: string;
+  privacyConsent: true;
+  privacyVersion: string;
+  idempotencyKey: string;
   context: InquiryContext;
-  /** 回显文案包（避免硬编码文案） */
-  copy: {
-    eyebrow: string;          // "You came from"
-    carryOver: string;        // "这些规格已经带进下面的表单，不用重填。"
-    notThis: string;          // "不是这个型号？"
-    changeModel: string;      // "换个型号"
-    changeHref: string;       // "/products/wheels"
-  };
 };
 ```
 
-**🔴 承接区的三条纪律**：
+正式实现该类型会改变现有 `InquiryInput` 和 WordPress/前端接缝，必须按 AGENTS §7.1 记录新的架构决策。本文件只定义目标，不在本次文档任务中修改 `src/content/types.ts`。
 
-1. **只回显、不改写** —— 承接区**不得**显示任何「该车型适配…」的推断（与 `/fitment` 同源的证据纪律）。
-2. **无上下文则整段不渲染** —— 直接从 `/request-a-quote`（无 query）进来的用户看到的是一个干净表单，
-   **不是一块空白的「你从哪来」**。
-3. **`selectedSpec` 是快照不是引用** —— 承接区回显的是 URL 里冻结的规格文本，
-   **不回查目录**（`contact.md` 纪律二：存快照不存引用）。
+### 8.1 现有字段迁移
 
-### ③ 表单（★ 与 `/contact` 完全同组件，只差两处 props）
-
-| 项 | 规格 |
+| 现有字段/行为 | 目标 |
 |---|---|
-| 组件 | **`<InquiryForm>`（`src/components/inquiry-form.tsx`，566 行，client）—— 同一份** |
-| props 差异 1 | `context`：本页**必带**（从 `searchParams` 构造）；`/contact` 通常 `undefined` |
-| props 差异 2 | `copy.optionalGroupLabel` 本页可为「补充信息」；`contextLabel` **不用**（已由承接区显示） |
-| 字段表 | **逐字复用 `contact.md` §2③3.2**（10 字段 / 实必填 3 / 两批） |
-| 后端 | **逐字复用 `contact.md` §2③3.4**（三条纪律 / `POST /api/inquiries`） |
+| `company` 对所有人必填 | 只对 B 端条件式处理；C 端不阻塞 |
+| `vehicle` 必填 | 仅轮毂准备提示或上下文字段，不作为跨产品线必填 |
+| `family: ProductFamily` | 改为四条正式 `ProductLineId`，复用全站同一数据源 |
+| `finish` 独立填写 | 轮毂详情从批准 variant 带入；其他入口不通用展示 |
+| `quantity` 必填且必须有数字 | 可选文本，允许样件或年需求表达 |
+| 仅 name/email/message 的服务端硬校验 | 增加客户类型、产品线、国家、隐私版本、幂等键与上下文复核 |
+| `delivered: boolean` | 分离持久化结果与邮件 accepted/delivered/bounced/unknown |
 
-**⚠️ 表单内不得新增任何字段** —— 专注态的「专注」体现在**外壳**，不在表单本身。
-若需要「报价专用字段（目标数量交期）」，**加进公共 10 字段表的第二批**，
-**不在本页另开一套**（否则回到「两个表单」的原罪）。
+## 9. 文件与保密资料
 
-**🔴 上下文从哪来（URL → `InquiryContext`）**：
+首发不提供附件上传。客户只选择是否已有 2D、3D 或样件，询盘生成后再由已确认流程交换资料。
 
-```ts
-// src/app/request-a-quote/page.tsx
-import type { InquiryContext } from "@/components/inquiry-form";
+后续增加附件必须同时具备：私有对象存储和短期签名 URL；扩展名、MIME、大小和病毒扫描；访问日志、保留期限和删除机制；NDA 与文件所有权提示；文件记录与询盘的权限绑定；上传失败不会让已经保存的文本询盘丢失。
 
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+不把工程图上传到 WordPress 媒体库，不用公开 URL 保存客户文件。
 
-/** ★ URL → InquiryContext 的唯一转换函数（本页与单品页共用，放 lib/） */
-// src/lib/inquiry-context.ts（需新建）
-export function buildInquiryContext(
-  sp: Awaited<SearchParams>,
-  pageUrl: string,            // "/request-a-quote"
-): InquiryContext;
-```
+## 10. 反滥用、安全与隐私
 
-| query 参数 | → `InquiryContext` 字段 | 来源页 |
-|---|---|---|
-| `?model=1081X` | `model` | 单品页 ⑦ `<InquiryPicker>` |
-| `?productionCode=…` | `productionCode` | 单品页（锁定 variant） |
-| `?size=15*7` | `selectedSpec.size` | 单品页 / 承接区改写 |
-| `?pcd=4*100` | `selectedSpec.pcd` | 单品页 |
-| `?et=35` | `selectedSpec.offset` | 单品页 |
-| `?cb=73.1` | `selectedSpec.centerBore` | 单品页 |
-| `?finish=白色全涂装` | `selectedSpec.finish` | 单品页 |
-| `?from=detail\|catalogue` | `sourcePageType` | 单品/目录页 |
-| `?series=…`（可选） | `series` | 系列页 |
+- 服务端验证所有字段长度、枚举、产品上下文和来源；客户端验证只改善体验。
+- 使用 honeypot、时间陷阱、Origin/CSRF 防护、IP/邮箱维度限流和幂等键。
+- 首发不强制可见 CAPTCHA；出现真实滥用再启用可访问的风险挑战。
+- 应用日志不输出消息全文、邮箱、电话、图纸名或完整请求体。
+- 隐私同意存 `privacyVersion`、`consentedAt` 和来源；营销订阅必须另设未勾选选项。
+- 成功页 `noindex`；询盘页可以 `index,follow`，但不把用户输入写入 metadata、URL 或分析事件名。
 
-**⚠️ 单品页 ⑦ `<InquiryPicker>` 必须输出这套 query 参数** —— 否则本页承接区永远空。
-**这是一条跨页契约**，写进 `PAGE-SPECS/products/wheels/[model].md` ⑦ 的待补项（见 §6 #4）。
+## 11. 可访问性与响应式
 
-### ④ 极简合规尾
+### 桌面 1440×900
 
-| 元素 | 内容 | 就绪度 |
-|---|---|---|
-| 隐私说明 | `<DataNotice>` —— 收集什么、存哪、第三方（Resend） | ⚠️ 同 `/contact` #12（需律师） |
-| 返回出口 | **一行文字链接**「还有别的问题？去 `/contact`」 | ✅ |
-| ❌ 禁止 | **不得**放第二个 CTA / 邮箱 / WhatsApp / `<DealerCta>` 主导出口 | — |
+- 内容最大宽度约 1040–1120px；表单主体约 620–720px，准备提示可在右侧窄栏。
+- 当前步骤从标题到主按钮完整可见；不要在同屏增加产品推荐或第二个主 CTA。
+- 步骤指示器使用文本 `Step 1 of 2` / `Step 2 of 2`，当前步骤带 `aria-current="step"`。
 
-**🔴 专注态的唯一出口是「提交」** —— 页面上任何别的 `btn-pill-solid` 都是事故。
-`<DealerCta>` 默认不渲染；若产品要求保留，**必须降级为纯文字链接**。
+### 移动 390×844
 
-```ts
-// src/components/data-notice.tsx（★ 与产品页 / /contact 同一组件，全站复用）
-type DataNoticeProps = {
-  eyebrow?: string;
-  body: string;                 // 隐私/来源说明
-  /** ★ 新增：尾部可选出口（本页用，指向 /contact） */
-  footLink?: { href: string; label: string };
-  variant?: "light" | "soft";
-};
-```
+- 单列，标签永远在字段上方；选择卡在空间不足时改原生 select。
+- 每一步的必填字段、隐私同意和按钮在正常视口内完成；公司条件字段导致超高时优先降低其首填要求。
+- 软键盘弹出后允许自然滚动，按钮不使用遮挡输入的固定底栏。
+- 国家字段使用可键盘操作的控件；错误、提交中和成功状态使用 `aria-live`。
 
----
+### 通用
 
-## 3. 组件清单
+- 每个输入有永久 label、help、错误 ID 与 `aria-describedby`。
+- 错误不用颜色作为唯一线索；提交中按钮保留原宽度，避免布局跳动。
+- 200% 放大无横向滚动；Tab 顺序与视觉顺序一致。
+- `prefers-reduced-motion` 下取消步骤切换位移；无 JS 时至少显示已确认直接联系渠道，不能显示一个无法工作的假表单。
 
-### 3.1 复用已有
+## 12. SEO 与分析
 
-| 组件 | 路径 | 用途 | 备注 |
-|---|---|---|---|
-| **`<InquiryForm>`** | `src/components/inquiry-form.tsx`（566 行，client） | 第 ③ 段 | ★ **全站唯一表单** —— 本页与 `/contact` 传不同 `context` |
-| `content.contact` | `src/content/contact.ts` | 文案（7 导出） | 复用 `contactFormCopy` |
-| — | `src/components/ui/button.tsx` | ⚠️ **零使用，不 import** —— 用 `.btn-pill-*` | — |
-| `<FloatingQuote>` | `floating-quote.tsx` | ⚠️ **本页必须同样隐藏**（同 `/contact`） | 见 §5 |
+- Title：`Request a Project Quote | Fenghuai`
+- Description：`Send a wheel, EV aluminum component, custom aluminum or self-sealing tire project enquiry to Fenghuai.`
+- canonical：`/request-a-quote`
+- robots：`index,follow`
+- 页面类型可使用 `ContactPage`/`WebPage`，但没有正式电话和工作时间时不生成虚构 `ContactPoint`。
+- 分析事件只记录步骤开始、验证失败类别、提交结果、产品线和来源类别；不记录消息、邮箱、电话、公司名或产品文件名。
+- 统计漏斗：进入 QF01 → 完成 QF02 → 提交 QF03 → 持久化成功；邮件投递不算前端转化成功条件。
 
-**⚠️ 复用 `contact.md §3.2` 已计划的新建组件**（不重复建）：
-`<ContactHero>`（本页传 `focused:true`）、`<DataNotice>`、`POST /api/inquiries`。
+## 13. 组件与内容接缝
 
-### 3.2 需新建（**本页专属，因为不新建）**
+### 复用并改造
 
-| 组件 | 建议路径 | 职责 | 复用度 |
-|---|---|---|---|
-| **`<QuoteContextBar>`** | `src/components/quote-context-bar.tsx` | 承接区：回显来源 + 已选规格 + 改写出口 | **仅本页** |
-| **`buildInquiryContext()`** | `src/lib/inquiry-context.ts` | ★ **URL → `InquiryContext` 的唯一转换器** | **本页 + 单品页**（避免两处解析逻辑漂移） |
-| **`<QuoteHero>`** | ⚠️ **不新建** —— 复用 `<ContactHero focused />` | 页头 | — |
+- `QuoteContextBar`：显示并允许清除合法上下文；服务端重新复核。
+- `InquiryForm`：拆成两步，去掉轮毂专属 `ProductFamily` 依赖。
+- 统一按钮、字段、错误摘要、`DataNotice` 和页面容器令牌。
+- `/contact`、轮毂详情和产品线页调用同一 `InquiryForm` 核心契约；嵌入式版本可缩短说明，不能改变后端语义。
 
-**★ 提取纪律**：`buildInquiryContext()` 是**本页与单品页 ⑦ 的共同契约**，
-**必须放 `src/lib/`，不许写进任一个 `page.tsx`**（否则单品页要复制一份解析逻辑）。
+### 删除或替换
 
-### 3.3 ⚠️ 两种实现方案（**必须拍板，见 §6 #1**）
+- 删除当前 PageHero 中 `Go to the form` 的中间跳转；进入页面即看到说明与表单。
+- 删除跨产品线不成立的 `Wheel enquiry`、车型必填、系列必填和 finish 通用字段。
+- 替换 `safely recorded`、`confirmation is on its way`、`sales team will follow up` 等超前承诺。
+- 不再向 `InquiryForm` 传 `productFamilies`；改传全站唯一 `productLines`。
 
-#### 方案 1：同一 `page.tsx` 用 searchParam 切态
+所有公开文案放在 `src/content/*.ts`，组件不硬编码营销文字。四条产品线名称与 Header、首页和产品中心共用同一数据源。
 
-```
-src/app/contact/page.tsx                 ← 唯一 page.tsx
-  ├── searchParams.mode === "quote"  → 专注态外壳（① ② ③ ④）
-  └── 否则                            → 通用态外壳（/contact 五段式）
-+ next.config.ts 加 rewrite：/request-a-quote → /contact?mode=quote
-+ ⚠️ 必须给 /request-a-quote 单独 generateMetadata（rewrite 不产生新路由，meta 需处理）
-```
+## 14. 发布门槛与验收
 
-| ✅ 优点 | ⚠️ 缺点 |
-|---|---|
-| 表单/后端物理上只有一份 | **URL 不干净**（要么 rewrite 要么 `?mode=`） |
-| 无重复代码风险 | **独立写 meta 困难**（一个 `page.tsx` 要按 searchParam 分叉 metadata） |
-| — | **canonical 难写**（两 URL 同一内容，SEO 上近乎重复页） |
-| — | **广告落地页拿到 query 串**，追踪参数与 `mode` 混在一起 |
+### 发布门槛
 
-#### 方案 2：两个 `page.tsx` 共用组件（**★ 推荐**）
+- [ ] 正式隐私政策已批准并有真实版本号。
+- [ ] 正式销售邮箱已确认；若显示 WhatsApp/电话，责任人和工作流程也已确认。
+- [ ] PostgreSQL 或等价持久化、事务 outbox、幂等唯一约束已运行。
+- [ ] 生产环境不再使用进程内 Map 保存询盘。
+- [ ] 产品上下文由服务端复核并保存快照。
+- [ ] 邮件 accepted、delivered、bounced、unknown 与询盘保存状态分开。
+- [ ] 四条产品线与 B/C 路径均完成真实提交测试。
+- [ ] 没有工程文件公开上传路径。
 
-```
-src/app/contact/page.tsx                 ← 通用态（五段式）
-src/app/request-a-quote/page.tsx         ← 专注态（四段式）★ 本规格描述的对象
-        └── 两者都 import 同一个 <InquiryForm>（同一份 + 同一后端）
-        └── 两者各自写 generateMetadata（title/canonical 独立）
-```
+### 功能验收
 
-| ✅ 优点 | ⚠️ 缺点 |
-|---|---|
-| **URL 干净**（`/request-a-quote` 无 query 也能进） | 两个 `page.tsx` 文件（但**外壳代码量极小**，逻辑都在组件里） |
-| **可独立写 meta**（`quote` vs `contact` 词根天然不竞争） | **纪律要求高**：必须抵抗「再写一份表单」的诱惑 |
-| 广告落地页 URL 稳定、可独立打转化标签 | — |
-| 与 `contact.md` 附 B.1「方案 2 保留两个路由」天然对齐 | — |
+- [ ] 无来源上下文、产品线来源、轮毂型号来源、批准 variant 来源四种入口正确。
+- [ ] B 端显示公司字段；C 端不因公司为空被阻止。
+- [ ] 每步必填不超过 3 个；桌面与移动基准视口均看见主按钮。
+- [ ] 前进、后退、校验失败和网络重试不丢当前输入。
+- [ ] 双击提交或超时重试只产生一个询盘号。
+- [ ] 数据库失败绝不跳转成功页。
+- [ ] 数据已存而邮件失败时仍显示同一询盘号，且不要求重复提交。
+- [ ] 直接访问 `/thank-you` 不能伪造成功。
 
-**★ 推荐方案 2 的三条硬理由**：
+### 内容与视觉验收
 
-1. **广告与外链需要一个干净的、永不变化的转化 URL** —— query 串会被追踪平台改写。
-2. **独立 meta 是「不自我竞争」的前提** —— 方案 1 里 `request-a-quote` 拿不到独立 `title`。
-3. **成本差极小** —— 两个 `page.tsx` 各只做「拼外壳 + 传 props」，**共用组件本就是既定纪律**，
-   不会真的产生第二份表单。
+- [ ] 页面没有 2N 品牌、文案、联系方式、图片或专有样式残留。
+- [ ] 准备提示只对应当前产品线，不一次铺开四套内容。
+- [ ] 页面不用工厂图、事故图或轮毂图抢占表单主任务。
+- [ ] 无正式 WhatsApp 时不显示号码或响应承诺。
+- [ ] 未验证 SLA、确认邮件、报价时限、验厂和生产结果均未出现。
 
-**→ 若拍板方案 1**：本规格 §1/§2 的四段式仍然成立，只是四段住进 `page.tsx` 的
-`mode === "quote"` 分支，§3.2 的 `<QuoteContextBar>` 与 `buildInquiryContext()` 照建不误。
+### 工程验收
 
----
-
-## 4. 数据契约
-
-### 4.1 输入（全部来自 `/contact`，**不重复定义**）
-
-```ts
-// ⚠️ 以下类型全部已定义在 PAGE-SPECS/contact.md §2③3.3 / §4，本页只引用
-import type { InquiryFormProps, InquiryContext } from "@/components/inquiry-form";
-import type { ProductFamily, WheelModel } from "@/content/types";
-```
-
-| 字段/类型 | 来源 | 本页用法 |
-|---|---|---|
-| `families: ProductFamily[]` | `content/products.ts`（**✅ 已存在** —— `types.ts:23`） | 传给表单（同 `/contact`） |
-| `models?: Pick<WheelModel,"model"\|"finishes">[]` | `WheelModel`（**⚠️ 类型已定义，数据未接入 `src/`**） | 型号选择器；未接入时降级文本输入 |
-| `context?: InquiryContext` | ★ **本页从 `searchParams` 构造** | 预填 + 承接区回显 |
-| `copy` | `contact.contactFormCopy` | 同 `/contact` |
-
-### 4.2 ★ 本页独有数据流（**这是本规格唯一新增的数据契约**）
-
-```
-单品页 ⑦ <InquiryPicker>
-   │  Link href="/request-a-quote?model=…&productionCode=…&size=…&pcd=…&et=…&cb=…&finish=…&from=detail"
-   ↓
-/request-a-quote  page.tsx
-   │  searchParams  ──buildInquiryContext()──▶  InquiryContext   ← ★ 单一转换器
-   ├──▶ <QuoteContextBar context={ctx} />       （② 承接区，纯回显）
-   └──▶ <InquiryForm context={ctx} models={…} families={…} copy={…} />  （③ 表单）
-             ↓ 提交
-   POST /api/inquiries  { …fields, context: { …ctx, pageUrl: "/request-a-quote" } }
-```
-
-**🔴 三条纪律（继承 `contact.md`）**：
-
-1. `context` **入库与询盘同行**（纪律三：上下文随询盘走）。
-2. `selectedSpec` 是**文本快照**，**不存 `productionCode` 外键**（纪律二：存快照不存引用）。
-3. `pageUrl` 本页固定为 `/request-a-quote` —— **销售据此区分：报价来的是高意向**。
-
-**⚠️ 缺口**：`buildInquiryContext()` 的**参数命名规范未定** ——
-必须与单品页 ⑦ `<InquiryPicker>` 的链接生成**同一张表**（见 §6 #4）。
-
-### 4.3 就绪度总表（逐段）
-
-| 段 | 依赖 | 就绪度 |
-|---|---|---|
-| ① 页头 | `<ContactHero>` 复用（`contact.md` 已计划） | ✅ |
-| ② **承接区** | **`buildInquiryContext()` + 单品页 ⑦ 输出这套 query** | ⚠️ **跨页契约未定**（§6 #4） |
-| ③ 表单 | `<InquiryForm>` 扩展 + `WheelModel` 数据接入 | ⚠️ 同 `/contact`（§6 #3） |
-| ④ 合规尾 | 隐私文案（需律师） | ⚠️ 同 `/contact` #12 |
-
----
-
-## 5. 布局与响应式
-
-| 项 | 规格 |
-|---|---|
-| 容器 | `.container-fh`（1180）—— **比 `/contact` 更窄的视觉**：表单主列居中，**无 aside** |
-| 布局 | **单列**（四段纵向堆叠）—— 专注态**不做 320px 侧栏**（那是 `/contact` 的 ④ 联系块位） |
-| 断点 | 字段栅格 `grid-cols-1 md:grid-cols-2`（同 `/contact`）⚠️ **768 必须专门测** |
-| 深色段 | **无** —— 全浅色 |
-| 动效 | `[data-reveal]` 每段一次；**② 承接区与 ③ 表单之间不做错峰**（避免元素位移干扰输入） |
-| 🔴 fail-visible | **不要自己加 `opacity-0`**（`globals.css:224-267`） |
-| 按钮 | `.btn-pill-solid`（提交）/ `.btn-pill-outline`（重置）—— **不是 `<Button>`** |
-| 浮动 CTA | ⚠️ **`<FloatingQuote>` 必须在 `/request-a-quote` 上隐藏** —— 与 `/contact` 同理 |
-
-**🔴 `<FloatingQuote>` 隐藏的实现注意**：
-现有隐藏逻辑写在 `floating-quote.tsx`（`layout.tsx:40` 挂载），**只判断 `/contact`**。
-新增本路由时**必须把 `/request-a-quote` 加进隐藏条件**，否则专注态右下角会浮一个「获取报价」按钮
-指向本页自己 —— **自我循环，且是第二个 CTA**。
-
-**★ 移动纪律**：专注态在 390px 上应当是「**一屏一个任务**」——
-页头 + 承接区 + 表单首字段应在首屏内，**用户不需要下滑才知道要填什么**。
-
----
-
-## 6. 待补与阻塞
-
-| # | 事项 | 阻塞 | 就绪度 |
-|---|---|---|---|
-| **1** | **实现方案拍板**：方案 1（searchParam 切态）vs **方案 2（两个 page.tsx，推荐）** | **整页** | 🔴 **待拍板**（同 `contact.md` 附 B.1 #9） |
-| **2** | `/contact` 与 `/request-a-quote` **是否合并** | 路由存在性 | 🔴 **文档矛盾，待拍板**（见附 A） |
-| **3** | **`WheelModel` 数据接入 `src/`** | ③ 型号选择器 | ⚠️ 传递性阻塞（同 `/contact` #10） |
-| **4** | ★ **URL query 参数命名 + `<InquiryPicker>` 输出契约** | **② 承接区 + ③ 预填** | 🔴 **跨页契约未定（本页独有阻塞）** |
-| **5** | 提交成功：内联成功态 vs 跳 `/thank-you` | ③ | 🔴 待拍板（同 `contact.md` 附 B.2 #11） |
-| **6** | **后端**：DB 选型 / Resend / Node runtime | ③ | ❌ 全部待定（同 `/contact` #5-7） |
-| **7** | 隐私说明（收集/存储/Resend/留存期） | ④ | ⚠️ 需律师（`README` §2.15） |
-| **8** | `<FloatingQuote>` 隐藏条件加本路由 | ⑤ | ✅ 小改动，但**不可漏** |
-| **9** | Google Ads / GA4 转化标签是否需要独立 landing 参数 | SEO/投放 | ⚠️ 待定（方案 2 才干净） |
-
-**🔴 阻塞汇总：#1 #4 是本页独有的两个硬阻塞**，其余全部继承自 `/contact`。
-
----
-
-## 附 A：与设计文档的对应
-
-| 本规格的段 | 设计依据 |
-|---|---|
-| 「专注态而非独立页」的定位 | `contact.md` 附 B.1 方案 2 + `contact-page.md:236-237` |
-| 四段式（五段式减联系块） | `PAGE-SPECS/contact.md` §1 五段式 |
-| 字段表 / `InquiryContext` / 后端三纪律 | **`PAGE-SPECS/contact.md` §2③3.2 / 3.3 / 3.4**（逐字复用） |
-| 一键查重：唯一表单 + 唯一后端 | `contact-page.md` §3（一页一个表单） |
-| 上下文随询盘走 | `contact-page.md` §4.2 + `README.md` §2.13 |
-
----
-
-## 附 B：🔴 与 `contact.md` 附 B.1 的协调说明
-
-`contact.md` 附 B.1 记录了**未决矛盾**：
-
-- `contact-page.md` §5 **主张合并成一个 `/contact`**
-  —— 「两个入口指向同一个表单会分散权重」。
-- `PAGE-SPECS/README.md`（文件命名 = 路由表）与目标站点地图 **保留两个路由**。
-
-**本规格的立场（规格层决定，不推翻设计层）**：
-
-| 若拍板 | 本规格的命运 |
-|---|---|
-| **保留两个路由（方案 2）** | ✅ **照本规格施工** —— 本文描述的就是 `/request-a-quote` 的专注态 |
-| **合并（方案 1 的激进版：只留 `/contact`）** | ⚠️ **本文作废**，但**不是白写** —— §2② `<QuoteContextBar>` + §3.2 `buildInquiryContext()` **整体迁进 `/contact`**，作为 `?mode=quote`（或 `?from=detail`）分支；`contact.md` §6 #9 的两选项一并落地 |
-
-**★ 无论拍板哪个，以下三件事不变、且本规格已给出规格**：
-
-1. **只有一个 `<InquiryForm>`**（§3.1）
-2. **承接区（回显上下文）必须存在** —— 只是它可能住在 `/contact` 里（§2②）
-3. **`buildInquiryContext()` 必须是唯一转换器**（§3.2）—— 它甚至比路由本身更重要，
-   因为它是**单品页 ⑦ 与本页的接口**，与路由合并与否无关。
-
-**→ 所以本规格的交付不依赖 #1/#2 的拍板**：路由结论只是决定「四段式住哪个文件」，
-**`<QuoteContextBar>` 与 `buildInquiryContext()` 两个新建件两种方案都要建。**
+- [ ] `npm run lint`
+- [ ] `npm run typecheck`
+- [ ] `npm run build`
+- [ ] 生产实例运行时验证 201 / 422 / 429 / DB 失败 / 邮件失败 / 幂等重放。
+- [ ] canonical、robots、成功页 noindex 与敏感 URL 检查通过。
+- [ ] 日志抽查没有 PII 或消息全文。

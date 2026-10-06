@@ -258,13 +258,9 @@ export function getFamilySpecs(slug: string): FamilySpec[] {
 
 /** Related-resource links shown at the foot of each family page. */
 export const familyResourceLinks: ResourceLink[] = [
-  {
-    eyebrow: "Reference",
-    title: "Vehicle gallery",
-    body: "See how each family sits on real platforms, with the sizes and finishes used on each build.",
-    href: "/gallery",
-    linkLabel: "Browse builds",
-  },
+  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
+  // /gallery is archived, and "real platforms … on each build" was a false
+  // claim — those builds never existed.
   {
     eyebrow: "Reference",
     title: "Finish gallery",
@@ -291,13 +287,8 @@ export const catalogueSkuCallout = {
 
 /** Related-resource links shown on the catalogue hub. */
 export const catalogueResourceLinks: ResourceLink[] = [
-  {
-    eyebrow: "Gallery",
-    title: "Vehicle gallery",
-    body: "Fitment references across performance, luxury and off-road platforms.",
-    href: "/gallery",
-    linkLabel: "Browse builds",
-  },
+  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
+  // /gallery is archived and its fitment references were invented.
   {
     eyebrow: "Finishes",
     title: "Finish reference",

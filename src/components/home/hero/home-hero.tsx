@@ -1,88 +1,85 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { HeroBackground } from "./hero-background";
-import { heroCopy, heroSlides } from "@/content/homepage-hero";
+import { ArrowDownRight, ArrowRight } from "lucide-react";
+import type { HomepageContent } from "@/content/types";
 
-/**
- * Homepage hero — the company-level entry view.
- *
- * Layout: photography behind, brand positioning on the left, four product
- * entries on the right (hero PageSpec §2). The background carries the mood; the
- * left column carries who we are; the right column routes visitors.
- *
- * ⚠️ Height. The section is `min-h-svh` and the site header floats OVER it
- * (see site-header.tsx), so header + hero together fill exactly one viewport
- * — previously the header sat above a separate 100svh hero, pushing the first
- * fold past a full screen (spec §5, AC-02).
- */
-export function HomeHero() {
+export function HomeHero({ hero }: { hero: HomepageContent["hero"] }) {
+  const showMedia = hero.media.hasRender && hero.media.approvalStatus === "approved";
+
   return (
     <section
       id="top"
       aria-labelledby="hero-title"
       className="relative isolate flex min-h-svh items-center overflow-hidden bg-hero"
     >
-      <HeroBackground slides={heroSlides} />
+      <div className="absolute inset-0 -z-20 bg-hero" aria-hidden="true" />
 
-      {/*
-        Vertical rhythm (hero PageSpec §21): the composition should sit slightly
-        BELOW the optical centre, so the block gets more bottom padding than top
-        and the section uses items-center against that asymmetry. The top inset
-        clears the fixed header — 96px on mobile (74px bar) and 152px from lg
-        (86px bar), both leaving breathing room rather than butting against it.
-      */}
-      {/*
-        ⚠️ No `w-full` here: it emits `width:100%`, which outranks the
-        container's own `width: min(calc(100% - 40px), 1180px)` and silently
-        collapses the gutter — the left column then jams against the viewport
-        edge and the cards bleed past the right one.
-      */}
-      <div className="container-fh pb-20 pt-[96px] lg:pb-28 lg:pt-[152px]">
-        {/*
-          Single column. The hero answers exactly one question — "who are we?"
-          (DESIGN.md §0.5.1). The four product cards that used to sit on the
-          right now live in their own section (`ProductLines`), because a
-          viewport carries one primary action and the cards were competing with
-          the hero's CTA for the same click.
-        */}
-        <div className="max-w-[760px]">
-          {/* ── Left: brand positioning ───────────────────────────────── */}
-          <div className="max-w-[650px]">
-            <p className="eyebrow !text-forge">{heroCopy.eyebrow}</p>
+      {showMedia ? (
+        <div className="absolute inset-0 -z-10" data-parallax-media>
+          <Image
+            src={hero.media.src}
+            alt={hero.media.alt}
+            fill
+            preload
+            sizes="100vw"
+            className="object-cover object-center opacity-55"
+          />
+          <div className="absolute inset-0 bg-linear-to-r from-hero via-hero/85 to-hero/35" />
+          <div className="absolute inset-0 bg-linear-to-t from-hero via-transparent to-hero/25" />
+        </div>
+      ) : (
+        <div
+          className="fh-industrial-grid absolute inset-0 -z-10 overflow-hidden"
+          aria-hidden="true"
+          data-parallax-media
+        >
+          <div className="absolute -right-[8%] top-[12%] aspect-square w-[58vw] rounded-full border border-white/10" />
+          <div className="absolute -right-[2%] top-[20%] aspect-square w-[43vw] rounded-full border border-white/10" />
+          <div className="absolute right-[7%] top-[30%] aspect-square w-[25vw] rounded-full border border-forge/35" />
+          <div className="absolute bottom-[12%] right-[4%] h-px w-[48%] bg-white/15" />
+          <div className="absolute bottom-[18%] right-[12%] h-px w-[34%] bg-forge/50" />
+        </div>
+      )}
 
-            <h1
-              id="hero-title"
-              className="mt-5 font-display text-[clamp(2.7rem,6.2vw,5.4rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
-            >
-              {heroCopy.headingLines.map((line, i) => (
-                <span key={line} className="block">
-                  {i === 1 ? <span className="text-forge">{line}</span> : line}
-                </span>
-              ))}
-              <span className="mt-3 block font-display text-[clamp(1.15rem,2.4vw,1.9rem)] font-600 uppercase leading-tight tracking-[0.01em] text-white/85">
-                {heroCopy.supporting}
-              </span>
-            </h1>
+      <div className="container-fh pb-18 pt-[112px] lg:pb-24 lg:pt-[148px]">
+        <div className="max-w-[780px]">
+          <p className="eyebrow !text-forge">{hero.eyebrow}</p>
 
-            <p className="mt-7 max-w-[600px] text-[1rem] leading-relaxed text-white/75">
-              {heroCopy.description}
-            </p>
+          <h1
+            id="hero-title"
+            className="mt-5 max-w-[760px] font-display text-[clamp(3rem,6.5vw,5.8rem)] font-800 uppercase leading-[0.9] tracking-[-0.025em] text-white"
+          >
+            {hero.heading}
+          </h1>
 
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Link href={heroCopy.primaryCta.href} className="btn-pill-solid">
-                {heroCopy.primaryCta.label}
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href={heroCopy.secondaryCta.href}
-                className="btn-pill-outline !text-white"
-              >
-                {heroCopy.secondaryCta.label}
-              </Link>
-            </div>
+          <p className="mt-7 max-w-[690px] text-[clamp(1rem,1.5vw,1.16rem)] leading-relaxed text-white/78">
+            {hero.lead}
+          </p>
+
+          <div className="mt-7 flex max-w-[680px] gap-4 border-l-2 border-forge pl-5">
+            <p className="text-sm leading-relaxed text-white/58">{hero.disclosure}</p>
           </div>
 
+          <div className="mt-9 flex flex-wrap gap-4">
+            <Link href={hero.primaryAction.href} className="btn-pill-solid">
+              {hero.primaryAction.label}
+              <ArrowDownRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href={hero.secondaryAction.href}
+              className="btn-pill-outline !text-white"
+            >
+              {hero.secondaryAction.label}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
+
+        {showMedia ? (
+          <p className="absolute bottom-7 right-6 hidden max-w-[320px] text-right font-display text-xs font-600 uppercase tracking-[0.12em] text-white/55 lg:block">
+            {hero.mediaLabel}
+          </p>
+        ) : null}
       </div>
     </section>
   );

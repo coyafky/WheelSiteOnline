@@ -1,38 +1,192 @@
 # 项目状态
 
-## 2026-10-04 当前状态
+## 2026-10-06 当前状态
 
-**本轮完成：在既有规划（5 份文档 + T00–T23 任务卡 + 视口规格）基础上进入执行阶段——产出 [代码与资产盘点报告](outputs/site-launch-plan/05-code-and-assets-inventory.md)；T02 工程基线三项门禁全绿（修复 sitemap 损坏尾段、wheel-skus 缺失函数、目录生成器两处错误）；T03 询盘泄漏关闭并经生产实例运行时验证（GET 404/401、POST 503、页面 200）；真实轮毂口径重跑：1349 型号 → **1073 有图上架 / 276 无图**（历史"1018"更正）；Git 基线建立并本地提交（推送远程进行中）；本地 WordPress 实验场上线（Docker：WP 8081 + MySQL 33061，媒体库已导入 157 张 PPT 图片，REST API 正常）。部署与发信仍未执行（DEC-028 本地先行）。**
+**当前版本已完成 7 个核心展示页，但轮毂交易主链路、统一询盘持久化、SEO
+发布集合与部署层仍未完成，因此只适合本地开发和内容审核，不适合公开上线。**
+
+完整核验报告见
+[当前实现状态审计](outputs/reports/current-implementation-status-2026-10-06.md)。本轮未
+commit、push、deploy，也没有向真实地址发送测试邮件。
+
+### 已实现并通过本轮构建与路由核验
+
+| 路由 | 当前实现 | 状态边界 |
+|---|---|---|
+| `/` | H01–H05、四条产品线、制造能力、项目路径与统一收口 | 已实现 |
+| `/about` | 公司定位、轮毂制造基地、自密封轮胎制造基地 | 已实现；法人证据仍按实际主体 |
+| `/capabilities` | WM01–WM05 轮毂制造与质量证据 | 已实现；证书未核验不公开 |
+| `/products/safety-tires` | T01–T06、17 张媒体、8 mm 结构化证据 | 已实现；具体型号报告待补 |
+| `/products/wheels/forged` | WF01–WF04、WF06 | 已实现；WF05 因案例证据不足隐藏，后台元数据待补 |
+| `/products/ev-components` | EV01–EV06、三类有图壳体 | 已实现；4 张 WP 媒体运营元数据待补 |
+| `/products/custom-aluminum` | CA01–CA07、来图来样评估 | 已实现；业务边界未确认，保持 `noindex,follow` |
+
+本轮 `npm run check` 全绿：lint、typecheck、Next.js 16.3.5 production build
+均通过，共生成 65 个页面数据项；`git diff --check` 通过。上述 7 个路由在
+`127.0.0.1:3005` 全部返回 200。现有页面验收目录共保存 19 张截图。
+
+本地 WordPress 的正确 REST 地址是
+`http://127.0.0.1:8081/wp-json/wp/v2`；`fh-wp` 与 `fh-wp-db` 容器运行中，
+WP 114/61/78/84 批量请求返回 200 和 4 条记录，`/about` HTML 已出现真实
+WordPress 媒体 URL。当前 CMS 接缝主要覆盖批准媒体，页面文案仍以
+`src/content/*.ts` 为主，不能描述成全站内容均由 WordPress 管理。
+
+### 部分实现或未实现
+
+0. **✅ 轮毂链路已全部打通（2026-10-06）**：事实层 → WordPress CPT（138 条）→
+   批准快照 `src/content/wheel-publication.json` → 公开集合模块 `src/lib/wheels/`
+   → **目录页 `/products/wheels`（W01–W03）与详情页 `/products/wheels/[model]`
+   （WD01–WD06）已改接完成**，sitemap 与询盘服务端复核同步接入。
+   四视口运行时验收全绿（0 横向溢出 / 0 断图 / 0 控制台错误），
+   询盘伪造规格实测被服务端真相覆盖。见 DEC-052 与 DEC-053。
+   口径提示：本轮按用户决定 138 条全部批准（便于验收分页/筛选/排序），
+   与规格「首发 10–20 个」不一致，**上公开环境前必须收窄**。
+
+1. **✅ 旋压入口已实现（2026-10-06，DEC-054）**：`/products/wheels/flow-formed`
+   已按 WFF01–WFF05 落地，**死链已修**。工艺边界服务端锁定（`?process=` 任一取值均被
+   忽略）；复用目录卡片/筛选/排序/分页（后两者已参数化）。
+   ✅ **索引已开放**（2026-10-06，用户指令）：`publicationGate` 两项均置为已确认 →
+   `robots: index,follow` + canonical 自指 + 已进 sitemap（177 URL）。
+   `sitemap.ts` 读同一门槛，**再关闭会自动退出**（双向耦合已实测）。
+2. **`WheelSketch` 已归档（2026-10-06，DEC-059）**：`src/components/wheel-gallery.tsx`
+   （含 `WheelSketch`）随 `/gallery/wheels` 一起搬进
+   `archive/2026-10-06-fictional-galleries/`。
+   ⚠️ **此处原写「那是另一个 PAGE-SPEC（轮毂设计画廊）」—— 该说法是错的。**
+   全量复核（现行 `PAGE-SPECS/`、`PAGE-SPECS/index.md`，以及 `archive/*/PAGE-SPECS/`）：
+   **`/gallery/*` 从来没有 Page SPEC**。归档基线里的
+   `archive/2026-10-01-document-baseline/PAGE-SPECS/_viewport-audit.md` 自己就写着
+   「规格里**没有 `/gallery` 的独立页面规格**」，把 `/gallery` 列在「本阶段不做」表里。
+   所以「先处理它的规格」这个前置条件不存在 —— 它从上线起就一直是未授权素材的占位。
+3. **✅ 旋压入口已实现（2026-10-06，DEC-054）**：`/products/wheels/flow-formed`
+   已按 WFF01–WFF05 落地，死链已修；工艺边界服务端锁定；发布门槛已按用户指令开启
+   （`index,follow` + canonical + 已进 sitemap）。
+4. **询盘后端已落地（2026-10-06，DEC-055）**：**持久化不再是内存 Map** —— 改为
+   WordPress CPT `fh_inquiry` + 三张专用表（幂等唯一键 / 邮件 outbox / 邮件事件），
+   经服务密钥鉴权的 `POST /fh/v1/inquiries` 写入，WordPress 后台可查阅管理。
+   端到端实测通过（含事务回滚与规格快照复核）。
+   **仍待做**：QF01–QF03 两步四线表单（当前可见表单仍是轮毂长表单）、
+   感谢页按 §7.3 复查、outbox 定时派发 worker、邮件事件回调。
+5. **✅ sitemap 已修正（2026-10-06）**：16 条虚构轮毂 SKU URL 已换成
+   `listPublishedWheelSlugs()` 的 138 条真实公开 slug；补上 EV、轮胎、锻造、询盘
+   四条真实可索引路由；`/gallery` 与 `/gallery/wheels` 两条**虚构内容路由**已下架
+   （DEC-059），`/gallery/finishes` 改读门槛、门槛关闭时不收录。当前 **174** 条。
+   `/products/custom-aluminum` 与 `/gallery/finishes` **刻意不在列表内** —— 分别由
+   DEC-050 与 DEC-059 的门槛控制。
+6. **部署与上线事实未冻结**：OpenNext 尚未落地；正式域名、邮箱、电话、隐私文本
+   未确认。**模板遗留已在 2026-10-06 清完（DEC-060）** —— `package.json` 元数据
+   已换成本项目自己的，根 Docker 文件 / `LICENSE` / `CONTRIBUTING` / `SECURITY` /
+   双锁文件中的 `bun.lock` 全部归档。**仍缺的是生产部署文件本身**（等平台决定）。
+
+对应下一步任务已写入：
+
+- `work/queued/2026-10-06-wheel-catalog-detail-flow-sitemap.md`
+- `work/queued/2026-10-06-inquiry-page-and-persistence.md`
+- `work/queued/2026-10-05-template-runtime-metadata-cleanup.md`
+
+轮毂链路的施工前架构分析见
+[`outputs/designs/wheel-publication-architecture-2026-10-06.md`](outputs/designs/wheel-publication-architecture-2026-10-06.md)，
+**该方案已于 2026-10-06 落地并写入 DEC-052**（数据链路部分）。
+
+分析发现的 108 组重复型号已在本轮查清并修正了处置口径：事实层按
+「（来源目录, model）」分条，同一 model 横跨多个尺寸目录且各目录变体**互不重叠**，
+因此公开型号必须取**并集合并**（1349 条源记录 → 1219 个唯一型号）。
+此前「保留分高的那条记录」的去重方式丢掉了 257 个变体（26%），属真实数据丢失，
+已在 `select-wheel-first-batch.py` 与 `publication.ts` 两处修正。
+
+公开集合的资格判定集中在 `src/lib/wheels/publication.ts` 一处，逐条对照
+mu-plugin 的 `fh_wheel_is_approved()`，**fail-closed**（缺字段即不通过，
+快照缺失时公开集合为空，绝不回退成「所有有图型号」）。
+
+工作树当前包含大量尚未提交的架构迁移、代码、图片和验收产物；在继续开发前应按
+功能边界整理并形成可追溯提交，但未经用户明确授权不执行 commit 或 push。
+
+## 2026-10-05 历史工作记录（已由上节覆盖）
+
+**本轮完成：在既有规划（5 份文档 + T00–T23 任务卡 + 视口规格）基础上进入执行阶段——T02 工程基线三项门禁全绿；T03 询盘泄漏关闭并经生产实例运行时验证；真实轮毂口径重跑为 1349 型号 → **1073 有图技术候选 / 276 无图**；本地 WordPress 实验场上线并导入 157 张 PPT 图片。首页 H01–H05、About A01/A02/AF01–AF03/AT01–AT03/A03、Capabilities WM01–WM05 和自密封轮胎 T01–T06 已完成代码、Headless WordPress 媒体接线与桌面/移动视觉验收；用户确认集团制造基地可用“我们的工厂”口径，当前媒体库图片均可读取（DEC-042～DEC-048）。部署与真实发信仍未执行。**
+
+已新增 [`outputs/page-spec-agent-prompts/`](outputs/page-spec-agent-prompts/README.md)，把上述已完成页面的实施方法整理为其他 agent 可直接复制的主提示词、媒体证据提示词、独立验收提示词和剩余页面启动提示词。建议按轮毂目录 → 详情模板 → 旋压入口 → 锻造 → 三电 → 定制铝制品 → 统一询盘的依赖顺序执行。
 
 用户已确认：公司按 PPT 为深圳峰徊科技有限公司；与蓝辉为同一股东名下不同公司；四线平行、B/C 客户；海外英文优先；目标 2026-11-04；整体运行维护约 1000 元/月。当前重点由既有首页微调转为首发范围与真实产品/询盘链路。
 
 交付入口：
 
+- [全仓文档导航](DOCUMENTATION.md)
 - [总计划与月预算](outputs/site-launch-plan/README.md)
 - [数据库与询盘契约](outputs/site-launch-plan/02-data-and-inquiry-design.md)
 - [素材分配](outputs/site-launch-plan/03-content-and-assets.md) 与 [40 条 PPT 图片对象定位](resources/research/2026-10-04-site-plan/ppt-image-locations.csv)
 - [逐页逐视口施工图](PAGE-SPECS/2026-10-04-launch-viewport-spec.md)
+- [首页规格](PAGE-SPECS/homepage.md)：H01–H05、四条产品线、六项制造能力、制造主体边界、交付路径和统一询盘
+- [About 轮毂制造合作方模块规格](PAGE-SPECS/about-wheel-factory.md)：WP 媒体 114/61/78/84、英文文案和双端验收
+- [Capabilities 轮毂制造与质量能力规格](PAGE-SPECS/capabilities-wheel-manufacturing.md)：WM01–WM05、12 张工艺/检测图、2 张证书候选和证据门槛
+- [锻造轮毂高端定制规格](PAGE-SPECS/forged-wheel-customization.md)：WF01–WF06、6 张可用媒体、案例门槛和询盘输入
+- [自密封轮胎规格](PAGE-SPECS/self-sealing-tires.md)：T01–T06、8 mm 证据口径、17 张候选媒体和现有页面替换要求
+- [About 自密封轮胎制造合作方规格](PAGE-SPECS/about-self-sealing-tire-factory.md)：AT01–AT03、7 张生产图和制造主体边界
+- [轮毂产品目录规格](PAGE-SPECS/wheel-catalog.md)：W01–W03、真实变体筛选、24 个/页、SEO 和发布门槛
+- [轮毂详情页规格](PAGE-SPECS/wheel-detail.md)：WD01–WD06、单图首屏、真实变体、嵌入式询盘、finish 和相关型号
+- [旋压轮毂入口规格](PAGE-SPECS/flow-formed-wheels.md)：WFF01–WFF05、工艺边界、批准型号集合、WP 116、目录复用和变体询盘
+- [新能源三电铝制品规格](PAGE-SPECS/ev-components.md)：EV01–EV06、三类有图壳体、工程问题、工艺证据和询盘输入
+- [定制铝制品规格](PAGE-SPECS/custom-aluminum.md)：CA01–CA07、来图来样评估、四类应用、工程方法示例和发布门槛
+- [项目询盘页规格](PAGE-SPECS/request-a-quote.md)：QF01–QF03、四线/B-C 分流、两步短表单、上下文快照、事务成功和隐私门槛
 - [开发任务卡与 DeepSeek 提示模板](outputs/site-launch-plan/04-task-cards.md)
+- [航鹏轮毂素材库](outputs/hangpeng-wheel-media/README.md)：68 张候选素材，其中 36 款轮毂按型号命名
+- [架构与 README 校准审计](outputs/architecture-alignment-audit.md)：三份核心文档的旧描述、修正结果和剩余实现缺口
+
+### 文档版本
+
+`ARCHITECTURE.md` 已按业务主体、模块接缝、内容证据、产品发布集合、页面、询盘、运行时和运维重新校准，并明确区分已实现、已设计和待确认。根 `README.md` 已从旧纯轮毂静态原型说明改为四线 B/C 项目的真实开发入口；`ARCHITECTURE/README.md` 负责阅读导航。`PAGE-SPECS/` 只保留现行首发正本与子规格。2026-10-01 的详细架构、22 份按路由施工图、旧视口审计、旧交接快照、旧实施草案和四个已被覆盖的待办，完整迁入 `archive/2026-10-01-document-baseline/`。没有删除历史内容。`DOCUMENTATION.md` 是当前文档统一入口（DEC-042）。
+
+首页已按 H01–H05 子规格完成实现：公司级 Hero、四条等权产品线、六项有范围的制造能力、五阶段项目路径与统一询盘收口均已接入。`WheelStripSection` 已从首页移除，旧的 `under one roof`、`factory direct`、`Four lines, one factory` 和结果式询盘承诺不再出现。WP 114、61、78、155 已由用户批准，并通过 `src/lib/wordpress/homepage.ts` 从 Headless WordPress 读取 URL、alt 和 caption；WordPress 不可用时回退到同一张批准图片。页面按用户确认使用“我们的制造基地”口径，法人证据仍按实际主体（DEC-040、DEC-043、DEC-044）。
+
+About 页已按现行规格完成重建。公司 Hero 与四项角色分工替换了旧占位统计和竞品式定位；AF01–AF03 使用 WP 114/61/78/84 展示厂区、铸造、CNC 与涂装；AT01–AT03 使用 WP 155/159/148/18/16/145/136 展示自动化、专用设备、产线、材料和检测环境。11 张媒体均已补英文 alt、caption、来源、用途与批准状态，组件共用 WordPress 批量媒体适配器并保留同图本地 WebP 回退。生产实例实测单次 REST 请求返回 11 张媒体，页面 1.12 秒返回并使用 WordPress URL。桌面 1440×900 与移动 390×844 已验收，无横向溢出（DEC-045）。用户另确认当前媒体库全部 157 张图片均可读取，已统一写入批准元数据；页面是否展示仍由 PageSpec 映射决定（DEC-046）。
+
+Capabilities 页已按 WM01–WM05 完成重建：工程输入、重力/低压/旋压路线选择、过程检查、三类验证试验和文件证据分别回答五个采购问题。12 张公开媒体已通过单次 WordPress 批量请求接入，并有同图 WebP 回退；WP 96/48/87/115/101/53/106 标题已修正，14 张相关媒体均补 alt、caption、来源与用途。证书 WP 53/106 保持内部候选，不进入页面。桌面 1440×900 与移动 390×844 已视觉验收，无横向溢出（DEC-047）。
+
+锻造轮毂页已新增 WF01–WF06 高端定制子规格。像素比对确认 WP 42/29/58/70/30/76 可分别用于锻造铝轮毂示例、压力机、探伤、CNC、表面样件和产品检查；ID 88/56/91 实际是装车图，不能按现标题当产品或工艺图。镁合金、热锻及三张装车图未正确入库；页面代码与后台元数据尚未修改（DEC-032）。
+
+自密封轮胎页已按 T01–T06 完成重建。17 张 WordPress 图片通过一次批量请求接入道路痛点、产品定义、自密封机理、8 mm 内部测试、研发和生产证据，并全部补齐 alt、caption、来源、用途与批准元数据；WordPress 不可用时回退到同图本地 WebP。8 mm 已建模为 `objectDiameterMm=8`、`punctureZone=tread`、`status=supplier-stated` 的结构化证据，未绑定具体型号报告前不会升级为已验证。旧页的无报告性能数字、`our in-house validation`、泛化认证和道路救援承诺已移除；桌面 1440/1280 与移动 390/360、无 JavaScript、无横向溢出和生产实例均已验收（DEC-033、DEC-048）。
+
+About 的 AT01–AT03 已并入页面实现。来源页的 `Independent Production` 未公开，页面使用用户确认的集团制造基地口径；具体制造法人、工厂地址、设备所有权、型号测试与市场文件继续逐项目核验（DEC-034、DEC-044、DEC-045）。
+
+轮毂目录已新增 W01–W03 子规格。Vossen 的紧凑目录、桌面筛选和大图卡片被保留为结构参考；Price、Series、色板和移动溢出不沿用。真实数据审计确认 1073 个有图技术候选含 2705 个变体，13 个型号有异常/复合 PCD、647 个未标工艺、531 种原始 finish 待治理。当前页面仍使用虚构 `wheel-skus.ts`，代码尚未改造（DEC-035）。
+
+轮毂详情已新增 WD01–WD06 子规格。2N N-501RS 的左图右信息首屏、产品上下文内询盘、finish 说明和相关型号顺序被保留为结构参考；三图缩略图库、自由规格组合、通用色点和车型营销不沿用。详情继续使用单张批准主图，规格逐条读取批准 variant，询盘服务端复核 productionCode。当前 `[sku]/page.tsx` 仍使用虚构 `WheelSku`、`WheelSketch`、finish 色块和 applications，代码尚未改造（DEC-036）。
+
+旋压轮毂入口已新增 WFF01–WFF05 子规格。真实生成目录中有 350 个 `旋压` 与 20 个 `低压+旋压` 型号，其中 330 个匹配图片、合计 762 条变体；这些仍是技术候选，不直接写成可售数量。页面只聚合两个规范工艺值和完整批准型号，`旋压` 不反推低压铸造毛坯，也不等同整体锻造。WP 116 仅作为供应商旋压设备场景；当前应用路由尚不存在（DEC-039）。
+
+新能源三电铝制品页已新增 EV01–EV06 子规格。首发只发布水冷电机壳、高压铸造电机壳、电控/逆变器壳体三类有图项目；WP 38/24/49/20 已按像素内容核对。工艺主张与照片证据分开管理，WP 38 不能作为焊接、密封或泄漏检测实拍。现有页面的 15 类部件、X-ray 和完整受控流程等超范围内容需要收敛（DEC-037）。
+
+定制铝制品页已新增 CA01–CA07 子规格。由于目前没有可确认属于非轮毂、非三电项目的定制铝件照片，首屏改用 2D/3D/样件输入型视觉；四组应用仅作为评估范围。WP 67/31/48 只作为轮毂几何上的工程方法示例，WP 44 实际是低压铸造设备，不能证明逆向工程。制造主体、不承接清单、应用范围和图权未确认前保持 `noindex,follow`（DEC-038）。
+
+项目询盘页已新增 QF01–QF03 子规格。2N 的低门槛说明、准备清单、短表单和直接联系兜底被保留为结构参考；页面改为四条产品线与 B/C 客户共用的两步流程。当前 `InquiryForm` 仍强制公司、车型、轮毂系列和数量，并把邮件状态简化为 `delivered: boolean`；实现时需改成产品上下文服务端复核、幂等提交、事务持久化和独立邮件事件。正式隐私政策、销售邮箱和持久化未完成前不得公开成功承诺（DEC-041）。
 
 ### 新核查到的发布阻断项
 
-1. `GET /api/inquiries` 无鉴权返回记录；询盘 Map 重启即丢。生产前必须关闭公开读取并完成真实持久化。
-2. 邮件已有 Resend HTTP 调用，不能再记为“没有任何真实发信代码”；但 accepted 被当 delivered、缺重试/回调、模拟日志输出个人数据仍待修。
-3. WordPress 读取函数尚未接入页面内容；不能声称只加 URL 就完成全站内容后台。
-4. 蓝辉主表 1349 个 models、生成表 1307 条 products、实体图 2757 张；历史有图 1018 的口径需重跑匹配，不能直接当可销售授权数量。
+1. `GET /api/inquiries` 公开读取已关闭；询盘仍由内存 Map 保存，重启即丢。生产前必须完成真实持久化。
+2. 邮件已有 Resend HTTP 调用，mock 日志已不再输出客户正文；但 accepted 仍被当 delivered，重试、回调与事件状态尚未实现。
+3. 首页、About、Capabilities 与自密封轮胎页媒体已接入 WordPress；其他页面内容仍未接线，不能声称全站已由 CMS 驱动。
+4. 蓝辉主表 1349 个型号中实测 1073 个有图、276 个无图；有图只满足技术上架门槛，仍不能直接当可销售授权数量。
 5. PPT/PDF 素材有试用水印、规格表列顺序问题、面积单位冲突及未经核准的数字；逐项处理，不直接批量上线。
 
 ### 下一步
 
 1. **T00/T01 业务事实冻结**：正式域名/邮箱、航鹏与洛克授权范围、首发 10–20 个型号（从 1073 有图型号中选）、PPT 水印/单位/表格歧义处理。
 2. **WP 文案录入**：把 3 个 PPT 的模块内容（文案+图片关联）录入本地 WP 实验场（媒体已就位，逐模块建页建文，标注 DRAFT/待审核）。
-3. **数据接缝接线**：目录/详情/筛选改读 `wheel-catalogue.ts`（T07/T11），sitemap 清除虚构 URL（T18）。
+   - 录入首页 H01–H05：为 WP 114、61/116、78/38、153、155 建立主体、产品线、使用范围、图权、alt、caption 和批准状态；四线媒体未批准时使用各自兜底，不互相冒充。
+   - About 双制造基地模块与 11 张媒体元数据已完成。
+   - Capabilities WM01–WM05、12 张公开媒体和 2 张证书候选元数据已完成；证书待文件核验后才可公开。
+   - 然后录入锻造轮毂 WF01–WF06：修正 42/29/30/76 与 88/56/91 的标题，补 6 张公开候选图元数据；案例图继续保持草稿，缺失素材经审核后再导入。
+   - 自密封轮胎 T01–T06 已完成：17 张图片元数据、页面媒体映射和 8 mm 结构化测试证据均已落地；下一步只在取得具体型号报告后补全测试字段。
+   - About AT01–AT03 已完成公开图片与中性说明；实际法人、地点、设备作用和型号证据仍按项目文件补全。
+   - 录入三电 EV01–EV06：为 WP 38/24/49/20 补主体、产品类别、来源、图权、alt、caption 与批准状态；不得从文件名推断焊接或工艺。
+   - 录入定制铝制品 CA01–CA07：为 WP 67/31/48 补“轮毂几何方法示例”caption 和证据边界；WP 44 保留给轮毂能力资料。
+   - 录入旋压轮毂 WFF01–WFF05：为 WP 116 补主体、来源、图权、alt、caption 和批准状态；画册产品图没有工艺绑定前不标成旋压产品。
+3. **数据接缝接线**：首页、About、Capabilities 与自密封轮胎媒体接缝已完成；下一步把页面文案和其余产品线内容逐步迁入 WordPress 稳定模型。目录/详情/筛选改读 `wheel-catalogue.ts`（T07/T11），随后实现旋压入口、三电、定制铝制品与统一询盘，最后同步 sitemap 并清除虚构 URL（T18）。
 4. **T04 运行时样机**：本地验证 OpenNext/数据库/邮件，锁定部署层与费用，再谈远程。
 5. 完成 Git 推送并确认远程仓库可克隆。
 
 未决：正式域名/邮箱、目标国家优先级、C 端交付与安装/售后、供应方与图权逐项确认、首发批次、服务商与实际费用/恢复能力。计划中的预算数字是分配上限，不是已核价报价。
 
-收尾：旧 PROJECT 已归档；项目说明/架构/决策已同步（新增 DEC-027/028）；原资料只读，核验输出位于 resources；本轮执行产物（盘点报告、任务卡流转、本地 WP 编排）已归档；应用 lint/typecheck/build 已三绿；Git 已初始化、提交并关联远程（推送进行中）；本地 WordPress 实验场数据不入库（gitignore）。
+收尾：旧 PROJECT 与旧文档基线已归档；项目说明、README、架构、决策与状态已同步；原资料只读，核验输出位于 resources；首页、三电、定制铝制品、旋压轮毂和询盘 Page SPEC、竞品/数据/媒体/架构审计与完成记录已归档；应用上一轮 lint/typecheck/build 已三绿；Git 已初始化、提交并关联远程（推送进行中）；本地 WordPress 实验场数据不入库（gitignore）。本轮架构校准只改文档，没有改应用代码，因此以 Markdown 链接检查和 `git diff --check` 验收。
 
 ## 历史快照：2026-10-01（以下不是本轮实测）
 
@@ -74,7 +228,10 @@ Last Updated:
 - ✅ **前端克隆骨架**：以竞品 [2nforged.com](https://2nforged.com) 为蓝本，
   逆向重建为 Next.js 16 App Router，26 个路由全部静态预渲染
 - ✅ **内容层结构**：21 个类型化内容模块（`src/content/*.ts`），契约在 `types.ts`
-- ✅ **两块画廊**：`/gallery`（按车型）与 `/gallery/wheels`（按设计）刻意分开
+- ⛔ **两块画廊已退场（2026-10-06，DEC-059）**：`/gallery`（按车型）与
+  `/gallery/wheels`（按设计）发布的是**虚构内容、0 张真实素材**，已归档并改为
+  **308 永久重定向**（→ `/fitment` / → `/products/wheels`）。`/gallery/finishes`
+  **保留但加发布门槛**（色名未确认 → `noindex, follow`、不发 canonical、不进 sitemap）
 - ✅ **偏距计算器**：可用，公式已对独立基准验证
 - ✅ **空白页事故修复**：动效系统 fail-hidden 缺陷已定位并修复
   （详见 `docs/BLANK-PAGE-AUDIT.md`）

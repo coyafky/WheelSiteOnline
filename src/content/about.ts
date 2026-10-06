@@ -1,183 +1,285 @@
-import type {
-  AnswerBlock,
-  CompanyStat,
-  CtaLink,
-  FlowStep,
-  PositioningPoint,
-} from "./types";
+import type { AboutContent } from "./types";
 
-/**
- * Company page copy (`/about`).
- *
- * PLACEHOLDER DISCIPLINE
- * ----------------------
- * Nothing on this page may state a figure as fact. Years in operation, floor
- * area, monthly capacity, headcount and export markets are all commercial
- * claims that must be supplied by Fenghuai before launch — every one of them
- * is flagged with `isPlaceholder: true` and rendered with a visible marker in
- * the UI. Replace the `value` strings (and flip the flag off) once the real
- * numbers are confirmed.
- */
-
-export const aboutHero = {
-  eyebrow: "Who we are",
-  heading: "An Aluminum Component Manufacturer, Not a Trading Desk",
-  lede: "Fenghuai manufactures across four product lines, with wheel components as the core line: forged wheels, EV powertrain housings, custom aluminum parts and self-healing safety tires.",
-  supporting:
-    "Our raw material is produced in-house and our integrated forging capability keeps the key decisions close to the line. We build to the specification agreed with you in writing.",
-} as const;
-
-/**
- * Capability / number strip.
- *
- * PLACEHOLDER: confirm every figure with production before launch.
- */
-export const aboutStats: CompanyStat[] = [
-  {
-    index: "01",
-    label: "Years in operation",
-    value: "PLACEHOLDER — years",
-    body: "Years in operation will be published once Fenghuai confirms the founding year.",
-    isPlaceholder: true,
+export const aboutContent: AboutContent = {
+  hero: {
+    eyebrow: "About Fenghuai",
+    heading: "One Shenzhen project interface. Specialized manufacturing behind every line.",
+    lead:
+      "Shenzhen Fenghuai Technology coordinates overseas automotive component programs across wheels, EV aluminum housings, custom aluminum parts and self-sealing tyres.",
+    companyName: "Shenzhen Fenghuai Technology Co., Ltd.",
+    location: "Shenzhen · China",
+    primaryAction: { label: "Discuss a project", href: "/request-a-quote?from=about" },
+    secondaryAction: { label: "See manufacturing", href: "#wheel-manufacturing" },
   },
-  {
-    index: "02",
-    label: "Max forging force",
-    value: "12,000 t",
-    body: "Confirmed maximum forging force for the integrated forging line.",
-    isPlaceholder: false,
+  role: {
+    eyebrow: "How the group works",
+    heading: "A clear commercial interface, with the responsible factory kept visible",
+    body:
+      "Fenghuai organizes the customer-facing project in Shenzhen. Manufacturing, engineering evidence and market documents remain tied to the legal entity and production base responsible for the selected product.",
+    responsibilities: [
+      {
+        title: "Requirement intake",
+        body: "We record the product, application, market, quantity and documents you already have.",
+      },
+      {
+        title: "Engineering coordination",
+        body: "The applicable manufacturing team reviews drawings, samples, variants and process questions.",
+      },
+      {
+        title: "Commercial follow-through",
+        body: "One project reference keeps quotation scope, changes, timing and delivery requirements connected.",
+      },
+      {
+        title: "Evidence matching",
+        body: "Certificates, reports and inspection records are checked against the issuing entity, product and market.",
+      },
+    ],
+    disclosure:
+      "The manufacturing companies operate within the same ownership group. Contracts, certifications, patents and test evidence continue to identify the actual legal entity and applicable scope.",
   },
-  {
-    index: "03",
-    label: "Monthly capacity",
-    value: "PLACEHOLDER — tonnes / month",
-    body: "Monthly output is reserved until Fenghuai confirms the production basis and current line load.",
-    isPlaceholder: true,
+  wheelFactory: {
+    anchor: "wheel-manufacturing",
+    status: "approved",
+    eyebrow: "Wheel manufacturing base",
+    heading: "A specialized production base for wheel programs",
+    lead:
+      "Our wheel manufacturing base combines forming, machining and finishing resources for approved wheel and aluminum-component programs.",
+    relationshipDisclosure:
+      "Fenghuai is the Shenzhen commercial and project interface. The responsible manufacturing entity, route, certification requirement and production availability are confirmed for each program.",
+    heroMedia: {
+      wordpressId: 114,
+      src: "/images/home/factory.webp",
+      alt: "Aerial view of the Fenghuai wheel manufacturing base",
+      caption: "Wheel and aluminum-component manufacturing base",
+      hasRender: true,
+      approvalStatus: "approved",
+      sourceRef: "WP 114 · Hangpeng company profile p.2",
+    },
+    workshopsEyebrow: "Inside the production system",
+    workshopsHeading: "Visible stages, shown as evidence rather than a universal sequence",
+    workshopsIntro:
+      "These photographs document three production environments. The actual route is selected for the approved design and does not require every product to pass through every pictured stage.",
+    workshops: [
+      {
+        id: "casting",
+        title: "Casting workshop",
+        body: "Casting resources support approved wheel and aluminum-component programs. The route is confirmed against the design and required properties.",
+        media: {
+          wordpressId: 61,
+          src: "/images/about/casting-process.webp",
+          alt: "Wheel casting production line inside the manufacturing base",
+          caption: "Casting workshop for wheel and aluminum-component programs",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 61 · Hangpeng company profile p.2",
+        },
+      },
+      {
+        id: "machining",
+        title: "CNC machining",
+        body: "CNC machining establishes controlled dimensions and interfaces. Inspection requirements are defined with the approved drawing.",
+        media: {
+          wordpressId: 78,
+          src: "/images/about/machining-workshop.webp",
+          alt: "CNC machining workshop for wheels and aluminum components",
+          caption: "CNC machining workshop for controlled product interfaces",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 78 · Hangpeng company profile p.2",
+        },
+      },
+      {
+        id: "coating",
+        title: "Coating and finishing",
+        body: "Surface preparation and coating are planned around the approved finish, appearance standard and service environment.",
+        media: {
+          wordpressId: 84,
+          src: "/images/about/coating-workshop.webp",
+          alt: "Coating line inside the wheel manufacturing base",
+          caption: "Coating and finishing line for approved product programs",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 84 · Hangpeng company profile p.2",
+        },
+      },
+    ],
+    capabilitiesEyebrow: "Program scope",
+    capabilitiesHeading: "Capabilities reviewed for each wheel program",
+    capabilitiesIntro:
+      "Share the target size, application, quantity and finish. The manufacturing team will confirm a buildable route and the evidence required for that program.",
+    capabilities: [
+      "Alloy and mould engineering",
+      "Gravity and low-pressure casting",
+      "Flow forming",
+      "Heat treatment and shot blasting",
+      "CNC machining",
+      "Surface preparation and coating",
+    ],
+    primaryAction: {
+      label: "Discuss a wheel program",
+      href: "/request-a-quote?product_line=wheels&from=about",
+    },
+    secondaryAction: { label: "View manufacturing and quality", href: "/capabilities" },
   },
-  {
-    index: "04",
-    label: "Export markets",
-    value: "Global",
-    body: "Our products serve customers across global markets; the exact market mix varies by programme.",
-    isPlaceholder: false,
+  tireFactory: {
+    anchor: "tire-manufacturing",
+    status: "approved",
+    eyebrow: "Self-sealing tyre manufacturing",
+    heading: "A dedicated production environment for self-sealing tyre programs",
+    lead:
+      "Our self-sealing tyre production base includes automated equipment, dedicated machinery, material handling and inspection environments presented for this product line.",
+    relationshipDisclosure:
+      "Fenghuai coordinates the supply program in Shenzhen. The responsible manufacturing entity, available tyre models, process scope and destination-market documents are confirmed for each enquiry.",
+    heroMedia: {
+      wordpressId: 155,
+      src: "/images/safety-tires/automated-production-line.webp",
+      alt: "Robotic equipment on an enclosed self-sealing tyre production line",
+      caption: "Automated equipment in the self-sealing tyre production base",
+      hasRender: true,
+      approvalStatus: "approved",
+      sourceRef: "WP 155 · Loake project profile p.14",
+    },
+    productionEyebrow: "Inside the production environment",
+    productionHeading: "Visible equipment across application, handling and inspection",
+    productionIntro:
+      "The images document equipment and working areas supplied for this product line. Final process flow, operating parameters and inspection points are confirmed against the applicable tyre and control plan.",
+    boundaryNote:
+      "Production images show equipment and working environments. They do not replace a process specification, inspection record or product test report.",
+    productionGroups: [
+      {
+        id: "application",
+        title: "Automated application equipment",
+        body: "An enclosed line with robotic handling is shown. Its exact process scope and current production use are confirmed with the responsible factory.",
+        evidenceStatus: "supplier-stated",
+        media: [
+          {
+            wordpressId: 155,
+            src: "/images/safety-tires/automated-production-line.webp",
+            alt: "Robotic equipment on an enclosed self-sealing tyre production line",
+            caption: "Automated production equipment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 155 · Loake project profile p.14",
+          },
+        ],
+      },
+      {
+        id: "machinery",
+        title: "Dedicated production machinery",
+        body: "Purpose-built machines and fixtures are visible in the production environment. A photograph alone does not establish output, cycle time or process capability.",
+        evidenceStatus: "supplier-stated",
+        media: [
+          {
+            wordpressId: 159,
+            src: "/images/safety-tires/dedicated-machinery.webp",
+            alt: "Dedicated production machinery in the self-sealing tyre manufacturing base",
+            caption: "Dedicated production machinery",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 159 · Loake project profile p.14",
+          },
+          {
+            wordpressId: 148,
+            src: "/images/safety-tires/automated-handling.webp",
+            alt: "Automated handling equipment in the self-sealing tyre production environment",
+            caption: "Automated handling equipment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 148 · Loake project profile p.14",
+          },
+        ],
+      },
+      {
+        id: "line",
+        title: "Production-line environment",
+        body: "Multiple line and equipment views document the facility environment without presenting the photographs as a fixed production sequence.",
+        evidenceStatus: "supplier-stated",
+        media: [
+          {
+            wordpressId: 18,
+            src: "/images/safety-tires/digital-production-line.webp",
+            alt: "Production-line equipment in the self-sealing tyre manufacturing base",
+            caption: "Production-line equipment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 18 · Loake project profile p.14",
+          },
+          {
+            wordpressId: 16,
+            src: "/images/safety-tires/process-equipment.webp",
+            alt: "Tyre-processing equipment within the production line",
+            caption: "Tyre-processing equipment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 16 · Loake project profile p.14",
+          },
+        ],
+      },
+      {
+        id: "material",
+        title: "Material-processing stage",
+        body: "A material-processing view is included in the production set. Material identity and its role in the sealing system require the applicable process documentation.",
+        evidenceStatus: "supplier-stated",
+        media: [
+          {
+            wordpressId: 145,
+            src: "/images/safety-tires/material-processing.webp",
+            alt: "Material-processing equipment in the self-sealing tyre production base",
+            caption: "Material-processing equipment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 145 · Loake project profile p.14",
+          },
+        ],
+      },
+      {
+        id: "inspection",
+        title: "Inspection equipment",
+        body: "Inspection equipment is visible within the production environment. Method, frequency and acceptance criteria remain model- and control-plan-specific.",
+        evidenceStatus: "supplier-stated",
+        media: [
+          {
+            wordpressId: 136,
+            src: "/images/safety-tires/inspection-line.webp",
+            alt: "Inspection equipment in the self-sealing tyre production environment",
+            caption: "Inspection equipment in the production environment",
+            hasRender: true,
+            approvalStatus: "approved",
+            sourceRef: "WP 136 · Loake project profile p.14",
+          },
+        ],
+      },
+    ],
+    evidenceEyebrow: "Verify the responsible manufacturer",
+    evidenceHeading: "The entity, process and product documents must match",
+    evidenceIntro:
+      "A production photograph identifies an environment. A purchase decision also needs documents identifying who manufactures the tyre, which models are covered and how each claim is evaluated.",
+    evidenceChecklist: [
+      { label: "Manufacturing entity", requirement: "Legal name, location and commercial authorization" },
+      { label: "Process scope", requirement: "Applicable tyre, sealing material, processing and inspection scope" },
+      { label: "Equipment and facility", requirement: "Current equipment status, location and relationship to the product line" },
+      { label: "Tyre-model evidence", requirement: "Model, size, method, conditions, date, test party and result" },
+      { label: "Market documentation", requirement: "Holder, model scope, destination market, validity and publishable copy" },
+      { label: "Commercial support", requirement: "Available sizes, quantity, region, inspection, warranty and service boundary" },
+    ],
+    primaryAction: {
+      label: "Discuss a tyre supply program",
+      href: "/request-a-quote?product_line=safety-tires&intent=supplier_program&from=about",
+    },
+    secondaryAction: { label: "See self-sealing technology", href: "/products/safety-tires" },
   },
-];
-
-export const aboutChain = {
-  eyebrow: "Factory and supply chain",
-  heading: "From self-produced raw material to your loading dock",
-  body: "The advantage starts before the press closes: Fenghuai produces its own raw material and carries integrated forging capability in-house. That keeps the key material and forming decisions close to the production line, with machining, finishing and inspection following inside the same manufacturing system.",
-  points: [
-    "Raw material produced in-house, to the confirmed project specification",
-    "Integrated forging capability for the core wheel-component line",
-    "Machining, finishing and inspection kept close to the production line",
-    "Production records kept against the order number",
-  ],
-} as const;
-
-export const aboutChainStages: FlowStep[] = [
-  {
-    step: "01",
-    title: "Material",
-    body: "Raw material is produced in-house, so the starting material is part of the manufacturing conversation rather than an unknown upstream hand-off.",
+  closing: {
+    eyebrow: "Company verification and contact",
+    heading: "Start with the product and market you need to serve",
+    body:
+      "Send the product line, application, destination market and the information already available. We will identify the responsible route and the documents needed for the next review.",
+    facts: [
+      { label: "Company", value: "Shenzhen Fenghuai Technology Co., Ltd." },
+      { label: "Project interface", value: "Shenzhen, China" },
+      { label: "Public language", value: "English-first for overseas enquiries" },
+      { label: "Business model", value: "B2B and qualified B2C project enquiries" },
+    ],
+    primaryAction: { label: "Request a project review", href: "/request-a-quote?from=about" },
+    secondaryAction: { label: "Explore product lines", href: "/products" },
   },
-  {
-    step: "02",
-    title: "In-house production",
-    body: "Integrated forging, CNC machining, finishing and inspection run inside the same manufacturing system, under the same production team.",
-  },
-  {
-    step: "03",
-    title: "Inspection",
-    body: "Dimensional checks, runout measurement and balancing are recorded against the order, not logged informally.",
-  },
-  {
-    step: "04",
-    title: "Despatch",
-    body: "Packing, documentation and freight booking are handled for you — including private-label packing where the brand must never appear.",
-  },
-];
-
-export const aboutQuality: AnswerBlock = {
-  eyebrow: "Quality and testing",
-  heading: "The order is not finished until the paperwork is",
-  body: "Every set leaves with an inspection record. What can be measured is measured; what cannot be measured here is disclosed honestly rather than claimed.",
-  points: [
-    "Dimensional verification against the approved drawing",
-    "Radial and lateral runout measurement on every set",
-    "Balance check before the wheel is packed",
-    "PLACEHOLDER: laboratory and homologation test reports must be named before publishing",
-    "Inspection record attached to the order and available on request",
-  ],
-};
-
-export const aboutPositioning = {
-  eyebrow: "Positioning",
-  heading: "What we are — and what we are not",
-  body: "Knowing which side of the line a supplier sits on matters more than any claim on a website. Here is where we stand, stated plainly.",
-} as const;
-
-export const aboutAreNot: PositioningPoint[] = [
-  {
-    title: "A trading company with a factory photo",
-    body: "We are not an intermediary relaying your order to a third party. Production happens on our lines, and our engineers answer the questions you ask.",
-  },
-  {
-    title: "A stockist selling from a shelf",
-    body: "We are not a warehouse operation. There is no inventory to pick from — your set is manufactured to your specification after the order is confirmed.",
-  },
-  {
-    title: "A consumer-facing brand",
-    body: "We are not competing with you for the end customer. We manufacture; you sell. Private label exists precisely so our name never appears on your customer's car.",
-  },
-] as const;
-
-export const aboutAre: PositioningPoint[] = [
-  {
-    title: "A factory-direct supplier",
-    body: "One layer between you and the production line. Pricing, lead time and technical answers all come from the people making the wheel.",
-  },
-  {
-    title: "A fitment partner",
-    body: "We review offset, PCD, centre bore and brake clearance against your vehicle data before material is cut, and flag what will not fit.",
-  },
-  {
-    title: "A private-label manufacturer",
-    body: "Centre caps, engraving, packaging and documentation can all carry your mark — with confidentiality and design exclusivity available on request.",
-  },
-];
-
-export const aboutDealerModel = {
-  eyebrow: "Working with dealers",
-  heading: "How a dealer relationship actually runs",
-  body: "The daily reality of the programme is unglamorous: you quote, we specify, we confirm in writing, we build, we ship. These are the four points that decide whether it works.",
-} as const;
-
-export const aboutDealerSteps: FlowStep[] = [
-  {
-    step: "01",
-    title: "You quote against a real specification",
-    body: "Tell us the vehicle, the look and the finish. We return a buildable specification and pricing you can put in front of your customer.",
-  },
-  {
-    step: "02",
-    title: "Nothing is cut until the drawing is approved",
-    body: "You get the specification in writing and sign it off. Changes after approval are quoted separately rather than absorbed silently.",
-  },
-  {
-    step: "03",
-    title: "You see the order move",
-    body: "Forging, machining, finishing and inspection milestones are reported against your order — not left for you to chase.",
-  },
-  {
-    step: "04",
-    title: "Delivery and documentation together",
-    body: "Wheels ship in freight-rated packing with the export documentation you need for the destination market.",
-  },
-];
-
-/** Primary hero action pair. */
-export const aboutHeroActions: { primary: CtaLink; secondary: CtaLink } = {
-  primary: { label: "Request a quote", href: "/contact" },
-  secondary: { label: "Meet the process", href: "/capabilities" },
 };

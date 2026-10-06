@@ -5,16 +5,45 @@ import { finishNote, finishes } from "@/content/finishes";
 import {
   finishesHero,
   finishesHonesty,
+  finishesPage,
   finishesPathways,
   finishesSampleCta,
+  isFinishesPublishingOpen,
 } from "@/content/finish-guide";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Finish Gallery — Brushed, Satin, Gloss & Matte Wheel Finishes",
-  description:
-    "Compare the forged wheel finishes Fenghuai offers — brushed clear, satin gunmetal, gloss black, matte bronze, polished lip and more — with guidance on requesting real samples.",
-};
+/**
+ * The publishing gate is in metadata, not in the component tree.
+ *
+ * The eight finish names are still placeholders and no real swatch photograph
+ * exists behind them, so `finishesPage.publicationGate` is unresolved and this
+ * route declares `robots: { index: false, follow: true }` and publishes **no
+ * canonical**. The page itself still renders in full — hero, honesty note,
+ * swatch grid and all — because its content is truthful about being
+ * illustrative. Clearing the flag in `@/content/finish-guide` is the only edit
+ * needed to make it indexable; `sitemap.ts` reads the same gate so the two can
+ * never disagree. See DEC-059.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const gateOpen = isFinishesPublishingOpen(finishesPage.publicationGate);
+
+  const head: Metadata = {
+    title: "Finish Gallery — Brushed, Satin, Gloss & Matte Wheel Finishes",
+    description:
+      "Compare the forged wheel finishes Fenghuai offers — brushed clear, satin gunmetal, gloss black, matte bronze, polished lip and more — with guidance on requesting real samples.",
+    robots: { index: gateOpen, follow: true },
+  };
+
+  // Fail-closed: while a gate flag is unresolved the route publishes no
+  // canonical at all, so nothing points at an unconfirmed page (DEC-050).
+  if (!gateOpen) return head;
+
+  return {
+    ...head,
+    alternates: { canonical: "/gallery/finishes" },
+  };
+}
 
 /** Finishes reference: hero → honesty note → swatch grid → pathways → CTA. */
 export default function FinishGalleryPage() {
@@ -37,15 +66,13 @@ export default function FinishGalleryPage() {
         />
 
         <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/gallery" className="transition-colors hover:!text-forge">
-              Gallery
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">{finishesHero.heading}</span>
-          </nav>
+          {/*
+            这里原本是 `Gallery / {heading}` 的面包屑。`/gallery` 已按 DEC-059 退休
+            （308 → `/fitment`），所以「Gallery」这个标签点下去会到 Fitment ——
+            **标签与目的地不符**，比没有面包屑更糟。
+            而面包屑的存在前提是「有父级」：`/gallery/finishes` 现在是一个
+            孤儿子路由（父级已退役），没有可回的真实父级，所以整条移除。
+          */}
 
           <h1
             id="finishes-title"
@@ -62,9 +89,8 @@ export default function FinishGalleryPage() {
               {finishesSampleCta.label}
               <ArrowRight className="size-4" />
             </Link>
-            <Link href="/gallery" className="btn-pill-outline !text-white">
-              Back to gallery
-            </Link>
+            {/* 「Back to gallery」已移除：`/gallery` 在这次变更中退休，
+                没有 gallery 可回了。主 CTA（样品申请）保留。 */}
           </div>
         </div>
       </section>
@@ -199,9 +225,17 @@ export default function FinishGalleryPage() {
             </h2>
           </div>
 
+          {/* 列数随条目数走。
+              DEC-059 删掉了原来的「Vehicle gallery」卡（指向已归档的 /gallery，
+              且文案声称 "sizes we built to" 而从未有过那些 build），这一组
+              只剩 1 条。固定在 `sm:grid-cols-2` 会把它渲染成**半宽孤卡**，
+              看起来像漏了一张 —— 所以 ≥2 条才分两列。 */}
           <div
             data-reveal-group
-            className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2"
+            className={cn(
+              "mt-10 grid grid-cols-1 gap-6",
+              finishesPathways.length > 1 && "sm:grid-cols-2",
+            )}
           >
             {finishesPathways.map((pathway) => (
               <Link

@@ -27,6 +27,18 @@ export type WpTerm = {
   count: number;
 };
 
+/** Media-library item returned by `/wp/v2/media/{id}`. */
+export type WpMedia = {
+  id: number;
+  source_url: string;
+  alt_text: string;
+  caption: { rendered: string };
+  media_details: {
+    width?: number;
+    height?: number;
+  };
+};
+
 /** Wheel model as exposed by the `wheel` CPT. */
 export type WpWheelAcf = {
   model: string;

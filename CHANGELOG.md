@@ -19,8 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 实测目录内共 **22 个文件**：**18 份页面规格** + **3 份公共文件**（`README.md`、`_components.md`、`_viewport-audit.md`）+ **1 份模块总表**（`index.md`）
   - ⚠️ 其中 `index.md` 是模块总表（索引表 + 组件复用矩阵 + 组件优先级），**不是页面规格** —— 早先误把它算进规格数是 21，实测应为 18
 - 每份规格固定 7 节：一句话判断 → 骨架（段数表 + 组件树）→ 逐块规格（含真实 TS props 契约）→ 组件清单（复用 / 新建）→ 数据契约 → 布局响应式 → 待补阻塞
-- `PAGE-SPECS/_components.md` —— 公共引用：现有组件清单 + 全部设计 token + 图片资产真相
-- `PAGE-SPECS/_viewport-audit.md` —— 视口合规审查报告，实测 **123239 字节（约 122 KB）**，**83 个视口 / 24 条合并建议**；首页章节前提已被证伪，报告开头已加「前提更正」段（见 `DEC-020`）
+- `archive/2026-10-01-document-baseline/PAGE-SPECS/_components.md` —— 当时的组件清单 + 全部设计 token + 图片资产真相
+- `archive/2026-10-01-document-baseline/PAGE-SPECS/_viewport-audit.md` —— 当时的视口合规审查报告，实测 **123239 字节（约 122 KB）**，**83 个视口 / 24 条合并建议**；首页章节前提已被证伪，报告开头已加「前提更正」段（见 `DEC-020`）
 
 **架构文档：三条非轮毂产品线的页面架构**
 - `ARCHITECTURE/page-architecture/ev-components-page.md`

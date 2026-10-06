@@ -36,6 +36,20 @@ services:
       WORDPRESS_DB_PASSWORD: wp_local_only
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: "1"
+      # WP 只在 HTTPS 或 environment_type=local 时启用「应用密码」。
+      # 本地是 http + 默认 production，两头都不满足 → wp_is_application_passwords_available()=false
+      # → REST 即使带 Basic 认证也永远返回 rest_not_logged_in(401)。
+      # 实测记录见 scripts/verify-wheel-cpt.py。
+      WP_ENVIRONMENT_TYPE: local
+
+      # ── 询盘服务密钥（DEC-055）────────────────────────────────────────────
+      # 值从 local-wp/.env 读（compose 自动加载 project 目录的 .env），**不写进本文件**。
+      # 缺省为空 → 询盘端点在 WP 侧 fail-closed 返回 503，而不是放行。
+      FH_INQUIRY_SERVICE_KEY: ${FH_INQUIRY_SERVICE_KEY:-}
+      # 把上面的环境变量提升成 PHP 常量。官方 wordpress 镜像的 wp-config.php 会
+      # eval 这个变量（见 /usr/src/wordpress/wp-config-docker.php）—— 已在容器内实测生效。
+      WORDPRESS_CONFIG_EXTRA: |
+        define('FH_INQUIRY_SERVICE_KEY', getenv('FH_INQUIRY_SERVICE_KEY') ?: '');
     volumes:
       - ./wp-data:/var/www/html
       # 只读挂载 PPT 素材目录，供 wp-cli 导入媒体（路径见下方 cli 服务说明）
@@ -55,6 +69,8 @@ services:
       WORDPRESS_DB_USER: wp
       WORDPRESS_DB_PASSWORD: wp_local_only
       WORDPRESS_DB_NAME: wordpress
+      # 与 wp 服务保持一致，否则 wp-cli 看到的环境类型不同。
+      WP_ENVIRONMENT_TYPE: local
     volumes:
       - ./wp-data:/var/www/html
       - ../3家公司的PPT资料:/ppts:ro

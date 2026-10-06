@@ -52,5 +52,9 @@ QUEUED  →  ACTIVE  →  COMPLETED
 
 ## 当前状态
 
-**三个子目录均为空。** 下一步工作（`STATUS.md` 的 Next Actions）需等
-前置问题答复后再建任务文件。
+- `active/`：首发第零阶段，T02/T03 已完成，T00/T01/T04 待处理。
+- `completed/`：保留已经完成的规划、设计与实现记录。
+- `queued/`：当前没有独立待办文件；后续任务按现行 T00–T23 计划在真正启动时建立。
+
+2026-10-01 的四个旧待办已被新首发计划覆盖，保存在
+`archive/2026-10-01-document-baseline/work/queued/`，不再视为当前队列。

@@ -1,461 +1,401 @@
-import type {
-  AnswerBlock,
-  BoundaryRow,
-  Capability,
-  FaqEntry,
-  FlowStep,
-  PartGroup,
-  ResourceLink,
-  RouteStep,
-} from "./types";
-import type { InputType } from "@/components/input-type-cards";
+import type { CustomAluminumPage } from "./types";
 
 /**
- * Custom aluminium components (`/products/custom-aluminum`).
+ * Custom aluminum assessment page (`/products/custom-aluminum`).
  *
- * The product here is the act of turning an input into a part, so the page is
- * built from three things: what input we accept, where the boundary sits, and
- * how the work actually runs. It is not a parts list — the source material for
- * this line names only four examples, which is nowhere near enough to pretend
- * to be a catalogue.
+ * This page is a project-development route, not a catalogue. The "product" is
+ * the act of turning an input — a drawing, a 3D model or a physical sample —
+ * into an assessed, tooled and inspected part. Nothing on it is orderable, and
+ * nothing on it is a photograph of a finished non-wheel, non-housing aluminum
+ * component: the source material has no image that can be confirmed as one.
  *
- * 🔴 THE PUBLISHING CONDITION
- * The boundary section is the reason this page exists, and it ships in a
- * deliberately incomplete state: the "not made" column is empty because the
- * business has not confirmed which categories it declines. `boundaryTerms.
- * excludedConfirmed` is therefore false, the column renders as a reserved
- * slot with a disclosure sentence, and the page must not be indexed until
- * real rows exist. Shipping it empty and silent would tell a reader we make
- * anything — the precise impression this page was built to avoid.
+ * ── WHERE THE COPIES CAME FROM ──────────────────────────────────────────────
+ * Every sentence below is either verbatim from
+ * `PAGE-SPECS/custom-aluminum.md` §4 or a faithful reduction of it. The
+ * boundaries are not optional decoration: the page publishes what is *listed*,
+ * what is *assessed per project* and what is *not yet confirmed*, and it never
+ * promotes a listed direction into a shipped product.
  *
- * A second condition: the material and forming cards include aluminium and
- * magnesium because our own brochure covers them, but that copy was written
- * about wheel programs. The wording here is deliberately about capability
- * ("we can form these materials") rather than about any specific product, so
- * nothing migrates across contexts. Whether the two are used on non-wheel
- * parts is one of the open questions listed in the boundary section.
+ * ── THE PUBLISHING GATE ─────────────────────────────────────────────────────
+ * `boundary.declinedConfirmed` is false because the business has not confirmed
+ * which categories it declines. While false:
+ *   • the status matrix publishes THREE columns and no blank "what we decline"
+ *     column — an empty column reads as a promise to make anything;
+ *   • the route metadata stays `noindex, follow` (see page.tsx), and the
+ *     component never hides the gap with CSS.
+ * Give the business a confirmed declined list, set the flag, add the rows and
+ * the route can be indexed.
+ *
+ * ── WHAT IS DELIBERATELY ABSENT ─────────────────────────────────────────────
+ * No magnesium capability claim, no general heat treatment, no in-house
+ * coating, no "unlimited size", no corrosion repeatability, and no
+ * `competitor's part`. None of those is supported by the source material for
+ * this line. No material grade, tolerance, minimum order, lead time, tool life,
+ * capacity or size-envelope figure is published either, and the three
+ * engineering images are labelled as methods shown on wheel geometry rather
+ * than as reports for a custom aluminum part.
  */
 
-export const caHero = {
-  eyebrow: "CUSTOM ALUMINUM",
-  heading: "Custom Aluminum Components",
-  subheading:
-    "Start with a Drawing, 3D Data or Physical Sample — we develop the part from there.",
-  lede: "Built to a drawing or a sample, in aluminium and magnesium, across casting, forging and precision machining routes.",
-  ctaLabel: "Send the drawing, start with DFM",
-} as const;
+/**
+ * Enquiry context.
+ *
+ * The context is frozen into the URL: `product_line`, `intent`, the application
+ * group, the input type and the originating page. `application` and
+ * `input_type` are always present — `unspecified` when the visitor has not
+ * picked one — so the enquiry record never arrives without them.
+ */
+const ASSESSMENT_BASE =
+  "/request-a-quote?product_line=custom-aluminum&intent=project_assessment&from=custom-aluminum";
 
-export const caHeroActions = {
-  primary: { label: "Send the drawing, start with DFM", href: "/contact" },
-  secondary: { label: "See the development flow", href: "#development-flow" },
-} as const;
+function assessmentHref(application: string, inputType: string): string {
+  return `${ASSESSMENT_BASE}&application=${application}&input_type=${inputType}`;
+}
 
-export const caDefinition: AnswerBlock = {
-  eyebrow: "What this line is",
-  heading: "Custom aluminium is a process, not a product range",
-  body: "There is no shelf to order from here. The work is turning an input — a drawing, a 3D model, a sample or a competitor's part — into a finished aluminium component that matches it. That is a different business from selling standard parts, and it changes what this page has to tell you: the useful information is what we can accept as input, where our limits are, and how the route from drawing to delivery runs. The detail below is organised around exactly those three things.",
-  points: [
-    "The input decides the job — a finished drawing, a neutral 3D format and a physical sample each start the work differently.",
-    "Process choice follows the part — casting, forging and machining are matched to size, load, weight and volume rather than fixed in advance.",
-    "The boundary is stated up front — including, where we can, what we do not take on, so neither side spends an evaluation finding out.",
-  ],
+/** Page-level enquiry link — nothing selected yet. */
+export const customAluminumAssessmentHref = assessmentHref(
+  "unspecified",
+  "unspecified",
+);
+
+const EV_HOUSING_HREF = "/products/ev-components";
+
+export const customAluminumPage: CustomAluminumPage = {
+  slug: "custom-aluminum",
+  publicationStatus: "draft",
+
+  /* CA01 — no product photograph ------------------------------------------ */
+  hero: {
+    id: "CA01",
+    eyebrow: "CUSTOM ALUMINUM DEVELOPMENT",
+    heading: "Start with a drawing, 3D model or physical sample",
+    lead: "Fenghuai coordinates drawing-led aluminum component projects through engineering assessment, tooling, first-article review and supplier-supported production.",
+    boundaryNote:
+      "This is a project-development route, not a catalogue. Part feasibility, material, process, inspection, quantity and delivery plan are agreed against the customer input.",
+    primaryCta: { label: "See what can start an assessment", href: "#project-inputs" },
+    secondaryCta: {
+      label: "Start a custom aluminum assessment",
+      href: "#custom-aluminum-assessment",
+    },
+  },
+
+  /* The fork to the EV housing page ---------------------------------------- */
+  evRoute: {
+    id: "CA01-EV",
+    eyebrow: "Are you on the right page?",
+    heading: "Motor and controller housings have their own route",
+    lead: "Water-cooled motor housings, high-pressure die-cast motor housings and controller or inverter housings are collected on the EV housing page, where cooling, sealing and interface requirements belong together.",
+    categories: [
+      "Water-cooled motor housing",
+      "HPDC motor housing",
+      "controller or inverter housing",
+    ],
+    prompt:
+      "If the part is a motor or controller housing, use the EV housing route so cooling, sealing and interface requirements are collected correctly.",
+    href: EV_HOUSING_HREF,
+    linkLabel: "Go to the EV housing route",
+  },
+
+  /* CA02 — assessment scope, not a stocked range --------------------------- */
+  applications: {
+    id: "CA02",
+    eyebrow: "Application scope",
+    heading: "Application areas listed for project assessment",
+    lead: "The groups below describe where a drawing-led project may begin. They are not stocked products and do not prove that every geometry, material or validation requirement is feasible.",
+    scopeLabel: "Assessment scope",
+    groups: [
+      {
+        slug: "motor-reducer",
+        name: "Motor & reducer",
+        examples: [
+          "End covers",
+          "Brackets",
+          "Reducer housings",
+          "Oil-cooled motor housings",
+        ],
+        framing: "Applications listed for project assessment",
+        evidenceStatus: "supplier-stated",
+        href: assessmentHref("motor-reducer", "unspecified"),
+      },
+      {
+        slug: "power-electronics-thermal-management",
+        name: "Power electronics & thermal management",
+        examples: [
+          "Inverter",
+          "PDU",
+          "OBC",
+          "Water-pump housings",
+          "Valve blocks",
+          "Fittings",
+        ],
+        framing: "Drawing-led applications; not stocked parts",
+        evidenceStatus: "supplier-stated",
+        href: assessmentHref("power-electronics-thermal-management", "unspecified"),
+      },
+      {
+        slug: "battery-system-structures",
+        name: "Battery-system structures",
+        examples: [
+          "Battery enclosures",
+          "End plates",
+          "Cold plates",
+          "Module brackets",
+        ],
+        framing: "Subject to size, sealing and validation review",
+        evidenceStatus: "supplier-stated",
+        href: assessmentHref("battery-system-structures", "unspecified"),
+      },
+      {
+        slug: "chassis-body",
+        name: "Chassis & body",
+        examples: [
+          "Control arms",
+          "Steering knuckles",
+          "Connectors",
+          "Lightweight structures",
+        ],
+        framing: "Subject to load case, process and test review",
+        evidenceStatus: "supplier-stated",
+        href: assessmentHref("chassis-body", "unspecified"),
+      },
+    ],
+    boundaryNote:
+      "These names describe assessment directions listed in the supplied material. With no project drawing, part number or customer approval behind them, the page publishes no production, stock or case-study claim.",
+  },
+
+  /* CA03 — three inputs; reverse engineering sits inside the sample route -- */
+  inputs: {
+    id: "project-inputs",
+    eyebrow: "Project inputs",
+    heading: "Three inputs can start the engineering review",
+    lead: "A drawing, a 3D model and a physical sample all enter the same assessment route. Each one asks something different of you, so each card states what the review needs before it can begin.",
+    routes: [
+      {
+        id: "2d-drawing",
+        title: "2D drawing",
+        summary: "Dimensions, datums and tolerance intent",
+        requirements: [
+          "Provide dimensions, datums, critical characteristics, tolerance intent, material or performance requirements and the applicable revision.",
+        ],
+        href: assessmentHref("unspecified", "2d-drawing"),
+      },
+      {
+        id: "3d-data",
+        title: "3D data",
+        summary: "A neutral model plus the interfaces that matter",
+        requirements: [
+          "Provide a neutral STEP or IGES model together with the drawing or a marked list of critical interfaces. A 3D model alone does not define acceptance.",
+        ],
+        href: assessmentHref("unspecified", "3d-data"),
+      },
+      {
+        id: "physical-sample",
+        title: "Physical sample",
+        summary: "The part itself, with rights confirmed",
+        requirements: [
+          "Provide the sample, its known function, mating conditions and the features that must be reproduced. Reverse engineering is assessed after sample ownership and reproduction rights are confirmed.",
+        ],
+        rightsNote:
+          "Submitting a sample confirms the right to deliver, measure and reproduce it for a manufacturing assessment.",
+        href: assessmentHref("unspecified", "physical-sample"),
+      },
+    ],
+    note: "Reverse engineering is part of the physical-sample route rather than a fourth option. It proceeds only once ownership and reproduction rights for the sample are confirmed, because a copy cannot be assessed before the right to make one is established.",
+    rightsDeclaration:
+      "The submitting party confirms they are entitled to hand over, measure and use the sample for a manufacturing assessment.",
+  },
+
+  /* CA04 — methods, with the wheel-geometry boundary attached -------------- */
+  methods: {
+    id: "CA04",
+    eyebrow: "Engineering assessment",
+    heading: "Engineering tools support the decision before tooling",
+    lead: "Assessment happens before a tool is cut, so that geometry, process and acceptance criteria are agreed while changing them is still cheap.",
+    items: [
+      {
+        id: "dfm-review",
+        title: "DFM review",
+        body: "Review geometry, critical interfaces, draft, machining access, joining, inspection and the risks that have to be closed before tooling.",
+      },
+      {
+        id: "structural-analysis-example",
+        title: "Structural analysis example",
+        body: "The supplied material includes a structural-analysis image using wheel geometry. It demonstrates an analysis workflow example; it is not a report for a custom aluminum part.",
+        media: {
+          wordpressId: 67,
+          src: "/images/capabilities/wheel-fea-review.webp",
+          alt: "Structural analysis result plotted on a wheel design",
+          caption:
+            "Structural-analysis workflow example shown on wheel geometry; not a project-specific report.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 67 · 峰徊科技_A版/A科技_产品综合介绍.md 第 04 章",
+        },
+      },
+      {
+        id: "casting-simulation-examples",
+        title: "Casting simulation examples",
+        body: "The supplied material includes casting-process simulation images using wheel geometry. Project-specific simulation, model assumptions and acceptance criteria must be confirmed for the actual part.",
+        media: {
+          wordpressId: 31,
+          src: "/images/capabilities/wheel-casting-simulation.webp",
+          alt: "Casting temperature simulation result plotted on a wheel design",
+          caption:
+            "Casting-process simulation example shown on wheel geometry; assumptions require project confirmation.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 31 · 峰徊科技_A版/A科技_产品综合介绍.md 第 04 章",
+        },
+        supportingMedia: {
+          wordpressId: 48,
+          src: "/images/capabilities/wheel-reverse-engineering.webp",
+          alt: "Casting simulation setup showing a runner and gate model",
+          caption: "Casting simulation setup example from supplied material.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 48 · 峰徊科技_A版/A科技_产品综合介绍.md 第 04 章",
+        },
+        // The source image is 318×204. Cap the rendered width at 318px so the
+        // setup screenshot is never upscaled into something it is not.
+        supportingMediaMaxWidth: 318,
+      },
+    ],
+    evidenceNote:
+      "Method examples from supplied material — not project-specific validation reports.",
+  },
+
+  /* CA05 — five auditable stages ------------------------------------------ */
+  stages: {
+    id: "development-flow",
+    eyebrow: "Development stages",
+    heading: "From engineering input to approved production",
+    lead: "Five stages, in order. Each one has an exit: a project can end at any of them, and the page says so rather than presenting the sequence as a promise of production.",
+    steps: [
+      {
+        step: "01",
+        title: "Engineering assessment",
+        body: "Review requirements, DFM risks, process options, evidence needs and the basis for quotation.",
+      },
+      {
+        step: "02",
+        title: "Tooling and trial",
+        body: "Develop the tooling route, produce trial parts and record the drawing revision used for the first article.",
+      },
+      {
+        step: "03",
+        title: "Inspection and sample review",
+        body: "Measure agreed characteristics and complete applicable performance checks before customer review.",
+      },
+      {
+        step: "04",
+        title: "Approval and engineering closure",
+        body: "Record sample approval and close agreed engineering changes before the production baseline is released.",
+      },
+      {
+        step: "05",
+        title: "Pilot and serial supply",
+        body: "Confirm repeatability, inspection frequency, traceability, packaging and shipment documents for the approved project.",
+      },
+    ],
+    boundaryNote:
+      "A project may stop after any stage on a technical, commercial or compliance assessment. Entering one stage does not commit either side to the next.",
+  },
+
+  /* CA06 — three columns, no blank "what we decline" ---------------------- */
+  boundary: {
+    id: "capability-boundary",
+    eyebrow: "Boundary",
+    heading: "What is listed, what is assessed and what still needs a boundary",
+    lead: "Most capability pages list what a supplier can do. This one separates what the source material lists, what is decided per project, and what cannot be published yet — because the expensive failure in custom work is discovering at the end of an assessment that the part could not have been made.",
+    columns: [
+      {
+        id: "listed",
+        label: "Listed in supplier material",
+        items: [
+          "HPDC",
+          "LPDC",
+          "Gravity casting",
+          "Forging",
+          "CNC",
+          "FSW",
+          "Surface treatment",
+        ],
+        note: "Possible combined routes. Which manufacturing entity supplies each route, and where subcontracted work begins, is confirmed per project.",
+      },
+      {
+        id: "assessed",
+        label: "Assessed per project",
+        items: [
+          "Material",
+          "Size",
+          "Weight",
+          "Wall section",
+          "Tolerance",
+          "Load",
+          "Sealing",
+          "Finish",
+          "Inspection",
+          "Tooling",
+          "Volume",
+        ],
+        note: "Not every project uses every route, and a route being listed is not a statement that it runs in-house.",
+      },
+      {
+        id: "unconfirmed",
+        label: "Not yet confirmed for publication",
+        items: [
+          "General size and weight envelope",
+          "Achievable tolerance ranges",
+          "Universal material grades",
+          "Minimum order",
+          "Lead time",
+          "Declined categories",
+        ],
+        note: "These are withheld deliberately. Publishing an unconfirmed figure here would be a commercial commitment, and publishing an unconfirmed exclusion would be worse.",
+      },
+    ],
+    declined: [],
+    declinedConfirmed: false,
+    publicationNote:
+      "The categories we decline are still being confirmed, so no “what we decline” column is published and this route stays out of search indexing. A blank column would read as a claim to take on anything.",
+  },
+
+  /* CA07 — the enquiry entry ---------------------------------------------- */
+  inquiry: {
+    id: "custom-aluminum-assessment",
+    eyebrow: "Start an assessment",
+    heading: "Send enough information for a useful first assessment",
+    lead: "A first assessment is only as good as its inputs. The list below is what the engineering review works from; anything unknown stays open rather than being filled with a generic value.",
+    checklistLabel: "Required inputs",
+    checklist: [
+      "Application and part function",
+      "2D drawing, 3D model or sample status",
+      "Critical dimensions, datums and tolerance intent",
+      "Material or performance requirements",
+      "Load, cooling, sealing or environmental conditions",
+      "Surface and corrosion requirements",
+      "Inspection and target-market documents",
+      "Prototype quantity and expected annual volume",
+      "Target sample timing and destination market",
+    ],
+    uploadNote:
+      "No direct upload is available yet. Marking a drawing or a sample as available does not attach a file — the project team sends a controlled exchange method against your enquiry reference instead.",
+    primaryCta: {
+      label: "Start a custom aluminum assessment",
+      href: customAluminumAssessmentHref,
+    },
+    secondaryCta: { label: "Contact the project team", href: "/contact" },
+    contextNotice:
+      "Your enquiry carries product_line=custom-aluminum together with the application group, the input type and this page as its source. NDA available for project discussion.",
+  },
+
+  closing: {
+    eyebrow: "Enquiries",
+    heading: "One drawing is enough to start.",
+    body: "A drawing, 3D data or a physical sample all begin the same assessment route, and each stage can be stopped before the next one is committed.",
+    primaryCta: {
+      label: "Start a custom aluminum assessment",
+      href: customAluminumAssessmentHref,
+    },
+    secondaryCta: { label: "Contact the project team", href: "/contact" },
+  },
 };
-
-/**
- * The split between this page and the powertrain-housing page.
- *
- * Both routes start from the same instruction (send a drawing), so without an
- * explicit fork a reader will land on the wrong one. The test is whether the
- * part has a name: a motor housing, an end plate and a cold plate are on the
- * other page with their own processes and inspection regime; a drawing with no
- * standard name belongs here.
- *
- * Rendered as a bordered aside rather than a line of small print, and worded
- * as a genuine either/or — a fork that says "both are fine" is not a fork.
- */
-export const caSplit: ResourceLink = {
-  eyebrow: "Are you on the right page?",
-  title: "Looking for an EV powertrain housing?",
-  body: "Motor housings, inverter housings, battery trays, end plates and cold plates have their own page, with the casting, welding and leak-testing detail that belongs to them. This page is for aluminium parts that have a drawing but no standard name — the ones you cannot look up in anyone's catalogue.",
-  href: "/products/ev-components",
-  linkLabel: "Go to EV powertrain housings",
-};
-
-/**
- * The four inputs.
- *
- * The reverse-engineering card is the one that earns its place. A buyer who
- * holds a competitor's component and no drawing will usually assume they are
- * not eligible to enquire; saying explicitly that a sample is enough, and
- * naming what we need alongside it, converts a group of visitors who would
- * otherwise have left.
- *
- * Each card's requirement list is the substance — "we accept drawings" without
- * saying which drawings is not an instruction anyone can act on.
- */
-export const caInputs: InputType[] = [
-  {
-    index: "01",
-    name: "2D drawing",
-    nameEn: "2D Drawing",
-    requirements: [
-      "Orthographic views (three-view or fully dimensioned)",
-      "Critical dimensions identified",
-      "Tolerance requirements, and any datum callouts",
-    ],
-  },
-  {
-    index: "02",
-    name: "3D data",
-    nameEn: "3D Data",
-    requirements: [
-      "A neutral format — STEP or IGES",
-      "Critical-to-function faces flagged",
-      "Material and finish intent, if already decided",
-    ],
-  },
-  {
-    index: "03",
-    name: "Physical sample",
-    nameEn: "Physical Sample",
-    requirements: [
-      "The sample itself, shipped to us",
-      "The service conditions it has to survive",
-      "Any known fitment constraints on the mating assembly",
-    ],
-  },
-  {
-    index: "04",
-    name: "Reference part only",
-    nameEn: "Reverse Engineering",
-    requirements: [
-      "The part you want matched",
-      "Which features are critical and which are free",
-      "Tolerances required on the functional interfaces",
-    ],
-    highlight: true,
-  },
-];
-
-export const caInputNote =
-  "The fourth route exists because most projects do not start with a finished drawing. If you have a part in hand and no model of it, that is a normal starting point — we reverse-engineer it, and the DFM conversation happens against the measured geometry rather than against nothing.";
-
-/**
- * 🔴 The boundary section, and the reason for the page's publishing gate.
- *
- * The "included" rows are the capability as our own material states it. The
- * "assess" rows describe the shape of the limit without quoting a number,
- * because no envelope figure has been confirmed. The "excluded" column is
- * empty — see the module header. Nothing here is inferred or invented: an
- * invented exclusion is a commercial commitment, and an invented inclusion is
- * worse.
- */
-export const boundaryTerms: {
-  excludedConfirmed: boolean;
-  rows: BoundaryRow[];
-} = {
-  excludedConfirmed: false,
-  rows: [
-    {
-      state: "included",
-      label: "Aluminium and magnesium components",
-      confirmed: true,
-      note: "Formed and machined in both materials; the route is chosen per part.",
-    },
-    {
-      state: "included",
-      label: "Cast and forged routes",
-      confirmed: true,
-      note: "Low-pressure casting, high-pressure die casting, gravity casting and forging.",
-    },
-    {
-      state: "included",
-      label: "CNC finishing on critical interfaces",
-      confirmed: true,
-      note: "Machined after forming, so location faces are cut from a common datum.",
-    },
-    {
-      state: "included",
-      label: "Heat treatment and surface finishing",
-      confirmed: true,
-      note: "Applied in house, including coating and painting.",
-    },
-    {
-      state: "included",
-      label: "Process routes combined per project",
-      confirmed: true,
-      note: "More than one route on a single part where the geometry calls for it.",
-    },
-    {
-      state: "assess",
-      label: "Parts beyond the confirmed size and weight envelope",
-      confirmed: false,
-      note: "The envelope is being confirmed. Until it is published we assess each part individually rather than screen it against a number.",
-    },
-    {
-      state: "assess",
-      label: "Geometrically complex or thin-walled parts",
-      confirmed: false,
-      note: "Assessed against the drawing. Casting simulation is run before tooling is committed, which is where complexity limits get tested.",
-    },
-    {
-      state: "assess",
-      label: "Volume beyond current line capacity",
-      confirmed: false,
-      note: "Annual capacity is being confirmed. Volume is discussed as part of the project assessment.",
-    },
-  ],
-};
-
-/**
- * Required while the excluded column is empty. Not a generic disclaimer — it
- * says which column is missing and why, so the gap is legible as a gap.
- */
-export const boundaryExcludedNote =
-  "The categories we decline are still being confirmed and are shown here as an empty slot rather than filled in. We will publish them — an explicit list of what we do not take on is more useful to both sides than a claim to make anything.";
-
-/** The resulting sentence, in the engineering register rather than sales. */
-export const boundaryClosingLine =
-  "Process selection follows size, load, weight, cost and program volume. These routes are not a process overview — they are manufacturing capability that can be combined project by project.";
-
-/**
- * Six capability cards.
- *
- * The material card is worded as capability rather than as a product claim:
- * our source copy names aluminium and magnesium in the context of wheel
- * programs, so nothing here asserts a specific grade on a specific part.
- * Whether those materials are used on non-wheel work is one of the open
- * questions the boundary section flags.
- */
-export const caCapabilities: Capability[] = [
-  {
-    index: "01",
-    title: "Materials",
-    body: "Aluminium and magnesium forming capability, with the grade fixed at project level once the part, the load case and the volume are known.",
-    evidence:
-      "Source copy names these materials in wheel programmes only. Whether they are used on non-wheel work is an open question — stated as capability, not as a grade claim.",
-  },
-  {
-    index: "02",
-    title: "Forming routes",
-    body: "Low-pressure casting, high-pressure die casting, gravity casting and forging — matched to the part rather than fixed by the line.",
-    evidence:
-      "Process list is from the source material. Confirm which routes run in-house vs subcontracted.",
-  },
-  {
-    index: "03",
-    title: "Precision machining",
-    body: "CNC machining, with critical interfaces finished after forming so the faces that locate the assembly share a datum with the drawing.",
-    evidence:
-      "Standard practice statement. Confirm the achievable tolerance band before quoting one.",
-  },
-  {
-    index: "04",
-    title: "Heat treatment",
-    body: "Heat treatment within the process flow, so mechanical properties are set before the part reaches finishing or inspection.",
-    evidence:
-      "Confirm which heat-treatment routes are in-house. Pending confirmation.",
-  },
-  {
-    index: "05",
-    title: "Surface finishing",
-    body: "Surface treatment and coating, applied in controlled stages so appearance and corrosion performance repeat across a batch.",
-    evidence:
-      "Confirm the finishing processes offered and any salt-spray hours behind the corrosion claim. Pending confirmation.",
-  },
-  {
-    index: "06",
-    title: "Engineering up front",
-    body: "3D design, finite element analysis, casting simulation, reverse engineering and tooling development — all completed before the tool is cut.",
-    evidence:
-      "Needs the real engineering workflow, same open question as the homepage cell 01.",
-  },
-];
-
-/**
- * Two groups of typical parts, not a product catalogue.
- *
- * The source material names four examples, three of them in a single line of
- * copy. That is enough to illustrate where this capability lands, and not
- * enough to build a product grid from — so the page shows two groups with a
- * scenario description each. The third group one might expect (general
- * machined parts) is absent because there is nothing behind it; an empty group
- * would advertise the thinness rather than hide it.
- *
- * The closing boundary line is on the component, not here, so the grid cannot
- * render without it.
- */
-export const caTypicalParts: PartGroup[] = [
-  {
-    slug: "drivetrain",
-    name: "Drivetrain and power",
-    nameEn: "Drivetrain & Power",
-    difficulty:
-      "Machined aluminium components that sit alongside a powertrain — covers, brackets and housings developed to a drawing rather than picked from a range.",
-    parts: [
-      { name: "End cover", nameEn: "End cover" },
-      { name: "Bracket", nameEn: "Bracket" },
-    ],
-  },
-  {
-    slug: "chassis",
-    name: "Chassis and body",
-    nameEn: "Chassis & Body",
-    difficulty:
-      "Lightweight structural aluminium for chassis and body applications, where the part has to carry load and stay light at the same time.",
-    parts: [
-      { name: "Control arm", nameEn: "Control arm" },
-      { name: "Steering knuckle", nameEn: "Steering knuckle" },
-      { name: "Connecting component", nameEn: "Connecting component" },
-      { name: "Lightweight structural part", nameEn: "Structural part" },
-    ],
-  },
-];
-
-export const caTypicalPartsBoundary =
-  "These are examples of the work rather than a catalogue — the part you need is assessed from your drawing. Nothing here is a standard part we hold in stock.";
-
-/**
- * The development flow — eight stages, in order.
- *
- * This is the page's main content and the one section that is complete: every
- * stage is documented in our own material. It stays at engineering level
- * (manufacturability, tooling, first article, pilot validation). The
- * commercial framing of the same journey — OEM / ODM / private label, who
- * carries tooling cost, minimum quantities — belongs to the custom
- * development page, and the closing cross-link points there rather than
- * restating it.
- *
- * The anchor `development-flow` is a fixed contract: the custom development
- * page links to it by name.
- */
-export const caDevelopmentFlow: FlowStep[] = [
-  {
-    step: "01",
-    title: "Input",
-    body: "A drawing, 3D data or a physical sample. Reverse engineering is available when no drawing exists.",
-  },
-  {
-    step: "02",
-    title: "DFM assessment",
-    body: "Manufacturability review, casting simulation and the process route — returned as an assessment before any tooling decision.",
-  },
-  {
-    step: "03",
-    title: "Tooling development",
-    body: "Tool design and manufacture, cut to the geometry agreed at the DFM stage rather than to the first version of the drawing.",
-  },
-  {
-    step: "04",
-    title: "First article",
-    body: "Trial parts produced, machined and measured — dimensions and performance checked against the drawing before anything is shipped.",
-  },
-  {
-    step: "05",
-    title: "Customer approval",
-    body: "First article and test results are presented for sign-off. Nothing moves to batch production without that approval.",
-  },
-  {
-    step: "06",
-    title: "Pilot validation",
-    body: "A small batch confirms the line repeats the approved part, with engineering changes closed out rather than carried forward.",
-  },
-  {
-    step: "07",
-    title: "Volume production",
-    body: "Serial production against the approved specification, with the process held to the route validated at pilot.",
-  },
-  {
-    step: "08",
-    title: "Export delivery",
-    body: "Documentation, freight and after-sales support, handled as part of the same order rather than handed off.",
-  },
-];
-
-export const caDevelopmentNda =
-  "We sign non-disclosure agreements. It is normally the first document exchanged, before drawings or samples change hands — send us the counterparty details and we will return it signed.";
-
-export const caDevelopmentCopy = {
-  eyebrow: "Process",
-  heading: "From a drawing to a delivered part, in eight stages",
-  lede: "Two of these stages exist to stop the project going wrong rather than to move it forward: the DFM assessment, where a part that cannot be held to tolerance is caught before a tool is cut, and the first-article approval, where the line proves it can repeat the approved part.",
-};
-
-/**
- * Cross-link to the commercial half of the same story.
- *
- * The destination anchor is fixed on that page. The engineering sequence stays
- * here in full and the commercial sequence stays there, precisely so the two
- * pages are not two versions of one narrative.
- */
-export const caFlowCrossLink = {
-  eyebrow: "Commercial view",
-  title: "How the same project is contracted",
-  body: "OEM, ODM and private label, who carries the tooling cost, minimum quantities and lead times — the commercial terms behind the same eight stages.",
-  href: "/custom-development#cooperation-models",
-  linkLabel: "See how we cooperate",
-};
-
-/**
- * Two FAQ entries, for the same reason as the EV page: the questions with no
- * confirmed answer are not authored at all. Material grades, size envelope
- * and tolerance all fall into that group, and the section closes with a notice
- * naming them. What remains is what we can answer today.
- */
-export const caFaqs: FaqEntry[] = [
-  {
-    question: "I have a sample but no drawing. Can you still make it?",
-    answer:
-      "Yes. Reverse engineering is part of our engineering capability, and it is a common starting point — a sample on the bench, no model of it. We work from the measured geometry, and the DFM conversation happens against that rather than against an assumption about the original design.",
-  },
-  {
-    question: "Do you sign an NDA?",
-    answer:
-      "Yes, and in most projects it is the first document exchanged. Drawings and samples normally only change hands after the agreement is signed, so tell us the counterparty details and we will return it.",
-  },
-  {
-    question: "How is a sampling schedule assessed?",
-    answer:
-      "It is quoted per part rather than from a table. Tooling complexity, the forming route and whether the input is a finished drawing or a single reference part all move the schedule, so the timeline comes back with the assessment.",
-  },
-];
-
-export const caFaqNotice =
-  "Aluminium grades, the size and weight envelope and achievable tolerances are still being confirmed. They will be published as figures once engineering signs them off, rather than described in general terms in the meantime.";
-
-export const caRoutes: RouteStep[] = [
-  {
-    step: "01",
-    title: "Cooperation models in full",
-    body: "For OEM, ODM and private-label routes, and the commercial terms behind a custom project.",
-    href: "/custom-development",
-    linkLabel: "See cooperation models",
-  },
-  {
-    step: "02",
-    title: "Plant processes and quality in full",
-    body: "For the casting, machining, finishing and inspection stages as they stand on the floor.",
-    href: "/capabilities",
-    linkLabel: "See the plant",
-  },
-  {
-    step: "03",
-    title: "Send a drawing and start",
-    body: "For putting the drawing, model or sample in front of engineering and getting an assessment back.",
-    href: "/contact",
-    linkLabel: "Send the drawing",
-  },
-];
-
-/**
- * Closing block.
- *
- * Unlike the EV page, the site's standard dealer enquiry band fits here: the
- * visitor has a part to make, so sending it is an enquiry rather than a
- * premature request for price. The copy stays under the length ceiling and
- * carries the NDA position, which is the first thing a customer wants settled.
- */
-export const caCta = {
-  title: "One drawing is enough to start.",
-  body: "NDAs available. A drawing, 3D data or a physical sample all begin the same development flow.",
-} as const;

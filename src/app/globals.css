@@ -230,6 +230,40 @@
   filter: blur(0);
 }
 
+/* STRUCTURAL BACKSTOP — DESIGN.md §1.5 rule 3, "宁可不动画也不留空洞".
+   Anything still hidden after 5s reveals itself.
+
+   This used to be a JS timer that iterated a node list captured at mount, so it
+   revealed nothing for any section that arrived later: measured on /about
+   reached by a client-side link, 13 of 18 sections were still blank 7s after
+   the navigation — the backstop had already fired and done nothing.
+
+   As CSS it cannot go stale: it holds no references, needs no JavaScript, and
+   therefore also covers the case where the hook itself throws. It is the last
+   line of the fail-visible contract, so it belongs where it cannot be skipped.
+
+   Note this makes scroll-reveal time-bounded: after 5s everything is revealed
+   whether or not it was scrolled to. That is the documented trade (§1.5:
+   "宁可不动画也不留空洞"), and the previous timer had the same behaviour — it is
+   recorded here so nobody later mistakes it for a bug. */
+.motion-ready[data-motion-armed] [data-reveal]:not(.is-revealed) {
+  animation: fh-reveal-backstop var(--motion-duration-reveal) var(--motion-ease-out) 5s
+    forwards;
+}
+
+.motion-ready[data-motion-armed] [data-reveal-group]:not(.is-revealed) > * {
+  animation: fh-reveal-backstop var(--motion-duration-reveal) var(--motion-ease-out) 5s
+    forwards;
+}
+
+@keyframes fh-reveal-backstop {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
 .motion-ready [data-parallax-media] {
   --motion-parallax-offset: 0px;
   transform: translate3d(0, var(--motion-parallax-offset), 0);
@@ -337,6 +371,27 @@
   .fh-kenburns {
     animation: none;
   }
+}
+
+.fh-industrial-grid {
+  background-color: var(--fh-hero);
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--fh-forge) 13%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--fh-forge) 13%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      135deg,
+      transparent 0 47%,
+      color-mix(in srgb, var(--fh-panel) 54%, transparent) 47% 53%,
+      transparent 53% 100%
+    );
+  background-size: 48px 48px, 48px 48px, 360px 360px;
 }
 
 @keyframes fh-nudge {

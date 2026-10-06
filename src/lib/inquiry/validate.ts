@@ -78,6 +78,13 @@ export function validate(body: unknown): ValidationResult {
     productionCode: str(ctxRaw.productionCode, 60) || undefined,
     series: str(ctxRaw.series, 120) || undefined,
     from: str(ctxRaw.from, 60) || undefined,
+    productLine: str(ctxRaw.productLine, 60) || undefined,
+    application: str(ctxRaw.application, 80) || undefined,
+    inputType: str(ctxRaw.inputType, 60) || undefined,
+    intent: str(ctxRaw.intent, 60) || undefined,
+    // Server-computed flag; the client can set it but it is overwritten by
+    // `bindWheelEnquiry` before persistence. Only a real boolean passes.
+    variantPending: ctxRaw.variantPending === true ? true : undefined,
     selectedSpec:
       typeof ctxRaw.selectedSpec === "object" && ctxRaw.selectedSpec !== null
         ? Object.fromEntries(

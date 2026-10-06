@@ -20,11 +20,8 @@ import type { ProductLine } from "./types";
  * organised?" (three categories). Collapsing them was the v1 plan and it would
  * have cost the catalogue its grouping.
  *
- * ── Where the copy came from ────────────────────────────────────────────────
- * Migrated verbatim from `heroProducts` in `homepage-hero.ts`, which had
- * already been reconciled against the four-line positioning (DEC-022) and had
- * its card artwork commissioned. Moving it here makes both call sites read one
- * source instead of two; the hero now imports from this file.
+ * Copy follows the approved homepage Page SPEC. This is the only company-level
+ * product-line collection; homepage and `/products` consume the same records.
  *
  * ⚠️ `hasRender: true` on all four — a real 1024×1024 card image exists in
  * `public/images/cards/` for each line, verified on disk. This is the opposite
@@ -35,17 +32,15 @@ import type { ProductLine } from "./types";
  * ── Parallelism is the whole point (§0 core discipline) ─────────────────────
  * Four entries, same shape, same image aspect, same fields. Nothing here
  * privileges wheels: it has no more fields than the others, and its summary is
- * not quantified more aggressively than theirs (the "1018 catalogue models"
- * figure appears because it is the one line with a real published count, and
- * the other three would have to invent one to match).
+   * not quantified more aggressively than theirs.
  */
 export const productLines: ProductLine[] = [
   {
     slug: "wheels",
-    name: "Forged Wheels",
-    subtitle: "Monoblock · Two-piece",
+    name: "Wheels",
+    subtitle: "Recorded models · Flow formed · Custom forged",
     summary:
-      "1018 catalogue models across 15–20 inch plus off-road and HP fitments, finished to your specification.",
+      "Browse approved wheel specifications, review recorded flow-formed routes, or start a custom forged wheel program.",
     highlights: [],
     hasRender: true,
     image: "/images/cards/card-wheels.webp",
@@ -53,10 +48,10 @@ export const productLines: ProductLine[] = [
   },
   {
     slug: "ev-components",
-    name: "EV Components",
-    subtitle: "EV drive & battery",
+    name: "EV Aluminum Housings",
+    subtitle: "Motor · Controller · Inverter",
     summary:
-      "Motor, controller and battery housings — including integrated spiral cooling channels for stator assemblies.",
+      "Engineering assessment for water-cooled motor, die-cast motor and controller or inverter housing projects.",
     highlights: [],
     hasRender: true,
     image: "/images/cards/card-ev.webp",
@@ -64,10 +59,10 @@ export const productLines: ProductLine[] = [
   },
   {
     slug: "custom-aluminum",
-    name: "Custom Aluminum",
-    subtitle: "Drawing or sample",
+    name: "Custom Aluminum Development",
+    subtitle: "2D drawing · 3D data · Physical sample",
     summary:
-      "Brackets, end covers, control arms and structural parts — built from your drawing, 3D data or sample.",
+      "Start a drawing- or sample-led assessment for an aluminum component outside the defined wheel and EV housing categories.",
     highlights: [],
     hasRender: true,
     image: "/images/cards/card-aluminum.webp",
@@ -75,10 +70,10 @@ export const productLines: ProductLine[] = [
   },
   {
     slug: "safety-tires",
-    name: "Self-Healing Tires",
-    subtitle: "Self-sealing coating",
+    name: "Self-Sealing Tires",
+    subtitle: "Technology · Testing · Supply review",
     summary:
-      "A polymer self-sealing layer in the inner liner closes the puncture channel in as little as 0.05 s.",
+      "Review the self-sealing concept, documented test conditions and the information needed to discuss an applicable tire program.",
     highlights: [],
     hasRender: true,
     image: "/images/cards/card-tires.webp",

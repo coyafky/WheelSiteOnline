@@ -1,322 +1,310 @@
-import type {
-  AnswerBlock,
-  Capability,
-  FaqEntry,
-  PartGroup,
-  PositioningPoint,
-  QualityRow,
-  RouteStep,
-} from "./types";
+import type { EvHousingPageContent } from "./types";
 
 /**
- * EV powertrain housings (`/products/ev-components`).
+ * EV housing assessment page (`/products/ev-components`).
  *
- * THIS PAGE IS NOT A CATALOGUE. The reader is a purchasing engineer at an OEM
- * or a tier-1 supplier, and the page is judged on the same axes as a
- * technical document: what we can make, how we join it, how we inspect it,
- * and what we are prepared to admit we do not publish yet. Agency phrasing
- * ("proven quality", "source factory") costs credibility here rather than
- * building it.
+ * EV01–EV06 from `PAGE-SPECS/ev-components.md`. Every English sentence below is
+ * either verbatim from the spec's §3 ("可直接录入的英文内容") or a faithful
+ * reduction of it; the boundaries are not decoration, they are the reason the
+ * page can publish at all.
  *
- * TWO RULES THAT SHAPE THE COPY
- * -----------------------------
- * 1. The closing action is "submit a drawing for engineering assessment", not
- *    "request a quote". At this stage the customer does not yet know whether
- *    we can take the job, so quoting is premature. The word quote does not
- *    appear on the page.
- * 2. Anything we cannot substantiate is absent, not softened. There is no
- *    material grade list, no dimensional envelope, no tolerance figure and no
- *    quality-system claim, because none of them has been confirmed. What is
- *    left is honest and still substantial: the part types, the processes, the
- *    inspection sequence and the NDA position.
+ * ── WHY THIS PAGE WAS REWRITTEN RATHER THAN EXTENDED ────────────────────────
+ * The previous version promoted fifteen part types across three systems and
+ * answered a purchasing engineer with claims the source material cannot carry
+ * on this line: an oil-cooled motor housing, PDU and OBC housings, a battery
+ * tray and a cold plate as if they were this line's products; an internal
+ * X-ray inspection capability; and a housing programme running as "one
+ * controlled flow rather than as separate subcontracts", which asserts a
+ * manufacturing relationship the source does not establish. The source audit
+ * (`resources/research/2026-10-05-ev-custom-aluminum-source-audit.md` §4) lists
+ * every one of those as out of range. They are gone, not softened.
  *
- * SOURCING: every fact below is Fenghuai's own brochure copy. Nothing is
- * borrowed from a third-party wheel manufacturer or from the tyre material —
- * this line's parts are cast and machined, so wheel-specific standards and
- * forging equipment claims do not apply to it.
+ * ── EVIDENCE STATE, BY DESIGN ───────────────────────────────────────────────
+ * `supplier-stated` — the three category names, and the LPDC / HPDC / friction
+ * welding / FSW routes. They may be shown, attributed to the supplier material,
+ * and must never be presented as established by a photograph.
+ * `missing` — material grades, tolerances, leak rates, pressures, capacity,
+ * yield, customers, vehicle programmes and IATF/ISO certification. No numeric
+ * value or certification mark appears anywhere in this module, and no field
+ * exists for one.
+ * Media captions describe what a photograph *shows*. WP 38 is a batch of
+ * machined housings in a production area: it is never welding, sealing or leak
+ * testing. WP 24's spiral water passage is not visible in the image, so the
+ * page never says it is. WP 49 does not demonstrate HPDC or friction welding.
+ * WP 20 is not a PDU, an OBC or a named vehicle's inverter housing.
+ *
+ * ── THE ACTION IS AN ASSESSMENT, NOT A QUOTE ────────────────────────────────
+ * The reader does not yet know whether the part can be made, so every CTA on
+ * this route leads to an engineering assessment. The word quote appears
+ * nowhere, and manufacturing relationship wording follows the partner boundary:
+ * Fenghuai is the Shenzhen project interface, not a Shenzhen-owned plant.
  */
-
-export const evHero = {
-  eyebrow: "EV POWERTRAIN",
-  heading: "EV Powertrain Housings",
-  subheading:
-    "Aluminum Housings for EV Motor & Controller Systems — built to a drawing, not to a shelf.",
-  partsLine:
-    "Water-cooled motor housing · High-pressure die-cast motor housing · Controller / inverter housing",
-  ctaLabel: "Submit a drawing for engineering assessment",
-} as const;
-
-export const evDefinition: AnswerBlock = {
-  eyebrow: "What this line is",
-  heading: "Heat, sealing and precision — the three problems a housing has to solve",
-  body: "Powertrain housings sit between the electrical system and the road: motor and reducer housings on the drive side, inverter, PDU and on-board charger housings on the control side, and battery trays, end plates and cold plates on the pack side. They are not chosen from a catalogue. Each one is developed against a drawing, because the three things that decide whether it works — how heat leaves the part, how it holds pressure, and how accurately the mating faces land — are set by the design rather than by the bin it is taken from.",
-  points: [
-    "Cooling — the water or oil gallery has to be formed inside the casting and stay sealed along its whole length.",
-    "Sealing — the housing is a pressure boundary; gas and water tightness is the acceptance criterion, not an optional extra.",
-    "Precision — stator, rotor and gear interfaces are assembled to tolerances that turn a good casting into a scrap part if they are missed.",
-  ],
-};
 
 /**
- * The differentiable section: the part types we can take on.
+ * Enquiry context, frozen into the URL.
  *
- * The count is deliberate and has been reconciled: 5 drive-side + 6
- * control-side + 4 battery-side = 15 named types, plus 2 generic parts that
- * appear across all three. The generic pair is rendered as a trailing note
- * rather than a fourth card — two items would break the three-column layout,
- * and both already appear on the custom aluminium page, so repeating them as
- * a card would be duplicating one list across two routes.
+ * `product_line=ev-components` classifies the line; `intent=project_assessment`
+ * records what the enquiry is for; `category` records which of the three
+ * housing categories the visitor started from, and `evidence` records that the
+ * enquiry is asking for the project evidence list. All four are always present
+ * — `unspecified` when the visitor has not picked a category — so the record
+ * never arrives unclassified.
  */
-export const evPartGroups: PartGroup[] = [
-  {
-    slug: "powertrain",
-    name: "Drive-side housings",
-    nameEn: "Motor & Reducer Housings",
-    difficulty:
-      "A cooling gallery formed in one piece with the body, plus a sealing face that must survive the whole service life.",
-    parts: [
-      { name: "Water-cooled motor housing", nameEn: "Water-cooled", process: "LPDC" },
+const ASSESSMENT_BASE =
+  "/request-a-quote?product_line=ev-components&intent=project_assessment&from=ev-components";
+
+function assessmentHref(category: string, evidence = "unspecified"): string {
+  return `${ASSESSMENT_BASE}&category=${category}&evidence=${evidence}`;
+}
+
+/** Page-level enquiry link — nothing selected yet. */
+export const evAssessmentHref = assessmentHref("unspecified");
+
+/** The same link, flagged as an evidence-list request (EV05's action). */
+export const evEvidenceRequestHref = assessmentHref("unspecified", "project_evidence_list");
+
+/** Ancillary links that are not enquiry routes. */
+const CUSTOM_ALUMINUM_HREF = "/products/custom-aluminum";
+
+export const evHousingPage: EvHousingPageContent = {
+  slug: "ev-components",
+  publicationStatus: "approved",
+
+  /* EV01 — the category hero ----------------------------------------------- */
+  hero: {
+    id: "EV01",
+    eyebrow: "EV ALUMINUM HOUSINGS",
+    heading: "Aluminum housings for EV motor and controller projects",
+    lead: "Fenghuai provides a Shenzhen-based project interface for supplier-supported motor and power-electronics housing programs. Each project starts from the customer drawing, interface requirements and validation plan.",
+    scopeLine:
+      "Water-cooled motor housings · Die-cast motor housings · Controller and inverter housings",
+    boundary:
+      "These are engineering project categories, not stocked components. Material, process route, tolerances, sealing criteria and supply status are confirmed for each project.",
+    primaryCta: { label: "View housing categories", href: "#housing-categories" },
+    secondaryCta: {
+      label: "Start an engineering assessment",
+      href: "#engineering-assessment",
+    },
+    media: {
+      wordpressId: 38,
+      src: "/images/ev-components/batch-housings-in-production.webp",
+      alt: "Batch of machined aluminum housings staged in a production area",
+      caption:
+        "Machined aluminum housings in a production area. The photograph shows batch staging; it is not welding, sealing or leak-test evidence.",
+      hasRender: true,
+      approvalStatus: "approved",
+      sourceRef: "WP 38 · 峰徊科技_A版/A科技_产品综合介绍.md 第 03 章",
+    },
+  },
+
+  /* EV02 — three categories, each labelled as a project category ----------- */
+  categories: {
+    id: "EV02",
+    eyebrow: "Housing categories",
+    heading: "Three housing categories in the supplied portfolio",
+    sourceNote:
+      "The three names below are stated in the supplier material. They are project categories for assessment, not stocked parts, and no photograph on this page establishes a process or a performance result.",
+    actionLabel: "Start with this category",
+    items: [
       {
-        name: "High-pressure die-cast motor housing",
-        nameEn: "HPDC motor housing",
-        process: "HPDC",
+        slug: "water-cooled-motor",
+        publicName: "Water-cooled motor housing",
+        body: "The supplier material describes a low-pressure-cast stator housing with an integrally formed spiral water passage. Cooling-channel geometry, pressure boundary and acceptance criteria must be reviewed against the customer drawing.",
+        scopeLabel: "Project category — not a stock SKU",
+        mediaFit: "cover",
+        claimStatus: "supplier-stated",
+        media: {
+          wordpressId: 24,
+          src: "/images/ev-components/water-cooled-housing-sample.webp",
+          alt: "Aluminum motor housing presented by the supplier as a water-cooled motor housing",
+          caption:
+            "Housing presented by the supplier as a water-cooled motor housing. The internal water passage is not visible in this photograph.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 24 · 峰徊科技_A版/A科技_产品综合介绍.md 第 03 章",
+        },
+        href: assessmentHref("water-cooled-motor"),
       },
-      { name: "Oil-cooled motor housing", nameEn: "Oil-cooled" },
-      { name: "Traction-motor stator housing", nameEn: "Stator housing" },
-      { name: "Reducer housing", nameEn: "Reducer housing" },
-    ],
-  },
-  {
-    slug: "controller",
-    name: "Control-side housings",
-    nameEn: "Controller & Power Electronics",
-    difficulty:
-      "Thin walls, mounting bosses and connector faces held to position while the part still has to shed heat.",
-    parts: [
       {
-        name: "Controller / inverter housing",
-        nameEn: "Controller / inverter",
+        slug: "die-cast-motor",
+        publicName: "Die-cast motor housing",
+        body: "The supplier material describes high-pressure die casting, precision machining and a welded cooling route for motor-housing programs. The applicable joining method and validation plan are confirmed per part.",
+        scopeLabel: "Project category — not a stock SKU",
+        mediaFit: "cover",
+        claimStatus: "supplier-stated",
+        media: {
+          wordpressId: 49,
+          src: "/images/ev-components/motor-housing-sample.webp",
+          alt: "Machined aluminum motor housing with coolant connections, supplier-provided example",
+          caption:
+            "Machined motor housing from the supplier material. This photograph does not by itself establish high-pressure die casting, friction welding or serial production.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 49 · 峰徊科技_A版/A科技_产品综合介绍.md 第 03 章",
+        },
+        href: assessmentHref("die-cast-motor"),
       },
-      { name: "Inverter", nameEn: "Inverter" },
-      { name: "PDU power distribution unit", nameEn: "PDU" },
-      { name: "OBC on-board charger", nameEn: "OBC" },
-      { name: "Water-pump housing", nameEn: "Water-pump housing" },
-      { name: "Valve block & fittings", nameEn: "Valve block & fittings" },
+      {
+        slug: "controller-inverter",
+        publicName: "Controller / inverter housing",
+        body: "A machined aluminum enclosure route for controller or inverter projects, where cooling features, sealing faces, connector interfaces and mounting locations are defined by the customer design.",
+        scopeLabel: "Project category — not a stock SKU",
+        mediaFit: "contain",
+        claimStatus: "supplier-stated",
+        media: {
+          wordpressId: 20,
+          src: "/images/ev-components/controller-housing-sample.webp",
+          alt: "Machined aluminum controller or inverter housing, supplier-provided example",
+          caption:
+            "Machined housing from the supplier material, presented as a controller or inverter housing candidate. The specific part name and rights are still being confirmed.",
+          hasRender: true,
+          approvalStatus: "approved",
+          sourceRef: "WP 20 · 峰徊科技_A版/A科技_产品综合介绍.md 第 03 章",
+        },
+        href: assessmentHref("controller-inverter"),
+      },
     ],
   },
-  {
-    slug: "battery",
-    name: "Battery-system parts",
-    nameEn: "Battery Tray, Plates & Cold Plates",
-    difficulty:
-      "Large flat structures that must stay flat, seal against coolant and carry the pack without distorting under load.",
-    parts: [
-      { name: "Battery tray", nameEn: "Battery tray" },
-      { name: "Battery end plate", nameEn: "End plate" },
-      { name: "Water-cooled cold plate", nameEn: "Cold plate" },
-      { name: "Module mounting bracket", nameEn: "Module bracket" },
+
+  /* EV03 — the three questions the drawing has to resolve together --------- */
+  engineeringConcerns: {
+    id: "EV03",
+    eyebrow: "Engineering concerns",
+    heading: "The drawing has to resolve cooling, sealing and interfaces together",
+    items: [
+      {
+        id: "cooling-path",
+        title: "Cooling path",
+        body: "Confirm how the water or oil passage is formed, closed, cleaned and inspected before tooling is approved.",
+      },
+      {
+        id: "sealing-boundary",
+        title: "Sealing boundary",
+        body: "Define every pressure boundary, sealing face, joint and acceptance method. A housing photo does not establish leak performance.",
+      },
+      {
+        id: "critical-interfaces",
+        title: "Critical interfaces",
+        body: "Identify bores, bearing locations, flange faces, connector positions and datums that control assembly.",
+      },
     ],
   },
-];
 
-/**
- * 🔴 The sentence that keeps this page from reading as a parts shop.
- * Passed as a required prop, so a caller cannot render the cards without it.
- */
-export const evPartGroupBoundary =
-  "The types above are the parts we can take on, not a stock list. Every project starts from a drawing, a 3D model or a sample, and the specification is agreed against that input rather than quoted from a datasheet.";
+  /* EV04 — the stated route, with its capability boundary attached --------- */
+  processRoutes: {
+    id: "EV04",
+    eyebrow: "Process route",
+    heading: "A process route is selected for the part, not from a fixed menu",
+    steps: [
+      {
+        step: "01",
+        title: "Casting route review",
+        body: "LPDC, HPDC or gravity casting are reviewed as supplier-stated options for the part.",
+      },
+      {
+        step: "02",
+        title: "Tooling and trial",
+        body: "Tooling concept, trial casting and first-part review against the drawing revision.",
+      },
+      {
+        step: "03",
+        title: "Precision machining",
+        body: "Critical bores, faces, interfaces and datums are finished from the agreed reference.",
+      },
+      {
+        step: "04",
+        title: "Joining and closure",
+        body: "Friction welding or FSW only where the approved route requires it.",
+      },
+      {
+        step: "05",
+        title: "Cleaning and inspection",
+        body: "Dimensional and leak-test planning against the drawing and its acceptance criteria.",
+      },
+    ],
+    disclosure:
+      "The route above describes supplier-stated capability. It does not mean every housing uses every process or that each process is owned by the Shenzhen company.",
+  },
 
-/** The two shared parts, rendered as a trailing pointer instead of a card. */
-export const evPartGroupGenericNote = {
-  text: "End covers and brackets appear across all three groups rather than belonging to one of them; they are covered on the custom aluminium page.",
-  href: "/products/custom-aluminum",
-  linkLabel: "Custom aluminium parts",
+  /* EV05 — what to request, at three gates --------------------------------- */
+  evidenceMatrix: {
+    id: "EV05",
+    eyebrow: "Evidence",
+    heading: "Evidence is agreed with the validation plan",
+    columns: {
+      item: "Evidence item",
+      beforeQuotation: "Before quotation",
+      beforeSampleApproval: "Before sample approval",
+      beforeSerialSupply: "Before serial supply",
+    },
+    rows: [
+      {
+        item: "Drawing revision and critical characteristics",
+        beforeQuotation: "Required",
+        beforeSampleApproval: "Frozen revision",
+        beforeSerialSupply: "Controlled revision",
+      },
+      {
+        item: "Material and process route",
+        beforeQuotation: "Proposed",
+        beforeSampleApproval: "Sample record",
+        beforeSerialSupply: "Lot traceability plan",
+      },
+      {
+        item: "Dimensional inspection",
+        beforeQuotation: "Scope agreed",
+        beforeSampleApproval: "First-article results",
+        beforeSerialSupply: "Control plan",
+      },
+      {
+        item: "Leak / pressure test",
+        beforeQuotation: "Method requested",
+        beforeSampleApproval: "Results where applicable",
+        beforeSerialSupply: "Frequency and acceptance agreed",
+      },
+      {
+        item: "Target-market documents",
+        beforeQuotation: "Requirements listed",
+        beforeSampleApproval: "Applicable documents reviewed",
+        beforeSerialSupply: "Shipment documents agreed",
+      },
+    ],
+    note: "This matrix defines the evidence to request at each gate. It is not a statement that the current portfolio already holds every record, and it publishes no figure for a grade, tolerance, leak rate, pressure, capacity or certification.",
+    action: {
+      label: "Request the project evidence list",
+      href: evEvidenceRequestHref,
+    },
+  },
+
+  /* EV06 — the engineering assessment entry -------------------------------- */
+  inquiry: {
+    id: "EV06",
+    anchor: "engineering-assessment",
+    eyebrow: "Engineering assessment",
+    heading: "Start with the part and its acceptance conditions",
+    lead: "A first assessment is only as good as its inputs. The list below is what the engineering review works from; anything unknown stays open rather than being filled with a generic value.",
+    checklistLabel: "Required inputs",
+    checklist: [
+      "Housing category and application",
+      "2D drawing and available 3D data",
+      "Critical interfaces and datums",
+      "Cooling medium, pressure and sealing boundary",
+      "Material or performance requirements",
+      "Prototype and annual quantity",
+      "Target market and required documents",
+      "Requested sample timing",
+    ],
+    uploadNote:
+      "No direct upload is available on this page. The project team replies with an enquiry reference and a controlled exchange method for drawings and samples.",
+    primaryCta: {
+      label: "Start an engineering assessment",
+      href: evAssessmentHref,
+    },
+    secondaryCta: {
+      label: "See the custom aluminum route",
+      href: CUSTOM_ALUMINUM_HREF,
+    },
+    contextNotice:
+      "Your enquiry carries product_line=ev-components, the housing category you selected, this page as its source and the evidence you asked for. NDA available for project discussion.",
+  },
 };
-
-export const evAudience = {
-  negative: {
-    title: "You are looking for a standard-parts catalogue",
-    body: "Then this page is the wrong one. We do not stock housings and we do not sell from a shelf — every part on this line is developed against a customer drawing.",
-  },
-  positiveHeading: "If any of these describes your project, keep reading",
-  positives: [
-    {
-      title: "You have a drawing, 3D data or a physical sample",
-      body: "That input is all we need to begin. We assess manufacturability before anything is cut, and tell you plainly if the part is outside what we can hold.",
-    },
-    {
-      title: "You are localising or second-sourcing a drive or pack part",
-      body: "Bringing an existing housing to a second supplier is a defined job: the interface is fixed, the acceptance criteria are known, and the work is in the process route rather than the design.",
-    },
-    {
-      title: "Your project needs an NDA and front-loaded DFM work",
-      body: "We sign non-disclosure agreements and expect to do manufacturability work before tooling is committed — that is the normal shape of a housing project, not an exception.",
-    },
-  ] satisfies PositioningPoint[],
-};
-
-/**
- * Five capability blocks.
- *
- * The joining card is the one that matters most here: friction stir welding is
- * what makes an internally formed cooling gallery a sealed, serviceable
- * feature rather than a casting defect waiting to happen. The final card is
- * the technical standout and is rendered on the accent surface — it is the
- * claim a competitor's catalogue will not carry.
- *
- * Note what is absent: no machine tonnage, no press model, no cycle time.
- * Those numbers have not been confirmed and an invented one would be worse
- * than a missing one on a page aimed at engineers.
- */
-export const evCapabilities: Capability[] = [
-  {
-    index: "01",
-    title: "Forming",
-    body: "Low-pressure die casting (LPDC), high-pressure die casting (HPDC) and gravity casting — selected per part rather than fixed by the line.",
-    evidence:
-      "Process list from the source material. Confirm which routes run in-house and the achievable part envelope.",
-  },
-  {
-    index: "02",
-    title: "Joining",
-    body: "Friction welding and friction stir welding (FSW), used where a cooling gallery or a housing joint has to be closed and stay gas- and water-tight.",
-    evidence:
-      "Confirm leak-test method and acceptance criteria behind the gas- and water-tight claim. Pending confirmation.",
-  },
-  {
-    index: "03",
-    title: "Precision machining",
-    body: "CNC machining with the critical interfaces finished last, so the faces that locate the stator, rotor or gear train are cut from the same datum.",
-    evidence:
-      "Confirm the tolerance band and whether it can be published as a figure.",
-  },
-  {
-    index: "04",
-    title: "Engineering up front",
-    body: "3D design, finite element analysis, casting simulation and reverse engineering — run before tooling is committed, so the process route is decided on evidence.",
-    evidence:
-      "Needs the real engineering workflow and who owns the DFM review.",
-  },
-  {
-    index: "05",
-    title: "Integrally cast spiral cooling gallery",
-    body: "Sand-core forming of a spiral water gallery in one piece with the body, developed for traction-motor stator housings — the channel is cast, not assembled.",
-    evidence:
-      "Engineering position on this feature is still open. Confirm whether it is a proven production route or a development capability.",
-  },
-];
-
-/**
- * Quality evidence.
- *
- * The third row is intentionally unconfirmed. A vehicle customer will ask
- * about the quality-management system, and the honest state is that the
- * answer is not yet settled — so the row renders with a dash and a pending
- * label instead of an assertion. No certification is named anywhere on this
- * page: the only source for one is a third party, and a claim like that
- * cannot be inherited from someone else's brochure.
- *
- * The X-ray row describes inspection of forged blanks. It is carried here as
- * a general internal-inspection capability; whether it applies to cast
- * housings specifically is still open with engineering, so the wording stays
- * neutral about the part form.
- */
-export const evQuality: {
-  rows: QualityRow[];
-  disclosure: string;
-} = {
-  rows: [
-    {
-      label: "Process control",
-      value:
-        "Casting through machining and cleaning to dimensional and leak testing — the sequence runs as one controlled flow rather than as separate subcontracts.",
-      confirmed: true,
-    },
-    {
-      label: "Internal inspection",
-      value:
-        "X-ray inspection is used internally to check for internal defects before a part is released to machining.",
-      confirmed: true,
-    },
-    {
-      label: "Quality management system",
-      value: "—",
-      confirmed: false,
-      pendingNote: "Being verified",
-    },
-  ],
-  disclosure:
-    "Whether we hold a specific automotive quality-management certification is still being confirmed, so the row above is shown empty rather than filled in. We will state the answer — including a negative one — rather than describe it in general terms.",
-};
-
-export const evFaqIntro = {
-  heading: "Questions an engineer asks first",
-  lede: "Short answers only where the answer exists. The open questions at the end are open on purpose.",
-};
-
-/**
- * 🔴 Two entries, deliberately.
- *
- * The questions a reader most wants answered — which grades, how large, what
- * tolerance, which certification, how long to sample — have no confirmed
- * answer, and a FAQ slot reading "coming soon" advertises the gap without
- * closing it. So those questions are not authored at all; the section ends
- * with a data notice naming what is still being confirmed. What remains is
- * the two things we can answer today, plus the sampling question rewritten in
- * the form we can actually respond to.
- */
-export const evFaqs: FaqEntry[] = [
-  {
-    question: "Do you sign an NDA before we send drawings?",
-    answer:
-      "Yes. We sign non-disclosure agreements, and in most projects it is the first document exchanged — before drawings, models or samples change hands. Tell us the counterparty details and we will return the signed agreement.",
-  },
-  {
-    question: "How is a sampling timeline assessed?",
-    answer:
-      "It is quoted against the part rather than from a table. Tooling complexity, casting route, the number of critical interfaces and whether the input is a finished drawing or a single reference part all move the schedule, so we return a timeline with the assessment instead of a generic figure here.",
-  },
-];
-
-export const evFaqNotice =
-  "Material grades, the size and weight envelope, achievable tolerances and the quality-management certification are all being confirmed. They will be published here as figures once engineering signs them off, rather than described in general terms now.";
-
-export const evRoutes: RouteStep[] = [
-  {
-    step: "01",
-    title: "Plant processes and quality in full",
-    body: "For the whole plant rather than this line alone — the casting, machining and inspection stages as they stand on the floor.",
-    href: "/capabilities",
-    linkLabel: "See the plant",
-  },
-  {
-    step: "02",
-    title: "The full development route",
-    body: "For how a drawing becomes a delivered part, including DFM feedback, sampling and the commercial models.",
-    href: "/custom-development",
-    linkLabel: "See the development route",
-  },
-  {
-    step: "03",
-    title: "Start with the part in hand",
-    body: "For sending a drawing, 3D model or sample directly, and getting an assessment back.",
-    href: "/contact",
-    linkLabel: "Send the part",
-  },
-];
-
-/**
- * Closing block — the one page where the site's standard dealer enquiry band
- * is the wrong instrument. This audience is not asking for a price; it is
- * asking whether we can make the part. The buttons therefore say assessment,
- * not quote, and there is no price language anywhere in the block.
- */
-export const evCta = {
-  title: "Have a drawing or a sample? Start with an engineering assessment.",
-  body: "NDAs are available. A drawing, 3D data or a physical sample is enough to begin.",
-  primary: {
-    label: "Submit a drawing for engineering assessment",
-    href: "/contact",
-  },
-  secondary: { label: "See the development route", href: "/custom-development" },
-} as const;

@@ -88,6 +88,482 @@ export type ProductLine = {
   href: string;
 };
 
+export type MediaApprovalStatus = "candidate" | "approved" | "rejected";
+
+/** Media normalized before it reaches a page component. */
+export type MediaAsset = {
+  /** WordPress media-library ID used by the server-side content adapter. */
+  wordpressId?: number;
+  src: string;
+  alt: string;
+  caption: string;
+  hasRender: boolean;
+  approvalStatus: MediaApprovalStatus;
+  sourceRef: string;
+};
+
+export type HomepageCapability = {
+  id: string;
+  title: string;
+  body: string;
+  appliesTo: string[];
+  evidenceStatus: "supplier-stated" | "verified";
+};
+
+export type HomepageStage = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+export type HomepageEvidence = {
+  id: string;
+  label: string;
+  body: string;
+  media: MediaAsset;
+};
+
+export type HomepageContent = {
+  hero: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    disclosure: string;
+    mediaLabel: string;
+    media: MediaAsset;
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  productLines: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    actionLabels: Record<string, string>;
+  };
+  capabilities: {
+    eyebrow: string;
+    heading: string;
+    items: HomepageCapability[];
+    action: CtaLink;
+  };
+  delivery: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    stages: HomepageStage[];
+    evidence: HomepageEvidence[];
+    action: CtaLink;
+  };
+  closing: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    inputLabel: string;
+    inputPrompts: string[];
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+};
+
+export type AboutWorkshop = {
+  id: "casting" | "machining" | "coating";
+  title: string;
+  body: string;
+  media: MediaAsset;
+};
+
+export type AboutProductionGroup = {
+  id: "application" | "machinery" | "line" | "material" | "inspection";
+  title: string;
+  body: string;
+  media: MediaAsset[];
+  evidenceStatus: "supplier-stated" | "verified";
+};
+
+export type AboutEvidenceItem = {
+  label: string;
+  requirement: string;
+};
+
+export type AboutContent = {
+  hero: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    companyName: string;
+    location: string;
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  role: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    responsibilities: Array<{ title: string; body: string }>;
+    disclosure: string;
+  };
+  wheelFactory: {
+    anchor: "wheel-manufacturing";
+    status: "draft" | "approved";
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    relationshipDisclosure: string;
+    heroMedia: MediaAsset;
+    workshopsEyebrow: string;
+    workshopsHeading: string;
+    workshopsIntro: string;
+    workshops: AboutWorkshop[];
+    capabilitiesEyebrow: string;
+    capabilitiesHeading: string;
+    capabilitiesIntro: string;
+    capabilities: string[];
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  tireFactory: {
+    anchor: "tire-manufacturing";
+    status: "draft" | "approved";
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    relationshipDisclosure: string;
+    heroMedia: MediaAsset;
+    productionEyebrow: string;
+    productionHeading: string;
+    productionIntro: string;
+    boundaryNote: string;
+    productionGroups: AboutProductionGroup[];
+    evidenceEyebrow: string;
+    evidenceHeading: string;
+    evidenceIntro: string;
+    evidenceChecklist: AboutEvidenceItem[];
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  closing: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    facts: Array<{ label: string; value: string }>;
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+};
+
+export type CapabilityViewportItem = {
+  id: string;
+  title: string;
+  body: string;
+  note?: string;
+  media?: MediaAsset;
+};
+
+export type CapabilityViewport = {
+  id: "WM01" | "WM02" | "WM03" | "WM04" | "WM05";
+  eyebrow: string;
+  heading: string;
+  lead?: string;
+  items: CapabilityViewportItem[];
+  boundaryNote?: string;
+  publicationStatus: "draft" | "approved";
+};
+
+export type WheelManufacturingCapabilities = {
+  anchor: "wheel-manufacturing";
+  status: "draft" | "approved";
+  hero: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    disclosure: string;
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  engineering: CapabilityViewport;
+  formingRoutes: CapabilityViewport;
+  processInspection: CapabilityViewport;
+  validationTests: CapabilityViewport;
+  documentedEvidence: CapabilityViewport & {
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+};
+
+/** One published block inside the self-sealing tyre Page SPEC. */
+export type TireViewportItem = {
+  id: string;
+  title: string;
+  body: string;
+  note?: string;
+  media?: MediaAsset;
+};
+
+export type TireViewport = {
+  id: "T01" | "T02" | "T03" | "T04" | "T05" | "T06";
+  eyebrow: string;
+  heading: string;
+  lead?: string;
+  items: TireViewportItem[];
+  boundaryNote?: string;
+  publicationStatus: "draft" | "approved";
+};
+
+/** A test assertion kept separate from marketing copy so it can be audited. */
+export type TirePunctureEvidence = {
+  id: string;
+  status: "supplier-stated" | "verified" | "rejected";
+  tyreModel?: string;
+  tyreSize?: string;
+  punctureZone: "tread" | "unspecified";
+  objectType: string;
+  objectDiameterMm: number;
+  inflationPressure?: string;
+  testSpeed?: string;
+  ambientTemperature?: string;
+  observationPeriod?: string;
+  acceptanceCriterion?: string;
+  testDate?: string;
+  performedBy?: string;
+  reportAsset?: MediaAsset;
+  sourceRefs: string[];
+};
+
+export type TireInquiryAudience = {
+  id: "consumer" | "channel";
+  title: string;
+  body: string;
+  inputs: string[];
+  action: CtaLink;
+};
+
+export type SelfSealingTirePage = {
+  slug: "safety-tires";
+  publicationStatus: "draft" | "approved";
+  attributionStatus: "pending" | "approved";
+  hero: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    disclosure: string;
+    primaryAction: CtaLink;
+    secondaryAction: CtaLink;
+  };
+  painPoint: TireViewport;
+  definition: TireViewport & { primaryAction: CtaLink };
+  mechanism: TireViewport;
+  punctureValidation: TireViewport & {
+    evidence: TirePunctureEvidence;
+    inspectionNote: string;
+    primaryAction: CtaLink;
+  };
+  evidenceSystem: TireViewport & { secondaryAction: CtaLink };
+  applicationAndInquiry: TireViewport & {
+    canConfirmLabel: string;
+    cannotGuaranteeLabel: string;
+    inputLabel: string;
+    canConfirm: string[];
+    cannotGuarantee: string[];
+    audiences: TireInquiryAudience[];
+    secondaryAction: CtaLink;
+  };
+};
+
+/** Stable view contract for the forged-wheel customization capability page. */
+export type ForgedWheelViewportItem = {
+  id: string;
+  title: string;
+  body: string;
+  media?: MediaAsset;
+};
+
+export type ForgedWheelViewport = {
+  id: "WF01" | "WF02" | "WF03" | "WF04" | "WF06";
+  eyebrow: string;
+  heading: string;
+  lead?: string;
+  items: ForgedWheelViewportItem[];
+  boundaryNote?: string;
+  primaryCta?: CtaLink;
+  secondaryCta?: CtaLink;
+  publicationStatus: "draft" | "approved";
+};
+
+export type ForgedWheelCustomizationPage = {
+  slug: "forged";
+  publicationStatus: "draft" | "approved";
+  hero: ForgedWheelViewport;
+  materialReview: ForgedWheelViewport;
+  forgingRoute: ForgedWheelViewport;
+  completion: ForgedWheelViewport;
+  inquiryInputs: ForgedWheelViewport;
+};
+
+/* ---------------------------------------------------------------------------
+   Custom aluminum assessment page (`/products/custom-aluminum`)
+
+   CA01–CA07 (PAGE-SPECS/custom-aluminum.md). The page is a project-development
+   route, not a catalogue: there is no orderable part on it, and the source
+   material has no photograph that can be confirmed as a non-wheel,
+   non-EV-housing custom aluminum component. That is why the hero is built
+   from typography instead of a product image, and why the four application
+   groups carry an explicit assessment-scope label rather than product cards.
+--------------------------------------------------------------------------- */
+
+/** The shared section shell every custom-aluminum viewport renders. */
+export type CustomAluminumSection = {
+  id: string;
+  eyebrow: string;
+  heading: string;
+  lead?: string;
+};
+
+/**
+ * One of the four application groups.
+ *
+ * `framing` is the sentence that keeps the group inside its evidence: the
+ * source material lists these as assessable directions, never as shipped
+ * products. It is rendered on the card, not hidden in a footnote.
+ */
+export type CustomAluminumApplicationGroup = {
+  slug: string;
+  name: string;
+  examples: string[];
+  framing: string;
+  evidenceStatus: "supplier-stated" | "verified";
+  /** Enquiry link that carries this group as `application=<slug>`. */
+  href: string;
+};
+
+/**
+ * One of the three inputs that can start an engineering review.
+ *
+ * Reverse engineering lives inside the `physical-sample` route — the spec
+ * collapses the old, separate "reference part" card into it. `rightsNote` is
+ * therefore present only on that route: a sample can only be measured and
+ * reproduced once the submitter confirms they are entitled to do so. The old
+ * `competitor's part` wording is deliberately absent.
+ */
+export type CustomAluminumInputRoute = {
+  id: "2d-drawing" | "3d-data" | "physical-sample";
+  title: string;
+  summary: string;
+  requirements: string[];
+  rightsNote?: string;
+  /** Enquiry link that carries this route as `input_type=<id>`. */
+  href: string;
+};
+
+/**
+ * One engineering method shown on CA04.
+ *
+ * `supportingMedia` is the low-resolution casting-setup screenshot (WP 48).
+ * It is rendered as a small card and must not be scaled past its original
+ * effective size — `supportingMediaMaxWidth` carries that ceiling so the
+ * component never upscales a 318×204 source into a hero.
+ */
+export type CustomAluminumMethodItem = {
+  id: string;
+  title: string;
+  body: string;
+  media?: MediaAsset;
+  supportingMedia?: MediaAsset;
+  /** Ceiling in CSS px for `supportingMedia`. Never exceed the source width. */
+  supportingMediaMaxWidth?: number;
+};
+
+/**
+ * One column of the CA06 status matrix.
+ *
+ * The three columns are `listed` / `assessed` / `unconfirmed`. There is no
+ * "declined" column in the public matrix while the declined list is
+ * unconfirmed: an empty column reads as a promise to make anything, which is
+ * exactly what this section exists to prevent. A blank column is never
+ * rendered — the unconfirmed column carries the wording instead.
+ */
+export type CustomAluminumBoundaryColumn = {
+  id: "listed" | "assessed" | "unconfirmed";
+  label: string;
+  items: string[];
+  note?: string;
+};
+
+export type CustomAluminumInquiry = {
+  id: string;
+  eyebrow: string;
+  heading: string;
+  lead: string;
+  /** Label above the required-input list. */
+  checklistLabel: string;
+  checklist: string[];
+  /** States that no direct upload exists yet. */
+  uploadNote: string;
+  primaryCta: CtaLink;
+  secondaryCta: CtaLink;
+  /** Names the context the enquiry carries. */
+  contextNotice: string;
+};
+
+export type CustomAluminumPage = {
+  slug: "custom-aluminum";
+  publicationStatus: "draft" | "approved";
+  hero: CustomAluminumSection & {
+    boundaryNote: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+  /** The three EV housing categories that belong on `/products/ev-components`. */
+  evRoute: CustomAluminumSection & {
+    categories: string[];
+    prompt: string;
+    href: string;
+    linkLabel: string;
+  };
+  applications: CustomAluminumSection & {
+    /** Fixed per-card label, e.g. "Assessment scope". */
+    scopeLabel: string;
+    groups: CustomAluminumApplicationGroup[];
+    boundaryNote: string;
+  };
+  inputs: CustomAluminumSection & {
+    routes: CustomAluminumInputRoute[];
+    note: string;
+    /** Section-level rights statement covering sample submission. */
+    rightsDeclaration: string;
+  };
+  methods: CustomAluminumSection & {
+    items: CustomAluminumMethodItem[];
+    /** Mandatory evidence boundary for the method examples. */
+    evidenceNote: string;
+  };
+  stages: CustomAluminumSection & {
+    steps: FlowStep[];
+    /** States that a project can stop at any stage. */
+    boundaryNote: string;
+  };
+  boundary: CustomAluminumSection & {
+    columns: CustomAluminumBoundaryColumn[];
+    /** Confirmed declined categories. Public only when `declinedConfirmed`. */
+    declined: string[];
+    /**
+     * Page-level publishing switch. While false the public matrix shows the
+     * three status columns only, no blank "what we decline" column, and the
+     * route metadata stays `noindex, follow`.
+     */
+    declinedConfirmed: boolean;
+    /** Rendered in place of the declined column while unconfirmed. */
+    publicationNote: string;
+  };
+  inquiry: CustomAluminumInquiry;
+  closing: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+};
+
 /** A completed build shown in the vehicle gallery. */
 export type BuildEntry = {
   id: string;
@@ -656,4 +1132,274 @@ export type FeaturedWheel = {
   process: string | null;
   /** Full description for screen readers — never a bare filename. */
   alt: string;
+};
+
+/* ---------------------------------------------------------------------------
+   EV housing assessment page (`/products/ev-components`)
+
+   EV01–EV06 (PAGE-SPECS/ev-components.md). This is a B2B capability and
+   engineering-assessment entry, not a stocked catalogue. Three housing
+   categories with supplier-provided photography are published; every other
+   part type the old page carried (battery trays, end plates, cold plates,
+   module brackets, control arms, steering knuckles, PDU, OBC, water-pump
+   housings, valve blocks) belongs to the custom-aluminum assessment scope and
+   is deliberately absent here.
+
+   ── EVIDENCE DISCIPLINE IS ENCODED IN THE SHAPE ────────────────────────────
+   `claimStatus` labels each category as source-stated rather than verified, and
+   the process routes are modelled as a *stated route* plus a fixed disclosure
+   instead of a per-part process claim. Digits — grades, tolerances, leak rates,
+   pressures, capacity, yield, customers, vehicle programmes, certification —
+   have no field to occupy, so they cannot be reintroduced by editing copy.
+--------------------------------------------------------------------------- */
+
+/** The three supplied housing categories published on this route. */
+export type EvHousingSlug =
+  | "water-cooled-motor"
+  | "die-cast-motor"
+  | "controller-inverter";
+
+/**
+ * One housing category card.
+ *
+ * `publicName` is the category name as the supplier material states it, so it
+ * is published with `claimStatus: "supplier-stated"` rather than presented as
+ * this page's own verification. `scopeLabel` is the fixed per-card label
+ * ("Project category — not a stock SKU") that keeps the card inside a
+ * project-development reading.
+ */
+export type EvHousingCategory = {
+  slug: EvHousingSlug;
+  publicName: string;
+  body: string;
+  media: MediaAsset;
+  claimStatus: "supplier-stated" | "verified";
+  scopeLabel: string;
+  /**
+   * How the 4:3 card frame fits the photograph.
+   *
+   * `contain` for the controller / inverter candidate (WP 20), whose part must
+   * not be cropped out of frame; `cover` for the two motor-housing candidates,
+   * where the flange and interfaces are inside the centre of the frame.
+   */
+  mediaFit: "cover" | "contain";
+  /**
+   * Assessment link that carries this category as `category=<slug>`.
+   *
+   * The build asks for the selected category to travel with the enquiry
+   * (§7), so selection has to be a real action on the card rather than an
+   * inferred one. The link starts an assessment — it is never a quote.
+   */
+  href: string;
+};
+
+/** One engineering question the drawing has to resolve (EV03). */
+export type EvEngineeringConcern = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/**
+ * One step of the stated manufacturing route (EV04).
+ *
+ * These are supplier-stated options, not a fixed line: `step` is only an order
+ * inside the explanation, and the section carries a mandatory disclosure that
+ * says so out loud.
+ */
+export type EvProcessRoute = {
+  step: string;
+  title: string;
+  body: string;
+};
+
+/**
+ * One evidence item the customer can request (EV05).
+ *
+ * The three columns are what has to exist at three project gates. The matrix
+ * defines what to ask for; it is not a statement that the current portfolio
+ * already holds these records.
+ */
+export type EvEvidenceRequirement = {
+  item: string;
+  beforeQuotation: string;
+  beforeSampleApproval: string;
+  beforeSerialSupply: string;
+};
+
+/** Column headers of the EV05 evidence matrix. */
+export type EvEvidenceMatrixColumns = {
+  item: string;
+  beforeQuotation: string;
+  beforeSampleApproval: string;
+  beforeSerialSupply: string;
+};
+
+export type EvHousingPageContent = {
+  slug: "ev-components";
+  publicationStatus: "draft" | "approved";
+  hero: {
+    id: "EV01";
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    /** The three categories in one line, under the lead. */
+    scopeLine: string;
+    /** States these are project categories rather than stocked components. */
+    boundary: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+    media: MediaAsset;
+  };
+  categories: {
+    id: "EV02";
+    eyebrow: string;
+    heading: string;
+    /** Names where the category names come from. */
+    sourceNote: string;
+    /** Fixed label on every card's assessment link. */
+    actionLabel: string;
+    items: EvHousingCategory[];
+  };
+  engineeringConcerns: {
+    id: "EV03";
+    eyebrow: string;
+    heading: string;
+    items: EvEngineeringConcern[];
+  };
+  processRoutes: {
+    id: "EV04";
+    eyebrow: string;
+    heading: string;
+    steps: EvProcessRoute[];
+    /** Mandatory wording: states the route is supplier-stated capability. */
+    disclosure: string;
+  };
+  evidenceMatrix: {
+    id: "EV05";
+    eyebrow: string;
+    heading: string;
+    columns: EvEvidenceMatrixColumns;
+    rows: EvEvidenceRequirement[];
+    /** States the matrix defines evidence to request, not held records. */
+    note: string;
+    /** Links to the assessment carrying `evidence=project_evidence_list`. */
+    action: CtaLink;
+  };
+  inquiry: {
+    id: "EV06";
+    /** DOM anchor the hero's second action scrolls to. */
+    anchor: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    checklistLabel: string;
+    checklist: string[];
+    /** States why no direct upload is offered yet. */
+    uploadNote: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+    /** Names the context the enquiry carries. */
+    contextNotice: string;
+  };
+};
+
+/* ---------------------------------------------------------------------------
+   Flow-formed wheel entry point (`/products/wheels/flow-formed`)
+
+   WFF01–WFF05 (PAGE-SPECS/flow-formed-wheels.md). The route is two things at
+   once: an explanation of what this site means by flow forming (and where it
+   stops being a forging), and a *locked* entry point into the real catalogue.
+
+   ── WHY THE PROCESS LOCK IS NOT A FIELD ON THIS TYPE ────────────────────────
+   The two permitted process values are not editorial content — they are the
+   page's identity, and they live in `@/lib/wheels` (`FLOW_FORMED_PROCESSES`) so
+   that no content edit can widen or remove the boundary. Putting them in the
+   copy module would make the page's scope editable from a file whose job is
+   prose.
+
+   ── WHY THE PUBLISHING FLAGS ARE ON THIS TYPE ───────────────────────────────
+   `publicationGate` is the page's only switch for `noindex, follow`. It is
+   fail-closed: the copy may be typed verbatim from the Page SPEC and the
+   equipment image may already be published, but neither counts as *reviewed*
+   until a human says so. See `page.tsx` — the flag is checked in metadata, not
+   in the component tree, so a viewport can never reveal what the gate hides.
+--------------------------------------------------------------------------- */
+
+/** One row of the WFF02 process-boundary comparison. */
+export type FlowFormedProcessBoundaryCard = {
+  id: string;
+  title: string;
+  body: string;
+  /**
+   * Set only on the forged-project fork. The card becomes a link, because the
+   * alternative route is the one thing on this page a visitor may actually
+   * need to leave for.
+   */
+  href?: string;
+};
+
+/** The two flags that gate indexing of the flow-formed route. */
+export type FlowFormedPublicationGate = {
+  /** Has a human reviewed the process wording (WFF02/WFF03) against the source? */
+  copyReviewed: boolean;
+  /** Rights state of the WP 116 equipment image. Anything but `approved` blocks. */
+  equipmentImageRights: "pending" | "approved" | "rejected";
+};
+
+/** The full copy contract of `/products/wheels/flow-formed`. */
+export type FlowFormedWheelsPage = {
+  slug: "flow-formed";
+  hero: {
+    id: "WFF01";
+    /** Rendered as a breadcrumb trail; the last entry is the current page. */
+    breadcrumb: CtaLink[];
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    boundary: string;
+    primaryCta: CtaLink;
+    secondaryCta: CtaLink;
+  };
+  processDefinition: {
+    id: "WFF02";
+    eyebrow: string;
+    heading: string;
+    body: string;
+    cards: FlowFormedProcessBoundaryCard[];
+    /** Mandatory evidence sentence — forbids a universal improvement figure. */
+    evidenceNote: string;
+  };
+  manufacturingRoute: {
+    id: "WFF03";
+    eyebrow: string;
+    heading: string;
+    steps: FlowStep[];
+    equipment: MediaAsset;
+    /** Mandatory sentence keeping WP 116 to a supplier-provided scene. */
+    evidenceBoundary: string;
+  };
+  catalogue: {
+    id: "WFF04";
+    eyebrow: string;
+    heading: string;
+    /** Verbatim empty-result wording; rendered head + body. */
+    emptyResultHeading: string;
+    emptyResultBody: string;
+  };
+  inquiry: {
+    id: "WFF05";
+    /** DOM anchor the hero's second action scrolls to. */
+    anchor: string;
+    eyebrow: string;
+    heading: string;
+    checklist: string[];
+    primaryCta: CtaLink;
+  };
+  seo: {
+    title: string;
+    description: string;
+    canonical: string;
+  };
+  publicationGate: FlowFormedPublicationGate;
 };
