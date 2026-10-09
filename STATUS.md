@@ -72,7 +72,13 @@
 当前可继续由开发推进但尚未完成：其余页面正文/SEO 迁入 WordPress 稳定适配器、逐页
 中文内容翻译与核验、中文 `hreflang`/sitemap 放行、真机软键盘和屏幕阅读器 UAT。
 
-本轮未 commit、push，未改 DNS；已部署 7080/9080 公网联调环境，并向已配置的内部 QQ
+本轮核验新增一项已排队的 P1：当前询盘仍是一条轮毂上下文，不支持一次提交多款轮毂；
+多产品询价清单的实现计划见 `work/queued/2026-10-09-inquiry-cart-multi-item.md`。
+邮件通道核验确认没有引入 Nodemailer，远程由 WordPress 自带 PHPMailer 走 QQ SMTP；
+Insights 首批 6 篇已由 `fh_guide` 自定义内容类型接管，`src/content/resources.ts`
+仅作为 CMS 不可用时的回退。
+
+本轮未改 DNS；已部署 7080/9080 公网联调环境，并向已配置的内部 QQ
 收件邮箱发出 1 封合成 SMTP 验收通知。当前仍是 IP + HTTP、强制 `noindex` 的上线验收
 环境，不等同于完成域名、TLS、正式隐私文本、监控和恢复演练后的商用生产环境。生产依赖
 审计为 0 漏洞；完整开发依赖树仍有 9 个 high，已排入
