@@ -50,6 +50,16 @@ const FH_INQUIRY_DB_VERSION_OPTION = 'fh_inquiry_db_version';
 /** 服务密钥的请求头（WP 会把请求头名归一为小写）。 */
 const FH_INQUIRY_SERVICE_KEY_HEADER = 'X-FH-Service-Key';
 
+/** 后台最小权限：查看/处理询盘与管理邮件派发分离。 */
+const FH_INQUIRY_CAP_MANAGE = 'edit_fh_inquiries';
+const FH_INQUIRY_CAP_DELIVERY = 'manage_fh_inquiry_delivery';
+const FH_INQUIRY_CAP_VERSION = '1';
+const FH_INQUIRY_CAP_VERSION_OPTION = 'fh_inquiry_cap_version';
+
+/** 数据保留清理：默认关闭；只有明确配置天数后才允许执行。 */
+const FH_INQUIRY_RETENTION_HOOK = 'fh_inquiry_retention_tick';
+const FH_INQUIRY_RETENTION_BATCH = 100;
+
 /* ============================================================================
  * 表名
  * ========================================================================== */
@@ -343,10 +353,59 @@ function fh_inquiry_register_post_type(): void
         'has_archive'         => false,
         'rewrite'             => false,
         'query_var'           => false,
-        // 本地不够细，别过度设计（与 wheel_model 一致）。
-        'capability_type'     => 'post',
+        'capability_type'     => ['fh_inquiry', 'fh_inquiries'],
         'map_meta_cap'        => true,
+        // 询盘只能由服务端创建，后台用户不应出现“新建询盘”。
+        'capabilities'        => ['create_posts' => 'do_not_allow'],
     ]);
+}
+
+/**
+ * 建立独立销售角色与能力矩阵。普通 Contributor/Author 不再因 `edit_posts`
+ * 获得客户 PII。管理员拥有派发能力；销售只读询盘并修改业务处理字段。
+ */
+add_action('init', 'fh_inquiry_install_capabilities', 6);
+function fh_inquiry_install_capabilities(): void
+{
+    if (get_option(FH_INQUIRY_CAP_VERSION_OPTION) === FH_INQUIRY_CAP_VERSION) {
+        return;
+    }
+
+    $salesCaps = [
+        'read',
+        'edit_fh_inquiries',
+        'edit_others_fh_inquiries',
+        'edit_published_fh_inquiries',
+        'read_private_fh_inquiries',
+    ];
+    $adminCaps = array_merge($salesCaps, [
+        'publish_fh_inquiries',
+        'delete_fh_inquiries',
+        'delete_others_fh_inquiries',
+        'delete_published_fh_inquiries',
+        'delete_private_fh_inquiries',
+        'edit_private_fh_inquiries',
+        FH_INQUIRY_CAP_DELIVERY,
+    ]);
+
+    $sales = get_role('fh_inquiry_sales');
+    if (!$sales) {
+        $sales = add_role('fh_inquiry_sales', '询盘销售', ['read' => true]);
+    }
+    if ($sales) {
+        foreach ($salesCaps as $cap) {
+            $sales->add_cap($cap);
+        }
+    }
+
+    $administrator = get_role('administrator');
+    if ($administrator) {
+        foreach ($adminCaps as $cap) {
+            $administrator->add_cap($cap);
+        }
+    }
+
+    update_option(FH_INQUIRY_CAP_VERSION_OPTION, FH_INQUIRY_CAP_VERSION);
 }
 
 /* ============================================================================
@@ -357,7 +416,7 @@ add_action('init', 'fh_inquiry_register_meta', 11);
 function fh_inquiry_register_meta(): void
 {
     $auth = static function (): bool {
-        return current_user_can('edit_posts');
+        return current_user_can(FH_INQUIRY_CAP_MANAGE);
     };
 
     $register = static function (string $key, string $default, ?callable $sanitize = null) use ($auth): void {
@@ -873,62 +932,157 @@ function fh_inquiry_resend_key(): string
 }
 
 /**
- * 渲染销售通知正文 —— 与 src/lib/inquiry/mailer.ts 的 renderBody 对齐。
+ * 渲染销售通知正文。
  *
  * ⚠️ 收件人只从服务端配置读；reply_to 用**已落库的**客户邮箱。客户端指定的收件人一律忽略。
  *
- * @return array{subject:string, text:string}
+ * @return array{subject:string, text:string, html:string}
  */
 function fh_inquiry_render_email(int $postId): array
 {
-    $title = (string) get_post_field('post_title', $postId);
-    $meta  = static fn(string $k): string => (string) get_post_meta($postId, $k, true);
-    $dash  = static fn(string $v): string => $v !== '' ? $v : '—';
+    $title       = (string) get_post_field('post_title', $postId);
+    $receivedAt  = (string) get_post_field('post_date_gmt', $postId) . ' UTC';
+    $meta        = static fn(string $key): string => (string) get_post_meta($postId, $key, true);
+    $dash        = static fn(string $value): string => $value !== '' ? $value : '—';
+    $customerType = fh_inquiry_customer_type_options()[$meta('customer_type')] ?? $meta('customer_type');
+    $productLine  = fh_inquiry_product_line_options()[$meta('product_line')] ?? $meta('product_line');
+    // 不依赖当前 REST 请求是否有登录用户；点击后仍由 WordPress 登录与 capability 拦截。
+    $adminUrl = admin_url('post.php?post=' . $postId . '&action=edit');
 
-    $specLines = '';
-    $specRaw   = $meta('context_spec_json');
+    $specRows = [];
+    $specRaw  = $meta('context_spec_json');
     if ($specRaw !== '') {
         $decoded = json_decode($specRaw, true);
         if (is_array($decoded)) {
-            $parts = [];
-            foreach ($decoded as $k => $v) {
-                $parts[] = $k . ': ' . $v;
+            foreach ($decoded as $key => $value) {
+                $specRows[(string) $key] = is_scalar($value) || $value === null
+                    ? (string) $value
+                    : (string) wp_json_encode($value);
             }
-            $specLines = implode("\n", $parts);
         }
     }
 
+    $specLines = [];
+    foreach ($specRows as $key => $value) {
+        $specLines[] = $key . ': ' . $value;
+    }
+
     $lines = [
-        'Inquiry ' . $title,
-        'Received: ' . (string) get_post_field('post_date_gmt', $postId) . ' UTC',
+        'INQUIRY ' . $title,
+        'Received: ' . $receivedAt,
         '',
-        '── Contact ──',
+        'CONTACT',
+        '-------',
         'Name:     ' . $dash($meta('name')),
         'Email:    ' . $dash($meta('email')),
         'WhatsApp: ' . $dash($meta('whatsapp')),
         'Company:  ' . $dash($meta('company')),
         'Country:  ' . $dash($meta('country_code')),
-        'Type:     ' . $dash($meta('customer_type')),
+        'Type:     ' . $dash($customerType),
         '',
-        '── Interest ──',
-        'Line:     ' . $dash($meta('product_line')),
+        'INQUIRY DETAILS',
+        '---------------',
+        'Product:  ' . $dash($productLine),
         'Model:    ' . $dash($meta('context_model')),
         'Code:     ' . $dash($meta('context_production_code')),
         'Quantity: ' . $dash($meta('quantity')),
         'Inputs:   ' . $dash($meta('inputs_available')),
         '',
-        '── Message ──',
-        $meta('message'),
+        'MESSAGE',
+        '-------',
+        $dash($meta('message')),
         '',
-        '── Snapshot (frozen at submit) ──',
-        $specLines,
-        'Variant pending: ' . ($meta('variant_pending') === '1' ? 'yes' : 'no'),
+        'SUBMITTED CONFIGURATION',
+        '-----------------------',
+        !empty($specLines) ? implode("\n", $specLines) : '—',
+        'Configuration pending: ' . ($meta('variant_pending') === '1' ? 'yes' : 'no'),
         '',
-        '── Origin ──',
+        'SOURCE & CONSENT',
+        '----------------',
         'Source page: ' . $dash($meta('context_source_page')),
         'Intent:      ' . $dash($meta('context_intent')),
         'Consent:     ' . $dash($meta('consented_at')) . ' (privacy ' . $dash($meta('privacy_version')) . ')',
+        '',
+        'WORDPRESS RECORD',
+        '----------------',
+        $adminUrl,
     ];
+
+    $renderRows = static function (array $rows): string {
+        $html = '';
+        foreach ($rows as $label => $value) {
+            $html .= '<tr>'
+                . '<td style="width:120px;padding:9px 12px;border-bottom:1px solid #e5e7eb;color:#667085;font-size:13px;vertical-align:top">'
+                . esc_html((string) $label)
+                . '</td>'
+                . '<td style="padding:9px 12px;border-bottom:1px solid #e5e7eb;color:#101828;font-size:14px;vertical-align:top;word-break:break-word">'
+                . esc_html($value !== '' ? (string) $value : '—')
+                . '</td></tr>';
+        }
+        return $html;
+    };
+
+    $section = static function (string $titleText, string $content): string {
+        return '<tr><td style="padding:0 24px 22px">'
+            . '<h2 style="margin:0 0 10px;color:#101828;font-size:16px;line-height:1.4">'
+            . esc_html($titleText)
+            . '</h2>'
+            . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:8px;border-collapse:separate;overflow:hidden">'
+            . $content
+            . '</table></td></tr>';
+    };
+
+    $contactRows = $renderRows([
+        'Name'       => $dash($meta('name')),
+        'Email'      => $dash($meta('email')),
+        'WhatsApp'   => $dash($meta('whatsapp')),
+        'Company'    => $dash($meta('company')),
+        'Country'    => $dash($meta('country_code')),
+        'Client type'=> $dash($customerType),
+    ]);
+    $detailRows = $renderRows([
+        'Product line' => $dash($productLine),
+        'Model'        => $dash($meta('context_model')),
+        'Production code' => $dash($meta('context_production_code')),
+        'Quantity'     => $dash($meta('quantity')),
+        'Inputs available' => $dash($meta('inputs_available')),
+    ]);
+    $configurationRows = !empty($specRows)
+        ? $renderRows($specRows)
+        : $renderRows(['Configuration' => '—']);
+    $configurationRows .= $renderRows([
+        'Configuration pending' => $meta('variant_pending') === '1' ? 'Yes' : 'No',
+    ]);
+    $originRows = $renderRows([
+        'Source page' => $dash($meta('context_source_page')),
+        'Intent'      => $dash($meta('context_intent')),
+        'Consent'     => $dash($meta('consented_at')) . ' (privacy ' . $dash($meta('privacy_version')) . ')',
+    ]);
+
+    $html = '<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>'
+        . '<body style="margin:0;padding:0;background:#f2f4f7;font-family:Arial,Helvetica,sans-serif">'
+        . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f2f4f7"><tr><td align="center" style="padding:28px 12px">'
+        . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:720px;background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;border-collapse:separate;overflow:hidden">'
+        . '<tr><td style="padding:24px;background:#111827;color:#ffffff">'
+        . '<div style="font-size:12px;line-height:1.4;letter-spacing:.08em;text-transform:uppercase;color:#cbd5e1">New inquiry</div>'
+        . '<h1 style="margin:5px 0 4px;font-size:24px;line-height:1.3">' . esc_html($title) . '</h1>'
+        . '<div style="font-size:13px;line-height:1.5;color:#d1d5db">Received ' . esc_html($receivedAt) . '</div>'
+        . '</td></tr>'
+        . '<tr><td style="padding:20px 24px 22px">'
+        . '<a href="' . esc_url($adminUrl) . '" style="display:inline-block;padding:11px 16px;border-radius:6px;background:#c2410c;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700">View in WordPress</a>'
+        . '<div style="margin-top:8px;color:#667085;font-size:12px">Login and inquiry permissions are required.</div>'
+        . '</td></tr>'
+        . $section('Contact', $contactRows)
+        . $section('Inquiry details', $detailRows)
+        . '<tr><td style="padding:0 24px 22px"><h2 style="margin:0 0 10px;color:#101828;font-size:16px;line-height:1.4">Message</h2>'
+        . '<div style="padding:12px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;color:#101828;font-size:14px;line-height:1.65;word-break:break-word">'
+        . nl2br(esc_html($dash($meta('message'))), false)
+        . '</div></td></tr>'
+        . $section('Submitted configuration', $configurationRows)
+        . $section('Source & consent', $originRows)
+        . '<tr><td style="padding:0 24px 24px;color:#667085;font-size:12px;line-height:1.5">'
+        . 'This notification is a copy. WordPress is the system of record for this inquiry.'
+        . '</td></tr></table></td></tr></table></body></html>';
 
     return [
         'subject' => sprintf(
@@ -937,6 +1091,7 @@ function fh_inquiry_render_email(int $postId): array
             $meta('company') !== '' ? $meta('company') : $meta('name')
         ),
         'text' => implode("\n", $lines),
+        'html' => $html,
     ];
 }
 
@@ -964,13 +1119,40 @@ function fh_inquiry_dispatch_email(int $postId, int $outboxId): string
         $wpdb->update($outboxTable, $fields, ['id' => $outboxId]);
     };
 
-    // 未配置发件能力：保持 pending，让后续定时发送器接手（不假装失败，也不假装成功）。
-    if ($apiKey === '' || $to === '' || $from === '') {
+    // 本地完整验收会创建多条询盘；暂停开关只阻止外发，落库与 outbox 仍照常验证。
+    // 默认不存在/关闭，不提供公开接口；清除后现有 pending 记录仍可由 worker 领取。
+    if (get_option('fh_inquiry_delivery_paused', '0') === '1') {
         update_post_meta($postId, 'email_status', 'pending');
-        update_post_meta($postId, 'email_error', 'resend 未配置（缺 API key / from / to）');
+        update_post_meta($postId, 'email_error', '');
         $writeOutbox([
             'status'          => 'pending',
-            'last_error'      => 'resend 未配置',
+            'last_error'      => null,
+            'next_attempt_at' => $now,
+        ]);
+        return 'pending';
+    }
+
+    // ── 通道选择：SMTP 优先，Resend 兜底 ────────────────────────────────────
+    // 两条都没配才 pending（fail-closed，不假装成功也不假装失败）。
+    $useSmtp = fh_inquiry_smtp_configured();
+
+    if (!$useSmtp && ($apiKey === '' || $to === '' || $from === '')) {
+        update_post_meta($postId, 'email_status', 'pending');
+        update_post_meta($postId, 'email_error', '未配置发信通道（缺 SMTP 或 Resend / from / to）');
+        $writeOutbox([
+            'status'          => 'pending',
+            'last_error'      => '未配置发信通道',
+            'next_attempt_at' => $now,
+        ]);
+        return 'pending';
+    }
+
+    if ($to === '' || $from === '') {
+        update_post_meta($postId, 'email_status', 'pending');
+        update_post_meta($postId, 'email_error', '缺收件人或发件人地址');
+        $writeOutbox([
+            'status'          => 'pending',
+            'last_error'      => '缺收件人或发件人地址',
             'next_attempt_at' => $now,
         ]);
         return 'pending';
@@ -983,7 +1165,44 @@ function fh_inquiry_dispatch_email(int $postId, int $outboxId): string
     update_post_meta($postId, 'email_status', 'sending');
 
     $rendered = fh_inquiry_render_email($postId);
+    $replyTo  = (string) get_post_meta($postId, 'email', true);
 
+    // ── 通道 A：SMTP（主）───────────────────────────────────────────────────
+    if ($useSmtp) {
+        $debug = '';
+        $sent  = fh_inquiry_send_via_smtp(
+            $to,
+            $rendered['subject'],
+            $rendered['html'],
+            $rendered['text'],
+            $replyTo,
+            $debug
+        );
+
+        if ($sent['ok']) {
+            update_post_meta($postId, 'email_status', 'accepted');
+            update_post_meta($postId, 'email_error', '');
+            $writeOutbox([
+                'status'          => 'accepted',
+                'last_error'      => null,
+                'next_attempt_at' => null,
+            ]);
+            return 'accepted';
+        }
+
+        // 只记错误消息本身，绝不含授权码或客户联系方式
+        $error = fh_inquiry_sanitize_delivery_error($sent['error']);
+        update_post_meta($postId, 'email_status', 'failed');
+        update_post_meta($postId, 'email_error', $error);
+        $writeOutbox([
+            'status'          => 'failed',
+            'last_error'      => $error,
+            'next_attempt_at' => fh_inquiry_backoff_at($attempts),
+        ]);
+        return 'failed';
+    }
+
+    // ── 通道 B：Resend（兜底）───────────────────────────────────────────────
     $response = wp_remote_post('https://api.resend.com/emails', [
         'timeout' => 8,
         'headers' => [
@@ -993,14 +1212,15 @@ function fh_inquiry_dispatch_email(int $postId, int $outboxId): string
         'body' => wp_json_encode([
             'from'     => $from,
             'to'       => [$to],
-            'reply_to' => (string) get_post_meta($postId, 'email', true),
+            'reply_to' => $replyTo,
             'subject'  => $rendered['subject'],
+            'html'     => $rendered['html'],
             'text'     => $rendered['text'],
         ]),
     ]);
 
     if (is_wp_error($response)) {
-        $error = $response->get_error_message();
+        $error = fh_inquiry_sanitize_delivery_error($response->get_error_message());
         update_post_meta($postId, 'email_status', 'failed');
         update_post_meta($postId, 'email_error', $error);
         $writeOutbox([
@@ -1036,6 +1256,24 @@ function fh_inquiry_dispatch_email(int $postId, int $outboxId): string
         'next_attempt_at' => fh_inquiry_backoff_at($attempts),
     ]);
     return 'failed';
+
+}
+
+/**
+ * 投递故障只能记录诊断类别，不能把邮箱、电话、密钥或长响应体写进 meta/outbox。
+ */
+function fh_inquiry_sanitize_delivery_error(string $error): string
+{
+    $safe = preg_replace('/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i', '[email]', $error);
+    $safe = preg_replace('/(?<!\w)\+?\d[\d\s().-]{7,}\d(?!\w)/', '[phone]', (string) $safe);
+
+    foreach ([fh_inquiry_resend_key(), fh_inquiry_smtp_pass(), fh_inquiry_service_key()] as $secret) {
+        if ($secret !== '') {
+            $safe = str_replace($secret, '[secret]', (string) $safe);
+        }
+    }
+
+    return mb_substr(trim((string) $safe), 0, 500);
 }
 
 /** 暂定退避：1、5、15、60 分钟，之后 60 分钟封顶（设计文档 §5.8）。 */
@@ -1055,8 +1293,8 @@ function fh_inquiry_register_admin_menu(): void
 {
     add_menu_page(
         '询盘',
-        '询盘',
-        'edit_posts',
+        '询盘' . fh_inquiry_menu_badge(),
+        FH_INQUIRY_CAP_MANAGE,
         'fh-inquiries',
         'fh_inquiry_render_list',
         'dashicons-email',
@@ -1096,12 +1334,25 @@ function fh_inquiry_email_badge_map(): array
 
 function fh_inquiry_render_list(): void
 {
-    if (!current_user_can('edit_posts')) {
+    if (!current_user_can(FH_INQUIRY_CAP_MANAGE)) {
         wp_die('无权访问询盘。', '', ['response' => 403]);
     }
 
-    $paged = isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
-    $query = new WP_Query([
+    // ── 工作台：tab / 状态筛选 / 搜索 ───────────────────────────────────────
+    $tab    = isset($_GET['tab']) ? sanitize_key((string) $_GET['tab']) : 'list';
+    if ($tab === 'outbox') {
+        fh_inquiry_render_outbox_panel();
+        return;
+    }
+
+    $status = isset($_GET['status']) ? sanitize_key((string) $_GET['status']) : 'all';
+    if ($status !== 'all' && !array_key_exists($status, fh_inquiry_business_status_options())) {
+        $status = 'all';
+    }
+    $search = isset($_GET['s']) ? sanitize_text_field((string) $_GET['s']) : '';
+    $paged  = isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
+
+    $args = [
         'post_type'           => FH_INQUIRY_POST_TYPE,
         'post_status'         => 'any',
         'posts_per_page'      => 20,
@@ -1109,7 +1360,40 @@ function fh_inquiry_render_list(): void
         'orderby'             => 'date',
         'order'               => 'DESC',
         'ignore_sticky_posts' => true,
-    ]);
+    ];
+
+    if ($status !== 'all') {
+        $args['meta_query'] = [
+            [
+                'key'     => 'business_status',
+                'value'   => $status,
+                'compare' => '=',
+            ],
+        ];
+    }
+
+    // 搜索：标题（询盘号）走 s，其余字段走 meta 命中的 id 集合
+    $searchIds = null;
+    if ($search !== '') {
+        $metaIds = fh_inquiry_search_ids($search);
+        $titleQuery = new WP_Query([
+            'post_type'      => FH_INQUIRY_POST_TYPE,
+            'post_status'    => 'any',
+            'posts_per_page' => 200,
+            'fields'         => 'ids',
+            's'              => $search,
+        ]);
+        $searchIds = array_values(array_unique(array_merge(
+            $metaIds,
+            array_map('intval', (array) $titleQuery->posts)
+        )));
+        if (empty($searchIds)) {
+            $searchIds = [0]; // 空集：明确返回「无结果」而不是退化成全量
+        }
+        $args['post__in'] = $searchIds;
+    }
+
+    $query = new WP_Query($args);
 
     $businessOptions = fh_inquiry_business_status_options();
     $customerOptions = fh_inquiry_customer_type_options();
@@ -1118,6 +1402,10 @@ function fh_inquiry_render_list(): void
 
     echo '<div class="wrap"><h1>询盘</h1>';
 
+    $counts = fh_inquiry_status_counts();
+    fh_inquiry_render_search_box($search, $status);
+    fh_inquiry_render_status_tabs($status, $counts, $search);
+
     if (isset($_GET['fh_updated'])) {
         echo '<div class="notice notice-success is-dismissible"><p>业务状态已更新。</p></div>';
     }
@@ -1125,6 +1413,7 @@ function fh_inquiry_render_list(): void
     echo '<p class="description">业务状态可在本页直接修改；<strong>邮件状态只读</strong> —— 它由投递流程写入，不代表业务进展。</p>';
     echo '<table class="wp-list-table widefat fixed striped"><thead><tr>'
         . '<th style="width:180px">询盘号</th>'
+        . '<th style="width:180px">客户</th>'
         . '<th style="width:110px">客户类型</th>'
         . '<th style="width:110px">产品线</th>'
         . '<th>型号 / 生产代码</th>'
@@ -1134,13 +1423,16 @@ function fh_inquiry_render_list(): void
         . '</tr></thead><tbody>';
 
     if (!$query->have_posts()) {
-        echo '<tr><td colspan="7">还没有询盘。</td></tr>';
+        echo '<tr><td colspan="8">还没有询盘。</td></tr>';
     }
 
     while ($query->have_posts()) {
         $query->the_post();
         $id = (int) get_the_ID();
 
+        $customerEmail = (string) get_post_meta($id, 'email', true);
+        $customerName  = (string) get_post_meta($id, 'name', true);
+        $customerCompany = (string) get_post_meta($id, 'company', true);
         $customerType = (string) get_post_meta($id, 'customer_type', true);
         $productLine  = (string) get_post_meta($id, 'product_line', true);
         $model        = (string) get_post_meta($id, 'context_model', true);
@@ -1166,6 +1458,26 @@ function fh_inquiry_render_list(): void
                 ? '<br><span style="color:#d63638;font-size:11px">⚠ 配置待确认</span>'
                 : ''
         );
+
+        // 客户列：姓名 / 公司 / 邮箱（业务员不必点进详情才知道是谁）
+        echo '<td>';
+        $who = trim($customerName . ($customerCompany !== '' ? ' · ' . $customerCompany : ''));
+        if ($who !== '') {
+            echo '<div>' . esc_html($who) . '</div>';
+        }
+        if ($customerEmail !== '') {
+            // 邮箱已经过服务端校验；后台历史脏数据仍只展示文本，不生成危险链接。
+            $safeEmail = sanitize_email($customerEmail);
+            if ($safeEmail !== '' && is_email($safeEmail)) {
+                echo '<div><a href="' . esc_url('mailto:' . $safeEmail) . '">' . esc_html($customerEmail) . '</a></div>';
+            } else {
+                echo '<div>' . esc_html($customerEmail) . '</div>';
+            }
+        }
+        if ($who === '' && $customerEmail === '') {
+            echo '—';
+        }
+        echo '</td>';
 
         printf('<td>%s</td>', esc_html($customerOptions[$customerType] ?? '—'));
         printf('<td>%s</td>', esc_html($lineOptions[$productLine] ?? '—'));
@@ -1208,6 +1520,13 @@ function fh_inquiry_render_list(): void
     }
 
     echo '</tbody></table>';
+
+    // 发件箱派发面板（worker 的可观测面）
+    if (current_user_can(FH_INQUIRY_CAP_DELIVERY)
+        && (!isset($_GET['tab']) || $_GET['tab'] !== 'outbox')
+    ) {
+        echo '<p><a href="' . esc_url(add_query_arg(['page' => 'fh-inquiries', 'tab' => 'outbox'], admin_url('admin.php'))) . '">查看发件箱派发状态</a></p>';
+    }
 
     if ($query->max_num_pages > 1) {
         $links = paginate_links([
@@ -1414,7 +1733,7 @@ function fh_inquiry_save_fields(int $postId, WP_Post $post): void
 add_action('admin_post_fh_inquiry_update_status', 'fh_inquiry_handle_update_status');
 function fh_inquiry_handle_update_status(): void
 {
-    if (!current_user_can('edit_posts')) {
+    if (!current_user_can(FH_INQUIRY_CAP_MANAGE)) {
         wp_die('无权修改询盘。', '', ['response' => 403]);
     }
 
@@ -1508,4 +1827,731 @@ function fh_inquiry_self_check(): array
         'rest_route'      => '/' . FH_INQUIRY_REST_NAMESPACE . '/inquiries',
         'mail_configured' => fh_inquiry_resend_key() !== '' && fh_inquiry_mail_to() !== '',
     ];
+}
+
+/* ============================================================================
+ * 发件箱派发 worker
+ *
+ * ── 为什么必须有这一段 ──────────────────────────────────────────────────────
+ * 提交瞬间 fh_inquiry_rest_create() 会同步调用一次 fh_inquiry_dispatch_email()。
+ * 那一次失败（例如未配置发信通道）后，outbox 行留在 pending：attempts 不增、
+ * next_attempt_at 已经写了，但**没有任何东西会再来领它** —— 邮件就永久卡住。
+ *
+ * 本段补上缺失的另一半：一个 WP-Cron 循环 + 租赁制领单，让 pending/failed
+ * 的记录能被反复领取直到成功或达到上限。
+ *
+ * 租赁制是防重复发信的核心：多条并发请求（cron 与手动触发撞在一起）必须靠
+ * 一条原子 UPDATE 抢租约，抢到才发。判据是 UPDATE 的影响行数 == 1。
+ * ========================================================================== */
+
+/** 派发循环的 hook 名。 */
+const FH_INQUIRY_DISPATCH_HOOK = 'fh_inquiry_dispatch_tick';
+
+/** 循环间隔（WP-Cron 的具名间隔键，见 fh_inquiry_cron_intervals）。 */
+const FH_INQUIRY_DISPATCH_INTERVAL = 'fh_inquiry_every_5_minutes';
+
+/** 单次循环最多处理几条（防爆，也防一条坏记录拖死整个循环）。 */
+const FH_INQUIRY_DISPATCH_BATCH = 10;
+
+/** 一条发件箱记录最多尝试几次，达到即放弃并转 failed。 */
+const FH_INQUIRY_DISPATCH_MAX_ATTEMPTS = 5;
+
+/** 租约时长（分钟）。超过后视为僵死，可被别人捡起。 */
+const FH_INQUIRY_DISPATCH_LEASE_MINUTES = 5;
+
+/** 每次循环最多领几批 —— 未使用，保留以说明批次上限的含义。 */
+
+/**
+ * 注册 5 分钟间隔。
+ *
+ * WP-Cron 默认只有 hourly / twicedaily / daily，所以自己加一个具名间隔。
+ */
+function fh_inquiry_cron_intervals(array $schedules): array
+{
+    if (!isset($schedules[FH_INQUIRY_DISPATCH_INTERVAL])) {
+        $schedules[FH_INQUIRY_DISPATCH_INTERVAL] = [
+            'interval' => 5 * 60,
+            'display'  => '每 5 分钟（询盘发件箱派发）',
+        ];
+    }
+    return $schedules;
+}
+add_filter('cron_schedules', 'fh_inquiry_cron_intervals');
+
+/**
+ * 确保调度已注册（幂等）。
+ *
+ * 必须在 wp_next_scheduled() 判重后再排，否则每次访问都会新排一个。
+ */
+function fh_inquiry_schedule_dispatch(): void
+{
+    if (wp_next_scheduled(FH_INQUIRY_DISPATCH_HOOK)) {
+        return;
+    }
+    wp_schedule_event(time(), FH_INQUIRY_DISPATCH_INTERVAL, FH_INQUIRY_DISPATCH_HOOK);
+}
+add_action('init', 'fh_inquiry_schedule_dispatch');
+
+/**
+ * 领一批待派发的 outbox 行。
+ *
+ * 条件：状态是 pending 或 failed ｜ 未到重试时间的不领 ｜ 未达上限 ｜ 无有效租约。
+ * 僵死租约（lease_expires_at 已过）可被重新领取 —— 否则进程被杀会让记录永久卡住。
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function fh_inquiry_claim_outbox(int $limit = FH_INQUIRY_DISPATCH_BATCH): array
+{
+    global $wpdb;
+
+    $table  = fh_inquiry_outbox_table();
+    $now    = gmdate('Y-m-d H:i:s');
+    $owner  = fh_inquiry_lease_owner();
+    $expiry = gmdate('Y-m-d H:i:s', time() + FH_INQUIRY_DISPATCH_LEASE_MINUTES * 60);
+    $max    = FH_INQUIRY_DISPATCH_MAX_ATTEMPTS;
+
+    // 先挑候选 id（只读，不锁）
+    $ids = $wpdb->get_col($wpdb->prepare(
+        "SELECT id FROM {$table}
+         WHERE status IN ('pending','failed')
+           AND attempts < %d
+           AND (next_attempt_at IS NULL OR next_attempt_at <= %s)
+           AND (lease_owner IS NULL OR lease_expires_at IS NULL OR lease_expires_at <= %s)
+         ORDER BY id ASC
+         LIMIT %d",
+        $max,
+        $now,
+        $now,
+        $limit
+    ));
+
+    if (empty($ids)) {
+        return [];
+    }
+
+    $claimed = [];
+    foreach ($ids as $id) {
+        $id = (int) $id;
+        // 原子抢租约：只有影响行数 == 1 才算抢到
+        $affected = $wpdb->query($wpdb->prepare(
+            "UPDATE {$table}
+             SET lease_owner = %s, lease_expires_at = %s, updated_at = %s
+             WHERE id = %d
+               AND status IN ('pending','failed')
+               AND attempts < %d
+               AND (lease_owner IS NULL OR lease_expires_at IS NULL OR lease_expires_at <= %s)",
+            $owner,
+            $expiry,
+            $now,
+            $id,
+            $max,
+            $now
+        ));
+
+        if ($affected === 1) {
+            $row = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$table} WHERE id = %d", $id), ARRAY_A);
+            if ($row) {
+                $claimed[] = $row;
+            }
+        }
+    }
+
+    return $claimed;
+}
+
+/**
+ * 本次进程的租约标识。够独特即可，无需全局唯一。
+ */
+function fh_inquiry_lease_owner(): string
+{
+    return substr(wp_generate_uuid4(), 0, 32);
+}
+
+/**
+ * 派发循环本体。
+ *
+ * 返回统计数组，供手动触发与自检使用。注意：任何失败都不得让循环抛异常，
+ * 否则 WP-Cron 会把这个事件标记为失败并不再续排。
+ *
+ * @return array{claimed:int, dispatched:int, accepted:int, failed:int, abandoned:int}
+ */
+function fh_inquiry_run_dispatch(): array
+{
+    global $wpdb;
+
+    $stats = [
+        'claimed'   => 0,
+        'dispatched' => 0,
+        'accepted'  => 0,
+        'failed'    => 0,
+        'abandoned' => 0,
+    ];
+
+    $rows = fh_inquiry_claim_outbox();
+    $stats['claimed'] = count($rows);
+
+    $table = fh_inquiry_outbox_table();
+    $now   = gmdate('Y-m-d H:i:s');
+
+    foreach ($rows as $row) {
+        $outboxId = (int) $row['id'];
+        $inquiryId = (int) $row['inquiry_id'];
+        // attempts 以领单快照为准；派发后由 worker 统一 +1
+        $attempts        = (int) $row['attempts'];
+        $claimedAttempts = $attempts;
+
+        try {
+            $status = fh_inquiry_dispatch_email($inquiryId, $outboxId);
+        } catch (\Throwable $e) {
+            // 不得把客户信息写进 last_error，只记异常类名
+            $status = 'failed';
+            $wpdb->update(
+                $table,
+                [
+                    'status'          => 'failed',
+                    'attempts'        => $attempts + 1,
+                    'last_error'      => 'dispatch exception: ' . get_class($e),
+                    'next_attempt_at' => fh_inquiry_backoff_at($attempts + 1),
+                    'lease_owner'     => null,
+                    'lease_expires_at' => null,
+                    'updated_at'      => gmdate('Y-m-d H:i:s'),
+                ],
+                ['id' => $outboxId]
+            );
+            $stats['failed']++;
+            continue;
+        }
+
+        $stats['dispatched']++;
+
+        // 以库里的实际值为准：dispatch_email 在未配置发信通道时会提前 return，
+        // 不写 attempts（既有行为）。worker 侧必须兜住，否则 attempts 恒为 0，
+        // 退避永远停在第一档、上限判定永不生效 → 坏记录会被无限重试。
+        $fresh     = $wpdb->get_row($wpdb->prepare("SELECT attempts, status FROM {$table} WHERE id = %d", $outboxId), ARRAY_A);
+        $attempts  = $fresh ? (int) $fresh['attempts'] : $attempts;
+        $curStatus = $fresh ? (string) $fresh['status'] : '';
+
+        // worker 统一负责计数：不论 dispatch_email 有没有自增（它在未配置通道时
+        // 会提前 return 不写 attempts），这里都以「领单前的值 + 1」为准写回。
+        // 这样上限判定才有意义 —— 否则坏记录会被无限重试。
+        $counted = $claimedAttempts + 1;
+        $wpdb->update(
+            $table,
+            ['attempts' => $counted, 'updated_at' => gmdate('Y-m-d H:i:s')],
+            ['id' => $outboxId]
+        );
+        $attempts = $counted;
+
+        if ($status === 'accepted') {
+            $stats['accepted']++;
+            // 成功即释放租约（dispatch_email 已写过 status/next_attempt_at）
+            $wpdb->update(
+                $table,
+                ['lease_owner' => null, 'lease_expires_at' => null, 'updated_at' => gmdate('Y-m-d H:i:s')],
+                ['id' => $outboxId]
+            );
+            continue;
+        }
+
+        $newAttempts = $attempts;
+        if ($newAttempts >= FH_INQUIRY_DISPATCH_MAX_ATTEMPTS) {
+            // 达到上限：转 failed 且不再被领取（next_attempt_at 置空 + attempts 顶到上限）
+            $wpdb->update(
+                $table,
+                [
+                    'status'          => 'failed',
+                    'attempts'        => $attempts,
+                    'last_error'      => '已放弃：达到最大尝试次数 ' . FH_INQUIRY_DISPATCH_MAX_ATTEMPTS,
+                    'next_attempt_at' => null,
+                    'lease_owner'     => null,
+                    'lease_expires_at' => null,
+                    'updated_at'      => gmdate('Y-m-d H:i:s'),
+                ],
+                ['id' => $outboxId]
+            );
+            $stats['abandoned']++;
+            continue;
+        }
+
+        // 未达上限：释放租约并按 backoff 排下次重试。
+        // ⚠️ 只写租约与 next_attempt_at —— status 与 attempts 由 dispatch_email
+        //    在事务内写过，这里再覆写会把 attempts 打回旧值（实测踩到：attempts 恒为 0）。
+        $wpdb->update(
+            $table,
+            [
+                'lease_owner'      => null,
+                'lease_expires_at' => null,
+                'next_attempt_at'  => fh_inquiry_backoff_at(max(1, $attempts)),
+                'updated_at'       => gmdate('Y-m-d H:i:s'),
+            ],
+            ['id' => $outboxId]
+        );
+        $stats['failed']++;
+    }
+
+    unset($now);
+
+    return $stats;
+}
+add_action(FH_INQUIRY_DISPATCH_HOOK, 'fh_inquiry_run_dispatch');
+
+/* ============================================================================
+ * 数据保留与删除接口（默认关闭）
+ *
+ * 这里只实现“如何安全删干净”，不替业务或法务决定“保留多少天”。未配置
+ * FH_INQUIRY_RETENTION_DAYS（或配置为 0）时不排 cron、不删任何数据。
+ * ========================================================================== */
+
+/** 读取已批准的保留天数；0 代表禁用。 */
+function fh_inquiry_retention_days(): int
+{
+    $raw = defined('FH_INQUIRY_RETENTION_DAYS')
+        ? constant('FH_INQUIRY_RETENTION_DAYS')
+        : getenv('FH_INQUIRY_RETENTION_DAYS');
+    $days = is_numeric($raw) ? (int) $raw : 0;
+    $days = (int) apply_filters('fh_inquiry_retention_days', $days);
+    return $days > 0 ? min($days, 36500) : 0;
+}
+
+/**
+ * 只读预览将被清理的记录 ID，供上线前审阅与 WP-CLI 探针使用。
+ *
+ * @return array<int,int>
+ */
+function fh_inquiry_retention_candidates(int $days, int $limit = FH_INQUIRY_RETENTION_BATCH): array
+{
+    if ($days <= 0 || $limit <= 0) {
+        return [];
+    }
+
+    global $wpdb;
+    $cutoff = gmdate('Y-m-d H:i:s', time() - $days * DAY_IN_SECONDS);
+    $ids = $wpdb->get_col($wpdb->prepare(
+        "SELECT ID FROM {$wpdb->posts}
+         WHERE post_type = %s AND post_date_gmt < %s
+         ORDER BY post_date_gmt ASC, ID ASC
+         LIMIT %d",
+        FH_INQUIRY_POST_TYPE,
+        $cutoff,
+        min($limit, FH_INQUIRY_RETENTION_BATCH)
+    ));
+
+    return array_map('intval', (array) $ids);
+}
+
+/**
+ * 在一个事务内删除 CPT、meta、幂等键、outbox 与 provider event。
+ * 序列号不会回收，避免旧询盘号被后来的记录复用。
+ */
+function fh_inquiry_delete_cascade(int $postId): bool
+{
+    if ($postId <= 0 || get_post_type($postId) !== FH_INQUIRY_POST_TYPE) {
+        return false;
+    }
+
+    global $wpdb;
+    $keyTable = fh_inquiry_key_table();
+    $outboxTable = fh_inquiry_outbox_table();
+    $eventTable = fh_inquiry_event_table();
+    $outboxIds = array_map('intval', (array) $wpdb->get_col($wpdb->prepare(
+        "SELECT id FROM {$outboxTable} WHERE inquiry_id = %d",
+        $postId
+    )));
+
+    $wpdb->query('START TRANSACTION');
+    try {
+        if ($outboxIds !== []) {
+            $idList = implode(',', $outboxIds);
+            if ($wpdb->query("DELETE FROM {$eventTable} WHERE outbox_id IN ({$idList})") === false) {
+                throw new RuntimeException('event delete failed');
+            }
+        }
+        if ($wpdb->delete($outboxTable, ['inquiry_id' => $postId], ['%d']) === false) {
+            throw new RuntimeException('outbox delete failed');
+        }
+        if ($wpdb->delete($keyTable, ['inquiry_id' => $postId], ['%d']) === false) {
+            throw new RuntimeException('key delete failed');
+        }
+        if (wp_delete_post($postId, true) === false) {
+            throw new RuntimeException('post delete failed');
+        }
+        $wpdb->query('COMMIT');
+        clean_post_cache($postId);
+        return true;
+    } catch (Throwable $error) {
+        $wpdb->query('ROLLBACK');
+        clean_post_cache($postId);
+        return false;
+    }
+}
+
+/** 执行一批到期清理；默认配置下永远返回 enabled=false。 */
+function fh_inquiry_run_retention(): array
+{
+    $days = fh_inquiry_retention_days();
+    if ($days === 0) {
+        return ['enabled' => false, 'days' => 0, 'candidates' => 0, 'deleted' => 0, 'failed' => 0];
+    }
+
+    $ids = fh_inquiry_retention_candidates($days);
+    $deleted = 0;
+    $failed = 0;
+    foreach ($ids as $postId) {
+        if (fh_inquiry_delete_cascade($postId)) {
+            $deleted++;
+        } else {
+            $failed++;
+        }
+    }
+
+    return [
+        'enabled' => true,
+        'days' => $days,
+        'candidates' => count($ids),
+        'deleted' => $deleted,
+        'failed' => $failed,
+    ];
+}
+add_action(FH_INQUIRY_RETENTION_HOOK, 'fh_inquiry_run_retention');
+
+/** 仅在保留期已明确配置时排每日清理；关闭时移除旧调度。 */
+function fh_inquiry_schedule_retention(): void
+{
+    if (fh_inquiry_retention_days() === 0) {
+        if (wp_next_scheduled(FH_INQUIRY_RETENTION_HOOK)) {
+            wp_clear_scheduled_hook(FH_INQUIRY_RETENTION_HOOK);
+        }
+        return;
+    }
+    if (!wp_next_scheduled(FH_INQUIRY_RETENTION_HOOK)) {
+        wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', FH_INQUIRY_RETENTION_HOOK);
+    }
+}
+add_action('init', 'fh_inquiry_schedule_retention', 20);
+
+/**
+ * 手动派发（后台按钮）。
+ *
+ * 走 admin_post，带 nonce 与能力校验。结果通过 redirect 上的 query 回显。
+ */
+function fh_inquiry_handle_manual_dispatch(): void
+{
+    if (!current_user_can(FH_INQUIRY_CAP_DELIVERY)) {
+        wp_die('无权执行派发。', '', ['response' => 403]);
+    }
+    check_admin_referer('fh_inquiry_dispatch', 'fh_inquiry_dispatch_nonce');
+
+    $stats = fh_inquiry_run_dispatch();
+
+    wp_safe_redirect(add_query_arg(
+        [
+            'page'             => 'fh-inquiries',
+            'fh_dispatched'    => (int) $stats['dispatched'],
+            'fh_accepted'      => (int) $stats['accepted'],
+            'fh_failed'        => (int) $stats['failed'],
+        ],
+        admin_url('admin.php')
+    ));
+    exit;
+}
+add_action('admin_post_fh_inquiry_manual_dispatch', 'fh_inquiry_handle_manual_dispatch');
+
+/**
+ * 后台「发件箱」区块：渲染最近若干条 outbox 记录 + 手动派发按钮。
+ *
+ * 只显示技术字段，不显示客户邮箱/电话/消息内容（见 ARCHITECTURE.md §10）。
+ */
+function fh_inquiry_render_outbox_panel(): void
+{
+    global $wpdb;
+
+    if (!current_user_can(FH_INQUIRY_CAP_DELIVERY)) {
+        return;
+    }
+
+    $table = fh_inquiry_outbox_table();
+    $rows  = $wpdb->get_results(
+        "SELECT id, inquiry_id, event_type, status, attempts, next_attempt_at, last_error, updated_at
+         FROM {$table} ORDER BY id DESC LIMIT 20",
+        ARRAY_A
+    );
+
+    $next = wp_next_scheduled(FH_INQUIRY_DISPATCH_HOOK);
+
+    echo '<div class="wrap"><h2>发件箱派发</h2>';
+
+    echo '<p>';
+    if ($next) {
+        printf(
+            '下次自动派发：%s（约 %d 分钟后）',
+            esc_html(get_date_from_gmt(gmdate('Y-m-d H:i:s', $next), 'Y-m-d H:i')),
+            max(0, (int) round(($next - time()) / 60))
+        );
+    } else {
+        echo '<strong>自动派发未注册</strong>';
+    }
+    echo '</p>';
+
+    echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
+    echo '<input type="hidden" name="action" value="fh_inquiry_manual_dispatch" />';
+    wp_nonce_field('fh_inquiry_dispatch', 'fh_inquiry_dispatch_nonce');
+    submit_button('立即派发一次', 'secondary', 'submit', false);
+    echo '</form>';
+
+    echo '<table class="widefat striped" style="margin-top:12px;max-width:900px"><thead><tr>';
+    echo '<th>ID</th><th>询盘 ID</th><th>类型</th><th>状态</th><th>已尝试</th><th>下次时间</th><th>最后错误</th><th>更新</th>';
+    echo '</tr></thead><tbody>';
+
+    if (empty($rows)) {
+        echo '<tr><td colspan="8">发件箱为空。</td></tr>';
+    } else {
+        foreach ($rows as $r) {
+            echo '<tr>';
+            echo '<td>' . esc_html((string) $r['id']) . '</td>';
+            echo '<td>' . esc_html((string) $r['inquiry_id']) . '</td>';
+            echo '<td>' . esc_html((string) $r['event_type']) . '</td>';
+            echo '<td>' . esc_html((string) $r['status']) . '</td>';
+            echo '<td>' . esc_html((string) $r['attempts']) . '</td>';
+            echo '<td>' . esc_html($r['next_attempt_at'] ? (string) $r['next_attempt_at'] : '—') . '</td>';
+            echo '<td>' . esc_html($r['last_error'] !== null ? (string) $r['last_error'] : '—') . '</td>';
+            echo '<td>' . esc_html((string) $r['updated_at']) . '</td>';
+            echo '</tr>';
+        }
+    }
+
+    echo '</tbody></table></div>';
+}
+
+/* ============================================================================
+ * 后台工作台：未读角标 · 状态筛选 · 搜索 · 发件箱 tab
+ *
+ * 与上面的派发 worker 同属一个文件，但职责分开：这里只做「人怎么看、怎么筛」，
+ * 不碰发信与租赁逻辑。
+ * ========================================================================== */
+
+/**
+ * 菜单角标：未处理（new）询盘条数。
+ *
+ * 只在有未处理时返回带 HTML 的徽标，否则返回空串 —— 菜单标题不带多余空白。
+ */
+function fh_inquiry_menu_badge(): string
+{
+    $count = fh_inquiry_count_by_status('new');
+    if ($count <= 0) {
+        return '';
+    }
+    return sprintf(
+        ' <span class="update-plugins count-%1$d"><span class="update-count">%1$d</span></span>',
+        (int) $count
+    );
+}
+
+/**
+ * 按业务状态计数。
+ *
+ * meta_query 而非 WP_Query 的 post_status —— business_status 存在 postmeta 里。
+ */
+function fh_inquiry_count_by_status(string $status): int
+{
+    $query = new WP_Query([
+        'post_type'           => FH_INQUIRY_POST_TYPE,
+        'post_status'         => 'any',
+        'posts_per_page'      => 1,
+        'fields'              => 'ids',
+        'ignore_sticky_posts' => true,
+        'meta_query'          => [
+            [
+                'key'     => 'business_status',
+                'value'   => $status,
+                'compare' => '=',
+            ],
+        ],
+    ]);
+
+    return (int) $query->found_posts;
+}
+
+/**
+ * 各状态条数（供筛选 tab 显示）。
+ *
+ * @return array<string,int>
+ */
+function fh_inquiry_status_counts(): array
+{
+    $counts = ['all' => 0];
+    foreach (array_keys(fh_inquiry_business_status_options()) as $value) {
+        $counts[$value] = fh_inquiry_count_by_status($value);
+    }
+    $counts['all'] = array_sum($counts);
+    return $counts;
+}
+
+/**
+ * 渲染状态筛选 tab（含条数、当前项高亮）。
+ */
+function fh_inquiry_render_status_tabs(string $current, array $counts, string $search): void
+{
+    $base = admin_url('admin.php');
+    $tabs = ['all' => '全部'] + fh_inquiry_business_status_options();
+
+    echo '<ul class="subsubsub" style="margin-bottom:12px">';
+    $items = [];
+    foreach ($tabs as $value => $label) {
+        $url = add_query_arg(
+            array_filter([
+                'page'           => 'fh-inquiries',
+                'status'         => $value === 'all' ? null : $value,
+                's'              => $search !== '' ? $search : null,
+            ]),
+            $base
+        );
+        $isCurrent = $value === $current;
+        $items[] = sprintf(
+            '<li><a href="%s"%s>%s <span class="count">(%d)</span></a></li>',
+            esc_url($url),
+            $isCurrent ? ' class="current" aria-current="page"' : '',
+            esc_html($label),
+            (int) ($counts[$value] ?? 0)
+        );
+    }
+    echo implode(' | ', $items);
+    echo '</ul>';
+}
+
+/**
+ * 渲染搜索框。
+ */
+function fh_inquiry_render_search_box(string $search, string $status): void
+{
+    echo '<form method="get" action="' . esc_url(admin_url('admin.php')) . '" style="margin:0 0 12px">';
+    echo '<input type="hidden" name="page" value="fh-inquiries" />';
+    if ($status !== 'all') {
+        echo '<input type="hidden" name="status" value="' . esc_attr($status) . '" />';
+    }
+    echo '<input type="search" name="s" value="' . esc_attr($search) . '" placeholder="搜索询盘号 / 公司 / 邮箱 / 内容" style="min-width:280px" /> ';
+    submit_button('搜索', 'secondary', '', false);
+    echo '</form>';
+}
+
+/**
+ * 搜索询盘：按询盘号（post_title）、公司、客户邮箱、消息内容匹配。
+ *
+ * 邮箱与消息存在 postmeta，所以要 meta_query；标题走 s 参数。
+ * 返回匹配到的 post id 列表（保持 WP_Query 的排序语义）。
+ *
+ * @return array<int,int>
+ */
+function fh_inquiry_search_ids(string $term): array
+{
+    $term = trim($term);
+    if ($term === '') {
+        return [];
+    }
+
+    $query = new WP_Query([
+        'post_type'           => FH_INQUIRY_POST_TYPE,
+        'post_status'         => 'any',
+        'posts_per_page'      => 200,
+        'fields'              => 'ids',
+        'orderby'             => 'date',
+        'order'               => 'DESC',
+        'ignore_sticky_posts' => true,
+        'meta_query'          => [
+            'relation' => 'OR',
+            ['key' => 'company', 'value' => $term, 'compare' => 'LIKE'],
+            ['key' => 'email', 'value' => $term, 'compare' => 'LIKE'],
+            ['key' => 'message', 'value' => $term, 'compare' => 'LIKE'],
+        ],
+    ]);
+
+    return array_map('intval', (array) $query->posts);
+}
+
+/* ============================================================================
+ * 发信通道：SMTP（主） / Resend（备）
+ *
+ * 原来只有 Resend 一条路，没配 key 时 fh_inquiry_dispatch_email() 直接 return
+ * 'pending' —— 邮件永远发不出去。现在改成：配了 SMTP 就走 SMTP，没配才回落
+ * Resend，两者都没配仍是 pending（保持 fail-closed，不假装成功）。
+ *
+ * 用 PHPMailer：WordPress 自带（wp-includes/PHPMailer/），不引入新依赖。
+ * ========================================================================== */
+
+/** SMTP 是否完整配置（缺任一项都视为未配置）。 */
+function fh_inquiry_smtp_configured(): bool
+{
+    return fh_inquiry_config('FH_INQUIRY_SMTP_HOST', 'fh_inquiry_smtp_host', 'smtp.qq.com') !== ''
+        && fh_inquiry_config('FH_INQUIRY_SMTP_USER', 'fh_inquiry_smtp_user', '') !== ''
+        && fh_inquiry_smtp_pass() !== '';
+}
+
+/** SMTP 授权码。注意：不得写进任何日志或 last_error（ARCHITECTURE.md §10）。 */
+function fh_inquiry_smtp_pass(): string
+{
+    return fh_inquiry_config('FH_INQUIRY_SMTP_PASS', 'fh_inquiry_smtp_pass', '');
+}
+
+/**
+ * 经 SMTP 投递一封 multipart/alternative 邮件。
+ *
+ * 465 = 隐式 SSL（QQ 推荐）；587 = STARTTLS。用 PHPMailer 自带的 SMTP 类，
+ * 不自己拼协议 —— 自拼容易在 AUTH LOGIN / 中文编码上出错。
+ *
+ * ⚠️ $debug 内容含 SMTP 对话，可能夹带地址；只在显式开启时输出，且不得落库。
+ *
+ * @return array{ok:bool,error:string}
+ */
+function fh_inquiry_send_via_smtp(
+    string $to,
+    string $subject,
+    string $html,
+    string $text,
+    string $replyTo,
+    string &$debug = ''
+): array {
+    if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
+        require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+        require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+        require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+    }
+
+    $host   = fh_inquiry_config('FH_INQUIRY_SMTP_HOST', 'fh_inquiry_smtp_host', 'smtp.qq.com');
+    $port   = (int) fh_inquiry_config('FH_INQUIRY_SMTP_PORT', 'fh_inquiry_smtp_port', '465');
+    $secure = strtolower(fh_inquiry_config('FH_INQUIRY_SMTP_SECURE', 'fh_inquiry_smtp_secure', 'ssl'));
+    $user   = fh_inquiry_config('FH_INQUIRY_SMTP_USER', 'fh_inquiry_smtp_user', '');
+    $pass   = fh_inquiry_smtp_pass();
+    $from   = fh_inquiry_mail_from();
+
+    try {
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host       = $host;
+        $mail->Port       = $port;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $user;
+        $mail->Password   = $pass;
+        $mail->SMTPSecure = $secure === 'tls' ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS
+                                              : PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Timeout    = 15;
+        $mail->CharSet    = 'UTF-8';
+        $mail->Encoding   = 'base64'; // 中文正文安全
+
+        $mail->setFrom($from, '');
+        $mail->addAddress($to);
+        if ($replyTo !== '' && is_email($replyTo)) {
+            $mail->addReplyTo($replyTo);
+        }
+
+        $mail->Subject = $subject;
+        $mail->isHTML(true);
+        $mail->Body    = $html;
+        $mail->AltBody = $text;
+
+        $mail->send();
+        return ['ok' => true, 'error' => ''];
+    } catch (\Throwable $e) {
+        // 只取异常消息，不落授权码
+        $msg = $e->getMessage();
+        return ['ok' => false, 'error' => 'smtp: ' . $msg];
+    }
 }

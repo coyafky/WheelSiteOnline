@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/content/site";
+import { configuredSiteUrl } from "@/lib/site-url";
 
 /**
  * Robots policy.
@@ -11,7 +11,10 @@ import { site } from "@/content/site";
  * `site.url` is a PLACEHOLDER production domain; confirm before launch.
  */
 export default function robots(): MetadataRoute.Robots {
-  const base = site.url.replace(/\/$/, "");
+  if (!configuredSiteUrl) {
+    return { rules: [{ userAgent: "*", disallow: "/" }] };
+  }
+  const base = configuredSiteUrl.origin;
 
   return {
     rules: [

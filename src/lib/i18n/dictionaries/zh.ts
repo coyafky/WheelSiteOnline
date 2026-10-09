@@ -34,6 +34,7 @@ export const zh: Dictionary = {
   "cta.requestQuote": "获取报价",
   "cta.viewRange": "查看产品线",
   "cta.backToTop": "回到顶部",
+  "brand.division": "制造",
 
   // ── 无障碍标签 ─────────────────────────────────────────────────────────
   "a11y.primaryNav": "主导航",
@@ -47,6 +48,9 @@ export const zh: Dictionary = {
   "footer.tagline1": "四条产品线的铝制部件制造商 ——",
   "footer.tagline2": "轮毂 · 三电壳体 · 铝制品定制 · 安全轮胎",
   "footer.rights": "版权所有",
+  "footer.ctaEyebrow": "开始沟通生产需求",
+  "footer.ctaHeading": "把需求交给我们",
+  "footer.ctaBody": "请提供图纸、适配要求或供货需求。我们会将询盘转给对应产品线，并回复下一步需要确认的信息。",
   "footer.group.products": "产品",
   "footer.group.company": "公司",
   "footer.support.warranty": "质保政策",

@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { DICTIONARIES } from "./dictionaries";
 import {
   DEFAULT_LOCALE,
@@ -18,6 +18,9 @@ export * from "./types";
  * (see PAGE-SPECS/index.md on routing changes being a separate migration).
  */
 export async function getLocale(): Promise<Locale> {
+  const requestHeaders = await headers();
+  const routed = requestHeaders.get("x-fh-locale");
+  if (isLocale(routed)) return routed;
   const store = await cookies();
   const value = store.get(LOCALE_COOKIE)?.value;
   return isLocale(value) ? value : DEFAULT_LOCALE;

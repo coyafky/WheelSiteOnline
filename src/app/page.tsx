@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     "Explore Fenghuai's four automotive product lines, manufacturing capabilities, project process and inquiry entry point for global B2B programs.",
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {

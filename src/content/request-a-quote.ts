@@ -10,9 +10,9 @@
  */
 
 export const requestQuoteHero = {
-  eyebrow: "Quote",
-  heading: "Request a Quote",
-  lede: "Fill in three fields, one minute. The specification you were looking at is carried into the form below — no need to retype it.",
+  eyebrow: "Project enquiry",
+  heading: "Tell us what you need to source or develop",
+  lede: "Choose a product line and send what you already know. A model number, drawing status or application description is enough to start the review. You do not need every specification ready; missing technical details are confirmed before quotation or production approval.",
 } as const;
 
 export const quoteContextBarCopy = {
@@ -24,8 +24,8 @@ export const quoteContextBarCopy = {
 } as const;
 
 export const quoteFormHeading = {
-  title: "Wheel enquiry",
-  body: "Everything we need to come back with a specification and a price rather than a follow-up question.",
+  title: "Project enquiry",
+  body: "Choose a product line and send what you already know. Missing technical details can be confirmed before quotation or production approval.",
 } as const;
 
 /**
@@ -35,11 +35,11 @@ export const quoteFormHeading = {
 export const requestQuoteFormCopy = {
   requiredNote: "Required field",
   optional: "optional",
-  submit: "Send quote request",
+  submit: "Submit project enquiry",
   submitting: "Sending…",
-  successTitle: "Quote request received",
+  successTitle: "Your enquiry has been recorded",
   successBody:
-    "Your requirement is logged and a member of the sales team will pick it up. Keep the reference number below — quoting it gets you a faster answer.",
+    "Keep the reference number below for follow-up. It confirms that the enquiry record was created.",
   resetLabel: "Send another request",
   errorSummaryTitle: "Check these fields",
   errorSummaryBody: "Your request has not been sent. Fix the items below:",
@@ -47,7 +47,7 @@ export const requestQuoteFormCopy = {
   networkErrorBody:
     "We could not reach our server — this is usually a connection problem on your side, not a problem with your details. Nothing was submitted, and everything you typed is still in the form. Please try again.",
   pendingDeliveryNote:
-    "Your request is safely recorded. Our confirmation email could not be sent just now, so a member of the sales team will follow up manually instead — no action needed from you.",
+    "The enquiry record was saved, but the notification email is still pending. Do not submit the same project again.",
 } as const;
 
 export const quoteDataNotice = {

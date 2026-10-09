@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowRight, Check, Info } from "lucide-react";
+import { AutomotiveBackdrop } from "@/components/automotive-backdrop";
+import { automotiveScenes } from "@/content/automotive-scenes";
 import type { EvHousingCategory, EvHousingPageContent, MediaAsset } from "@/content/types";
 
 /**
@@ -45,11 +47,11 @@ function SectionHeading({
   return (
     <div data-reveal className="max-w-[760px]">
       <div className="flex items-center gap-4">
-        <span className="font-mono text-[0.64rem] font-bold tracking-[0.18em] text-forge">
+        <span className={`font-mono text-[0.64rem] font-bold tracking-[0.18em] ${dark ? "text-forge-bright" : "text-forge"}`}>
           {section.id}
         </span>
         <span className={`h-px w-10 ${dark ? "bg-white/18" : "bg-ink/16"}`} aria-hidden="true" />
-        <p className="eyebrow">{section.eyebrow}</p>
+        <p className={`eyebrow ${dark ? "!text-forge-bright" : ""}`}>{section.eyebrow}</p>
       </div>
       <h2
         id={`${section.id.toLowerCase()}-title`}
@@ -537,15 +539,21 @@ export function EvAssessmentInquiry({
   return (
     <section
       id={section.anchor}
+      data-floating-quote-hide
       aria-labelledby="ev06-title"
-      className="scroll-mt-[120px] bg-ink py-20 text-white lg:py-28"
+      className="relative isolate scroll-mt-[120px] overflow-hidden bg-ink py-20 text-white lg:py-28"
     >
+      <AutomotiveBackdrop scene={automotiveScenes.evAssessment} className="opacity-55" />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink via-ink/92 to-ink/60"
+        aria-hidden="true"
+      />
       <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.7fr)] lg:gap-20">
         <div>
           <SectionHeading section={section} dark />
 
           <div className="mt-10" data-reveal>
-            <p className="font-display text-[0.68rem] font-700 uppercase tracking-[0.16em] text-forge">
+            <p className="font-display text-[0.68rem] font-700 uppercase tracking-[0.16em] text-forge-bright">
               {section.checklistLabel}
             </p>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">

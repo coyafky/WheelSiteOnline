@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
-import { getGuide, guides } from "@/content/resources";
+import { guides } from "@/content/resources";
 import { ProseArticle } from "@/components/prose-article";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PreviewBanner } from "@/components/preview-banner";
+import {
+  getInsightGuideDocument,
+  getInsightGuideDocuments,
+} from "@/lib/wordpress/insights";
 
 type GuidePageProps = {
   params: Promise<{ slug: string }>;
@@ -17,15 +23,17 @@ export async function generateMetadata({
   params,
 }: GuidePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const guide = getGuide(slug);
+  const { isEnabled: preview } = await draftMode();
+  const document = await getInsightGuideDocument(slug, { preview });
 
-  if (!guide) {
+  if (!document) {
     return { title: "Guide not found" };
   }
 
   return {
-    title: `${guide.title} — ${guide.category} Guide`,
-    description: guide.summary,
+    title: document.seoTitle,
+    description: document.seoDescription,
+    robots: { index: false, follow: true },
   };
 }
 
@@ -38,24 +46,29 @@ export async function generateMetadata({
  */
 export default async function GuideArticlePage({ params }: GuidePageProps) {
   const { slug } = await params;
-  const guide = getGuide(slug);
+  const { isEnabled: preview } = await draftMode();
+  const document = await getInsightGuideDocument(slug, { preview });
 
-  if (!guide) {
+  if (!document) {
     notFound();
   }
+  const guide = document.guide;
+  const documents = await getInsightGuideDocuments({ preview });
+  const liveGuides = documents.map((item) => item.guide);
 
   // Three siblings, preferring the same category so the footer stays relevant.
-  const sameCategory = guides.filter(
+  const sameCategory = liveGuides.filter(
     (item) => item.slug !== guide.slug && item.category === guide.category,
   );
-  const others = guides.filter(
+  const others = liveGuides.filter(
     (item) => item.slug !== guide.slug && item.category !== guide.category,
   );
   const related = [...sameCategory, ...others].slice(0, 3);
 
   return (
     <>
-      <ProseArticle guide={guide} related={related} />
+      <PreviewBanner enabled={preview} status={document.publicationStatus} />
+      <ProseArticle guide={guide} related={related} heroMedia={document.media} />
       <DealerCta />
     </>
   );

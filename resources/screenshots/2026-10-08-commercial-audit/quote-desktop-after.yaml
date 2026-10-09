@@ -1,0 +1,230 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Fenghuai home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - generic [ref=e6]: Fenghuai
+          - generic [ref=e7]: Forged
+      - navigation "Primary navigation" [ref=e8]:
+        - generic [ref=e9]:
+          - button "Products" [ref=e10]:
+            - text: Products
+            - img [ref=e11]
+          - generic:
+            - generic:
+              - link "All Product Lines":
+                - /url: /products
+              - link "Wheels":
+                - /url: /products/wheels
+              - link "EV Powertrain Housings":
+                - /url: /products/ev-components
+              - link "Custom Aluminum":
+                - /url: /products/custom-aluminum
+              - link "Safety Tires":
+                - /url: /products/safety-tires
+        - generic [ref=e13]:
+          - button "Capabilities" [ref=e14]:
+            - text: Capabilities
+            - img [ref=e15]
+          - generic:
+            - generic:
+              - link "Capabilities":
+                - /url: /capabilities
+              - link "Custom Development":
+                - /url: /custom-development
+        - generic [ref=e17]:
+          - button "Dealer Programs" [ref=e18]:
+            - text: Dealer Programs
+            - img [ref=e19]
+          - generic:
+            - generic:
+              - link "Dealer Supply":
+                - /url: /dealers
+              - link "Private Label":
+                - /url: /dealers/private-label
+        - generic [ref=e21]:
+          - button "Insights" [ref=e22]:
+            - text: Insights
+            - img [ref=e23]
+          - generic:
+            - generic:
+              - link "All Guides":
+                - /url: /insights
+              - link "Bolt Pattern Guides":
+                - /url: /insights/bolt-patterns
+        - link "About Us" [ref=e25] [cursor=pointer]:
+          - /url: /about
+      - link "Request a Quote" [ref=e27] [cursor=pointer]:
+        - /url: /request-a-quote
+  - main [ref=e28]:
+    - region "Request a Quote" [ref=e29]:
+      - generic [ref=e30]:
+        - paragraph [ref=e31]: Quote
+        - heading "Request a Quote" [level=1] [ref=e32]
+        - paragraph [ref=e33]: Fill in three fields, one minute. The specification you were looking at is carried into the form below — no need to retype it.
+        - link "Go to the form" [ref=e35] [cursor=pointer]:
+          - /url: "#quote-form-title"
+          - text: Go to the form
+          - img [ref=e36]
+    - region "Wheel enquiry" [ref=e38]:
+      - generic [ref=e40]:
+        - heading "Wheel enquiry" [level=2] [ref=e41]
+        - paragraph [ref=e42]: Everything we need to come back with a specification and a price rather than a follow-up question.
+        - form "Project enquiry form" [ref=e44]:
+          - paragraph [ref=e45]: Step 1 of 2
+          - heading "What are you asking about?" [level=3] [ref=e46]
+          - paragraph [ref=e47]: "* Required field"
+          - generic [ref=e48]:
+            - group "Customer type *" [ref=e49]:
+              - generic [ref=e50]: Customer type *
+              - generic [ref=e51]:
+                - generic [ref=e52]:
+                  - radio "Business" [ref=e53]
+                  - text: Business
+                - generic [ref=e54]:
+                  - radio "Individual" [ref=e55]
+                  - text: Individual
+            - generic [ref=e56]:
+              - generic [ref=e57]:
+                - text: Product line
+                - generic [ref=e58]: "*"
+              - combobox "Product line" [ref=e59]:
+                - option "Select a product line…" [selected]
+                - option "Wheels"
+                - option "EV Aluminum Housings"
+                - option "Custom Aluminum Development"
+                - option "Self-Sealing Tires"
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: Useful details, if available
+              - list [ref=e62]:
+                - listitem [ref=e63]: • What you need
+                - listitem [ref=e64]: • What information you already have
+                - listitem [ref=e65]: • Approximate quantity and market
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - text: Describe the part, product or result you need
+                - generic [ref=e68]: "*"
+              - textbox "Describe the part, product or result you need" [ref=e69]
+              - paragraph [ref=e70]: Include the application, known specifications, quantity or market if you have them.
+            - generic [ref=e71]:
+              - generic [ref=e72]:
+                - text: Approximate quantity
+                - generic [ref=e73]: optional
+              - textbox "Approximate quantity optional" [ref=e74]:
+                - /placeholder: e.g. prototype, 10 sets, or 500/year
+            - group "Useful inputs already available optional" [ref=e75]:
+              - generic [ref=e76]: Useful inputs already available optional
+              - generic [ref=e77]:
+                - generic [ref=e78]:
+                  - checkbox "2D drawing" [ref=e79]
+                  - text: 2D drawing
+                - generic [ref=e80]:
+                  - checkbox "3D data" [ref=e81]
+                  - text: 3D data
+                - generic [ref=e82]:
+                  - checkbox "Physical sample" [ref=e83]
+                  - text: Physical sample
+                - generic [ref=e84]:
+                  - checkbox "Product code" [ref=e85]
+                  - text: Product code
+                - generic [ref=e86]:
+                  - checkbox "None yet" [ref=e87]
+                  - text: None yet
+            - button "Continue" [ref=e88]:
+              - text: Continue
+              - img [ref=e89]
+    - region "How we handle your details" [ref=e91]:
+      - generic [ref=e93]:
+        - paragraph [ref=e94]: How we handle your details
+        - heading "How we handle your details" [level=2] [ref=e95]
+        - paragraph [ref=e96]: We use the information you send here to prepare and discuss your quotation. It is stored on our own systems and shared only with the people who need it to answer you. We do not add you to a mailing list.
+        - link "Have another question? Go to the contact page" [ref=e97] [cursor=pointer]:
+          - /url: /contact
+  - contentinfo [ref=e98]:
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]: Fenghuai
+            - generic [ref=e104]: Technology
+          - paragraph [ref=e105]:
+            - text: Aluminum components for four product lines —
+            - text: wheels, EV housings, custom parts, safety tires.
+        - navigation "Footer navigation" [ref=e106]:
+          - generic [ref=e107]:
+            - heading "Products" [level=2] [ref=e108]
+            - list [ref=e109]:
+              - listitem [ref=e110]:
+                - link "Wheels" [ref=e111] [cursor=pointer]:
+                  - /url: /products/wheels
+              - listitem [ref=e112]:
+                - link "EV Powertrain Housings" [ref=e113] [cursor=pointer]:
+                  - /url: /products/ev-components
+              - listitem [ref=e114]:
+                - link "Custom Aluminum" [ref=e115] [cursor=pointer]:
+                  - /url: /products/custom-aluminum
+              - listitem [ref=e116]:
+                - link "Safety Tires" [ref=e117] [cursor=pointer]:
+                  - /url: /products/safety-tires
+          - generic [ref=e118]:
+            - heading "Company" [level=2] [ref=e119]
+            - list [ref=e120]:
+              - listitem [ref=e121]:
+                - link "About Us" [ref=e122] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e123]:
+                - link "Capabilities" [ref=e124] [cursor=pointer]:
+                  - /url: /capabilities
+              - listitem [ref=e125]:
+                - link "Custom Development" [ref=e126] [cursor=pointer]:
+                  - /url: /custom-development
+              - listitem [ref=e127]:
+                - link "Dealer Supply" [ref=e128] [cursor=pointer]:
+                  - /url: /dealers
+              - listitem [ref=e129]:
+                - link "Private Label" [ref=e130] [cursor=pointer]:
+                  - /url: /dealers/private-label
+              - listitem [ref=e131]:
+                - link "Insights" [ref=e132] [cursor=pointer]:
+                  - /url: /insights
+          - generic [ref=e133]:
+            - heading "Support" [level=2] [ref=e134]
+            - list [ref=e135]:
+              - listitem [ref=e136]:
+                - link "Warranty Policy" [ref=e137] [cursor=pointer]:
+                  - /url: /support/warranty
+              - listitem [ref=e138]:
+                - link "Return & Refund" [ref=e139] [cursor=pointer]:
+                  - /url: /support/returns
+              - listitem [ref=e140]:
+                - link "Shipping & Packaging" [ref=e141] [cursor=pointer]:
+                  - /url: /support/shipping
+              - listitem [ref=e142]:
+                - link "Terms of Service" [ref=e143] [cursor=pointer]:
+                  - /url: /support/terms
+              - listitem [ref=e144]:
+                - link "Privacy Policy" [ref=e145] [cursor=pointer]:
+                  - /url: /support/privacy
+          - generic [ref=e146]:
+            - heading "Enquiries" [level=2] [ref=e147]
+            - list [ref=e148]:
+              - listitem [ref=e149]:
+                - link "Request a Quote" [ref=e150] [cursor=pointer]:
+                  - /url: /request-a-quote
+              - listitem [ref=e151]:
+                - link "Contact Us" [ref=e152] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e153]:
+                - link "Offset Calculator" [ref=e154] [cursor=pointer]:
+                  - /url: /tools/offset-calculator
+      - generic [ref=e155]:
+        - paragraph [ref=e156]: © 2026 Fenghuai. All rights reserved.
+        - link "Back to top" [ref=e157] [cursor=pointer]:
+          - /url: "#top"
+          - text: Back to top
+          - img [ref=e159]
+  - link:
+    - /url: /request-a-quote
+    - text: Request Quote
+  - alert [ref=e161]

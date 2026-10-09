@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Shipping & Packaging",
   description:
     "How Fenghuai packs and ships orders — Incoterms, risk transfer, documentation and damage-in-transit procedure.",
+  robots: { index: false, follow: false },
 };
 
 /**

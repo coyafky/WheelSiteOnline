@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio-skill" agent="diagram-ir" version="3.0.0">
+  <diagram id="system" name="System">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="inbox" value="inbox/ 蓝辉轮毂库存 xlsx 6109 行" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="inbox" data-kind="datastore" data-properties="{}" data-source-properties="{}" data-source-label="inbox/&#10;蓝辉轮毂库存 xlsx&#10;6109 行" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="60" y="80" width="234" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="clean" value="clean-wheel-inventory.py 清洗·尺寸识别·PCD 解析" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="clean" data-kind="command" data-properties="{}" data-source-properties="{}" data-source-label="clean-wheel-inventory.py&#10;清洗·尺寸识别·PCD 解析" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="557" y="80" width="334" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wheeldata" value="assets/wheel-data/*.json 1349 源记录 → 1219 型号 3485 variant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wheeldata" data-kind="datastore" data-properties="{}" data-source-properties="{}" data-source-label="assets/wheel-data/*.json&#10;1349 源记录 → 1219 型号&#10;3485 variant" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="973" y="80" width="434" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="select" value="select-wheel-first-batch.py 闸门: 有图/规格全/无商标 打分 0-100" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="select" data-kind="command" data-properties="{}" data-source-properties="{}" data-source-label="select-wheel-first-batch.py&#10;闸门: 有图/规格全/无商标&#10;打分 0-100" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="60" y="240" width="437" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="batch" value="wheel-first-batch-by-size 每尺寸 30 · 175 唯一型号" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="batch" data-kind="datastore" data-properties="{}" data-source-properties="{}" data-source-label="wheel-first-batch-by-size&#10;每尺寸 30 · 175 唯一型号" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="557" y="240" width="356" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cpt" value="CPT wheel_model 25 meta · 发布决定 + 事实快照" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="cpt" data-kind="service" data-properties="{}" data-source-properties="{}" data-source-label="CPT wheel_model&#10;25 meta · 发布决定 + 事实快照" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="973" y="240" width="321" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="build" value="build-wheel-import.py 生成导入包" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="build" data-kind="command" data-properties="{}" data-source-properties="{}" data-source-label="build-wheel-import.py&#10;生成导入包" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="60" y="400" width="237" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="import" value="wp-import-wheels.php 幂等 (slug 先查后写)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="import" data-kind="command" data-properties="{}" data-source-properties="{}" data-source-label="wp-import-wheels.php&#10;幂等 (slug 先查后写)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="557" y="400" width="297" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pub" value="sync-wheel-publication.py WP REST → 批准快照" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="pub" data-kind="command" data-properties="{}" data-source-properties="{}" data-source-label="sync-wheel-publication.py&#10;WP REST → 批准快照" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="973" y="400" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="snapshot" value="wheel-publication.json 138 条公开 (构建期)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="snapshot" data-kind="datastore" data-properties="{}" data-source-properties="{}" data-source-label="wheel-publication.json&#10;138 条公开 (构建期)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="60" y="560" width="303" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gates" value="publication.ts 资格判定 fail-closed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="gates" data-kind="library" data-properties="{}" data-source-properties="{}" data-source-label="publication.ts&#10;资格判定 fail-closed" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="557" y="560" width="259" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="catalogue" value="public-catalogue.ts 筛选·排序·分页·facets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="catalogue" data-kind="library" data-properties="{}" data-source-properties="{}" data-source-label="public-catalogue.ts&#10;筛选·排序·分页·facets" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="973" y="560" width="297" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pages" value="/products/wheels + [model] + flow-formed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="pages" data-kind="module" data-properties="{}" data-source-properties="{}" data-source-label="/products/wheels&#10;+ [model] + flow-formed" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_pipeline.json&quot;}">
+          <mxGeometry x="60" y="720" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-0" value="清洗" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="inbox" target="clean" data-model-id="p1" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="清洗">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-1" value="闸门 + 打分" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wheeldata" target="select" data-model-id="p2" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="闸门 + 打分">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-2" value="候选集" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="select" target="batch" data-model-id="p3" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="候选集">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-3" value="facts + 图片" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="batch" target="build" data-model-id="p4" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="facts + 图片">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-4" value="import-package.json" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="build" target="import" data-model-id="p5" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="import-package.json">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-5" value="写入" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="import" target="cpt" data-model-id="p6" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="写入">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-6" value="REST 读取" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="cpt" target="pub" data-model-id="p7" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="REST 读取">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-7" value="--check 可校验" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="pub" target="snapshot" data-model-id="p8" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="--check 可校验">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-8" value="读快照" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="snapshot" target="gates" data-model-id="p9" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="读快照">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-9" value="变体并集 (合并语义)" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wheeldata" target="gates" data-model-id="p10" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="变体并集 (合并语义)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-10" value="公开型号" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="gates" target="catalogue" data-model-id="p11" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="公开型号">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-11" value="接线" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="catalogue" target="pages" data-model-id="p12" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="接线">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-12" value="规范化输出" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="clean" target="wheeldata" data-model-id="p13" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="规范化输出">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

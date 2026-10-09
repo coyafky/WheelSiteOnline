@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Check, Clock, Mail } from "lucide-react";
+import { ArrowLeft, Check, CircleAlert, Clock, Mail } from "lucide-react";
 import {
   thankYouConfirm,
   thankYouResponsePromise,
+  thankYouUnverified,
   thankYouUrgentContact,
 } from "@/content/thank-you";
 import { site } from "@/content/site";
+import { verifyInquiryReceipt } from "@/lib/inquiry/receipt";
 
 export const metadata: Metadata = {
   title: "Inquiry Received — Fenghuai",
@@ -37,6 +39,12 @@ export default async function ThankYouPage({
   const params = await searchParams;
   const rawId = params.id;
   const referenceId = (Array.isArray(rawId) ? rawId[0] : rawId)?.trim() || undefined;
+  const rawReceipt = params.receipt;
+  const receipt = (Array.isArray(rawReceipt) ? rawReceipt[0] : rawReceipt)?.trim();
+  const confirmed = Boolean(
+    referenceId && receipt && verifyInquiryReceipt(referenceId, receipt),
+  );
+  const confirmationCopy = confirmed ? thankYouConfirm : thankYouUnverified;
 
   const { contact } = site;
   const hasRealContact = contact.confirmed;
@@ -64,24 +72,28 @@ export default async function ThankYouPage({
             data-reveal
             className="inline-flex size-14 items-center justify-center rounded-full bg-forge text-white"
           >
-            <Check className="size-7" strokeWidth={3} aria-hidden="true" />
+            {confirmed ? (
+              <Check className="size-7" strokeWidth={3} aria-hidden="true" />
+            ) : (
+              <CircleAlert className="size-7" aria-hidden="true" />
+            )}
           </span>
 
-          <p className="eyebrow mt-7 !text-forge">{thankYouConfirm.eyebrow}</p>
+          <p className="eyebrow mt-7 !text-forge">{confirmationCopy.eyebrow}</p>
 
           <h1
             id="thank-you-title"
             className="mt-5 max-w-[820px] font-display text-[clamp(2.4rem,6.6vw,4.6rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
           >
-            {thankYouConfirm.title}
+            {confirmationCopy.title}
           </h1>
 
           <p className="mt-7 max-w-[600px] text-[1.05rem] leading-relaxed text-white/75">
-            {thankYouConfirm.body}
+            {confirmationCopy.body}
           </p>
 
           {/* ⚠️ Only ever the id that actually arrived in the URL. No id, no line. */}
-          {referenceId ? (
+          {confirmed && referenceId ? (
             <p className="mt-8 inline-flex flex-wrap items-baseline gap-3 rounded-lg border border-white/15 bg-white/5 px-5 py-4">
               <span className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-white/50">
                 Reference
@@ -95,18 +107,18 @@ export default async function ThankYouPage({
           {/* Quiet text link home — deliberately not a button. */}
           <p className="mt-9">
             <Link
-              href={thankYouConfirm.backHref}
+              href={confirmationCopy.backHref}
               className="inline-flex items-center gap-2 text-[0.9rem] text-white/55 transition-colors hover:text-forge"
             >
               <ArrowLeft className="size-4" aria-hidden="true" />
-              {thankYouConfirm.backLabel}
+              {confirmationCopy.backLabel}
             </Link>
           </p>
         </div>
       </section>
 
       {/* ② Response promise ------------------------------------------------ */}
-      <section
+      {confirmed ? <section
         aria-labelledby="thank-you-promise-title"
         data-reveal
         className="border-b border-border bg-white py-16 lg:py-20"
@@ -135,7 +147,7 @@ export default async function ThankYouPage({
             {thankYouResponsePromise.nextStepNote}
           </p>
         </div>
-      </section>
+      </section> : null}
 
       {/* ③ Urgent contact -------------------------------------------------- */}
       <section

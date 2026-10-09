@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 type LegacyGuidePageProps = {
   params: Promise<{ slug: string }>;
@@ -11,14 +11,11 @@ type LegacyGuidePageProps = {
  * passed through unchanged, so every guide article keeps working at its new
  * path while old inbound links resolve.
  *
- * `redirect()` throws a 307 from a Server Component request; the route is
- * listed in `next.config`-free static redirects rather than here only if the
- * whole route is removed. Keeping a page that redirects preserves any
- * analytics landing on the old path.
+ * 这是已确认的永久改名，因此使用 308，让搜索引擎迁移旧地址信号。
  */
 export default async function LegacyGuideArticlePage({
   params,
 }: LegacyGuidePageProps) {
   const { slug } = await params;
-  redirect(`/insights/${slug}`);
+  permanentRedirect(`/insights/${encodeURIComponent(slug)}`);
 }

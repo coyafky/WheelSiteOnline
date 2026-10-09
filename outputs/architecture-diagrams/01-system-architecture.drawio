@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio-skill" agent="diagram-ir" version="3.0.0">
+  <diagram id="system" name="System">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="assets" value="assets/ 只读供应商原件" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="assets" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-label="assets/&#10;只读供应商原件" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="local">
+          <mxGeometry x="60" y="80" width="166" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="resources" value="resources/ 提取·核验·来源记录" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="resources" data-kind="component" data-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-label="resources/&#10;提取·核验·来源记录" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="local">
+          <mxGeometry x="369" y="80" width="212" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="inbox" value="inbox/ 原始库存 Excel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="inbox" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-label="inbox/&#10;原始库存 Excel" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="local">
+          <mxGeometry x="787" y="80" width="164" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wheeldata" value="assets/wheel-data 1219 型号 / 3485 variant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wheeldata" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;facts&quot;}" data-source-label="assets/wheel-data&#10;1219 型号 / 3485 variant" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="local">
+          <mxGeometry x="1086" y="80" width="310" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="scripts" value="scripts/*.py 清洗·选品·导入·同步" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="scripts" data-kind="command" data-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;pipeline&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;local&quot;,&quot;layer&quot;:&quot;pipeline&quot;}" data-source-label="scripts/*.py&#10;清洗·选品·导入·同步" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="local">
+          <mxGeometry x="60" y="240" width="232" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wp" value="WordPress CPT wheel_model + fh_inquiry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wp" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;,&quot;layer&quot;:&quot;cms&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;,&quot;layer&quot;:&quot;cms&quot;}" data-source-label="WordPress&#10;CPT wheel_model + fh_inquiry" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="private">
+          <mxGeometry x="369" y="240" width="286" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wpdb" value="MySQL posts / meta / 3 专用表" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wpdb" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;,&quot;layer&quot;:&quot;cms&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;,&quot;layer&quot;:&quot;cms&quot;}" data-source-label="MySQL&#10;posts / meta / 3 专用表" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="private">
+          <mxGeometry x="787" y="240" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="publication" value="wheel-publication.json 批准快照 (构建期)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="publication" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;repo&quot;,&quot;layer&quot;:&quot;pipeline&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;repo&quot;,&quot;layer&quot;:&quot;pipeline&quot;}" data-source-label="wheel-publication.json&#10;批准快照 (构建期)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="repo">
+          <mxGeometry x="1086" y="240" width="288" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="content" value="src/content/*.ts 类型化视图契约" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="content" data-kind="library" data-properties="{&quot;trust_boundary&quot;:&quot;build&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;build&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-label="src/content/*.ts&#10;类型化视图契约" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="build">
+          <mxGeometry x="60" y="400" width="227" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wpclient" value="src/lib/wordpress/client.ts server-only REST 读取" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wpclient" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-label="src/lib/wordpress/client.ts&#10;server-only REST 读取" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="369" y="400" width="358" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wheels" value="src/lib/wheels/ 公开集合·资格判定" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wheels" data-kind="library" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;seam&quot;}" data-source-label="src/lib/wheels/&#10;公开集合·资格判定" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="787" y="400" width="239" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="components" value="src/components/ 展示与交互模块" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="components" data-kind="library" data-properties="{&quot;trust_boundary&quot;:&quot;build&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;build&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-label="src/components/&#10;展示与交互模块" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="build">
+          <mxGeometry x="1086" y="400" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="routes" value="src/app/ 38 条 App Router 路由" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="routes" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-label="src/app/&#10;38 条 App Router 路由" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="60" y="560" width="227" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sitemap" value="sitemap.ts 174 条 · 读公开集合" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="sitemap" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;view&quot;}" data-source-label="sitemap.ts&#10;174 条 · 读公开集合" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="369" y="560" width="222" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" value="浏览器访客" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="browser" data-kind="external" data-properties="{&quot;trust_boundary&quot;:&quot;public&quot;,&quot;layer&quot;:&quot;edge&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;public&quot;,&quot;layer&quot;:&quot;edge&quot;}" data-source-label="浏览器访客" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="public">
+          <mxGeometry x="787" y="560" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="next" value="Next.js 运行时 standalone / OpenNext(待定)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="next" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-label="Next.js 运行时&#10;standalone / OpenNext(待定)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="1086" y="560" width="305" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="inqapi" value="POST /api/inquiries 校验·复核·限流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="inqapi" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-label="POST /api/inquiries&#10;校验·复核·限流" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="server">
+          <mxGeometry x="60" y="720" width="249" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mailer" value="Resend 直发 (闭环待实现)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="mailer" data-kind="external" data-properties="{&quot;trust_boundary&quot;:&quot;public&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;public&quot;,&quot;layer&quot;:&quot;runtime&quot;}" data-source-label="Resend 直发&#10;(闭环待实现)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_main.json&quot;}" data-boundary="public">
+          <mxGeometry x="369" y="720" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-0" value="清洗" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="inbox" target="scripts" data-model-id="e1" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="清洗">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-1" value="提取·核验" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="assets" target="resources" data-model-id="e2" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="提取·核验">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-2" value="草稿主体/图权/批准" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="resources" target="wp" data-model-id="e3" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="草稿主体/图权/批准">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-3" value="选品·打分" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wheeldata" target="scripts" data-model-id="e4" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="选品·打分">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-4" value="wp-import-wheels.php (幂等)" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="scripts" target="wp" data-model-id="e5" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="wp-import-wheels.php (幂等)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-5" value="sync-wheel-publication.py" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wp" target="publication" data-model-id="e6" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="sync-wheel-publication.py">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-6" value="读写" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wp" target="wpdb" data-model-id="e7" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="读写">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-7" value="构建期读入" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="publication" target="wheels" data-model-id="e8" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="构建期读入">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-8" value="REST (Basic auth)" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wp" target="wpclient" data-model-id="e9" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="REST (Basic auth)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-9" value="MediaAsset 归一" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wpclient" target="content" data-model-id="e10" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="MediaAsset 归一">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-10" value="稳定视图模型" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="content" target="components" data-model-id="e11" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="稳定视图模型">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-11" value="公开卡片/详情" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wheels" target="components" data-model-id="e12" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="公开卡片/详情">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-12" value="组装页面" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="components" target="routes" data-model-id="e13" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="组装页面">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-13" value="RSC 渲染" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="routes" target="next" data-model-id="e14" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="RSC 渲染">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-14" value="同一公开集合" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wheels" target="sitemap" data-model-id="e15" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="同一公开集合">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-15" value="HTTPS 同源" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="browser" target="next" data-model-id="e16" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="HTTPS 同源">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-16" value="JSON 表单" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="browser" target="inqapi" data-model-id="e17" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="JSON 表单">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-17" value="POST /fh/v1/inquiries 服务密钥鉴权" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="inqapi" target="wp" data-model-id="e18" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="POST /fh/v1/inquiries&#10;服务密钥鉴权">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-18" value="发送 (当前直发)" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="inqapi" target="mailer" data-model-id="e19" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="发送 (当前直发)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-19" value="HTML/CSS/JS" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="next" target="browser" data-model-id="e20" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="HTML/CSS/JS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

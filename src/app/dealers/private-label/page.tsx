@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "Private Label Forged Wheels — Manufacture Under Your Own Brand",
   description:
     "Fenghuai manufactures private label forged wheels under your brand — custom centre caps, engraving, packaging and documentation, with confidentiality and design exclusivity available on request.",
+  robots: { index: false, follow: true },
 };
 
 /**

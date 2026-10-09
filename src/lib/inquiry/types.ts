@@ -9,8 +9,18 @@
  *      is part of the record.
  */
 
+export type InquiryCustomerType = "business" | "individual";
+
+export type InquiryProductLine =
+  | "wheels"
+  | "ev-components"
+  | "custom-aluminum"
+  | "safety-tires";
+
 /** The visitor-facing form payload. */
 export type InquiryInput = {
+  customerType: InquiryCustomerType;
+  productLine: InquiryProductLine;
   name: string;
   email: string;
   /** Optional — but B2B export buyers expect it. */
@@ -22,6 +32,9 @@ export type InquiryInput = {
   model?: string;
   finish?: string;
   quantity?: string;
+  inputsAvailable?: string[];
+  /** Approved policy version presented beside the checkbox. */
+  privacyVersion: string;
   message: string;
 };
 

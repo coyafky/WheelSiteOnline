@@ -16,19 +16,26 @@
   3. **事务** —— `wp_insert_post()` 不是天然的事务单元。任务明确要求：
      用一个「在 COMMIT 前故意失败」的探针实测 ROLLBACK 真的带走了 CPT 与键行。
      本脚本每次运行都会重跑这个探针（临时 PHP，跑完即删）。
+  4. **发件箱 worker** —— 到期条件、租约互斥、僵死租约回收、退避计数与
+     最大重试次数都必须有数据库实证，不能只看函数是否存在。
 
 ⚠️ 本项目已知病是「弱断言」：只看 HTTP 状态码不足以说明问题。所以下面每一条
 关键断言都同时核对**响应体内容**与**数据库实证**（information_schema / 直接查表）。
 
 依赖：docker 容器 fh-wp（WordPress）与 fh-wp-db（MySQL）在跑；
 服务密钥读容器里的常量（也就是 local-wp/.env 经 WORDPRESS_CONFIG_EXTRA 之后的结果）。
+
+脚本运行期间会把本地 WordPress 选项 `fh_inquiry_delivery_paused` 临时置为 `1`，
+避免验收用例向真实收件箱连续发信；进入 worker 用例前恢复，finally 再兜底清除。
 """
 
 from __future__ import annotations
 
 import hashlib
+import html as html_lib
 import json
 import os
+import re
 import secrets
 import subprocess
 import sys
@@ -270,13 +277,183 @@ if ($mode === 'tx') {
     exit(0);
 }
 
+if ($mode === 'worker') {
+    global $wpdb;
+    $resendOptionExisted = get_option('fh_inquiry_resend_api_key', null) !== null;
+    $resendOptionValue   = get_option('fh_inquiry_resend_api_key', '');
+    update_option('fh_inquiry_resend_api_key', '', false);
+    $outbox = fh_inquiry_outbox_table();
+    $now    = gmdate('Y-m-d H:i:s');
+    $past   = gmdate('Y-m-d H:i:s', time() - 60);
+    $future = gmdate('Y-m-d H:i:s', time() + 600);
+
+    $postId = wp_insert_post([
+        'post_type'    => FH_INQUIRY_POST_TYPE,
+        'post_status'  => 'private',
+        'post_title'   => 'INQ-WORKER-PROBE',
+        'post_content' => 'worker probe',
+    ]);
+    update_post_meta($postId, 'name', 'Worker Probe');
+    update_post_meta($postId, 'email', 'vfytest@example.com');
+    update_post_meta($postId, 'message', 'worker probe');
+    update_post_meta($postId, 'email_status', 'pending');
+
+    $insert = static function (array $overrides = []) use ($wpdb, $outbox, $postId, $now): int {
+        $row = array_merge([
+            'inquiry_id'      => $postId,
+            'event_type'      => 'sales_notification',
+            'status'          => 'pending',
+            'attempts'        => 0,
+            'next_attempt_at' => $now,
+            'lease_owner'     => null,
+            'lease_expires_at'=> null,
+            'last_error'      => null,
+            'created_at'      => $now,
+            'updated_at'      => $now,
+        ], $overrides);
+        $wpdb->insert($outbox, $row);
+        return (int) $wpdb->insert_id;
+    };
+
+    // 五种候选：到期、未到期、有效租约、已达上限、过期租约。
+    $dueId     = $insert();
+    $futureId  = $insert(['next_attempt_at' => $future]);
+    $leasedId  = $insert(['lease_owner' => 'other-worker', 'lease_expires_at' => $future]);
+    $maxedId   = $insert(['attempts' => FH_INQUIRY_DISPATCH_MAX_ATTEMPTS]);
+    $expiredId = $insert(['lease_owner' => 'dead-worker', 'lease_expires_at' => $past]);
+
+    $claimed1 = fh_inquiry_claim_outbox(10);
+    $claimedIds1 = array_map(static fn(array $row): int => (int) $row['id'], $claimed1);
+    sort($claimedIds1);
+    $claimed2 = fh_inquiry_claim_outbox(10);
+
+    $leasedRows = $wpdb->get_results(
+        "SELECT id, lease_owner, lease_expires_at FROM {$outbox} WHERE id IN ({$dueId},{$expiredId}) ORDER BY id",
+        ARRAY_A
+    );
+
+    // 租约选择检查结束后移除五条候选，另建一条专门验证失败重试。
+    $wpdb->query("DELETE FROM {$outbox} WHERE inquiry_id = " . (int) $postId);
+    $retryId = $insert();
+    $runs = [];
+    for ($i = 1; $i <= FH_INQUIRY_DISPATCH_MAX_ATTEMPTS; $i++) {
+        // 不真的等待退避时间，但每轮都从数据库把它推进到“已到期”。
+        $wpdb->update($outbox, ['next_attempt_at' => $past], ['id' => $retryId]);
+        $stats = fh_inquiry_run_dispatch();
+        $row = $wpdb->get_row($wpdb->prepare(
+            "SELECT status, attempts, next_attempt_at, lease_owner, lease_expires_at, last_error
+             FROM {$outbox} WHERE id = %d",
+            $retryId
+        ), ARRAY_A);
+        $runs[] = ['stats' => $stats, 'row' => $row];
+    }
+    $afterLimit = fh_inquiry_run_dispatch();
+
+    fh_inquiry_schedule_dispatch();
+    $nextCron = wp_next_scheduled(FH_INQUIRY_DISPATCH_HOOK);
+    $event = $nextCron ? wp_get_scheduled_event(FH_INQUIRY_DISPATCH_HOOK) : false;
+    $schedules = wp_get_schedules();
+
+    if ($resendOptionExisted) {
+        update_option('fh_inquiry_resend_api_key', $resendOptionValue, false);
+    } else {
+        delete_option('fh_inquiry_resend_api_key');
+    }
+
+    echo wp_json_encode([
+        'cron_next'       => $nextCron,
+        'cron_schedule'   => $event ? $event->schedule : '',
+        'cron_interval'   => (int) ($schedules[FH_INQUIRY_DISPATCH_INTERVAL]['interval'] ?? 0),
+        'guard_ids'       => compact('dueId', 'futureId', 'leasedId', 'maxedId', 'expiredId'),
+        'claimed_first'   => $claimedIds1,
+        'claimed_second'  => count($claimed2),
+        'leased_rows'     => $leasedRows,
+        'retry_runs'      => $runs,
+        'after_limit'     => $afterLimit,
+    ]), "\n";
+    exit(0);
+}
+
+if ($mode === 'presentation') {
+    if (!function_exists('submit_button')) {
+        require_once ABSPATH . 'wp-admin/includes/template.php';
+    }
+    $admins = get_users(['role' => 'administrator', 'number' => 1, 'fields' => 'ID']);
+    if (!empty($admins)) {
+        wp_set_current_user((int) $admins[0]);
+    }
+
+    $postId = wp_insert_post([
+        'post_type'    => FH_INQUIRY_POST_TYPE,
+        'post_status'  => 'private',
+        'post_title'   => 'INQ-PRESENTATION-PROBE',
+        'post_content' => 'presentation probe',
+    ]);
+    $meta = [
+        'customer_type'            => 'business',
+        'product_line'             => 'wheels',
+        'message'                  => "Need quote\n<script>alert('probe')</script>",
+        'quantity'                 => '24',
+        'inputs_available'         => 'Drawing available',
+        'name'                     => 'CONTACT-TOKEN',
+        'email'                    => 'presentation@example.com',
+        'country_code'             => 'DE',
+        'company'                  => 'COMPANY-TOKEN',
+        'whatsapp'                 => '+49 000 000',
+        'business_status'          => 'new',
+        'email_status'             => 'pending',
+        'privacy_version'          => 'verify-1',
+        'consented_at'             => '2026-10-08T00:00:00Z',
+        'context_model'            => 'MODEL-TOKEN',
+        'context_production_code'  => 'CODE-TOKEN',
+        'context_spec_json'        => wp_json_encode(['size' => '18x8.5', 'pcd' => '5x112']),
+        'context_source_page'      => 'https://example.com/products/wheels/probe',
+        'context_intent'           => 'wheel_model_quote',
+        'variant_pending'          => '0',
+    ];
+    foreach ($meta as $key => $value) {
+        update_post_meta($postId, $key, $value);
+    }
+
+    $rendered = fh_inquiry_render_email($postId);
+    $editUrl  = (string) get_edit_post_link($postId, 'raw');
+
+    $_GET = ['page' => 'fh-inquiries'];
+    ob_start();
+    fh_inquiry_render_list();
+    $listHtml = (string) ob_get_clean();
+
+    ob_start();
+    fh_inquiry_render_message_box(get_post($postId));
+    $detailHtml = (string) ob_get_clean();
+
+    echo wp_json_encode([
+        'post_id'      => (int) $postId,
+        'post_type'    => (string) get_post_type($postId),
+        'post_title'   => (string) get_post_field('post_title', $postId),
+        'edit_url'     => $editUrl,
+        'subject'      => (string) ($rendered['subject'] ?? ''),
+        'text'         => (string) ($rendered['text'] ?? ''),
+        'html'         => (string) ($rendered['html'] ?? ''),
+        'list_html'    => $listHtml,
+        'detail_html'  => $detailHtml,
+    ]), "\n";
+    exit(0);
+}
+
 echo wp_json_encode(['error' => 'unknown mode']), "\n";
 """
 
 
-def run_probe(mode: str) -> dict:
+def run_probe(mode: str, env: dict[str, str] | None = None) -> dict:
+    docker_args: list[str] = []
+    for key, value in (env or {}).items():
+        docker_args.extend(["-e", f"{key}={value}"])
+    docker_args.extend(
+        [CONTAINER, "sh", "-c", f"cat > {PROBE_PATH_IN_CONTAINER} && php {PROBE_PATH_IN_CONTAINER} {mode}"]
+    )
     proc = docker_exec(
-        [CONTAINER, "sh", "-c", f"cat > {PROBE_PATH_IN_CONTAINER} && php {PROBE_PATH_IN_CONTAINER} {mode}"],
+        docker_args,
         stdin=PROBE_PHP,
     )
     out = (proc.stdout or "").strip()
@@ -395,6 +572,13 @@ def main() -> int:
     )
 
     try:
+        pause = docker_php(
+            'require "/var/www/html/wp-load.php"; '
+            'update_option("fh_inquiry_delivery_paused", "1", false); '
+            'echo get_option("fh_inquiry_delivery_paused", "0");'
+        )
+        record(pause == "1", "本地验收已暂停真实邮件投递", f"option={pause}")
+
         # ── 1 语法 ──────────────────────────────────────────────────────────
         print("\n[1] 插件语法")
         lint = docker_exec([CONTAINER, "php", "-l", PLUGIN_IN_CONTAINER])
@@ -423,6 +607,38 @@ def main() -> int:
         missing = sorted(set(check["expected_meta"]) - set(check["meta_keys"]))
         record(not missing, f"{len(check['expected_meta'])} 个 meta 字段全部注册", f"缺 {missing}" if missing else "")
         record(check["service_key_set"] is True, "服务密钥在容器内可解析（常量或环境变量）")
+
+        capability_matrix = json.loads(docker_php(
+            'require "/var/www/html/wp-load.php"; '
+            '$sales=get_role("fh_inquiry_sales"); $contributor=get_role("contributor"); '
+            '$author=get_role("author"); $admin=get_role("administrator"); '
+            'echo wp_json_encode(['
+            '"sales_manage"=>$sales ? $sales->has_cap("edit_fh_inquiries") : false,'
+            '"sales_delivery"=>$sales ? $sales->has_cap("manage_fh_inquiry_delivery") : false,'
+            '"contributor_manage"=>$contributor ? $contributor->has_cap("edit_fh_inquiries") : false,'
+            '"author_manage"=>$author ? $author->has_cap("edit_fh_inquiries") : false,'
+            '"admin_manage"=>$admin ? $admin->has_cap("edit_fh_inquiries") : false,'
+            '"admin_delivery"=>$admin ? $admin->has_cap("manage_fh_inquiry_delivery") : false'
+            ']);'
+        ))
+        record(
+            capability_matrix["sales_manage"] is True
+            and capability_matrix["sales_delivery"] is False,
+            "询盘销售可处理业务字段，但不能手动派发邮件",
+            str(capability_matrix),
+        )
+        record(
+            capability_matrix["contributor_manage"] is False
+            and capability_matrix["author_manage"] is False,
+            "Contributor/Author 不再因 edit_posts 读取客户询盘",
+            str(capability_matrix),
+        )
+        record(
+            capability_matrix["admin_manage"] is True
+            and capability_matrix["admin_delivery"] is True,
+            "管理员拥有询盘处理与邮件派发能力",
+            str(capability_matrix),
+        )
 
         for group in ("key", "outbox", "event"):
             record(check["tables_exist"][group] is True, f"专用表存在：{check['tables'][group]}")
@@ -674,7 +890,14 @@ def main() -> int:
         )
         status_map = {k: v for k, v in spoof_status}
         record(
-            code_s == 201 and status_map.get("business_status") == "new" and status_map.get("email_status") != "accepted",
+            # 本断言的真契约是「客户端伪造的状态不被采纳」，而不是「邮件必须发不出去」。
+            # 早期发信通道未配置时 email_status 恒为 pending，这条被写成了 != "accepted"；
+            # 现在 SMTP 已通、真实发送会置 accepted，那个写法会把「功能修好了」判成失败。
+            # 正确判据：落库值不得等于客户端伪造的值，且必须是合法枚举内由服务端决定的结果。
+            code_s == 201
+            and status_map.get("business_status") == "new"
+            and status_map.get("email_status") in ("pending", "sending", "accepted", "failed")
+            and status_map.get("provider_message_id") in (None, ""),
             "客户端伪造的 emailStatus/businessStatus 被忽略",
             f"HTTP {code_s} 实得 {status_map}",
         )
@@ -696,9 +919,162 @@ def main() -> int:
                 f'require "/var/www/html/wp-load.php"; wp_delete_post({filler["id"]}, true); echo "ok";'
             )
 
+        # ── 9 发件箱 worker ─────────────────────────────────────────────────
+        print("\n[9] 发件箱 worker：调度、租约、退避与上限")
+        mid_cleanup = json.loads(cleanup())
+        record(
+            mid_cleanup["posts_left"] == 0
+            and mid_cleanup["keys_left"] == 0
+            and mid_cleanup["outbox_left"] == 0,
+            "worker 验收前已隔离前序测试数据",
+            json.dumps(mid_cleanup, ensure_ascii=False),
+        )
+        # worker 需要验证真实重试状态机，先恢复默认；该探针自己的 PHP 进程会清空授权码。
+        docker_php(
+            'require "/var/www/html/wp-load.php"; '
+            'delete_option("fh_inquiry_delivery_paused"); echo "ok";'
+        )
+        # 仅此 PHP 探针进程清空 SMTP 授权码；容器长期配置不变，也不会发送测试邮件。
+        worker = run_probe("worker", {"FH_INQUIRY_SMTP_PASS": "", "RESEND_API_KEY": ""})
+
+        record(
+            bool(worker["cron_next"])
+            and worker["cron_schedule"] == "fh_inquiry_every_5_minutes"
+            and worker["cron_interval"] == 300,
+            "WP-Cron 已注册 5 分钟派发事件",
+            f"schedule={worker['cron_schedule']} interval={worker['cron_interval']}",
+        )
+
+        guards = worker["guard_ids"]
+        expected_claimed = sorted([guards["dueId"], guards["expiredId"]])
+        record(
+            worker["claimed_first"] == expected_claimed,
+            "只领取已到期且无有效租约的记录；过期租约可回收",
+            f"实得 {worker['claimed_first']}，期望 {expected_claimed}",
+        )
+        record(
+            worker["claimed_second"] == 0,
+            "同一批记录在有效租约内不能被第二个 worker 重复领取",
+            f"第二次领取 {worker['claimed_second']} 条",
+        )
+        record(
+            len(worker["leased_rows"]) == 2
+            and all(row.get("lease_owner") and row.get("lease_expires_at") for row in worker["leased_rows"]),
+            "领取后已写入租约所有者与到期时间",
+            f"实得 {worker['leased_rows']}",
+        )
+
+        retry_runs = worker["retry_runs"]
+        attempts = [int(run["row"]["attempts"]) for run in retry_runs]
+        record(
+            attempts == [1, 2, 3, 4, 5],
+            "发信通道不可用时 attempts 每轮严格递增",
+            f"实得 {attempts}",
+        )
+        record(
+            all(
+                run["row"]["lease_owner"] is None
+                and run["row"]["lease_expires_at"] is None
+                for run in retry_runs
+            ),
+            "每次失败后都释放租约",
+        )
+        record(
+            all(run["row"]["next_attempt_at"] for run in retry_runs[:4]),
+            "未达上限时写入下一次退避时间",
+            f"实得 {[run['row']['next_attempt_at'] for run in retry_runs[:4]]}",
+        )
+        last_retry = retry_runs[-1]
+        record(
+            last_retry["row"]["status"] == "failed"
+            and int(last_retry["row"]["attempts"]) == 5
+            and last_retry["row"]["next_attempt_at"] is None
+            and int(last_retry["stats"]["abandoned"]) == 1,
+            "第 5 次失败后转为已放弃且不再排期",
+            f"实得 status={last_retry['row']['status']} attempts={last_retry['row']['attempts']}",
+        )
+        record(
+            int(worker["after_limit"]["claimed"]) == 0,
+            "达到最大次数后后续 worker 不再领取",
+            f"实得 {worker['after_limit']}",
+        )
+
+        # ── 10 邮件格式与 WordPress 后台可见性 ─────────────────────────────
+        print("\n[10] 邮件格式与 WordPress 后台可见性")
+        presentation = run_probe("presentation")
+        email_html = presentation["html"]
+        email_text = presentation["text"]
+        edit_url = presentation["edit_url"]
+        list_html = presentation["list_html"]
+        detail_html = presentation["detail_html"]
+        list_body = list_html.split("<tbody>", 1)[-1].split("</tbody>", 1)[0]
+        email_hrefs = [html_lib.unescape(value) for value in re.findall(r'href="([^"]+)"', email_html)]
+
+        record(
+            presentation["post_id"] > 0
+            and presentation["post_type"] == CPT
+            and presentation["post_title"] == "INQ-PRESENTATION-PROBE",
+            "同一询盘已保存为 WordPress fh_inquiry 记录",
+            f"post_id={presentation['post_id']}",
+        )
+        record(
+            bool(edit_url)
+            and f"post={presentation['post_id']}" in edit_url
+            and "action=edit" in edit_url,
+            "邮件可生成同一询盘的 WordPress 详情链接",
+            edit_url,
+        )
+        record(
+            '<meta charset="UTF-8">' in email_html
+            and all(section in email_html for section in (
+                "Contact", "Inquiry details", "Submitted configuration", "Source &amp; consent"
+            )),
+            "HTML 邮件声明 UTF-8，并按联系人、需求、规格快照、来源与同意分区",
+        )
+        record(
+            edit_url in email_hrefs
+            and "View in WordPress" in email_html,
+            "HTML 邮件提供 WordPress 详情入口",
+        )
+        record(
+            "<script>" not in email_html
+            and "&lt;script&gt;" in email_html
+            and "<script>" not in detail_html
+            and "&lt;script&gt;" in detail_html,
+            "邮件和后台详情都会转义客户输入",
+        )
+        record(
+            email_text.count("\n") >= 12
+            and "CONTACT" in email_text
+            and "INQUIRY DETAILS" in email_text
+            and "WORDPRESS RECORD" in email_text,
+            "纯文本备用正文保留分区与换行",
+            f"换行 {email_text.count(chr(10))} 个",
+        )
+
+        # 列表应按表头顺序输出：客户 → 客户类型 → 产品线 → 型号 → 业务状态。
+        list_positions = [
+            list_body.find("CONTACT-TOKEN"),
+            list_body.find("企业 / 贸易商"),
+            list_body.find("轮毂"),
+            list_body.find("MODEL-TOKEN"),
+            list_body.find("新询盘"),
+        ]
+        record(
+            all(pos >= 0 for pos in list_positions)
+            and list_positions == sorted(list_positions),
+            "WordPress 询盘列表字段与表头顺序一致",
+            f"位置 {list_positions}",
+        )
+
     finally:
-        # ── 清理 ────────────────────────────────────────────────────────────
-        print("\n[9] 清理")
+        # ── 11 清理 ─────────────────────────────────────────────────────────
+        print("\n[11] 清理")
+        docker_php(
+            'require "/var/www/html/wp-load.php"; '
+            'delete_option("fh_inquiry_delivery_paused"); echo "ok";',
+            allow_fail=True,
+        )
         try:
             summary = json.loads(cleanup())
             record(

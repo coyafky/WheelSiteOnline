@@ -1,0 +1,98 @@
+name: fenghuai-wordpress
+
+services:
+  db:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --performance-schema=OFF
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 640M
+
+  wordpress:
+    image: wordpress:php8.3-apache@sha256:5a93c470ae8220fddf71f6ebe3bc94e615ddc2ae4d9810f795b830fb11c41a17
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DEBUG: "0"
+      WP_ENVIRONMENT_TYPE: production
+      WORDPRESS_AUTH_KEY: ${WORDPRESS_AUTH_KEY}
+      WORDPRESS_SECURE_AUTH_KEY: ${WORDPRESS_SECURE_AUTH_KEY}
+      WORDPRESS_LOGGED_IN_KEY: ${WORDPRESS_LOGGED_IN_KEY}
+      WORDPRESS_NONCE_KEY: ${WORDPRESS_NONCE_KEY}
+      WORDPRESS_AUTH_SALT: ${WORDPRESS_AUTH_SALT}
+      WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT}
+      WORDPRESS_LOGGED_IN_SALT: ${WORDPRESS_LOGGED_IN_SALT}
+      WORDPRESS_NONCE_SALT: ${WORDPRESS_NONCE_SALT}
+      WORDPRESS_PUBLIC_URL: ${WORDPRESS_PUBLIC_URL}
+      FH_INQUIRY_SERVICE_KEY: ${FH_INQUIRY_SERVICE_KEY}
+      FH_INQUIRY_SMTP_HOST: ${FH_INQUIRY_SMTP_HOST:-smtp.qq.com}
+      FH_INQUIRY_SMTP_PORT: ${FH_INQUIRY_SMTP_PORT:-465}
+      FH_INQUIRY_SMTP_SECURE: ${FH_INQUIRY_SMTP_SECURE:-ssl}
+      FH_INQUIRY_SMTP_USER: ${FH_INQUIRY_SMTP_USER:-}
+      FH_INQUIRY_SMTP_PASS: ${FH_INQUIRY_SMTP_PASS:-}
+      FH_INQUIRY_MAIL_FROM: ${FH_INQUIRY_MAIL_FROM:-}
+      FH_INQUIRY_MAIL_TO: ${FH_INQUIRY_MAIL_TO:-}
+      FH_INQUIRY_RETENTION_DAYS: ${FH_INQUIRY_RETENTION_DAYS:-0}
+      FH_NEXT_REVALIDATE_URL: ${FH_NEXT_REVALIDATE_URL:-}
+      FH_NEXT_REVALIDATE_SECRET: ${FH_NEXT_REVALIDATE_SECRET}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('WORDPRESS_PUBLIC_URL'));
+        define('WP_SITEURL', getenv('WORDPRESS_PUBLIC_URL'));
+        define('WP_ENVIRONMENT_TYPE', 'production');
+        define('DISALLOW_FILE_EDIT', true);
+        define('WP_MEMORY_LIMIT', '256M');
+        define('FH_INQUIRY_SERVICE_KEY', getenv('FH_INQUIRY_SERVICE_KEY') ?: '');
+        define('FH_INQUIRY_SMTP_HOST', getenv('FH_INQUIRY_SMTP_HOST') ?: 'smtp.qq.com');
+        define('FH_INQUIRY_SMTP_PORT', getenv('FH_INQUIRY_SMTP_PORT') ?: '465');
+        define('FH_INQUIRY_SMTP_SECURE', getenv('FH_INQUIRY_SMTP_SECURE') ?: 'ssl');
+        define('FH_INQUIRY_SMTP_USER', getenv('FH_INQUIRY_SMTP_USER') ?: '');
+        define('FH_INQUIRY_SMTP_PASS', getenv('FH_INQUIRY_SMTP_PASS') ?: '');
+        define('FH_INQUIRY_MAIL_FROM', getenv('FH_INQUIRY_MAIL_FROM') ?: '');
+        define('FH_INQUIRY_MAIL_TO', getenv('FH_INQUIRY_MAIL_TO') ?: '');
+        define('FH_INQUIRY_RETENTION_DAYS', getenv('FH_INQUIRY_RETENTION_DAYS') ?: '0');
+        define('FH_NEXT_REVALIDATE_URL', getenv('FH_NEXT_REVALIDATE_URL') ?: '');
+        define('FH_NEXT_REVALIDATE_SECRET', getenv('FH_NEXT_REVALIDATE_SECRET') ?: '');
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./mu-plugins:/var/www/html/wp-content/mu-plugins:ro
+    ports:
+      - "127.0.0.1:${WP_BIND_PORT:-7081}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(@fsockopen(\"127.0.0.1\", 80) ? 0 : 1);'"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 640M
+
+volumes:
+  db_data:
+  wordpress_data:

@@ -36,6 +36,7 @@
 - [代码与资产盘点](outputs/site-launch-plan/05-code-and-assets-inventory.md)：执行前的代码、数据、素材现状。
 - [航鹏轮毂素材库](outputs/hangpeng-wheel-media/README.md)：68 张候选素材、清单和本地浏览页。
 - [首页 Page SPEC](PAGE-SPECS/homepage.md)：2N 结构参考、四条产品线、六项制造能力、合作制造边界、交付路径和统一询盘。
+- [About 公司角色分工模块](PAGE-SPECS/about-company-role.md)：A02 四项角色与集团纵向一体化链条、同一 ownership group 公开口径、六类禁发内容和证据边界。
 - [About 轮毂制造合作方模块](PAGE-SPECS/about-wheel-factory.md)：四张 WordPress 工厂图片、英文文案、双端布局与验收。
 - [Capabilities 轮毂制造与质量能力](PAGE-SPECS/capabilities-wheel-manufacturing.md)：五个视口、12 张工艺/检测图、2 张证书候选和证据门槛。
 - [锻造轮毂高端定制](PAGE-SPECS/forged-wheel-customization.md)：六个视口、WordPress 真实媒体绑定、装车案例发布门槛和英文内容。

@@ -6,7 +6,6 @@ import {
   WHEEL_DETAIL_CONFIGURATION_ANCHOR,
   wheelDetailEnquiryContext,
 } from "@/content/wheel-detail";
-import type { ProductFamily } from "@/content/types";
 
 import type { WheelVariantSpec } from "./spec-format";
 import { WheelInquiryPanel } from "./wheel-inquiry-panel";
@@ -42,7 +41,6 @@ export function WheelDetailInteractive({
   model,
   variants,
   initialSelectedCode,
-  families,
 }: {
   model: string;
   /** Already projected for the browser — the raw source `finish` is not sent. */
@@ -52,8 +50,6 @@ export function WheelDetailInteractive({
    * model with no valid selection — the visitor is never pre-decided for (§6).
    */
   initialSelectedCode: string | null;
-  /** Passed through to the shared form; see the page for why it is empty. */
-  families: ProductFamily[];
 }) {
   const baseId = useId();
   const [selectedCode, setSelectedCode] = useState<string | null>(initialSelectedCode);
@@ -91,7 +87,6 @@ export function WheelDetailInteractive({
       <WheelInquiryPanel
         model={model}
         selectedVariant={selectedVariant}
-        families={families}
         headingId={ENQUIRY_SECTION_ID}
       />
     </>

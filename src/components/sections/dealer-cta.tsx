@@ -84,12 +84,14 @@ export function DealerCta({
                 Request a quote
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              <a
-                href={`mailto:${site.contact.email}`}
-                className="text-sm text-steel transition-colors hover:text-forge"
-              >
-                {site.contact.email}
-              </a>
+              {site.contact.confirmed ? (
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="text-sm text-steel transition-colors hover:text-forge"
+                >
+                  {site.contact.email}
+                </a>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -100,12 +102,14 @@ export function DealerCta({
               Request a quote
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-            <a
-              href={`mailto:${site.contact.email}`}
-              className="text-sm text-steel transition-colors hover:text-forge"
-            >
-              {site.contact.email}
-            </a>
+            {site.contact.confirmed ? (
+              <a
+                href={`mailto:${site.contact.email}`}
+                className="text-sm text-steel transition-colors hover:text-forge"
+              >
+                {site.contact.email}
+              </a>
+            ) : null}
           </div>
         )}
       </div>

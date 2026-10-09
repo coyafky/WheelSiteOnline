@@ -1,0 +1,503 @@
+{
+  "records": [
+    {
+      "slug": "how-to-measure-fitment",
+      "title": "How to measure your fitment",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "The five numbers a forged wheel order actually needs, how to read them off a vehicle, and why a tape measure alone will get you into trouble.",
+      "category": "Fitment",
+      "reading_time": "6 min read",
+      "answer": "A forged wheel order is defined by five values — diameter, width, offset, PCD and centre bore — and of those, offset is the one that goes wrong. Start from the OEM specification for the exact trim, adjust deliberately, and let the factory check the result before material is cut.",
+      "needs_verification": true,
+      "detail": [
+        {
+          "heading": "The five numbers that matter",
+          "paragraphs": [
+            "A forged wheel order is specified by five values: diameter, width, offset, PCD (bolt pattern) and centre bore. Everything else — face profile, lip depth, spoke concavity — follows from how those five interact with the vehicle.",
+            "Diameter and width are straightforward and are the numbers customers quote. Offset is where most orders go wrong, because it is invisible to anyone who has not measured it and it changes how the wheel sits relative to the arch, the suspension and the brake caliper."
+          ]
+        },
+        {
+          "heading": "Measuring offset without a wheel off the car",
+          "paragraphs": [
+            "Offset (ET) is the distance from the wheel's mounting face to its centreline, in millimetres. Positive means the mounting face is outboard of the centreline; negative means inboard.",
+            "The reliable route for a vehicle that is new to you is to start from the OEM specification for that exact trim, then adjust deliberately and in small steps. If you are measuring a physical wheel, backspacing (the distance from the mounting face to the inboard edge) is easier to measure directly and converts back to offset once you know the width."
+          ]
+        },
+        {
+          "heading": "What to send the factory",
+          "paragraphs": [
+            "Photograph the vehicle with the arch visible, note any brake or suspension modification, and give us the OEM specification you are starting from along with the stance you are targeting. We will check clearance and load rating against it and flag anything that will not fit before material is cut."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "The five numbers a wheel order is built from",
+          "body": [
+            "Every forged wheel is manufactured to five values. Diameter and width define the size. Offset defines where the wheel's mounting face sits relative to its own centreline. PCD — the bolt pattern — defines the circle the mounting holes sit on and the number of studs or bolts. Centre bore defines the hub hole that centres the wheel on the vehicle.",
+            "Two of these are visible to anyone: diameter and width. They are also the two that customers lead with, which is why they get the most attention and cause the least trouble. The other three are effectively invisible on a finished car, and they are where orders fail.",
+            "The important thing to understand is that these are not independent. Change the width and you change where both edges of the wheel sit for a given offset. Change the offset and you move the whole wheel in or outboard without changing its width. A specification that quotes a width but not an offset is not a specification — it is half of one."
+          ]
+        },
+        {
+          "heading": "Why a tape measure alone is not enough",
+          "body": [
+            "It is tempting to measure the gap between the current wheel and the arch, add that as additional width, and quote the result. That works on the outboard side and tells you nothing about the inboard side, which is usually the real constraint.",
+            "The inboard lip has to clear the suspension strut, control arms, brake caliper and any brake cooling ducting. On a car with a large brake package, that clearance can already be tight with the factory wheel. Add width on the outboard side by reducing offset and you have simultaneously moved the inboard lip closer to those components.",
+            "This is why we start from the OEM specification for the exact trim rather than from a measurement. The OEM number is a known-good baseline that clears everything as shipped. Adjustments from there are deliberate and can be checked one at a time."
+          ]
+        },
+        {
+          "heading": "Reading offset off a wheel you have in front of you",
+          "body": [
+            "Offset is normally stamped or cast on the inside of the wheel, usually as an ET number. Where it is not legible, you can measure it: lay the wheel face-down on a flat surface, measure the distance from the mounting face down to the surface — that is backspacing — then relate it to the wheel's width.",
+            "Backspacing and offset describe the same geometry from opposite ends, and you cannot convert between them without knowing the width. That conversion is covered in its own guide, because confusing the two is a common cause of a mis-quoted fitment."
+          ]
+        },
+        {
+          "heading": "PCD and centre bore: measure, do not guess",
+          "body": [
+            "Both are easy to measure incorrectly and both matter. PCD is the diameter of the circle passing through the centre of the bolt holes — not the distance between two adjacent holes, which is the mistake people make and which gives a plausible-looking wrong answer. Centre bore is the diameter of the hub hole and must match the vehicle's hub spigot.",
+            "We do not recommend spigot rings as a way to bridge a centre-bore mismatch on a custom order. If we are manufacturing the wheel for your car, the correct answer is to build it with the right centre bore in the first place."
+          ]
+        },
+        {
+          "heading": "What we need from you to confirm a fitment",
+          "body": [
+            "Send the vehicle make, model, exact trim and model year, the chassis code where you know it, the brake package if there is more than one, any suspension change, and the stance you are targeting. If you have the OEM wheel specification, include it.",
+            "We will review that against the clearance envelope and the load rating, propose a specification, and return it to you in writing for approval before anything is cut.",
+            "PLACEHOLDER: any specific measurement value quoted to a customer — offset, PCD, centre bore, or a load rating — must come from Fenghuai engineering for the specific vehicle. Nothing on this page should be used as a lookup value."
+          ]
+        }
+      ],
+      "seo_title": "How to measure your fitment — Fitment Guide",
+      "seo_description": "The five numbers a forged wheel order actually needs, how to read them off a vehicle, and why a tape measure alone will get you into trouble.",
+      "media": {
+        "src": "/images/wheels/17-dm902-5.webp",
+        "alt": "DM902 wheel used as a visual reference for fitment documentation",
+        "caption": "Approved wheel media; specifications remain model and variant specific.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "approved wheel publication: dm902"
+      }
+    },
+    {
+      "slug": "offset-and-backspacing",
+      "title": "Understanding offset and backspacing",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "Two ways of describing the same measurement, and the conversion that stops a customer's wheel from sitting 15mm further out than they expected.",
+      "category": "Fitment",
+      "reading_time": "5 min read",
+      "answer": "Offset and backspacing describe the same geometry from opposite reference points — offset from the wheel's centreline, backspacing from the mounting face to the inboard lip. You cannot convert between them without knowing the width, which is why a spec quoting one and not the other is incomplete.",
+      "needs_verification": false,
+      "detail": [
+        {
+          "heading": "They describe the same thing from opposite ends",
+          "paragraphs": [
+            "Offset is measured from the wheel centreline. Backspacing is measured from the mounting face to the inboard lip. One is wheel-centric, the other is car-centric, and confusion between them is a common reason a quoted fitment comes out wrong.",
+            "For a given width, the two are directly related — which means converting between them requires knowing the width, and a specification quoting backspacing without a width is incomplete."
+          ]
+        },
+        {
+          "heading": "Why it matters at the arch",
+          "paragraphs": [
+            "On a wide-body or lowered car, the constraint is usually not the outboard arch but the inboard clearance: the inner lip against the suspension strut, control arm or brake caliper. That is a backspacing question, and it is the one a wheel that 'looks right' can still fail.",
+            "Aggressive negative offsets push the wheel outboard and reduce inboard clearance. On a car with big brakes, that clearance is already tight before you change anything."
+          ]
+        },
+        {
+          "heading": "Practical approach",
+          "paragraphs": [
+            "Agree the target stance with the customer first. Then we work back to an offset that delivers it without sacrificing brake or suspension clearance, and give you the resulting specification in writing before the order is cut."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Two reference points, one geometry",
+          "body": [
+            "Offset is measured from the wheel's own centreline to its mounting face. Positive offset means the mounting face is outboard of the centreline — the wheel's mounting surface sits closer to the outside face. Negative offset means the mounting face is inboard of the centreline.",
+            "Backspacing is measured from the mounting face to the inboard edge of the wheel. It is a different question: not 'where is the face relative to the wheel' but 'how far does the wheel reach inboard once it is bolted on'.",
+            "Both are correct descriptions of the same wheel. Which one you use depends on the question you are asking. If you are comparing wheel designs against each other, offset is natural. If you are asking whether a wheel will clear the suspension, backspacing is the more direct answer."
+          ]
+        },
+        {
+          "heading": "The conversion, and why width is mandatory",
+          "body": [
+            "Because offset is measured from the centreline and backspacing from the mounting face, converting between them depends on where the mounting face sits relative to the centreline — which is exactly what offset describes — and on the total width, which is what tells you where the inboard edge is.",
+            "So the conversion requires both values. A specification that gives backspacing but omits the width cannot be converted back to an offset, and a specification quoting offset without a width cannot tell you whether the inboard lip clears anything.",
+            "The practical rule: never accept a fitment figure in isolation. A useful fitment specification states diameter, width, offset, PCD and centre bore together."
+          ]
+        },
+        {
+          "heading": "Where each one actually decides the outcome",
+          "body": [
+            "The outboard question — does the wheel sit flush, tuck, or poke — is an offset question, because it is about where the outer face lands relative to the arch.",
+            "The inboard question — does the wheel foul the strut, the arm or the caliper — is a backspacing question, because it is about how far the wheel reaches inwards from the mounting face.",
+            "Most fitment failures we see are inboard. A wheel that looks perfect against the arch can still catch a control arm on compression, and that is not something you can assess by eye from outside the car. On a car with a large brake package, the margin is often already small with the factory wheel."
+          ]
+        },
+        {
+          "heading": "Negative offset and the brake problem",
+          "body": [
+            "Aggressive negative offset pushes the wheel outboard, which reduces the space available on the inboard side. On a car with a big-brake option, that space is already the tightest part of the whole envelope.",
+            "The consequence is that a low-offset wheel that fits a car with standard brakes may not clear the same car optioned with the larger brake package. This is why we ask for the brake option, not just the model."
+          ]
+        },
+        {
+          "heading": "How we work it out for you",
+          "body": [
+            "Agree the target stance first. That is a customer decision and it should be made deliberately, not arrived at by accident from a wheel that happened to be available.",
+            "We then work back to an offset that delivers the stance without consuming the clearance you need on the inboard side, and return the resulting specification — with all five values — in writing before the order is cut.",
+            "PLACEHOLDER: any specific offset or backspacing value we quote must be produced by Fenghuai engineering for the specific vehicle. Do not treat numbers from this guide as buildable specifications."
+          ]
+        }
+      ],
+      "seo_title": "Understanding offset and backspacing — Fitment Guide",
+      "seo_description": "Two ways of describing the same measurement, and the conversion that stops a customer's wheel from sitting 15mm further out than they expected.",
+      "media": {
+        "src": "/images/about/cad-design.webp",
+        "alt": "Wheel geometry being reviewed at an engineering workstation",
+        "caption": "Geometry should be checked from a recorded baseline, not appearance alone.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "WP 44 / approved internal media"
+      }
+    },
+    {
+      "slug": "monoblock-vs-two-piece",
+      "title": "Monoblock vs two-piece: choosing a construction",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "Lightest versus widest, stiffest versus serviceable. A decision framework rather than a sales pitch — including when two-piece is the wrong answer.",
+      "category": "Construction",
+      "reading_time": "6 min read",
+      "answer": "Start from the constraint, not the look. Monoblock is lightest and stiffest and is the right answer when unsprung weight matters. Two-piece adds a joint but unlocks lip depth and extreme widths that a single piece cannot reach. Choosing a deep lip because it photographs well is not engineering.",
+      "needs_verification": false,
+      "detail": [
+        {
+          "heading": "Start from the constraint, not the look",
+          "paragraphs": [
+            "Monoblock wheels are cut from one forged blank. There is no join and no bolted centre, which makes them the lightest and stiffest construction we build and gives the tightest control on runout and balance.",
+            "Two-piece wheels pair a forged centre with a separately formed barrel. That allows lip depth and step styling to be set independently of the spoke design, which is what produces the deep-lip look and the extreme widths a single piece cannot reach."
+          ]
+        },
+        {
+          "heading": "When two-piece is the wrong answer",
+          "paragraphs": [
+            "If the customer is chasing unsprung weight and steering response, two-piece adds a joint and hardware that monoblock does not have. The correct answer is monoblock, and selling the deep lip instead because it looks better in a photograph is not engineering.",
+            "Conversely, if the requirement is a 13-inch-wide rear on a wide-body build, monoblock may not be able to deliver it at all. The construction follows the requirement."
+          ]
+        },
+        {
+          "heading": "Serviceability",
+          "paragraphs": [
+            "Two-piece barrels can be replaced without scrapping the forged centre. On a car that is regularly tracked or kerbed, that is a genuine economic argument over the life of the wheel — though it is not a reason to choose two-piece on its own."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "What each construction actually is",
+          "body": [
+            "A monoblock wheel is machined from a single forged blank. The spoke face, the rim and the mounting pad are one continuous piece of metal. There is no interface, no bolts and no seal between two parts.",
+            "A two-piece wheel has a forged centre — the face and spokes — mated to a separately formed barrel that supplies the rim and the lip. The two are joined and sealed. Because the centre and the barrel are manufactured independently, each can be shaped for its own purpose: the centre for the spoke design, the barrel for lip depth and width.",
+            "That separation is the whole point. It is what allows a deep lip to exist independently of the face design, and it is what allows barrel widths that a single machined piece cannot economically reach."
+          ]
+        },
+        {
+          "heading": "The performance case for monoblock",
+          "body": [
+            "Removing the joint and its hardware removes mass, and it removes a set of fastened interfaces that all have to stay tight over the life of the wheel. For a wheel that is expected to be light and to stay true, a single piece is the cleaner engineering answer.",
+            "The practical benefit is unsprung and rotational mass. Reducing either improves how a car responds — steering feel, ride quality over sharp inputs, and the effort the suspension has to control. This is directionally true on any car and most noticeable on a performance platform.",
+            "We deliberately do not quote specific weight savings in this guide. Any figure quoted to a customer should come from our engineers with a stated test basis for the exact specification being ordered."
+          ]
+        },
+        {
+          "heading": "The case for two-piece",
+          "body": [
+            "Two-piece exists to solve problems monoblock cannot. If the requirement is a deep lip, or a step-lip profile that sets the rim depth visually as well as physically, that is a two-piece answer. If the requirement is a width beyond what a monoblock blank can be machined to at that diameter, that is also a two-piece answer.",
+            "The second benefit is serviceability. A barrel that is damaged can be replaced without discarding the forged centre. On a wheel that lives on a track car or a car parked regularly against kerbs, that is a real reduction in the cost of ownership over several years."
+          ]
+        },
+        {
+          "heading": "How to choose, in order",
+          "body": [
+            "First, establish the hard constraint. Is there a width or lip depth the customer needs that monoblock cannot produce? If yes, the decision is made for you and the conversation moves to which two-piece configuration delivers it.",
+            "Second, if both are viable, ask what the customer actually values. Unsprung weight and stiffness point to monoblock. A specific lip look, or the ability to replace a barrel later, points to two-piece.",
+            "Third, be honest about the trade. If a customer is chasing lap-time feel and asks for a deep lip because they saw one they liked, the correct advice is that the two objectives pull against each other and they should choose which one matters more."
+          ]
+        },
+        {
+          "heading": "What we need from you",
+          "body": [
+            "Tell us the vehicle, the width and diameter target, the stance, and what the customer values most. We will tell you which construction is buildable for that requirement and, where both are, what the trade-off looks like in practice."
+          ]
+        }
+      ],
+      "seo_title": "Monoblock vs two-piece: choosing a construction — Construction Guide",
+      "seo_description": "Lightest versus widest, stiffest versus serviceable. A decision framework rather than a sales pitch — including when two-piece is the wrong answer.",
+      "media": {
+        "src": "/images/wheels/18-ff107.webp",
+        "alt": "Machined wheel face used to illustrate construction choices",
+        "caption": "Construction is selected against the project requirement.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "approved wheel inventory media"
+      }
+    },
+    {
+      "slug": "forged-vs-cast",
+      "title": "Forged vs cast wheels",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "Why forging costs more, what the material actually does differently, and where a cast wheel is still the honest recommendation.",
+      "category": "Construction",
+      "reading_time": "5 min read",
+      "answer": "Forging works a solid billet under high pressure so the material's grain follows the shape of the part; casting pours metal into a mould. A forged wheel of the same dimensions can generally be lighter and stronger because the material is doing more work per gram — but where budget rules forged out, an honest cast recommendation beats an over-claimed forged one.",
+      "needs_verification": true,
+      "detail": [
+        {
+          "heading": "What forging does to the material",
+          "paragraphs": [
+            "Forging works a solid billet under high pressure, which aligns the material's grain structure along the shape of the part. A casting is poured into a mould, so the grain structure is less directional and the material generally carries more porosity.",
+            "The practical result is that a forged wheel can be both lighter and stronger than a cast wheel of the same dimensions — the material is doing more work per gram because it has been formed rather than poured."
+          ]
+        },
+        {
+          "heading": "Where it shows up",
+          "paragraphs": [
+            "On a performance car the benefit is unsprung weight and stiffness, both of which the driver feels through steering response and ride. On a truck or SUV the benefit is load capacity and resistance to impact damage.",
+            "PLACEHOLDER: any specific strength, weight-saving or load-rating figures quoted to a customer must come from Fenghuai's engineering team with a stated test basis."
+          ]
+        },
+        {
+          "heading": "When cast is the honest answer",
+          "paragraphs": [
+            "If the budget does not support a forged wheel, a cast wheel sold as a cast wheel is a better outcome than a forged wheel sold on numbers that do not hold up. Say so and keep the customer."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "The manufacturing difference",
+          "body": [
+            "Casting and forging are different ways of turning aluminium alloy into a wheel. Casting pours molten metal into a mould shaped like the finished part. It is efficient, it allows complex shapes, and it is the reason a cast wheel can be affordable.",
+            "Forging takes a solid billet and works it under high pressure into the rough shape of the wheel, before machining refines it. The pressure deforms the metal rather than melting it, and that process aligns the material's internal grain structure to follow the form of the part.",
+            "The difference that matters is not a single number, it is the directionality and the consistency of the material. A forged part has a grain that runs with the load paths. A cast part has a grain structure determined by how the metal cooled, which is generally less directional and more likely to include internal porosity."
+          ]
+        },
+        {
+          "heading": "What that gives the driver",
+          "body": [
+            "Because forged material is doing more work per unit of mass, a forged wheel of a given size and strength can generally be built lighter than an equivalent casting. The benefit is unsprung and rotational mass: less weight for the suspension to control, less inertia for the drivetrain to spin up.",
+            "The other benefit is toughness. On a truck or SUV that sees rough surfaces, the resistance to impact damage and the ability to carry load matter more than lap-time feel. Forging helps there too.",
+            "We deliberately do not publish specific strength or weight figures in this guide. Where a customer needs numbers, they should come from our engineers with a stated test basis and for the exact specification being ordered."
+          ]
+        },
+        {
+          "heading": "The cost, stated plainly",
+          "body": [
+            "Forging costs more. The billet is more expensive than the raw material for a casting, the forging process itself is capital-intensive, and removing material from a solid forged blank by machining takes longer than finishing a casting near its final shape.",
+            "That cost is real and it does not disappear through scale. A dealer quoting a forged wheel against a cast competitor is quoting a different product, and the honest framing is to explain what the customer is buying rather than to try to match the cast price."
+          ]
+        },
+        {
+          "heading": "When cast is a legitimate recommendation",
+          "body": [
+            "If the customer's budget or use case does not support a forged wheel, saying so is better than stretching the truth. A cast wheel sold as a cast wheel sets the right expectation; a cast wheel implied to be forged does not, and it comes back as a complaint the first time something goes wrong.",
+            "There are applications where a forged wheel is genuinely not the priority: a low-mileage show car, a spare, or a winter set. In those cases a well-made cast wheel can be the correct answer, and recommending it honestly is how you keep the account."
+          ]
+        },
+        {
+          "heading": "What we need from you",
+          "body": [
+            "Tell us how the car is used, what the customer values, and what the budget allows. We will recommend a construction and be explicit about which parts of the recommendation are engineering and which are commercial."
+          ]
+        }
+      ],
+      "seo_title": "Forged vs cast wheels — Construction Guide",
+      "seo_description": "Why forging costs more, what the material actually does differently, and where a cast wheel is still the honest recommendation.",
+      "media": {
+        "src": "/images/about/forging-production-line.webp",
+        "alt": "Wheel manufacturing line inside a Fenghuai production facility",
+        "caption": "Manufacturing route evidence from the Fenghuai production group.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "WP 116 / approved internal media"
+      }
+    },
+    {
+      "slug": "finishing-options-explained",
+      "title": "Finishing options explained",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "Brushed, polished, satin, matte and gloss — what each finish is, how it ages, and how to avoid a colour mismatch between samples and a delivered order.",
+      "category": "Finishing",
+      "reading_time": "5 min read",
+      "answer": "Finishes have two independent attributes — surface texture and colour — and customers routinely conflate them. Getting that distinction clear early prevents most finish disputes. The real risk with any finish is not the first order but the second one: repeatability depends on controlled process and a record of what was actually supplied.",
+      "needs_verification": false,
+      "detail": [
+        {
+          "heading": "Surface versus colour",
+          "paragraphs": [
+            "Finishes have two independent attributes that customers often conflate. Surface texture — brushed, polished, satin, matte, gloss — describes how the metal interacts with light. Colour describes its hue.",
+            "You can have a matte bronze and a gloss bronze; they are the same colour with different surface behaviour. Getting this distinction clear early prevents most finish disputes."
+          ]
+        },
+        {
+          "heading": "Why swatches lie",
+          "paragraphs": [
+            "A flat colour swatch cannot show how linear grain catches light as a wheel turns, how a gloss behaves in direct sunlight, or how a finish reads against a specific body colour. Screen calibration changes it again.",
+            "For anything other than a straightforward gloss or matte black, ask for a physical sample or a photograph of the exact finish on an actual wheel before committing a full order."
+          ]
+        },
+        {
+          "heading": "Repeatability",
+          "paragraphs": [
+            "The real risk with finishes is not the first order — it is the second one. Repeatability depends on controlled process stages and on keeping a record of what was actually supplied. Ask what finish the previous order was, not what it was called."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Two attributes, not one",
+          "body": [
+            "A finish is a combination of a surface treatment and a colour. Surface treatment describes how light behaves when it hits the metal: whether it is scattered evenly by a matte or satin texture, reflected sharply by a polish, or caught in fine lines by a directional brush. Colour describes the hue that the treatment is applied over or tinted with.",
+            "These are independent. Satin black and gloss black are the same colour with different surface behaviour. Satin bronze and gloss bronze likewise. When a customer describes the finish they want, establishing which of the two they are actually reacting to — the texture or the hue — resolves most of the ambiguity before it becomes a dispute."
+          ]
+        },
+        {
+          "heading": "The common surface treatments",
+          "body": [
+            "Brushed finishes apply a fine directional grain to the metal under a clear coat. The grain catches light differently as the wheel turns, so a brushed wheel changes character with the angle you view it from. It reads as technical and understated.",
+            "Polished finishes reflect sharply and show a hard highlight where they catch the light. On a rim lip, a polish draws an edge line around the wheel; on a full face it is a much stronger statement and needs more care to maintain.",
+            "Satin sits between matte and gloss: a soft sheen without a hard reflection. It is the most forgiving of the gloss levels against most body colours.",
+            "Matte scatters light evenly and shows no reflection. It is understated and it hides minor surface variation well. The trade-off is that matte surfaces can be harder to clean uniformly, since some cleaning products leave a sheen behind.",
+            "Gloss is fully reflective, hardest and easiest to wipe clean, and provides the maximum contrast and depth. It is also the least forgiving of surface defects, because a reflection shows every imperfection."
+          ]
+        },
+        {
+          "heading": "Colour, and the problem with swatches",
+          "body": [
+            "A flat colour swatch is a representation, not a sample. It cannot show how a directional grain behaves as the wheel rotates, how a gloss reads in direct sunlight versus shade, or how the finish interacts with the specific paint on the car it will sit on.",
+            "On top of that, screens render colour differently from each other and from the real object, and a swatch seen on a phone is not evidence of what a delivered wheel will look like. For anything other than a straightforward gloss or matte black, a physical sample or a photograph of the exact finish on an actual wheel is worth the effort before a customer commits.",
+            "Note also that a two-tone finish is not one colour — it is two, usually a contrasting face and lip. Those need to be agreed together, because the contrast is the point."
+          ]
+        },
+        {
+          "heading": "Repeatability is the real risk",
+          "body": [
+            "The first order is rarely the problem. The second order, six months later, is. Finish repeatability depends on controlled process stages: consistent surface preparation, consistent application, consistent curing. Where those vary, the second batch will not match the first, and a customer who ordered one wheel to replace a damaged one will notice immediately.",
+            "The mitigation is record-keeping. What matters is not what the finish was called on the invoice but what was actually applied and how. When a repeat order comes in, we should be able to reproduce the previous process, not approximate it from a name."
+          ]
+        },
+        {
+          "heading": "How to specify a finish without problems",
+          "body": [
+            "Agree the colour and the surface treatment as two separate decisions. If the finish is anything other than a basic gloss or matte, get a physical sample or a photograph of the exact finish on a wheel in front of the customer before the order is placed. Record what was supplied, not just its name, so the next order can be matched.",
+            "PLACEHOLDER: confirm which finishes Fenghuai currently offers, and produce a sample policy stating what we will send and how fast, before publishing this guide as advice."
+          ]
+        }
+      ],
+      "seo_title": "Finishing options explained — Finishing Guide",
+      "seo_description": "Brushed, polished, satin, matte and gloss — what each finish is, how it ages, and how to avoid a colour mismatch between samples and a delivered order.",
+      "media": {
+        "src": "/images/about/coating-workshop.webp",
+        "alt": "Coating workshop used to illustrate finish process planning",
+        "caption": "Finish availability is confirmed for the selected model and order.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "approved internal media"
+      }
+    },
+    {
+      "slug": "importing-freight-and-duties",
+      "title": "Importing wheels: freight and duties",
+      "status": "publish",
+      "publication_status": "approved",
+      "summary": "Incoterms, HS codes, duty and the paperwork trail — a dealer's checklist for getting wheels across a border without a customs hold.",
+      "category": "Logistics",
+      "reading_time": "7 min read",
+      "answer": "Agree the incoterm before you price the job — FOB, CIF and DDP shift who owns freight, insurance, duty and clearance, and therefore move the landed cost materially. Classify the goods correctly, state the country of origin, and keep the inspection record with the shipment paperwork, because that is what a damage claim is decided on.",
+      "needs_verification": true,
+      "detail": [
+        {
+          "heading": "Agree the incoterm before you price the job",
+          "paragraphs": [
+            "FOB, CIF and DDP are not interchangeable labels — they move who is responsible for freight, insurance, duty and clearance, and therefore move the landed cost materially. Quoting a customer before the incoterm is agreed is how margin disappears.",
+            "PLACEHOLDER: confirm which incoterms Fenghuai actually offers and which it will not, and produce a one-page explanation for dealers."
+          ]
+        },
+        {
+          "heading": "Classification and duty",
+          "paragraphs": [
+            "Wheels need a correct HS classification and a stated country of origin on the commercial invoice. Get the description wrong and the consignment stops at the border while it is resolved — usually at the worst possible moment for the customer.",
+            "Duty and tax rates vary by destination and by classification. They must be calculated for the destination market rather than assumed from a previous shipment."
+          ]
+        },
+        {
+          "heading": "Packing and damage claims",
+          "paragraphs": [
+            "Wheels are heavy and awkward, and once they are on a pallet they are handled by machinery rather than people. Freight-grade packing with reinforced corners is cheaper than a damage claim that takes eight weeks to resolve.",
+            "Photograph the consignment before it leaves and on arrival, and keep the inspection record with the shipment documentation — it is what a claim is decided on."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "The landed cost is not the invoice price",
+          "body": [
+            "The number a dealer needs before quoting a customer is the landed cost: the price of the goods plus freight, insurance, duty, and any clearance and handling charges to the point of delivery. Quoting from the invoice price alone is how a job that looked profitable turns out not to be.",
+            "The size of that gap depends on the destination market and on the terms agreed, so it has to be calculated per shipment. A rate that applied to a previous order to a different market is not evidence of anything."
+          ]
+        },
+        {
+          "heading": "Agree the incoterm first",
+          "body": [
+            "The incoterm — the three-letter trade term — decides where responsibility passes from seller to buyer. It determines who arranges and pays for freight, who arranges insurance, who clears the goods and who pays the duty.",
+            "The practical consequence is that two identical invoices can have very different landed costs depending on the term. FOB, where the buyer takes responsibility once the goods are on board, is a different commercial deal from DDP, where the seller delivers to the buyer's premises with duty paid.",
+            "This has to be agreed before a price is given to the end customer. A dealer who quotes a customer on one basis and then discovers the shipment was agreed on another has lost the difference out of their own margin.",
+            "PLACEHOLDER: confirm which incoterms Fenghuai offers, which it declines, and produce a short dealer-facing explanation of each before this advice is published."
+          ]
+        },
+        {
+          "heading": "Classification, origin and the invoice",
+          "body": [
+            "Every consignment needs a correct HS classification — the harmonised system code that tells customs what the goods are — and a stated country of origin. Both appear on the commercial invoice, and both need to be right.",
+            "A wrong description is not a minor clerical issue. It stops the consignment at the border while it is queried, which usually happens at the worst possible moment for the customer waiting on a set of wheels. Resolving it takes time you did not plan for and delays you cannot explain away.",
+            "Duty rates vary by destination and by classification, so the correct rate has to be looked up for the specific market rather than carried over from another shipment. VAT or sales tax treatment likewise varies by destination."
+          ]
+        },
+        {
+          "heading": "Packing, and why it decides your claim",
+          "body": [
+            "Wheels are heavy and awkward to handle. Once a pallet is in a freight network it is moved by machinery, loaded and unloaded several times, and stacked against other freight. Packing that would be fine for a courier parcel is not adequate for international freight.",
+            "Freight-grade packing — reinforced corners, wheels separated from each other, the pallet itself secured — costs less than the damage claim it prevents. A claim is also slow: even where it succeeds, the customer is waiting while it is resolved.",
+            "Documentation is what decides a claim. Photograph the consignment before it leaves and again on arrival, and keep the inspection record with the shipment paperwork. A claim without evidence of the condition at dispatch is much harder to substantiate."
+          ]
+        },
+        {
+          "heading": "A pre-shipment checklist",
+          "body": [
+            "Before any order ships, confirm: the incoterm is agreed and in writing; the invoice states the correct HS classification and country of origin; freight and insurance are arranged on the agreed basis; the packing meets a freight standard rather than a parcel standard; and photographs and the inspection record are captured before the goods leave the facility.",
+            "PLACEHOLDER: which of these Fenghuai performs, and which sit with the dealer, must be confirmed and documented internally before this checklist is presented to dealers as fact."
+          ]
+        }
+      ],
+      "seo_title": "Importing wheels: freight and duties — Logistics Guide",
+      "seo_description": "Incoterms, HS codes, duty and the paperwork trail — a dealer's checklist for getting wheels across a border without a customs hold.",
+      "media": {
+        "src": "/images/about/factory-aerial.webp",
+        "alt": "Aerial view of a Fenghuai manufacturing facility",
+        "caption": "Commercial and shipping terms are confirmed for each destination market.",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "WP 114 / approved internal media"
+      }
+    }
+  ]
+}

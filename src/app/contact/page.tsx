@@ -13,12 +13,12 @@ import {
   contactAside,
   contactDetailsCopy,
   contactFormCopy,
+  contactFormHeading,
   contactHero,
   contactPathways,
   contactSteps,
   contactWhatHappens,
 } from "@/content/contact";
-import { productFamilies } from "@/content/products";
 import { site } from "@/content/site";
 import { InquiryForm } from "@/components/inquiry-form";
 
@@ -86,15 +86,14 @@ export default function ContactPage() {
               id="enquiry-title"
               className="font-display text-[clamp(1.6rem,3.6vw,2.2rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              Wheel enquiry form
+              {contactFormHeading.title}
             </h2>
             <p className="mt-3 max-w-[560px] text-[0.98rem] leading-relaxed text-steel">
-              Everything we need to come back with a specification rather than a
-              follow-up question.
+              {contactFormHeading.body}
             </p>
 
             <div className="mt-8">
-              <InquiryForm families={productFamilies} copy={contactFormCopy} />
+              <InquiryForm copy={contactFormCopy} />
             </div>
           </div>
 
@@ -109,6 +108,7 @@ export default function ContactPage() {
                 {contactDetailsCopy.body}
               </p>
 
+              {site.contact.confirmed ? (
               <dl className="mt-7 grid gap-5">
                 <div className="flex items-start gap-3.5">
                   <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-forge/12 text-forge">
@@ -180,19 +180,15 @@ export default function ContactPage() {
                   </div>
                 </div>
               </dl>
-
-              {/* Placeholder warning — the contact details in site.ts are not real. */}
+              ) : (
               <p className="mt-7 flex items-start gap-2.5 rounded-lg border border-forge/35 bg-forge-soft px-4 py-3.5 text-[0.78rem] leading-relaxed text-forge-deep">
                 <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 <span>
-                  PLACEHOLDER contact details — the email address and phone
-                  number above are structural. Replace them in{" "}
-                  <code className="font-mono text-[0.74rem]">
-                    src/content/site.ts
-                  </code>{" "}
-                  before launch.
+                  Direct contact details are still being verified. Use the project
+                  enquiry form so your request follows the tracked intake process.
                 </span>
               </p>
+              )}
             </div>
 
             {/* What makes a quote fast */}

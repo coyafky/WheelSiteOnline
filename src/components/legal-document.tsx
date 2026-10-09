@@ -161,13 +161,23 @@ export function LegalDocumentPage({ doc }: { doc: LegalDocument }) {
               <p className="mt-2 text-sm leading-relaxed text-steel">
                 Contact us before you rely on any clause here.
               </p>
-              <a
-                href={`mailto:${site.contact.email}`}
-                className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
-              >
-                {site.contact.email}
-                <ArrowRight className="size-3.5" />
-              </a>
+              {site.contact.confirmed ? (
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
+                >
+                  {site.contact.email}
+                  <ArrowRight className="size-3.5" />
+                </a>
+              ) : (
+                <Link
+                  href="/contact"
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
+                >
+                  Open the contact page
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              )}
             </div>
           </aside>
 

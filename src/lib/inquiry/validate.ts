@@ -1,69 +1,62 @@
+import { inquirySubmissionSchema, zodFieldErrors } from "./schema.ts";
 import type { InquiryContext, InquiryInput } from "./types";
 
 /**
  * Server-side validation.
  *
  * The form validates too, but a route handler must never trust the client.
- * Kept dependency-free (no zod) to match the project's current setup.
+ * 客户端与服务端共用同一份 Zod 字段契约；路由仍须独立执行，不能信任浏览器。
  */
-
-// Deliberately permissive — catches typos, does not police RFC 5322.
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-const LIMITS = {
-  name: 120,
-  email: 200,
-  whatsapp: 40,
-  company: 160,
-  country: 80,
-  line: 60,
-  model: 60,
-  finish: 120,
-  quantity: 40,
-  message: 5000,
-} as const;
 
 export type ValidationResult =
   | { ok: true; input: InquiryInput; context: InquiryContext }
   | { ok: false; fieldErrors: Record<string, string> };
 
-function str(v: unknown, max: number): string {
-  return typeof v === "string" ? v.trim().slice(0, max) : "";
+function contextString(value: unknown, max: number): string {
+  return typeof value === "string" && value.trim().length <= max ? value.trim() : "";
 }
 
-export function validate(body: unknown): ValidationResult {
-  const fieldErrors: Record<string, string> = {};
-
+export function validate(body: unknown, expectedPrivacyVersion: string): ValidationResult {
   if (typeof body !== "object" || body === null) {
     return { ok: false, fieldErrors: { _form: "Invalid payload." } };
   }
   const raw = body as Record<string, unknown>;
+  const parsed = inquirySubmissionSchema.safeParse(raw);
+  if (!parsed.success) {
+    const fieldErrors = zodFieldErrors(parsed.error);
+    const privacyVersion =
+      typeof raw.privacyVersion === "string" ? raw.privacyVersion.trim() : "";
+    if (!privacyVersion || privacyVersion !== expectedPrivacyVersion) {
+      fieldErrors.privacyConsent = "The privacy notice changed. Review it and agree again.";
+    }
+    return { ok: false, fieldErrors };
+  }
 
-  // ── Required ────────────────────────────────────────────────────────────
-  const name = str(raw.name, LIMITS.name);
-  if (!name) fieldErrors.name = "Please tell us your name.";
+  if (parsed.data.privacyVersion !== expectedPrivacyVersion) {
+    return {
+      ok: false,
+      fieldErrors: {
+        privacyConsent: "The privacy notice changed. Review it and agree again.",
+      },
+    };
+  }
 
-  const email = str(raw.email, LIMITS.email);
-  if (!email) fieldErrors.email = "Please provide an email address.";
-  else if (!EMAIL.test(email)) fieldErrors.email = "That email address looks incomplete.";
-
-  const message = str(raw.message, LIMITS.message);
-  if (!message) fieldErrors.message = "Please describe what you need.";
-
-  if (Object.keys(fieldErrors).length > 0) return { ok: false, fieldErrors };
-
-  // ── Optional ────────────────────────────────────────────────────────────
+  const data = parsed.data;
   const input: InquiryInput = {
-    name,
-    email,
-    message,
-    whatsapp: str(raw.whatsapp, LIMITS.whatsapp) || undefined,
-    company: str(raw.company, LIMITS.company) || undefined,
-    country: str(raw.country, LIMITS.country) || undefined,
-    line: str(raw.line, LIMITS.line) || undefined,
-    model: str(raw.model, LIMITS.model) || undefined,
-    finish: str(raw.finish, LIMITS.finish) || undefined,
-    quantity: str(raw.quantity, LIMITS.quantity) || undefined,
+    customerType: data.customerType,
+    productLine: data.productLine,
+    name: data.name,
+    email: data.email,
+    message: data.message,
+    privacyVersion: data.privacyVersion,
+    whatsapp: data.whatsapp || undefined,
+    company: data.company || undefined,
+    country: data.country,
+    line: data.productLine,
+    model: data.model || undefined,
+    finish: data.finish || undefined,
+    quantity: data.quantity || undefined,
+    inputsAvailable: data.inputsAvailable.length > 0 ? data.inputsAvailable : undefined,
   };
 
   // ── Auto-captured context (never trusted from the user, only echoed) ─────
@@ -72,16 +65,16 @@ export function validate(body: unknown): ValidationResult {
     : {}) as Record<string, unknown>;
 
   const context: InquiryContext = {
-    pageUrl: str(ctxRaw.pageUrl, 500) || undefined,
-    pageType: str(ctxRaw.pageType, 60) || undefined,
-    model: str(ctxRaw.model, 60) || undefined,
-    productionCode: str(ctxRaw.productionCode, 60) || undefined,
-    series: str(ctxRaw.series, 120) || undefined,
-    from: str(ctxRaw.from, 60) || undefined,
-    productLine: str(ctxRaw.productLine, 60) || undefined,
-    application: str(ctxRaw.application, 80) || undefined,
-    inputType: str(ctxRaw.inputType, 60) || undefined,
-    intent: str(ctxRaw.intent, 60) || undefined,
+    pageUrl: contextString(ctxRaw.pageUrl, 500) || undefined,
+    pageType: contextString(ctxRaw.pageType, 60) || undefined,
+    model: contextString(ctxRaw.model, 60) || undefined,
+    productionCode: contextString(ctxRaw.productionCode, 60) || undefined,
+    series: contextString(ctxRaw.series, 120) || undefined,
+    from: contextString(ctxRaw.from, 60) || undefined,
+    productLine: contextString(ctxRaw.productLine, 60) || undefined,
+    application: contextString(ctxRaw.application, 80) || undefined,
+    inputType: contextString(ctxRaw.inputType, 60) || undefined,
+    intent: contextString(ctxRaw.intent, 60) || undefined,
     // Server-computed flag; the client can set it but it is overwritten by
     // `bindWheelEnquiry` before persistence. Only a real boolean passes.
     variantPending: ctxRaw.variantPending === true ? true : undefined,
@@ -90,7 +83,8 @@ export function validate(body: unknown): ValidationResult {
         ? Object.fromEntries(
             Object.entries(ctxRaw.selectedSpec as Record<string, unknown>)
               .slice(0, 12)
-              .map(([k, v]) => [str(k, 40), str(v, 120)]),
+              .map(([k, v]) => [contextString(k, 40), contextString(v, 120)])
+              .filter(([k, v]) => k && v),
           )
         : undefined,
   };

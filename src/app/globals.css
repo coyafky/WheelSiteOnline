@@ -32,6 +32,7 @@
   --color-muted: var(--fh-muted);
   --color-soft: var(--fh-soft);
   --color-forge: var(--fh-forge);
+  --color-forge-bright: var(--fh-forge-bright);
   --color-forge-deep: var(--fh-forge-deep);
   --color-forge-soft: var(--fh-forge-soft);
 
@@ -81,7 +82,8 @@
   --fh-steel: #5d6a7d;
   --fh-muted: #dfe3ea;
   --fh-soft: #f5f7fa;
-  --fh-forge: #c2650a;
+  --fh-forge: #aa5208;
+  --fh-forge-bright: #f2a65a;
   --fh-forge-deep: #8a4406;
   --fh-forge-soft: #fdf3e7;
 

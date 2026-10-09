@@ -1,328 +1,303 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import Link from "next/link";
+import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Check, ChevronDown, CircleAlert } from "lucide-react";
-import type { ProductFamily } from "@/content/types";
-// ⚠️ TYPE-ONLY import. Never import `@/lib/inquiry` here — that module pulls in
-// server-side storage (fs) and would break the client bundle.
-import type { InquiryContext } from "@/lib/inquiry/types";
+import { ArrowLeft, ArrowRight, Check, CircleAlert } from "lucide-react";
+import { inquiryFormUi, inquiryPreparation } from "@/content/inquiry-form";
+import { productLines } from "@/content/product-lines";
+import type {
+  InquiryContext,
+  InquiryCustomerType,
+  InquiryProductLine,
+} from "@/lib/inquiry/types";
+import {
+  inquiryStepOneSchema,
+  inquiryStepTwoSchema,
+  zodFieldErrors,
+} from "@/lib/inquiry/schema";
 import { cn } from "@/lib/utils";
 
-/* ---------------------------------------------------------------------------
-   Enquiry form — WIRED TO THE BACKEND.
-
-   `handleSubmit` POSTs to `/api/inquiries` with `{ ...values, context }`.
-   `context` is captured automatically from the URL the visitor arrived on —
-   never typed (see `buildContext`). Three outcomes, all reported honestly:
-
-     · 201 { ok: true }   → success state + redirect to `/thank-you?id=…`
-     · 422                → field errors mapped onto the offending inputs
-     · network / other    → explicit failure message; the panel does NOT
-                            pretend the enquiry was received.
-
-   ⚠️ A `delivered: false` response is NOT a failure. It means the notification
-   email did not go out; the enquiry is already persisted server-side. The
-   success state renders either way.
---------------------------------------------------------------------------- */
-
 type FormValues = {
-  company: string;
-  contactName: string;
+  customerType: InquiryCustomerType | "";
+  productLine: InquiryProductLine | "";
+  message: string;
+  quantity: string;
+  inputsAvailable: string[];
+  name: string;
   email: string;
   country: string;
-  vehicle: string;
-  family: string;
-  quantity: string;
-  finish: string;
-  message: string;
+  company: string;
+  whatsapp: string;
+  privacyConsent: boolean;
+  website: string;
 };
 
-type FormErrors = Partial<Record<keyof FormValues, string>>;
+type FormKey = keyof FormValues;
+type FormErrors = Partial<Record<FormKey, string>>;
 
-const EMPTY: FormValues = {
-  company: "",
-  contactName: "",
-  email: "",
-  country: "",
-  vehicle: "",
-  family: "",
-  quantity: "",
-  finish: "",
-  message: "",
+type FormCopy = {
+  submit: string;
+  successTitle: string;
+  successBody: string;
+  resetLabel: string;
+  errorSummaryTitle: string;
+  errorSummaryBody: string;
+  networkErrorTitle: string;
+  networkErrorBody: string;
+  pendingDeliveryNote: string;
+  submitting?: string;
+  requiredNote?: string;
+  optional?: string;
 };
 
-/** Deliberately permissive: catches typos, does not try to police RFC 5322. */
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-/**
- * The spec keys the URL may carry for a selected variant. Mirrors the
- * `?size=&pcd=&et=&cb=&finish=` contract the model pages emit, mapping each
- * query param onto the `selectedSpec` snapshot key.
- */
-const SPEC_PARAMS: Record<string, string> = {
-  size: "size",
-  pcd: "pcd",
-  et: "offset",
-  cb: "centerBore",
-  finish: "finish",
-};
-
-/**
- * Collect the originating context from the URL. Runs client-side on submit, so
- * it always sees the real `window.location`, query string and all.
- *
- * ⚠️ This is a SNAPSHOT, not a reference: the values are frozen as text at the
- * moment of submission and never re-resolved against the catalogue.
- */
-function buildContext(): InquiryContext {
-  if (typeof window === "undefined") return {};
-
-  const params = new URLSearchParams(window.location.search);
-  const first = (key: string): string | undefined =>
-    params.get(key)?.trim() || undefined;
-
-  const selectedSpec: Record<string, string> = {};
-  for (const [param, key] of Object.entries(SPEC_PARAMS)) {
-    const value = first(param);
-    if (value) selectedSpec[key] = value;
-  }
-
-  const context: InquiryContext = {
-    pageUrl: window.location.href,
-    pageType: first("pageType"),
-    model: first("model"),
-    productionCode: first("code") ?? first("productionCode"),
-    series: first("series"),
-    from: first("from"),
-    // Captured from the originating link, not selected by the visitor — see
-    // `InquiryContext` in `lib/inquiry/types.ts`.
-    productLine: first("product_line"),
-    application: first("application"),
-    inputType: first("input_type"),
-    intent: first("intent"),
-    selectedSpec: Object.keys(selectedSpec).length > 0 ? selectedSpec : undefined,
-  };
-
-  return context;
-}
-
-/** Shape of the 201 response from `POST /api/inquiries`. */
 type SubmitSuccess = {
   ok: true;
   id: string;
   delivered: boolean;
-  mock: boolean;
+  receiptToken?: string | null;
 };
-
-/** Shape of the 422 response from `POST /api/inquiries`. */
 type SubmitFailure = {
   ok: false;
   error: string;
   fieldErrors?: Record<string, string>;
 };
 
-/**
- * Map the server's field keys onto this form's field names. The backend
- * validates on `name`; the client form calls the same value `contactName`.
- */
-const SERVER_TO_FORM_FIELD: Partial<Record<string, keyof FormValues>> = {
-  name: "contactName",
-  email: "email",
-  company: "company",
-  country: "country",
-  model: "vehicle",
-  quantity: "quantity",
-  finish: "finish",
-  message: "message",
+const EMPTY: FormValues = {
+  customerType: "",
+  productLine: "",
+  message: "",
+  quantity: "",
+  inputsAvailable: [],
+  name: "",
+  email: "",
+  country: "",
+  company: "",
+  whatsapp: "",
+  privacyConsent: false,
+  website: "",
 };
 
+const PRODUCT_LINE_IDS = new Set(productLines.map((line) => line.slug));
+const PRIVACY_VERSION = process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim() ?? "";
+
+const SERVER_TO_FORM_FIELD: Partial<Record<string, FormKey>> = {
+  customerType: "customerType",
+  productLine: "productLine",
+  message: "message",
+  quantity: "quantity",
+  name: "name",
+  email: "email",
+  country: "country",
+  company: "company",
+  whatsapp: "whatsapp",
+  privacyConsent: "privacyConsent",
+};
+
+function createIdempotencyKey(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID().replaceAll("-", "");
+  }
+  return `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`.padEnd(32, "0");
+}
+
+function buildContext(): InquiryContext {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  const first = (key: string) => params.get(key)?.trim() || undefined;
+  const selectedSpec: Record<string, string> = {};
+  const specParams: Record<string, string> = {
+    size: "size",
+    pcd: "pcd",
+    et: "offset",
+    cb: "centerBore",
+    finish: "finish",
+  };
+  for (const [param, key] of Object.entries(specParams)) {
+    const value = first(param);
+    if (value) selectedSpec[key] = value;
+  }
+  return {
+    pageUrl: window.location.href,
+    pageType: first("pageType"),
+    model: first("model"),
+    productionCode: first("code") ?? first("productionCode"),
+    series: first("series"),
+    from: first("from"),
+    productLine: first("product_line"),
+    application: first("application"),
+    inputType: first("input_type"),
+    intent: first("intent"),
+    selectedSpec: Object.keys(selectedSpec).length > 0 ? selectedSpec : undefined,
+  };
+}
+
 export function InquiryForm({
-  families,
   copy,
 }: {
-  families: ProductFamily[];
-  copy: {
-    requiredNote: string;
-    optional: string;
-    submit: string;
-    submitting: string;
-    successTitle: string;
-    successBody: string;
-    resetLabel: string;
-    errorSummaryTitle: string;
-    errorSummaryBody: string;
-    /** Shown when the request never reached the server (network failure). */
-    networkErrorTitle: string;
-    /** Extra line under the network error heading. */
-    networkErrorBody: string;
-    /** Reassurance that the enquiry is logged even if email delivery failed. */
-    pendingDeliveryNote: string;
-  };
+  copy: FormCopy;
 }) {
   const router = useRouter();
   const baseId = useId();
-
-  // Prefill the vehicle field from the URL's `model` param so the visitor does
-  // not retype what the page they came from already knows.
-  const initialValues = useMemo<FormValues>(() => {
-    if (typeof window === "undefined") return EMPTY;
-    const params = new URLSearchParams(window.location.search);
-    return { ...EMPTY, vehicle: params.get("model")?.trim() ?? "" };
-  }, []);
-
-  const [values, setValues] = useState<FormValues>(initialValues);
+  const [step, setStep] = useState<1 | 2>(1);
+  const [values, setValues] = useState<FormValues>(EMPTY);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const [attempted, setAttempted] = useState(false);
-  /** Populated on a 201 — the single source of truth for the success panel. */
   const [receipt, setReceipt] = useState<SubmitSuccess | null>(null);
-  /** Set when the request never reached the server, or the server errored. */
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [idempotencyKey, setIdempotencyKey] = useState(createIdempotencyKey);
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
-  const fieldId = (name: keyof FormValues) => `${baseId}-${name}`;
-  const errorId = (name: keyof FormValues) => `${baseId}-${name}-error`;
+  useEffect(() => {
+    const candidate = new URLSearchParams(window.location.search).get("product_line")?.trim();
+    if (!candidate || !PRODUCT_LINE_IDS.has(candidate)) return;
+    const timer = window.setTimeout(() => {
+      setValues((current) => ({
+        ...current,
+        productLine: candidate as InquiryProductLine,
+      }));
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
-  const set = (name: keyof FormValues, value: string) => {
+  if (!PRIVACY_VERSION) {
+    return (
+      <div
+        role="status"
+        className="rounded-xl border border-forge/35 bg-forge-soft p-7 lg:p-9"
+      >
+        <h3 className="font-display text-xl font-800 uppercase text-ink">
+          {inquiryFormUi.formUnavailableTitle}
+        </h3>
+        <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-steel">
+          {inquiryFormUi.formUnavailableBody}
+        </p>
+      </div>
+    );
+  }
+
+  const fieldId = (name: FormKey) => `${baseId}-${name}`;
+  const errorId = (name: FormKey) => `${baseId}-${name}-error`;
+  const set = <K extends FormKey>(name: K, value: FormValues[K]) => {
     setValues((current) => ({ ...current, [name]: value }));
+    if (errors[name]) {
+      setErrors((current) => ({ ...current, [name]: undefined }));
+    }
+  };
 
-    // Clear the error for a field as soon as the user starts fixing it, but
-    // only if they have already attempted a submit — validating on every
-    // keystroke before that reads as nagging.
-    if (attempted && errors[name]) {
-      setErrors((current) => {
-        const next = { ...current };
-        delete next[name];
-        return next;
+  const focusFirstError = (found: FormErrors) => {
+    const first = Object.keys(found)[0] as FormKey | undefined;
+    if (first) {
+      requestAnimationFrame(() => {
+        const field = document.getElementById(fieldId(first));
+        if (first === "customerType") {
+          field?.querySelector<HTMLInputElement>("input")?.focus();
+          return;
+        }
+        field?.focus();
       });
     }
   };
 
-  const validate = (candidate: FormValues): FormErrors => {
-    const next: FormErrors = {};
-
-    if (!candidate.company.trim()) {
-      next.company = "Enter your company or business name.";
-    }
-
-    if (!candidate.contactName.trim()) {
-      next.contactName = "Enter the name of the person we should reply to.";
-    }
-
-    if (!candidate.email.trim()) {
-      next.email = "Enter a business email address so we can send the quote.";
-    } else if (!EMAIL_PATTERN.test(candidate.email.trim())) {
-      next.email = "That does not look like a valid email address.";
-    }
-
-    if (!candidate.country.trim()) {
-      next.country = "Enter the country you are importing into.";
-    }
-
-    if (!candidate.vehicle.trim()) {
-      next.vehicle = "List the vehicle or fitment you are quoting for.";
-    }
-
-    if (!candidate.family) {
-      next.family = "Select the wheel family you are interested in.";
-    }
-
-    if (!candidate.quantity.trim()) {
-      next.quantity = "Give an approximate quantity, even if it is a range.";
-    } else if (!/\d/.test(candidate.quantity)) {
-      next.quantity = "Quantity should include a number, for example “10 sets”.";
-    }
-
-    if (candidate.message.trim().length < 10) {
-      next.message = "Add a short note about the order so we can quote accurately.";
-    }
-
-    return next;
+  const validateStepOne = (): FormErrors => {
+    const result = inquiryStepOneSchema.safeParse(values);
+    return result.success ? {} : (zodFieldErrors(result.error) as FormErrors);
   };
 
-  const focusFirstError = (found: FormErrors) => {
-    // Move focus to the first field in error so keyboard and screen-reader
-    // users land where the problem is, rather than at the top of the page.
-    const firstKey = Object.keys(found)[0] as keyof FormValues;
-    if (firstKey) document.getElementById(fieldId(firstKey))?.focus();
+  const validateStepTwo = (): FormErrors => {
+    const result = inquiryStepTwoSchema.safeParse(values);
+    return result.success ? {} : (zodFieldErrors(result.error) as FormErrors);
+  };
+
+  const continueToContact = () => {
+    setAttempted(true);
+    const found = validateStepOne();
+    setErrors(found);
+    if (Object.keys(found).length > 0) return focusFirstError(found);
+    setAttempted(false);
+    setErrors({});
+    setStep(2);
+    requestAnimationFrame(() => document.getElementById(`${baseId}-step-title`)?.focus());
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (status === "submitting") return;
     setAttempted(true);
     setSubmitError(null);
-
-    const found = validate(values);
+    const found = { ...validateStepOne(), ...validateStepTwo() };
     setErrors(found);
-
-    if (Object.keys(found).length > 0) {
-      focusFirstError(found);
-      return;
-    }
+    if (Object.keys(found).length > 0) return focusFirstError(found);
 
     setStatus("submitting");
-
-    const context = buildContext();
-
-    // `InquiryInput` (server contract) is narrower than `FormValues`, so map
-    // explicitly rather than spreading the whole form state.
-    const payload = {
-      name: values.contactName,
-      email: values.email,
-      company: values.company,
-      country: values.country,
-      model: values.vehicle,
-      finish: values.finish || undefined,
-      quantity: values.quantity,
-      message: values.message,
-      context,
-    };
-
     let response: Response;
     try {
       response = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          idempotencyKey,
+          formStartedAt,
+          website: values.website,
+          customerType: values.customerType,
+          productLine: values.productLine,
+          message: values.message,
+          quantity: values.quantity || undefined,
+          inputsAvailable: values.inputsAvailable,
+          name: values.name,
+          email: values.email,
+          country: values.country.toUpperCase(),
+          company: values.company || undefined,
+          whatsapp: values.whatsapp || undefined,
+          privacyConsent: values.privacyConsent,
+          privacyVersion: PRIVACY_VERSION,
+          context: buildContext(),
+        }),
       });
     } catch {
-      // The request never left the browser. Say so — do not show success.
       setStatus("idle");
       setSubmitError(copy.networkErrorBody);
       return;
     }
 
-    if (response.status === 201) {
-      const body = (await response.json()) as SubmitSuccess;
-      // ⚠️ `delivered: false` is NOT a failure — the enquiry is persisted.
+    let body: SubmitSuccess | SubmitFailure | null = null;
+    try {
+      body = (await response.json()) as SubmitSuccess | SubmitFailure;
+    } catch {
+      // 由下面的通用失败状态处理。
+    }
+
+    if ((response.status === 200 || response.status === 201) && body?.ok) {
       setReceipt(body);
       setStatus("success");
-      // Hand off to the confirmation page with the real reference number.
-      router.push(`/thank-you?id=${encodeURIComponent(body.id)}`);
+      if (body.receiptToken) {
+        router.push(
+          `/thank-you?id=${encodeURIComponent(body.id)}&receipt=${encodeURIComponent(body.receiptToken)}`,
+        );
+      }
       return;
     }
 
-    if (response.status === 422) {
-      const body = (await response.json()) as SubmitFailure;
+    if (response.status === 422 && body && !body.ok) {
       const mapped: FormErrors = {};
       for (const [serverKey, message] of Object.entries(body.fieldErrors ?? {})) {
-        const formKey = SERVER_TO_FORM_FIELD[serverKey];
-        if (formKey) mapped[formKey] = message;
+        const key = SERVER_TO_FORM_FIELD[serverKey];
+        if (key) mapped[key] = message;
       }
-      setStatus("idle");
       setErrors(mapped);
+      setStatus("idle");
       if (Object.keys(mapped).length > 0) focusFirstError(mapped);
+      else setSubmitError(body.error);
       return;
     }
 
-    // 400 / 500 / anything else — the server rejected the request outright.
     setStatus("idle");
-    setSubmitError(copy.networkErrorBody);
+    setSubmitError(
+      response.status === 429 ? inquiryFormUi.rateLimited : copy.networkErrorBody,
+    );
   };
 
-  const errorKeys = Object.keys(errors) as (keyof FormValues)[];
-
-  /* ---------------------------------------------------------------- success */
   if (status === "success") {
     return (
       <div
@@ -333,74 +308,34 @@ export function InquiryForm({
         <span className="inline-flex size-12 items-center justify-center rounded-full bg-forge text-white">
           <Check className="size-6" strokeWidth={3} aria-hidden="true" />
         </span>
-
-        <h3 className="mt-6 font-display text-[clamp(1.5rem,3.4vw,2.1rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink">
+        <h3 className="mt-6 font-display text-2xl font-800 uppercase text-ink">
           {copy.successTitle}
         </h3>
-
-        <p className="mt-4 max-w-[560px] text-[1rem] leading-relaxed text-steel">
+        <p className="mt-4 max-w-[560px] leading-relaxed text-steel">
           {copy.successBody}
         </p>
-
-        {/* Reference number — the server's real id, never fabricated. */}
         {receipt ? (
-          <p className="mt-5 inline-flex flex-wrap items-baseline gap-2.5 rounded-lg border border-forge/35 bg-white/60 px-4 py-3">
-            <span className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-steel">
-              Reference
+          <p className="mt-5 inline-flex gap-2.5 rounded-lg border border-forge/35 bg-white/60 px-4 py-3">
+            <span className="font-display text-xs font-700 uppercase tracking-wider text-steel">
+              {inquiryFormUi.referenceLabel}
             </span>
-            <span className="font-mono text-[0.95rem] font-semibold text-forge-deep">
-              {receipt.id}
-            </span>
+            <span className="font-mono font-semibold text-forge-deep">{receipt.id}</span>
           </p>
         ) : null}
-
-        {/* Only surfaced when email delivery failed — the enquiry is still
-            recorded, so this is a note, not an error. */}
         {receipt && !receipt.delivered ? (
-          <p className="mt-4 flex items-start gap-2.5 rounded-lg border border-forge/35 bg-white/60 px-4 py-3.5 text-[0.82rem] leading-relaxed text-forge-deep">
-            <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-            <span>{copy.pendingDeliveryNote}</span>
-          </p>
+          <p className="mt-4 text-sm text-forge-deep">{copy.pendingDeliveryNote}</p>
         ) : null}
-
-        <dl className="mt-7 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
-          {[
-            { label: "Company", value: values.company },
-            { label: "Contact", value: values.contactName },
-            { label: "Email", value: values.email },
-            { label: "Country", value: values.country },
-            { label: "Vehicle / fitment", value: values.vehicle },
-            { label: "Wheel family", value: values.family },
-            { label: "Quantity", value: values.quantity },
-            { label: "Finish", value: values.finish || "Not specified" },
-          ].map((row) => (
-            <div key={row.label} className="bg-white px-5 py-4">
-              <dt className="font-display text-[0.64rem] font-700 uppercase tracking-[0.14em] text-steel">
-                {row.label}
-              </dt>
-              <dd className="mt-1.5 text-sm text-ink">{row.value}</dd>
-            </div>
-          ))}
-
-          <div className="bg-white px-5 py-4 sm:col-span-2">
-            <dt className="font-display text-[0.64rem] font-700 uppercase tracking-[0.14em] text-steel">
-              Message
-            </dt>
-            <dd className="mt-1.5 text-sm leading-relaxed text-ink/85">
-              {values.message}
-            </dd>
-          </div>
-        </dl>
-
         <button
           type="button"
           onClick={() => {
-            setValues(initialValues);
+            setValues(EMPTY);
+            setStep(1);
             setErrors({});
             setAttempted(false);
-            setSubmitError(null);
             setReceipt(null);
             setStatus("idle");
+            setIdempotencyKey(createIdempotencyKey());
+            setFormStartedAt(Date.now());
           }}
           className="btn-pill-outline mt-8 text-ink"
         >
@@ -410,294 +345,316 @@ export function InquiryForm({
     );
   }
 
-  /* ------------------------------------------------------------------- form */
+  const errorKeys = Object.keys(errors) as FormKey[];
+  const preparation = values.productLine
+    ? inquiryPreparation.byProductLine[values.productLine]
+    : inquiryPreparation.generic;
+
   return (
     <form
       noValidate
       onSubmit={handleSubmit}
-      aria-label="Wheel enquiry form"
-      className="rounded-xl border border-border bg-white p-7 lg:p-9"
+      aria-label={inquiryFormUi.ariaLabel}
+      className="rounded-xl border border-border bg-white p-6 lg:p-8"
     >
-      <p className="text-[0.8rem] leading-relaxed text-steel">
-        <span aria-hidden="true" className="text-forge">
-          *
-        </span>{" "}
-        {copy.requiredNote}
+      <ol
+        aria-label={inquiryFormUi.progressLabel}
+        className="grid grid-cols-[1fr_auto_1fr] items-center gap-3"
+      >
+        <li className="min-w-0">
+          {step === 2 ? (
+            <button
+              type="button"
+              onClick={() => {
+                setStep(1);
+                setErrors({});
+                setAttempted(false);
+              }}
+              className="group flex items-center gap-3 text-left"
+              aria-label={inquiryFormUi.editProjectLabel}
+            >
+              <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-forge text-white">
+                <Check className="size-4" aria-hidden="true" />
+              </span>
+              <span>
+                <span className="block text-[0.68rem] font-700 uppercase tracking-[0.14em] text-forge">
+                  {inquiryFormUi.completedLabel}
+                </span>
+                <span className="block truncate text-sm font-semibold text-ink group-hover:text-forge">
+                  {inquiryFormUi.projectStepLabel}
+                </span>
+              </span>
+            </button>
+          ) : (
+            <div className="flex items-center gap-3" aria-current="step">
+              <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-forge font-display text-sm font-800 text-white">
+                1
+              </span>
+              <span>
+                <span className="block text-[0.68rem] font-700 uppercase tracking-[0.14em] text-forge">
+                  {inquiryFormUi.stepOne}
+                </span>
+                <span className="block truncate text-sm font-semibold text-ink">
+                  {inquiryFormUi.projectStepLabel}
+                </span>
+              </span>
+            </div>
+          )}
+        </li>
+        <span className="h-px w-8 bg-border sm:w-16" aria-hidden="true" />
+        <li className="min-w-0">
+          <div className="flex items-center justify-end gap-3" aria-current={step === 2 ? "step" : undefined}>
+            <span
+              className={cn(
+                "inline-flex size-8 shrink-0 items-center justify-center rounded-full font-display text-sm font-800",
+                step === 2 ? "bg-forge text-white" : "bg-soft text-steel",
+              )}
+            >
+              2
+            </span>
+            <span className="min-w-0">
+              <span
+                className={cn(
+                  "block text-[0.68rem] font-700 uppercase tracking-[0.14em]",
+                  step === 2 ? "text-forge" : "text-steel",
+                )}
+              >
+                {inquiryFormUi.stepTwo}
+              </span>
+              <span className="block truncate text-sm font-semibold text-ink">
+                {inquiryFormUi.contactStepLabel}
+              </span>
+            </span>
+          </div>
+        </li>
+      </ol>
+      <h3
+        id={`${baseId}-step-title`}
+        tabIndex={-1}
+        className="mt-3 font-display text-2xl font-800 uppercase text-ink outline-none"
+      >
+        {step === 1 ? inquiryFormUi.stepOneTitle : inquiryFormUi.stepTwoTitle}
+      </h3>
+      <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-steel">
+        {step === 1 ? inquiryFormUi.stepOneDescription : inquiryFormUi.stepTwoDescription}
+      </p>
+      <p className="mt-3 text-xs text-steel">
+        <span className="text-forge" aria-hidden="true">*</span>{" "}
+        {copy.requiredNote ?? inquiryFormUi.requiredNote}
       </p>
 
-      {/* Transport failure — the enquiry never reached the server. */}
       {submitError ? (
         <div
           role="alert"
-          className="mt-6 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
+          className="mt-5 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
         >
-          <p className="flex items-center gap-2 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-destructive">
+          <p className="flex items-center gap-2 font-display text-xs font-700 uppercase text-destructive">
             <CircleAlert className="size-4" aria-hidden="true" />
             {copy.networkErrorTitle}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-ink/80">
-            {submitError}
-          </p>
+          <p className="mt-2 text-sm text-ink/80">{submitError}</p>
         </div>
       ) : null}
 
-      {/* Error summary — announced once, links to the first problem. */}
       {attempted && errorKeys.length > 0 ? (
         <div
           role="alert"
-          className="mt-6 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
+          className="mt-5 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
         >
-          <p className="flex items-center gap-2 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-destructive">
-            <CircleAlert className="size-4" aria-hidden="true" />
+          <p className="font-display text-xs font-700 uppercase text-destructive">
             {copy.errorSummaryTitle}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-ink/80">
-            {copy.errorSummaryBody}
-          </p>
-          <ul className="mt-3 grid gap-1.5">
-            {errorKeys.map((key) => (
-              <li key={key}>
-                <a
-                  href={`#${fieldId(key)}`}
-                  className="text-sm text-destructive underline decoration-destructive/40 underline-offset-2 hover:decoration-destructive"
-                >
-                  {errors[key]}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-2 text-sm text-ink/80">{copy.errorSummaryBody}</p>
         </div>
       ) : null}
 
-      <div className="mt-7 grid gap-6 sm:grid-cols-2">
-        <Field
-          id={fieldId("company")}
-          name="company"
-          label="Company / business name"
-          required
-          value={values.company}
-          error={attempted ? errors.company : undefined}
-          errorId={errorId("company")}
-          autoComplete="organization"
-          onChange={(value) => set("company", value)}
-        />
-
-        <Field
-          id={fieldId("contactName")}
-          name="contactName"
-          label="Contact name"
-          required
-          value={values.contactName}
-          error={attempted ? errors.contactName : undefined}
-          errorId={errorId("contactName")}
-          autoComplete="name"
-          onChange={(value) => set("contactName", value)}
-        />
-
-        <Field
-          id={fieldId("email")}
-          name="email"
-          type="email"
-          label="Business email"
-          required
-          value={values.email}
-          error={attempted ? errors.email : undefined}
-          errorId={errorId("email")}
-          autoComplete="email"
-          onChange={(value) => set("email", value)}
-        />
-
-        <Field
-          id={fieldId("country")}
-          name="country"
-          label="Country of import"
-          required
-          value={values.country}
-          error={attempted ? errors.country : undefined}
-          errorId={errorId("country")}
-          autoComplete="country-name"
-          onChange={(value) => set("country", value)}
-        />
-
-        <Field
-          id={fieldId("vehicle")}
-          name="vehicle"
-          label="Vehicle(s) / fitment"
-          required
-          value={values.vehicle}
-          error={attempted ? errors.vehicle : undefined}
-          errorId={errorId("vehicle")}
-          placeholder="e.g. BMW G80 M3, Porsche 992 Carrera S"
-          className="sm:col-span-2"
-          onChange={(value) => set("vehicle", value)}
-        />
-
-        {/* Wheel family select --------------------------------------------
-            §7 (PAGE-SPECS/wheel-detail.md WD03) lists the fields the wheel
-            model enquiry carries, and "wheel family" is not among them: the
-            model + productionCode already identify the product. It is also
-            meaningless here — the family groupings (Monoblock / Two-Piece /
-            Off-Road) were fictional and are being archived.
-
-            So the block renders only when the caller actually passes a family
-            list (the general /request-a-quote form still does). Without that
-            guard it would be an empty dropdown — two options, neither of them
-            a product. */}
-        {families.length > 0 ? (
-          <div className="sm:col-span-1">
-            <FieldLabel htmlFor={fieldId("family")} required>
-              Wheel family
-            </FieldLabel>
-            {/* Wrapper is relative so the chevron can sit over the native arrow
-                we removed with `appearance-none`. A real SVG beats an arbitrary
-                `bg-[url(data:…)]` utility here: it is inspectable, themeable and
-                does not depend on Tailwind parsing a data URI. */}
-            <div className="relative">
-              <select
-                id={fieldId("family")}
-                name="family"
-                value={values.family}
-                aria-invalid={attempted && Boolean(errors.family)}
-                aria-describedby={
-                  attempted && errors.family ? errorId("family") : undefined
-                }
-                onChange={(event) => set("family", event.target.value)}
-                className={cn(
-                  inputClass,
-                  "appearance-none pr-12",
-                  attempted && errors.family && "border-destructive",
-                  !values.family && "text-steel",
-                )}
-              >
-                <option value="">Select a family…</option>
-                {families.map((family) => (
-                  <option key={family.slug} value={family.name}>
-                    {family.name}
-                  </option>
-                ))}
-                <option value="Not sure yet">Not sure yet — advise me</option>
-              </select>
-
-              <ChevronDown
-                aria-hidden="true"
-                className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-steel"
+      {step === 1 ? (
+        <div className="mt-6 grid gap-5">
+          <RadioGroup
+            id={fieldId("customerType")}
+            label={inquiryFormUi.customerTypeLabel}
+            value={values.customerType}
+            options={inquiryFormUi.customerTypes}
+            error={errors.customerType}
+            onChange={(value) => set("customerType", value as InquiryCustomerType)}
+          />
+          <SelectField
+            id={fieldId("productLine")}
+            label={inquiryFormUi.productLineLabel}
+            value={values.productLine}
+            error={errors.productLine}
+            onChange={(value) => set("productLine", value as InquiryProductLine)}
+          />
+          <div className="rounded-lg border border-border bg-soft p-4">
+            <p className="font-display text-xs font-700 uppercase tracking-wider text-ink">
+              {inquiryPreparation.label}
+            </p>
+            <ul className="mt-2 grid gap-1 text-sm text-steel">
+              {preparation.map((item) => <li key={item}>• {item}</li>)}
+            </ul>
+          </div>
+          <TextAreaField
+            id={fieldId("message")}
+            label={inquiryFormUi.messageLabel}
+            help={inquiryFormUi.messageHelp}
+            value={values.message}
+            error={errors.message}
+            onChange={(value) => set("message", value)}
+          />
+          <Field
+            id={fieldId("quantity")}
+            label={inquiryFormUi.quantityLabel}
+            value={values.quantity}
+            error={errors.quantity}
+            placeholder={inquiryFormUi.quantityPlaceholder}
+            optionalLabel={copy.optional ?? inquiryFormUi.optional}
+            onChange={(value) => set("quantity", value)}
+          />
+          <CheckboxGroup
+            id={fieldId("inputsAvailable")}
+            values={values.inputsAvailable}
+            onChange={(next) => set("inputsAvailable", next)}
+          />
+          <button type="button" onClick={continueToContact} className="btn-pill-solid w-fit">
+            {inquiryFormUi.continueLabel}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </button>
+        </div>
+      ) : (
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+          <Field
+            id={fieldId("name")}
+            label={inquiryFormUi.nameLabel}
+            required
+            value={values.name}
+            error={errors.name}
+            autoComplete="name"
+            onChange={(value) => set("name", value)}
+          />
+          <Field
+            id={fieldId("email")}
+            label={inquiryFormUi.emailLabel}
+            type="email"
+            required
+            value={values.email}
+            error={errors.email}
+            autoComplete="email"
+            onChange={(value) => set("email", value)}
+          />
+          <Field
+            id={fieldId("country")}
+            label={inquiryFormUi.countryLabel}
+            required
+            value={values.country}
+            error={errors.country}
+            help={inquiryFormUi.countryHelp}
+            autoComplete="country"
+            onChange={(value) => set("country", value.toUpperCase())}
+          />
+          {values.customerType === "business" ? (
+            <Field
+              id={fieldId("company")}
+              label={inquiryFormUi.companyLabel}
+              value={values.company}
+              error={errors.company}
+              optionalLabel={copy.optional ?? inquiryFormUi.optional}
+              autoComplete="organization"
+              onChange={(value) => set("company", value)}
+            />
+          ) : null}
+          <Field
+            id={fieldId("whatsapp")}
+            label={inquiryFormUi.phoneLabel}
+            value={values.whatsapp}
+            error={errors.whatsapp}
+            optionalLabel={copy.optional ?? inquiryFormUi.optional}
+            autoComplete="tel"
+            className="sm:col-span-2"
+            onChange={(value) => set("whatsapp", value)}
+          />
+          <div className="sm:col-span-2">
+            <label className="flex items-start gap-3 text-sm leading-relaxed text-ink">
+              <input
+                id={fieldId("privacyConsent")}
+                type="checkbox"
+                checked={values.privacyConsent}
+                onChange={(event) => set("privacyConsent", event.target.checked)}
+                className="mt-1 size-4 accent-forge"
               />
-            </div>
-            <FieldError
-              id={errorId("family")}
-              message={attempted ? errors.family : undefined}
+              <span>
+                {inquiryFormUi.privacyConsent}{" "}
+                <Link href={inquiryFormUi.privacyHref} className="underline underline-offset-4">
+                  {inquiryFormUi.privacyLinkLabel}
+                </Link>.
+              </span>
+            </label>
+            <FieldError id={errorId("privacyConsent")} message={errors.privacyConsent} />
+          </div>
+          <div className="absolute -left-[9999px]" aria-hidden="true">
+            <label htmlFor={fieldId("website")}>Website</label>
+            <input
+              id={fieldId("website")}
+              tabIndex={-1}
+              autoComplete="off"
+              value={values.website}
+              onChange={(event) => set("website", event.target.value)}
             />
           </div>
-        ) : null}
-
-        <Field
-          id={fieldId("quantity")}
-          name="quantity"
-          label="Approximate quantity"
-          required
-          className={families.length > 0 ? undefined : "sm:col-span-2"}
-          value={values.quantity}
-          error={attempted ? errors.quantity : undefined}
-          errorId={errorId("quantity")}
-          placeholder="e.g. 10 sets, or 20 wheels"
-          onChange={(value) => set("quantity", value)}
-        />
-
-        <Field
-          id={fieldId("finish")}
-          name="finish"
-          label="Finish preference"
-          value={values.finish}
-          error={undefined}
-          errorId={errorId("finish")}
-          placeholder="e.g. Brushed clear, satin gunmetal"
-          optionalLabel={copy.optional}
-          className="sm:col-span-2"
-          onChange={(value) => set("finish", value)}
-        />
-
-        {/* Message -------------------------------------------------------- */}
-        <div className="sm:col-span-2">
-          <FieldLabel htmlFor={fieldId("message")} required>
-            Notes for the quotation
-          </FieldLabel>
-          <textarea
-            id={fieldId("message")}
-            name="message"
-            rows={5}
-            value={values.message}
-            aria-invalid={attempted && Boolean(errors.message)}
-            aria-describedby={
-              attempted && errors.message ? errorId("message") : undefined
-            }
-            placeholder="Target stance, brake or suspension changes, target price point, timeline, private-label requirements…"
-            onChange={(event) => set("message", event.target.value)}
-            className={cn(
-              inputClass,
-              "min-h-[140px] resize-y py-3.5 leading-relaxed",
-              attempted && errors.message && "border-destructive",
-            )}
-          />
-          <FieldError
-            id={errorId("message")}
-            message={attempted ? errors.message : undefined}
-          />
+          <div className="flex flex-wrap gap-4 sm:col-span-2">
+            <button
+              type="button"
+              onClick={() => {
+                setStep(1);
+                setErrors({});
+                setAttempted(false);
+              }}
+              className="btn-pill-outline text-ink"
+            >
+              <ArrowLeft className="size-4" aria-hidden="true" />
+              {inquiryFormUi.backLabel}
+            </button>
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="btn-pill-solid disabled:opacity-60"
+            >
+              {status === "submitting"
+                ? copy.submitting ?? inquiryFormUi.submittingLabel
+                : copy.submit || inquiryFormUi.submitLabel}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className="mt-9 flex flex-wrap items-center gap-5">
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          className="btn-pill-solid disabled:opacity-60"
-        >
-          {status === "submitting" ? copy.submitting : copy.submit}
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </button>
-
-        <p className="text-[0.78rem] leading-relaxed text-steel">
-          We reply with a specification and a price, not a mailing list signup.
-        </p>
-      </div>
+      )}
     </form>
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Field primitives                                                            */
-/* -------------------------------------------------------------------------- */
-
 const inputClass = cn(
   "min-h-[50px] w-full rounded-lg border border-border bg-white px-4 text-[0.95rem] text-ink",
-  "placeholder:text-steel/70",
-  "outline-none transition-[border-color,box-shadow] duration-200",
-  "focus:border-forge focus:ring-2 focus:ring-forge/25",
+  "outline-none transition-[border-color,box-shadow] focus:border-forge focus:ring-2 focus:ring-forge/25",
 );
 
-function FieldLabel({
+function Label({
   htmlFor,
+  children,
   required,
   optionalLabel,
-  children,
 }: {
   htmlFor: string;
+  children: React.ReactNode;
   required?: boolean;
   optionalLabel?: string;
-  children: React.ReactNode;
 }) {
   return (
     <label
       htmlFor={htmlFor}
-      className="mb-2.5 flex items-center gap-2 font-display text-[0.72rem] font-700 uppercase tracking-[0.14em] text-ink"
+      className="mb-2 flex items-center gap-2 font-display text-xs font-700 uppercase tracking-wider text-ink"
     >
       {children}
-      {required ? (
-        <span className="text-forge" aria-hidden="true">
-          *
-        </span>
-      ) : null}
+      {required ? <span className="text-forge" aria-hidden="true">*</span> : null}
       {optionalLabel ? (
-        <span className="font-sans text-[0.68rem] font-medium normal-case tracking-normal text-steel">
+        <span className="font-sans font-medium normal-case tracking-normal text-steel">
           {optionalLabel}
         </span>
       ) : null}
@@ -706,70 +663,222 @@ function FieldLabel({
 }
 
 function FieldError({ id, message }: { id: string; message?: string }) {
-  if (!message) return null;
-
-  return (
-    <p
-      id={id}
-      className="mt-2 flex items-start gap-1.5 text-[0.8rem] leading-snug text-destructive"
-    >
-      <CircleAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+  return message ? (
+    <p id={id} className="mt-2 flex items-start gap-1.5 text-xs text-destructive">
+      <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
       {message}
     </p>
-  );
+  ) : null;
 }
 
 function Field({
   id,
-  name,
   label,
   value,
-  error,
-  errorId,
   onChange,
+  error,
   type = "text",
   required,
   optionalLabel,
   placeholder,
   autoComplete,
+  help,
   className,
 }: {
   id: string;
-  name: string;
   label: string;
   value: string;
-  error?: string;
-  errorId: string;
   onChange: (value: string) => void;
+  error?: string;
   type?: string;
   required?: boolean;
   optionalLabel?: string;
   placeholder?: string;
   autoComplete?: string;
+  help?: string;
   className?: string;
 }) {
+  const describedBy = [help ? `${id}-help` : "", error ? `${id}-error` : ""]
+    .filter(Boolean)
+    .join(" ") || undefined;
   return (
     <div className={className}>
-      <FieldLabel
-        htmlFor={id}
-        required={required}
-        optionalLabel={optionalLabel}
-      >
-        {label}
-      </FieldLabel>
+      <Label htmlFor={id} required={required} optionalLabel={optionalLabel}>{label}</Label>
       <input
         id={id}
-        name={name}
         type={type}
         value={value}
         placeholder={placeholder}
         autoComplete={autoComplete}
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? errorId : undefined}
+        aria-describedby={describedBy}
         onChange={(event) => onChange(event.target.value)}
         className={cn(inputClass, error && "border-destructive")}
       />
-      <FieldError id={errorId} message={error} />
+      {help ? <p id={`${id}-help`} className="mt-2 text-xs text-steel">{help}</p> : null}
+      <FieldError id={`${id}-error`} message={error} />
     </div>
+  );
+}
+
+function TextAreaField({
+  id,
+  label,
+  help,
+  value,
+  error,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  help: string;
+  value: string;
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor={id} required>{label}</Label>
+      <textarea
+        id={id}
+        rows={5}
+        value={value}
+        aria-invalid={Boolean(error)}
+        aria-describedby={`${id}-help${error ? ` ${id}-error` : ""}`}
+        onChange={(event) => onChange(event.target.value)}
+        className={cn(
+          inputClass,
+          "min-h-[130px] resize-y py-3",
+          error && "border-destructive",
+        )}
+      />
+      <p id={`${id}-help`} className="mt-2 text-xs text-steel">{help}</p>
+      <FieldError id={`${id}-error`} message={error} />
+    </div>
+  );
+}
+
+function RadioGroup({
+  id,
+  label,
+  value,
+  options,
+  error,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  options: readonly { value: string; label: string }[];
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <fieldset
+      id={id}
+      aria-invalid={Boolean(error)}
+      aria-describedby={error ? `${id}-error` : undefined}
+    >
+      <legend className="mb-2 font-display text-xs font-700 uppercase tracking-wider text-ink">
+        {label} <span className="text-forge">*</span>
+      </legend>
+      <div className="grid grid-cols-2 gap-3">
+        {options.map((option) => (
+          <label
+            key={option.value}
+            className={cn(
+              "rounded-lg border px-4 py-3 text-sm",
+              value === option.value ? "border-forge bg-forge-soft" : "border-border",
+            )}
+          >
+            <input
+              type="radio"
+              name={`${id}-option`}
+              value={option.value}
+              checked={value === option.value}
+              onChange={() => onChange(option.value)}
+              className="mr-2 accent-forge"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
+      <FieldError id={`${id}-error`} message={error} />
+    </fieldset>
+  );
+}
+
+function SelectField({
+  id,
+  label,
+  value,
+  error,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor={id} required>{label}</Label>
+      <select
+        id={id}
+        value={value}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${id}-error` : undefined}
+        onChange={(event) => onChange(event.target.value)}
+        className={cn(inputClass, error && "border-destructive")}
+      >
+        <option value="">{inquiryFormUi.productLinePlaceholder}</option>
+        {productLines.map((line) => (
+          <option key={line.slug} value={line.slug}>{line.name}</option>
+        ))}
+      </select>
+      <FieldError id={`${id}-error`} message={error} />
+    </div>
+  );
+}
+
+function CheckboxGroup({
+  id,
+  values,
+  onChange,
+}: {
+  id: string;
+  values: string[];
+  onChange: (values: string[]) => void;
+}) {
+  const toggle = (value: string, checked: boolean) => {
+    if (value === "none-yet" && checked) return onChange([value]);
+    const next = checked
+      ? [...values.filter((item) => item !== "none-yet"), value]
+      : values.filter((item) => item !== value);
+    onChange([...new Set(next)]);
+  };
+  return (
+    <fieldset id={id}>
+      <legend className="mb-2 font-display text-xs font-700 uppercase tracking-wider text-ink">
+        {inquiryFormUi.inputsLabel}{" "}
+        <span className="font-sans font-medium normal-case tracking-normal text-steel">
+          {inquiryFormUi.optional}
+        </span>
+      </legend>
+      <div className="grid gap-2 sm:grid-cols-2">
+        {inquiryFormUi.inputs.map((item) => (
+          <label key={item.value} className="text-sm text-ink">
+            <input
+              type="checkbox"
+              checked={values.includes(item.value)}
+              onChange={(event) => toggle(item.value, event.target.checked)}
+              className="mr-2 accent-forge"
+            />
+            {item.label}
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }

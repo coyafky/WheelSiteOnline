@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/content/site";
+import { configuredSiteUrl } from "@/lib/site-url";
 import { listPublishedWheelSlugs } from "@/lib/wheels";
 import {
   flowFormedWheelsPage,
@@ -7,9 +7,6 @@ import {
 } from "@/content/flow-formed-wheels";
 import { finishesPage, isFinishesPublishingOpen } from "@/content/finish-guide";
 import { platformFitments } from "@/content/fitment";
-import { guides } from "@/content/resources";
-import { boltPatterns } from "@/content/bolt-patterns";
-import { legalDocuments } from "@/content/legal";
 
 /**
  * Sitemap.
@@ -21,8 +18,8 @@ import { legalDocuments } from "@/content/legal";
  * `site.url` is a PLACEHOLDER production domain; confirm before launch.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = site.url.replace(/\/$/, "");
-  const now = new Date();
+  if (!configuredSiteUrl) return [];
+  const base = configuredSiteUrl.origin;
 
   /** Static, hand-listed routes. */
   const staticPaths: { path: string; priority: number }[] = [
@@ -36,11 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/capabilities", priority: 0.7 },
     { path: "/custom-development", priority: 0.7 },
     { path: "/fitment", priority: 0.8 },
-    { path: "/dealers", priority: 0.8 },
-    { path: "/dealers/private-label", priority: 0.7 },
     { path: "/about", priority: 0.6 },
-    { path: "/insights", priority: 0.8 },
-    { path: "/insights/bolt-patterns", priority: 0.8 },
     { path: "/tools", priority: 0.7 },
     { path: "/tools/offset-calculator", priority: 0.8 },
     { path: "/contact", priority: 0.9 },
@@ -86,7 +79,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((entry) => ({
     url: `${base}${entry.path}`,
-    lastModified: now,
     changeFrequency: "monthly",
     priority: entry.priority,
   }));
@@ -107,45 +99,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const publishedSlugs = await listPublishedWheelSlugs();
   const wheelModelEntries: MetadataRoute.Sitemap = publishedSlugs.map((slug) => ({
     url: `${base}/products/wheels/${slug}`,
-    lastModified: now,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
 
   const fitmentEntries: MetadataRoute.Sitemap = platformFitments.map((item) => ({
     url: `${base}/fitment/${item.slug}`,
-    lastModified: now,
     changeFrequency: "monthly",
     priority: 0.8,
-  }));
-
-  const guideEntries: MetadataRoute.Sitemap = guides.map((guide) => ({
-    url: `${base}/insights/${guide.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
-  const boltPatternEntries: MetadataRoute.Sitemap = boltPatterns.map((entry) => ({
-    url: `${base}/insights/bolt-patterns/${entry.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
-  const legalEntries: MetadataRoute.Sitemap = legalDocuments.map((doc) => ({
-    url: `${base}/support/${doc.slug}`,
-    lastModified: now,
-    changeFrequency: "yearly",
-    priority: 0.3,
   }));
 
   return [
     ...staticEntries,
     ...wheelModelEntries,
     ...fitmentEntries,
-    ...guideEntries,
-    ...boltPatternEntries,
-    ...legalEntries,
   ];
 }

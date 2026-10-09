@@ -16,11 +16,7 @@ import "server-only";
  * 但接 WordPress 实时读取时接口不能变，否则所有调用方都要改。
  */
 
-import {
-  getPublicModelBySlug,
-  getPublicModels,
-  listPublicSlugs,
-} from "./publication";
+import { getPublishedWheelModels } from "./source";
 import {
   PAGE_SIZE,
   PROCESS_KEYS,
@@ -67,7 +63,7 @@ export const FLOW_FORMED_PROCESSES: ProcessKey[] = [
 export async function getWheelCataloguePage(
   input: WheelCatalogueInput = {},
 ): Promise<WheelCataloguePageView> {
-  const all = getPublicModels();
+  const all = await getPublishedWheelModels();
   const query = normalizeQuery(input);
 
   const matched = filterModels(all, query);
@@ -109,10 +105,11 @@ export function isPageOutOfRange(view: WheelCataloguePageView, requestedPage: nu
  * ========================================================================== */
 
 export async function getWheelDetailPage(slug: string): Promise<WheelDetailView | null> {
-  const model = getPublicModelBySlug(slug);
+  const all = await getPublishedWheelModels();
+  const model = all.find((item) => item.slug === slug.trim().toLowerCase()) ?? null;
   if (!model) return null;
 
-  const related = pickRelatedModels(getPublicModels(), model);
+  const related = pickRelatedModels(all, model);
 
   return {
     slug: model.slug,
@@ -134,7 +131,7 @@ export async function getWheelDetailPage(slug: string): Promise<WheelDetailView 
  * ========================================================================== */
 
 export async function listPublishedWheelSlugs(): Promise<string[]> {
-  return listPublicSlugs();
+  return (await getPublishedWheelModels()).map((model) => model.slug);
 }
 
 /* ============================================================================
@@ -152,7 +149,8 @@ export async function resolvePublishedWheelSelection(input: {
   slug: string;
   productionCode: string;
 }): Promise<ResolvedWheelSelection | null> {
-  const model = getPublicModelBySlug(input.slug);
+  const all = await getPublishedWheelModels();
+  const model = all.find((item) => item.slug === input.slug.trim().toLowerCase()) ?? null;
   if (!model) return null;
 
   const code = String(input.productionCode ?? "").trim();

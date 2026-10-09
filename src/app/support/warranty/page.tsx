@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Warranty Policy",
   description:
     "Fenghuai's manufacturing warranty for aluminum components — coverage, exclusions, claim process and remedies.",
+  robots: { index: false, follow: false },
 };
 
 /**

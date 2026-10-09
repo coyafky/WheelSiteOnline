@@ -39,6 +39,7 @@ export const en: Dictionary = {
   "cta.requestQuote": "Request a Quote",
   "cta.viewRange": "View the range",
   "cta.backToTop": "Back to top",
+  "brand.division": "Manufacturing",
 
   // ── Accessibility labels ───────────────────────────────────────────────
   "a11y.primaryNav": "Primary navigation",
@@ -52,6 +53,9 @@ export const en: Dictionary = {
   "footer.tagline1": "Aluminum components for four product lines —",
   "footer.tagline2": "wheels, EV housings, custom parts, safety tires.",
   "footer.rights": "All rights reserved",
+  "footer.ctaEyebrow": "Start a production conversation",
+  "footer.ctaHeading": "Bring us the brief",
+  "footer.ctaBody": "Share the drawing, fitment or supply requirement. We will route it to the right product line and reply with the next information we need.",
   "footer.group.products": "Products",
   "footer.group.company": "Company",
   "footer.support.warranty": "Warranty Policy",

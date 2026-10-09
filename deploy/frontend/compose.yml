@@ -1,0 +1,60 @@
+name: fenghuai-frontend
+
+services:
+  frontend:
+    image: fenghuai-frontend-9080:2026-10-09
+    build:
+      context: ../..
+      dockerfile: deploy/frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+        NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION: ${NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION}
+        WP_API_URL: ${WP_PUBLIC_API_URL}
+        WP_REST_ROOT: ${WP_PUBLIC_REST_ROOT}
+        # 构建只生成仓库兜底快照，避免在 2 GB 服务器构建期抓取 138 个 CMS 页面；
+        # 运行时仍为 live，并在启动后通过签名回调刷新 WordPress 内容。
+        WP_MODE: mock
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION: ${NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION}
+      WP_MODE: live
+      WP_API_URL: http://wordpress/wp-json/wp/v2
+      WP_REST_ROOT: http://wordpress/wp-json
+      WP_INQUIRY_SERVICE_KEY: ${WP_INQUIRY_SERVICE_KEY}
+      WP_PREVIEW_SECRET: ${WP_PREVIEW_SECRET}
+      WP_REVALIDATE_SECRET: ${WP_REVALIDATE_SECRET}
+      INQUIRY_RECEIPT_SECRET: ${INQUIRY_RECEIPT_SECRET}
+      INQUIRY_ALLOWED_ORIGINS: ${INQUIRY_ALLOWED_ORIGINS}
+    ports:
+      - "127.0.0.1:${FRONTEND_BIND_PORT:-9081}:3000"
+    networks:
+      wordpress:
+        aliases:
+          - fenghuai-frontend
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/robots.txt').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+
+networks:
+  wordpress:
+    external: true
+    name: fenghuai-wordpress_default

@@ -9,40 +9,45 @@ import type { AnswerBlock, FlowStep } from "./types";
  */
 
 export const contactHero = {
-  eyebrow: "Request a quote",
-  heading: "Tell Us What You Need to Quote",
-  lede: "Send the requirement, the volumes and any drawings or samples. We come back with a buildable specification, a delivery position and pricing — not a brochure.",
+  eyebrow: "Project enquiry",
+  heading: "Tell Us What You Need to Source or Develop",
+  lede: "Choose a product line and send the requirement, expected quantity and any drawings or samples you already have.",
   supporting:
-    "The more of the fitment you can give us up front, the fewer rounds it takes. If you do not have all of it yet, send what you have.",
+    "You do not need every specification ready. Missing technical details can be confirmed before quotation or production approval.",
 } as const;
 
 export const contactFormCopy = {
   requiredNote: "Required field",
   optional: "optional",
-  submit: "Send enquiry",
+  submit: "Submit project enquiry",
   submitting: "Sending…",
-  successTitle: "Enquiry received",
+  successTitle: "Your enquiry has been recorded",
   successBody:
-    "Your enquiry has been logged and a confirmation is on its way to the email address you supplied. Keep the reference number below — quoting it gets you a faster answer.",
+    "Keep the reference number below for follow-up. It confirms that the enquiry record was created.",
   resetLabel: "Start another enquiry",
   errorSummaryTitle: "Check these fields",
   errorSummaryBody: "Your enquiry has not been sent. Fix the items below:",
   networkErrorTitle: "Your enquiry was not sent",
   networkErrorBody:
-    "We could not reach our server — this is usually a connection problem on your side, not a problem with your details. Nothing was submitted, and everything you typed is still in the form. Please try again, or email us directly at the address on this page.",
+    "We could not reach the enquiry service. Nothing was submitted, and everything you typed is still in the form. Please try again later.",
   pendingDeliveryNote:
-    "Your enquiry is safely recorded. Our confirmation email could not be sent just now, so a member of the sales team will follow up manually instead — no action needed from you.",
+    "The enquiry record was saved, but the notification email is still pending. Do not submit the same project again.",
+} as const;
+
+export const contactFormHeading = {
+  title: "Project enquiry",
+  body: "Choose a product line and send what you already know. Missing technical details can be confirmed before quotation or production approval.",
 } as const;
 
 export const contactWhatHappens: AnswerBlock = {
   eyebrow: "What happens next",
   heading: "From your message to a written quotation",
-  body: "An enquiry goes to the sales team, not a queue. The first reply is a conversation about fitment and volume, because that is what determines whether we can quote accurately.",
+  body: "The enquiry record keeps the project details and reference together. Technical scope, quantity and the destination market can then be clarified before a quotation is approved.",
   points: [
-    "A reply within one business day, from a person who can answer technical questions",
-    "Fitment reviewed against brake, suspension and load-rating constraints",
-    "A written specification and price returned for your approval",
-    "Nothing is cut until you approve that specification",
+    "The submitted details remain attached to one enquiry reference",
+    "Missing fitment, interface or performance inputs can be identified",
+    "Specifications and commercial terms require separate project confirmation",
+    "Production approval is distinct from the initial enquiry",
   ],
 };
 
@@ -55,17 +60,17 @@ export const contactSteps: FlowStep[] = [
   {
     step: "02",
     title: "We ask the questions that matter",
-    body: "Brake clearance, suspension changes, load rating and target price point — the variables that decide what is buildable.",
+    body: "The relevant fitment, interface, performance and commercial inputs depend on the selected product line.",
   },
   {
     step: "03",
-    title: "You get a specification",
-    body: "Construction, sizes, offset, finish and lead time in writing, with pricing against your volume.",
+    title: "The scope is confirmed",
+    body: "Any specification, price or lead-time position is confirmed for the actual project rather than inferred from the first message.",
   },
   {
     step: "04",
-    title: "Production starts on approval",
-    body: "The drawing is signed off, the order is scheduled, and milestone reporting begins against your order number.",
+    title: "Approval remains explicit",
+    body: "An enquiry does not itself approve a drawing, order or production schedule.",
   },
 ];
 

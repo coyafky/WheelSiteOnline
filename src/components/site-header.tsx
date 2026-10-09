@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, Phone, X } from "lucide-react";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { primaryNav, site } from "@/content/site";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { createT } from "@/lib/i18n/use-t";
-import type { Locale } from "@/lib/i18n/types";
+import { localizedPath, stripLocalePrefix, type Locale } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "@/components/language-switcher";
 
 export function SiteHeader({ locale }: { locale: Locale }) {
   const pathname = usePathname();
@@ -46,7 +46,7 @@ function navLabel(
 function HeaderBar({ locale }: { locale: Locale }) {
   const t = createT(locale);
   const scrolled = useScrolled(16);
-  const pathname = usePathname();
+  const pathname = stripLocalePrefix(usePathname());
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -68,8 +68,7 @@ function HeaderBar({ locale }: { locale: Locale }) {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  // Over a dark hero the bar is a translucent plate so the photography reads
-  // through it (hero PageSpec §4, option A); scrolled or opened it turns solid.
+  const hrefFor = (href: string) => localizedPath(href, locale);
   const solid = scrolled || open;
 
   return (
@@ -77,17 +76,17 @@ function HeaderBar({ locale }: { locale: Locale }) {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,color] duration-200 ease-out",
         solid
-          ? "bg-white/96 text-ink shadow-[0_12px_32px_rgba(11,15,22,0.10)] backdrop-blur-xl"
-          : "bg-hero/72 text-white backdrop-blur-xl",
+          ? "border-b border-border bg-white/96 text-ink shadow-[0_12px_32px_rgba(11,15,22,0.08)] backdrop-blur-xl"
+          : "border-b border-white/10 bg-transparent text-white",
       )}
     >
-      <div className="container-fh flex h-[74px] items-center justify-between gap-6 lg:h-[86px]">
+      <div className="container-fh flex h-[78px] items-center justify-between gap-5 lg:h-[92px]">
         <Link
-          href="/"
-          className="flex items-center gap-3"
+          href={hrefFor("/")}
+          className="group flex items-center gap-3"
           aria-label={`${site.name} home`}
         >
-          <Wordmark solid={solid} />
+          <Wordmark solid={solid} division={t("brand.division")} />
         </Link>
 
         {/* Desktop navigation */}
@@ -103,11 +102,11 @@ function HeaderBar({ locale }: { locale: Locale }) {
               return (
                 <Link
                   key={item.label}
-                  href={item.href}
+                  href={hrefFor(item.href)}
                   className={cn(
-                    "eyebrow whitespace-nowrap rounded-full px-2.5 py-2 !text-[0.7rem] !tracking-[0.1em] transition-colors xl:px-3",
+                    "relative whitespace-nowrap border-b-2 border-transparent px-2.5 py-3 font-display text-[0.76rem] font-700 uppercase tracking-[0.08em] transition-colors xl:px-3",
                     solid ? "text-ink/80 hover:text-forge" : "text-white/80 hover:text-white",
-                    active && "!text-forge",
+                    active && (solid ? "border-forge !text-forge" : "border-forge-bright !text-white"),
                   )}
                 >
                   {navLabel(t, item)}
@@ -130,9 +129,9 @@ function HeaderBar({ locale }: { locale: Locale }) {
                     setExpanded(expanded === item.label ? null : item.label)
                   }
                   className={cn(
-                    "eyebrow flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 !text-[0.7rem] !tracking-[0.1em] transition-colors xl:px-3",
+                    "flex items-center gap-1 whitespace-nowrap border-b-2 border-transparent px-2.5 py-3 font-display text-[0.76rem] font-700 uppercase tracking-[0.08em] transition-colors xl:px-3",
                     solid ? "text-ink/80 hover:text-forge" : "text-white/80 hover:text-white",
-                    active && "!text-forge",
+                    active && (solid ? "border-forge !text-forge" : "border-forge-bright !text-white"),
                   )}
                 >
                   {navLabel(t, item)}
@@ -158,7 +157,7 @@ function HeaderBar({ locale }: { locale: Locale }) {
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
-                        href={child.href}
+                        href={hrefFor(child.href)}
                         className="block px-4 py-2.5 text-sm text-ink/80 transition-colors hover:bg-soft hover:text-forge"
                       >
                         {navLabel(t, child)}
@@ -171,21 +170,23 @@ function HeaderBar({ locale }: { locale: Locale }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher
-            locale={locale}
-            label={t("a11y.switchLanguage")}
-            tone={solid ? "light" : "dark"}
-          />
-
+        <div className="flex items-center gap-5">
+          <div className="hidden xl:block">
+            <LanguageSwitcher
+              locale={locale}
+              label={t("a11y.switchLanguage")}
+              tone={solid ? "light" : "dark"}
+            />
+          </div>
           <Link
-            href="/request-a-quote"
+            href={hrefFor("/request-a-quote")}
             className={cn(
-              "hidden xl:inline-flex",
-              solid ? "btn-pill-solid" : "btn-pill-outline !text-white",
+              "group hidden min-h-10 items-center gap-2 whitespace-nowrap px-1 font-display text-[0.72rem] font-700 uppercase tracking-[0.1em] transition-colors xl:inline-flex",
+              solid ? "text-forge hover:text-forge-deep" : "text-forge-bright hover:text-white",
             )}
           >
             {t("cta.requestQuote")}
+            <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
           </Link>
 
           <button
@@ -217,7 +218,7 @@ function HeaderBar({ locale }: { locale: Locale }) {
             <div key={item.label} className="border-b border-border/60 last:border-0">
               <div className="flex items-center justify-between">
                 <Link
-                  href={item.href}
+                  href={hrefFor(item.href)}
                   className="eyebrow py-4 !text-[0.74rem] text-ink"
                   onClick={() => setOpen(false)}
                 >
@@ -256,7 +257,7 @@ function HeaderBar({ locale }: { locale: Locale }) {
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
-                        href={child.href}
+                        href={hrefFor(child.href)}
                         className="block py-2 pl-4 text-sm text-steel"
                         onClick={() => setOpen(false)}
                       >
@@ -269,21 +270,30 @@ function HeaderBar({ locale }: { locale: Locale }) {
             </div>
           ))}
 
-          <div className="flex flex-col gap-3 py-5">
+          <div className="flex items-center justify-between gap-5 py-5">
+            <LanguageSwitcher
+              locale={locale}
+              label={t("a11y.switchLanguage")}
+            />
             <Link
-              href="/request-a-quote"
-              className="btn-pill-solid w-full"
+              href={hrefFor("/request-a-quote")}
+              className="group inline-flex min-h-11 items-center gap-2 bg-forge px-4 font-display text-[0.72rem] font-700 uppercase tracking-[0.1em] text-white transition-colors hover:bg-forge-deep"
               onClick={() => setOpen(false)}
             >
               {t("cta.requestQuote")}
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </Link>
-            <a
-              href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
-              className="flex items-center justify-center gap-2 text-sm text-steel"
-            >
-              <Phone className="size-4" />
-              {site.contact.phone}
-            </a>
+          </div>
+          <div className="pb-5">
+            {site.contact.confirmed ? (
+              <a
+                href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+                className="flex items-center justify-center gap-2 text-sm text-steel"
+              >
+                <Phone className="size-4" />
+                {site.contact.phone}
+              </a>
+            ) : null}
           </div>
         </nav>
       </div>
@@ -292,12 +302,24 @@ function HeaderBar({ locale }: { locale: Locale }) {
 }
 
 /** Wordmark with a light/dark variant swap driven by header state. */
-function Wordmark({ solid }: { solid: boolean }) {
+function Wordmark({ solid, division }: { solid: boolean; division: string }) {
   return (
-    <span className="flex items-baseline gap-2">
+    <span className="flex items-center gap-3">
       <span
         className={cn(
-          "font-display text-[1.35rem] font-800 uppercase leading-none tracking-tight transition-colors",
+          "grid size-10 place-items-center border font-display text-[0.78rem] font-800 tracking-[0.12em] transition-colors",
+          solid
+            ? "border-ink bg-ink text-white"
+            : "border-white/75 bg-white/5 text-white",
+        )}
+        aria-hidden="true"
+      >
+        FH
+      </span>
+      <span className="flex flex-col gap-1">
+      <span
+        className={cn(
+          "font-display text-[1.28rem] font-800 uppercase leading-none tracking-[0.01em] transition-colors",
           solid ? "text-ink" : "text-white",
         )}
       >
@@ -305,11 +327,12 @@ function Wordmark({ solid }: { solid: boolean }) {
       </span>
       <span
         className={cn(
-          "font-display text-[0.68rem] font-600 uppercase leading-none tracking-[0.2em] transition-colors",
+          "font-display text-[0.58rem] font-700 uppercase leading-none tracking-[0.28em] transition-colors",
           solid ? "text-forge" : "text-white/70",
         )}
       >
-        Forged
+        {division}
+      </span>
       </span>
     </span>
   );

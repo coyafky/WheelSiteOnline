@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Clock, TriangleAlert } from "lucide-react";
-import type { GuideEntry } from "@/content/types";
+import type { GuideEntry, MediaAsset } from "@/content/types";
 import { guideVerificationNotice } from "@/content/resources";
 import { site } from "@/content/site";
 
@@ -20,9 +21,11 @@ import { site } from "@/content/site";
 export function ProseArticle({
   guide,
   related,
+  heroMedia,
 }: {
   guide: GuideEntry;
   related: GuideEntry[];
+  heroMedia?: MediaAsset;
 }) {
   return (
     <>
@@ -33,6 +36,19 @@ export function ProseArticle({
         data-reveal
         className="relative isolate overflow-hidden bg-ink"
       >
+        {heroMedia?.hasRender ? (
+          <>
+            <Image
+              src={heroMedia.src}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="-z-20 object-cover brightness-[0.3]"
+            />
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink via-ink/88 to-ink/45" aria-hidden="true" />
+          </>
+        ) : null}
         <div
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_78%_0%,rgba(194,101,10,0.22)_0%,rgba(11,15,22,0)_58%)]"
           aria-hidden="true"
@@ -164,13 +180,23 @@ export function ProseArticle({
                 Send us the vehicle and we will confirm the specification in
                 writing.
               </p>
-              <a
-                href={`mailto:${site.contact.email}`}
-                className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
-              >
-                {site.contact.email}
-                <ArrowRight className="size-3.5" />
-              </a>
+              {site.contact.confirmed ? (
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
+                >
+                  {site.contact.email}
+                  <ArrowRight className="size-3.5" />
+                </a>
+              ) : (
+                <Link
+                  href="/request-a-quote"
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-forge transition-colors hover:text-forge-deep"
+                >
+                  Open the project enquiry
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              )}
             </div>
           </aside>
 

@@ -83,7 +83,7 @@ WordpressWheelSIte/
 │   └── tech-architecture/  每个模块怎么落地
 │
 ├── assets/              ← ★ 只读资产：1349 型号 / 2757 图 / 语料库
-├── SKILLS/              ← ★ 项目技能库（20 个，复制自兄弟项目）
+├── SKILLS/              ← ★ 项目技能库（21 个，含项目工程工作流）
 │
 ├── inbox/               ← 未分类入口。不是长期存储区。
 ├── areas/               ← 长期业务领域（按需创建）
@@ -252,11 +252,26 @@ IntersectionObserver。** 两个效果都必须保持挂在 JS 添加的 `motion
 5. `STATUS.md` 反映新状态。
 6. 若做了决定，已记入 `DECISIONS.md`。
 
+## 10. 工程工作流技能
+
+新功能、缺陷修复、重构、规格整理、Issue 拆分、代码评审和 session 复盘，使用项目
+技能 `SKILLS/fenghuai-engineering-workflow/SKILL.md`。可发现入口在
+`.agents/skills/fenghuai-engineering-workflow/`。
+
+该技能引入 Matt Pocock 的规格、纵向切片、TDD、证据化诊断、双轴评审与复盘方法，
+但以下本项目原则永远优先：
+
+- 所有项目记录用中文；
+- Issue 生命周期仍走 `work/queued → work/active → work/completed`；
+- 页面规格、架构、决定与状态继续放在本文件规定的位置；
+- 不得因为通用技能的默认动作而自动 commit、push、deploy 或创建外部 Issue；
+- 项目完成门禁、内容接缝、证据纪律和发布门槛不得被通用流程放宽。
+
 ---
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 

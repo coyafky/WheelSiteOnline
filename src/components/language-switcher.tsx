@@ -1,17 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
-import { Languages } from "lucide-react";
-import { LOCALE_COOKIE, LOCALES, type Locale } from "@/lib/i18n/types";
+import {
+  localizedPath,
+  LOCALE_COOKIE,
+  LOCALES,
+  type Locale,
+} from "@/lib/i18n/types";
 
 /**
  * Locale toggle.
  *
- * Writes the `fh-locale` cookie and refreshes the server components so the
- * header/footer re-render in the new language. Chosen over a `[locale]` route
- * segment because the site has 26 existing routes and a segment rewrite is a
- * separate migration.
+ * Writes the preference cookie and navigates to the locale's public URL while
+ * preserving the current path, query string and fragment.
  */
 
 /**
@@ -39,41 +41,56 @@ export function LanguageSwitcher({
   /** `dark` renders for the ink header; `light` for light surfaces. */
   tone?: "light" | "dark";
 }) {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [pending, startTransition] = useTransition();
 
   function pick(next: Locale) {
     if (next === locale) return;
     persistLocale(next);
-    startTransition(() => router.refresh());
+    const query = searchParams.toString();
+    const hash = window.location.hash;
+    const href = `${localizedPath(pathname, next)}${query ? `?${query}` : ""}${hash}`;
+    // Locale changes affect the root `<html lang>` attribute. A full navigation
+    // is intentional here: App Router preserves the root layout during a soft
+    // transition and would otherwise leave assistive technology on the old
+    // language even though the URL and visible chrome had changed.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+    startTransition(() => window.location.assign(href));
   }
 
-  const base =
+  const inactive =
     tone === "dark"
-      ? "border-white/25 text-white/70 hover:border-forge hover:text-forge"
-      : "border-border text-steel hover:border-forge hover:text-forge";
+      ? "text-white/52 hover:text-white"
+      : "text-steel hover:text-ink";
+  const active = tone === "dark" ? "text-forge-bright" : "text-forge";
 
   return (
     <div
       role="group"
       aria-label={label}
-      className={`inline-flex flex-nowrap items-center gap-1 whitespace-nowrap rounded-full border px-1.5 py-1 ${base} ${
+      className={`inline-flex flex-nowrap items-center whitespace-nowrap font-display text-[0.7rem] font-700 uppercase tracking-[0.12em] ${
         pending ? "opacity-60" : ""
       }`}
     >
-      <Languages className="mx-1 size-3.5" aria-hidden="true" />
-      {LOCALES.map((code) => (
-        <button
-          key={code}
-          type="button"
-          onClick={() => pick(code)}
-          aria-current={code === locale ? "true" : undefined}
-          className={`whitespace-nowrap rounded-full px-2 py-0.5 text-xs uppercase tracking-[0.08em] transition-colors ${
-            code === locale ? "bg-forge text-white" : "hover:text-forge"
-          }`}
-        >
-          {LABELS[code]}
-        </button>
+      {LOCALES.map((code, index) => (
+        <span key={code} className="inline-flex items-center">
+          {index > 0 ? (
+            <span className={tone === "dark" ? "px-2 text-white/18" : "px-2 text-ink/18"} aria-hidden="true">
+              /
+            </span>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => pick(code)}
+            aria-current={code === locale ? "true" : undefined}
+            className={`whitespace-nowrap py-2 transition-colors ${
+              code === locale ? active : inactive
+            }`}
+          >
+            {LABELS[code]}
+          </button>
+        </span>
       ))}
     </div>
   );

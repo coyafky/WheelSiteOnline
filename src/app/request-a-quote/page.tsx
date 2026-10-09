@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import {
   quoteContextBarCopy,
   quoteDataNotice,
@@ -8,7 +7,6 @@ import {
   requestQuoteFormCopy,
   requestQuoteHero,
 } from "@/content/request-a-quote";
-import { productFamilies } from "@/content/products";
 import { PageHero } from "@/components/sections/page-hero";
 import { InquiryForm } from "@/components/inquiry-form";
 import { QuoteContextBar } from "@/components/quote-context-bar";
@@ -17,7 +15,7 @@ import { buildInquiryContext, hasContext } from "@/lib/inquiry-context";
 export const metadata: Metadata = {
   title: "Request a Quote",
   description:
-    "Send your requirement in about a minute — wheels, EV components, custom aluminium parts or safety tires. Anything you selected on a model page carries over with your enquiry.",
+    "Send a project enquiry for wheels, EV components, custom aluminium parts or safety tires. Approved product context carries over from model pages.",
   alternates: { canonical: "/request-a-quote" },
 };
 
@@ -55,12 +53,7 @@ export default async function RequestAQuotePage({
         eyebrow={requestQuoteHero.eyebrow}
         heading={requestQuoteHero.heading}
         lede={requestQuoteHero.lede}
-      >
-        <Link href="#quote-form-title" className="btn-pill-solid !text-white">
-          Go to the form
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
-      </PageHero>
+      />
 
       {/* ② Carry-over ------------------------------------------------------ */}
       {hasContext(context) ? (
@@ -85,7 +78,7 @@ export default async function RequestAQuotePage({
             </p>
 
             <div className="mt-8">
-              <InquiryForm families={productFamilies} copy={requestQuoteFormCopy} />
+              <InquiryForm copy={requestQuoteFormCopy} />
             </div>
           </div>
         </div>

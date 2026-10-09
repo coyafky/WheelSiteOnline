@@ -12,6 +12,7 @@
 export type WpPost<T> = {
   id: number;
   slug: string;
+  status?: "publish" | "draft" | "pending" | "private" | "future" | "trash";
   date: string;
   modified: string;
   title: { rendered: string };

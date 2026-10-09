@@ -9,7 +9,6 @@ import {
   wheelDetailEnquiryContext,
   wheelDetailFormCopy,
 } from "@/content/wheel-detail";
-import type { ProductFamily } from "@/content/types";
 
 import {
   centreBoreValue,
@@ -42,13 +41,11 @@ import {
 export function WheelInquiryPanel({
   model,
   selectedVariant,
-  families,
   headingId,
 }: {
   model: string;
   /** `null` when the visitor has not chosen a configuration yet. */
   selectedVariant: WheelVariantSpec | null;
-  families: ProductFamily[];
   headingId: string;
 }) {
   // §12: the same enquiry, reachable without JavaScript. Carries the model and —
@@ -109,7 +106,7 @@ export function WheelInquiryPanel({
         </div>
 
         <div className="mt-8">
-          <InquiryForm families={families} copy={wheelDetailFormCopy} />
+          <InquiryForm copy={wheelDetailFormCopy} />
         </div>
 
         <p className="mt-5 text-[0.8rem] leading-relaxed text-steel">

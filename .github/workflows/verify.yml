@@ -1,0 +1,30 @@
+name: 仓库门禁
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: 安装锁定依赖
+        run: npm ci
+      - name: 单元与契约测试
+        run: npm test
+      - name: 代码与构建门禁
+        run: npm run check
+      - name: 生产依赖漏洞门禁
+        run: npm run audit:prod

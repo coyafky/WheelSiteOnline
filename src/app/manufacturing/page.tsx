@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 /**
  * Legacy route: `/manufacturing` → `/capabilities`.
@@ -8,11 +8,8 @@ import { redirect } from "next/navigation";
  * so `/capabilities` describes it more accurately. The old path is kept as a
  * permanent redirect so existing links and search results do not break.
  *
- * `redirect()` throws a 307 from a Server Component request; the route is
- * listed in `next.config`-free static redirects rather than here only if the
- * whole route is removed. Keeping a page that redirects preserves any
- * analytics landing on the old path.
+ * 这是已确认的永久改名，因此使用 308，让搜索引擎迁移旧地址信号。
  */
 export default function ManufacturingPage() {
-  redirect("/capabilities");
+  permanentRedirect("/capabilities");
 }

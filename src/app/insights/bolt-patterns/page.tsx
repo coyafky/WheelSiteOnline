@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Bolt Pattern Guides — 5x112, 5x114.3, 5x120",
   description:
     "What the two numbers in a bolt pattern mean, how to measure the pattern yourself, and why a vehicle list is a starting point rather than a fitment authority.",
+  robots: { index: false, follow: true },
 };
 
 /**

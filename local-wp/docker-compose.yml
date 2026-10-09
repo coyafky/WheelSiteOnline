@@ -46,10 +46,36 @@ services:
       # 值从 local-wp/.env 读（compose 自动加载 project 目录的 .env），**不写进本文件**。
       # 缺省为空 → 询盘端点在 WP 侧 fail-closed 返回 503，而不是放行。
       FH_INQUIRY_SERVICE_KEY: ${FH_INQUIRY_SERVICE_KEY:-}
+
+      # ── QQ 邮箱 SMTP（销售通知发信通道）───────────────────────────────────
+      # 同样是白名单透传：值只在 local-wp/.env（已 gitignore），本文件只写变量引用。
+      # 端口 465 = SSL（隐式 TLS）；587 = STARTTLS。QQ 实测 465/587 均可达。
+      FH_INQUIRY_SMTP_HOST: ${FH_INQUIRY_SMTP_HOST:-smtp.qq.com}
+      FH_INQUIRY_SMTP_PORT: ${FH_INQUIRY_SMTP_PORT:-465}
+      FH_INQUIRY_SMTP_SECURE: ${FH_INQUIRY_SMTP_SECURE:-ssl}
+      FH_INQUIRY_SMTP_USER: ${FH_INQUIRY_SMTP_USER:-}
+      FH_INQUIRY_SMTP_PASS: ${FH_INQUIRY_SMTP_PASS:-}
+      FH_INQUIRY_MAIL_FROM: ${FH_INQUIRY_MAIL_FROM:-}
+      FH_INQUIRY_MAIL_TO: ${FH_INQUIRY_MAIL_TO:-}
+      # 0 = 禁用自动清理；正式天数须在隐私/法务批准后配置。
+      FH_INQUIRY_RETENTION_DAYS: ${FH_INQUIRY_RETENTION_DAYS:-0}
+      FH_NEXT_REVALIDATE_URL: ${FH_NEXT_REVALIDATE_URL:-}
+      FH_NEXT_REVALIDATE_SECRET: ${FH_NEXT_REVALIDATE_SECRET:-}
+
       # 把上面的环境变量提升成 PHP 常量。官方 wordpress 镜像的 wp-config.php 会
       # eval 这个变量（见 /usr/src/wordpress/wp-config-docker.php）—— 已在容器内实测生效。
       WORDPRESS_CONFIG_EXTRA: |
         define('FH_INQUIRY_SERVICE_KEY', getenv('FH_INQUIRY_SERVICE_KEY') ?: '');
+        define('FH_INQUIRY_SMTP_HOST', getenv('FH_INQUIRY_SMTP_HOST') ?: 'smtp.qq.com');
+        define('FH_INQUIRY_SMTP_PORT', getenv('FH_INQUIRY_SMTP_PORT') ?: '465');
+        define('FH_INQUIRY_SMTP_SECURE', getenv('FH_INQUIRY_SMTP_SECURE') ?: 'ssl');
+        define('FH_INQUIRY_SMTP_USER', getenv('FH_INQUIRY_SMTP_USER') ?: '');
+        define('FH_INQUIRY_SMTP_PASS', getenv('FH_INQUIRY_SMTP_PASS') ?: '');
+        define('FH_INQUIRY_MAIL_FROM', getenv('FH_INQUIRY_MAIL_FROM') ?: '');
+        define('FH_INQUIRY_MAIL_TO', getenv('FH_INQUIRY_MAIL_TO') ?: '');
+        define('FH_INQUIRY_RETENTION_DAYS', getenv('FH_INQUIRY_RETENTION_DAYS') ?: '0');
+        define('FH_NEXT_REVALIDATE_URL', getenv('FH_NEXT_REVALIDATE_URL') ?: '');
+        define('FH_NEXT_REVALIDATE_SECRET', getenv('FH_NEXT_REVALIDATE_SECRET') ?: '');
     volumes:
       - ./wp-data:/var/www/html
       # 只读挂载 PPT 素材目录，供 wp-cli 导入媒体（路径见下方 cli 服务说明）

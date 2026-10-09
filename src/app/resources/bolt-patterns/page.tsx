@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 /**
  * Legacy route: `/resources/bolt-patterns` → `/insights/bolt-patterns`.
@@ -7,11 +7,8 @@ import { redirect } from "next/navigation";
  * reference set moved with its parent, so the old index path is kept as a
  * permanent redirect rather than being deleted.
  *
- * `redirect()` throws a 307 from a Server Component request; the route is
- * listed in `next.config`-free static redirects rather than here only if the
- * whole route is removed. Keeping a page that redirects preserves any
- * analytics landing on the old path.
+ * 这是已确认的永久改名，因此使用 308，让搜索引擎迁移旧地址信号。
  */
 export default function LegacyBoltPatternsIndexPage() {
-  redirect("/insights/bolt-patterns");
+  permanentRedirect("/insights/bolt-patterns");
 }

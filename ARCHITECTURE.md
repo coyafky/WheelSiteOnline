@@ -65,7 +65,7 @@ flowchart LR
   Mail --> PG
 ```
 
-图中 WordPress、询盘 CPT（同库）、事务发件箱和 OpenNext 属于目标生产架构。当前代码已有 WordPress 读取接口、轮毂生成目录和询盘 API，但页面接线、生产持久化和 OpenNext 配置尚未完成。
+图中 WordPress、询盘 CPT（同库）与事务发件箱已经在本地 Docker 运行并通过集成验收；OpenNext、生产基础设施、邮件事件回调、可靠调度、监控和恢复仍属于目标生产架构。页面内容仍只有部分模块接入 WordPress。
 
 ## 3. 模块与接缝
 
@@ -74,12 +74,13 @@ flowchart LR
 | 模块 | 接缝/接口 | 当前适配器 | 目标适配器 | 状态 |
 |---|---|---|---|---|
 | 站点内容 | `src/content/*.ts` 与 `src/content/types.ts` | 本地类型化对象 | WordPress 响应适配为相同类型 | 接缝已实现，页面仍以本地内容为主 |
-| WordPress 读取 | `wpCollection` / `wpItem` | mock fallback | 受认证的 REST 读取、缓存与重验证 | 读取模块已实现，页面未系统接入 |
-| 轮毂事实 | `WheelCatalogue` / `WheelModel` / `WheelVariant` | 生成的 `wheel-catalogue.ts` | 同一事实数据 + WordPress 发布覆盖层 | 真实目录已生成，现有页面仍读虚构 SKU |
-| 发布资格 | 公开 `WheelCatalogueCard/Detail` 视图 | `hasImage` 技术标记 | 图片、图权、供货、规格、名称和批准状态共同决定 | 已设计，覆盖层待实现 |
-| 询盘写入 | `POST /api/inquiries` | 进程内 Map | WordPress CPT `fh_inquiry` + 事务 outbox（DEC-055） | API 已实现，生产持久化待实现 |
-| 邮件投递 | `send(record)` | 无 key 时 mock；有 key 时 Resend HTTP | outbox worker + accepted/delivered/bounced/unknown 回调 | 直发代码存在，闭环待实现 |
-| 国际化 | 类型化字典与 cookie | `en/zh` cookie 切换 | 首发英文；后续独立语言 URL 需另决策 | 已实现基础，首发不开放中文 SEO |
+| WordPress 读取 | `wpCollection` / `wpItem` | mock fallback + 本地 live REST | 受认证的 REST 读取、缓存与重验证 | 读取模块已实现，部分页面媒体已接入 |
+| Insights 内容 | `InsightGuideDocument` → 既有 `GuideEntry` | WordPress 结构化文章与媒体；失败时回退本地已审核内容 | 同左，逐步扩展到其他页面正文 | 6 篇文章已迁移并接管；预览、撤回与标签失效已验收 |
+| 轮毂事实 | `WheelCatalogue` / `WheelModel` / `WheelVariant` | WordPress 可编辑规格/媒体正本 + 最后有效静态快照 | 同左，生产环境补监控与备份 | 138 型号已迁移并接管；页面公共接口与类型保持不变 |
+| 发布资格 | 公开 `WheelCatalogueCard/Detail` 视图 | 图片、发布状态与实际 variant 的 fail-closed 判定 | 再补图权、供货和业务签字 | 技术门槛已实现，首发集合待业务签字 |
+| 询盘写入 | `POST /api/inquiries` | WordPress CPT `fh_inquiry` + 事务 outbox（DEC-055） | 同一适配器接生产 WordPress | 本地持久化、幂等、回滚与权限矩阵已验收 |
+| 邮件投递 | WordPress outbox worker | accepted、租约、退避与放弃 | delivered/bounced 事件回调 + 平台可靠调度 | 本地 worker 已验收，生产事件闭环待实现 |
+| 国际化 | `src/lib/i18n` 语言契约 + 请求级 locale | 英文保留根 URL，中文使用 `/zh/*` 独立 URL；页头页脚已双语 | 页面正文按内容接缝逐模块提供中英版本 | URL/SEO/站点框架接缝实施中，未翻译正文不得伪装为中文 |
 | 部署 | Next.js 服务端能力 | `output: "standalone"` | OpenNext 目标平台 | 当前可本地 Node 运行，OpenNext 未配置 |
 
 新增第二个数据来源时，在既有接缝增加适配器。不得让多个页面分别理解 WordPress 字段、供应商 JSON 或邮件服务响应。
@@ -142,6 +143,12 @@ assets/ 只读原件
 - 撤回、过期或安全相关状态必须立即失效，不能被旧缓存继续标成可供；
 - 预览内容与公开内容分离，草稿不能进入 sitemap。
 
+轮毂与 Insights 的 WordPress 公开接口必须返回项目自有稳定契约，而不是让页面理解
+core REST 响应。轮毂 live 读取失败时只能回退到仓库中最后一次核验通过的公开集合；
+WordPress 明确返回“权威且为空”时代表全部撤回，不得误用旧快照重新上架。规格与媒体
+迁移采用 expand–migrate–contract：迁移期间旧事实层只作兜底与对账，完成后不再作为
+运营录入点。
+
 ### 5.3 主体和主张
 
 工厂照片只证明照片中可见场景及已核准主体。用户已确认相关制造公司属于同一实际控制人体系，因此品牌层公开页面可以使用“我们的制造基地 / our manufacturing bases”；合同、发票、认证、专利和测试报告仍按实际法人主体与适用范围展示。About、Capabilities 和四产品线页面复用同一主体与证据记录，避免同一事实出现不同口径。
@@ -150,7 +157,9 @@ assets/ 只读原件
 
 ### 6.1 原始事实与公开集合
 
-轮毂基线为 1349 个型号、3485 条变体。当前 1073 个型号匹配到图片，276 个无图。`hasImage` 只表示技术匹配，不等于获得销售和发布批准。
+轮毂基线为 1349 个型号、3485 条变体。当前 1073 个型号匹配到图片，276 个无图。
+`hasImage` 只表示技术匹配，不等于获得销售和发布批准。历史导入数据继续保留作来源
+证据；新的运营入口由 WordPress 管理型号、规格和已批准媒体。
 
 公开资格必须同时满足：
 
@@ -163,7 +172,10 @@ AND specificationStatus = verified
 AND 至少一个 approved variant
 ```
 
-无图、无权、未确认、撤回或没有批准 variant 的型号不生成详情页，不进入目录、筛选、相关推荐或 sitemap；猜中 URL 返回真实 404。数据继续保留在只读事实层，完成审核后再进入公开集合。
+无图、无权、未确认、撤回或没有批准 variant 的型号不生成详情页，不进入目录、筛选、
+相关推荐或 sitemap；猜中 URL 返回真实 404。数据继续保留在只读事实层作为迁移兜底和
+审计证据；WordPress 中新建或更新的型号只有在规格、媒体和四项人工门槛全部通过后才
+进入公开集合。
 
 三电、定制铝制品和自密封轮胎在没有完整型号数据时发布能力页，不渲染空产品卡或占位详情页。
 
@@ -174,15 +186,19 @@ AND 至少一个 approved variant
 目录、详情、询盘上下文和 sitemap 必须调用同一个公开集合：
 
 ```text
-供应商事实数据
-  → 规范化 WheelModel/WheelVariant
-  → WordPress 发布覆盖层
+WordPress 可编辑型号/规格/媒体正本
+  → 稳定 `/fh/v1/wheels` 发布视图
+  → Next.js 适配器（失败时读取最后有效静态快照）
   → publishedWheelModels
   ├─ 目录与筛选
   ├─ 详情与相关型号
   ├─ sitemap
   └─ 询盘服务端上下文复核与快照
 ```
+
+后台保存、撤回、移入回收站或删除轮毂/Insights 时，通过 HMAC-SHA256 请求体签名的 webhook 触发
+Next.js 标签与路径失效。缓存失效是发布流程的一部分，不依赖运营手工运行同步脚本；
+生产运行时仍须配置回调 URL、密钥与失败监控。
 
 ## 7. 页面与路由架构
 
@@ -211,7 +227,11 @@ AND 至少一个 approved variant
 - sitemap 只读取批准页面和公开产品集合；
 - `/thank-you`、预览、草稿、未确认产品和无效型号不索引；
 - `NEXT_PUBLIC_APP_URL` 在构建时固化，构建与发布必须核对其实际值；
-- 英文首发使用根路由。cookie 语言切换不构成独立可索引语言版本。
+- 英文保留根路由以维持既有链接，中文使用 `/zh/*` 独立 URL；语言选择 cookie 只用于
+  记忆与入口跳转，不作为页面语言的唯一事实源；
+- 每个已完成中文正文的公开页面才可输出 `hreflang=zh` 并进入中文 sitemap。只有站点
+  框架翻译、正文仍为英文的页面不得被标成完整中文页面，也不得进入中文索引集合；
+- 语言切换必须保留当前路径、查询参数和片段，不得把用户无条件送回首页。
 
 ## 8. 询盘架构
 
@@ -246,9 +266,16 @@ sequenceDiagram
 
 ### 8.3 当前实现与缺口
 
-当前 `POST /api/inquiries` 已有 JSON/字段校验、先保存后发信和错误响应；生产无 `RESEND_API_KEY` 时返回 503。`GET` 无管理 token 时返回 404、错误 token 返回 401。当前 store 是进程内 Map，重启即丢；邮件为同步直发并用一个 `delivered` 布尔值代表结果。
+当前 `POST /api/inquiries` 已有两步四线/B-C 表单、服务端字段与产品上下文复核、浏览器
+幂等键、隐私版本双重门槛、Origin、蜜罐、时间陷阱、窗口限流和请求体上限；WordPress
+在同一事务写 CPT、幂等键、上下文/同意 meta 与 outbox。`GET` 恒返 404，权威读取只在
+WordPress 最小权限后台。Docker 已对回滚、201/200 重放、租约、退避、5 次放弃与权限
+矩阵完成 69 项验收。
 
-生产前必须增加：询盘 CPT 事务仓储、幂等唯一约束、隐私记录、受控产品快照、outbox worker、邮件事件回调、重试/死信、保留与删除策略、告警和故障演练。
+生产前仍需增加：批准的隐私文本与正式版本、平台边缘限流/人机验证取舍、邮件提供商
+签名事件回调、平台可靠调度、法务批准的保留天数、备份内删除策略、异常/积压告警和
+预发布故障演练。应用层已有默认关闭的保留候选与同事务级联删除接口，但不得替代法务
+决定具体期限。
 
 ## 9. 运行时与部署架构
 
@@ -259,6 +286,18 @@ sequenceDiagram
 - 本地 WordPress Docker 实验场已存在，读取客户端默认 mock；
 - 仓库没有 `@opennextjs/*`、Wrangler 或目标云配置；
 - 根 `Dockerfile` / `docker-compose.yml` 等模板文件已归档（DEC-060）；**仓库中没有生产部署文件**，待 OpenNext 平台确定后新写。
+
+2026-10-09 用户指定 `119.91.205.130:7080` 作为第一阶段 Headless WordPress 公网入口。
+该端口原为旧 Next.js 预览，由 nginx 代理到 `127.0.0.1:3200`；切换时保留旧应用目录和
+systemd 单元作为回滚点，只停止服务并替换 nginx 代理。WordPress 与 MySQL 运行在独立
+Docker Compose 项目中，数据库不映射公网，WordPress 仅绑定 `127.0.0.1:7081`，公网
+继续由 nginx 的 `7080` 入口转发。该地址在没有 HTTPS 前只属于受控预发布后台，不是
+正式商用管理入口。
+
+同日用户追加 `9080` 作为询盘联调前端入口。该入口只用于腾讯云单机上的端到端测试：
+nginx `9080` → 回环端口 `9081` → Node 24 Next.js 容器，容器经 WordPress Compose
+内部网络访问 CMS。它验证真实 `/api/inquiries`、内容读取、回执和缓存回调，但不替代
+DEC-009 的 OpenNext 正式部署决策；没有域名、TLS、CDN 和正式监控时不得标记为生产。
 
 ### 9.2 目标
 
@@ -291,6 +330,8 @@ sequenceDiagram
 | `src/content/` | 类型化内容与产品视图接缝 |
 | `src/lib/wordpress/` | WordPress 读取适配器 |
 | `src/lib/inquiry/` | 询盘验证、仓储和邮件接口的当前实现 |
+| `deploy/wordpress/` | 远程 Headless WordPress Compose、nginx 模板、备份与回滚说明 |
+| `deploy/frontend/` | 腾讯云 9080 询盘联调前端的容器、nginx 与测试部署说明 |
 | `assets/` | 只读产品数据、图片和语料 |
 | `public/` | 已批准或构建产生的公开资源 |
 | `PAGE-SPECS/` | 页面逐视口施工规格 |
@@ -304,9 +345,9 @@ sequenceDiagram
 | 优先级 | 差距 | 完成判据 |
 |---:|---|---|
 | 1 | 业务事实与发布授权未冻结 | 正式英文名/域名/邮箱、供应关系、图权和首发型号签字 |
-| 2 | 页面仍使用虚构 SKU 与旧业务文案 | 目录、详情、首页和 sitemap 全部读取批准公开集合，竞品残留为 0 |
+| 2 | 138 个验收型号未收窄为首发集合 | 销售、工程、供应与图权共同签字，低清或未确认型号同步退出所有公开面 |
 | 3 | WordPress 未接入页面 | 编辑、预览、发布、撤回和缓存失效完整通过 |
-| 4 | 询盘只存内存 | 询盘 CPT 事务、幂等、outbox、邮件事件和故障测试通过 |
+| 4 | 询盘生产事件闭环未完成 | 平台 cron、delivered/bounced 回调、积压/退信告警、保留删除与预发布故障测试通过 |
 | 5 | OpenNext 尚未落地 | 本地/预发布运行时、环境变量、canonical、回滚和费用验证通过 |
 | 6 | 旧路由可能仍可公开访问 | 每条路由完成保留、重定向、noindex 或关闭决策 |
 

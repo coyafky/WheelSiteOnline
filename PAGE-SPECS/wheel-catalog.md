@@ -3,10 +3,10 @@
 - 路由：`/products/wheels`
 - 页面类型：真实型号目录与询盘入口
 - 视口：W01–W03；W02 产品网格可自然延续多个屏高
-- 状态：**已实现**（2026-10-06，DEC-053）。W01–W03 已按本规格落地，只读 `@/lib/wheels`；无 JS 可用（GET 表单 + 普通链接 + 原生 `<details>` 抽屉）；四视口运行时验收全绿。⚠️ 已知偏差：§10 的「焦点锁定 + Escape 关闭」与「无 JS 可用」不可兼得，当前选后者；§8 的 tag 重验证因页面读构建期快照而暂为「同步 + 重建」，管道已预留。§4 的 `/products/wheels/flow-formed` **已实现**（DEC-054），死链已修。
+- 状态：**已实现**（2026-10-09，DEC-053、DEC-069）。W01–W03 只读 `@/lib/wheels`；live 模式读取 WordPress 可编辑规格/媒体，契约或网络失败时使用最后有效静态集合；保存、撤回和删除通过签名 webhook 立即失效。无 JS 可用（GET 表单 + 普通链接 + 原生 `<details>` 抽屉）；四视口运行时验收全绿。⚠️ 已知偏差：§10 的「焦点锁定 + Escape 关闭」与「无 JS 可用」不可兼得，当前选后者。§4 的 `/products/wheels/flow-formed` **已实现**（DEC-054）。
 - 公开语言：英文优先
 - 参考结构：[Vossen Wheels 目录](https://vossenwheels.com/wheels/)；只借鉴筛选、产品卡和密集浏览方式
-- 数据来源：`src/content/wheel-catalogue.ts` ← `assets/wheel-data/WHEEL-CATALOG-ALL.json` + 实际图片匹配
+- 数据来源：WordPress `/fh/v1/wheels` 可编辑正本；`src/content/wheel-catalogue.ts` 与批准快照只作故障兜底和审计
 - 上架规则：有图只是技术候选；图片、规格、供货和使用授权全部批准后才进入公开目录
 
 ## 1. 页面目标与叙事
@@ -303,7 +303,7 @@ type WheelCatalogueCard = {
 
 ## 8. 内容与发布接缝
 
-生成目录保持原始生产数据只读；WordPress 维护发布与公开命名。适配器按 `model`/稳定来源键合并：
+WordPress 维护型号、逐条规格、媒体、发布状态与公开命名；原始生成目录保持只读，作为迁移对账和最后有效兜底。稳定公开视图如下：
 
 ```ts
 type WheelPublicationRecord = {
@@ -409,9 +409,9 @@ type WheelCatalogueQuery = {
 
 ## 13. 现有实现替换要求
 
-当前 `/products/wheels` 使用 16 条虚构 `wheel-skus.ts`、`WheelSketch` 和竞品式 Monoblock/Two-Piece/Off-Road 分组。实施本规格时：
+以下替换要求已于 2026-10-06～09 完成：
 
-1. 改读 `publishedWheelModels` 与 WordPress 发布记录合并后的公开集合。
+1. 改读 WordPress live 集合；故障时回退最后有效 `publishedWheelModels` 静态集合。
 2. 删除目录页对 `wheelSkus`、`getSkusByFamily`、`productFamilies` 和 `WheelSketch` 的依赖。
 3. 使用真实第一张批准图片，不再生成示意轮毂 SVG。
 4. 不继续显示虚构三分类、虚构 summary、spoke count 或 finish。

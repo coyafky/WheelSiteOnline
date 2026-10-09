@@ -30,6 +30,9 @@ const eslintConfig = defineConfig([
     // Read-only data pack (JSON + images). Not source.
     "assets/**",
     "resources/**",
+    // Playwright generated HTML/trace bundles are third-party build output.
+    "playwright-report/**",
+    "test-results/**",
     // Local WordPress runtime/data mirror. It contains upstream WordPress
     // bundles and is never part of the Next.js source tree.
     "local-wp/**",

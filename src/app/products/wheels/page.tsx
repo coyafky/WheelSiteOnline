@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
+import { AutomotiveBackdrop } from "@/components/automotive-backdrop";
 import {
   getWheelCataloguePage,
   isPageOutOfRange,
@@ -21,6 +22,7 @@ import {
   WheelCatalogueEmptyState,
   WheelCatalogueEnd,
 } from "@/components/wheels/wheel-catalogue-empty";
+import { automotiveScenes } from "@/content/automotive-scenes";
 
 /**
  * `/products/wheels` — 轮毂目录（PAGE-SPECS/wheel-catalog.md W01–W03）。
@@ -129,8 +131,13 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
         data-reveal
         className="relative isolate overflow-hidden bg-ink"
       >
+        <AutomotiveBackdrop scene={automotiveScenes.wheelCatalogue} priority />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_24%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink via-ink/90 to-ink/35"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_24%_0%,rgba(194,101,10,0.22)_0%,rgba(11,15,22,0)_58%)]"
           aria-hidden="true"
         />
         <div
@@ -195,7 +202,8 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
       {/* ═══ W02 · 结果区 / W03 · 空状态（§4、§9、§10）══════════════════ */}
       <section
         aria-label="Wheel catalogue results"
-        className="border-b border-border bg-soft py-8 lg:py-12"
+        data-floating-quote-hide
+        className="border-b border-border bg-white py-8 lg:py-14"
       >
         <div className="container-fh-wide">
           {/* 移动：结果数在 Filters 按钮之前（§10「H1 后立即显示结果数和 Filters 按钮」） */}
@@ -203,11 +211,11 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
             {summary}
           </p>
 
-          <div className="lg:grid lg:grid-cols-[248px_minmax(0,1fr)] lg:items-start lg:gap-x-10">
+          <div className="lg:grid lg:grid-cols-[270px_minmax(0,1fr)] lg:items-start lg:gap-x-10">
             {/* 左栏：筛选（sticky，但不遮挡 Header、不阻断页尾）。
                 高度约束与内部滚动移进了 `WheelCatalogueFilters` 的表单 ——
                 只有那样「筛选区滚动 + Apply 常驻」才成立。 */}
-            <div className="mt-4 lg:sticky lg:top-24 lg:mt-0">
+            <div className="mt-4 lg:sticky lg:top-24 lg:mt-0 lg:border-r lg:border-border lg:pr-8">
               <WheelCatalogueFilters
                 facets={view.facets}
                 query={pageQuery}
@@ -224,8 +232,8 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
               ) : (
                 <>
                   {/* 结果数 + 排序同屏（§9 W01）；结果数在桌面显示（移动那份已在上面） */}
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <p className="mr-auto hidden font-display text-[0.78rem] font-700 uppercase tracking-[0.1em] text-ink lg:block">
+                  <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/12 pb-5">
+                    <p className="mr-auto hidden font-display text-[0.82rem] font-700 uppercase tracking-[0.12em] text-ink lg:block">
                       {summary}
                     </p>
                     <WheelCatalogueSort query={pageQuery} />
@@ -238,14 +246,14 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
                   />
 
                   {/* 卡片边界说明 —— 只出现一次，不逐卡重复（§4 W02） */}
-                  <p className="mt-4 text-[0.75rem] leading-relaxed text-muted-foreground">
+                  <p className="mt-5 max-w-[720px] text-[0.75rem] leading-relaxed text-muted-foreground">
                     Specifications shown in the catalogue are production records, not a
                     vehicle-fitment guarantee.
                   </p>
 
                   {/* 每页 24 张；移动单列（360–639）→ 640 起两列 → 桌面四列，
                       且任何一列都不窄于 230px（§5.4、§9、§10）。只给第一排 priority。 */}
-                  <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] sm:gap-5">
+                  <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:gap-y-14">
                     {view.cards.map((card, index) => (
                       <WheelCatalogueCardView
                         key={card.slug}

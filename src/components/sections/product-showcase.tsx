@@ -57,12 +57,15 @@ export function ProductShowcase({
                 )}
                 <div className="absolute inset-0 -z-10 bg-linear-to-t from-hero via-hero/58 to-hero/10" />
 
-                <div className="absolute left-6 top-6 font-display text-sm font-700 tracking-[0.16em] text-white/45 lg:left-8 lg:top-8">
+                <div
+                  aria-hidden="true"
+                  className="absolute left-6 top-6 font-display text-sm font-700 tracking-[0.16em] text-white/70 lg:left-8 lg:top-8"
+                >
                   {String(index + 1).padStart(2, "0")}
                 </div>
 
                 <div className="relative">
-                  <p className="font-display text-[0.78rem] font-600 uppercase tracking-[0.13em] text-forge">
+                  <p className="font-display text-[0.78rem] font-600 uppercase tracking-[0.13em] text-forge-bright">
                     {product.subtitle}
                   </p>
                   <h3 className="mt-3 max-w-[520px] font-display text-[clamp(1.8rem,3.2vw,2.6rem)] font-800 uppercase leading-[0.95] tracking-[-0.01em] text-white">
@@ -72,7 +75,7 @@ export function ProductShowcase({
                     {product.summary}
                   </p>
 
-                  <span className="mt-6 inline-flex min-h-11 items-center gap-2 font-display text-[0.8rem] font-700 uppercase tracking-[0.12em] text-white transition-colors duration-300 group-hover:text-forge">
+                  <span className="mt-6 inline-flex min-h-11 items-center gap-2 font-display text-[0.8rem] font-700 uppercase tracking-[0.12em] text-white transition-colors duration-300 group-hover:text-forge-bright">
                     {copy.actionLabels[product.slug] ?? "Explore product line"}
                     <ArrowUpRight
                       className="size-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"

@@ -36,9 +36,59 @@ if (process.env.WP_API_URL) {
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  poweredByHeader: false,
   images: {
     remotePatterns,
     dangerouslyAllowLocalIP: allowLocalWordpressMedia,
+  },
+  async headers() {
+    const appUsesHttps = (() => {
+      try {
+        return process.env.NEXT_PUBLIC_APP_URL
+          ? new URL(process.env.NEXT_PUBLIC_APP_URL).protocol === "https:"
+          : false;
+      } catch {
+        return false;
+      }
+    })();
+    const cmsOrigin = (() => {
+      try {
+        return process.env.WP_API_URL ? new URL(process.env.WP_API_URL).origin : "";
+      } catch {
+        return "";
+      }
+    })();
+    const contentSecurityPolicy = [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "object-src 'none'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      `img-src 'self' data: blob:${cmsOrigin ? ` ${cmsOrigin}` : ""}`,
+      `connect-src 'self'${cmsOrigin ? ` ${cmsOrigin}` : ""}`,
+      "font-src 'self' data:",
+      ...(appUsesHttps ? ["upgrade-insecure-requests"] : []),
+    ].join("; ");
+
+    const securityHeaders = [
+      { key: "Content-Security-Policy", value: contentSecurityPolicy },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "X-Frame-Options", value: "DENY" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      ...(appUsesHttps
+        ? [{ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" }]
+        : []),
+    ];
+
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 

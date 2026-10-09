@@ -47,10 +47,10 @@ function PageLink({
       rel={rel}
       aria-current={current ? "page" : undefined}
       className={cn(
-        "inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border px-3 font-display text-[0.78rem] font-700 uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge",
+        "inline-flex min-h-11 min-w-11 items-center justify-center border px-3 font-display text-[0.78rem] font-700 uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge",
         current
           ? "border-forge bg-forge text-white"
-          : "border-border bg-card text-ink hover:border-forge hover:text-forge",
+          : "border-border bg-white text-ink hover:border-forge hover:text-forge",
       )}
     >
       {label}
@@ -62,7 +62,7 @@ function DisabledPage({ label }: { label: string }) {
   return (
     <span
       aria-disabled="true"
-      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border bg-card px-3 font-display text-[0.78rem] font-700 uppercase tracking-[0.1em] text-muted-foreground opacity-50"
+      className="inline-flex min-h-11 min-w-11 items-center justify-center border border-border bg-white px-3 font-display text-[0.78rem] font-700 uppercase tracking-[0.1em] text-muted-foreground opacity-50"
     >
       {label}
     </span>

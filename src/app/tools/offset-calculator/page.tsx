@@ -174,8 +174,8 @@ export default function OffsetCalculatorPage() {
             </p>
           </div>
 
-          <div>
-            <pre className="overflow-x-auto rounded-xl border border-border bg-ink p-6 font-mono text-[0.8rem] leading-relaxed text-white/85">
+          <div className="min-w-0">
+            <pre className="max-w-full overflow-x-auto rounded-xl border border-border bg-ink p-6 font-mono text-[0.8rem] leading-relaxed text-white/85">
               <code>
                 {copy.formulaLines.map((line) => (
                   <span key={line} className="block">

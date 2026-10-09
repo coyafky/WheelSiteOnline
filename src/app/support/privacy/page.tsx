@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "What personal data Fenghuai collects from enquiries and orders, why, who it is shared with, and your rights.",
+  robots: { index: false, follow: false },
 };
 
 /**

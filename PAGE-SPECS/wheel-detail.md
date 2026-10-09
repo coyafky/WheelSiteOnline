@@ -3,10 +3,10 @@
 - 路由：`/products/wheels/[model]`
 - 页面类型：真实轮毂型号、实际变体选择与询盘
 - 视口：WD01–WD06
-- 状态：**已实现**（2026-10-06，DEC-053）。WD01–WD06 已按本规格落地；路由由 `[sku]` 改为 `[model]`；`generateStaticParams` 用 `listPublishedWheelSlugs()`；询盘服务端复核已接入（伪造规格实测被覆盖）；四视口运行时验收全绿。
+- 状态：**已实现**（2026-10-09，DEC-053、DEC-069）。WD01–WD06 已落地；路由由 `[sku]` 改为 `[model]`；`generateStaticParams`、详情、询盘复核和 sitemap 共用 WordPress live/静态兜底集合；签名 webhook 的发布、修改、撤回和删除已用临时 FH-002 验收；四视口运行时验收全绿。
 - 公开语言：英文优先
 - 结构参考：[2N Forged N-501RS](https://2nforged.com/wheel-products/n-501rs/)；只借鉴产品首屏、配置询盘、finish 解释和相关产品结构
-- 数据来源：目录事实 `src/content/wheel-catalogue.ts` + WordPress 发布覆盖层
+- 数据来源：WordPress `/fh/v1/wheels` 可编辑规格/媒体正本；静态目录与批准快照作故障兜底
 - 上架规则：复用 [轮毂产品目录 Page SPEC](wheel-catalog.md) 的完整发布资格；目录、详情、询盘和 sitemap 必须使用同一公开集合
 
 ## 1. 页面目标与叙事
@@ -338,7 +338,7 @@ type WheelDetailView = {
 
 ## 13. 现有实现替换要求
 
-当前 `src/app/products/wheels/[sku]/page.tsx` 使用虚构 `WheelSku`、生成式 `WheelSketch`、通用 finish 色块、虚构 applications 和系列关系。实施本规格时：
+以下替换要求已完成；旧 `[sku]` 方案仅保留在归档记录中：
 
 1. 路由逻辑改读公开 `WheelModel` 和 WordPress 发布覆盖层；参数语义统一为 `model`。
 2. `generateStaticParams`、页面查询和 sitemap 使用完全相同的公开集合。

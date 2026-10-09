@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FloatingQuote } from "@/components/floating-quote";
 import { getLocale } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const inter = Inter({
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
   },
   description:
     "Fenghuai manufactures aluminium components across four product lines — forged wheels, EV powertrain housings, custom aluminium parts and self-healing safety tires — for dealers, Tier 1 suppliers and OEM programmes.",
-  metadataBase: new URL("https://www.fenghuai.com"),
+  metadataBase: siteUrl,
 };
 
 export default async function RootLayout({
@@ -56,7 +57,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={locale}
+      lang={locale === "zh" ? "zh-CN" : "en"}
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${barlow.variable} h-full antialiased`}
     >
@@ -67,7 +68,7 @@ export default async function RootLayout({
           {children}
         </main>
         <SiteFooter locale={locale} />
-        <FloatingQuote />
+        <FloatingQuote locale={locale} />
       </body>
     </html>
   );

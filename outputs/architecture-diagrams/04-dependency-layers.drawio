@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio-skill" agent="diagram-ir" version="3.0.0">
+  <diagram id="system" name="System">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l1" value="L1 项目事实与证据 assets/ · resources/ · WordPress 批准态" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="l1" data-kind="datastore" data-properties="{&quot;layer&quot;:&quot;1&quot;}" data-source-properties="{&quot;layer&quot;:&quot;1&quot;}" data-source-label="L1 项目事实与证据&#10;assets/ · resources/ · WordPress 批准态" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="60" y="80" width="399" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="L2 类型化契约 src/content · WheelCatalogue · InquiryRecord" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="l2" data-kind="library" data-properties="{&quot;layer&quot;:&quot;2&quot;}" data-source-properties="{&quot;layer&quot;:&quot;2&quot;}" data-source-label="L2 类型化契约&#10;src/content · WheelCatalogue · InquiryRecord" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="519" y="80" width="414" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="L3 页面组件与 SEO src/components · metadata · schema" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="l3" data-kind="library" data-properties="{&quot;layer&quot;:&quot;3&quot;}" data-source-properties="{&quot;layer&quot;:&quot;3&quot;}" data-source-label="L3 页面组件与 SEO&#10;src/components · metadata · schema" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="60" y="240" width="373" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" value="L4 路由与运行时适配器 src/app · wordpress/client · wheels/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="l4" data-kind="module" data-properties="{&quot;layer&quot;:&quot;4&quot;}" data-source-properties="{&quot;layer&quot;:&quot;4&quot;}" data-source-label="L4 路由与运行时适配器&#10;src/app · wordpress/client · wheels/" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="519" y="240" width="408" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" value="L5 外部系统 WordPress · MySQL · 邮件 · 部署平台" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="l5" data-kind="service" data-properties="{&quot;layer&quot;:&quot;5&quot;}" data-source-properties="{&quot;layer&quot;:&quot;5&quot;}" data-source-label="L5 外部系统&#10;WordPress · MySQL · 邮件 · 部署平台" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="60" y="400" width="331" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ban" value="禁止的依赖 · 组件直读 WP 原始响应 · 客户端组件导入服务端存储/密钥 · 页面绕过公开集合用全部 1219 型号 · 表单自行认定型号合法 · 邮件结果决定询盘是否保存" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="ban" data-kind="component" data-properties="{&quot;layer&quot;:&quot;ban&quot;}" data-source-properties="{&quot;layer&quot;:&quot;ban&quot;}" data-source-label="禁止的依赖&#10;· 组件直读 WP 原始响应&#10;· 客户端组件导入服务端存储/密钥&#10;· 页面绕过公开集合用全部 1219 型号&#10;· 表单自行认定型号合法&#10;· 邮件结果决定询盘是否保存" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_layers.json&quot;}">
+          <mxGeometry x="519" y="400" width="948" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-0" value="允许" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="l1" target="l2" data-model-id="d1" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="允许">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-1" value="允许" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="l2" target="l3" data-model-id="d2" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="允许">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-2" value="允许" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="l3" target="l4" data-model-id="d3" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="允许">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-3" value="允许" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="l4" target="l5" data-model-id="d4" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="允许">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-4" value="禁止" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="l3" target="l5" data-model-id="d5" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="禁止">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

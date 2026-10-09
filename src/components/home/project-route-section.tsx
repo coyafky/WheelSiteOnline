@@ -45,7 +45,7 @@ export function ProjectRouteSection({
           data-reveal-group
         >
           <div data-reveal>
-            <p className="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-forge">
+            <p className="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-forge-bright">
               {delivery.eyebrow}
             </p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-5xl lg:text-6xl">
@@ -62,7 +62,7 @@ export function ProjectRouteSection({
                   className="relative pb-9 last:pb-0"
                   data-reveal
                 >
-                  <span className="absolute -left-[2.47rem] top-0 grid size-5 place-items-center rounded-full border border-forge bg-hero font-mono text-[0.52rem] font-bold text-forge">
+                  <span className="absolute -left-[2.47rem] top-0 grid size-5 place-items-center rounded-full border border-forge-bright bg-hero font-mono text-[0.52rem] font-bold text-forge-bright">
                     {index + 1}
                   </span>
                   <h3 className="text-lg font-semibold tracking-[-0.02em]">

@@ -1,74 +1,103 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
-  guides,
   resourcesCards,
   resourcesExtraIndex,
   resourcesHero,
   resourcesIntro,
   resourcesPathways,
 } from "@/content/resources";
+import { insightsHeroMedia } from "@/content/insights-visuals";
 import { GuidesAccordion } from "@/components/guides-accordion";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PreviewBanner } from "@/components/preview-banner";
+import { getInsightGuideDocuments } from "@/lib/wordpress/insights";
 
 export const metadata: Metadata = {
   title: "Forged Wheel Insights — Fitment, Construction & Import Guides",
   description:
     "Reference guides for dealers and wheel shops: measuring fitment, offset and backspacing, choosing a construction, finish options and importing wheels.",
+  robots: { index: false, follow: true },
 };
 
 /**
  * Insights hub.
  *
- * Follows the reference site's `resources-*` index archetype: hero → category
- * strip and card list → pathways → CTA. The cards expand in place rather than
- * linking to article routes, because no `/insights/[slug]` page exists yet.
+ * 工程资料库：用编辑型主视觉、可筛选 dossier 卡和参考工具入口组织内容。
+ * 视觉借鉴高端汽车网站的图像节奏与强层级，但文字、素材和信息架构均为丰怀自有。
  */
-export default function InsightsPage() {
+export default async function InsightsPage() {
+  const { isEnabled: preview } = await draftMode();
+  const documents = await getInsightGuideDocuments({ preview });
+  const guides = documents.map((document) => document.guide);
+  const guideMedia = Object.fromEntries(
+    documents.flatMap((document) => document.media ? [[document.guide.slug, document.media]] : []),
+  );
   return (
     <>
+      <PreviewBanner enabled={preview} />
       {/* A. Hero ----------------------------------------------------------- */}
       <section
         id="top"
         aria-labelledby="resources-title"
         data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        className="relative isolate overflow-hidden bg-hero"
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_30%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
+        <div className="container-fh grid min-h-[760px] items-end gap-10 pb-16 pt-[140px] lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.75fr)] lg:gap-16 lg:pb-20 lg:pt-[168px]">
+          <div className="relative z-10">
+            <div className="flex items-center gap-4">
+              <p className="eyebrow !text-forge-bright">{resourcesHero.eyebrow}</p>
+              <span className="h-px w-12 bg-white/25" aria-hidden="true" />
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-white/65">
+                {String(guides.length).padStart(2, "0")} dossiers
+              </p>
+            </div>
+            <h1
+              id="resources-title"
+              className="mt-7 max-w-[900px] font-display text-[clamp(3.2rem,8vw,7.3rem)] font-800 uppercase leading-[0.82] tracking-[-0.035em] text-white"
+            >
+              {resourcesHero.heading}
+            </h1>
+            <p className="mt-8 max-w-[680px] text-[1.08rem] leading-relaxed text-white/78">
+              {resourcesHero.lede}
+            </p>
+            <p className="mt-4 max-w-[620px] text-sm leading-relaxed text-white/62">
+              {resourcesHero.supporting}
+            </p>
 
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{resourcesHero.eyebrow}</p>
-          <h1
-            id="resources-title"
-            className="mt-5 max-w-[1000px] font-display text-[clamp(2.4rem,6.8vw,4.9rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
-          >
-            {resourcesHero.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {resourcesHero.lede}
-          </p>
-          <p className="mt-4 max-w-[660px] text-sm leading-relaxed text-white/55">
-            {resourcesHero.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="#guides-title" className="btn-pill-solid">
-              Browse the guides
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/contact" className="btn-pill-outline !text-white">
-              Ask a technical question
-            </Link>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <Link href="#guides-title" className="btn-pill-solid">
+                Browse the guides
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link href="/contact" className="btn-pill-outline !text-white">
+                Ask a technical question
+              </Link>
+            </div>
           </div>
+
+          <figure className="relative min-h-[360px] overflow-hidden border border-white/15 bg-panel lg:min-h-[560px]" data-reveal>
+            <Image
+              src={insightsHeroMedia.src}
+              alt={insightsHeroMedia.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              className="object-cover brightness-[0.72] contrast-110"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-hero via-transparent to-hero/15" aria-hidden="true" />
+            <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 border-t border-white/15 bg-hero/70 p-5 backdrop-blur-sm">
+              <span className="max-w-[360px] text-xs leading-5 text-white/75">{insightsHeroMedia.caption}</span>
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-forge-bright">Technical library</span>
+            </figcaption>
+          </figure>
         </div>
+
+        <div className="pointer-events-none absolute inset-y-0 left-[8%] -z-10 w-px bg-white/[0.06]" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 right-[8%] -z-10 w-px bg-white/[0.06]" aria-hidden="true" />
       </section>
 
       {/* B. Guide cards ------------------------------------------------------ */}
@@ -91,7 +120,7 @@ export default function InsightsPage() {
           </div>
 
           <div data-reveal className="mt-12 px-4">
-            <GuidesAccordion guides={guides} copy={resourcesCards} />
+            <GuidesAccordion guides={guides} copy={resourcesCards} media={guideMedia} />
           </div>
         </div>
       </section>

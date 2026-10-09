@@ -1,5 +1,144 @@
 # 项目状态
 
+## 2026-10-09 商用基线继续收口
+
+**当前判断仍为 No-Go。** 本轮已关闭所有不依赖管理层决定的本地工程基线，但正式
+主体/域名/法律文本/首发产品签字/OpenNext 平台/邮件事件/监控恢复仍未具备，不能部署
+生产、开放索引或向客户发信。
+
+本轮完成：
+
+- 腾讯云公网联调环境已部署：`119.91.205.130:7080` 运行 Headless WordPress，
+  `119.91.205.130:9080` 运行 Node 24 Next.js；MySQL 不暴露公网，WordPress/Next 容器
+  只绑定 7081/9081 回环端口，nginx 持有公网入口，三个容器均通过健康检查；
+- 9080→Next API→WordPress 的询盘链路以 `INQ-20261009-0004` 验收：首次 `201`、幂等
+  重放 `200`、WordPress 后台同编号可见；缓存刷新无签名 `401`，轮毂和 Insights 两类
+  签名回调成功；
+- 本地已经验收的 QQ SMTP 参数已在不向日志或仓库暴露明文的前提下同步到远端，并保留
+  同步前 `.env` 备份；
+  `INQ-20261009-0007` 在远端完成真实内部通知验收，后台 CPT 与事务 outbox 均为
+  `accepted`、尝试次数 1、无错误。SMTP 接受不等同于最终送达，最终到件仍由收件邮箱确认；
+- HTTP 联调入口曾因 CSP `upgrade-insecure-requests` 把 CSS/JS 错误升级为 HTTPS，现已
+  改为仅对 HTTPS 地址启用，同时只在 HTTPS 下发送 HSTS；Playwright 远端复核 0 错误、
+  0 警告，截图见 `outputs/remote-9080-zh-rendered-2026-10-09.png`；
+- 服务器只有 2 GB 内存，远端 `next build` 会导致实例失去响应。部署流程已固定为开发机
+  生成并冒烟验证 amd64 镜像、服务器只校验/加载/运行；失败构建的 1.863 GB 缓存已清理；
+- 询盘表单客户端/服务端现共用 Zod 字段契约，Step 1/Step 2 增加可访问进度、完成状态、
+  返回修改入口和错误聚焦；仓库核验为单一根包、多运行时项目，不是 monorepo；
+- WordPress 轮毂后台已从“只改发布决定”升级为型号、逐条规格、规格排序、主图和图库的
+  可编辑正本；138 个已批准型号和 677 张关联图片已幂等迁移，公开 `/fh/v1/wheels`
+  契约接管后仍为 138 个型号，网络/契约失败保留最后有效静态兜底；
+- `@/lib/wheels` 既有四个公共接口与页面组件契约不变，目录、筛选、详情、sitemap 和询盘
+  复核统一读取 WordPress live 集合；权威空集合不会错误回退旧产品；
+- 轮毂与 Insights 的保存、撤回、回收站和删除现以 HMAC-SHA256 请求体签名通知 Next，
+  按内容类型失效 tag 与目录/详情/sitemap 路径；错误或缺失签名返回 401；
+- Insights 已提供可增删排序的短版/正文分段编辑器和媒体库特色图片；现有 6 篇文章及图片
+  已幂等迁移并打开 WordPress 权威接管，列表、文章首屏、预览和撤回均已验收；
+- 临时 FH-002 完成草稿、两规格、媒体、批准、目录/筛选/详情/sitemap、修改、撤回和删除
+  全生命周期测试；测试记录和媒体已清理，未把虚构产品留在后台；
+- 新增 23 项 Playwright E2E：四种询盘上下文、201/200、422、429、数据库失败、邮件
+  失败、感谢页回执、robots/sitemap/canonical、敏感 URL、预览/退出/缓存失效、中文
+  独立 URL；axe/WCAG、键盘焦点、错误聚焦与等效 200% 缩放全部通过；
+- 限流键全部只保存 SHA-256；应用错误日志不再输出异常正文；WordPress 邮件错误入库前
+  脱敏邮箱、电话和密钥；新增默认关闭的保留/级联删除接口，Docker 探针已验证且清理；
+- Insights 新增 `fh_guide` WordPress 内容类型、中文后台字段、稳定 REST 视图、双重发布
+  门槛、权威接管开关、预览、撤回和按 tag 立即失效；CMS 探针完成且无残留数据；
+- Insights 列表改为图像主导的工业编辑版式；页头与页脚借鉴参考站的透明叠加、下划线
+  导航、强字标和深色大版面，但未复制竞品资产、品牌或文案；
+- i18n 改为英文根 URL + 中文 `/zh/*` 独立 URL，切换保留路径、查询参数与片段，站点
+  框架中英双语；中文正文尚未逐页完成，因此响应强制 `noindex,follow`，不进入 sitemap；
+- 轮毂 Markdown 导出器修复派生字段误参与对账的问题，重新生成并验证 1349 条来源记录、
+  3485 条 variant、8 个直径组；两个过期 active 任务已移入 completed；
+- 完成深色模块车辆场景审计，生成三张无品牌合成图并接入轮毂目录页首、自修复轮胎
+  页首和 EV 工程评估横幅；合成图只承担装饰与应用语境，不进入产品/制造证据链；
+- 页头语言切换改为同基线的 `EN / 中文` 文字状态，询盘入口取消桌面胶囊描边，改由
+  品牌色与方向箭头强调；中英、透明/滚动态和移动菜单均完成截图验收；
+- 轮毂目录参考 Vossen 的白底留白、无框产品陈列与居中信息层级完成 UI 重构，同时保留
+  PCD/尺寸/工艺筛选与真实 variant 契约；四视口无横向溢出，源图统一另列资产任务；
+- 当前门禁：24/24 单元测试、23/23 浏览器测试、轮毂 CPT 21/21、Insights 结构化 CMS
+  探针、FH-002 live 生命周期、lint、typecheck、191 项 production build 与生产进程冒烟全绿。
+
+证据目录：
+
+- `resources/screenshots/2026-10-09-insights-redesign/`
+- `resources/screenshots/2026-10-09-header-footer-redesign/`
+- `resources/screenshots/2026-10-09-automotive-backgrounds/`
+- `resources/screenshots/2026-10-09-header-controls/`
+- `resources/screenshots/2026-10-09-vossen-wheel-reference/`
+- `resources/screenshots/2026-10-09-wheel-catalogue-refinement/`
+- `outputs/reports/04-privacy-logging-retention-audit-2026-10-09.md`
+- `outputs/reports/05-automotive-background-module-audit-2026-10-09.md`
+
+当前可继续由开发推进但尚未完成：其余页面正文/SEO 迁入 WordPress 稳定适配器、逐页
+中文内容翻译与核验、中文 `hreflang`/sitemap 放行、真机软键盘和屏幕阅读器 UAT。
+
+本轮未 commit、push，未改 DNS；已部署 7080/9080 公网联调环境，并向已配置的内部 QQ
+收件邮箱发出 1 封合成 SMTP 验收通知。当前仍是 IP + HTTP、强制 `noindex` 的上线验收
+环境，不等同于完成域名、TLS、正式隐私文本、监控和恢复演练后的商用生产环境。生产依赖
+审计为 0 漏洞；完整开发依赖树仍有 9 个 high，已排入
+`work/queued/2026-10-09-development-dependency-security-audit.md`，未执行破坏性 force fix。
+
+## 2026-10-08 商用完整核验
+
+**当前判断仍为 No-Go：可用于本地演示、内容评审和继续开发，不可正式公开上线。**
+
+工程流程已新增项目技能
+`SKILLS/fenghuai-engineering-workflow/`（DEC-061）：固定
+`mattpocock/skills@v1.3.1`，归并规格、纵向 Issue、TDD、证据化诊断、双轴评审和
+复盘方法。所有项目记录继续使用中文，Issue 继续走 `work/` 生命周期，不自动
+commit/push/deploy，也不另建第二套外部 Issue 正本。
+
+本轮完成三个独立交付：
+
+1. [商用就绪完整核验与整改计划](outputs/reports/01-commercial-readiness-audit-2026-10-08.md)
+2. [UI 页面审计报告](outputs/reports/02-ui-page-audit-2026-10-08.md)
+3. [正式部署所需资源与管理层请示清单](outputs/reports/03-deployment-resource-and-decision-request-2026-10-08.md)
+
+对应整改任务已进入
+[商用上线整改与验收](work/queued/2026-10-08-commercial-launch-remediation.md)。
+
+### 2026-10-08 自主整改后状态
+
+已按 DEC-061 的工程流程完成一轮“无需上级请示”的垂直整改：
+
+- 询盘改为 QF01–QF03 两步四线/B-C 表单，个人客户不强制公司；浏览器幂等键、
+  200/201 重放、主动隐私同意、确定版本、失败保留与感谢页已贯通；
+- API 增加 16 KiB 上限、Origin 白名单、蜜罐、时间陷阱、IP/邮箱窗口限流；匿名 GET
+  恒返 404，恶意 Origin 实测 403，超大请求体实测 413；
+- WordPress 新增 `fh_inquiry_sales` 最小权限角色，Contributor/Author 不可读询盘，
+  邮件派发只给管理员；销售通知改为 HTML + 纯文本备用，邮件可直达同一条 WordPress
+  详情，后台列表错列已修；Docker 完整验收更新为 **78/78 通过**；
+- 未批准法律、经销、洞察与适配内容已 `noindex` 并退出 sitemap；站点 URL 未配置时
+  robots/sitemap fail-closed；假联系渠道已隐藏；
+- 英文首发不再读取语言 cookie，未完成语言切换已移除；主要页面恢复静态预渲染；
+- 永久迁移统一为 308；CSP、HSTS、nosniff、frame、referrer 和 permissions 安全头已启用；
+- Next.js 与 eslint-config-next 升至 16.4.0；`npm audit --omit=dev` 为 **0 漏洞**；
+  新增 7 项询盘契约测试与中文 CI；
+- 移动筛选展开时隐藏浮动询盘按钮；偏距公式改为自身滚动，390px 视口整页
+  `scrollWidth=390`；询盘旧“轮毂/三个字段/一分钟”文案已清除。
+- 感谢页成功状态增加 15 分钟 HMAC 回执；直接访问、篡改询盘号或伪造 token 均不会
+  显示“已记录”。
+- 邮件模板以合成数据通过 900px/390px Playwright 复核，中文 UTF-8、客户输入转义、
+  分区和无横向溢出均通过；真实内部验收询盘 `INQ-20261008-0001` 已由 SMTP 接受并
+  保留在本地 WordPress（`post_id=538`）供后台查看。
+
+当前工程门禁：`npm run lint`、`npm run typecheck`、`npm test`、带站点 URL/隐私版本的
+`npm run build`、`npm audit --omit=dev` 与 `git diff --check` 均通过；Next.js 16.4.0
+生成 188 个页面数据项。浏览器证据保存在
+`resources/screenshots/2026-10-08-commercial-audit/`。
+
+当前仍阻断正式上线、且不能由开发代理自行决定的事项：
+
+- 正式法定主体、域名、邮箱、电话、地址、工作时间与销售责任人；
+- 138 个验收型号收窄为业务/工程/供应/图权共同签字的首发集合，并补齐合格主图；
+- 五份法律文本、目标市场、B/C 政策和隐私版本的正式批准；
+- OpenNext 平台、生产 WordPress/MySQL、邮件提供商事件回调、可靠 cron、监控、告警、
+  备份恢复和应用回滚；
+- 预发布 UAT、真机/无障碍、真实 delivered/bounced、第二人恢复演练与最终上线授权。
+
+本轮未 commit、push、deploy，未变更 DNS。本次邮件格式修复只向服务端配置的内部
+收件邮箱发送 1 封合成验收通知，未向客户地址发送邮件；`accepted` 不代表最终送达。
+
 ## 2026-10-06 当前状态
 
 **当前版本已完成 7 个核心展示页，但轮毂交易主链路、统一询盘持久化、SEO
@@ -14,7 +153,7 @@ commit、push、deploy，也没有向真实地址发送测试邮件。
 | 路由 | 当前实现 | 状态边界 |
 |---|---|---|
 | `/` | H01–H05、四条产品线、制造能力、项目路径与统一收口 | 已实现 |
-| `/about` | 公司定位、轮毂制造基地、自密封轮胎制造基地 | 已实现；法人证据仍按实际主体 |
+| `/about` | 公司定位、公司角色分工与集团纵向链条、轮毂制造基地、自密封轮胎制造基地 | 已实现；法人证据仍按实际主体 |
 | `/capabilities` | WM01–WM05 轮毂制造与质量证据 | 已实现；证书未核验不公开 |
 | `/products/safety-tires` | T01–T06、17 张媒体、8 mm 结构化证据 | 已实现；具体型号报告待补 |
 | `/products/wheels/forged` | WF01–WF04、WF06 | 已实现；WF05 因案例证据不足隐藏，后台元数据待补 |
@@ -65,7 +204,8 @@ WordPress 媒体 URL。当前 CMS 接缝主要覆盖批准媒体，页面文案�
    经服务密钥鉴权的 `POST /fh/v1/inquiries` 写入，WordPress 后台可查阅管理。
    端到端实测通过（含事务回滚与规格快照复核）。
    **仍待做**：QF01–QF03 两步四线表单（当前可见表单仍是轮毂长表单）、
-   感谢页按 §7.3 复查、outbox 定时派发 worker、邮件事件回调。
+   感谢页按 §7.3 复查、邮件事件回调。mu-plugin 的 WP-Cron 租约重试已在本轮完成
+   66/66 运行时复验；生产仍需改由可靠的平台定时任务触发并补齐监控告警。
 5. **✅ sitemap 已修正（2026-10-06）**：16 条虚构轮毂 SKU URL 已换成
    `listPublishedWheelSlugs()` 的 138 条真实公开 slug；补上 EV、轮胎、锻造、询盘
    四条真实可索引路由；`/gallery` 与 `/gallery/wheels` 两条**虚构内容路由**已下架

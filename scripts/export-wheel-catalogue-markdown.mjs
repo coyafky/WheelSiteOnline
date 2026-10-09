@@ -65,7 +65,17 @@ function variantKey(record, variant) {
 }
 
 function comparableRecord(record) {
-  const { sizeCategory: _ignored, ...rest } = record;
+  // `records` 在导出阶段会附加来源定位字段；总表只包含事实记录并额外附加
+  // `sizeCategory`。对账必须同时剥掉这两侧各自的派生字段，否则第一条来源记录
+  // 就会因为 sourceFile/sourceKey 等元数据而永远无法与事实相同的总表匹配。
+  const {
+    sizeCategory: _sizeCategory,
+    sourceFile: _sourceFile,
+    sourceDocument: _sourceDocument,
+    catalogueKey: _catalogueKey,
+    sourceKey: _sourceKey,
+    ...rest
+  } = record;
   return JSON.stringify(rest);
 }
 

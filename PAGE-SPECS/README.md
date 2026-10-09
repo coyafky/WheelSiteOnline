@@ -9,6 +9,7 @@
 已拆出的现行子规格：
 
 - [首页](homepage.md)：2N 首页结构取舍、四条产品线、六项制造能力、制造关系、统一询盘和现有组件替换。
+- [About 页：公司角色分工模块](about-company-role.md)：A02 四项角色与集团纵向一体化链条、同一 ownership group 公开口径、六类禁发内容和证据边界；代码已实现。
 - [About 页：轮毂制造基地模块](about-wheel-factory.md)：厂区、铸造、机加工、涂装四张 WordPress 图片及品牌/法人边界；代码已实现。
 - [Capabilities 页：轮毂制造与质量能力](capabilities-wheel-manufacturing.md)：工程设计、成形路线、过程检查、三类试验和文件证据；代码已实现。
 - [锻造轮毂高端定制页](forged-wheel-customization.md)：材料与设计、锻造成形、CNC/表面/检查、受控案例和询盘输入；代码已实现，WF05 因证据不足隐藏。

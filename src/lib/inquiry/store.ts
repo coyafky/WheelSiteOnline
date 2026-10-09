@@ -205,21 +205,17 @@ function buildWpPayload(
 ) {
   return {
     idempotencyKey,
-    customerType: resolveCustomerType(explicit.customerType, input),
-    productLine: resolveProductLine(explicit.productLine, input, context),
+    customerType: resolveCustomerType(explicit.customerType ?? input.customerType, input),
+    productLine: resolveProductLine(explicit.productLine ?? input.productLine, input, context),
     message: input.message,
     quantity: input.quantity,
-    // The current form has no "what inputs do you have" control yet.
-    inputsAvailable: [] as string[],
+    inputsAvailable: input.inputsAvailable ?? [],
     name: input.name,
     email: input.email,
     countryCode: input.country,
     company: input.company,
     whatsapp: input.whatsapp,
-    // The consent record is required by the endpoint. Until the two-step form
-    // captures it, the server stamps it — the value is honest about being
-    // unversioned rather than inventing a policy version.
-    privacyVersion: process.env.INQUIRY_PRIVACY_VERSION?.trim() || "unversioned",
+    privacyVersion: input.privacyVersion,
     consentedAt: new Date().toISOString(),
     context: {
       model: context.model ?? input.model,
@@ -276,7 +272,7 @@ export async function save(
       // `InquiryInput` has no customerType field yet; when the form starts
       // sending one it arrives through `context`-adjacent plumbing and will be
       // threaded in here.
-      { customerType: undefined, productLine: input.line },
+      { customerType: input.customerType, productLine: input.productLine },
     ),
   );
 

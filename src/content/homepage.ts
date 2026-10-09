@@ -89,7 +89,7 @@ export const homepageContent: HomepageContent = {
     eyebrow: "From requirement to approved supply",
     heading: "One project interface, product-specific manufacturing routes",
     lead:
-      "Fenghuai coordinates one commercial and project interface in Shenzhen across our specialized manufacturing bases. The responsible facility, process route, validation plan and document set are confirmed for the selected product line.",
+      "Fenghuai coordinates one commercial and project interface in Shenzhen across our specialized manufacturing bases. Those bases sit within the same ownership group and together cover material, tooling, casting and precision machining stages. The responsible facility, process route, validation plan and document set are confirmed for the selected product line.",
     stages: [
       {
         id: "01",

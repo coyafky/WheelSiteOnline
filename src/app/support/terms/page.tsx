@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Terms of Service",
   description:
     "The terms on which Fenghuai quotes, manufactures and supplies to dealers, distributors and OEM programmes.",
+  robots: { index: false, follow: false },
 };
 
 /**

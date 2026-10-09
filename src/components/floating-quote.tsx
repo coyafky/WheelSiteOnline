@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { createT } from "@/lib/i18n/use-t";
+import { localizedPath, stripLocalePrefix, type Locale } from "@/lib/i18n/types";
 
 /**
  * Persistent accent pill linking to the quote form.
@@ -27,8 +29,9 @@ const DELAYED_ON = ["/"];
 /** Fraction of the viewport that must be scrolled before the pill appears. */
 const REVEAL_AT = 0.3;
 
-export function FloatingQuote() {
-  const pathname = usePathname();
+export function FloatingQuote({ locale }: { locale: Locale }) {
+  const pathname = stripLocalePrefix(usePathname());
+  const t = createT(locale);
 
   const hidden = HIDDEN_ON.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
@@ -39,6 +42,8 @@ export function FloatingQuote() {
   // The scroll handler is the only thing that ever sets this — no synchronous
   // setState inside the effect (which would cascade renders).
   const [passedThreshold, setPassedThreshold] = useState(!delayed);
+  const [catalogueFilterOpen, setCatalogueFilterOpen] = useState(false);
+  const [suppressionZoneVisible, setSuppressionZoneVisible] = useState(false);
 
   useEffect(() => {
     if (!delayed) return;
@@ -50,16 +55,43 @@ export function FloatingQuote() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [delayed, pathname]);
 
-  const visible = !hidden && passedThreshold;
+  useEffect(() => {
+    const filter = document.querySelector<HTMLDetailsElement>(
+      "details[data-catalogue-mobile-filter]",
+    );
+    if (!filter) return;
+
+    const onToggle = () => setCatalogueFilterOpen(filter.open);
+    filter.addEventListener("toggle", onToggle);
+    return () => filter.removeEventListener("toggle", onToggle);
+  }, [pathname]);
+
+  useEffect(() => {
+    const zones = document.querySelectorAll("footer, [data-floating-quote-hide]");
+    if (zones.length === 0) return;
+    const visibility = new Map<Element, boolean>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) visibility.set(entry.target, entry.isIntersecting);
+        setSuppressionZoneVisible([...visibility.values()].some(Boolean));
+      },
+      { threshold: 0.02 },
+    );
+    zones.forEach((zone) => observer.observe(zone));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const visible = !hidden && !catalogueFilterOpen && !suppressionZoneVisible && passedThreshold;
 
   return (
     <Link
-      href="/request-a-quote"
-      aria-label="Request a quote"
+      data-floating-quote
+      href={localizedPath("/request-a-quote", locale)}
+      aria-label={t("cta.requestQuote")}
       aria-hidden={!visible}
       tabIndex={visible ? undefined : -1}
       className={cn(
-        "fixed bottom-[22px] right-6 z-40 inline-flex min-h-[46px] items-center rounded-full bg-forge px-5",
+        "fixed bottom-[calc(22px+env(safe-area-inset-bottom))] right-4 z-40 inline-flex min-h-[46px] items-center rounded-full bg-forge px-5 sm:right-6",
         "font-display text-[0.85rem] font-700 uppercase tracking-wide text-white",
         "shadow-[0_14px_34px_rgba(138,68,6,0.34)]",
         "transition-[transform,background,box-shadow,opacity] duration-300 ease-out",
@@ -69,7 +101,7 @@ export function FloatingQuote() {
         !visible && "pointer-events-none translate-y-2 opacity-0",
       )}
     >
-      Request Quote
+      {t("cta.requestQuote")}
     </Link>
   );
 }

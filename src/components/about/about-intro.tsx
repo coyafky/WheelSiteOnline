@@ -84,6 +84,39 @@ export function CompanyRole({ role }: { role: AboutContent["role"] }) {
             </p>
           </div>
         </div>
+
+        <div className="mt-14 border-t border-muted pt-12" data-reveal>
+          <div className="max-w-3xl">
+            <p className="eyebrow">{role.groupEyebrow}</p>
+            <h3
+              id="company-group-title"
+              className="mt-5 font-display text-3xl font-700 uppercase leading-[0.98] tracking-[-0.03em] text-ink sm:text-4xl"
+            >
+              {role.groupHeading}
+            </h3>
+            <p className="mt-6 text-base leading-7 text-steel">{role.groupIntro}</p>
+          </div>
+
+          {/* 用「编号行」而非并列卡片：5 条在 2/3 列网格里会留下半宽空卡（本项目踩过） */}
+          <ol className="mt-10 border-t border-muted" aria-labelledby="company-group-title">
+            {role.groupStages.map((stage, index) => (
+              <li
+                key={stage.id}
+                className="grid gap-1.5 border-b border-muted py-5 sm:grid-cols-[3rem_minmax(0,13rem)_minmax(0,1fr)] sm:items-baseline sm:gap-6"
+              >
+                <p className="font-mono text-xs tabular-nums text-forge">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h4 className="text-base font-semibold tracking-[-0.01em] text-ink">{stage.title}</h4>
+                <p className="text-sm leading-6 text-steel">{stage.body}</p>
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-6 max-w-3xl border-l-2 border-forge bg-forge-soft px-5 py-4 text-sm leading-6 text-ink/72">
+            {role.groupNote}
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -15,6 +15,8 @@ import type {
   SelfSealingTirePage,
   TireViewport,
 } from "@/content/types";
+import { AutomotiveBackdrop } from "@/components/automotive-backdrop";
+import { automotiveScenes } from "@/content/automotive-scenes";
 
 function MediaVisual({
   media,
@@ -74,7 +76,9 @@ export function SelfSealingHero({ content }: { content: SelfSealingTirePage }) {
 
   return (
     <section id="top" className="relative isolate overflow-hidden bg-hero text-white" aria-labelledby="safety-tires-title">
-      <div className="fh-industrial-grid absolute inset-0 -z-20 opacity-75" aria-hidden="true" />
+      <AutomotiveBackdrop scene={automotiveScenes.selfSealingHero} priority />
+      <div className="absolute inset-0 -z-10 bg-linear-to-r from-hero via-hero/88 to-hero/35" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-linear-to-t from-hero/90 to-transparent" aria-hidden="true" />
       <div className="absolute -right-40 top-24 -z-10 size-[560px] rounded-full border border-white/8" aria-hidden="true" />
       <div className="absolute -right-10 top-60 -z-10 size-[300px] rounded-full border border-forge/30" aria-hidden="true" />
       <div className="container-fh grid min-h-[760px] items-end gap-14 pb-18 pt-[132px] lg:grid-cols-[minmax(0,1fr)_330px] lg:pb-24 lg:pt-[168px]">

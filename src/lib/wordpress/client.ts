@@ -41,8 +41,6 @@ export function getWpConfig(): WpClientConfig {
  * starts reading live: pass it to `wpFetch` and a publish event can invalidate
  * exactly the wheel entries.
  */
-export const WHEEL_PUBLICATION_TAG = "wheel-publication";
-
 /**
  * Low-level fetch against the WP REST API.
  *
@@ -78,6 +76,53 @@ async function wpFetch<T>(
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown error";
     console.error(`[wp] ${path} unavailable: ${message}`);
+    return null;
+  }
+}
+
+/**
+ * 带缓存标签的只读接口。预览态用 noStore，公开态按标签缓存；调用方必须自己决定
+ * `null`（CMS 不可用）与空数组（CMS 明确没有已发布内容）的不同语义。
+ */
+export async function wpRead<T>(
+  path: string,
+  options: {
+    revalidate?: number;
+    tags?: string[];
+    noStore?: boolean;
+    restRoot?: boolean;
+  } = {},
+): Promise<T | null> {
+  const cfg = getWpConfig();
+  if (cfg.mode !== "live") return null;
+
+  const baseUrl = options.restRoot ? getWpRestRoot() : cfg.baseUrl;
+  if (!baseUrl) return null;
+
+  try {
+    const res = await fetch(`${baseUrl}${path}`, {
+      headers: cfg.authToken
+        ? { Authorization: `Basic ${cfg.authToken}` }
+        : undefined,
+      ...(options.noStore
+        ? { cache: "no-store" as const }
+        : {
+            next: {
+              revalidate: options.revalidate ?? 3600,
+              ...(options.tags?.length ? { tags: options.tags } : {}),
+            },
+          }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) {
+      console.error(`[wp] ${path} failed: ${res.status}`);
+      return null;
+    }
+    return (await res.json()) as T;
+  } catch (error) {
+    console.error(
+      `[wp] ${path} unavailable: ${error instanceof Error ? error.name : "unknown"}`,
+    );
     return null;
   }
 }

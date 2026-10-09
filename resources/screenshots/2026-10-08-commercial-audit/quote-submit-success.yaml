@@ -1,0 +1,190 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e221]:
+    - generic [ref=e222]:
+      - link "Fenghuai home" [ref=e223] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e224]:
+          - generic [ref=e225]: Fenghuai
+          - generic [ref=e226]: Forged
+      - button "Open navigation" [ref=e228]:
+        - img [ref=e229]
+    - navigation "Mobile navigation" [ref=e231]:
+      - generic [ref=e232]:
+        - generic [ref=e233]:
+          - link "Products" [ref=e234] [cursor=pointer]:
+            - /url: /products
+          - button "Toggle Products submenu" [ref=e235]:
+            - img [ref=e236]
+        - generic:
+          - generic:
+            - link "All Product Lines" [ref=e238] [cursor=pointer]:
+              - /url: /products
+            - link "Wheels" [ref=e239] [cursor=pointer]:
+              - /url: /products/wheels
+            - link "EV Powertrain Housings" [ref=e240] [cursor=pointer]:
+              - /url: /products/ev-components
+            - link "Custom Aluminum" [ref=e241] [cursor=pointer]:
+              - /url: /products/custom-aluminum
+            - link "Safety Tires" [ref=e242] [cursor=pointer]:
+              - /url: /products/safety-tires
+      - generic [ref=e243]:
+        - generic [ref=e244]:
+          - link "Capabilities" [ref=e245] [cursor=pointer]:
+            - /url: /capabilities
+          - button "Toggle Capabilities submenu" [ref=e246]:
+            - img [ref=e247]
+        - generic:
+          - generic:
+            - link "Capabilities" [ref=e249] [cursor=pointer]:
+              - /url: /capabilities
+            - link "Custom Development" [ref=e250] [cursor=pointer]:
+              - /url: /custom-development
+      - generic [ref=e251]:
+        - generic [ref=e252]:
+          - link "Dealer Programs" [ref=e253] [cursor=pointer]:
+            - /url: /dealers
+          - button "Toggle Dealer Programs submenu" [ref=e254]:
+            - img [ref=e255]
+        - generic:
+          - generic:
+            - link "Dealer Supply" [ref=e257] [cursor=pointer]:
+              - /url: /dealers
+            - link "Private Label" [ref=e258] [cursor=pointer]:
+              - /url: /dealers/private-label
+      - generic [ref=e259]:
+        - generic [ref=e260]:
+          - link "Insights" [ref=e261] [cursor=pointer]:
+            - /url: /insights
+          - button "Toggle Insights submenu" [ref=e262]:
+            - img [ref=e263]
+        - generic:
+          - generic:
+            - link "All Guides" [ref=e265] [cursor=pointer]:
+              - /url: /insights
+            - link "Bolt Pattern Guides" [ref=e266] [cursor=pointer]:
+              - /url: /insights/bolt-patterns
+      - link "About Us" [ref=e269] [cursor=pointer]:
+        - /url: /about
+      - link "Request a Quote" [ref=e271] [cursor=pointer]:
+        - /url: /request-a-quote
+  - main [ref=e53]:
+    - region "We have your inquiry" [ref=e272]:
+      - generic [ref=e273]:
+        - img [ref=e275]
+        - paragraph [ref=e277]: Inquiry received
+        - heading "We have your inquiry" [level=1] [ref=e278]
+        - paragraph [ref=e279]: Your details are in our processing queue and a member of the sales team has been notified.
+        - paragraph [ref=e280]:
+          - generic [ref=e281]: Reference
+          - generic [ref=e282]: INQ-20261008-0001
+        - paragraph [ref=e283]:
+          - link "Back to home" [ref=e284] [cursor=pointer]:
+            - /url: /
+            - img [ref=e285]
+            - text: Back to home
+    - region "When you will hear from us" [ref=e287]:
+      - generic [ref=e288]:
+        - paragraph [ref=e289]: What happens next
+        - heading "When you will hear from us" [level=2] [ref=e290]
+        - paragraph [ref=e291]:
+          - img [ref=e292]
+          - generic [ref=e295]: ⏳ Pending confirmation
+        - paragraph [ref=e296]: The reply window for this site has not been finalised, so we are not quoting a number here. A real response time will replace this line before launch.
+        - paragraph [ref=e297]: If anything is missing from your submission, we will ask for it in our reply rather than leaving you guessing.
+    - region "Reaching us directly" [ref=e298]:
+      - generic [ref=e299]:
+        - paragraph [ref=e300]: If it is urgent
+        - heading "Reaching us directly" [level=2] [ref=e301]
+        - paragraph [ref=e302]:
+          - img [ref=e303]
+          - generic [ref=e306]: Direct contact details for this site are still being confirmed, so we are not publishing a number or inbox here yet. Once they are live they will appear on the contact page.
+        - paragraph [ref=e307]:
+          - link "Contact page" [ref=e308] [cursor=pointer]:
+            - /url: /contact
+  - contentinfo [ref=e123]:
+    - generic [ref=e124]:
+      - generic [ref=e125]:
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - generic [ref=e128]: Fenghuai
+            - generic [ref=e129]: Technology
+          - paragraph [ref=e130]:
+            - text: Aluminum components for four product lines —
+            - text: wheels, EV housings, custom parts, safety tires.
+        - navigation "Footer navigation" [ref=e131]:
+          - generic [ref=e132]:
+            - heading "Products" [level=2] [ref=e133]
+            - list [ref=e134]:
+              - listitem [ref=e135]:
+                - link "Wheels" [ref=e136] [cursor=pointer]:
+                  - /url: /products/wheels
+              - listitem [ref=e137]:
+                - link "EV Powertrain Housings" [ref=e138] [cursor=pointer]:
+                  - /url: /products/ev-components
+              - listitem [ref=e139]:
+                - link "Custom Aluminum" [ref=e140] [cursor=pointer]:
+                  - /url: /products/custom-aluminum
+              - listitem [ref=e141]:
+                - link "Safety Tires" [ref=e142] [cursor=pointer]:
+                  - /url: /products/safety-tires
+          - generic [ref=e143]:
+            - heading "Company" [level=2] [ref=e144]
+            - list [ref=e145]:
+              - listitem [ref=e146]:
+                - link "About Us" [ref=e147] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e148]:
+                - link "Capabilities" [ref=e149] [cursor=pointer]:
+                  - /url: /capabilities
+              - listitem [ref=e150]:
+                - link "Custom Development" [ref=e151] [cursor=pointer]:
+                  - /url: /custom-development
+              - listitem [ref=e152]:
+                - link "Dealer Supply" [ref=e153] [cursor=pointer]:
+                  - /url: /dealers
+              - listitem [ref=e154]:
+                - link "Private Label" [ref=e155] [cursor=pointer]:
+                  - /url: /dealers/private-label
+              - listitem [ref=e156]:
+                - link "Insights" [ref=e157] [cursor=pointer]:
+                  - /url: /insights
+          - generic [ref=e158]:
+            - heading "Support" [level=2] [ref=e159]
+            - list [ref=e160]:
+              - listitem [ref=e161]:
+                - link "Warranty Policy" [ref=e162] [cursor=pointer]:
+                  - /url: /support/warranty
+              - listitem [ref=e163]:
+                - link "Return & Refund" [ref=e164] [cursor=pointer]:
+                  - /url: /support/returns
+              - listitem [ref=e165]:
+                - link "Shipping & Packaging" [ref=e166] [cursor=pointer]:
+                  - /url: /support/shipping
+              - listitem [ref=e167]:
+                - link "Terms of Service" [ref=e168] [cursor=pointer]:
+                  - /url: /support/terms
+              - listitem [ref=e169]:
+                - link "Privacy Policy" [ref=e170] [cursor=pointer]:
+                  - /url: /support/privacy
+          - generic [ref=e171]:
+            - heading "Enquiries" [level=2] [ref=e172]
+            - list [ref=e173]:
+              - listitem [ref=e174]:
+                - link "Request a Quote" [ref=e175] [cursor=pointer]:
+                  - /url: /request-a-quote
+              - listitem [ref=e176]:
+                - link "Contact Us" [ref=e177] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e178]:
+                - link "Offset Calculator" [ref=e179] [cursor=pointer]:
+                  - /url: /tools/offset-calculator
+      - generic [ref=e180]:
+        - paragraph [ref=e181]: © 2026 Fenghuai. All rights reserved.
+        - link "Back to top" [ref=e182] [cursor=pointer]:
+          - /url: "#top"
+          - text: Back to top
+          - img [ref=e184]
+  - link:
+    - /url: /request-a-quote
+    - text: Request Quote
+  - alert [ref=e186]: WE HAVE YOUR INQUIRY

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Dealer Supply Programme — Supply Without Stock",
   description:
     "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
+  robots: { index: false, follow: true },
 };
 
 /**

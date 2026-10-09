@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio-skill" agent="diagram-ir" version="3.0.0">
+  <diagram id="system" name="System">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="browser" value="浏览器 InquiryForm 提交" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="browser" data-kind="external" data-properties="{&quot;trust_boundary&quot;:&quot;public&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;public&quot;}" data-source-label="浏览器&#10;InquiryForm 提交" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="public">
+          <mxGeometry x="60" y="80" width="176" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="POST /api/inquiries Next Route Handler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="api" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-label="POST /api/inquiries&#10;Next Route Handler" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="server">
+          <mxGeometry x="451" y="80" width="286" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="validate" value="validate.ts 字段/枚举/长度/honeypot/限流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="validate" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-label="validate.ts&#10;字段/枚举/长度/honeypot/限流" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="server">
+          <mxGeometry x="797" y="80" width="287" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="binding" value="inquiry-binding.ts 服务端复核型号+生产代码" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="binding" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-label="inquiry-binding.ts&#10;服务端复核型号+生产代码" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="server">
+          <mxGeometry x="60" y="240" width="296" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="catalogue" value="公开集合 (不可变规格快照来源)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="catalogue" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-label="公开集合&#10;(不可变规格快照来源)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="server">
+          <mxGeometry x="451" y="240" width="204" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="store" value="inquiry/store.ts wpWrite() 转发" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="store" data-kind="module" data-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;server&quot;}" data-source-label="inquiry/store.ts&#10;wpWrite() 转发" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="server">
+          <mxGeometry x="797" y="240" width="235" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wpendpoint" value="POST /fh/v1/inquiries mu-plugin · 服务密钥鉴权" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="wpendpoint" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="POST /fh/v1/inquiries&#10;mu-plugin · 服务密钥鉴权" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="60" y="400" width="331" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tx" value="事务写入 CPT + meta + 3 表" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="tx" data-kind="component" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="事务写入&#10;CPT + meta + 3 表" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="451" y="400" width="196" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cpt" value="CPT fh_inquiry 业务状态 (可改)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="cpt" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="CPT fh_inquiry&#10;业务状态 (可改)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="797" y="400" width="222" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="key" value="wp_fh_inquiry_key 幂等唯一键" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="key" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="wp_fh_inquiry_key&#10;幂等唯一键" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="60" y="560" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox" value="wp_fh_inquiry_outbox 邮件发件箱" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="outbox" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="wp_fh_inquiry_outbox&#10;邮件发件箱" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="451" y="560" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="event" value="wp_fh_inquiry_event 邮件事件 (只读)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="event" data-kind="datastore" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="wp_fh_inquiry_event&#10;邮件事件 (只读)" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="797" y="560" width="256" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mailer" value="Resend 当前直发 · 闭环待实现" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="mailer" data-kind="external" data-properties="{&quot;trust_boundary&quot;:&quot;public&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;public&quot;}" data-source-label="Resend&#10;当前直发 · 闭环待实现" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="public">
+          <mxGeometry x="60" y="720" width="204" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="WP 后台 询盘管理界面" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;" vertex="1" parent="1" data-model-id="admin" data-kind="service" data-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-properties="{&quot;trust_boundary&quot;:&quot;private&quot;}" data-source-label="WP 后台&#10;询盘管理界面" data-provenance="{&quot;path&quot;:&quot;/tmp/ir_inquiry.json&quot;}" data-boundary="private">
+          <mxGeometry x="451" y="720" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-0" value="JSON + 幂等键 + 隐私版本" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="browser" target="api" data-model-id="i1" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="JSON + 幂等键 + 隐私版本">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-1" value="校验" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="api" target="validate" data-model-id="i2" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="校验">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-2" value="复核上下文" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="validate" target="binding" data-model-id="i3" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="复核上下文">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-3" value="真值来源" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="catalogue" target="binding" data-model-id="i4" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="真值来源">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-4" value="批准快照" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="binding" target="store" data-model-id="i5" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="批准快照">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-5" value="HTTPS + 服务密钥" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="store" target="wpendpoint" data-model-id="i6" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="HTTPS + 服务密钥">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-6" value="单事务" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="wpendpoint" target="tx" data-model-id="i7" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="单事务">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-7" value="写" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="tx" target="cpt" data-model-id="i8" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="写">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-8" value="幂等" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="tx" target="key" data-model-id="i9" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="幂等">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-9" value="入箱" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="tx" target="outbox" data-model-id="i10" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="入箱">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-10" value="发送" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="api" target="mailer" data-model-id="i12" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="发送">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-11" value="后台查阅" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="cpt" target="admin" data-model-id="i13" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="后台查阅">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-12" value="201 + inquiry number" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="api" target="browser" data-model-id="i14" data-kind="sync" data-properties="{}" data-source-properties="{}" data-source-label="201 + inquiry number">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-system-13" value="webhook 回调 (待实现)" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="mailer" target="event" data-model-id="i11" data-kind="async" data-properties="{}" data-source-properties="{}" data-source-label="webhook 回调 (待实现)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

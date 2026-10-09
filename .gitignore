@@ -82,6 +82,9 @@ inbox/*
 # 工具运行时缓存（可再生，与本项目内容无关）
 .codegraph/
 .playwright-cli/
+playwright-report/
+test-results/
+__pycache__/
 
 # ⚠️ PPT 派生材料（不是原始 PPT 目录，是它的提取物）—— 与上方「供应商原始资料」同一条
 # 理由：三份 PPT 的逐页全文提取、整页渲染图、从中抽出的原图，实质就是原始资料本身；

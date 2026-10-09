@@ -201,6 +201,12 @@ export type AboutContent = {
     body: string;
     responsibilities: Array<{ title: string; body: string }>;
     disclosure: string;
+    /** 集团结构：纵向一体化链条（DEC-044 品牌层 / 证据层分离） */
+    groupEyebrow: string;
+    groupHeading: string;
+    groupIntro: string;
+    groupStages: Array<{ id: string; title: string; body: string }>;
+    groupNote: string;
   };
   wheelFactory: {
     anchor: "wheel-manufacturing";

@@ -33,6 +33,7 @@ export async function generateMetadata({
   return {
     title: `${entry.pattern} Bolt Pattern — ${entry.label}`,
     description: entry.intro,
+    robots: { index: false, follow: true },
   };
 }
 

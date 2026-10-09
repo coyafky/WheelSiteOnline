@@ -11,11 +11,19 @@
 
 export const thankYouConfirm = {
   eyebrow: "Inquiry received",
-  title: "We have your inquiry",
-  body: "Your details are in our processing queue and a member of the sales team has been notified.",
+  title: "Your enquiry has been recorded",
+  body: "Keep the reference number shown below for follow-up. It confirms that the enquiry record was created; email delivery is tracked separately.",
   /** Quiet text link back home — deliberately not a button. */
   backLabel: "Back to home",
   backHref: "/",
+} as const;
+
+export const thankYouUnverified = {
+  eyebrow: "Submission status",
+  title: "We cannot confirm an enquiry from this link",
+  body: "This page does not contain a valid recent submission receipt. Return to the enquiry form if you still need to submit a project, or keep the reference shown immediately after a successful submission.",
+  backLabel: "Go to the enquiry form",
+  backHref: "/request-a-quote",
 } as const;
 
 /**
@@ -35,7 +43,7 @@ export const thankYouResponsePromise = {
     "The reply window for this site has not been finalised, so we are not quoting a number here. A real response time will replace this line before launch.",
   /** ✅ Independent of the placeholder — always true. */
   nextStepNote:
-    "If anything is missing from your submission, we will ask for it in our reply rather than leaving you guessing.",
+    "Any missing technical or commercial detail can be clarified against the same enquiry reference.",
 } as const;
 
 export const thankYouUrgentContact = {

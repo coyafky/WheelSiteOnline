@@ -36,6 +36,39 @@ export const aboutContent: AboutContent = {
     ],
     disclosure:
       "The manufacturing companies operate within the same ownership group. Contracts, certifications, patents and test evidence continue to identify the actual legal entity and applicable scope.",
+    groupEyebrow: "Group structure",
+    groupHeading: "One ownership group, organised as an integrated chain",
+    groupIntro:
+      "The product lines on this site are served by production companies under the same ownership. Material, tooling, casting, precision machining and finished-product work sit in specialist operating companies rather than one general workshop, so each project is routed to the stage and the entity that actually performs the work — and that entity is the one named in the documents.",
+    groupStages: [
+      {
+        id: "material",
+        title: "Alloy material",
+        body: "Base alloy melted and cast for the downstream forming and machining stages.",
+      },
+      {
+        id: "tooling",
+        title: "Mould and tooling",
+        body: "Mould and tooling engineered and built for the approved part geometry.",
+      },
+      {
+        id: "casting",
+        title: "Casting and forming",
+        body: "Gravity casting, low-pressure casting, die casting, flow forming and forging, selected by the approved route.",
+      },
+      {
+        id: "machining",
+        title: "Precision machining",
+        body: "Critical bores, faces, interfaces and datums machined against the approved drawing.",
+      },
+      {
+        id: "finished",
+        title: "Finished component",
+        body: "Product-specific finishing or assembly where the route requires it, then inspection and supply documentation.",
+      },
+    ],
+    groupNote:
+      "This describes how the group is organised, not what any one company has been verified to do. Capacity, certification, patent, customer and test claims are not inherited from the group: each is confirmed against the entity, product and market that actually holds it.",
   },
   wheelFactory: {
     anchor: "wheel-manufacturing",

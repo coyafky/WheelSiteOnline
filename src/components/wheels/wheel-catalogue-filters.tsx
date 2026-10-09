@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { PcdSearchGroup } from "./pcd-search-group";
+import { WheelFilterOption } from "./wheel-filter-option";
 import {
   SORT_KEYS,
   buildCatalogueHref,
@@ -150,33 +151,16 @@ function CheckboxGroup({
     const disabled = option.disabled && !checked;
     const id = `${idPrefix}-${name}-${option.value}`;
     return (
-      <label
+      <WheelFilterOption
         key={option.value}
-        htmlFor={id}
-        className={cn(
-          "flex cursor-pointer items-center gap-2.5 text-[0.82rem] leading-snug text-foreground",
-          disabled && "cursor-not-allowed text-muted-foreground",
-        )}
-      >
-        <input
-          id={id}
-          type="checkbox"
-          name={name}
-          value={option.value}
-          defaultChecked={checked}
-          disabled={disabled}
-          className="size-4 shrink-0 accent-forge"
-        />
-        <span>{option.label}</span>
-        <span
-          className={cn(
-            "ml-auto tabular-nums text-[0.75rem] text-muted-foreground",
-            disabled && "opacity-60",
-          )}
-        >
-          {option.count}
-        </span>
-      </label>
+        id={id}
+        name={name}
+        value={option.value}
+        label={option.label}
+        count={option.count}
+        checked={checked}
+        disabled={disabled}
+      />
     );
   };
 
@@ -282,15 +266,16 @@ function FilterFields({
         它**不随筛选区滚动**（那部分在下面的 flex-1 滚动格里）。
       */}
       <div className="shrink-0">
-        <p className="text-[0.75rem] text-muted-foreground">
-          {isFiltered
-            ? `${total} ${total === 1 ? "model" : "models"} match the current filters`
-            : `${total} ${total === 1 ? "model" : "models"} available`}
-        </p>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="eyebrow !text-ink">Filter by specification</p>
+          <p className="text-[0.7rem] tabular-nums text-muted-foreground">
+            {isFiltered ? `${total} match` : `${total} available`}
+          </p>
+        </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-          <button type="submit" className="btn-pill-solid !text-white">
-            Apply filters
+          <button type="submit" className="inline-flex min-h-11 items-center bg-ink px-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white transition-colors hover:bg-forge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
+            View {total} {total === 1 ? "model" : "models"}
           </button>
           <Link
             href={basePath}
@@ -313,10 +298,8 @@ function FilterFields({
           免责声明直接跳过，而它其实是操作说明。左边框 + 稍深一点的墨色，
           既能被看到，又不占一整块盒子的高度。
         */}
-        <p className="mt-2.5 border-l-2 border-forge/40 pl-2.5 text-[0.74rem] leading-relaxed text-steel">
-          Tick <strong className="font-600 text-ink">any number</strong> of boxes per
-          group — they add up, they don&rsquo;t replace each other. Ticking 18″{" "}
-          <em>and</em> 19″ shows both; the same applies to bolt patterns.
+        <p className="mt-3 text-[0.72rem] leading-relaxed text-steel">
+          Select one or more values in each group. Values in the same group add together.
         </p>
       </div>
 
@@ -333,7 +316,7 @@ function FilterFields({
           defaultValue={query.q ?? ""}
           placeholder="e.g. HP12"
           autoComplete="off"
-          className="mt-3 w-full rounded-md border border-border bg-white px-3 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+          className="mt-3 w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
         />
       </div>
 
@@ -455,7 +438,10 @@ export function WheelCatalogueFilters(props: CatalogueFilterProps) {
   return (
     <>
       {/* 移动：原生 details 抽屉，无 JS 可展开（§10 末条） */}
-      <details className="group rounded-lg border border-border bg-card lg:hidden">
+      <details
+        data-catalogue-mobile-filter
+        className="group border border-border bg-white lg:hidden"
+      >
         <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 marker:content-none">
           <span className="font-display text-[0.78rem] font-700 uppercase tracking-[0.14em] text-ink">
             Filters
@@ -465,7 +451,7 @@ export function WheelCatalogueFilters(props: CatalogueFilterProps) {
           </span>
           <span
             aria-hidden="true"
-            className="flex size-5 shrink-0 items-center justify-center rounded-full border border-border font-display text-[0.9rem] font-700 leading-none text-steel transition-transform duration-200 ease-out group-open:rotate-45"
+            className="flex size-5 shrink-0 items-center justify-center font-display text-[1rem] font-700 leading-none text-forge transition-transform duration-200 ease-out group-open:rotate-45"
           >
             +
           </span>
@@ -663,7 +649,7 @@ export function WheelCatalogueSort({
         id="catalogue-sort"
         name="sort"
         defaultValue={query.sort ?? "model-asc"}
-        className="min-h-11 rounded-md border border-border bg-card px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+        className="min-h-11 border border-border bg-white px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
       >
         {SORT_KEYS.map((key) => (
           <option key={key} value={key}>
@@ -673,7 +659,7 @@ export function WheelCatalogueSort({
       </select>
       <button
         type="submit"
-        className="min-h-11 rounded-md border border-border bg-card px-3 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-ink transition-colors hover:border-forge focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+        className="min-h-11 bg-ink px-4 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white transition-colors hover:bg-forge focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
       >
         Apply
       </button>

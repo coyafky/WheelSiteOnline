@@ -691,7 +691,7 @@
 ## DEC-052 · 轮毂公开目录模块以「事实层合并 + WordPress 批准快照」为唯一数据链路
 
 - 日期：2026-10-06
-- 状态：数据链路（导入 → 快照 → 公开集合模块）已实现并验收；目录页与详情页尚未改接
+- 状态：历史方案已实现；2026-10-09 起由 DEC-069 的 WordPress 规格/媒体正本取代，静态层保留为兜底与审计
 - 背景：`PAGE-SPECS/wheel-catalog.md` 与 `wheel-detail.md` 的施工前置是「公开集合」，而当时不存在：目录页消费 16 条虚构 `wheel-skus.ts`，详情页消费虚构 `WheelSku`，`publishedWheelModels` 实际只做 `hasImage` 过滤（1073 个技术候选被当成可售数量）。同时本轮全量精读竞品 `meathill/next-wordpress` 后确认其数据层只完成了形状、未接通失效链路，故只借鉴其「单一取数入口 + 防腐层 + tags」的形状，不照搬其降级方向。
 - 决定：建立三层数据链路并全部落盘。
   1. **事实层（只读正本）** `assets/wheel-data/WHEEL-CATALOG-ALL.json`，1349 条源记录。
@@ -979,3 +979,275 @@
   - ⚠️ **`AGENTS.md` 尾部那段模板原文含与本项目冲突的指引**（`Deployment: Vercel` 与 DEC-009 矛盾；`Pixel-perfect emulation`、`Real content — use actual text and assets from the target site` 与证据纪律、DEC-010 相冲）。本轮**保留**，因为：① 它带围栏说明「本项目的工作规范以本文上半部分为准」② 项目对「保留模板原文对照上游」的**先例就是原地保留 + 加说明**（见 `CHANGELOG.md`）。**若日后认为 64 行冲突指引放在 agent 常读文件里风险偏高，可移进本归档目录——这是一个我可以随时执行的改动，等指示。**
   - 本轮未 commit、未 push、未部署。
 - 相关：`package.json`、`package-lock.json`、`archive/2026-10-06-template-scaffold-retired/README.md`、`work/completed/2026-10-05-template-runtime-metadata-cleanup.md`、`README.md`、`AGENTS.md`、`ARCHITECTURE.md`、`STATUS.md`、DEC-009、DEC-010、DEC-026。
+
+## DEC-061 · 工程流程采用 Matt Pocock 方法，但以中文项目档案和现有任务系统为正本
+
+- 日期：2026-10-08
+- 状态：已实现
+- 背景：项目已经有较强的内容、发布和收尾规则，但缺少一条把需求对齐、规格、Issue
+  切分、TDD、诊断、评审和复盘串起来的统一工程链路。`mattpocock/skills` 提供了适合
+  补齐这部分的方法，但其默认配置会使用 GitHub/GitLab/`.scratch` tracker，部分实现
+  流程会自动 commit，项目记录也以英文为主；直接全量安装会与本仓库的 `work/` 生命周期、
+  中文记录和外部动作授权规则冲突。
+- 决定：固定上游 `mattpocock/skills@v1.3.1`，采用“功能归并”而非全量复制：将
+  `tdd`、`diagnosing-bugs`、`to-spec`、`to-tickets`、`code-review`、`retro`、
+  `domain-modeling` 与 `implement` 的核心方法整合为项目技能
+  `SKILLS/fenghuai-engineering-workflow/`，并在 `.agents/skills/` 建薄装载入口。
+- 本地不变项：
+  1. 所有项目记录继续使用中文；
+  2. Issue 正本继续使用 `work/queued → work/active → work/completed`；
+  3. 页面规格、架构、架构决定、流程决定和当前状态仍走现有文档路由；
+  4. 删除上游 `implement` 的自动 commit 行为，commit/push/deploy 仍需用户明确授权；
+  5. 双轴评审不默认强制并行 agent；只有用户明确要求时才并行；
+  6. 项目的 CodeGraph、Next.js 文档、内容接缝、证据纪律、发布门槛、Playwright、
+     Docker 验收和 session 收尾规则继续优先。
+- 理由：保留上游最有价值的反馈回路、纵向切片和双轴评审，同时避免维护两个 Issue
+  系统、同名技能冲突和未经授权的 Git 操作。中文是项目知识可持续维护的前提，不属于
+  可被上游模板覆盖的样式偏好。
+- 影响：以后新功能、缺陷、重构、规格、Issue、评审和复盘先按该技能选择最小模式；
+  不要求每个小改动都写完整规格。上游来源、blob SHA 和更新方式记录在 `UPSTREAM.md`，
+  有意偏离记录在 `.local-patch.md`，更新不得无审查覆盖。
+- 相关：`AGENTS.md`、`SKILLS/README.md`、`SKILLS/skills-lock.json`、
+  `SKILLS/fenghuai-engineering-workflow/`、`.agents/skills/fenghuai-engineering-workflow/`。
+
+## DEC-062 · 询盘公开面采用双重失效关闭，WordPress 询盘权限与内容权限分离
+
+- 日期：2026-10-08
+- 状态：已实现并完成本地运行时验证
+- 背景：初次商用审计发现表单没有主动隐私同意、浏览器幂等键、来源校验和反滥用，
+  WordPress 又沿用普通文章的 `edit_posts` 能力。即使事务与 outbox 正确，这些入口层和
+  权限层缺口仍会让垃圾提交、重复建单、无效同意或普通编辑读取个人信息成为可能。
+- 决定：
+  1. 表单与 API 都必须取得同一个明确的隐私版本；浏览器缺少
+     `NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION` 时不渲染可提交表单，服务端缺少或不匹配
+     `INQUIRY_PRIVACY_VERSION` 时拒绝写入，不再产生 `unversioned` 记录；
+  2. 浏览器在一次询盘开始时生成幂等键，失败重试沿用，主动开始另一条询盘才换键；
+     201 首交与 200 重放都是成功，同键在 WordPress 内只允许一条 CPT 与一条 outbox；
+  3. 应用层先执行请求体上限、Origin、蜜罐、最短填写时间和 IP/邮箱窗口限流；平台
+     确定后再叠加边缘限流与按风险启用人机验证，二者不是互相替代；
+  4. WordPress 使用独立的 `fh_inquiry/fh_inquiries` capability type；销售角色只可读取
+     和维护业务字段，邮件派发能力只给管理员；Contributor/Author 不继承询盘读取权；
+  5. Next 的 `GET /api/inquiries` 不再提供进程内投影，权威后台只有受控的 WordPress。
+  6. 感谢页不能只相信 URL 中的询盘号；持久化成功后由 API 签发 15 分钟 HMAC 回执，
+     页面同时验证询盘号、时间与签名。无回执或篡改链接只能显示“无法确认”。
+- 理由：同意、幂等与权限都属于可审计事实，不能依赖默认值或“当前只有管理员”这种
+  运行习惯。双重失效关闭能避免一次错误环境变量把未批准表单公开；权限分离则让内容
+  编辑与客户个人信息访问不再隐式绑定。
+- 影响：应用层具备进入预发布的安全基线；正式开放仍依赖批准的政策版本、平台边缘
+  保护、异常告警、邮件事件回调和权限回收流程。Docker 验收由 66 项扩展为 69 项。
+- 相关：`src/components/inquiry-form.tsx`、`src/app/api/inquiries/route.ts`、
+  `src/lib/inquiry/{guard,validate,store,types}.ts`、`src/content/inquiry-form.ts`、
+  `src/lib/inquiry/receipt.ts`、`src/app/thank-you/page.tsx`、
+  `local-wp/mu-plugins/fenghuai-inquiries.php`、`scripts/verify-inquiry-backend.py`、DEC-041、DEC-055。
+
+## DEC-063 · 未批准公开内容与部署配置统一 fail-closed，英文首发不保留半成品语言状态
+
+- 日期：2026-10-08
+- 状态：已实现；正式域名与内容批准仍待外部输入
+- 背景：初次商用审计发现法律草稿、占位洞察和未验证页面进入 sitemap；正式站点 URL
+  硬编码；语言 cookie 把全站强制动态化，而中文只翻译导航。页面返回 200 并不代表
+  内容可发布，错误环境变量还会静默污染 canonical、OG 和 sitemap。
+- 决定：
+  1. 未批准法律页输出 `noindex,nofollow`；其他未批准内容输出 `noindex,follow`，并从
+     sitemap 排除。发布页面和 sitemap 必须读取同一个批准事实；
+  2. `NEXT_PUBLIC_APP_URL` 是公开 URL 的单一来源。未配置时允许本地渲染，但 robots
+     全站 `Disallow`、sitemap 为空，不能静默生成可索引的错误域名；
+  3. 英文首发阶段根页面固定 `lang=en`，移除公开页语言 cookie 和未完成语言切换；
+     完整中文只能通过未来的独立语言路由重新开放；
+  4. 安全响应头在 Next 配置建立仓库内基线，平台层可以加强但不得弱化；历史永久迁移
+     使用 308；sitemap 不用构建时刻伪造页面修改时间。
+- 理由：内容批准和部署环境都应默认拒绝公开，而不是让缺配置看起来“正常”。去掉半成品
+  语言状态同时恢复静态预渲染、缓存能力与正确的辅助技术语言声明。
+- 影响：代码可安全进入预发布，但正式域名、OG 资产、法律文本、产品签字和平台配置仍是
+  上线门槛；任何部署都必须检查构建产物中烤入的站点 URL。
+- 相关：`src/lib/site-url.ts`、`src/app/{layout,robots,sitemap}.ts`、`next.config.ts`、
+  `src/components/{site-header,floating-quote}.tsx`、`.env.example`、DEC-005、DEC-009、DEC-041。
+
+## DEC-064 · 销售通知使用 HTML 与纯文本双格式，WordPress 记录是询盘真相源
+
+- 日期：2026-10-08
+- 状态：已实现并完成本地与真实内部投递验证
+- 背景：销售通知虽能送达，但正文在邮箱里退化为连续文本，联系人、产品、规格和来源
+  难以扫描；通知也没有进入 WordPress 同一记录的入口。后台询盘列表同时存在表头与
+  单元格顺序错位，进一步增加误判风险。
+- 决定：
+  1. SMTP 发送 `multipart/alternative`：HTML 为主正文，纯文本为备用；Resend 适配器
+     同时提交 `html` 与 `text`，两种格式来自同一个已落库 `fh_inquiry`；
+  2. HTML 只用内联样式和表格布局，显式声明 UTF-8；客户输入全部转义，不加载外部
+     图片、脚本或样式；
+  3. 邮件提供 WordPress 详情链接，但目标仍由登录和询盘 capability 保护；邮件只是
+     通知副本，WordPress 记录与提交时规格快照才是真相源；
+  4. 后台列表按表头顺序显示客户、客户类型、产品线、型号/生产代码和状态；询盘号进入
+     完整详情；
+  5. 本地完整验收临时启用 `fh_inquiry_delivery_paused`，只暂停外发而不跳过落库、事务、
+     outbox 与 worker 验证；进入 worker 用例前恢复，`finally` 强制清除，避免回归脚本
+     连续向真实收件箱发送探针邮件。
+- 边界：`accepted` 只说明 SMTP/提供商接受，不代表 `delivered`，更不代表销售已读或已
+  跟进。正式上线仍需邮件提供商签名回调、退信告警和销售处理责任。
+- 影响：Docker 验收扩展为 **78/78**；900px/390px 邮件视觉复核 0 横向溢出、0 控制台
+  错误；真实内部验收询盘 `INQ-20261008-0001` 已由 SMTP 接受，并以同号记录保留在
+  WordPress。未 commit、未 push、未部署。
+- 相关：`local-wp/mu-plugins/fenghuai-inquiries.php`、
+  `scripts/verify-inquiry-backend.py`、
+  `work/completed/2026-10-08-inquiry-email-and-wordpress-visibility.md`、DEC-055、DEC-062。
+
+## DEC-065 · Insights 使用项目自有 WordPress 契约，隐私保留策略默认关闭
+
+- 日期：2026-10-09
+- 状态：已实现并完成本地运行时验证
+- 背景：Insights 适配器最初假定普通文章会返回 ACF 字段，但仓库没有对应 schema，
+  “代码能映射”不等于编辑真的能录入、发布、撤回。询盘侧同时缺少可执行的到期删除
+  接口，但法务又尚未批准具体保留天数。
+- 决定：
+  1. WordPress 注册独立 `fh_guide` 文章类型，以项目自有 `guide` REST 视图输出既有
+     `GuideEntry` 所需字段，组件和 `src/content` 类型契约不变；
+  2. 公开文章必须同时满足 WordPress `publish` 与编辑状态 `approved`；草稿和撤回只在
+     具备文章编辑权限的预览请求中可见；字段不完整继续 fail-closed；
+  3. `fh_guides_authoritative` 默认关闭。CMS 内容未完整迁移、核验前继续使用已审核本地
+     内容；开关开启后，空集合也是权威结果，从而支持“全部撤回”而不错误回退；
+  4. 公开读取按 `insights-guides` 标签缓存，预览 no-store；受密钥保护的接口立即失效
+     列表和指定文章路径；
+  5. 询盘保留天数默认 0，不自动删除。只提供候选查询、同事务级联删除和计划任务接口，
+     等法务批准后再配置天数；日志和邮件错误不得存邮箱、电话、消息正文或密钥原文。
+- 验证：14 项单元测试、CMS Docker 合成探针、PHP 语法、23 项浏览器 E2E 和生产构建
+  通过；探针文章/询盘已清理，权威开关已恢复。
+- 相关：`local-wp/mu-plugins/fenghuai-guides.php`、`src/lib/wordpress/insights*.ts`、
+  `src/app/api/{preview,revalidate/wordpress}`、`scripts/verify-insights-cms.py`、
+  `outputs/reports/04-privacy-logging-retention-audit-2026-10-09.md`。
+
+## DEC-066 · 双语采用英文根 URL 与中文前缀，中文正文未完成前禁止索引
+
+- 日期：2026-10-09
+- 状态：站点框架已实现；中文正文仍分阶段迁移
+- 背景：用户要求完整 i18n 模式并重做页头/页脚。DEC-063 关闭了只翻导航的 cookie
+  半成品；恢复语言入口必须先解决独立 URL、`html lang`、路径保持与 SEO 失实问题。
+- 决定：
+  1. 英文继续使用既有根 URL，中文使用 `/zh/*`，避免为英文批量制造重定向；Proxy
+     只承担 locale 边界和内部 rewrite，cookie 只记忆选择，不再是语言唯一事实源；
+  2. 切换语言保留当前路径、查询参数和片段，并做完整导航以同步根 `<html lang>`；
+  3. 页头、页脚、导航与行动按钮先完整双语；页面正文继续通过类型化内容接缝逐页迁移；
+  4. 在某页中文正文、metadata 和证据未完整核验前，中文响应统一输出
+     `X-Robots-Tag: noindex, follow`，不进入 sitemap，也不输出可索引 `hreflang=zh`；
+  5. 视觉借鉴 2N Forged 的透明首屏导航、强字标、细分隔线和深色大版面，但只使用丰怀
+     自有结构、文案和资产；这不改变 DEC-010 的禁止复制边界。
+- 理由：独立 URL 是可缓存、可分享、可审计双语站的最低条件；但把英文技术正文套上
+  `lang=zh` 并允许索引会制造更严重的 SEO 与可访问性错误，因此路由能力和内容放行分开。
+- 影响：根布局转为请求级渲染；中文站点框架可验收但不代表中文正文已经完成。后续每页
+  只有在中英内容对齐和业务核验后，才单独开放 canonical/hreflang/sitemap。
+- 相关：`src/proxy.ts`、`src/lib/i18n/`、`src/components/{site-header,site-footer,
+  language-switcher,floating-quote}.tsx`、`ARCHITECTURE.md`、DEC-010、DEC-063。
+
+## DEC-067 · 合成车辆图只承担应用语境，不进入产品与制造证据链
+
+- 日期：2026-10-09
+- 状态：已实现
+- 背景：站内多处深色区域只有纹理和渐变，缺少汽车应用语境；但把热门车型精确复刻、
+  把合成场景当成客户案例或给所有黑色模块铺图，会同时带来商标、误导和可读性风险。
+- 决定：
+  1. 只在产品线首屏或转化横幅使用车辆场景；页脚、表单、技术数据、工艺与检验证据区
+     保持纯色或真实资料；
+  2. 车辆只采用“性能 GT、电动跨界车、家庭 SUV”等无品牌分段造型，不出现 Logo、
+     车标、车牌、可读文字或真实品牌精确外观；
+  3. 合成图统一按装饰图处理：空 alt、`aria-hidden`、深色遮罩，不作为适配、客户、测试、
+     产能或质量主张的依据；
+  4. 站点资产使用压缩 WebP，原始提示与生成边界存入 `resources/generated/`；以后若使用
+     特定车型，必须先取得可商用照片与车型/商标展示授权。
+- 理由：汽车场景可以提升产品语境和视觉层次，但证据图与氛围图必须在结构上分开，
+  以免“看起来像”被误读成“已经制造、适配或验证过”。
+- 相关：`src/content/automotive-scenes.ts`、`src/components/automotive-backdrop.tsx`、
+  `outputs/reports/05-automotive-background-module-audit-2026-10-09.md`、DEC-010。
+
+## DEC-068 · 轮毂目录借鉴精品陈列语言，但保持生产规格目录定位
+
+- 日期：2026-10-09
+- 状态：已实现 UI；图片规范化待办
+- 背景：Vossen 目录通过白色画布、无框产品卡、统一棚拍、居中型号与大留白建立精品感；
+  丰怀目录原先的圆角描边卡和表格式规格过重，但丰怀必须支持 PCD、尺寸和工艺等生产记录
+  筛选，不能照搬只按系列浏览的零售结构。
+- 决定：
+  1. 结果区采用白底、无卡片外框、正方形完整图片、居中型号/工艺/尺寸/PCD 和细线分隔；
+  2. 保留 PCD → 直径 → 宽度 → 工艺的筛选顺序、服务端 GET、可爬取分页与真实 variant
+     派生规格，不加入未经批准的价格、库存、车型适配或载荷；
+  3. 移动端继续遵守单列产品卡规格，不为了外观复制参考站的信息密度；
+  4. 源图不一致作为资产治理问题处理。允许裁切、背景清理、曝光归一和压缩，但禁止用
+     生成式图像改写轮辐、孔位、Logo 或表面处理后冒充真实 SKU。
+- 影响：目录视觉更轻、更像产品陈列，但要达到统一棚拍级质感仍需完成首发图片规范化任务。
+- 相关：`src/components/wheels/wheel-catalogue-{card,filters,pagination}.tsx`、
+  `work/queued/2026-10-09-wheel-image-normalization.md`、DEC-004、DEC-014。
+
+## DEC-069 · 轮毂内容正本迁入 WordPress，静态事实层降级为最后有效兜底
+
+- 日期：2026-10-09
+- 状态：已实现并通过本地 WordPress、live 前端与 FH-002 生命周期验收
+- 背景：DEC-052 为首期安全上架采用“仓库事实层 + WordPress 发布覆盖层”。该结构能
+  审批历史数据，却不能让运营在后台新增型号、编辑规格和图片；新增 FH-002 仍需要改
+  仓库、运行生成器、同步快照并重新部署，与项目“内容更新无需改代码”的目标冲突。
+- 决定：
+  1. WordPress `wheel_model` 扩展为型号、真实变体和媒体的可编辑正本；规格仍以一条
+     variant 保存完整组合，禁止跨行拼接；
+  2. 公开读取使用项目自有 `/fh/v1/wheels` 契约，只返回已批准型号、已批准媒体和完整
+     变体，不暴露来源备注、候选分或内部商标字段；
+  3. `@/lib/wheels` 四个公共接口与页面视图类型保持不变，适配器在 `WP_MODE=live` 时
+     读取 WordPress；网络或契约失败才使用最后一次核验过的静态集合；权威空集合不回退；
+  4. 迁移采用 expand–migrate–contract。历史 JSON、图片和发布快照先保留作审计、导入
+     和故障兜底，禁止在迁移中直接删除；
+  5. 轮毂和 Insights 的保存、撤回、回收站与删除统一触发 HMAC-SHA256 请求体签名 webhook，使目录、详情、
+     sitemap、询盘复核和文章页面按标签立即失效；
+  6. Insights 正文改用结构化分段编辑器，并增加文章媒体。现有本地文章完成幂等迁移和
+     前后端核验后，才允许打开 WordPress 权威接管。
+- 理由：运营可编辑性不能以破坏发布门槛、组件契约或 CMS 故障可用性为代价。稳定公开
+  契约加最后有效兜底能把编辑体验、运行时安全和 Git 审计分层处理。
+- 影响：DEC-052 的“WordPress 只存发布决定、不复制规格”只保留为历史迁移背景，不再是
+  目标架构；生产环境必须新增 WordPress→Next 回调 URL/密钥与失败监控配置。本地已迁移
+  138 个型号、677 张关联图片和 6 篇 Insights，并以临时 FH-002 验证草稿、发布、修改、
+  撤回及删除；临时数据验收后清理。
+- 相关：`ARCHITECTURE.md`、`work/completed/2026-10-09-wordpress-wheel-and-insights-authoring.md`、
+  DEC-052、DEC-065。
+
+## DEC-070 · 119.91.205.130:7080 作为第一阶段 Headless WordPress 预发布入口
+
+- 日期：2026-10-09
+- 状态：已实施
+- 背景：用户要求把本地已验收的 Headless WordPress 推送到腾讯云服务器，并指定公网
+  `7080`。服务器当前由 nginx 在 7080 代理旧 Next.js 预览，主机没有 Docker；旧前台
+  目录 `/opt/fenghuai-site-preview` 与 systemd 服务仍可作为回滚点。
+- 决定：
+  1. 允许覆盖 7080 的旧预览入口，但不删除旧应用目录、systemd 单元或 nginx 备份；
+  2. 安装 Docker Engine 与 Compose plugin，WordPress/MySQL 使用独立 Compose 项目；
+  3. MySQL 只在内部网络开放，WordPress 只绑定 `127.0.0.1:7081`，nginx 继续持有公网
+     7080 并反向代理，避免容器直接抢占端口；
+  4. 迁移前导出本地数据库和 `wp-content/uploads`，远端导入后重写 `home/siteurl`，
+     mu-plugin 只从仓库跟踪源部署；
+  5. 在没有域名和 TLS 前把该实例标为上线验收环境，不在 HTTP 登录中复用其它系统的
+     高价值账号；用户已明确要求把本地验收过的 QQ SMTP 配置同步到远端，因此只允许
+     向已批准的内部收件邮箱发送询盘通知，不向客户地址主动发信；
+  6. 前端部署与 OpenNext 平台仍是独立决定，不能把 WordPress 上线误记为整站已上线。
+- 理由：nginx 保持外部端口、容器只绑定回环地址可以减少暴露面；保留旧进程和配置文件
+  能在切换失败时分钟级恢复。数据库、媒体、插件和运行配置分开备份才能真正回滚。
+- 相关：`deploy/wordpress/`、`work/completed/2026-10-09-headless-wordpress-remote-deployment.md`、
+  DEC-009、DEC-028、DEC-060、DEC-069。
+
+## DEC-071 · 119.91.205.130:9080 仅作为询盘端到端联调前端
+
+- 日期：2026-10-09
+- 状态：已实施
+- 背景：7080 已切换为 Headless WordPress 后台与 REST API。用户开放 9080，希望从真实
+  前端页面验证“填写表单 → Next API → WordPress 事务持久化 → 后台可见”。服务器系统
+  Node 仍为 20，而项目要求 Node 24；直接升级系统 Node 会影响同机其它站点。
+- 决定：
+  1. nginx 公开 9080，Next.js 容器只绑定 `127.0.0.1:9081`；
+  2. 前端使用隔离的 Node 24 Docker 镜像，不替换宿主机 Node，不接管其它站点；
+  3. 构建时固定 `NEXT_PUBLIC_APP_URL=http://119.91.205.130:9080`，运行时经 Compose
+     内部网络读取 WordPress，并使用独立服务密钥提交询盘；
+  4. 该部署是端到端上线验收环境，不改变 DEC-009 的 OpenNext 正式目标；按用户明确要求
+     接入已在本地验收的 QQ SMTP，但通知范围只限已批准的内部收件邮箱；
+  5. WordPress 缓存回调只指向容器内前端地址，密钥与 Next 侧保持一致。
+  6. 2 GB 服务器只加载并运行开发机产出的 amd64 镜像，不在服务器执行 `next build`；
+     构建产物先在本机进行运行冒烟与 canonical 核验，再以校验和确认上传完整性；
+  7. `upgrade-insecure-requests` 与 HSTS 只在 `NEXT_PUBLIC_APP_URL` 为 HTTPS 时启用，
+     避免 HTTP 联调入口把 CSS、JS、字体和图片升级到未配置的 HTTPS 端口。
+- 理由：两个公网端口把前端与 CMS 职责分开；容器隔离避免服务器现有 Node 应用受到
+  运行时升级影响。把 canonical 与隐私版本在构建时显式注入可避开静默错误。
+- 相关：`deploy/frontend/`、`deploy/wordpress/`、
+  `work/completed/2026-10-09-headless-wordpress-remote-deployment.md`、DEC-005、DEC-009、
+  DEC-055、DEC-070。

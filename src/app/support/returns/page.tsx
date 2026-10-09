@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Return & Refund Policy",
   description:
     "How Fenghuai handles returns for made-to-order aluminum components — defect, error, cancellation and restocking terms.",
+  robots: { index: false, follow: false },
 };
 
 /**

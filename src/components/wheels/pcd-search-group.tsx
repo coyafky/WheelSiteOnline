@@ -3,6 +3,7 @@
 import { useSyncExternalStore, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { WheelFilterOption } from "./wheel-filter-option";
 import type { FacetOption } from "@/lib/wheels";
 
 /**
@@ -127,33 +128,16 @@ export function PcdSearchGroup({
     const disabled = option.disabled && !checked;
     const id = `${idPrefix}-${name}-${option.value}`;
     return (
-      <label
+      <WheelFilterOption
         key={option.value}
-        htmlFor={id}
-        className={cn(
-          "flex cursor-pointer items-center gap-2.5 text-[0.82rem] leading-snug text-foreground",
-          disabled && "cursor-not-allowed text-muted-foreground",
-        )}
-      >
-        <input
-          id={id}
-          type="checkbox"
-          name={name}
-          value={option.value}
-          defaultChecked={checked}
-          disabled={disabled}
-          className="size-4 shrink-0 accent-forge"
-        />
-        <span>{option.label}</span>
-        <span
-          className={cn(
-            "ml-auto tabular-nums text-[0.75rem] text-muted-foreground",
-            disabled && "opacity-60",
-          )}
-        >
-          {option.count}
-        </span>
-      </label>
+        id={id}
+        name={name}
+        value={option.value}
+        label={option.label}
+        count={option.count}
+        checked={checked}
+        disabled={disabled}
+      />
     );
   };
 
@@ -180,14 +164,14 @@ export function PcdSearchGroup({
               placeholder="e.g. 5x114 or 112"
               aria-label={`Search ${legend}`}
               autoComplete="off"
-              className="w-full rounded-md border border-border bg-white px-3 py-2 pr-9 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+              className="w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 pr-8 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
             />
             {query ? (
               <button
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label="Clear search"
-                className="absolute right-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-soft hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+                className="absolute right-0 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center text-muted-foreground transition-colors hover:text-forge focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
               >
                 ×
               </button>

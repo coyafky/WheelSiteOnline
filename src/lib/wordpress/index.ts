@@ -5,7 +5,12 @@ export {
   wpItem,
   wpMedia,
   wpMediaCollection,
+  wpRead,
 } from "./client";
+export {
+  getInsightGuideDocument,
+  getInsightGuideDocuments,
+} from "./insights";
 export { getAboutContent } from "./about";
 export { getHomepageContent } from "./homepage";
 export { getWheelManufacturingCapabilities } from "./wheel-capabilities";

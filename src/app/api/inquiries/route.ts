@@ -9,6 +9,8 @@ import {
   validate,
 } from "@/lib/inquiry";
 import { bindWheelEnquiry } from "@/lib/wheels/inquiry-binding";
+import { automationTrap, originAllowed, rateLimit } from "@/lib/inquiry/guard";
+import { issueInquiryReceipt } from "@/lib/inquiry/receipt";
 
 /**
  * POST /api/inquiries — the public boundary; the only write path into the
@@ -34,6 +36,8 @@ import { bindWheelEnquiry } from "@/lib/wheels/inquiry-binding";
 
 export const runtime = "nodejs";
 
+const MAX_BODY_BYTES = 16 * 1024;
+
 /** The endpoint's idempotency-key contract: 32–64 chars of [A-Za-z0-9_-]. */
 const IDEMPOTENCY_KEY = /^[A-Za-z0-9_-]{32,64}$/;
 
@@ -51,9 +55,22 @@ function readIdempotencyKey(body: unknown): string | undefined {
 }
 
 export async function POST(request: Request) {
+  if (!originAllowed(request)) {
+    return NextResponse.json({ ok: false, error: "Origin not allowed." }, { status: 403 });
+  }
+
+  const declaredLength = Number(request.headers.get("content-length") ?? "0");
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "Request body is too large." }, { status: 413 });
+  }
+
   let body: unknown;
   try {
-    body = await request.json();
+    const text = await request.text();
+    if (new TextEncoder().encode(text).byteLength > MAX_BODY_BYTES) {
+      return NextResponse.json({ ok: false, error: "Request body is too large." }, { status: 413 });
+    }
+    body = JSON.parse(text);
   } catch {
     return NextResponse.json(
       { ok: false, error: "Malformed request body." },
@@ -61,11 +78,32 @@ export async function POST(request: Request) {
     );
   }
 
-  const parsed = validate(body);
+  const trapError = automationTrap(body);
+  if (trapError) {
+    return NextResponse.json({ ok: false, error: trapError }, { status: 422 });
+  }
+
+  const privacyVersion = process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim();
+  if (!privacyVersion) {
+    return NextResponse.json(
+      { ok: false, error: "The enquiry form is not enabled." },
+      { status: 503 },
+    );
+  }
+
+  const parsed = validate(body, privacyVersion);
   if (!parsed.ok) {
     return NextResponse.json(
       { ok: false, error: "Validation failed.", fieldErrors: parsed.fieldErrors },
       { status: 422 },
+    );
+  }
+
+  const retryAfter = rateLimit(request, parsed.input.email);
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { ok: false, error: "Too many submissions. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } },
     );
   }
 
@@ -107,6 +145,7 @@ export async function POST(request: Request) {
       {
         ok: true,
         id: saved.id,
+        receiptToken: issueInquiryReceipt(saved.id),
         persisted: true,
         emailStatus: saved.emailStatus,
         delivered,
@@ -126,6 +165,7 @@ export async function POST(request: Request) {
     {
       ok: true,
       id: saved.id,
+      receiptToken: null,
       persisted: false,
       emailStatus: outcome.delivered ? "accepted" : isMockMode() ? "pending" : "failed",
       delivered: outcome.delivered,
@@ -159,7 +199,7 @@ function persistenceFailureResponse(error: unknown): NextResponse {
 
   console.error(
     `[inquiry] unexpected persistence failure: ${
-      error instanceof Error ? error.message : "unknown"
+      error instanceof Error ? error.name : "unknown"
     }`,
   );
   return NextResponse.json(
@@ -169,37 +209,11 @@ function persistenceFailureResponse(error: unknown): NextResponse {
 }
 
 export async function GET(request: Request) {
-  // T03 (2026-10-04): anonymous inquiry listing is a launch blocker —
-  // see outputs/site-launch-plan/02-data-and-inquiry-design.md §6.
-  // Listing is only reachable with an explicit admin token; when no token is
-  // configured the capability is disabled entirely (404), and a wrong token
-  // is rejected with 401. Never open this to anonymous readers.
-  const adminToken = process.env.INQUIRY_ADMIN_TOKEN;
-  if (!adminToken) {
-    return NextResponse.json(
-      { ok: false, error: "Inquiry listing is not enabled." },
-      { status: 404 },
-    );
-  }
-  const auth = request.headers.get("authorization");
-  if (auth !== `Bearer ${adminToken}`) {
-    return NextResponse.json(
-      { ok: false, error: "Unauthorized." },
-      { status: 401 },
-    );
-  }
-
-  // ⚠️ Since DEC-055 the authoritative list is the wp-admin 「询盘」 menu, not
-  // this endpoint: the records live in WordPress, and this process only holds
-  // the ones it wrote since it started. A protected list REST route would need
-  // role checks and an audit trail first (design §6), so it is intentionally
-  // not added in this pass.
-  const { list } = await import("@/lib/inquiry");
-  const records = await list();
-  return NextResponse.json({
-    ok: true,
-    count: records.length,
-    scope: "process",
-    records,
-  });
+  void request;
+  // 权威列表只存在于具备独立能力的 wp-admin。Next 进程内投影不是权威数据，
+  // 即使配置 token 也不再开放，避免把调试缓存误当成管理接口。
+  return NextResponse.json(
+    { ok: false, error: "Inquiry listing is not available on this endpoint." },
+    { status: 404 },
+  );
 }

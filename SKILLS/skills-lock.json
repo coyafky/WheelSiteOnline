@@ -108,6 +108,26 @@
       "sourceType": "github",
       "skillPath": "skills/stitch-skill/SKILL.md",
       "computedHash": "13322f38406cd3abf16ba45e35bdc9b18002d0153a79b4612b97aefc65d5a335"
+    },
+    "fenghuai-engineering-workflow": {
+      "source": "mattpocock/skills",
+      "sourceType": "github-adapted",
+      "skillPath": "SKILLS/fenghuai-engineering-workflow/SKILL.md",
+      "ref": "v1.3.1",
+      "computedHash": "cfa19de2947fe55abd2054d1323eac70ca29f26bf9000daaa7d94cb24b712abd"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "ref": "4.3.1",
+      "computedHash": "38c2e839e130008b6da814ab9c16f3fcbbedfdf721a9638eebd31a9e65341a7a"
+    },
+    "seo-market-research": {
+      "source": "local-project",
+      "sourceType": "local-adapted",
+      "skillPath": "SKILLS/seo-market-research/SKILL.md",
+      "computedHash": "25619772671d26664eede660821b1d118c9c1f4996225e83a03423becbe59f94"
     }
   }
 }

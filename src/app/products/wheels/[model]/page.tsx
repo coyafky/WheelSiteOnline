@@ -15,7 +15,6 @@ import {
   sizeLabel,
   toBrowserVariant,
 } from "@/components/wheels/spec-format";
-import type { ProductFamily } from "@/content/types";
 import { wheelDetailSeo } from "@/content/wheel-detail";
 import {
   getWheelDetailPage,
@@ -46,22 +45,6 @@ type WheelModelPageProps = {
   params: Promise<{ model: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
-
-/**
- * The family list handed to the embedded `<InquiryForm>` — deliberately empty.
- *
- * The site's family taxonomy lives in `@/content/products`, which this route may
- * not import (it holds the placeholder product data the wheel routes are being
- * moved off). Nothing else about the form changes: the enquiry's identity is
- * carried by `model + productionCode`, which the route re-resolves server-side.
- *
- * §7's field list does not ask a visitor to re-classify a model they have already
- * chosen, so the shared form's own "advise me" option is the honest answer for
- * this control. If a populated selector is preferred, the trade is either passing
- * that module's family list (a wheel-data boundary change) or moving the enquiry
- * to a `/request-a-quote` link, which needs no family list at all.
- */
-const familiesForEnquiry: ProductFamily[] = [];
 
 /** §13.2: every published slug, from the module that also serves the sitemap. */
 export async function generateStaticParams() {
@@ -137,7 +120,6 @@ export default async function WheelModelPage({
         model={detail.model}
         variants={detail.approvedVariants.map(toBrowserVariant)}
         initialSelectedCode={selectedCode}
-        families={familiesForEnquiry}
       />
 
       {/* WD04 — hidden until a finish has an approved public name (§4, §8) */}

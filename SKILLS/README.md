@@ -5,8 +5,8 @@
 
 - 建立日期：2026-10-01
 - 来源：从兄弟项目 `深圳公司的独立站搭建`（`ChatGPT/深圳公司的独立站搭建/.agents/skills/`）迁移
-- 规模：**19 个技能**（全部含 `SKILL.md`）｜ 3.2 MB
-- 来源记录：`skills-lock.json`（含每个技能的 upstream 仓库与 computedHash）
+- 规模：**21 个技能**（全部含 `SKILL.md`）｜ 3.2 MB
+- 来源记录：`skills-lock.json`（含每个技能的来源与 computedHash）
 
 > ⚠️ **这些是复制，不是软链。** 两个项目各自演进，
 > **不要假定与兄弟项目同步**。需要更新时显式对比。
@@ -74,6 +74,16 @@
 |---|---|
 | `seo-market-research` | SEO 与市场情报 |
 
+### 1.6 工程流程
+
+| 技能 | 用途 |
+|---|---|
+| `fenghuai-engineering-workflow` | 规格 → 纵向 Issue → TDD/诊断 → 双轴评审 → 中文项目收尾 |
+
+该技能适配自 `mattpocock/skills@v1.3.1`。它不是上游英文文件的直接副本，而是与本项目
+`PAGE-SPECS/`、`work/`、`STATUS.md`、`DECISIONS.md` 和发布门槛整合后的中文正本。
+上游固定版本见技能内 `UPSTREAM.md`，有意偏离见 `.local-patch.md`。
+
 ---
 
 ## 2. 使用纪律
@@ -107,4 +117,5 @@
 
 | 日期 | 变更 |
 |---|---|
+| 2026-10-08 | 新增 `fenghuai-engineering-workflow`：归并 Matt Pocock 的规格、纵向 Issue、TDD、诊断、双轴评审与复盘方法；保持中文记录和现有任务体系；同时补齐此前漏记的 `impeccable`、`seo-market-research` 来源锁 |
 | 2026-10-01 | 从兄弟项目迁移 19 个技能 + `skills-lock.json`，建立本 README |
