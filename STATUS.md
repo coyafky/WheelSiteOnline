@@ -1,12 +1,13 @@
 # 项目状态
 
-## 2026-10-12 询盘转化页四语切片已验；远端预发布暂缓
+## 2026-10-12 当前全量快照已推送并部署到 9080 预发布
 
-- `/request-a-quote` 与 `/contact` 现在分别读取 WordPress Page 的四语业务正文和 SEO；本地记录 1339、1428 的 `en/zh/es/th` 业务译文均为 `approved`。迁移前的询盘聚合草稿保存在该记录的 `fh_conversion_legacy_backup_json`，隐私草稿未批准、未改动。
-- `privacy` Page 是唯一同意版本门槛；预览不能借隐私草稿开启收集。真实本地 WordPress 模式下两页四语均展示停用提示，没有可提交表单；模拟模式的测试表单仍可用于隔离回归。
-- `npm test` 42/42、lint、typecheck、build 通过；Playwright 模拟模式 11/11、真实本地 WP 模式 12/12（含隐私版本展示复核）。320px 下无横向溢出或破图，页面无 JS 异常，canonical/非英语 noindex 核对通过。覆盖脚本从 46 降至 **42 个未通过的页面×语言组合**；整站四语目标仍未完成。
-- 远端 9080/7080 仍为旧预发布；7080 的 `fh/v1/pages` 返回 404，且 SSH 公钥登录被拒。仓库有大量未提交的并行改动；不能把当前工作树直接打包或推送。待取得服务器访问并确定受控发布快照、备份与回滚后，再做远端预发布，不宣称已上线。
-- 下一步：轮毂目录 `/products/wheels` 的页面/筛选/排序/空态/分页 UI 四语化；随后处理其余业务 Page、文章、媒体与错误码。`privacy` 法务审核和直接联系方式核实继续独立排队。
+- 发布分支为 `codex/full-site-current-20261012`，最新提交 `d98bbd1`；基础全量快照 `d91d8ae` 已推送到远端仓库。当前工作树干净。
+- 本地门禁：`npm run lint`、`npm run typecheck`、`npm test` 42/42、生产构建通过；Playwright CLI 全量 **131 passed / 1 skipped / 0 failed**。跳过项是明确要求真实 WordPress 权限的只读用例，默认 mock 模式下不执行真实写入。
+- 前端镜像 `fenghuai-frontend-9080:d91d8ae` 已在本机构建为 `linux/amd64`，镜像摘要为 `sha256:88764fad0b1b0113483b203af39adcf35cb19aac41eb19b7bdf24243ace671ec`；远端容器健康，9080 的 robots、sitemap、四语路由均通过 HTTP 冒烟。
+- 远端 WordPress 已加载 Pages 接缝与受控运行时 seeder；`request-a-quote` 页面 ID 1262、`contact` 页面 ID 1263，四语业务内容均为 `approved`，单页 API 返回 `authoritative: true`。全量页面接管开关仍未打开，避免未迁移页面被误宣称为 CMS 权威。
+- 远端备份位于 `/opt/fenghuai-backups/20261012-162734`，包含数据库 dump、compose、配置和 mu-plugin 压缩包。公开 9080 仍保持 `noindex, nofollow`；隐私版本未批准，询盘表单保持关闭，未发送真实邮件。
+- 下一步：轮毂目录 `/products/wheels` 的页面/筛选/排序/空态/分页 UI 四语化；之后处理其余业务 Page、文章、媒体与错误码。隐私法务审核、正式域名 SEO、真实 SMTP 投递和生产发布仍是独立门槛。
 
 ## 2026-10-12 四语全文实施中：轮毂详情切片已验，整站未通过
 
