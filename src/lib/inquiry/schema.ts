@@ -15,6 +15,26 @@ export const inquiryInputTypes = [
   "none-yet",
 ] as const;
 
+export const inquiryItemSchema = z.object({
+  model: z
+    .string({ error: "Use text for the wheel model." })
+    .trim()
+    .min(1, { error: "Wheel model is required." })
+    .max(60, { error: "Wheel model is too long." }),
+  productionCode: z
+    .string({ error: "Use text for the production code." })
+    .trim()
+    .min(1, { error: "Production code is required." })
+    .max(120, { error: "Production code is too long." }),
+  quantity: z
+    .number({ error: "Quantity must be a number." })
+    .int({ error: "Quantity must be a whole number." })
+    .min(1, { error: "Quantity must be at least 1." })
+    .refine(Number.isSafeInteger, {
+      error: "Quantity is too large to process safely.",
+    }),
+});
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export const inquiryStepOneSchema = z.object({
@@ -98,6 +118,7 @@ export const inquirySubmissionSchema = inquiryStepOneSchema
       .max(120, { error: "Keep this field to 120 characters or fewer." })
       .optional()
       .default(""),
+    items: z.array(inquiryItemSchema).max(20, { error: "You can quote up to 20 wheels at once." }).optional().default([]),
   });
 
 export function zodFieldErrors(error: z.ZodError): Record<string, string> {

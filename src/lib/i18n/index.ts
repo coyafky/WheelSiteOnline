@@ -11,11 +11,9 @@ import {
 export * from "./types";
 
 /**
- * Resolve the active locale on the server.
- *
- * V1 reads the `fh-locale` cookie only. No `[locale]` route segment yet —
- * that would require rewriting every route and is deliberately deferred
- * (see PAGE-SPECS/index.md on routing changes being a separate migration).
+ * Resolve the active locale on the server. Proxy supplies the URL locale in
+ * `x-fh-locale`; the cookie remains a preference for visits to the English
+ * root, never the only source of a public language URL.
  */
 export async function getLocale(): Promise<Locale> {
   const requestHeaders = await headers();

@@ -7,6 +7,7 @@ import {
 } from "@/content/flow-formed-wheels";
 import { finishesPage, isFinishesPublishingOpen } from "@/content/finish-guide";
 import { platformFitments } from "@/content/fitment";
+import { INDEXABLE_LOCALES, localizedPath } from "@/lib/i18n/types";
 
 /**
  * Sitemap.
@@ -109,9 +110,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [
+  const englishEntries = [
     ...staticEntries,
     ...wheelModelEntries,
     ...fitmentEntries,
   ];
+  const localizedEntries = INDEXABLE_LOCALES
+    .filter((locale) => locale !== "en")
+    .flatMap((locale) => englishEntries.map((entry) => ({
+      ...entry,
+      url: `${base}${localizedPath(new URL(entry.url).pathname, locale)}`,
+    })));
+
+  return [...englishEntries, ...localizedEntries];
 }

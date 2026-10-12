@@ -11,6 +11,7 @@ import {
   isFinishesPublishingOpen,
 } from "@/content/finish-guide";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
 import { cn } from "@/lib/utils";
 
 /**
@@ -49,51 +50,26 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function FinishGalleryPage() {
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone, no eyebrow and no breadcrumb.
+          The breadcrumb was removed when `/gallery` retired under DEC-059:
+          the only real label would have pointed at `/fitment`, which is not
+          this page's parent. Keep it omitted here so the label and the
+          destination cannot disagree. */}
+      <PageHero
         id="top"
-        aria-labelledby="finishes-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="finishes-title"
+        tone="dark"
+        heading={finishesHero.heading}
+        lede={finishesHero.lede}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_20%_0%,rgba(194,101,10,0.24)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          {/*
-            这里原本是 `Gallery / {heading}` 的面包屑。`/gallery` 已按 DEC-059 退休
-            （308 → `/fitment`），所以「Gallery」这个标签点下去会到 Fitment ——
-            **标签与目的地不符**，比没有面包屑更糟。
-            而面包屑的存在前提是「有父级」：`/gallery/finishes` 现在是一个
-            孤儿子路由（父级已退役），没有可回的真实父级，所以整条移除。
-          */}
-
-          <h1
-            id="finishes-title"
-            className="mt-6 font-display text-[clamp(2.6rem,8vw,5.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            {finishesHero.heading}
-          </h1>
-          <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
-            {finishesHero.lede}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href={finishesSampleCta.href} className="btn-pill-solid">
-              {finishesSampleCta.label}
-              <ArrowRight className="size-4" />
-            </Link>
-            {/* 「Back to gallery」已移除：`/gallery` 在这次变更中退休，
-                没有 gallery 可回了。主 CTA（样品申请）保留。 */}
-          </div>
-        </div>
-      </section>
+        <Link href={finishesSampleCta.href} className="btn-pill-solid">
+          {finishesSampleCta.label}
+          <ArrowRight className="size-4" />
+        </Link>
+        {/* 「Back to gallery」已移除：`/gallery` 在这次变更中退休，
+            没有 gallery 可回了。主 CTA（样品申请）保留。 */}
+      </PageHero>
 
       {/* B. Honesty note ---------------------------------------------------- */}
       <section

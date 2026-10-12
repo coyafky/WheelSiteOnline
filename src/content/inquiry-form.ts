@@ -62,6 +62,21 @@ export const inquiryFormUi = {
     "Too many attempts were received. Please wait a few minutes before trying again.",
   referenceLabel: "Reference",
   notSpecified: "Not specified",
+  privacyConsentChanged:
+    "The privacy notice changed since you agreed. Read the updated notice and tick the consent box again.",
+  validationMessages: {
+    customerType: "Choose Business or Individual.",
+    productLine: "Choose one of the four product lines.",
+    message: "Please describe what you need in at least 10 characters.",
+    quantity: "Keep the quantity to 40 characters or fewer.",
+    inputsAvailable: "Choose only supported input types.",
+    name: "Please tell us your name.",
+    email: "That email address looks incomplete.",
+    country: "Use a 2–8 letter country or market code.",
+    company: "Keep the company name to 160 characters or fewer.",
+    whatsapp: "Keep the phone or WhatsApp number to 40 characters or fewer.",
+    privacyConsent: "Consent is required before submission.",
+  },
 } as const;
 
 export const inquiryPreparation = {
@@ -74,3 +89,17 @@ export const inquiryPreparation = {
     "safety-tires": ["Tire size or model", "Vehicle or fleet use", "Required test documents"],
   },
 } as const;
+
+/** Preserve the content shape while allowing approved translations of text leaves. */
+type LocalizedText<T> = T extends string
+  ? string
+  : T extends readonly (infer Item)[]
+    ? ReadonlyArray<LocalizedText<Item>>
+    : T extends object
+      ? { [Key in keyof T]: LocalizedText<T[Key]> }
+      : T;
+
+export type InquiryFormUi = LocalizedText<typeof inquiryFormUi>;
+export type InquiryPreparation = LocalizedText<typeof inquiryPreparation>;
+export type InquiryPreparationLine =
+  InquiryPreparation["byProductLine"][keyof InquiryPreparation["byProductLine"]];

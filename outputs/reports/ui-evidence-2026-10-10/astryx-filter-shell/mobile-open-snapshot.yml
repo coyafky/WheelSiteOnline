@@ -1,0 +1,752 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Fenghuai home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - generic [ref=e6]: FH
+          - generic [ref=e7]:
+            - generic [ref=e8]: Fenghuai
+            - generic [ref=e9]: Manufacturing
+      - button "Open navigation" [ref=e11] [cursor=pointer]:
+        - img [ref=e12]
+    - navigation "Mobile navigation" [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - link "Products" [ref=e17] [cursor=pointer]:
+            - /url: /products
+          - button "Toggle Products submenu" [ref=e18] [cursor=pointer]:
+            - img [ref=e19]
+        - generic:
+          - generic:
+            - link "All Product Lines" [ref=e21] [cursor=pointer]:
+              - /url: /products
+            - link "Wheels" [ref=e22] [cursor=pointer]:
+              - /url: /products/wheels
+            - link "EV Powertrain Housings" [ref=e23] [cursor=pointer]:
+              - /url: /products/ev-components
+            - link "Custom Aluminum" [ref=e24] [cursor=pointer]:
+              - /url: /products/custom-aluminum
+            - link "Safety Tires" [ref=e25] [cursor=pointer]:
+              - /url: /products/safety-tires
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - link "Capabilities" [ref=e28] [cursor=pointer]:
+            - /url: /capabilities
+          - button "Toggle Capabilities submenu" [ref=e29] [cursor=pointer]:
+            - img [ref=e30]
+        - generic:
+          - generic:
+            - link "Capabilities" [ref=e32] [cursor=pointer]:
+              - /url: /capabilities
+            - link "Custom Development" [ref=e33] [cursor=pointer]:
+              - /url: /custom-development
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - link "Dealer Programs" [ref=e36] [cursor=pointer]:
+            - /url: /dealers
+          - button "Toggle Dealer Programs submenu" [ref=e37] [cursor=pointer]:
+            - img [ref=e38]
+        - generic:
+          - generic:
+            - link "Dealer Supply" [ref=e40] [cursor=pointer]:
+              - /url: /dealers
+            - link "Private Label" [ref=e41] [cursor=pointer]:
+              - /url: /dealers/private-label
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - link "Insights" [ref=e44] [cursor=pointer]:
+            - /url: /insights
+          - button "Toggle Insights submenu" [ref=e45] [cursor=pointer]:
+            - img [ref=e46]
+        - generic:
+          - generic:
+            - link "All Guides" [ref=e48] [cursor=pointer]:
+              - /url: /insights
+            - link "Bolt Pattern Guides" [ref=e49] [cursor=pointer]:
+              - /url: /insights/bolt-patterns
+      - link "About Us" [ref=e52] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - generic [ref=e55]: Switch language
+          - generic [ref=e56]: EN
+          - combobox "Switch language" [ref=e57] [cursor=pointer]:
+            - option "English" [selected]
+            - option "中文"
+            - option "Español"
+            - option "ไทย"
+        - link "Request a Quote" [ref=e58] [cursor=pointer]:
+          - /url: /request-a-quote
+          - text: Request a Quote
+          - img [ref=e59]
+  - main [ref=e63]:
+    - region "Find a wheel by verified production specification" [ref=e64]:
+      - generic [ref=e65]:
+        - navigation "Breadcrumb" [ref=e68]:
+          - list [ref=e69]:
+            - listitem [ref=e70]:
+              - link "Products" [ref=e71] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=e72]:
+              - generic [ref=e74]: /
+              - generic [ref=e75]: Wheels
+        - paragraph [ref=e76]: WHEEL CATALOGUE
+        - heading "Find a wheel by verified production specification" [level=1] [ref=e77]
+        - paragraph [ref=e78]: Browse published wheel models by diameter, width, PCD and recorded manufacturing process. Every result has an approved image, and every selectable specification comes from an actual recorded variant.
+        - paragraph [ref=e79]: A catalogue match is a starting point for quotation. Vehicle fitment, brake clearance, load requirements and destination-market documents are confirmed before an order is approved.
+        - generic [ref=e80]:
+          - link "Browse recorded flow-formed wheels" [ref=e81] [cursor=pointer]:
+            - /url: /products/wheels/flow-formed
+            - text: Browse recorded flow-formed wheels
+            - img [ref=e82]
+          - link "Discuss a custom forged wheel" [ref=e84] [cursor=pointer]:
+            - /url: /products/wheels/forged
+            - text: Discuss a custom forged wheel
+            - img [ref=e85]
+    - region "Wheel catalogue results" [ref=e87]:
+      - generic [ref=e88]:
+        - paragraph [ref=e89]: 23 models match the selected production specifications
+        - generic [ref=e90]:
+          - group [ref=e92]:
+            - generic "Filters 2 applied" [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Filters
+              - generic [ref=e95]: 2 applied
+              - generic [ref=e96]: +
+          - generic [ref=e97]:
+            - form "Sort the wheel catalogue" [ref=e99]:
+              - generic [ref=e100]: Sort
+              - combobox "Sort" [ref=e101]:
+                - option "Model A–Z" [selected]
+                - 'option "Diameter: low to high"'
+                - 'option "Diameter: high to low"'
+                - option "Most recorded configurations"
+              - button "Apply" [ref=e102] [cursor=pointer]
+            - generic [ref=e103]:
+              - generic [ref=e104]: Applied filters
+              - link "Diameter 18\" Remove filter" [ref=e105] [cursor=pointer]:
+                - /url: /products/wheels?pcd=5x112
+                - text: Diameter 18"
+                - generic [ref=e106]: ×
+                - generic [ref=e107]: Remove filter
+              - link "PCD 5×112 Remove filter" [ref=e108] [cursor=pointer]:
+                - /url: /products/wheels?diameter=18
+                - text: PCD 5×112
+                - generic [ref=e109]: ×
+                - generic [ref=e110]: Remove filter
+              - link "Clear all" [ref=e111] [cursor=pointer]:
+                - /url: /products/wheels
+            - paragraph [ref=e112]: Specifications shown in the catalogue are production records, not a vehicle-fitment guarantee.
+            - generic [ref=e113]:
+              - article [ref=e114]:
+                - link "DIM057 — view specifications" [ref=e115] [cursor=pointer]:
+                  - /url: /products/wheels/dim057
+                  - img "Fenghuai wheel model DIM057, front view" [ref=e118]
+                  - generic [ref=e119]:
+                    - generic [ref=e120]:
+                      - paragraph [ref=e121]: DIM057
+                      - paragraph [ref=e122]: Low Pressure Cast
+                    - generic [ref=e123]:
+                      - generic [ref=e124]:
+                        - term [ref=e125]: Diameter
+                        - definition [ref=e126]: 18″ | 19″
+                      - generic [ref=e127]:
+                        - term [ref=e128]: PCD
+                        - definition [ref=e129]:
+                          - text: PCD5×100 · 5×108
+                          - generic [ref=e130]: "+3"
+                    - paragraph [ref=e131]: 10 recorded configurations · 5 finishes
+                    - generic [ref=e132]:
+                      - text: View specifications
+                      - generic [ref=e133]: →
+                - button "Add to enquiry" [ref=e135] [cursor=pointer]
+              - article [ref=e136]:
+                - link "DIM5014 — view specifications" [ref=e137] [cursor=pointer]:
+                  - /url: /products/wheels/dim5014
+                  - img "Fenghuai wheel model DIM5014, front view" [ref=e140]
+                  - generic [ref=e141]:
+                    - generic [ref=e142]:
+                      - paragraph [ref=e143]: DIM5014
+                      - paragraph [ref=e144]: Low Pressure Cast
+                    - generic [ref=e145]:
+                      - generic [ref=e146]:
+                        - term [ref=e147]: Diameter
+                        - definition [ref=e148]: 18″ | 19″
+                      - generic [ref=e149]:
+                        - term [ref=e150]: PCD
+                        - definition [ref=e151]: PCD5×112 · 5×114.3
+                    - paragraph [ref=e152]: 5 recorded configurations · 2 finishes
+                    - generic [ref=e153]:
+                      - text: View specifications
+                      - generic [ref=e154]: →
+                - button "Add to enquiry" [ref=e156] [cursor=pointer]
+              - article [ref=e157]:
+                - link "FF52 — view specifications" [ref=e158] [cursor=pointer]:
+                  - /url: /products/wheels/ff52
+                  - img "Fenghuai wheel model FF52, front view" [ref=e161]
+                  - generic [ref=e162]:
+                    - generic [ref=e163]:
+                      - paragraph [ref=e164]: FF52
+                      - paragraph [ref=e165]: Process not specified
+                    - generic [ref=e166]:
+                      - generic [ref=e167]:
+                        - term [ref=e168]: Diameter
+                        - definition [ref=e169]: 18″ | 19″
+                      - generic [ref=e170]:
+                        - term [ref=e171]: PCD
+                        - definition [ref=e172]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e173]: "+2"
+                    - paragraph [ref=e174]: 14 recorded configurations · 5 finishes
+                    - generic [ref=e175]:
+                      - text: View specifications
+                      - generic [ref=e176]: →
+                - button "Add to enquiry" [ref=e178] [cursor=pointer]
+              - article [ref=e179]:
+                - link "FF56 — view specifications" [ref=e180] [cursor=pointer]:
+                  - /url: /products/wheels/ff56
+                  - img "Fenghuai wheel model FF56, front view" [ref=e183]
+                  - generic [ref=e184]:
+                    - generic [ref=e185]:
+                      - paragraph [ref=e186]: FF56
+                      - paragraph [ref=e187]: Process not specified
+                    - generic [ref=e188]:
+                      - generic [ref=e189]:
+                        - term [ref=e190]: Diameter
+                        - definition [ref=e191]: 17″ | 18″
+                      - generic [ref=e192]:
+                        - term [ref=e193]: PCD
+                        - definition [ref=e194]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e195]: "+2"
+                    - paragraph [ref=e196]: 14 recorded configurations · 6 finishes
+                    - generic [ref=e197]:
+                      - text: View specifications
+                      - generic [ref=e198]: →
+                - button "Add to enquiry" [ref=e200] [cursor=pointer]
+              - article [ref=e201]:
+                - link "FF566 — view specifications" [ref=e202] [cursor=pointer]:
+                  - /url: /products/wheels/ff566
+                  - img "Fenghuai wheel model FF566, front view" [ref=e205]
+                  - generic [ref=e206]:
+                    - generic [ref=e207]:
+                      - paragraph [ref=e208]: FF566
+                      - paragraph [ref=e209]: Process not specified
+                    - generic [ref=e210]:
+                      - generic [ref=e211]:
+                        - term [ref=e212]: Diameter
+                        - definition [ref=e213]: 17″ | 18″ | 19″
+                      - generic [ref=e214]:
+                        - term [ref=e215]: PCD
+                        - definition [ref=e216]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e217]: "+2"
+                    - paragraph [ref=e218]: 25 recorded configurations · 4 finishes
+                    - generic [ref=e219]:
+                      - text: View specifications
+                      - generic [ref=e220]: →
+                - button "Add to enquiry" [ref=e222] [cursor=pointer]
+              - article [ref=e223]:
+                - link "FFC006 — view specifications" [ref=e224] [cursor=pointer]:
+                  - /url: /products/wheels/ffc006
+                  - img "Fenghuai wheel model FFC006, front view" [ref=e227]
+                  - generic [ref=e228]:
+                    - generic [ref=e229]:
+                      - paragraph [ref=e230]: FFC006
+                      - paragraph [ref=e231]: Process not specified
+                    - generic [ref=e232]:
+                      - generic [ref=e233]:
+                        - term [ref=e234]: Diameter
+                        - definition [ref=e235]: 17″ | 18″ | 19″
+                      - generic [ref=e236]:
+                        - term [ref=e237]: PCD
+                        - definition [ref=e238]:
+                          - text: PCD5×100 · 5×108
+                          - generic [ref=e239]: "+3"
+                    - paragraph [ref=e240]: 51 recorded configurations · 4 finishes
+                    - generic [ref=e241]:
+                      - text: View specifications
+                      - generic [ref=e242]: →
+                - button "Add to enquiry" [ref=e244] [cursor=pointer]
+              - article [ref=e245]:
+                - link "FFC012 — view specifications" [ref=e246] [cursor=pointer]:
+                  - /url: /products/wheels/ffc012
+                  - img "Fenghuai wheel model FFC012, front view" [ref=e249]
+                  - generic [ref=e250]:
+                    - generic [ref=e251]:
+                      - paragraph [ref=e252]: FFC012
+                      - paragraph [ref=e253]: Process not specified
+                    - generic [ref=e254]:
+                      - generic [ref=e255]:
+                        - term [ref=e256]: Diameter
+                        - definition [ref=e257]: 18″ | 19″
+                      - generic [ref=e258]:
+                        - term [ref=e259]: PCD
+                        - definition [ref=e260]:
+                          - text: PCD5×100 · 5×108
+                          - generic [ref=e261]: "+3"
+                    - paragraph [ref=e262]: 29 recorded configurations · 3 finishes
+                    - generic [ref=e263]:
+                      - text: View specifications
+                      - generic [ref=e264]: →
+                - button "Add to enquiry" [ref=e266] [cursor=pointer]
+              - article [ref=e267]:
+                - link "FFC015 — view specifications" [ref=e268] [cursor=pointer]:
+                  - /url: /products/wheels/ffc015
+                  - img "Fenghuai wheel model FFC015, front view" [ref=e271]
+                  - generic [ref=e272]:
+                    - generic [ref=e273]:
+                      - paragraph [ref=e274]: FFC015
+                      - paragraph [ref=e275]: Process not specified
+                    - generic [ref=e276]:
+                      - generic [ref=e277]:
+                        - term [ref=e278]: Diameter
+                        - definition [ref=e279]: 17″ | 18″
+                      - generic [ref=e280]:
+                        - term [ref=e281]: PCD
+                        - definition [ref=e282]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e283]: "+1"
+                    - paragraph [ref=e284]: 24 recorded configurations · 4 finishes
+                    - generic [ref=e285]:
+                      - text: View specifications
+                      - generic [ref=e286]: →
+                - button "Add to enquiry" [ref=e288] [cursor=pointer]
+              - article [ref=e289]:
+                - link "G5067 — view specifications" [ref=e290] [cursor=pointer]:
+                  - /url: /products/wheels/g5067
+                  - img "Fenghuai wheel model G5067, front view" [ref=e293]
+                  - generic [ref=e294]:
+                    - generic [ref=e295]:
+                      - paragraph [ref=e296]: G5067
+                      - paragraph [ref=e297]: Flow Formed
+                    - generic [ref=e298]:
+                      - generic [ref=e299]:
+                        - term [ref=e300]: Diameter
+                        - definition [ref=e301]: 18″
+                      - generic [ref=e302]:
+                        - term [ref=e303]: PCD
+                        - definition [ref=e304]: PCD5×112 · 5×114.3
+                    - paragraph [ref=e305]: 5 recorded configurations · 4 finishes
+                    - generic [ref=e306]:
+                      - text: View specifications
+                      - generic [ref=e307]: →
+                - button "Add to enquiry" [ref=e309] [cursor=pointer]
+              - article [ref=e310]:
+                - link "LK026 — view specifications" [ref=e311] [cursor=pointer]:
+                  - /url: /products/wheels/lk026
+                  - img "Fenghuai wheel model LK026, front view" [ref=e314]
+                  - generic [ref=e315]:
+                    - generic [ref=e316]:
+                      - paragraph [ref=e317]: LK026
+                      - paragraph [ref=e318]: Flow Formed
+                    - generic [ref=e319]:
+                      - generic [ref=e320]:
+                        - term [ref=e321]: Diameter
+                        - definition [ref=e322]: 18″
+                      - generic [ref=e323]:
+                        - term [ref=e324]: PCD
+                        - definition [ref=e325]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e326]: "+2"
+                    - paragraph [ref=e327]: 9 recorded configurations · 5 finishes
+                    - generic [ref=e328]:
+                      - text: View specifications
+                      - generic [ref=e329]: →
+                - button "Add to enquiry" [ref=e331] [cursor=pointer]
+              - article [ref=e332]:
+                - link "LK020188006S6041 — view specifications" [ref=e333] [cursor=pointer]:
+                  - /url: /products/wheels/lk020188006s6041
+                  - img "Fenghuai wheel model LK020188006S6041, front view" [ref=e336]
+                  - generic [ref=e337]:
+                    - generic [ref=e338]:
+                      - paragraph [ref=e339]: LK020188006S6041
+                      - paragraph [ref=e340]: Flow Formed
+                    - generic [ref=e341]:
+                      - generic [ref=e342]:
+                        - term [ref=e343]: Diameter
+                        - definition [ref=e344]: 18″
+                      - generic [ref=e345]:
+                        - term [ref=e346]: PCD
+                        - definition [ref=e347]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e348]: "+1"
+                    - paragraph [ref=e349]: 3 recorded configurations · 1 finish
+                    - generic [ref=e350]:
+                      - text: View specifications
+                      - generic [ref=e351]: →
+                - button "Add to enquiry" [ref=e353] [cursor=pointer]
+              - article [ref=e354]:
+                - link "SR28 — view specifications" [ref=e355] [cursor=pointer]:
+                  - /url: /products/wheels/sr28
+                  - img "Fenghuai wheel model SR28, front view" [ref=e358]
+                  - generic [ref=e359]:
+                    - generic [ref=e360]:
+                      - paragraph [ref=e361]: SR28
+                      - paragraph [ref=e362]: Process not specified
+                    - generic [ref=e363]:
+                      - generic [ref=e364]:
+                        - term [ref=e365]: Diameter
+                        - definition [ref=e366]: 17″ | 18″
+                      - generic [ref=e367]:
+                        - term [ref=e368]: PCD
+                        - definition [ref=e369]:
+                          - text: PCD4×100 · 5×100
+                          - generic [ref=e370]: "+2"
+                    - paragraph [ref=e371]: 11 recorded configurations · 8 finishes
+                    - generic [ref=e372]:
+                      - text: View specifications
+                      - generic [ref=e373]: →
+                - button "Add to enquiry" [ref=e375] [cursor=pointer]
+              - article [ref=e376]:
+                - link "XF005 — view specifications" [ref=e377] [cursor=pointer]:
+                  - /url: /products/wheels/xf005
+                  - img "Fenghuai wheel model XF005, front view" [ref=e380]
+                  - generic [ref=e381]:
+                    - generic [ref=e382]:
+                      - paragraph [ref=e383]: XF005
+                      - paragraph [ref=e384]: Flow Formed
+                    - generic [ref=e385]:
+                      - generic [ref=e386]:
+                        - term [ref=e387]: Diameter
+                        - definition [ref=e388]: 17″ | 18″ | 19″
+                      - generic [ref=e389]:
+                        - term [ref=e390]: PCD
+                        - definition [ref=e391]:
+                          - text: PCD5×100 · 5×108
+                          - generic [ref=e392]: "+3"
+                    - paragraph [ref=e393]: 55 recorded configurations · 3 finishes
+                    - generic [ref=e394]:
+                      - text: View specifications
+                      - generic [ref=e395]: →
+                - button "Add to enquiry" [ref=e397] [cursor=pointer]
+              - article [ref=e398]:
+                - link "XF006 — view specifications" [ref=e399] [cursor=pointer]:
+                  - /url: /products/wheels/xf006
+                  - img "Fenghuai wheel model XF006, front view" [ref=e402]
+                  - generic [ref=e403]:
+                    - generic [ref=e404]:
+                      - paragraph [ref=e405]: XF006
+                      - paragraph [ref=e406]: Process not specified
+                    - generic [ref=e407]:
+                      - generic [ref=e408]:
+                        - term [ref=e409]: Diameter
+                        - definition [ref=e410]: 17″ | 18″ | 19″
+                      - generic [ref=e411]:
+                        - term [ref=e412]: PCD
+                        - definition [ref=e413]:
+                          - text: PCD4×100 · 5×100
+                          - generic [ref=e414]: "+4"
+                    - paragraph [ref=e415]: 25 recorded configurations · 3 finishes
+                    - generic [ref=e416]:
+                      - text: View specifications
+                      - generic [ref=e417]: →
+                - button "Add to enquiry" [ref=e419] [cursor=pointer]
+              - article [ref=e420]:
+                - link "ZK327 — view specifications" [ref=e421] [cursor=pointer]:
+                  - /url: /products/wheels/zk327
+                  - img "Fenghuai wheel model ZK327, front view" [ref=e424]
+                  - generic [ref=e425]:
+                    - generic [ref=e426]:
+                      - paragraph [ref=e427]: ZK327
+                      - paragraph [ref=e428]: Flow Formed
+                    - generic [ref=e429]:
+                      - generic [ref=e430]:
+                        - term [ref=e431]: Diameter
+                        - definition [ref=e432]: 17″ | 18″ | 19″
+                      - generic [ref=e433]:
+                        - term [ref=e434]: PCD
+                        - definition [ref=e435]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e436]: "+2"
+                    - paragraph [ref=e437]: 8 recorded configurations · 2 finishes
+                    - generic [ref=e438]:
+                      - text: View specifications
+                      - generic [ref=e439]: →
+                - button "Add to enquiry" [ref=e441] [cursor=pointer]
+              - article [ref=e442]:
+                - link "ZKX051 — view specifications" [ref=e443] [cursor=pointer]:
+                  - /url: /products/wheels/zkx051
+                  - img "Fenghuai wheel model ZKX051, front view" [ref=e446]
+                  - generic [ref=e447]:
+                    - generic [ref=e448]:
+                      - paragraph [ref=e449]: ZKX051
+                      - paragraph [ref=e450]: Flow Formed
+                    - generic [ref=e451]:
+                      - generic [ref=e452]:
+                        - term [ref=e453]: Diameter
+                        - definition [ref=e454]: 18″ | 19″
+                      - generic [ref=e455]:
+                        - term [ref=e456]: PCD
+                        - definition [ref=e457]: PCD5×112
+                    - paragraph [ref=e458]: 2 recorded configurations · 2 finishes
+                    - generic [ref=e459]:
+                      - text: View specifications
+                      - generic [ref=e460]: →
+                - button "Add to enquiry" [ref=e462] [cursor=pointer]
+              - article [ref=e463]:
+                - link "ZKX304 — view specifications" [ref=e464] [cursor=pointer]:
+                  - /url: /products/wheels/zkx304
+                  - img "Fenghuai wheel model ZKX304, front view" [ref=e467]
+                  - generic [ref=e468]:
+                    - generic [ref=e469]:
+                      - paragraph [ref=e470]: ZKX304
+                      - paragraph [ref=e471]: Flow Formed
+                    - generic [ref=e472]:
+                      - generic [ref=e473]:
+                        - term [ref=e474]: Diameter
+                        - definition [ref=e475]: 18″ | 19″
+                      - generic [ref=e476]:
+                        - term [ref=e477]: PCD
+                        - definition [ref=e478]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e479]: "+1"
+                    - paragraph [ref=e480]: 6 recorded configurations · 1 finish
+                    - generic [ref=e481]:
+                      - text: View specifications
+                      - generic [ref=e482]: →
+                - button "Add to enquiry" [ref=e484] [cursor=pointer]
+              - article [ref=e485]:
+                - link "ZKX306 — view specifications" [ref=e486] [cursor=pointer]:
+                  - /url: /products/wheels/zkx306
+                  - img "Fenghuai wheel model ZKX306, front view" [ref=e489]
+                  - generic [ref=e490]:
+                    - generic [ref=e491]:
+                      - paragraph [ref=e492]: ZKX306
+                      - paragraph [ref=e493]: Process not specified
+                    - generic [ref=e494]:
+                      - generic [ref=e495]:
+                        - term [ref=e496]: Diameter
+                        - definition [ref=e497]: 18″ | 19″ | 20″
+                      - generic [ref=e498]:
+                        - term [ref=e499]: PCD
+                        - definition [ref=e500]: PCD5×112 · 5×114.3
+                    - paragraph [ref=e501]: 9 recorded configurations · 1 finish
+                    - generic [ref=e502]:
+                      - text: View specifications
+                      - generic [ref=e503]: →
+                - button "Add to enquiry" [ref=e505] [cursor=pointer]
+              - article [ref=e506]:
+                - link "ZKX320 — view specifications" [ref=e507] [cursor=pointer]:
+                  - /url: /products/wheels/zkx320
+                  - img "Fenghuai wheel model ZKX320, front view" [ref=e510]
+                  - generic [ref=e511]:
+                    - generic [ref=e512]:
+                      - paragraph [ref=e513]: ZKX320
+                      - paragraph [ref=e514]: Flow Formed
+                    - generic [ref=e515]:
+                      - generic [ref=e516]:
+                        - term [ref=e517]: Diameter
+                        - definition [ref=e518]: 18″ | 19″
+                      - generic [ref=e519]:
+                        - term [ref=e520]: PCD
+                        - definition [ref=e521]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e522]: "+1"
+                    - paragraph [ref=e523]: 7 recorded configurations · 2 finishes
+                    - generic [ref=e524]:
+                      - text: View specifications
+                      - generic [ref=e525]: →
+                - button "Add to enquiry" [ref=e527] [cursor=pointer]
+              - article [ref=e528]:
+                - link "ZKX324 — view specifications" [ref=e529] [cursor=pointer]:
+                  - /url: /products/wheels/zkx324
+                  - img "Fenghuai wheel model ZKX324, front view" [ref=e532]
+                  - generic [ref=e533]:
+                    - generic [ref=e534]:
+                      - paragraph [ref=e535]: ZKX324
+                      - paragraph [ref=e536]: Flow Formed
+                    - generic [ref=e537]:
+                      - generic [ref=e538]:
+                        - term [ref=e539]: Diameter
+                        - definition [ref=e540]: 18″ | 19″
+                      - generic [ref=e541]:
+                        - term [ref=e542]: PCD
+                        - definition [ref=e543]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e544]: "+1"
+                    - paragraph [ref=e545]: 4 recorded configurations · 1 finish
+                    - generic [ref=e546]:
+                      - text: View specifications
+                      - generic [ref=e547]: →
+                - button "Add to enquiry" [ref=e549] [cursor=pointer]
+              - article [ref=e550]:
+                - link "ZKX333 — view specifications" [ref=e551] [cursor=pointer]:
+                  - /url: /products/wheels/zkx333
+                  - img "Fenghuai wheel model ZKX333, front view" [ref=e554]
+                  - generic [ref=e555]:
+                    - generic [ref=e556]:
+                      - paragraph [ref=e557]: ZKX333
+                      - paragraph [ref=e558]: Process not specified
+                    - generic [ref=e559]:
+                      - generic [ref=e560]:
+                        - term [ref=e561]: Diameter
+                        - definition [ref=e562]: 18″ | 19″
+                      - generic [ref=e563]:
+                        - term [ref=e564]: PCD
+                        - definition [ref=e565]:
+                          - text: PCD5×108 · 5×112
+                          - generic [ref=e566]: "+1"
+                    - paragraph [ref=e567]: 10 recorded configurations · 4 finishes
+                    - generic [ref=e568]:
+                      - text: View specifications
+                      - generic [ref=e569]: →
+                - button "Add to enquiry" [ref=e571] [cursor=pointer]
+              - article [ref=e572]:
+                - link "ZKX3256 — view specifications" [ref=e573] [cursor=pointer]:
+                  - /url: /products/wheels/zkx3256
+                  - img "Fenghuai wheel model ZKX3256, front view" [ref=e576]
+                  - generic [ref=e577]:
+                    - generic [ref=e578]:
+                      - paragraph [ref=e579]: ZKX3256
+                      - paragraph [ref=e580]: Flow Formed
+                    - generic [ref=e581]:
+                      - generic [ref=e582]:
+                        - term [ref=e583]: Diameter
+                        - definition [ref=e584]: 17″ | 18″
+                      - generic [ref=e585]:
+                        - term [ref=e586]: PCD
+                        - definition [ref=e587]: PCD5×112
+                    - paragraph [ref=e588]: 3 recorded configurations · 1 finish
+                    - generic [ref=e589]:
+                      - text: View specifications
+                      - generic [ref=e590]: →
+                - button "Add to enquiry" [ref=e592] [cursor=pointer]
+              - article [ref=e593]:
+                - link "ZR001 — view specifications" [ref=e594] [cursor=pointer]:
+                  - /url: /products/wheels/zr001
+                  - img "Fenghuai wheel model ZR001, front view" [ref=e597]
+                  - generic [ref=e598]:
+                    - generic [ref=e599]:
+                      - paragraph [ref=e600]: ZR001
+                      - paragraph [ref=e601]: Process not specified
+                    - generic [ref=e602]:
+                      - generic [ref=e603]:
+                        - term [ref=e604]: Diameter
+                        - definition [ref=e605]: 15″ | 18″
+                      - generic [ref=e606]:
+                        - term [ref=e607]: PCD
+                        - definition [ref=e608]:
+                          - text: PCD5×112 · 5×114.3
+                          - generic [ref=e609]: "+2"
+                    - paragraph [ref=e610]: 7 recorded configurations · 4 finishes
+                    - generic [ref=e611]:
+                      - text: View specifications
+                      - generic [ref=e612]: →
+                - button "Add to enquiry" [ref=e614] [cursor=pointer]
+            - region "Need a specification that is not listed?" [ref=e615]:
+              - heading "Need a specification that is not listed?" [level=2] [ref=e616]
+              - paragraph [ref=e617]: Share the vehicle or application, target size, PCD, offset, centre bore, quantity and finish. The team will confirm whether an existing variant or a custom program is the appropriate route.
+              - link "Request a wheel review" [ref=e619] [cursor=pointer]:
+                - /url: /request-a-quote?product_line=wheels&diameter=18&pcd=5x112
+  - contentinfo [ref=e620]:
+    - generic [ref=e621]:
+      - generic [ref=e622]:
+        - generic [ref=e623]:
+          - paragraph [ref=e624]: Start a production conversation
+          - heading "Bring us the brief" [level=2] [ref=e625]
+        - generic [ref=e626]:
+          - paragraph [ref=e627]: Share the drawing, fitment or supply requirement. We will route it to the right product line and reply with the next information we need.
+          - link "Request a Quote" [ref=e628] [cursor=pointer]:
+            - /url: /request-a-quote
+            - text: Request a Quote
+            - img [ref=e629]
+      - generic [ref=e632]:
+        - generic [ref=e633]:
+          - generic [ref=e634]:
+            - generic [ref=e635]: FH
+            - generic [ref=e636]:
+              - paragraph [ref=e637]: Fenghuai
+              - paragraph [ref=e638]: Manufacturing
+          - paragraph [ref=e639]:
+            - text: Aluminum components for four product lines —
+            - text: wheels, EV housings, custom parts, safety tires.
+        - navigation "Footer navigation" [ref=e640]:
+          - generic [ref=e641]:
+            - paragraph [ref=e642]: "01"
+            - heading "Products" [level=2] [ref=e643]
+            - list [ref=e644]:
+              - listitem [ref=e645]:
+                - link "Wheels" [ref=e646] [cursor=pointer]:
+                  - /url: /products/wheels
+              - listitem [ref=e647]:
+                - link "EV Powertrain Housings" [ref=e648] [cursor=pointer]:
+                  - /url: /products/ev-components
+              - listitem [ref=e649]:
+                - link "Custom Aluminum" [ref=e650] [cursor=pointer]:
+                  - /url: /products/custom-aluminum
+              - listitem [ref=e651]:
+                - link "Safety Tires" [ref=e652] [cursor=pointer]:
+                  - /url: /products/safety-tires
+          - generic [ref=e653]:
+            - paragraph [ref=e654]: "02"
+            - heading "Company" [level=2] [ref=e655]
+            - list [ref=e656]:
+              - listitem [ref=e657]:
+                - link "About Us" [ref=e658] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e659]:
+                - link "Capabilities" [ref=e660] [cursor=pointer]:
+                  - /url: /capabilities
+              - listitem [ref=e661]:
+                - link "Custom Development" [ref=e662] [cursor=pointer]:
+                  - /url: /custom-development
+              - listitem [ref=e663]:
+                - link "Dealer Supply" [ref=e664] [cursor=pointer]:
+                  - /url: /dealers
+              - listitem [ref=e665]:
+                - link "Private Label" [ref=e666] [cursor=pointer]:
+                  - /url: /dealers/private-label
+              - listitem [ref=e667]:
+                - link "Insights" [ref=e668] [cursor=pointer]:
+                  - /url: /insights
+          - generic [ref=e669]:
+            - paragraph [ref=e670]: "03"
+            - heading "Support" [level=2] [ref=e671]
+            - list [ref=e672]:
+              - listitem [ref=e673]:
+                - link "Warranty Policy" [ref=e674] [cursor=pointer]:
+                  - /url: /support/warranty
+              - listitem [ref=e675]:
+                - link "Return & Refund" [ref=e676] [cursor=pointer]:
+                  - /url: /support/returns
+              - listitem [ref=e677]:
+                - link "Shipping & Packaging" [ref=e678] [cursor=pointer]:
+                  - /url: /support/shipping
+              - listitem [ref=e679]:
+                - link "Terms of Service" [ref=e680] [cursor=pointer]:
+                  - /url: /support/terms
+              - listitem [ref=e681]:
+                - link "Privacy Policy" [ref=e682] [cursor=pointer]:
+                  - /url: /support/privacy
+          - generic [ref=e683]:
+            - paragraph [ref=e684]: "04"
+            - heading "Enquiries" [level=2] [ref=e685]
+            - list [ref=e686]:
+              - listitem [ref=e687]:
+                - link "Request a Quote" [ref=e688] [cursor=pointer]:
+                  - /url: /request-a-quote
+              - listitem [ref=e689]:
+                - link "Contact Us" [ref=e690] [cursor=pointer]:
+                  - /url: /contact
+              - listitem [ref=e691]:
+                - link "Offset Calculator" [ref=e692] [cursor=pointer]:
+                  - /url: /tools/offset-calculator
+      - generic [ref=e693]:
+        - generic [ref=e694]:
+          - paragraph [ref=e695]: © 2026 Fenghuai. All rights reserved.
+          - generic [ref=e696]:
+            - generic [ref=e697]: Switch language
+            - generic [ref=e698]: EN
+            - combobox "Switch language" [ref=e699] [cursor=pointer]:
+              - option "English" [selected]
+              - option "中文"
+              - option "Español"
+              - option "ไทย"
+        - link "Back to top" [ref=e700] [cursor=pointer]:
+          - /url: "#top"
+          - text: Back to top
+          - img [ref=e702]
+  - link "Request a Quote" [ref=e704] [cursor=pointer]:
+    - /url: /request-a-quote
+  - alert [ref=e705]

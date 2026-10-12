@@ -9,6 +9,7 @@ import {
   EvProcessRoute,
 } from "@/components/ev-components/ev-components-page";
 import { getEvHousingPage } from "@/lib/wordpress/ev-components";
+import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 
 /**
  * `/products/ev-components` — EV01–EV06.
@@ -29,17 +30,21 @@ import { getEvHousingPage } from "@/lib/wordpress/ev-components";
  * moment a claim on it becomes unconfirmed, that claim comes off the page —
  * the rule is not to hide it in metadata.
  */
-export const metadata: Metadata = {
-  // Verbatim from the Page SPEC §7. `absolute` is required: the root layout's
-  // `%s | Fenghuai` template would otherwise append the brand a second time.
-  title: {
-    absolute: "EV Motor & Controller Aluminum Housings | Engineering Assessment | Fenghuai",
-  },
-  description:
-    "Review supplier-supported aluminum housing categories for EV motor and controller projects, then submit drawing, cooling, sealing and volume requirements for engineering assessment.",
-  alternates: { canonical: "/products/ev-components" },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getWordpressPageDocument("ev-components");
+  return {
+    title: {
+      absolute:
+        page?.seoTitle ||
+        "EV Motor & Controller Aluminum Housings | Engineering Assessment | Fenghuai",
+    },
+    description:
+      page?.seoDescription ||
+      "Review supplier-supported aluminum housing categories for EV motor and controller projects, then submit drawing, cooling, sealing and volume requirements for engineering assessment.",
+    alternates: { canonical: "/products/ev-components" },
+    robots: { index: true, follow: true },
+  };
+}
 
 /**
  * `Service` schema — deliberately not `Product`.

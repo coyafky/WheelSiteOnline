@@ -66,6 +66,33 @@ test("字段不完整时 fail-closed，不发布空壳文章", () => {
   assert.equal(normalizeWordpressGuide(invalid), null);
 });
 
+test("Insights 多语言正文必须有已批准翻译，草稿只在预览可见", () => {
+  const localized: WordpressGuideRecord = {
+    ...record,
+    guide: {
+      ...record.guide,
+      translations: {
+        zh: {
+          title: "适配基础",
+          summary: "中文摘要。",
+          category: "适配",
+          reading_time: "5 分钟阅读",
+          answer: "从已核验的车型规格开始。",
+          detail: [{ heading: "快速查看", paragraphs: ["中文段落。"] }],
+          sections: [{ heading: "工作细节", body: ["中文正文。"] }],
+          seo_title: "经销商适配基础",
+          seo_description: "中文适配参考。",
+        },
+      },
+      translation_status: { zh: "approved" },
+    },
+  };
+  const zh = normalizeWordpressGuide(localized, { locale: "zh" });
+  assert.ok(zh);
+  assert.equal(zh.guide.title, "适配基础");
+  assert.equal(normalizeWordpressGuide(localized, { locale: "es" }), null);
+});
+
 test("预览 slug 与缓存失效路径不可形成开放跳转", () => {
   assert.equal(validInsightPreviewSlug("fitment-basics"), "fitment-basics");
   assert.equal(validInsightPreviewSlug("https://evil.example"), null);

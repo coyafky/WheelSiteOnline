@@ -1,0 +1,1076 @@
+{
+  "phase": "before",
+  "base": "http://127.0.0.1:3200",
+  "results": [
+    {
+      "route": "/",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/about",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/capabilities",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/insights",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(48, 42, 36)",
+        "ratio": 14.17
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns/5x114-3",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment/bmw-m",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers/private-label",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/gallery/finishes",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools/offset-calculator",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/privacy",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/returns",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 33,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/shipping",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/terms",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/warranty",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/thank-you",
+      "vp": "320x568",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/about",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/capabilities",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/insights",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(48, 42, 36)",
+        "ratio": 14.17
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns/5x114-3",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment/bmw-m",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers/private-label",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/gallery/finishes",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools/offset-calculator",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/privacy",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/returns",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/shipping",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/terms",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/warranty",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/thank-you",
+      "vp": "390x844",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/about",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/capabilities",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/insights",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(48, 42, 36)",
+        "ratio": 14.17
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns/5x114-3",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment/bmw-m",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers/private-label",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/gallery/finishes",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools/offset-calculator",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/privacy",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/returns",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/shipping",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/terms",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/warranty",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/thank-you",
+      "vp": "768x1024",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/about",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/capabilities",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(41, 38, 33)",
+        "bg": "rgb(251, 250, 247)",
+        "ratio": 14.44
+      }
+    },
+    {
+      "route": "/insights",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(48, 42, 36)",
+        "ratio": 14.17
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/insights/bolt-patterns/5x114-3",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/fitment/bmw-m",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/dealers/private-label",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/gallery/finishes",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/tools/offset-calculator",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/privacy",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/returns",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/shipping",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/terms",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/support/warranty",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    },
+    {
+      "route": "/thank-you",
+      "vp": "1440x900",
+      "status": 200,
+      "overflow": 0,
+      "themeOk": true,
+      "consoleErrors": [],
+      "h1": {
+        "fg": "rgb(255, 255, 255)",
+        "bg": "rgb(41, 38, 33)",
+        "ratio": 15.07
+      }
+    }
+  ],
+  "langResults": [
+    {
+      "url": "/about",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/insights",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/tools/offset-calculator",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/support/privacy",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/zh/about",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/zh/insights",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/zh/tools/offset-calculator",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/zh/support/privacy",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/es/about",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/es/insights",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/es/tools/offset-calculator",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/es/support/privacy",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/th/about",
+      "status": 200,
+      "themeOk": false
+    },
+    {
+      "url": "/th/insights",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/th/tools/offset-calculator",
+      "status": 200,
+      "themeOk": true
+    },
+    {
+      "url": "/th/support/privacy",
+      "status": 200,
+      "themeOk": true
+    }
+  ]
+}

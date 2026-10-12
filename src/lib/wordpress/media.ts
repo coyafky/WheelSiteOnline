@@ -9,14 +9,29 @@ function stripHtml(value: string): string {
   return value.replace(/<[^>]*>/g, "").trim();
 }
 
+/**
+ * Merge the WordPress media library record into a content media asset.
+ *
+ * ⚠️ 优先级：**内容载荷里的文本优先**，媒体库只作兜底。
+ *
+ * 媒体库（`wp/v2/media`）的 `alt_text` / `caption` 是**英文单语**资源，没有按
+ * locale 分版；而 `content` / `content_by_locale[locale]` 里的 `alt` / `caption`
+ * 是**按语言**翻译好的。若让媒体库优先，任何非英文页面都会被强制回英文
+ * —— 正文已翻译、图注仍是英文（实测 `/zh/products/safety-tires` 17 条图注全英文）。
+ *
+ * 英文侧不受影响：`content_by_locale.en` 的图注本就与媒体库逐字一致，
+ * 首选载荷与首选媒体库结果相同。
+ *
+ * 仍从媒体库取 `src`：那是资源的唯一定位来源，与语言无关。
+ */
 function mergeWordpressMedia(media: MediaAsset, wordpressMedia: WpMedia | undefined) {
   if (!wordpressMedia?.source_url) return media;
 
   return {
     ...media,
     src: wordpressMedia.source_url,
-    alt: wordpressMedia.alt_text.trim() || media.alt,
-    caption: stripHtml(wordpressMedia.caption.rendered) || media.caption,
+    alt: media.alt.trim() || wordpressMedia.alt_text.trim(),
+    caption: media.caption.trim() || stripHtml(wordpressMedia.caption.rendered),
   };
 }
 

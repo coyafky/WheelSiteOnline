@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowRight, Check, FileCheck2 } from "lucide-react";
 
+import { PageHero } from "@/components/sections/page-hero";
 import type {
   CapabilityViewport,
   CapabilityViewportItem,
@@ -54,41 +55,47 @@ function BoundaryNote({ text, dark = false }: { text?: string; dark?: boolean })
   );
 }
 
+/**
+ * Capabilities opening band.
+ *
+ * ── Why this is warm-light and not the old dark band ───────────────────────
+ * It used to be `bg-hero text-white` with a 70% `.fh-industrial-grid` over it.
+ * There is no photograph here — measured `imgs=0` — so the dark surface was
+ * carrying no information, only tone.
+ *
+ * It was also a measured accessibility failure. The theme scopes heading ink by
+ * landmark, not by surface (`site-theme.css:11-14`,
+ * `:where(h1…) { color: var(--color-text-primary) }`), so an `<h1>` that does
+ * not declare its own colour on a dark surface resolves to `--fh-ink`
+ * (#292621) on `--fh-hero` (#302a24): **1.06:1**. The heading was unreadable.
+ *
+ * The band now uses the shared warm-light `PageHero`, the same surface as
+ * `/products`, `/products/wheels`, `/custom-development` and
+ * `/request-a-quote` — one identity band across the company/product family,
+ * instead of two pages that happened to be dark.
+ *
+ * Preserved: `<section id="top">`, the `aria-labelledby` contract, the `<h1>`
+ * id, both Next `<Link>` CTAs (crawlable) and the WM01–WM05 index rail.
+ */
 export function CapabilitiesHero({ hero }: { hero: WheelManufacturingCapabilities["hero"] }) {
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-hero text-white" aria-labelledby="capabilities-title">
-      <div className="fh-industrial-grid absolute inset-0 -z-20 opacity-70" aria-hidden="true" />
-      <div className="absolute inset-0 -z-10 bg-linear-to-r from-hero via-hero/95 to-hero/68" aria-hidden="true" />
-      <div className="container-fh grid min-h-[760px] items-end gap-12 pb-18 pt-[132px] lg:grid-cols-[minmax(0,1fr)_300px] lg:pb-24 lg:pt-[168px]">
-        <div data-reveal>
-          <p className="eyebrow">{hero.eyebrow}</p>
-          <h1 id="capabilities-title" className="mt-5 max-w-[940px] font-display text-[clamp(3.2rem,7.8vw,7.2rem)] font-800 uppercase leading-[0.85] tracking-[-0.04em]">
-            {hero.heading}
-          </h1>
-          <p className="mt-8 max-w-[760px] text-base leading-7 text-white/72 sm:text-lg sm:leading-8">{hero.lead}</p>
-          <p className="mt-6 max-w-[700px] border-l-2 border-forge pl-5 text-sm leading-6 text-white/56">{hero.disclosure}</p>
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href={hero.primaryAction.href} className="btn-pill-solid">
-              {hero.primaryAction.label}
-              <ArrowDownRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link href={hero.secondaryAction.href} className="btn-pill-outline text-white">
-              {hero.secondaryAction.label}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="hidden border-l border-white/16 pl-7 lg:block" data-reveal>
-          {["WM01", "WM02", "WM03", "WM04", "WM05"].map((id) => (
-            <div key={id} className="flex items-center justify-between border-b border-white/12 py-4">
-              <span className="font-mono text-[0.66rem] font-bold tracking-[0.18em] text-forge">{id}</span>
-              <span className="size-1.5 rounded-full bg-white/34" aria-hidden="true" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <PageHero
+      titleId="capabilities-title"
+      eyebrow={hero.eyebrow}
+      heading={hero.heading}
+      headingMaxWidth="940px"
+    >
+      <p className="max-w-[760px] text-base leading-7 text-steel sm:text-lg sm:leading-8">{hero.lead}</p>
+      <p className="max-w-[700px] border-l-2 border-forge pl-5 text-sm leading-6 text-ink/68">{hero.disclosure}</p>
+      <Link href={hero.primaryAction.href} className="btn-pill-solid">
+        {hero.primaryAction.label}
+        <ArrowDownRight className="size-4" aria-hidden="true" />
+      </Link>
+      <Link href={hero.secondaryAction.href} className="btn-pill-outline text-ink">
+        {hero.secondaryAction.label}
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </Link>
+    </PageHero>
   );
 }
 
@@ -135,7 +142,7 @@ function RouteCard({ item }: { item: CapabilityViewportItem }) {
         </div>
       )}
       <div className="flex flex-1 flex-col p-6 sm:p-7">
-        {item.note ? <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] text-forge">{item.note}</p> : null}
+        {item.note ? <p className={`font-mono text-[0.62rem] font-bold uppercase tracking-[0.16em] ${item.media ? "text-forge" : "text-forge-bright"}`}>{item.note}</p> : null}
         <h3 className={`mt-3 text-2xl font-semibold tracking-[-0.025em] ${item.media ? "text-ink" : "text-white"}`}>{item.title}</h3>
         <p className={`mt-3 text-sm leading-6 ${item.media ? "text-steel" : "text-white/60"}`}>{item.body}</p>
       </div>
@@ -167,10 +174,10 @@ function EvidenceCard({ item, dark = false }: { item: CapabilityViewportItem; da
         </div>
       ) : null}
       <div className="p-6 sm:p-7">
-        {item.note ? <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.15em] text-forge">{item.note}</p> : null}
+        {item.note ? <p className={`font-mono text-[0.62rem] font-bold uppercase tracking-[0.15em] ${dark ? "text-forge-bright" : "text-forge"}`}>{item.note}</p> : null}
         <h3 className={`text-2xl font-semibold tracking-[-0.025em] ${item.note ? "mt-3" : ""} ${dark ? "text-white" : "text-ink"}`}>{item.title}</h3>
         <p className={`mt-3 text-sm leading-6 ${dark ? "text-white/58" : "text-steel"}`}>{item.body}</p>
-        {item.media ? <p className={`mt-6 border-t pt-4 text-xs leading-5 ${dark ? "border-white/12 text-white/44" : "border-muted text-steel/80"}`}>{item.media.caption}</p> : null}
+        {item.media ? <p className={`mt-6 border-t pt-4 text-xs leading-5 ${dark ? "border-white/12 text-white/60" : "border-muted text-steel"}`}>{item.media.caption}</p> : null}
       </div>
     </article>
   );
@@ -211,7 +218,7 @@ export function DocumentedEvidence({ section }: { section: WheelManufacturingCap
   return (
     <section className="bg-forge-soft py-20 sm:py-24 lg:py-28" aria-labelledby="wm05-title">
       <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-20">
-        <div>
+        <div className="min-w-0">
           <SectionHeading section={section} titleId="wm05-title" />
           <div className="mt-10 border-t border-ink/14" data-reveal-group>
             {section.items.map((item) => (
@@ -225,7 +232,7 @@ export function DocumentedEvidence({ section }: { section: WheelManufacturingCap
             ))}
           </div>
         </div>
-        <aside className="self-start bg-ink p-7 text-white sm:p-9 lg:sticky lg:top-28" data-reveal>
+        <aside className="min-w-0 self-start bg-ink p-7 text-white sm:p-9 lg:sticky lg:top-28" data-reveal>
           <p className="border-l-2 border-forge pl-5 text-sm leading-6 text-white/62">{section.boundaryNote}</p>
           <ul className="mt-8 grid gap-3">
             {section.items.map((item) => (
@@ -236,11 +243,11 @@ export function DocumentedEvidence({ section }: { section: WheelManufacturingCap
             ))}
           </ul>
           <div className="mt-9 flex flex-col gap-3">
-            <Link href={section.primaryAction.href} className="btn-pill-solid w-full">
+            <Link href={section.primaryAction.href} className="btn-pill-solid w-full min-w-0 text-center">
               {section.primaryAction.label}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-            <Link href={section.secondaryAction.href} className="btn-pill-outline w-full text-white">
+            <Link href={section.secondaryAction.href} className="btn-pill-outline w-full min-w-0 text-center text-white">
               {section.secondaryAction.label}
             </Link>
           </div>

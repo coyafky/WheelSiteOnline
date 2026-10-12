@@ -143,11 +143,16 @@ export function PcdSearchGroup({
 
   return (
     <fieldset className="mt-6 border-t border-border pt-5">
-      <legend className="eyebrow !text-ink">
+      <legend className="eyebrow flex items-center gap-2 !text-ink">
+        {/* 品牌色小标记：与 CheckboxGroup 的分组标题保持同一视觉语言 */}
+        <span
+          aria-hidden="true"
+          className="inline-block h-[3px] w-4 shrink-0 rounded-full bg-forge"
+        />
         {legend}
         {selectedCount > 0 ? (
-          <span className="ml-2 font-600 text-forge normal-case tracking-normal">
-            · {selectedCount} selected
+          <span className="rounded-full bg-forge-soft px-2 py-0.5 text-[0.68rem] font-600 normal-case tracking-normal text-forge-deep">
+            {selectedCount} selected
           </span>
         ) : null}
       </legend>

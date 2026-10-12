@@ -1,0 +1,561 @@
+{
+ "base": "http://127.0.0.1:3240",
+ "generatedAt": "2026-10-11T13:30:18.776Z",
+ "results": [
+  {
+   "route": "/",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/about",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/capabilities",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/custom-development",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 61,
+     "targets": [
+      ".max-w-\\[720px\\].px-4[data-reveal=\"true\"] > .eyebrow",
+      ".text-\\[1rem\\]",
+      "li:nth-child(1) > .transition-\\[transform\\,border-color\\,box-shadow\\].hover\\:shadow-\\[0_18px_40px_rgba\\(15\\,23\\,42\\,0\\.08\\)\\].focus-visible\\:border-forge > .p-5.lg\\:p-6.flex-1 > .\\!text-\\[0\\.62rem\\].\\!text-forge.eyebrow"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/products/wheels",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/forged",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/ev-components",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 31,
+     "targets": [
+      "#housing-categories > .container-fh > .max-w-\\[760px\\][data-reveal=\"true\"] > .gap-4.items-center.flex > .font-mono.text-\\[0\\.64rem\\].tracking-\\[0\\.18em\\]",
+      "#housing-categories > .container-fh > .max-w-\\[760px\\][data-reveal=\"true\"] > .gap-4.items-center.flex > .eyebrow",
+      "article:nth-child(1) > .gap-1\\.5.border-forge\\/35.bg-forge-soft"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/products/custom-aluminum",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/safety-tires",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/contact",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/request-a-quote",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 34,
+     "targets": [
+      ".max-w-\\[560px\\]",
+      "div[aria-current=\"step\"] > span:nth-child(2) > .text-\\[0\\.62rem\\].sm\\:text-\\[0\\.68rem\\].sm\\:tracking-\\[0\\.14em\\]",
+      "div[aria-current=\"step\"] > span:nth-child(2) > .font-semibold.sm\\:text-sm.text-xs"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/thank-you",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/insights",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 73,
+     "targets": [
+      ".max-w-\\[720px\\] > .eyebrow",
+      ".max-w-\\[720px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      ".bg-forge.border-forge.px-5"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/insights/bolt-patterns",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/fitment",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/dealers",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 79,
+     "targets": [
+      ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.15fr\\)_minmax\\(0\\,0\\.85fr\\)\\] > div > .eyebrow",
+      ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.15fr\\)_minmax\\(0\\,0\\.85fr\\)\\] > div > .max-w-\\[560px\\].text-\\[1\\.02rem\\].mt-5",
+      ".content-start > .gap-3\\.5.items-start:nth-child(1) > .text-\\[0\\.96rem\\].text-ink\\/80.leading-relaxed"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/dealers/private-label",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 77,
+     "targets": [
+      ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.15fr\\)_minmax\\(0\\,0\\.85fr\\)\\] > div > .eyebrow",
+      ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.15fr\\)_minmax\\(0\\,0\\.85fr\\)\\] > div > .max-w-\\[560px\\].text-\\[1\\.02rem\\].mt-5",
+      ".content-start > .items-start.gap-3\\.5:nth-child(1) > .text-\\[0\\.96rem\\].text-ink\\/80.leading-relaxed"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/gallery/finishes",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/tools",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 29,
+     "targets": [
+      "section[aria-labelledby=\"available-tools-title\"] > .container-fh > .max-w-\\[680px\\] > .eyebrow",
+      ".text-\\[1\\.5rem\\]",
+      ".text-\\[0\\.68rem\\]"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/tools/offset-calculator",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/privacy",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/returns",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/shipping",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 66,
+     "targets": [
+      ".\\!text-forge-deep",
+      "#draft-notice-title",
+      ".max-w-\\[760px\\]"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/support/terms",
+   "vp": "320x568",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 84,
+     "targets": [
+      ".\\!text-forge-deep",
+      "#draft-notice-title",
+      ".max-w-\\[760px\\]"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/support/warranty",
+   "vp": "320x568",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/about",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/capabilities",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 29,
+     "targets": [
+      ".lg\\:grid-cols-\\[minmax\\(0\\,0\\.68fr\\)_minmax\\(0\\,1\\.32fr\\)\\] > div:nth-child(1) > .text-ink\\/68.mt-10.border-l-2",
+      ".border-y > .container-fh > div[data-reveal=\"true\"] > .gap-4.items-center.flex > .text-\\[0\\.64rem\\].tracking-\\[0\\.18em\\].font-mono",
+      ".border-y > .container-fh > div[data-reveal=\"true\"] > .gap-4.items-center.flex > .eyebrow"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/custom-development",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 45,
+     "targets": [
+      ".gap-8.lg\\:grid-cols-\\[minmax\\(0\\,1fr\\)_auto\\].lg\\:items-center > div > .eyebrow",
+      ".max-w-\\[620px\\]",
+      ".lg\\:justify-self-end"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/products/wheels",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/forged",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 24,
+     "targets": [
+      "#wf02 > .container-fh > div[data-reveal=\"true\"] > .gap-4.flex.items-center > .text-\\[0\\.64rem\\].font-mono.font-bold",
+      "#wf02 > .container-fh > div[data-reveal=\"true\"] > .gap-4.flex.items-center > .eyebrow",
+      ".container-fh > div[data-reveal=\"true\"] > .mt-6.max-w-3xl.text-base"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/products/ev-components",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/custom-aluminum",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/products/safety-tires",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 45,
+     "targets": [
+      ".lg\\:sticky > div[data-reveal=\"true\"] > .gap-4.items-center.flex > .text-\\[0\\.64rem\\].tracking-\\[0\\.18em\\].font-mono",
+      ".lg\\:sticky > div[data-reveal=\"true\"] > .gap-4.items-center.flex > .eyebrow",
+      ".lg\\:sticky > div[data-reveal=\"true\"] > .max-w-3xl.text-base.leading-7"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/contact",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/request-a-quote",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/thank-you",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/insights",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 73,
+     "targets": [
+      ".max-w-\\[720px\\] > .eyebrow",
+      ".max-w-\\[720px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      ".bg-forge.border-forge.px-5"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/insights/bolt-patterns",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 53,
+     "targets": [
+      ".max-w-\\[720px\\] > .eyebrow",
+      ".max-w-\\[720px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      "a[href=\"/insights/bolt-patterns/5x112\"] > .gap-4.items-start.justify-between > .text-\\[1\\.9rem\\].leading-none.tracking-\\[0\\.01em\\]"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/fitment",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/dealers",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 60,
+     "targets": [
+      ".max-w-\\[700px\\].px-4[data-reveal=\"true\"] > .eyebrow",
+      ".max-w-\\[700px\\].px-4[data-reveal=\"true\"] > .text-\\[1\\.02rem\\].mt-5.text-steel",
+      ".transition-\\[border-color\\,transform\\].hover\\:-translate-y-0\\.5.hover\\:border-forge:nth-child(1) > .px-7.py-8.bg-ink > .mt-2\\.5.font-600.tracking-\\[0\\.02em\\]"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/dealers/private-label",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 70,
+     "targets": [
+      "section[aria-labelledby=\"branding-title\"] > .container-fh > .max-w-\\[700px\\] > .eyebrow",
+      "section[aria-labelledby=\"branding-title\"] > .container-fh > .max-w-\\[700px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      "article:nth-child(1) > .text-\\[0\\.88rem\\].tracking-\\[0\\.08em\\].font-800"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/gallery/finishes",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 15,
+     "targets": [
+      ".max-w-\\[680px\\] > .eyebrow",
+      ".max-w-\\[680px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      "article:nth-child(1) > .p-6 > .\\!text-steel.eyebrow"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/tools",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 24,
+     "targets": [
+      "section[aria-labelledby=\"planned-tools-title\"] > .container-fh > .max-w-\\[680px\\] > .eyebrow",
+      ".max-w-\\[680px\\] > .text-\\[1\\.02rem\\].mt-5.leading-relaxed",
+      "article:nth-child(1) > .px-3.py-1.rounded-full"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/tools/offset-calculator",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/privacy",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/returns",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 48,
+     "targets": [
+      "#section-1 > div[data-reveal=\"true\"] > .text-\\[clamp\\(1\\.24rem\\,2\\.8vw\\,1\\.7rem\\)\\].leading-\\[1\\.04\\].tracking-\\[-0\\.005em\\]",
+      "#section-1 > div[data-reveal=\"true\"] > .gap-4.mt-5.grid > .max-w-\\[720px\\].text-\\[0\\.98rem\\].leading-relaxed:nth-child(1)",
+      "#section-1 > div[data-reveal=\"true\"] > .gap-4.mt-5.grid > .max-w-\\[720px\\].text-\\[0\\.98rem\\].leading-relaxed:nth-child(2)"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/support/shipping",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "nodes": 51,
+     "targets": [
+      "#section-1 > div[data-reveal=\"true\"] > .text-\\[clamp\\(1\\.24rem\\,2\\.8vw\\,1\\.7rem\\)\\].leading-\\[1\\.04\\].tracking-\\[-0\\.005em\\]",
+      "#section-1 > div[data-reveal=\"true\"] > .gap-4.mt-5.grid > .max-w-\\[720px\\].text-\\[0\\.98rem\\].leading-relaxed:nth-child(1)",
+      "#section-1 > div[data-reveal=\"true\"] > .gap-4.mt-5.grid > .max-w-\\[720px\\].text-\\[0\\.98rem\\].leading-relaxed:nth-child(2)"
+     ]
+    }
+   ]
+  },
+  {
+   "route": "/support/terms",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  },
+  {
+   "route": "/support/warranty",
+   "vp": "1440x900",
+   "status": 200,
+   "violations": []
+  }
+ ]
+}

@@ -3,11 +3,14 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { productLines } from "@/content/product-lines";
 import type { HomepageContent } from "@/content/types";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
 
 export function ProductShowcase({
   copy,
+  locale,
 }: {
   copy: HomepageContent["productLines"];
+  locale: Locale;
 }) {
 
   return (
@@ -40,9 +43,14 @@ export function ProductShowcase({
           {productLines.map((product, index) => (
             <li key={product.slug}>
               <Link
-                href={product.href}
+                href={localizedPath(product.href, locale)}
                 aria-label={copy.actionLabels[product.slug] ?? `Explore ${product.name}`}
-                className="group relative flex h-full min-h-[390px] flex-col justify-end overflow-hidden rounded-xl border border-border bg-hero p-6 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-forge hover:shadow-[0_22px_50px_rgb(11_15_22/0.16)] focus-visible:border-forge focus-visible:outline-none lg:min-h-[440px] lg:p-8"
+                /* `focus-visible:outline-none` previously removed the outline and
+                   substituted only a border-colour change, which is not a
+                   detectable focus indicator (WCAG 2.4.7 — measured:
+                   outline-style `none` on these four home cards). Keep the
+                   border tint AND add a real ring. */
+                className="group relative flex h-full min-h-[390px] flex-col justify-end overflow-hidden rounded-xl border border-border bg-hero p-6 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-forge hover:shadow-[0_22px_50px_rgb(11_15_22/0.16)] focus-visible:border-forge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forge focus-visible:ring-offset-2 focus-visible:ring-offset-white lg:min-h-[440px] lg:p-8"
               >
                 {product.hasRender ? (
                   <Image

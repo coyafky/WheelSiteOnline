@@ -12,6 +12,7 @@ import {
 } from "@/components/custom-aluminum/custom-aluminum-page";
 import { customAluminumPage } from "@/content/custom-aluminum";
 import { getCustomAluminumPage } from "@/lib/wordpress/custom-aluminum";
+import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 
 /**
  * `/products/custom-aluminum` — CA01–CA07.
@@ -32,24 +33,28 @@ import { getCustomAluminumPage } from "@/lib/wordpress/custom-aluminum";
  */
 const PUBLISHING_GATE_OPEN = customAluminumPage.boundary.declinedConfirmed;
 
-export const metadata: Metadata = {
-  // Verbatim from the Page SPEC §8. `absolute` is required: the root layout's
-  // `%s | Fenghuai` template would otherwise append the brand a second time.
-  title: {
-    absolute: "Custom Aluminum Components | Drawing & Sample Assessment | Fenghuai",
-  },
-  description:
-    "Start a drawing-led aluminum component assessment with 2D drawings, 3D data or a physical sample, covering DFM, tooling, first article and supplier-supported production.",
-  ...(PUBLISHING_GATE_OPEN
-    ? { alternates: { canonical: "/products/custom-aluminum" } }
-    : { robots: { index: false, follow: true } }),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getWordpressPageDocument("custom-aluminum");
+  return {
+    title: {
+      absolute:
+        page?.seoTitle ||
+        "Custom Aluminum Components | Drawing & Sample Assessment | Fenghuai",
+    },
+    description:
+      page?.seoDescription ||
+      "Start a drawing-led aluminum component assessment with 2D drawings, 3D data or a physical sample, covering DFM, tooling, first article and supplier-supported production.",
+    ...(PUBLISHING_GATE_OPEN
+      ? { alternates: { canonical: "/products/custom-aluminum" } }
+      : { robots: { index: false, follow: true } }),
+  };
+}
 
 export default async function CustomAluminumPage() {
   const content = await getCustomAluminumPage();
 
   return (
-    <main>
+    <div>
       {/* CA01 — photo-free engineering-input hero, plus the EV housing fork */}
       <CustomAluminumHero content={content} />
       {/* CA02 — four application groups, each labelled "Assessment scope" */}
@@ -65,6 +70,6 @@ export default async function CustomAluminumPage() {
       {/* CA07 — the enquiry inputs and the unified inquiry route */}
       <AssessmentInquiry section={content.inquiry} />
       <CustomAluminumClosing closing={content.closing} />
-    </main>
+    </div>
   );
 }

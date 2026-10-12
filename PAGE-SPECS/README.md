@@ -4,9 +4,14 @@
 
 ## 现行正本
 
-[2026-10-04 英文首发逐页逐视口施工规格](2026-10-04-launch-viewport-spec.md) 是当前唯一执行依据，覆盖四条产品线、B/C 询盘、桌面与移动视口、内容模块、素材来源和验收标准。
+[2026-10-04 英文首发逐页逐视口施工规格](2026-10-04-launch-viewport-spec.md) 是内容任务与发布边界的现行正本，覆盖四条产品线、B/C 询盘、桌面与移动视口。跨页面视觉与通用控件另见 [Astryx Neutral 暖白界面规格](astryx-neutral-global.md)；两者分别管内容与呈现，不互相取代。
+
+已落地的视觉用法与组件边界见 [现行设计正本](../DESIGN.md)。历史黑灰橙实测已归档，不再作为新页面目标；全站浮动 Request Quote 已按 DEC-094 移除，导航、页脚及产品页询盘路径继续保留。
+P0–P5 的本地结果与商用阻断项见 [最终回归与商用 SEO 交接](../outputs/reports/33-astryx-p5-final-commercial-seo-handoff-2026-10-11.md)；界面验收不替代上线审批。
 
 已拆出的现行子规格：
+
+- [Astryx Neutral 全站页面族映射](astryx-neutral-page-families.md)：各路由族的控件选用、保留的业务组件、交互与验收证据。
 
 - [首页](homepage.md)：2N 首页结构取舍、四条产品线、六项制造能力、制造关系、统一询盘和现有组件替换。
 - [About 页：公司角色分工模块](about-company-role.md)：A02 四项角色与集团纵向一体化链条、同一 ownership group 公开口径、六类禁发内容和证据边界；代码已实现。

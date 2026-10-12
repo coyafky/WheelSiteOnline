@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, ChevronDown, Menu, Phone, X } from "lucide-react";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { primaryNav, site } from "@/content/site";
-import { useScrolled } from "@/hooks/use-scrolled";
 import { createT } from "@/lib/i18n/use-t";
 import { localizedPath, stripLocalePrefix, type Locale } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
@@ -45,7 +44,6 @@ function navLabel(
 
 function HeaderBar({ locale }: { locale: Locale }) {
   const t = createT(locale);
-  const scrolled = useScrolled(16);
   const pathname = stripLocalePrefix(usePathname());
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -69,14 +67,15 @@ function HeaderBar({ locale }: { locale: Locale }) {
   }, []);
 
   const hrefFor = (href: string) => localizedPath(href, locale);
-  const solid = scrolled || open;
+  // The warm-light system uses the same readable header over every page hero.
+  const solid = true;
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,color] duration-200 ease-out",
         solid
-          ? "border-b border-border bg-white/96 text-ink shadow-[0_12px_32px_rgba(11,15,22,0.08)] backdrop-blur-xl"
+          ? "border-b border-border bg-background/96 text-ink shadow-[0_8px_24px_rgba(41,38,33,0.06)] backdrop-blur-xl"
           : "border-b border-white/10 bg-transparent text-white",
       )}
     >
@@ -125,9 +124,22 @@ function HeaderBar({ locale }: { locale: Locale }) {
                   type="button"
                   aria-expanded={expanded === item.label}
                   aria-controls={`submenu-${item.label}`}
-                  onClick={() =>
-                    setExpanded(expanded === item.label ? null : item.label)
-                  }
+                  onClick={(event) => {
+                    setExpanded((current) => {
+                      // A pointer enters the wrapper before click, so hover has
+                      // already opened this menu. A pointer click must keep it
+                      // open instead of immediately toggling it closed. Keyboard
+                      // activation has detail=0 and retains true toggle behavior.
+                      if (event.detail > 0) return item.label;
+                      return current === item.label ? null : item.label;
+                    });
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      setExpanded(null);
+                      event.currentTarget.focus();
+                    }
+                  }}
                   className={cn(
                     "flex items-center gap-1 whitespace-nowrap border-b-2 border-transparent px-2.5 py-3 font-display text-[0.76rem] font-700 uppercase tracking-[0.08em] transition-colors xl:px-3",
                     solid ? "text-ink/80 hover:text-forge" : "text-white/80 hover:text-white",
@@ -230,7 +242,9 @@ function HeaderBar({ locale }: { locale: Locale }) {
                     aria-label={`Toggle ${item.label} submenu`}
                     aria-expanded={expanded === item.label}
                     onClick={() =>
-                      setExpanded(expanded === item.label ? null : item.label)
+                      setExpanded((current) =>
+                        current === item.label ? null : item.label,
+                      )
                     }
                     className="p-2 text-steel"
                   >

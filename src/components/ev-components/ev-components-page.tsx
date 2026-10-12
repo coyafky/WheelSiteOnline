@@ -151,9 +151,13 @@ export function EvHousingHero({ content }: { content: EvHousingPageContent }) {
         {/* Copy first in source order: on mobile the image follows the text. */}
         <div data-reveal>
           <p className="eyebrow">{hero.eyebrow}</p>
+          {/* The colour is stated on the <h1> itself, not inherited from the
+              section. The generated theme sets heading ink by landmark
+              (`site-theme.css:11-14`), so an inherited `text-white` never
+              reached this heading: it measured #292621 on #292621 — 1.00:1. */}
           <h1
             id="ev01-title"
-            className="mt-5 max-w-[680px] font-display text-[clamp(2.1rem,6vw,4.4rem)] font-800 uppercase leading-[0.9] tracking-[-0.03em]"
+            className="mt-5 max-w-[680px] font-display text-[clamp(2.1rem,6vw,4.4rem)] font-800 uppercase leading-[0.9] tracking-[-0.03em] text-white"
           >
             {hero.heading}
           </h1>
@@ -539,7 +543,6 @@ export function EvAssessmentInquiry({
   return (
     <section
       id={section.anchor}
-      data-floating-quote-hide
       aria-labelledby="ev06-title"
       className="relative isolate scroll-mt-[120px] overflow-hidden bg-ink py-20 text-white lg:py-28"
     >

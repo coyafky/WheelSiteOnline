@@ -1,0 +1,40 @@
+
+### TabList+Tab(button)
+OK. len=2394
+tags: {"<nav":1,"<div":1,"<button":2,"<span":10,"<template":1}
+body: <nav aria-label="Tabs" data-astryx-edge-comp="" class="astryx-tab-list md x78zum5 x1qjc9v5 x1lsbc85 x193iq5w xeuugli x1n2onr6" data-size="md"><div class="astryx-tab-strip x78zum5 x1qjc9v5 x14kbac9 x1iyjqo2 xs83m0k xeuugli xqcrz7y xw2csxc x10wlt62 x7p5m3t x1xif8ns x1rohswg xkcv6ua xg83hb1 x78b515 x158n88w xlr2r7p xmqyaqf xwhchk8 xlgak1e x1kpkw9v xi5l473 xw4ya9i x157bb6t x80gvsz x12w9bfk xlr8y92"><button type="button" data-astryx-pressable="" data-astryx-edg
+
+### TabList+Tab(href)
+OK. len=1467
+tags: {"<nav":1,"<div":1,"<a":1,"<span":5,"<template":1}
+body: <nav aria-label="Tabs" data-astryx-edge-comp="" class="astryx-tab-list md x78zum5 x1qjc9v5 x1lsbc85 x193iq5w xeuugli x1n2onr6" data-size="md"><div class="astryx-tab-strip x78zum5 x1qjc9v5 x14kbac9 x1iyjqo2 xs83m0k xeuugli xqcrz7y xw2csxc x10wlt62 x7p5m3t x1xif8ns x1rohswg xkcv6ua xg83hb1 x78b515 x158n88w xlr2r7p xmqyaqf xwhchk8 xlgak1e x1kpkw9v xi5l473 xw4ya9i x157bb6t x80gvsz x12w9bfk xlr8y92"><a data-astryx-pressable="" data-astryx-edge-comp="" data-tab-
+
+### Collapsible default(closed)
+OK. len=1173
+tags: {"<div":2,"<button":1,"<span":3,"<svg":1,"<path":1,"<p":1}
+body: <div class="astryx-collapsible xh8yej3"><button type="button" aria-expanded="true" aria-controls="_R_0_" data-astryx-pressable="" class="astryx-collapsible-trigger end open x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x1wfwxd8 x1vwwbsn x9f619 x78zum5 x6s0dn4 x1qughib xh8yej3 x1ypdohk x16khyan x9ynric x18juvz8 x2mo6ok x1tgivj0 x1yc453h xt970qd x11z29ks xli5ek3 x14e4jsf x8s9nux xwkbtvz xziyay6 xz2mauf x1l7afqf x1anq1lc x1s5nr2v x13ugjdw xl8sb5e x7ngsy6 xubczr
+
+### Collapsible defaultIsOpen
+OK. len=1173
+tags: {"<div":2,"<button":1,"<span":3,"<svg":1,"<path":1,"<p":1}
+body: <div class="astryx-collapsible xh8yej3"><button type="button" aria-expanded="true" aria-controls="_R_0_" data-astryx-pressable="" class="astryx-collapsible-trigger end open x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x1wfwxd8 x1vwwbsn x9f619 x78zum5 x6s0dn4 x1qughib xh8yej3 x1ypdohk x16khyan x9ynric x18juvz8 x2mo6ok x1tgivj0 x1yc453h xt970qd x11z29ks xli5ek3 x14e4jsf x8s9nux xwkbtvz xziyay6 xz2mauf x1l7afqf x1anq1lc x1s5nr2v x13ugjdw xl8sb5e x7ngsy6 xubczr
+
+### TopNav
+OK. len=232
+tags: {"<nav":1,"<div":2,"<a":1}
+body: <nav role="navigation" aria-label="Main" class="astryx-top-nav x6s0dn4 xh8yej3 xlsj2fj x9f619 x78zum5"><div class="x78zum5 x6s0dn4 x18g69wz x845mor xeuugli"><div class="x78zum5 x6s0dn4 xzye2dw"><a href="/">Home</a></div></div></nav>
+
+### MobileNav closed
+OK. len=2328
+tags: {"<dialog":1,"<div":3,"<button":1,"<span":4,"<svg":1,"<path":1,"<a":1}
+body: <dialog id="_R_0_" class="astryx-mobile-nav end x9ynric xjm74w1 xxovm9e xw6l6zx x1j61x8r x1yc453h x7ssn7h xzugeeo x6mezaz x1i21sxh xp3md9m x19pm5ym xeaf4i8 x1lldw8n x1h4wwuj xxydokm xixxii4 x1ghz6dp x1717udv xc342km xng3xce x1x1rfll x7ab17h x10a8y8t xn9wirt xtdtrs8 xjbqb8w x7giv3 xish69e x1j4r261 x1a2a7pz x1s85apg xrgi2yo x80gvsz xd00j3c xrhngw9 xjsfl84 x1047aw6 xax9j7h xdt8ak2 x1rs4lu4 x1vii845 xojybgt x1qfll2g xyvxpqs x1f17rg1 xnixb3f x1abwkk1 xph5o2a x1
+
+### Button as=NextLink href
+OK. len=892
+tags: {"<a":1,"<span":3}
+body: <a href="/products/wheels" data-next-link="1" class="astryx-button secondary md none x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x16bblx1 x1wfwxd8 x13aywxo x1n2onr6 x3nfvp2 x6s0dn4 xl56j7k x1txdalj xce4md1 xrrkdod xc342km xng3xce x1jxw6zd xjb2p0i xcr08ib x1kq96og x1e4wzip xuxw1ft xeuugli x193iq5w x1ypdohk x16khyan xrafxwg xuedmi6 x12w9bfk xlr8y92 x1ueg155 x11z29ks xli5ek3 x14e4jsf x8s9nux xwkbtvz xziyay6 xz2mauf x1l7afqf x7uyq82 x3f84ok x7ngsy6 xubczrd xmv
+
+### ClickableCard href
+OK. len=882
+tags: {"<div":1,"<a":1,"<span":1}
+body: <div class="astryx-card default none x2kkz0m x153u1i6 xeuugli x7giv3 x1p8z4y0 x1de1mus xw28qpl x9f619 x1vii845 xojybgt xjmlhfd x1ihxwbr x1rqz8me x1omyuck x14rzhog xjej9fs x4poyjn x1u1kw4e x1litavf x1y0btm7 x1n2onr6 x1ypdohk x16khyan x1hl2dhg x1heor9g x14i3s5s xs19ii7 x12frdag x1nex4ik xbv1mwh xshfolx xuedmi6 xlr8y92 x1s9pv7w xb8awce x1a5qima x1sad4of x1s2lk0z xmfmiv1 x1hn5ov8 x1wkyqe6 xbb2ue6 x1wphrdb x1s928wv x1j6awrg xarstr8 x2q1x1w x1ywzrc5 x18w5vxb x1d

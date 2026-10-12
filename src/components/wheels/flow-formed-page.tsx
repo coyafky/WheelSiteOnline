@@ -16,6 +16,7 @@ import type {
   FlowFormedWheelsPage,
   MediaAsset,
 } from "@/content/types";
+import { SiteBreadcrumbs, type SiteBreadcrumbItem } from "@/components/site-breadcrumbs";
 
 import { WheelCatalogueCardView } from "./wheel-catalogue-card";
 import { WheelCataloguePagination } from "./wheel-catalogue-pagination";
@@ -136,7 +137,7 @@ function SectionHeading({
           {id.toUpperCase()}
         </span>
         <span className={`h-px w-10 ${dark ? "bg-white/18" : "bg-ink/16"}`} aria-hidden="true" />
-        <p className={`eyebrow ${dark ? "!text-forge" : ""}`}>{eyebrow}</p>
+        <p className={`eyebrow ${dark ? "!text-forge-bright" : ""}`}>{eyebrow}</p>
       </div>
       <h2
         id={`${id.toLowerCase()}-title`}
@@ -272,10 +273,12 @@ function NoApprovedModel() {
 export function FlowFormedHero({
   content,
   featured,
+  breadcrumbItems,
 }: {
   content: FlowFormedWheelsPage;
   /** First approved flow-formed model, or `null` when none is published. */
   featured: WheelCatalogueCard | null;
+  breadcrumbItems?: SiteBreadcrumbItem[];
 }) {
   const { hero } = content;
 
@@ -300,34 +303,20 @@ export function FlowFormedHero({
           pill past the viewport on a narrow phone. */}
       <div className="container-fh grid grid-cols-1 gap-10 pb-16 pt-[124px] lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-start lg:gap-16 lg:pb-20 lg:pt-[156px]">
         <div data-reveal>
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            {hero.breadcrumb.map((crumb, index) => {
-              const last = index === hero.breadcrumb.length - 1;
-              return (
-                <Fragment key={crumb.label}>
-                  {index > 0 ? (
-                    <span aria-hidden="true" className="px-2">
-                      /
-                    </span>
-                  ) : null}
-                  {last ? (
-                    <span className="!text-forge" aria-current="page">
-                      {crumb.label}
-                    </span>
-                  ) : (
-                    <Link href={crumb.href} className="transition-colors hover:!text-forge">
-                      {crumb.label}
-                    </Link>
-                  )}
-                </Fragment>
-              );
-            })}
-          </nav>
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={breadcrumbItems ?? hero.breadcrumb.map((crumb) => ({ label: crumb.label, href: crumb.href }))}
+          />
 
           <p className="eyebrow mt-6">{hero.eyebrow}</p>
+          {/* The colour is stated on the <h1> itself, not inherited from the
+              section: the generated theme sets heading ink by landmark
+              (`site-theme.css:11-14`), so an inherited `text-white` never
+              reached this heading (measured #292621 on #292621 — 1.00:1). */}
           <h1
             id="wff01-title"
-            className="mt-4 max-w-[680px] font-display text-[clamp(1.95rem,5.4vw,3.6rem)] font-800 uppercase leading-[0.92] tracking-[-0.035em]"
+            className="mt-4 max-w-[680px] font-display text-[clamp(1.95rem,5.4vw,3.6rem)] font-800 uppercase leading-[0.92] tracking-[-0.035em] text-white"
           >
             {hero.heading}
           </h1>

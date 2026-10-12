@@ -23,6 +23,9 @@ import {
   WheelCatalogueEnd,
 } from "@/components/wheels/wheel-catalogue-empty";
 import { automotiveScenes } from "@/content/automotive-scenes";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 /**
  * `/products/wheels` — 轮毂目录（PAGE-SPECS/wheel-catalog.md W01–W03）。
@@ -109,6 +112,7 @@ export async function generateMetadata({
  * ------------------------------------------------------------------------- */
 
 export default async function WheelCataloguePage({ searchParams }: CataloguePageProps) {
+  const locale = await getLocale();
   const params = await searchParams;
   const query = parseCatalogueSearchParams(params);
   const view = await getWheelCataloguePage(query);
@@ -129,46 +133,45 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
         id="top"
         aria-labelledby="wheel-catalogue-title"
         data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        className="relative isolate overflow-hidden border-b border-border bg-background"
       >
         <AutomotiveBackdrop scene={automotiveScenes.wheelCatalogue} priority />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink via-ink/90 to-ink/35"
+          className="pointer-events-none absolute inset-0 -z-10 bg-background/90 lg:bg-linear-to-r lg:from-background lg:via-background/95 lg:to-background/50"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_24%_0%,rgba(194,101,10,0.22)_0%,rgba(11,15,22,0)_58%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-forge-soft/15"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.15] [background-image:repeating-linear-gradient(115deg,var(--fh-muted)_0_1px,transparent_1px_64px)]"
           aria-hidden="true"
         />
 
         <div className="container-fh pb-9 pt-[100px] lg:pb-11 lg:pt-[112px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/products" className="transition-colors hover:!text-forge">
-              Products
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">Wheels</span>
-          </nav>
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="light"
+            items={[
+              { label: "Products", href: localizedPath("/products", locale) },
+              { label: "Wheels" },
+            ]}
+          />
 
           <p className="eyebrow mt-5 !text-forge">WHEEL CATALOGUE</p>
           <h1
             id="wheel-catalogue-title"
-            className="mt-3 max-w-[860px] font-display text-[clamp(1.85rem,4.4vw,2.6rem)] font-800 uppercase leading-[0.96] tracking-[-0.02em] text-white"
+            className="mt-3 max-w-[860px] font-display text-[clamp(1.85rem,4.4vw,2.6rem)] font-800 uppercase leading-[0.96] tracking-[-0.02em] text-ink"
           >
             Find a wheel by verified production specification
           </h1>
-          <p className="mt-4 max-w-[760px] text-[0.98rem] leading-relaxed text-white/75">
+          <p className="mt-4 max-w-[760px] text-[0.98rem] leading-relaxed text-steel">
             Browse published wheel models by diameter, width, PCD and recorded
             manufacturing process. Every result has an approved image, and every
             selectable specification comes from an actual recorded variant.
           </p>
-          <p className="mt-3 max-w-[760px] text-[0.82rem] leading-relaxed text-white/55">
+          <p className="mt-3 max-w-[760px] text-[0.82rem] leading-relaxed text-steel/85">
             A catalogue match is a starting point for quotation. Vehicle fitment, brake
             clearance, load requirements and destination-market documents are confirmed
             before an order is approved.
@@ -177,7 +180,7 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
           <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Link
               href="/products/wheels/flow-formed"
-              className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-white"
+              className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-ink"
             >
               Browse recorded flow-formed wheels
               <ArrowRight
@@ -187,7 +190,7 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
             </Link>
             <Link
               href="/products/wheels/forged"
-              className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-white"
+              className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-ink"
             >
               Discuss a custom forged wheel
               <ArrowRight
@@ -202,7 +205,6 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
       {/* ═══ W02 · 结果区 / W03 · 空状态（§4、§9、§10）══════════════════ */}
       <section
         aria-label="Wheel catalogue results"
-        data-floating-quote-hide
         className="border-b border-border bg-white py-8 lg:py-14"
       >
         <div className="container-fh-wide">

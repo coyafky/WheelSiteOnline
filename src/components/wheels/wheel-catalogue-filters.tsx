@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Field } from "@astryxdesign/core/Field";
+import { Theme } from "@astryxdesign/core/theme";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
 
 import { cn } from "@/lib/utils";
 import { PcdSearchGroup } from "./pcd-search-group";
@@ -83,6 +87,25 @@ type CatalogueFilterProps = {
   /** 结果 URL 的基础路径。默认轮毂总目录。 */
   basePath?: string;
 };
+
+/**
+ * 筛选操作说明使用 Astryx 信息 Banner：它是持续性的状态说明，不是错误告警。
+ * Theme 只包围组件表面，避免 Neutral 令牌改写目录自己的布局和品牌颜色。
+ */
+function FilterInstructionBanner() {
+  return (
+    <Theme theme={neutralTheme} mode="light">
+      <Banner
+        status="info"
+        title="How filters combine"
+        description="Select one or more values in each group. Values in the same group add together."
+        container="card"
+        collapsible={false}
+        className="mt-3"
+      />
+    </Theme>
+  );
+}
 
 /* ---------------------------------------------------------------------------
  * URL 快照
@@ -179,13 +202,18 @@ function CheckboxGroup({
 
   return (
     <fieldset className="mt-6 border-t border-border pt-5">
-      <legend className="eyebrow !text-ink">
+      <legend className="eyebrow flex items-center gap-2 !text-ink">
+        {/* 品牌色小标记：给分组标题一个视觉锚点，替代原来裸露的分隔线观感 */}
+        <span
+          aria-hidden="true"
+          className="inline-block h-[3px] w-4 shrink-0 rounded-full bg-forge"
+        />
         {legend}
         {/* 「已选 N」既是反馈也是隐含提示 —— 能同时选中两个，就说明这是多选。
             也让用户在勾选项滚出视野后仍知道当前选了什么。 */}
         {selectedCount > 0 ? (
-          <span className="ml-2 font-600 text-forge normal-case tracking-normal">
-            · {selectedCount} selected
+          <span className="rounded-full bg-forge-soft px-2 py-0.5 text-[0.68rem] font-600 normal-case tracking-normal text-forge-deep">
+            {selectedCount} selected
           </span>
         ) : null}
       </legend>
@@ -204,16 +232,16 @@ function CheckboxGroup({
 
       {rare.length > 0 ? (
         /* 原生 details —— 无 JS 可展开，与移动抽屉同一套机制。 */
-        <details className="group mt-2">
-          <summary className="flex min-h-8 cursor-pointer list-none items-center gap-1.5 text-[0.75rem] font-600 text-forge marker:content-none transition-colors hover:text-forge-deep">
+        <details className="group/rare mt-2">
+          <summary className="flex min-h-8 cursor-pointer list-none items-center gap-1.5 rounded-md px-1.5 text-[0.75rem] font-600 text-forge marker:content-none transition-colors duration-150 hover:bg-forge-soft hover:text-forge-deep">
             <span
               aria-hidden="true"
-              className="flex size-4 shrink-0 items-center justify-center rounded-full border border-forge/50 font-display text-[0.8rem] font-700 leading-none transition-transform duration-200 group-open:rotate-45"
+              className="flex size-4 shrink-0 items-center justify-center rounded-full bg-forge-soft font-display text-[0.75rem] font-700 leading-none text-forge transition-transform duration-200 group-open/rare:rotate-90"
             >
-              +
+              ›
             </span>
-            <span className="group-open:hidden">Show {rare.length} more</span>
-            <span className="hidden group-open:inline">Show fewer</span>
+            <span className="group-open/rare:hidden">Show {rare.length} more</span>
+            <span className="hidden group-open/rare:inline">Show fewer</span>
           </summary>
           <div
             className={cn(
@@ -274,8 +302,8 @@ function FilterFields({
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-          <button type="submit" className="inline-flex min-h-11 items-center bg-ink px-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white transition-colors hover:bg-forge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
-            View {total} {total === 1 ? "model" : "models"}
+          <button type="submit" className="inline-flex min-h-11 items-center rounded-md bg-ink px-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white shadow-sm transition-all duration-150 ease-out hover:bg-forge hover:shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
+            Apply filters
           </button>
           <Link
             href={basePath}
@@ -285,39 +313,25 @@ function FilterFields({
           </Link>
         </div>
 
-        {/*
-          ══ 「多选」必须明说（2026-10-06 用户要求）══════════════════════════════
-
-          轮毂筛选本质是多选（同类 OR、跨轴 AND），但用户对筛选栏的默认预期是
-          单选。不提示的话，最常见的两种误解是：
-            · 「点 18 寸会不会把 19 寸排除掉？」
-            · 「再点一个是「换」还是「加」？」
-          两种都会让人不敢多点，或者点完看到一堆结果不知所以。
-
-          写成一个**左边框注记**而不是一行灰色小字：小字在这个位置会被当成
-          免责声明直接跳过，而它其实是操作说明。左边框 + 稍深一点的墨色，
-          既能被看到，又不占一整块盒子的高度。
-        */}
-        <p className="mt-3 text-[0.72rem] leading-relaxed text-steel">
-          Select one or more values in each group. Values in the same group add together.
-        </p>
+        <FilterInstructionBanner />
       </div>
 
       {/* 筛选区：独立滚动，不与上面的主行动抢位置 */}
       <div className="mt-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:border-t lg:border-border lg:pt-1">
       <div className="mt-5">
-        <label htmlFor={`${idPrefix}-q`} className="eyebrow !text-ink">
-          Model search
-        </label>
-        <input
-          id={`${idPrefix}-q`}
-          type="search"
-          name="q"
-          defaultValue={query.q ?? ""}
-          placeholder="e.g. HP12"
-          autoComplete="off"
-          className="mt-3 w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
-        />
+        <Theme theme={neutralTheme} mode="light">
+          <Field label="Model search" inputID={`${idPrefix}-q`}>
+            <input
+              id={`${idPrefix}-q`}
+              type="search"
+              name="q"
+              defaultValue={query.q ?? ""}
+              placeholder="e.g. HP12"
+              autoComplete="off"
+              className="w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
+            />
+          </Field>
+        </Theme>
       </div>
 
       {/*
@@ -440,18 +454,22 @@ export function WheelCatalogueFilters(props: CatalogueFilterProps) {
       {/* 移动：原生 details 抽屉，无 JS 可展开（§10 末条） */}
       <details
         data-catalogue-mobile-filter
-        className="group border border-border bg-white lg:hidden"
+        className="group/mobile-filter border border-border bg-white lg:hidden"
       >
-        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 marker:content-none">
-          <span className="font-display text-[0.78rem] font-700 uppercase tracking-[0.14em] text-ink">
-            Filters
+        <summary
+          role="button"
+          aria-label={appliedCount > 0 ? `Filter wheels, ${appliedCount} applied` : "Filter wheels, all models"}
+          className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 bg-ink px-4 py-3 text-white marker:content-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge"
+        >
+          <span className="font-display text-[0.78rem] font-700 uppercase tracking-[0.14em] text-white">
+            Filter wheels
           </span>
-          <span className="text-[0.75rem] text-muted-foreground">
+          <span className="text-[0.75rem] text-white/70">
             {appliedCount > 0 ? `${appliedCount} applied` : "All models"}
           </span>
           <span
             aria-hidden="true"
-            className="flex size-5 shrink-0 items-center justify-center font-display text-[1rem] font-700 leading-none text-forge transition-transform duration-200 ease-out group-open:rotate-45"
+            className="flex size-5 shrink-0 items-center justify-center font-display text-[1rem] font-700 leading-none text-forge transition-transform duration-200 ease-out group-open/mobile-filter:rotate-45"
           >
             +
           </span>
@@ -462,6 +480,15 @@ export function WheelCatalogueFilters(props: CatalogueFilterProps) {
               <input key={name} type="hidden" name={name} value={value} />
             ))}
             <FilterFields {...props} idPrefix="mobile" />
+            <div className="mt-6 border-t border-border pt-5">
+              <button
+                data-mobile-filter-apply="bottom"
+                type="submit"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-md bg-ink px-5 font-display text-[0.75rem] font-700 uppercase tracking-[0.12em] text-white shadow-sm transition-all duration-150 ease-out hover:bg-forge hover:shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge"
+              >
+                Apply filters
+              </button>
+            </div>
           </form>
         </div>
       </details>
@@ -633,7 +660,7 @@ export function WheelCatalogueSort({
     <form
       method="get"
       action={basePath}
-      className="flex items-center gap-2"
+      className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:w-auto"
       aria-label="Sort the wheel catalogue"
     >
       {snapshotPairs(query, lockedProcesses).map(([name, value]) => (
@@ -649,7 +676,7 @@ export function WheelCatalogueSort({
         id="catalogue-sort"
         name="sort"
         defaultValue={query.sort ?? "model-asc"}
-        className="min-h-11 border border-border bg-white px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+        className="min-h-11 w-full min-w-0 border border-border bg-white px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
       >
         {SORT_KEYS.map((key) => (
           <option key={key} value={key}>

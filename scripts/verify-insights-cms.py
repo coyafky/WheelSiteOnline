@@ -24,7 +24,7 @@ def wordpress_php(code: str) -> str:
 def main() -> int:
     source = r'''
 require "/var/www/html/wp-load.php";
-$original = get_option(FH_GUIDE_OPTION_AUTHORITATIVE, null);
+$original = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, null);
 $ids = [];
 $fields = [
   "fh_summary" => "CMS contract probe summary.",
@@ -35,12 +35,12 @@ $fields = [
   "fh_sections_json" => wp_json_encode([["heading"=>"Detail", "body"=>["Probe body."]]]),
 ];
 try {
-  update_option(FH_GUIDE_OPTION_AUTHORITATIVE, "1");
+  update_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, "1");
   wp_set_current_user(1);
   foreach (["approved"=>"publish", "withdrawn"=>"draft"] as $editor_status => $wp_status) {
     $id = wp_insert_post([
-      "post_type"=>FH_GUIDE_POST_TYPE,
-      "post_title"=>"__FH_GUIDE_VERIFY_" . strtoupper($editor_status) . "__",
+      "post_type"=>FH_GUIDE_NATIVE_POST_TYPE,
+      "post_title"=>"__FH_NATIVE_POST_VERIFY_" . strtoupper($editor_status) . "__",
       "post_name"=>"fh-guide-verify-" . $editor_status,
       "post_status"=>$wp_status,
     ]);
@@ -50,7 +50,7 @@ try {
     update_post_meta($id, "fh_publication_status", $editor_status);
   }
 
-  $existing = get_posts(["post_type"=>FH_GUIDE_POST_TYPE, "post_status"=>"publish", "posts_per_page"=>1, "meta_key"=>"fh_featured_media_id"]);
+  $existing = get_posts(["post_type"=>FH_GUIDE_NATIVE_POST_TYPE, "post_status"=>"publish", "posts_per_page"=>1, "meta_key"=>"fh_featured_media_id"]);
   $media_id = $existing ? absint(get_post_meta($existing[0]->ID, "fh_featured_media_id", true)) : 0;
   $_POST = [
     "fh_guide_nonce"=>wp_create_nonce("fh_guide_save"),
@@ -65,7 +65,7 @@ try {
     "fh_seo_description"=>"Structured guide SEO description.",
     "fh_featured_media_id"=>(string) $media_id,
   ];
-  do_action("save_post_" . FH_GUIDE_POST_TYPE, $ids[0], get_post($ids[0]));
+  do_action("save_post_" . FH_GUIDE_NATIVE_POST_TYPE, $ids[0], get_post($ids[0]));
   $_POST = [];
 
   ob_start();
@@ -84,18 +84,19 @@ try {
     "self_check"=>fh_guide_self_check(),
     "public_status"=>$public->get_status(),
     "preview_status"=>$preview->get_status(),
+    "source"=>$public_data["source"] ?? null,
     "approved_public"=>in_array("fh-guide-verify-approved", $public_slugs, true),
     "withdrawn_public"=>in_array("fh-guide-verify-withdrawn", $public_slugs, true),
     "withdrawn_preview"=>in_array("fh-guide-verify-withdrawn", $preview_slugs, true),
     "structured_detail"=>json_decode((string) get_post_meta($ids[0], "fh_detail_json", true), true),
     "structured_sections"=>json_decode((string) get_post_meta($ids[0], "fh_sections_json", true), true),
     "media_saved"=>$media_id > 0 && absint(get_post_meta($ids[0], "fh_featured_media_id", true)) === $media_id,
-    "structured_editor_rendered"=>str_contains($editor_html, "fh-guide-section-blocks") && str_contains($editor_html, "从媒体库选择"),
+    "structured_editor_rendered"=>str_contains($editor_html, "fh-guide-section-blocks") && str_contains($editor_html, "从媒体库选择") && str_contains($editor_html, "fh_translations_json") && str_contains($editor_html, "fh_translation_status_json"),
   ], JSON_UNESCAPED_UNICODE);
 } finally {
   foreach ($ids as $id) wp_delete_post($id, true);
-  if ($original === null) delete_option(FH_GUIDE_OPTION_AUTHORITATIVE);
-  else update_option(FH_GUIDE_OPTION_AUTHORITATIVE, $original);
+  if ($original === null) delete_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE);
+  else update_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, $original);
 }
 '''
     try:
@@ -107,6 +108,8 @@ try {
     checks = {
         "文章类型已注册": data["self_check"]["registered"] is True,
         "REST base 正确": data["self_check"]["rest_base"] == "fh-guides",
+        "原生文章权威开关已生效": data["self_check"].get("native_authoritative") is True,
+        "公开接口来自原生文章": data["source"] == "wordpress-post",
         "公开接口可读": data["public_status"] == 200,
         "授权预览接口可读": data["preview_status"] == 200,
         "已批准文章公开": data["approved_public"] is True,

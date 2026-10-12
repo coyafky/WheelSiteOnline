@@ -1251,3 +1251,485 @@
 - 相关：`deploy/frontend/`、`deploy/wordpress/`、
   `work/completed/2026-10-09-headless-wordpress-remote-deployment.md`、DEC-005、DEC-009、
   DEC-055、DEC-070。
+
+## DEC-072 · 邮件发送沿用 WordPress PHPMailer，投递事件作为独立可靠性接缝
+
+- 日期：2026-10-10
+- 状态：本地已实现；生产提供商与回调配置待批准
+- 背景：现有询盘邮件已由 WordPress 内置 PHPMailer 通过 QQ SMTP 正常获得 SMTP 接受，
+  但 SMTP 接受不等于最终送达，也不能自动产生 `delivered/bounced` 事件。另起
+  Nodemailer 会造成两套发信配置、模板和故障路径。
+- 决定：
+  1. 保留 WordPress PHPMailer 作为当前发送适配器，不为本地或生产重复引入 Nodemailer；
+  2. 通过 `POST /fh/v1/email-events` 接收支持 HMAC 签名的邮件提供商终态事件，先以
+     `provider_event_id + event_type` 去重，再更新 outbox 与询盘邮件状态；
+  3. 事件表只保存最小化审计字段，`delivered` 不覆盖已确认的 `bounced/failed`，未知
+     outbox 的事件返回 `202` 并保留审计；
+  4. outbox worker 继续使用租约、退避和最大尝试次数；新增五分钟积压摘要、已放弃/过期
+     租约告警，并通过 `fh_inquiry_delivery_alert` 留出监控系统接缝；
+  5. 本地验收只使用合成事件与暂停投递开关；生产必须选择支持 Webhook 的提供商，配置
+     `FH_INQUIRY_WEBHOOK_SECRET`、公开 HTTPS 回调、可靠 cron/队列和告警接收方。
+- 理由：发送通道与投递观测是两个不同事实；保持现有发送器能避免迁移风险，同时让
+  `accepted`、`delivered`、`bounced` 的状态边界可审计、可重放、可恢复。
+- 相关：`local-wp/mu-plugins/fenghuai-inquiries.php`、
+  `scripts/verify-inquiry-delivery.py`、
+  `work/active/2026-10-10-inquiry-delivery-productionization.md`、DEC-055。
+
+## DEC-073 · 轻量 CRM 以 `fh_inquiry` CPT 为主记录
+
+- 日期：2026-10-10
+- 状态：已决定
+- 背景：当前询盘量和销售协作复杂度较低，需要优先保证运营人员能在 WordPress 后台
+  查看询盘、修改跟进状态，并减少自建 CRM 管理界面的开发成本。
+- 决定：
+  1. `fh_inquiry` CPT 是轻量 CRM 的主记录，客户信息、消息、规格快照和业务状态继续
+     使用 WordPress 后台和 post meta 管理；
+  2. 不采用“整套 CRM 迁入自定义数据表”的方案。`fh_inquiry_key`、`fh_inquiry_outbox`
+     和 `fh_inquiry_event` 只承担幂等、邮件投递和事件审计等基础设施职责，不替代 CRM
+     主记录；
+  3. 多 SKU 询价实现时，主询盘仍保留为 CPT；只有当 SKU 明细需要独立校验、排序、统计
+     或查询时，才增加 `fh_inquiry_item` 明细表（或等价的受控子记录），不把大段未结构化
+     JSON 作为长期 CRM 查询接口；
+  4. 当询盘量、并发写入、复杂报表或 CRM 集成达到新的规模门槛时，再评估把查询密集型
+     数据迁移到专用表，迁移不得破坏现有后台查看和 API 契约。
+- 理由：CPT 原生提供后台列表、权限、编辑、状态和审计能力，适合当前低规模业务；专用表
+  保留在需要唯一约束、租约和事件去重的地方，兼顾开发速度与可靠性。
+- 相关：`local-wp/mu-plugins/fenghuai-inquiries.php`、DEC-055、DEC-072、
+  `work/completed/2026-10-10-inquiry-cart-multi-item.md`。
+
+## DEC-074 · 多款轮毂询价以 CPT 主记录 + 不可变 JSON 快照落地
+
+- 日期：2026-10-10
+- 状态：已实施；其中 1–999 数量上限已被 DEC-089 替代
+- 背景：第一版业务量较小，但客户需要一次提交多款已批准轮毂；历史询盘必须不受日后
+  产品编辑、撤回或删除影响。
+- 决定：
+  1. 浏览器只持久化询价清单的查询线索（型号、productionCode、展示用规格和数量），
+     最多 20 项；同一型号+productionCode 在客户端合并数量；初版 1–999 范围已由 DEC-089
+     改为“正整数且无业务上限”；
+  2. Next.js 服务端在保存前逐项调用公开轮毂集合，以 `model + productionCode` 重新解析，
+     用服务端规格覆盖客户端值；未发布、跨型号或不存在的配置拒绝整次清单；
+  3. WordPress 仍以 `fh_inquiry` CPT 为主记录，在同一事务中保存 `inquiry_items_json`，
+     邮件和后台详情都只读取该提交时的逐项快照；旧单产品字段继续保留；
+  4. 第一版不增加 `fh_inquiry_item` 明细表。达到需要独立排序、统计或高并发查询的规模
+     门槛时，才在不破坏 API 和后台读取的前提下迁移为受控子记录。
+- 理由：把“客户想询价什么”和“服务器确认的产品事实”分开，既避免伪造规格进入销售
+  通知，又以最小数据结构完成当前 CRM 需求；事务、幂等和 outbox 仍由 WordPress 负责。
+- 相关：`src/lib/wheels/inquiry-cart.ts`、`src/lib/wheels/inquiry-binding.ts`、
+  `local-wp/mu-plugins/fenghuai-inquiries.php`、DEC-073。
+
+## DEC-075 · 首页、公司、能力和 Insights 采用原生 WordPress post/page 接管
+
+- 日期：2026-10-10
+- 状态：第一、第二切片已实施，第三切片代码已实施；正式隐私版本待确认
+- 背景：运营需要在 WordPress 后台维护博客和页面文案、SEO、媒体与发布状态，而不应
+  每次修改都改 Next.js 代码。原有 `fh_guide` CPT 和本地 `src/content` 仍是有效历史
+  数据，不能在未迁移验收前删除。
+- 决定：
+  1. Insights 的公开来源从迁移后的原生 `post` 开始，原 `fh_guide` 保留为回退和对账源；
+  2. 首页、公司、能力和四条产品线使用原生 `page`，以页面键区分业务页面；
+  3. 页面结构化内容、SEO 和特色媒体作为受控字段保存，REST 只返回稳定的 `page` 契约；
+  4. Next.js 服务端适配器先把响应归一化为既有 `src/content/types.ts` 类型，组件不得
+     读取 WordPress 原始字段；字段缺失、页面未发布或编辑状态不是 `approved` 时
+     fail-closed，并回退最后一次有效本地快照；
+  5. 询盘入口、感谢页和隐私版本也进入受控 Page 内容契约；没有正式隐私版本时保持
+     草稿和 fail-closed，不为了“让表单可用”编造法律版本；
+  6. 保存、撤回和删除通过 HMAC 回调刷新对应页面、Insights 标签和 sitemap 缓存；预览
+     需要 WordPress 编辑权限，不与公开读取混用。
+- 理由：原生编辑器、媒体库、权限和修订记录满足当前运营需求，迁移成本低于重做一套
+  后台；稳定适配器保持前端接缝不变，expand–migrate–contract 可逐页核验并随时回退。
+- 相关：`local-wp/mu-plugins/fenghuai-guides.php`、`local-wp/mu-plugins/fenghuai-pages.php`、
+  `src/lib/wordpress/pages.ts`、`src/lib/wordpress/product-lines.ts`、
+  `scripts/migrate-insights-to-native-posts.php`、`scripts/import-native-pages.php`、
+  `work/active/2026-10-10-wordpress-native-content-takeover.md`。
+
+## DEC-076 · 隐私模板可前台预览，但未批准时必须保持不可提交
+
+- 日期：2026-10-10
+- 状态：已实施；正式政策待公司/法务确认
+- 背景：运营需要在批准前看到隐私版本号、同意文本和链接在真实前台的呈现，单看后台
+  JSON 无法发现文案换行、链接或表单提示的不一致；同时项目不能把未经确认的法律文本
+  当成正式政策。
+- 决定：
+  1. 维护一份中文编辑模板 `outputs/templates/2026-10-10-privacy-consent-template.md`，
+     明确占位字段、确认人和发布门槛，不虚构公司的保存期限、处理者或跨境承诺；
+  2. 通过受保护的 `/api/preview?secret=...&page=privacy` 与
+     `/api/preview?secret=...&page=request-a-quote` 开启 Next.js Draft Mode，让 WordPress
+     草稿在前台可观测，并显示预览横幅；
+  3. `privacy` 页面直接展示当前模板的版本、同意文本和隐私链接；空版本号、草稿、撤回
+     或版本不一致时，询盘表单显示不可用提示且不写入数据；
+  4. 预览只影响当前编辑会话，不改变公开 REST、sitemap 或页面发布状态。
+- 理由：把“可审阅”和“可对外生效”分成两个明确状态，既满足运营视觉验收，也让法律
+  文本保持 fail-closed。
+- 相关：`src/app/api/preview/route.ts`、`src/app/support/privacy/page.tsx`、
+  `src/app/request-a-quote/page.tsx`、`src/lib/wordpress/inquiry-content.ts`、
+  `outputs/templates/2026-10-10-privacy-consent-template.md`。
+
+## DEC-077 · 多语言采用独立前缀 + locale 内容字段，翻译批准前统一 noindex
+
+- 日期：2026-10-10
+- 状态：第一切片已实施；正文翻译和语言放行待逐页完成
+- 背景：现有站点只有英文根 URL 与中文骨架，页面正文主要仍是英文；业务还希望支持
+  西班牙语、泰语。把英文正文直接复制到其他语言 URL 会制造 SEO、可访问性和业务事实
+  风险。
+- 决定：
+  1. 保留英文根 URL，新增 `/zh/*`、`/es/*`、`/th/*`，Proxy 负责 locale 边界和内部
+     rewrite；cookie 只记忆选择，不作为公开语言事实源；
+  2. 继续使用项目现有 `src/lib/i18n`，不另引入第三方运行时；语言选择使用可访问下拉框，
+     切换保留路径、查询参数和片段；
+  3. WordPress Page 使用 `content_by_locale`、`seo_by_locale`、`locale_status`；Insights
+     使用 `translations`、`translation_status`。Next.js 适配器先映射回既有内容类型，
+     不让组件依赖 WordPress 原始字段；
+  4. `INDEXABLE_LOCALES` 是唯一索引放行门，目前只有 `en`。未批准语言输出
+     `noindex, follow`，不输出可索引 `hreflang`，不进入 sitemap；完成正文、SEO、媒体
+     alt 和业务核验后才加入放行集合。
+- 理由：同一套路由和内容接缝可扩展更多语言，且“可访问预览”与“可被搜索引擎收录”保持
+  明确分离；翻译质量和法律/技术事实不由代码擅自推断。
+- 相关：`src/lib/i18n/`、`src/proxy.ts`、`src/components/language-switcher.tsx`、
+  `local-wp/mu-plugins/fenghuai-pages.php`、`local-wp/mu-plugins/fenghuai-guides.php`、
+  `src/lib/wordpress/pages-contract.ts`、`src/lib/wordpress/insights-contract.ts`、
+  `work/active/2026-10-10-multilingual-content-seo.md`。
+
+## DEC-078 · 现有轮毂图片采用轻量批量确认，不按文件存在直接商用
+
+- 日期：2026-10-10
+- 状态：流程已确定，首发资料待业务提供
+- 背景：资产包中的文件、型号映射、规格、供货关系和图片授权是不同事实。已有 WebP
+  文件或 WordPress 媒体记录只能证明“实体存在”，不能证明型号身份、图权或当前供货。
+- 决定：
+  1. 阶段 4 首先从 138 个技术/迁移批准型号中收窄 10–20 个首发型号；
+  2. 普通公司内部提供的图片采用批量声明：指定负责人确认“本批图片和产品资料可用于
+     丰怀官网及相关宣传”，记录确认人、日期、来源和适用范围即可；
+  3. 每个型号仍必须通过实体存在、型号/变体匹配、供货确认和业务最终批准；
+  4. 只有第三方 Logo、客户车辆、外部供应商素材、授权范围不明或出现争议时，才升级到
+     逐图记录权利方、地区、期限和改编范围；
+  5. 图片处理只允许裁切、背景清理、曝光/色温归一和压缩，不得生成或改写产品事实；
+  6. 现有 WordPress 的公开门槛继续 fail-closed，未匹配、明显错图、缺图或无法供货的
+     型号不进入目录、详情、筛选、询盘快照或 sitemap。
+- 理由：当前业务量小，逐图法务档案会增加不必要的运营成本；但“收到材料”仍不是可审计的
+  公司授权事实，尤其资产中存在第三方来源。用一条批量声明保留最小责任链，异常素材再升级
+  处理，可以兼顾开发速度、管理成本和撤回能力。
+- 相关：`outputs/reports/12-product-image-trust-verification-process-2026-10-10.md`、
+  `work/active/2026-10-10-product-image-trust-verification.md`、
+  `work/queued/2026-10-09-wheel-image-normalization.md`、DEC-018。
+
+## DEC-079 · 备用轮毂图片按型号分批上传，不做一次性媒体迁移
+
+- 日期：2026-10-10
+- 状态：已实施（第一批切片完成）
+- 背景：备用图片数量较多，且并非每张都已经绑定型号、变体和首发范围；一次性上传会把
+  候选素材、公开媒体和运营任务混在一起。
+- 决定：
+  1. 未确定型号的备用图片继续留在只读 `assets/` 候选库，不因文件存在进入公开目录；
+  2. 确定型号后按一个型号或一个小批次上传 WordPress，绑定图库并将第一张设为主图；
+  3. 上传本身不改变前台，只有媒体绑定、型号公开门槛和缓存回归全部通过后才发布；
+  4. 每批都重新验证目录、详情、筛选、相关推荐、询盘快照和 sitemap；失败只影响当前型号；
+  5. 不用生成图填补尚未上传或不合格的真实 SKU 图片。
+- 理由：分批上传降低运营负担和回滚范围，符合当前低业务量；同时保留“候选”和“公开事实”
+  两条边界，避免备用图误进入目录。
+- 相关：`work/queued/2026-10-10-reserve-wheel-image-incremental-upload.md`、DEC-078。
+
+## DEC-080 · UI 增量以采购任务链为唯一排序依据
+
+- 日期：2026-10-10
+- 状态：已决定，待执行
+- 背景：现有 UI 已有稳定品牌视觉，但区块、编号、大写、动画和 CTA 叠加后，可能增加首次
+  访问者的判断成本。一次性重做全站会同时影响内容接缝、询盘和 SEO。
+- 决定：
+  1. 所有 UI 增量优先服务“定位需求、找产品/能力、验证证据、选择规格、提交询盘”这条链路；
+  2. 第一批先做首页需求入口和移动端行动入口安全区，再做字体/密度和 Hero 媒体韧性；
+  3. 保留现有颜色令牌、真实产品数据、WordPress 稳定契约和询盘 API，不以增加装饰或动画
+     代替任务改进；
+  4. 主观视觉意见必须转成可观察验收：URL 上下文、截图遮挡、键盘焦点、LCP、退出率或
+     询盘转化，而不是直接按评分重构。
+- 理由：采购站的成功不是展示区块数量，而是让合适的客户更快完成正确询盘；纵向切片可以
+  将 UI 变化和业务结果分开验证，避免设计偏好压过产品事实和内容治理。
+- 相关：`outputs/reports/13-first-principles-incremental-roadmap-2026-10-10.md`、
+  `work/completed/2026-10-10-homepage-intent-entry.md`、
+  `work/completed/2026-10-10-mobile-action-safe-area.md`。
+
+## DEC-081 · 首批 UI 增量用任务入口和可观测兜底收敛，不做全站重做
+
+- 日期：2026-10-10
+- 状态：部分被 DEC-083 替代（Hero 三入口已回退，媒体兜底与移动安全区保留）
+- 背景：审计发现首页视觉表达强，但采购商第一步不够明确；移动端固定询价入口和首图失败也
+  需要用浏览器证据确认，而不是凭 CSS 直觉判断。
+- 决定：
+  1. 首页首屏保留品牌 Hero，在同一视觉层内加入三个采购起点，并把已有上下文参数传入询盘；
+  2. `hasContext` 将产品线、意图、输入方式和来源视为可展示上下文，询盘来源条不再只对
+     型号/规格生效；
+  3. 移动浮动询价入口保留 78px 内容安全区，大屏才恢复 22px，隐藏状态继续从 Tab 顺序移除；
+  4. Hero 批准媒体通过客户端 `onError` 切换稳定工业网格，失败兜底不进入产品证据链；
+  5. 普通 CTA 先改为 Inter 和普通句式，后续字体收敛仍按页面逐刀验收；
+  6. 每个切片必须有 Playwright URL/视口/失败注入或计算样式断言，并保存截图证据。
+- 理由：这些改动直接缩短“定位需求 → 提交询盘”的路径，且可在不改 WordPress 内容契约、产品事实
+  和询盘 API 的情况下回滚；截图与自动化断言能区分真实遮挡/加载故障和主观审美意见。
+- 相关：`src/components/home/hero/home-hero.tsx`、`src/components/home/hero/hero-media.tsx`、
+  `src/components/floating-quote.tsx`、`src/lib/inquiry-context.ts`、
+  `work/completed/2026-10-10-homepage-intent-entry.md`、
+  `work/completed/2026-10-10-mobile-action-safe-area.md`、
+  `work/completed/2026-10-10-hero-media-resilience.md`。
+
+## DEC-082 · Astryx 采用 Neutral 局部主题并按纵向切片迁移
+
+- 日期：2026-10-10
+- 状态：已实施（第一切片）
+- 背景：用户希望使用 Meta Astryx 提升界面一致性，并优先改造面包屑和询盘表单。Astryx
+  虽源于 Meta 内部设计系统实践，但公开发行中没有名为“Meta”的品牌主题；现有公开主题需要
+  在不破坏丰怀黑灰橙品牌和内容接缝的前提下选择。
+- 决定：
+  1. 安装 `@astryxdesign/core`、`@astryxdesign/theme-neutral` 与 `@stylexjs/stylex`，以
+     Neutral 作为低装饰、可继续品牌化的基础，不冒用 Meta 品牌视觉；
+  2. 根布局只提供 Next.js 链接适配和语言环境，Neutral `Theme` 局部包围 Astryx 组件表面，
+     避免主题语义颜色继承到既有深色页面；
+  3. 第一切片只迁移共享面包屑与询盘表单控件，不改变 Zod、两步状态、API、WordPress、
+     幂等和购物清单契约；
+  4. 显式规定 `reset → theme → base → astryx-base → astryx-theme → components → utilities`
+     的 CSS 级联层，保证 Astryx 控件边框和焦点态不被 Tailwind reset 静默覆盖；
+  5. 不用 Astryx Stepper 替换当前两步进度，因为其官方使用范围为 3–7 步；两步界面保留
+     现有更简洁的进度表达；
+  6. 后续继续采用 expand–migrate–contract：每次只迁移一条用户任务链，截图与自动化通过后
+     再扩展目录筛选等界面，不做一次性全站换皮；
+  7. 三个依赖的包元数据均声明 MIT；商业分发时保留上游版权与许可声明。
+- 理由：Neutral 提供 Astryx 的可访问交互和一致控件语法，同时不会把 Meta 的企业品牌误装为
+  丰怀品牌。局部主题减少第三方设计令牌对既有页面的回归面，纵向切片可用询盘 E2E 直接证明
+  改造没有伤害核心转化链路。
+- 相关：`src/app/providers.tsx`、`src/components/site-breadcrumbs.tsx`、
+  `src/components/inquiry-form.tsx`、`work/completed/2026-10-10-astryx-breadcrumb-form.md`。
+
+## DEC-083 · 首页回退采购起点卡片，恢复完整品牌 Hero
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：首批 UI 增量在 Hero 中加入三个采购起点并压缩标题与间距。用户复核后认为首页应回到
+  原有完整工业品牌风格，而不是让新增入口卡片主导首屏。
+- 决定：
+  1. 移除首页 Hero 的三个采购起点卡片与页面级文案装配；
+  2. 恢复回退前的标题尺寸、首屏留白、正文间距和双 CTA 品牌展示字形；
+  3. 保留 Hero 媒体失败兜底、WordPress 首页内容与 SEO、四语言路由，以及产品线、能力、
+     交付流程和收尾询盘五区块结构；
+  4. 普通导航和表单按钮继续使用 Inter 句式，只有首页 Hero CTA 使用 `btn-pill-brand`，避免
+     为恢复一个局部视觉而重新放大全站大写问题；
+  5. 不删除询盘上下文能力，目录、详情或外部链接仍可携带结构化来源进入询盘。
+- 理由：首页首先承担品牌定位和制造可信度表达；采购起点卡片虽然缩短路径，但与背景媒体、标题、
+  双 CTA 同时竞争注意力。局部回退能恢复视觉优势，又不牺牲已经完成的后台和询盘能力。
+- 相关：`src/components/home/hero/home-hero.tsx`、`src/app/page.tsx`、
+  `work/completed/2026-10-10-homepage-visual-rollback.md`。
+
+## DEC-084 · Astryx 只迁移重复交互基础设施，不替换业务事实模块
+
+- 日期：2026-10-10
+- 状态：已决定，下一切片排队
+- 背景：Astryx 提供大量可访问、可主题化组件，但丰怀页面同时包含服务端 URL 筛选、无 JS
+  兜底、WordPress 内容接缝和必须逐变体核验的产品事实。机械替换会把组件引入方式误当成产品
+  需求，扩大回归面。
+- 决定：
+  1. 只有跨页面重复且可用公共 DOM、URL、焦点和无障碍断言验证的交互才进入 Astryx 迁移；
+  2. 面包屑、空状态、反馈横幅和部分表单控件是首选；目录筛选状态、分页链接、语言导航、
+     首页 Hero、产品卡片和工程规格表暂不强行迁移；
+  3. 任何需要 `onChange` 才成立的客户端组件，都必须先证明不破坏服务端渲染、URL 可复制和
+     无 JavaScript 操作，再决定是否采用；
+  4. 每个切片只迁移视觉/语义外壳，业务数据继续来自稳定 `src/content` 或适配器，产品事实和
+     询盘快照不由 Astryx 组件决定；
+  5. Astryx 当前为 beta，升级采用显式版本和完整回归，不自动追新版本。
+- 理由：设计系统的价值是降低重复交互的认知和维护成本，而不是让每个页面看起来都一样。
+  对采购网站来说，URL、服务端筛选、真实规格和证据边界比组件覆盖率更重要。
+- 相关：`outputs/reports/14-astryx-first-principles-component-roadmap-2026-10-10.md`、
+  `work/queued/2026-10-10-astryx-breadcrumb-empty-state.md`、DEC-082。
+
+## DEC-085 · Astryx 面包屑与空状态只替换语义外壳
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：需要扩展 Astryx 使用范围，但轮毂目录的筛选、分页和询盘快照仍必须由服务端 URL 与稳定
+  业务模块负责。
+- 决定：
+  1. 所有公开内容页统一使用 `SiteBreadcrumbs`，由页面在服务端按当前 locale 构造路径；
+  2. 轮毂无结果页使用 Astryx `EmptyState` 作为说明外壳，筛选摘要和两个业务链接继续使用本项目
+     组件，不把筛选状态改成客户端状态；
+  3. 维持当前页面的 dark/light 局部主题边界，不把 Neutral 主题扩散到工业品牌布局；
+  4. 该切片不迁移分页、语言导航、首页 Hero 或产品规格表。
+- 理由：面包屑和空状态是跨页面重复、可由 DOM/键盘/URL 断言验证的基础设施；业务筛选和产品事实
+  具有明确的服务端与证据约束，迁移它们不能仅凭组件外观判断成功。
+- 相关：`src/components/site-breadcrumbs.tsx`、`src/components/wheels/wheel-catalogue-empty.tsx`、
+  `e2e/site-contract.spec.ts`、`work/completed/2026-10-10-astryx-breadcrumb-empty-state.md`。
+
+## DEC-086 · Astryx Pagination 暂不替换服务端链接分页
+
+- 日期：2026-10-10
+- 状态：已决定
+- 背景：目录分页必须保留可复制 URL、无 JavaScript 行为、筛选参数和旋压子目录的工艺边界。
+- 证据：固定版本 `@astryxdesign/core@0.6.7` 的静态渲染探针显示，官方 `Pagination` 要求
+  `onChange`，输出 `<button>` 而非 `<a href>`。
+- 决定：继续使用现有 `WheelCataloguePagination` 普通链接；除非 Astryx 提供服务端链接 API，
+  或项目完成经过评审的链接适配层，否则不为组件覆盖率引入客户端分页。
+- 理由：分页的业务契约是 URL 和服务端结果，不是控件外观；当前替换会直接降低无 JS、爬虫和复制
+  链接能力。
+- 相关：`outputs/reports/15-astryx-pagination-server-link-probe-2026-10-10.md`、
+  `tests/astryx-pagination-probe.test.mts`、`work/active/2026-10-10-astryx-ui-expansion.md`。
+
+## DEC-087 · 轮毂筛选器只迁移 Astryx Field，不替换多值原生 checkbox
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：需要评估 Astryx `Field` / `CheckboxInput` 是否能作为轮毂筛选器外壳，同时保持 GET URL、服务端筛选和无 JavaScript 提交。
+- 证据：固定版本 `@astryxdesign/core@0.6.7` 的静态渲染探针显示，`CheckboxInput` 的 `value` 是布尔选中态，`htmlName` 只输出 `name`，不会输出筛选业务所需的 `value="18"`。它还要求受控 `onChange` 才能在客户端切换。
+- 决定：
+  1. 型号搜索迁移到 Astryx `Field`，继续把实际输入交给原生 `input[type=search][name=q]`；
+  2. 直径、宽度、PCD、工艺 checkbox 保留原生实现，继续提交真实 `name + value`，并保留无 JavaScript 行为；
+  3. 不用隐藏输入或双写字段绕过 `CheckboxInput`，避免取消勾选时与 URL 状态失同步；
+  4. 计数文字改用 `text-steel`，移除透明度后通过 WCAG A/AA 对比度扫描；
+  5. 只有 Astryx 提供业务值属性或服务端多值适配器后，才重新评估 checkbox 迁移。
+- 理由：对本项目来说，筛选值和 URL 是业务契约；组件外观不能凌驾于可复制 URL、无 JS 提交和服务端真相之上。
+- 相关：`src/components/wheels/wheel-catalogue-filters.tsx`、`src/components/wheels/wheel-filter-option.tsx`、
+  `tests/astryx-filter-shell-probe.test.mts`、`e2e/site-contract.spec.ts`、`e2e/accessibility.spec.ts`、
+  `outputs/reports/16-astryx-wheel-filter-shell-probe-2026-10-10.md`。
+
+## DEC-088 · Astryx Banner 只承载筛选操作说明，FormLayout 不包裹轮毂筛选器
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：需要评估 Astryx `Banner` / `FormLayout` 是否适合轮毂目录的结果反馈与筛选提示，同时保留 GET URL、服务端筛选和无 JavaScript 行为。
+- 证据：固定版本 `@astryxdesign/core@0.6.7` 的静态探针显示，`Banner status="info"` 输出 `role="status"`，而 `warning/error` 输出 `role="alert"`；`FormLayout` 只是布局 `<div>`，不产生表单或筛选字段语义。
+- 决定：
+  1. 在桌面和移动筛选面板中使用 `Banner status="info"` 展示“同一筛选组可多选、组内值相加”的操作说明，并使用 `collapsible={false}` 保持服务端内容直接可见；
+  2. 普通结果数量继续使用文本摘要，不把每次筛选结果当成状态告警；
+  3. 无结果继续使用 `EmptyState`，不再叠加 Banner；
+  4. `FormLayout` 继续用于询盘表单字段组，不包裹轮毂筛选器，因为筛选器必须保留两份原生 GET 表单、`fieldset`、真实 `name/value` 和移动 `details` 结构；
+  5. `Theme` 仅局部包围 Banner，避免 Neutral 主题令牌扩散到目录品牌布局。
+- 理由：Banner 的价值是统一状态语义和反馈层级，不是把所有说明都变成警报；FormLayout 的价值是字段间距，不足以替代筛选业务契约。按语义边界接入可获得可访问的提示，同时不牺牲 URL、爬虫和无脚本能力。
+- 相关：`src/components/wheels/wheel-catalogue-filters.tsx`、`tests/astryx-feedback-shell-probe.test.mts`、`e2e/site-contract.spec.ts`、`outputs/reports/17-astryx-feedback-shell-probe-2026-10-10.md`。
+
+## DEC-089 · 轮毂直接询盘与总询盘分流，配置数量不设业务上限
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：详情页同时显示“加入清单”和完整表单，直接提交会无条件读取并清空总询盘清单；单配置
+  数量又在浏览器、Zod 和 WordPress 三层被任意限制为 999，与“询盘而非购物车”的业务语义冲突。
+- 决定：
+  1. 详情页只显示“加入总询盘”和“直接询问当前产品”两条意图清晰的路径；后者使用 Astryx
+     `Dialog purpose="form"` 在当前页打开共享表单；
+  2. 共享 `InquiryForm` 以显式 `direct/cart` 模式决定 payload、清单摘要、成功清理和跳转；
+     `direct` 不订阅、不提交、不清空 localStorage 清单，`cart` 保持多项提交与成功清空；
+  3. 单配置数量是正整数且没有业务上限；删除 999 clamp、输入 `max`、Zod `.max(999)` 和
+     WordPress 1–999 校验；JavaScript 安全整数、请求体大小和最多 20 个配置仍作为技术防护；
+  4. `quantity` 项目文本继续允许 `prototype`、`10 sets`、`500/year`，不得拿它替代每条配置数量；
+  5. 客户端提供的型号、生产代码和数量仍是询盘线索，服务端继续按公开集合复核并保存快照。
+- 理由：询盘数量用于表达采购意向，不代表库存、价格或可下单量；两条路径分流可以避免客户在
+  直接询问一个产品时误提交或丢失已经整理的多项清单，同时保留统一 API 和持久化事实源。
+- 相关：`PAGE-SPECS/wheel-detail.md` §7、`PAGE-SPECS/request-a-quote.md` §3/§5、
+  `work/completed/2026-10-10-direct-wheel-inquiry-dialog-and-quantity.md`。
+
+## DEC-090 · Astryx 反馈与输入按任务语义接入，不把静态内容改造成伪交互
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：需要继续深化询盘反馈、偏距输入与高风险交互，同时判断 FAQ、制造流程和 Insights 分类
+  是否应迁移到 Astryx 组件。
+- 决定：
+  1. 询盘清单动作使用 Astryx `Toast`，浮动询盘入口使用 `Badge` 显示配置项数量；Toast 只提供
+     即时反馈，清单真相仍来自 `useInquiryCart()` 和服务端复核；
+  2. 偏距计算器六个输入使用 Astryx `NumberInput`，公式抽成纯函数，组件不决定工程事实；
+  3. 公开 FAQ 保留服务端 `<dl>` 全文，不用 `Collapsible` 隐藏需要直接比较的采购与工程信息；
+  4. `/capabilities` 没有真实面板切换，孤立未调用的 `ProcessExplorer` 不构成迁移理由，不引入
+     `TabList` 制造伪 Tabs；
+  5. Insights 分类是结果筛选而不是视图导航，保留按钮组和 `aria-pressed`；只有未来把状态提升到
+     可复制 URL 后，才重新评估 `SegmentedControl`；
+  6. 直接询盘 Success 状态必须把弹窗内部滚动回顶部，确保窄视口仍看得到标题和关闭入口。
+- 理由：设计系统应降低重复交互的实现成本，但不能改变内容可见性、导航语义或业务状态模型。
+  FAQ、静态能力内容和筛选输入各有更合适的原生语义；反馈、数值录入和弹窗滚动则有明确、可测的
+  交互收益。
+- 相关：`outputs/reports/20-astryx-interaction-feedback-and-baselines-2026-10-10.md`、
+  `work/completed/2026-10-10-astryx-interaction-feedback-and-baselines.md`。
+
+## DEC-091 · 长文 Outline 只增强导航，锚点必须保持稳定布局
+
+- 日期：2026-10-10
+- 状态：已实施
+- 背景：法律文档和 Insights 长文各自维护手写目录，需要统一滚动激活和键盘导航，但正文、锚点、
+  WordPress 接缝与无 JavaScript 阅读不能变成客户端组件的附属物。
+- 决定：
+  1. `LegalDocumentPage` 与 `ProseArticle` 共用薄 `LongformOutline`，只向 Astryx 传入已规范化的
+     `{ id, label, level }`；标题、正文和 `section-*` ID 继续由服务端生成；
+  2. 目录继续输出普通 `href="#section-*"`，Astryx 只增强 scroll spy、平滑滚动和 roving tabindex；
+     无 JavaScript 时 hash 导航与全文必须仍然成立；
+  3. 固定 Header 的留白由目标元素 `scroll-mt-[110px]` 统一负责，Outline `offset` 保持为 0，避免
+     JavaScript 与原生 hash 使用两套不同落点；
+  4. 锚点目标自身不得参与 translate 型 reveal 动画；动画只放在其内部内容上，否则浏览器会按
+     位移后的坐标滚动，动画结束后标题再次钻入 Header 下方；
+  5. 目录界面标签进入四语言字典，不把业务正文或 WordPress 原始字段搬进客户端适配器；
+  6. 隐私页因专属浅色政策面板位于深色 Hero 之前，首屏固定 Header 使用实色模式并由面板预留
+     导航高度；其他法律页继续保留透明 Header 覆盖深色 Hero。
+- 理由：组件系统可以统一交互语义，但长文的可索引内容、稳定 URL 和原生锚点才是页面契约。
+  稳定目标元素还让 JS 增强与无 JS 跳转共享同一坐标模型，避免用经验 offset 掩盖动画竞态。
+- 相关：`src/components/longform-outline.tsx`、`src/components/legal-document.tsx`、
+  `src/components/prose-article.tsx`、`e2e/astryx-interactions.spec.ts`、
+  `outputs/reports/21-astryx-longform-outline-2026-10-10.md`。
+
+## DEC-092 · 询盘成功必须以 WordPress/MySQL 持久化为最低标准
+
+- 日期：2026-10-11
+- 状态：已实施
+- 背景：本地 Next.js 未配置 `WP_MODE=live` 与 WordPress REST 根地址时，仓储会生成
+  `persisted:false` 的进程内记录，但 API 仍返回 `201 + ok:true`；前端又没有校验持久化标志，
+  因而显示询盘号并可能清空清单。客户看到“成功”，WordPress、MySQL 与 Outbox 实际均为空，
+  QQ 邮箱自然没有通知。
+- 决定：
+  1. 只有 WordPress 在同一事务写入 CPT、幂等键、快照/同意 meta 与 Outbox 后，Next.js 才能
+     返回成功；任何 `persisted:false` 统一返回 503，不生成回执，不清空表单或询盘清单；
+  2. 前端只接受 `ok:true && persisted:true`，即使上游错误地返回 HTTP 200/201 也不得进入成功态；
+  3. 邮件 `pending/accepted/delivered/bounced/failed` 是持久化后的独立状态，SMTP 失败不能回滚或
+     否定已经保存的客户询盘；
+  4. Playwright 强制 `WP_MODE=mock` 且禁止静默复用端口上的陌生服务，自动化测试不得向真实邮箱发信；
+  5. 后端验收脚本只能删除自身带明确测试标记的夹具，禁止以“本地库”为由清空全部客户询盘。
+- 理由：询盘站的第一责任是保住客户线索。进程内对象、HTTP 状态码和 SMTP 接受都不能替代可恢复、
+  可审计的数据库事实；邮件是通知渠道，不是询盘存在性的真相源。
+- 相关：`src/app/api/inquiries/route.ts`、`src/components/inquiry-form.tsx`、
+  `e2e/inquiry.spec.ts`、`playwright.config.ts`、`scripts/verify-inquiry-backend.py`、
+  `outputs/reports/23-inquiry-persistence-smtp-e2e-2026-10-11.md`。
+
+## DEC-093 · 全站主题从局部 Neutral 扩展为暖白统一呈现
+
+- 日期：2026-10-11
+- 状态：已实施并通过 P5 本地回归；商用发布另行审批。
+- 背景：用户要求所有页面使用 Astryx Neutral 体系，并明确白色、暖色调更适合峰徊。先前 `DESIGN.md` 的黑灰橙描述是旧站现状。
+- 决定：按 `docs/adr/2026-10-11-astryx-warm-light-presentation.md` 建立全站暖白语义令牌与 Astryx 根主题；通用交互采用经验证的 Astryx 原语，品牌与事实模块继续使用项目组件并统一视觉。逐页面族迁移和验收，WordPress 内容接缝、服务端筛选、产品发布和询盘落库契约不变。
+- 与 DEC-082/084：取代“主题只局部包裹”的阶段性范围；保留“组件选择以语义和业务行为为准”的原则。DEC-086/087 的当前组件能力限制仍有效。
+- 相关：`PAGE-SPECS/astryx-neutral-global.md`、`ARCHITECTURE.md`、`work/completed/2026-10-11-astryx-neutral-sitewide-migration.md`。
+
+## DEC-094 · 移除全站悬浮询盘入口，保留原位转化路径
+
+- 日期：2026-10-11
+- 状态：已实施，P5 全站回归通过。
+- 背景：用户指出右下角常驻 Request Quote 按钮影响观感，与导航、页尾和产品页的询盘行动重复；它还需要依靠滚动观察器避免遮挡筛选、页脚和其他 CTA。
+- 决定：根布局不再挂载 `FloatingQuote`，目录和 EV 页面移除专用抑制标记。桌面 Header、移动菜单、Footer、产品直接询盘与加入总询盘路径保持；Toast 提示加入结果，清单数量在询盘页可核对，不再依赖浮动 Badge。
+- 取舍：这不是关闭询盘，也不把总询盘改成直接询盘。未验证转化数据之前，不另造一个新的悬浮入口。旧组件源码移入 `archive/2026-10-11-floating-quote.tsx` 供追溯，不进入客户端渲染树。
+- 相关：`src/app/layout.tsx`、`PAGE-SPECS/astryx-neutral-global.md`、`DESIGN.md`、`e2e/inquiry.spec.ts`。
+
+## DEC-095 · 语言偏好只驱动完整页面跳转，RSC 数据请求尊重显式路径
+
+- 日期：2026-10-11
+- 状态：已实施，P5 全量回归通过。
+- 背景：P5 的四语言浏览器审计发现，先访问 `/zh` 再预取未加前缀的链接时，Cookie 偏好重定向与 Next.js 内部重写形成 307 往返，控制台出现 `ERR_TOO_MANY_REDIRECTS`。开发环境默认不做生产预取，之前的交互测试没有暴露。
+- 决定：`src/proxy.ts` 在完整页面请求上继续按语言偏好跳转；RSC/后台数据请求以显式 URL 为准，不用 Cookie 改写。首页五个模块的内容链接在服务端依据当前路径语言生成前缀，避免把中文首页的询盘/产品链接预取成英文路径。
+- 边界：此修复不表示未审批翻译可索引；`zh/es/th` 仍保留 `noindex, follow`。其余页面族的内容链接逐页本地化核验留在商用 SEO 门槛 COM-014/015，不借 UI 迁移伪装为已完成。
+- 相关：`src/proxy.ts`、`src/app/page.tsx`、`e2e/site-contract.spec.ts`、`e2e/astryx-sitewide-p5.spec.ts`。
+
+## DEC-096 · 询盘交互文案本地化，但隐私同意版本必须由权威内容决定
+
+- 日期：2026-10-12
+- 状态：已实施；全站四语正文与法律审核仍未完成。
+- 背景：轮毂直接询盘和 `/contact` 曾使用英文表单文案；直接询盘未显式传入隐私版本时还会从环境变量兜底，可能绕过 WordPress 的未批准状态。
+- 决定：`InquiryFormUi` 和 `InquiryPreparation` 保持既有字段形状，但把文字叶子的类型放宽为可译字符串；本地语言副本负责表单、配置和清单交互，WordPress 仍负责可编辑正文和已批准的隐私同意文字/版本。明确传入的空版本一律 fail-closed，不能再读取环境变量替代。非英语译文在审核前只作为草稿展示，不因此放开索引或真实提交门槛。
+- 边界：此决定不改变产品事实、后端询盘契约或“落库才成功”；法律/工程译文不得因前端有四语言字符串就视为批准。
+- 相关：`src/content/inquiry-form.ts`、`src/lib/i18n/inquiry-form-copy.ts`、`src/lib/wordpress/inquiry-content.ts`、`src/components/inquiry-form.tsx`、`src/app/contact/page.tsx`。
+
+## DEC-097 · 询盘业务页面与隐私同意页分开审批
+
+- 日期：2026-10-12
+- 状态：已实施；仅本地业务译文获准，隐私与法律仍待审核。
+- 背景：`/request-a-quote` 的旧 WordPress 草稿同时存放业务正文、表单和隐私字段，使业务译文获批可能被误读为同意版本获批；`/contact` 也没有独立 Page 正本。
+- 决定：两个转化页分别由 WordPress `request-a-quote`、`contact` Page 持有结构化业务正文、四语 SEO 和译文状态，Next.js 仅保留同形本地回退及交互字典。可提交门槛只读取独立、公开且已批准的 `privacy` Page；即使是页面草稿预览，也不能把隐私草稿当有效同意版本。业务提示不发布未经审核的数据用途承诺。
+- 理由：内容编辑可独立推进业务页面，而法律未批准时系统继续阻止收集线索；页面级 `approved` 不等于法务同意。
+- 影响：`privacy` 未批准时转化页可展示，但表单关闭；向远端部署必须先同步 Pages 插件与受控内容迁移，不能只替换前端镜像。非英语仍按整站门槛 `noindex`。
+- 相关：`src/content/conversion-pages.ts`、`src/lib/wordpress/conversion-pages.ts`、`src/lib/wordpress/inquiry-content.ts`、`local-wp/mu-plugins/fenghuai-pages.php`、`ARCHITECTURE.md`。

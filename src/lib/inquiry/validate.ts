@@ -57,6 +57,7 @@ export function validate(body: unknown, expectedPrivacyVersion: string): Validat
     finish: data.finish || undefined,
     quantity: data.quantity || undefined,
     inputsAvailable: data.inputsAvailable.length > 0 ? data.inputsAvailable : undefined,
+    items: data.items.length > 0 ? data.items : undefined,
   };
 
   // ── Auto-captured context (never trusted from the user, only echoed) ─────

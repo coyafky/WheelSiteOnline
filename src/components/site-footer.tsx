@@ -28,24 +28,24 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const hrefFor = (href: string) => localizedPath(href, locale);
 
   return (
-    <footer className="overflow-hidden bg-ink text-white/70">
+    <footer className="overflow-hidden bg-soft text-steel">
       <div className="container-fh">
-        <div className="grid gap-10 border-b border-white/15 py-16 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-end lg:py-24">
+        <div className="grid gap-10 border-b border-border py-16 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-end lg:py-24">
           <div>
-            <p className="font-display text-[0.66rem] font-700 uppercase tracking-[0.24em] text-forge-bright">
+            <p className="font-display text-[0.66rem] font-700 uppercase tracking-[0.24em] text-forge">
               {t("footer.ctaEyebrow")}
             </p>
-            <h2 className="mt-5 max-w-[900px] font-display text-[clamp(2.7rem,7vw,6.8rem)] font-800 uppercase leading-[0.82] tracking-[-0.035em] text-white">
+            <h2 className="mt-5 max-w-[900px] font-display text-[clamp(2.7rem,7vw,6.8rem)] font-800 uppercase leading-[0.82] tracking-[-0.035em] text-ink">
               {t("footer.ctaHeading")}
             </h2>
           </div>
           <div className="lg:pb-2">
-            <p className="max-w-md text-[0.98rem] leading-relaxed text-white/65">
+            <p className="max-w-md text-[0.98rem] leading-relaxed text-steel">
               {t("footer.ctaBody")}
             </p>
             <Link
               href={hrefFor("/request-a-quote")}
-              className="mt-7 inline-flex items-center gap-3 border-b border-forge-bright pb-2 font-display text-sm font-700 uppercase tracking-[0.12em] text-white transition-colors hover:text-forge-bright"
+              className="mt-7 inline-flex items-center gap-3 border-b border-forge pb-2 font-display text-sm font-700 uppercase tracking-[0.12em] text-ink transition-colors hover:text-forge"
             >
               {t("cta.requestQuote")}
               <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -53,22 +53,22 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        <div className="grid gap-14 border-b border-white/15 py-14 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)] lg:py-18">
+        <div className="grid gap-14 border-b border-border py-14 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)] lg:py-18">
           <div>
             <div className="flex items-center gap-4">
-              <span className="grid size-12 place-items-center border border-white/70 font-display text-sm font-800 tracking-[0.14em] text-white">
+              <span className="grid size-12 place-items-center border border-ink font-display text-sm font-800 tracking-[0.14em] text-ink">
                 FH
               </span>
               <div>
-                <p className="font-display text-[1.45rem] font-800 uppercase leading-none tracking-[0.02em] text-white">
+                <p className="font-display text-[1.45rem] font-800 uppercase leading-none tracking-[0.02em] text-ink">
                   {site.name}
                 </p>
-                <p className="mt-1 font-display text-[0.58rem] font-700 uppercase tracking-[0.28em] text-forge-bright">
+                <p className="mt-1 font-display text-[0.58rem] font-700 uppercase tracking-[0.28em] text-forge">
                   {t("brand.division")}
                 </p>
               </div>
             </div>
-            <p className="mt-7 max-w-sm font-display text-[1.05rem] font-600 uppercase leading-[1.4] tracking-[0.04em] text-white/85">
+            <p className="mt-7 max-w-sm font-display text-[1.05rem] font-600 uppercase leading-[1.4] tracking-[0.04em] text-ink">
               {t("footer.tagline1")}
               <br />
               {t("footer.tagline2")}
@@ -81,10 +81,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           >
             {footerNav.map((group, groupIndex) => (
               <div key={group.headingKey}>
-                <p className="font-display text-[0.6rem] font-700 tracking-[0.16em] text-forge-bright">
+                <p className="font-display text-[0.6rem] font-700 tracking-[0.16em] text-forge">
                   {String(groupIndex + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-3 font-display text-[0.72rem] font-700 uppercase tracking-[0.16em] text-white">
+                <h2 className="mt-3 font-display text-[0.72rem] font-700 uppercase tracking-[0.16em] text-ink">
                   {t(group.headingKey)}
                 </h2>
                 <ul className="mt-4 space-y-2.5">
@@ -92,7 +92,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
                     <li key={`${group.headingKey}-${link.href}`}>
                       <Link
                         href={hrefFor(link.href)}
-                        className="text-sm transition-colors hover:text-forge-bright"
+                        className="text-sm transition-colors hover:text-forge"
                       >
                         {link.labelKey ? t(link.labelKey) : link.label}
                       </Link>
@@ -105,21 +105,21 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         </div>
         <div className="flex flex-col gap-8 py-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-5">
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-steel">
               © {new Date().getFullYear()} {site.name}. {t("footer.rights")}.
             </p>
             <LanguageSwitcher
               locale={locale}
               label={t("a11y.switchLanguage")}
-              tone="dark"
+              tone="light"
             />
           </div>
           <a
             href="#top"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/60 transition-colors hover:text-forge-bright"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-steel transition-colors hover:text-forge"
           >
             {t("cta.backToTop")}
-            <span className="inline-flex size-8 items-center justify-center border border-white/25">
+            <span className="inline-flex size-8 items-center justify-center border border-border">
               <ArrowUp className="size-3.5" aria-hidden="true" />
             </span>
           </a>

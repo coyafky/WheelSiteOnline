@@ -654,6 +654,64 @@ export type ResourceLink = {
   linkLabel: string;
 };
 
+/** Header copy for the `/products` catalogue hub (viewport 01). */
+export type CatalogueIntro = {
+  eyebrow: string;
+  /** Rendered as the page `<h1 id="products-title">`. */
+  heading: string;
+  lede: string;
+  supporting: string;
+};
+
+/** "How to specify your order" header — the numbered route list is `RouteStep[]`. */
+export type CatalogueGuidance = {
+  eyebrow: string;
+  heading: string;
+  lede: string;
+};
+
+/** SKU index callout on the catalogue hub. */
+export type CatalogueSkuCallout = {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  cta: CtaLink;
+};
+
+/** Fitment-support block — heading copy plus the bulleted points. */
+export type CatalogueFitmentSupport = {
+  eyebrow: string;
+  heading: string;
+  lede: string;
+  points: string[];
+};
+
+/**
+ * The localizable body of the `/products` catalogue hub.
+ *
+ * ⚠️ This is the `catalogue` half of the WordPress `product-lines` page content
+ * (the `lines` half is `ProductLine[]`). It exists because that page used to be
+ * a hybrid: the four cards came from WordPress while ~86% of the body copy was
+ * read from local constants, so `/zh/products` rendered a half-translated page.
+ * Both halves now travel through the same localized content seam.
+ */
+export type ProductCatalogueContent = {
+  intro: CatalogueIntro;
+  guidance: CatalogueGuidance;
+  skuCallout: CatalogueSkuCallout;
+  routes: RouteStep[];
+  fitmentSupport: CatalogueFitmentSupport;
+  resourceLinks: ResourceLink[];
+  faqs: FaqEntry[];
+};
+
+/** Full localized content of the WordPress `product-lines` page. */
+export type ProductLinesContent = {
+  /** The company's four parallel product lines, rendered as the card grid. */
+  lines: ProductLine[];
+  catalogue: ProductCatalogueContent;
+};
+
 /** A note block used in product "answer" / explainer sections. */
 export type AnswerBlock = {
   eyebrow: string;

@@ -2,8 +2,11 @@ import "server-only";
 
 import { customAluminumPage } from "@/content/custom-aluminum";
 import type { CustomAluminumMethodItem, CustomAluminumPage, MediaAsset } from "@/content/types";
+import { getLocale } from "@/lib/i18n";
+import { resolveLocalized } from "@/lib/i18n/localized-page";
 
 import { resolveWordpressMediaCollection } from "./media";
+import { getWordpressPageDocument } from "./pages";
 
 /**
  * Server-side media adapter for `/products/custom-aluminum`.
@@ -39,8 +42,23 @@ function restoreBoundaryCopy(resolved: MediaAsset, original: MediaAsset): MediaA
   return { ...resolved, alt: original.alt, caption: original.caption };
 }
 
+function isCustomAluminumPage(value: unknown): value is CustomAluminumPage {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Record<string, unknown>;
+  return ["slug", "hero", "applications", "inputs", "methods", "stages", "boundary", "inquiry", "closing"]
+    .every((key) => candidate[key] !== undefined);
+}
+
 export async function getCustomAluminumPage(): Promise<CustomAluminumPage> {
-  const originals = customAluminumPage.methods.items.flatMap(methodMedia);
+  const locale = await getLocale();
+  const native = await getWordpressPageDocument<CustomAluminumPage>("custom-aluminum", { locale });
+  const { content: source } = resolveLocalized<CustomAluminumPage>({
+    requested: native && isCustomAluminumPage(native.content) ? native.content : null,
+    default: customAluminumPage,
+    locale,
+    scope: "custom-aluminum",
+  });
+  const originals = source.methods.items.flatMap(methodMedia);
   const resolved = await resolveWordpressMediaCollection(originals);
   const byId = new Map(
     resolved.flatMap((asset) => (asset.wordpressId ? [[asset.wordpressId, asset] as const] : [])),
@@ -53,10 +71,10 @@ export async function getCustomAluminumPage(): Promise<CustomAluminumPage> {
   };
 
   return {
-    ...customAluminumPage,
+    ...source,
     methods: {
-      ...customAluminumPage.methods,
-      items: customAluminumPage.methods.items.map((item) => ({
+      ...source.methods,
+      items: source.methods.items.map((item) => ({
         ...item,
         media: resolveMedia(item.media),
         supportingMedia: resolveMedia(item.supportingMedia),

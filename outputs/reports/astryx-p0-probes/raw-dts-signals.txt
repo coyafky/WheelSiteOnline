@@ -1,0 +1,247 @@
+# Astryx 0.6.7 .d.ts 关键信号抽取（grep）
+# 生成时间: 2026-10-11T06:48:15Z
+
+########## CheckboxInput/CheckboxInput.d.ts ##########
+4: * @output Exports CheckboxInput component, CheckboxInputProps
+12: * - /packages/cli/assets/templates/blocks/components/CheckboxInput/ (showcase blocks)
+15:import * as stylex from '@stylexjs/stylex';
+30:export type CheckboxInputSize = keyof typeof wrapperSizeStyles;
+31:export interface CheckboxInputProps extends Omit<BaseProps, 'onChange'> {
+50:    onChange?: (checked: boolean, e: ChangeEvent<HTMLInputElement>) => void;
+52:     * Async action on change. Fires after onChange if not prevented.
+113:     * Width of the field. Numbers are treated as pixels, strings are used as-is
+144: * A checkbox input component for toggling boolean values.
+151: *   onChange={setAccepted}
+157: *   onChange={setSubscribed}
+161:export declare function CheckboxInput({ label, isLabelHidden, description, onChange, changeAction, isLoading, value, isDisabled, htmlName, disabledMessage, isReadOnly, isOptional, isRequired, size, onFocus, onBlur, labelIcon, status, width, xstyle, className, style, ref, 'aria-describedby': ariaDescribedByProp, ...rest }: CheckboxInputProps): import("react").JSX.Element;
+
+########## Table/Table.d.ts ##########
+3: * @input React, StyleX, BaseTable, theme tokens, types, components
+4: * @output Exports Table component, TableProps, TableDensity, TableDividers types
+13: * - /packages/cli/assets/templates/blocks/components/Table/ (showcase blocks)
+18:export type TableDensity = 'compact' | 'balanced' | 'spacious';
+20:export type TableDividers = 'rows' | 'columns' | 'grid' | 'none';
+22:export type TableTextOverflow = 'wrap' | 'truncate';
+24: * Props for the styled Table component.
+29:export interface TableProps<T extends Record<string, unknown>> extends Omit<BaseTableProps<T>, 'plugins' | 'components'> {
+71: * Table — a styled, data-driven table component.
+73: * Wraps BaseTable with styled components (TableRow, TableCell,
+76: * design tokens in the component styles.
+78: * @compositionHint Use renderCell on columns to compose rich cell content.
+81: * (multi-element cell layouts). Without renderCell, cells render as plain text.
+91: *     { key: 'name', header: 'Name', width: proportional(1), renderCell: (u) => (
+97: *     { key: 'status', header: 'Status', width: proportional(1), renderCell: (u) => (
+107:export declare const Table: <T extends Record<string, unknown>>(props: TableProps<T> & {
+
+########## Card/Card.d.ts ##########
+4: * @output Exports Card component, CardProps, CardVariant types
+5: * @position Core card container component
+11: * - /packages/cli/assets/templates/blocks/components/Card/ (showcase blocks)
+32:export type CardVariant = keyof CardVariantMap;
+33:export type { SizeValue } from '../utils/types';
+34:export interface CardProps extends BaseProps<HTMLDivElement> {
+38:     * Numbers are treated as pixels, strings are used as-is.
+43:     * Numbers are treated as pixels, strings are used as-is.
+48:     * Numbers are treated as pixels, strings are used as-is.
+53:     * Numbers are treated as pixels, strings are used as-is.
+58:     * Should typically be Layout child components.
+92: * and sets CSS variables for child layout components.
+94: * @compositionHint Use as a top-level container for elevated content.
+122:export declare function Card({ width, height, maxWidth, minHeight, children, padding, variant, elevation, xstyle, className, style, ref, ...props }: CardProps): import("react").JSX.Element;
+
+########## ClickableCard/ClickableCard.d.ts ##########
+4: * @output Exports ClickableCard component and ClickableCardProps
+11: * - /packages/cli/assets/templates/blocks/components/Card/ClickableCardShowcase.tsx (showcase block)
+12: * - /packages/cli/assets/templates/blocks/components/Card/ClickableCardWithNestedButton.tsx (block)
+13: * - /packages/cli/assets/templates/blocks/components/Card/ClickableCardElevated.tsx (block)
+20: * label, and focus ring — the card surface itself has no role/tabIndex.
+31:export interface ClickableCardProps extends BaseProps {
+36:     * Used as `aria-label` — provides the accessible name for screen readers.
+37:     * When the card has visible text that serves as its label, prefer
+45:    onClick?: (event: MouseEvent<HTMLElement>) => void;
+50:    href?: string;
+52:     * Link target for href navigation.
+92: * An interactive card that acts as a single navigation or action target.
+97: * the card's onClick or navigation.
+109: * <ClickableCard label="Settings" href="/settings">
+117: * <ClickableCard label="Open modal" onClick={() => setShowModal(true)}>
+119: *   <Button label="Other action" onClick={handleOther} />
+123:export declare function ClickableCard({ label, onClick: onClickProp, onMouseUp: onMouseUpProp, href, target, isDisabled, children, padding, variant, elevation, width, height, maxWidth, ref, xstyle: xstyleProp, className: classNameProp, style, ...props }: ClickableCardProps): import("react").JSX.Element;
+
+########## Markdown/Markdown.d.ts ##########
+16:export interface MarkdownInlinePlugin {
+25:    /** Render the match as a React element. */
+31: * as a compact superscript citation pill instead of plain text.
+33:export type MarkdownSource = CitationSource;
+34:export interface MarkdownComponents {
+40:        children: string;
+56:        href: string;
+57:        children: React.ReactNode;
+61:        children: React.ReactNode;
+71:        children: React.ReactNode;
+78:        children: React.ReactNode;
+82:export interface MarkdownProps<Plugins extends ReadonlyArray<MarkdownPluginEntry> = readonly []> extends BaseProps<HTMLElement> {
+84:    children: string;
+95:     * E.g. headingLevelStart={3} renders `#` as h3, `##` as h4, `###` as h5.
+101:    onLinkClick?: (href: string, event: React.MouseEvent<HTMLAnchorElement>) => void | false;
+104:     * in the markdown that match a key are rendered as citation chips.
+133:    components?: Partial<MarkdownComponents>;
+161: * Renders a markdown string as Astryx components. Supports streaming with
+171:export declare function Markdown<const Plugins extends ReadonlyArray<MarkdownPluginEntry> = readonly []>({ ref, children, display, density, headingLevelStart, isStreaming, onLinkClick, sources, citationStyle, contentWidth, contentAlign, components, plugins, inlinePlugins, autolink, xstyle, className, style, id: rootId, 'data-testid': testId, ...props }: MarkdownProps<Plugins>): React.ReactElement;
+
+########## TabList/TabList.d.ts ##########
+5: * @output Exports TabList component, TabListProps and TabListOverflow types
+17: * - /packages/cli/assets/templates/blocks/components/TabList/ (showcase blocks)
+26: * - `'auto'` — the component picks the strategy. Today that is always
+30: *   spill out of the strip, as they did before overflow existed.
+32:export type TabListOverflow = 'auto' | 'scroll' | 'visible';
+33:export interface TabListProps extends Omit<BaseProps<HTMLElement>, 'onChange'> {
+42:    onChange: (value: string) => void;
+45:     * as Button and TextInput (`sm` = 28px, `md` = 32px, `lg` = 36px).
+73:     * to zero, and the strip is left exactly as it was. Block-edge docking stays
+85:     * tab does not navigate — an `href` is ignored there.
+95:     * `'auto'` lets the component choose; today it always scrolls. `'scroll'`
+107:    children: ReactNode;
+110: * Tab navigation wrapper. Provides context for value/onChange/size
+115: * <TabList value={activeTab} onChange={setActiveTab}>
+125:export declare function TabList({ ref, value, onChange, size: sizeProp, layout, hasDivider, isFullBleed, role, overflow, xstyle, className, style, children, onKeyDown: onKeyDownProp, onFocus: onFocusProp, onBlur: onBlurProp, 'aria-label': ariaLabelFromProps, 'aria-labelledby': ariaLabelledBy, 'aria-orientation': _ariaOrientation, [EDGE_COMP_ATTR]: _edgeCompAttr, ...restProps }: TabListProps): React.JSX.Element;
+
+########## Collapsible/Collapsible.d.ts ##########
+4: * @output Exports Collapsible component and CollapsibleProps
+15: * density padding) from CollapsibleGroupPresentationContext — StyleX has no
+23: * - /packages/cli/assets/templates/blocks/components/Collapsible/ (showcase blocks)
+28:export interface CollapsibleProps extends BaseProps {
+50:    isOpen?: boolean;
+63:     * CollapsibleGroup owns grouped state and calls its `onChange` instead.
+65:    onOpenChange?: (isOpen: boolean) => void;
+82:     * inside a group, the group owns open state and its `onChange` is the
+128:export declare function Collapsible({ trigger, children, defaultIsOpen, isOpen: controlledIsOpen, isDisabled, onOpenChange, chevronPosition, value, ref, xstyle, className, style, ...props }: CollapsibleProps): import("react").JSX.Element;
+
+########## TopNav/TopNav.d.ts ##########
+4: * @output Exports TopNav component and TopNavProps
+12: * - /packages/cli/assets/templates/blocks/components/TopNav/ (showcase blocks)
+16:export interface TopNavProps extends BaseProps<HTMLElement> {
+30:     * Alias for startContent. Prefer startContent when composing with other slots.
+60: * `endContent`. `children` are accepted as an alias for `startContent`
+70: *   startContent={<TopNavItem label="Home" href="/" isSelected />}
+75:export declare function TopNav({ heading, startContent, children, centerContent, endContent, label: labelFromProps, xstyle, className, style, ref, ...props }: TopNavProps): import("react").JSX.Element | null;
+
+########## MobileNav/MobileNav.d.ts ##########
+4: * @output Exports MobileNav component and MobileNavProps
+22: * starts itself, such as the Android back gesture.
+28: * - /packages/cli/assets/templates/blocks/components/MobileNav/ (showcase blocks)
+36: * reads back as `"0.41s"` and a list as `"0.41s, 0.12s"` — so the seconds branch
+39: * directly in MobileNavCloseTiming.test.ts rather than through the component.
+43:export declare function parseShortestDurationMs(value: string): number | null;
+44:export interface MobileNavProps extends Omit<BaseProps, 'title'> {
+52:    isOpen?: boolean;
+60:    onOpenChange?: (isOpen: boolean) => void;
+64:    children: ReactNode;
+106: * When used inside AppShell, `isOpen` and `onOpenChange` are managed
+107: * automatically via context. When used standalone, provide them as props.
+113: *     <SideNavItem label="Home" href="/" />
+116: * <MobileNav isOpen={isOpen} onOpenChange={setIsOpen} header="Navigation">
+117: *   <SideNavItem label="Home" href="/" />
+121:export declare function MobileNav({ isOpen: isOpenProp, onOpenChange: onOpenChangeProp, children, header, width, side, label, 'data-testid': testId, xstyle, className, style, onClick: onClickProp, ref, ...rest }: MobileNavProps): import("react").JSX.Element;
+
+########## Button/Button.d.ts ##########
+4: * @output Exports Button component, ButtonProps, ButtonVariant types
+12: * - /packages/cli/assets/templates/blocks/components/Button/ (showcase blocks)
+14: * Last synced props: label, variant, size, isDisabled, isLoading, isInterruptible, clickAction, icon, isIconOnly, width, children, tooltip, endContent, href, as, target, rel
+19:import * as stylex from '@stylexjs/stylex';
+20:import type { LinkComponentType } from '../Link/types';
+37:export type ButtonVariant = keyof ButtonVariantMap;
+41:export type ButtonSize = keyof typeof sizeStyles;
+42:export interface ButtonProps extends BaseProps<HTMLButtonElement> {
+55:     * Rendered as visible text by default. When `isIconOnly` is true,
+56:     * used as aria-label instead.
+100:    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+110:     * When true, renders as a square icon-only button with `label` as aria-label.
+116:     * Width of the button. Numbers are treated as pixels, strings are used as-is
+122:     * Optional visible content. When provided, rendered instead of `label` as the
+123:     * visible text (label still serves as the accessible name via aria-label).
+139:     * When provided, renders the button as a link (`<a>` or custom component).
+140:     * When the button is disabled, still renders as `<button>` regardless of href
+143:    href?: string;
+145:     * Custom link component to use when `href` is provided.
+147:     * Useful for Next.js `<Link>` or other router-aware components.
+149:    as?: LinkComponentType;
+151:     * HTML target attribute for the link. Only applies when `href` is provided.
+155:     * HTML rel attribute for the link. Only applies when `href` is provided.
+160: * A versatile button component with multiple variants.
+164: * Themes can provide component-level variant overrides via theme.components.button.variants
+166: * When `href` is provided (and the button is not disabled), renders as an `<a>`
+167: * element (or custom link component) with full button styling, enabling native
+181: * <Button label="Visit site" href="https://example.com" variant="primary" />
+182: * <Button label="Open in new tab" href="https://example.com" target="_blank" rel="noopener noreferrer" />
+185:export declare function Button({ label, variant, size: sizeProp, type, isDisabled, isLoading, isInterruptible, clickAction, icon, isIconOnly, width, elevation, children, endContent, tooltip, href, as, target, rel, xstyle, className, style, ref, ...props }: ButtonProps): ReactNode;
+
+########## Link/LinkProvider.d.ts ##########
+3: * @input React, LinkContext, LinkComponentType
+4: * @output Exports LinkProvider component and LinkProviderProps
+5: * @position Provider component for polymorphic link support
+7: * Sets the default link component for all Astryx components in the subtree.
+8: * Individual components can still override via the `as` prop.
+13: * <LinkProvider component={Link}>
+21: * - /packages/cli/assets/templates/blocks/components/Link/ (showcase blocks)
+22: * - /packages/cli/assets/templates/blocks/components/LinkProvider/ (example blocks)
+25:import type { LinkComponentType } from './types';
+26:export interface LinkProviderProps {
+28:     * The component to use for all link elements in the subtree.
+29:     * Must accept href, className, style, and children props.
+34:     * <LinkProvider component={Link}>
+37:    component: LinkComponentType;
+38:    children: ReactNode;
+41: * Provides a custom link component to all Astryx components in the subtree.
+44: * native `<a>` elements with your framework's link component
+47:export declare function LinkProvider({ component, children }: LinkProviderProps): import("react").JSX.Element;
+
+########## Link/useLinkComponent.d.ts ##########
+1:import type { LinkComponentType } from './types';
+5: * Custom components receive `to={href}` unless an explicit `to` is supplied.
+9: * const LinkComponent = useLinkComponent(as);
+10: * return <LinkComponent href="/docs">Documentation</LinkComponent>;
+13:export declare function useLinkComponent(as?: LinkComponentType): LinkComponentType;
+14://# sourceMappingURL=useLinkComponent.d.ts.map
+
+########## Link/Link.d.ts ##########
+4: * @output Exports Link component, LinkProps
+12: * - /packages/cli/assets/templates/blocks/components/Link/ (showcase blocks)
+17:import type { LinkComponentType } from './types';
+18:export interface LinkProps extends BaseProps<HTMLAnchorElement | HTMLButtonElement> {
+22:     * Custom component to render instead of `<a>`.
+24:     * Must accept href, className, style, and children props.
+25:     * Only used when href is provided.
+27:    as?: LinkComponentType;
+30:     * Used as aria-label when content is not self-descriptive
+32:     * unnecessary — the link text itself serves as the label.
+37:     * When undefined, renders as a `<button>` with link styling
+40:    href?: string;
+49:     * A disabled link renders as a plain anchor without an href (and without
+50:     * target/rel/onClick), so it cannot be focused or activated — no
+51:     * navigation and no onClick, even via programmatic focus or assistive
+88:     * Click handler. Fires before navigation (when href is set),
+89:     * or as the primary action (when href is undefined).
+91:    onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+137:    children: ReactNode;
+140: * A styled anchor link component.
+147: * <Link href="/docs">Documentation</Link>
+148: * <Link href="https://github.com" isExternalLink>GitHub</Link>
+149: * <Link href="/settings" color="secondary">Settings</Link>
+150: * <Link href="/privacy" hasUnderline>Privacy Policy</Link>
+151: * <Link label="Close dialog" href="/home"><Icon icon="x" /></Link>
+153: *   Read our <Link href="/terms" type="inherit">terms</Link> first.
+157:export declare function Link({ as, label, href, hasUnderline, isDisabled, isExternalLink, newTabLabel: newTabLabelFromProps, target: targetFromProps, onClick, tooltip, isStandalone, type, size, weight, color, display, maxLines, children, rel: relFromProps, xstyle, className, style, ref, ...props }: LinkProps): import("react").JSX.Element;
+
+########## LinkContext/LinkContext.d.ts ##########
+MISSING FILE
+
+########## MetadataList/MetadataList.d.ts ##########
+4: * @output Exports MetadataList component, MetadataListProps, MetadataListColumns types
+12: * - /packages/cli/assets/templates/blocks/components/MetadataList/ (showcase blocks)
+17:export type MetadataListColumns = 'multi' | 'single' | number;
+18:export interface MetadataListProps extends Omit<BaseProps<HTMLDivElement>, 'title'> {
+22:     * Metadata list items. Should be MetadataListItem components.
+24:    children: ReactNode;
+54:     * and wrap to new lines as needed. The following props are ignored:
+68:export declare function MetadataList({ children, columns, label, maxNumOfItems, orientation, title, xstyle, className, style, 'data-testid': testId, ref, }: MetadataListProps): import("react").JSX.Element;

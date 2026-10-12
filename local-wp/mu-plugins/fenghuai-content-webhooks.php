@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Fenghuai Content — Next.js 缓存刷新
- * Description:       轮毂与 Insights 保存、撤回或删除后，以共享密钥通知 Next.js 失效对应缓存。
+ * Description:       轮毂、原生博客与原生页面保存、撤回或删除后，以共享密钥通知 Next.js 失效对应缓存。
  * Version:           0.1.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
@@ -28,7 +28,7 @@ function fh_content_send_revalidation(string $type, string $slug): bool
 {
     $config = fh_content_revalidate_config();
     if ($config['url'] === '' || $config['secret'] === '') return false;
-    if (!in_array($type, ['wheels', 'insights'], true)) return false;
+    if (!in_array($type, ['wheels', 'insights', 'pages'], true)) return false;
     $slug = sanitize_title($slug);
 
     $body = wp_json_encode(['type' => $type, 'slug' => $slug]);
@@ -59,6 +59,12 @@ function fh_content_post_type_payload(int $postId): ?array
     if ($post->post_type === 'fh_guide') {
         return ['type' => 'insights', 'slug' => $post->post_name];
     }
+    if ($post->post_type === 'post' && get_post_meta($postId, 'fh_publication_status', true) !== '') {
+        return ['type' => 'insights', 'slug' => $post->post_name];
+    }
+    if ($post->post_type === 'page' && get_post_meta($postId, 'fh_page_key', true) !== '') {
+        return ['type' => 'pages', 'slug' => (string) get_post_meta($postId, 'fh_page_key', true)];
+    }
     return null;
 }
 
@@ -71,6 +77,8 @@ function fh_content_revalidate_post(int $postId): void
 
 add_action('save_post_wheel_model', 'fh_content_revalidate_post', 100);
 add_action('save_post_fh_guide', 'fh_content_revalidate_post', 100);
+add_action('save_post_post', 'fh_content_revalidate_post', 100);
+add_action('save_post_page', 'fh_content_revalidate_post', 100);
 add_action('trashed_post', 'fh_content_revalidate_post', 100);
 add_action('before_delete_post', 'fh_content_revalidate_post', 100);
 

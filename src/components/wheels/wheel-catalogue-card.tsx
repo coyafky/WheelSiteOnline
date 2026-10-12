@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { WheelCatalogueCard } from "@/lib/wheels/types";
+import { wheelCardCopyFor } from "@/lib/i18n/wheel-card-copy";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
+import { AddWheelToInquiryButton } from "./inquiry-cart-summary";
 
 /**
  * 目录产品卡 —— **唯一一份**（PAGE-SPECS/wheel-catalog.md §7）
@@ -13,25 +16,29 @@ export function WheelCatalogueCardView({
   card,
   /** 第一排的卡才给 priority，其余懒加载（§9）。 */
   priority = false,
+  locale = "en",
 }: {
   card: WheelCatalogueCard;
   priority?: boolean;
+  locale?: Locale;
 }) {
-  const href = `/products/wheels/${card.slug}`;
+  const copy = wheelCardCopyFor(locale);
+  const href = localizedPath(`/products/wheels/${card.slug}`, locale);
   const extraDiameters = card.diametersTotal - card.diameters.length;
   const extraPcds = card.pcdsTotal - card.pcds.length;
 
   return (
-    <Link
-      href={href}
-      aria-label={`${card.model} — view specifications`}
-      className="group flex min-w-0 flex-col bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forge"
-    >
-      <div className="relative aspect-square w-full overflow-hidden bg-soft transition-colors duration-300 group-hover:bg-muted">
+    <article className="group flex min-w-0 flex-col bg-white">
+      <Link
+        href={href}
+        aria-label={copy.viewAria(card.model)}
+        className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forge"
+      >
+        <div className="relative aspect-square w-full overflow-hidden bg-soft transition-colors duration-300 group-hover:bg-muted">
         <div className="absolute inset-3 sm:inset-4">
           <Image
             src={card.primaryImage}
-            alt={`Fenghuai wheel model ${card.model}, front view`}
+            alt={copy.imageAlt(card.model)}
             fill
             sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, (min-width: 640px) 50vw, 100vw"
             className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
@@ -39,9 +46,9 @@ export function WheelCatalogueCardView({
             loading={priority ? undefined : "lazy"}
           />
         </div>
-      </div>
+        </div>
 
-      <div className="flex flex-1 flex-col items-center border-b border-ink/12 px-3 pb-7 pt-5 text-center sm:px-4">
+        <div className="flex flex-1 flex-col items-center border-b border-ink/12 px-3 pb-5 pt-5 text-center sm:px-4">
         <div className="min-h-[54px]">
           <p className="font-display text-[1.05rem] font-800 uppercase tracking-[0.06em] text-ink">
             {card.model}
@@ -52,14 +59,14 @@ export function WheelCatalogueCardView({
             </p>
           ) : (
             <p className="mt-1.5 text-[0.66rem] uppercase tracking-[0.14em] text-muted-foreground">
-              Process not specified
+              {copy.processMissing}
             </p>
           )}
         </div>
 
         <dl className="mt-4 w-full text-[0.78rem]">
           <div>
-            <dt className="sr-only">Diameter</dt>
+            <dt className="sr-only">{copy.diameter}</dt>
             <dd className="font-700 leading-6 text-ink">
               {card.diameters.length
                 ? card.diameters.map((diameter) => `${diameter}″`).join("  |  ")
@@ -86,20 +93,38 @@ export function WheelCatalogueCardView({
         </dl>
 
         <p className="mt-3 text-[0.7rem] leading-5 text-muted-foreground">
-          {card.approvedVariantCount} recorded{" "}
-          {card.approvedVariantCount === 1 ? "configuration" : "configurations"}
+          {copy.variantCount(card.approvedVariantCount)}
           {card.approvedFinishCount > 0
-            ? ` · ${card.approvedFinishCount} ${card.approvedFinishCount === 1 ? "finish" : "finishes"}`
+            ? ` · ${copy.finishCount(card.approvedFinishCount)}`
             : ""}
         </p>
 
         <span className="mt-4 inline-flex items-center gap-1.5 font-display text-[0.68rem] font-700 uppercase tracking-[0.12em] text-forge">
-          View specifications
+          {copy.view}
           <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
             →
           </span>
         </span>
-      </div>
-    </Link>
+        </div>
+      </Link>
+      {card.defaultVariant ? (
+        <div className="flex justify-center border-b border-ink/12 px-3 py-4">
+          <AddWheelToInquiryButton
+            locale={locale}
+            label={copy.add}
+            addedLabel={copy.added}
+            item={{
+              model: card.model,
+              slug: card.slug,
+              productionCode: card.defaultVariant.productionCode,
+              size: card.defaultVariant.size,
+              pcd: card.defaultVariant.pcd,
+              offset: card.defaultVariant.offset,
+              centerBore: card.defaultVariant.centerBore,
+            }}
+          />
+        </div>
+      ) : null}
+    </article>
   );
 }

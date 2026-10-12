@@ -1,0 +1,277 @@
+{
+ "base": "http://127.0.0.1:3240",
+ "note": "measured after forcing scroll-reveal wrappers visible",
+ "generatedAt": "2026-10-11T13:36:59.947Z",
+ "results": [
+  {
+   "route": "/",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/about",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/capabilities",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/custom-development",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/forged",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/ev-components",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/custom-aluminum",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/products/safety-tires",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/contact",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/request-a-quote",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/thank-you",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/insights",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/insights/bolt-patterns",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/fitment",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/dealers",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/dealers/private-label",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/gallery/finishes",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/tools",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/tools/offset-calculator",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/support/privacy",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/support/returns",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/support/shipping",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/support/terms",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/support/warranty",
+   "vp": "320x568",
+   "violations": []
+  },
+  {
+   "route": "/",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/about",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/capabilities",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/custom-development",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/wheels/forged",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/ev-components",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/custom-aluminum",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/products/safety-tires",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/contact",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/request-a-quote",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/thank-you",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/insights",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/insights/bolt-patterns",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/fitment",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/dealers",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/dealers/private-label",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/gallery/finishes",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/tools",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/tools/offset-calculator",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/support/privacy",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/support/returns",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/support/shipping",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/support/terms",
+   "vp": "1440x900",
+   "violations": []
+  },
+  {
+   "route": "/support/warranty",
+   "vp": "1440x900",
+   "violations": []
+  }
+ ]
+}

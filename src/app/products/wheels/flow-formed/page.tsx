@@ -22,6 +22,8 @@ import {
   type WheelCataloguePageView,
 } from "@/lib/wheels";
 import { getFlowFormedWheelsPage } from "@/lib/wordpress/flow-formed";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 /**
  * `/products/wheels/flow-formed` — WFF01–WFF05 (PAGE-SPECS/flow-formed-wheels.md).
@@ -161,6 +163,7 @@ function collectionSchema(
  * ------------------------------------------------------------------------- */
 
 export default async function FlowFormedWheelsRoute({ searchParams }: FlowFormedPageProps) {
+  const locale = await getLocale();
   const parsed = parseCatalogueSearchParams(await searchParams);
   const view = await getWheelCataloguePage(lockedQuery(parsed));
 
@@ -185,7 +188,17 @@ export default async function FlowFormedWheelsRoute({ searchParams }: FlowFormed
   return (
     <>
       {/* WFF01 — what this page is, the boundary it works inside, one model */}
-      <FlowFormedHero content={content} featured={featured} />
+      <FlowFormedHero
+        content={content}
+        featured={featured}
+        breadcrumbItems={content.hero.breadcrumb.map((crumb, index) => ({
+          label: crumb.label,
+          href:
+            index === content.hero.breadcrumb.length - 1
+              ? undefined
+              : localizedPath(crumb.href, locale),
+        }))}
+      />
 
       {/* WFF02 — rim-section forming vs. a forged wheel, with the forging fork */}
       <FlowFormedProcessDefinition section={content.processDefinition} />

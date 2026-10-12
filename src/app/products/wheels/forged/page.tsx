@@ -20,12 +20,12 @@ export default async function ForgedWheelPage() {
   const content = await getForgedWheelCustomizationPage();
 
   return (
-    <main>
+    <div>
       <ForgedWheelHero content={content} />
       <ForgedMaterialReview section={content.materialReview} />
       <ForgedForgingRoute section={content.forgingRoute} />
       <ForgedCompletion section={content.completion} />
       <ForgedInquiryInputs section={content.inquiryInputs} />
-    </main>
+    </div>
   );
 }

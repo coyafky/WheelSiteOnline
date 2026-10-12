@@ -10,6 +10,9 @@ import {
   getBoltPattern,
 } from "@/content/bolt-patterns";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 type PatternPageProps = {
   params: Promise<{ pattern: string }>;
@@ -48,6 +51,7 @@ export async function generateMetadata({
  * no vehicle → pattern mapping on this page is presented as verified fact.
  */
 export default async function BoltPatternPage({ params }: PatternPageProps) {
+  const locale = await getLocale();
   const { pattern: slug } = await params;
   const entry = getBoltPattern(slug);
 
@@ -77,27 +81,18 @@ export default async function BoltPatternPage({ params }: PatternPageProps) {
         />
 
         <div className="container-fh pb-14 pt-[140px] lg:pb-16 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link
-              href="/insights"
-              className="transition-colors hover:!text-forge"
-            >
-              Insights
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <Link
-              href="/insights/bolt-patterns"
-              className="transition-colors hover:!text-forge"
-            >
-              Bolt patterns
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">{entry.pattern}</span>
-          </nav>
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Insights", href: localizedPath("/insights", locale) },
+              {
+                label: "Bolt patterns",
+                href: localizedPath("/insights/bolt-patterns", locale),
+              },
+              { label: entry.pattern },
+            ]}
+          />
 
           <p className="eyebrow mt-6 !text-forge">Bolt pattern</p>
           <h1

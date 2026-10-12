@@ -14,6 +14,7 @@ import { insightsHeroMedia } from "@/content/insights-visuals";
 import { GuidesAccordion } from "@/components/guides-accordion";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PreviewBanner } from "@/components/preview-banner";
+import { getLocale } from "@/lib/i18n";
 import { getInsightGuideDocuments } from "@/lib/wordpress/insights";
 
 export const metadata: Metadata = {
@@ -31,7 +32,8 @@ export const metadata: Metadata = {
  */
 export default async function InsightsPage() {
   const { isEnabled: preview } = await draftMode();
-  const documents = await getInsightGuideDocuments({ preview });
+  const locale = await getLocale();
+  const documents = await getInsightGuideDocuments({ preview, locale });
   const guides = documents.map((document) => document.guide);
   const guideMedia = Object.fromEntries(
     documents.flatMap((document) => document.media ? [[document.guide.slug, document.media]] : []),
@@ -91,7 +93,7 @@ export default async function InsightsPage() {
             <div className="absolute inset-0 bg-linear-to-t from-hero via-transparent to-hero/15" aria-hidden="true" />
             <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 border-t border-white/15 bg-hero/70 p-5 backdrop-blur-sm">
               <span className="max-w-[360px] text-xs leading-5 text-white/75">{insightsHeroMedia.caption}</span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-forge-bright">Technical library</span>
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-white/75">Technical library</span>
             </figcaption>
           </figure>
         </div>

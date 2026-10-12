@@ -11,6 +11,9 @@ export {
   getInsightGuideDocument,
   getInsightGuideDocuments,
 } from "./insights";
+export { getWordpressPageDocument } from "./pages";
+export { getProductLines } from "./product-lines";
+export { getInquiryContent } from "./inquiry-content";
 export { getAboutContent } from "./about";
 export { getHomepageContent } from "./homepage";
 export { getWheelManufacturingCapabilities } from "./wheel-capabilities";

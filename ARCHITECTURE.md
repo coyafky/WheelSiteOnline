@@ -75,15 +75,31 @@ flowchart LR
 |---|---|---|---|---|
 | 站点内容 | `src/content/*.ts` 与 `src/content/types.ts` | 本地类型化对象 | WordPress 响应适配为相同类型 | 接缝已实现，页面仍以本地内容为主 |
 | WordPress 读取 | `wpCollection` / `wpItem` | mock fallback + 本地 live REST | 受认证的 REST 读取、缓存与重验证 | 读取模块已实现，部分页面媒体已接入 |
-| Insights 内容 | `InsightGuideDocument` → 既有 `GuideEntry` | WordPress 结构化文章与媒体；失败时回退本地已审核内容 | 同左，逐步扩展到其他页面正文 | 6 篇文章已迁移并接管；预览、撤回与标签失效已验收 |
+| Insights 内容 | `InsightGuideDocument` → 既有 `GuideEntry` | WordPress 原生 `post` 结构化文章与媒体；失败时回退本地已审核内容 | 同左，逐步扩展到其他页面正文 | 6 篇文章已迁移并由原生文章接管；预览、撤回与标签失效已验收 |
+| 站点页面内容 | `HomepageContent` / `AboutContent` / `ConversionQuoteBody` / `ConversionContactBody` 等稳定类型 | WordPress 原生 `page` 的页面键、结构化内容、SEO 与特色媒体；字段不完整时回退最后一次有效快照 | 原生 Page 全量运营编辑、预览、撤回与发布审计 | 询盘页与联系页的业务正文分别由 `request-a-quote`、`contact` Page 承载；隐私同意版本只由独立 `privacy` Page 决定，不能因为正文获批而开放表单 |
 | 轮毂事实 | `WheelCatalogue` / `WheelModel` / `WheelVariant` | WordPress 可编辑规格/媒体正本 + 最后有效静态快照 | 同左，生产环境补监控与备份 | 138 型号已迁移并接管；页面公共接口与类型保持不变 |
 | 发布资格 | 公开 `WheelCatalogueCard/Detail` 视图 | 图片、发布状态与实际 variant 的 fail-closed 判定 | 再补图权、供货和业务签字 | 技术门槛已实现，首发集合待业务签字 |
 | 询盘写入 | `POST /api/inquiries` | WordPress CPT `fh_inquiry` + 事务 outbox（DEC-055） | 同一适配器接生产 WordPress | 本地持久化、幂等、回滚与权限矩阵已验收 |
 | 邮件投递 | WordPress outbox worker | accepted、租约、退避与放弃 | delivered/bounced 事件回调 + 平台可靠调度 | 本地 worker 已验收，生产事件闭环待实现 |
-| 国际化 | `src/lib/i18n` 语言契约 + 请求级 locale | 英文保留根 URL，中文使用 `/zh/*` 独立 URL；页头页脚已双语 | 页面正文按内容接缝逐模块提供中英版本 | URL/SEO/站点框架接缝实施中，未翻译正文不得伪装为中文 |
+| 国际化 | `src/lib/i18n` 语言契约 + 请求级 locale | 英文根 URL，`/zh/*`、`/es/*`、`/th/*` 独立 URL；下拉切换与站点 chrome 已接入 | WordPress Page/Insights 按 locale 提供正文与 SEO，逐页批准后开放索引 | 路由、字典和内容字段接缝已实现；正文未批准语言保持 noindex |
+| 界面主题与组件 | Astryx Neutral 静态主题、项目语义令牌与薄适配器 | 局部 `Theme`、全局 CSS 与项目组件并存 | 全站暖白主题；通用交互优先复用 Astryx，事实模块保留项目组件 | 迁移中，见 `PAGE-SPECS/astryx-neutral-global.md` |
 | 部署 | Next.js 服务端能力 | `output: "standalone"` | OpenNext 目标平台 | 当前可本地 Node 运行，OpenNext 未配置 |
 
 新增第二个数据来源时，在既有接缝增加适配器。不得让多个页面分别理解 WordPress 字段、供应商 JSON 或邮件服务响应。
+
+### 3.1 全站界面层（2026-10-11 迁移中）
+
+```text
+WordPress 已批准内容 / 已批准轮毂事实
+  → 服务端适配器与 src/content 稳定类型
+  → Next.js Server Component 页面与领域模块
+  → Astryx 通用交互原语 + 项目事实组件
+  → 暖白 Neutral 主题与项目语义令牌
+```
+
+主题和组件只决定如何呈现，不读取 WordPress 原始 JSON，也不决定产品发布、筛选真相或询盘保存。根布局仍是 Server Component；客户端 `Theme`、国际化、Toast 等 Provider 通过 `children` 承载服务端页面，不把整棵页面模块导入客户端。已知必须保留原生语义的多值 GET 筛选、普通链接分页、全文及工程规格表可使用项目组件，但其颜色、字号、焦点和间距遵守同一主题规格。
+
+主题的静态 CSS 与 `globals.css` 共同提供首屏样式，不能等水合后才注入关键颜色。英文根 URL 与三个语言前缀、WordPress 草稿/撤回门槛、无 JavaScript 阅读和 GET 筛选不随主题迁移改变。全站目标、组件例外和视口验收详见 `PAGE-SPECS/astryx-neutral-global.md`；决定依据见 `docs/adr/2026-10-11-astryx-warm-light-presentation.md`。
 
 ## 4. 依赖方向
 
@@ -134,7 +150,11 @@ assets/ 只读原件
 
 所有营销文案和页面数据进入 `src/content/*.ts` 的稳定接口，组件不硬编码。切换到 WordPress 时，适配器返回同样的视图模型，页面和组件无需修改。
 
-首页、About 与 Capabilities 已实现 live 媒体接缝：共用 `src/lib/wordpress/media.ts` 把 WordPress 的图片 URL、alt 与 caption 归一化为 `MediaAsset`；页面适配器分别组装稳定的 `HomepageContent`、`AboutContent` 与 `WheelManufacturingCapabilities`。CMS 未启用或临时不可用时，回退到同一张批准媒体的 `public/` 派生版本。其他页面仍待接入，不能据此声称全站已经由 WordPress 驱动。
+首页、About、Capabilities 和四条产品线页面已实现 live 内容/媒体接缝：共用
+`src/lib/wordpress/pages.ts` 读取原生 Page，再由各页面适配器组装稳定的
+`HomepageContent`、`AboutContent`、能力页和产品线视图模型。Insights 的 6 篇文章已迁移
+到原生 `post`，由 `src/lib/wordpress/insights.ts` 归一化。CMS 未启用、字段不完整或临时
+不可用时，回退到最后一次核验通过的本地快照；组件不会读取原始 WordPress REST 字段。
 
 生产 `WP_MODE=live` 后：
 
@@ -227,10 +247,11 @@ Next.js 标签与路径失效。缓存失效是发布流程的一部分，不依
 - sitemap 只读取批准页面和公开产品集合；
 - `/thank-you`、预览、草稿、未确认产品和无效型号不索引；
 - `NEXT_PUBLIC_APP_URL` 在构建时固化，构建与发布必须核对其实际值；
-- 英文保留根路由以维持既有链接，中文使用 `/zh/*` 独立 URL；语言选择 cookie 只用于
+- 英文保留根路由以维持既有链接，中文、西班牙语、泰语使用 `/zh/*`、`/es/*`、`/th/*`
+  独立 URL；语言选择 cookie 只用于
   记忆与入口跳转，不作为页面语言的唯一事实源；
-- 每个已完成中文正文的公开页面才可输出 `hreflang=zh` 并进入中文 sitemap。只有站点
-  框架翻译、正文仍为英文的页面不得被标成完整中文页面，也不得进入中文索引集合；
+- 每个已完成且批准的语言正文才可输出对应 `hreflang` 并进入该语言 sitemap。只有站点
+  框架翻译、正文仍为英文的页面不得被标成完整翻译，也不得进入语言索引集合；
 - 语言切换必须保留当前路径、查询参数和片段，不得把用户无条件送回首页。
 
 ## 8. 询盘架构
@@ -255,14 +276,19 @@ sequenceDiagram
   A->>C: 复核产品线/型号/variant
   C-->>A: 批准快照或拒绝
   A->>D: 同事务写 inquiry/items/snapshot/consent/outbox
-  D-->>A: inquiry number
-  A-->>B: 201 + inquiry number
+  D-->>A: persisted=true + inquiry number
+  alt 数据库事务成功
+    A-->>B: 201/200 + inquiry number
+  else 未持久化或 CMS 不可用
+    A-->>B: 503，不生成成功回执
+  end
   O->>D: 领取 outbox
   O->>M: 发送通知/回执
   M-->>D: accepted/delivered/bounced/unknown 事件
 ```
 
-数据库事务成功是询盘成功的唯一条件。邮件服务商接受请求、邮件送达和销售已阅读是不同状态。
+数据库事务成功是询盘成功的唯一条件。进程内临时记录不属于客户询盘，API 与前端都必须拒绝
+`persisted:false` 的成功语义；邮件服务商接受请求、邮件送达和销售已阅读是不同状态。
 
 ### 8.3 当前实现与缺口
 
@@ -270,7 +296,9 @@ sequenceDiagram
 幂等键、隐私版本双重门槛、Origin、蜜罐、时间陷阱、窗口限流和请求体上限；WordPress
 在同一事务写 CPT、幂等键、上下文/同意 meta 与 outbox。`GET` 恒返 404，权威读取只在
 WordPress 最小权限后台。Docker 已对回滚、201/200 重放、租约、退避、5 次放弃与权限
-矩阵完成 69 项验收。
+矩阵完成 80 项验收。Next.js 在 WordPress 未配置或写入失败时统一返回 503；浏览器只有收到
+`ok:true && persisted:true` 才进入成功状态、生成回执或清空总询盘清单。Playwright 固定使用
+`WP_MODE=mock`，不得继承开发机的真实 SMTP 配置。
 
 生产前仍需增加：批准的隐私文本与正式版本、平台边缘限流/人机验证取舍、邮件提供商
 签名事件回调、平台可靠调度、法务批准的保留天数、备份内删除策略、异常/积压告警和

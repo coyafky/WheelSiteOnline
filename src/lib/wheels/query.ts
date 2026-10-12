@@ -257,6 +257,15 @@ export function toCatalogueCard(model: PublicWheelModel) {
     pcdsTotal: model.pcds.length,
     approvedVariantCount: model.approvedVariantCount,
     approvedFinishCount: model.approvedFinishCount,
+    defaultVariant: model.variants[0]
+      ? {
+          productionCode: model.variants[0].productionCode,
+          size: model.variants[0].size,
+          pcd: model.variants[0].pcd,
+          offset: model.variants[0].offset,
+          centerBore: model.variants[0].centerBore,
+        }
+      : null,
   };
 }
 

@@ -17,7 +17,7 @@
 |---|---|---|---|---|
 | WD01 | 这是什么型号 | 面包屑、真实型号、批准主图、已记录工艺和简短事实说明 | 单张产品主图 + 型号信息 | 浏览配置 |
 | WD02 | 有哪些真实配置 | 每一条批准 variant 的生产代码、尺寸、PCD、ET、CB、finish | 桌面表格 / 移动配置卡 | 选择一个配置 |
-| WD03 | 怎样询问这个型号 | 已选配置摘要、项目字段、联系人和统一隐私同意 | 嵌入式紧凑询盘表单 | `Request this configuration` |
+| WD03 | 怎样询问这个型号 | 已选配置摘要、加入总询盘与当前产品直接询盘 | 双路径 CTA + 当前页弹窗 | `Request this configuration` |
 | WD04 | 有哪些表面处理 | 仅列本型号已批准变体中的公开 finish；说明实际颜色需样品确认 | 文本卡；有批准实物图后才显示图 | 把 finish 带入询盘 |
 | WD05 | 这个型号是否适配我的车 | 生产规格与车型适配的区别、工程还需要哪些输入 | 适配核对清单 | 提交车型/应用信息 |
 | WD06 | 还可比较哪些型号 | 最多三个完整批准、字段相关的真实型号 | 复用目录产品卡 | 查看另一个型号 |
@@ -249,7 +249,18 @@ type WheelDetailView = {
 
 ## 7. WD03 询盘行为
 
-详情页嵌入紧凑版统一询盘组件，提交仍走 `/api/inquiries`，不建立第二套 Email/WhatsApp 处理逻辑。
+详情页不直接铺开完整表单，而是明确分成两条业务路径：
+
+- `Add to total enquiry`：只把当前批准配置加入可跨页面保留的总询盘清单，客户可继续比较型号；
+- `Request this configuration`：在当前页打开可访问弹窗，只提交当前型号/配置，不读取也不清空
+  总询盘清单；未选择配置时使用 `Request this wheel model`，按既有 `variant_pending` 语义提交。
+
+两条路径仍复用统一 `InquiryForm`、`/api/inquiries`、隐私同意、服务端复核、WordPress 持久化和
+投递状态，不建立第二套 Email/WhatsApp 处理逻辑。直接模式提交成功后在弹窗内显示询盘编号，
+不跳转 `/request-a-quote`；总询盘模式提交成功后才清空清单。
+
+弹窗使用 Astryx `Dialog purpose="form"`：关闭按钮和 Escape 可退出、背景不可操作、关闭后焦点
+返回触发按钮。移动端内容在视口内纵向滚动，页面不得产生横向溢出。
 
 ### 可见字段
 
@@ -258,7 +269,8 @@ type WheelDetailView = {
 - `Company`：B 端必填，C 端隐藏或选填
 - `Business email` / `Email`
 - `Country or market`
-- `Quantity`
+- `Quantity for this configuration`：选中配置时为正整数，无业务上限；只受安全整数等技术边界保护
+- 项目总量文本：继续允许 `prototype`、`500/year` 等表达，不与单配置数量混为一个上限
 - `Vehicle or application`
 - `Message`
 - 隐私同意

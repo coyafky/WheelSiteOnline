@@ -1,0 +1,28 @@
+
+Running 23 tests using 1 worker
+
+  ✓   1 [chromium] › e2e/astryx-product.spec.ts:52:7 › 目录 URL 契约 › 筛选、排序表单是原生 GET，多值 checkbox 提交同一个 name (4.2s)
+  ✓   2 [chromium] › e2e/astryx-product.spec.ts:115:7 › 目录 URL 契约 › 分页是真实 <a href>，带 rel 与 aria-current (2.3s)
+  ✓   3 [chromium] › e2e/astryx-product.spec.ts:132:7 › 目录 URL 契约 › 筛选 + 排序 + 分页参数可复制 URL 并保持 (6.1s)
+  ✓   4 [chromium] › e2e/astryx-product.spec.ts:146:7 › 目录 URL 契约 › 越界页码返回 404 (1.1s)
+  ✓   5 [chromium] › e2e/astryx-product.spec.ts:151:7 › 目录 URL 契约 › 无结果筛选返回 200 且 noindex 空状态 (846ms)
+  ✓   6 [chromium] › e2e/astryx-product.spec.ts:167:7 › 移动筛选入口 › 320px 下 Filter 入口可见、可展开、可提交 (3.2s)
+  ✓   7 [chromium] › e2e/astryx-product.spec.ts:196:7 › 上架门槛 › 无图型号不可公开：详情 404，目录与 sitemap 均无 (3.9s)
+  ✓   8 [chromium] › e2e/astryx-product.spec.ts:210:7 › 上架门槛 › 目录每张卡都有真实图片 (2.5s)
+  ✓   9 [chromium] › e2e/astryx-product.spec.ts:227:7 › 详情规格同变体 › 桌面配置表每行是完整的同一 productionCode 组合 (3.0s)
+  ✓  10 [chromium] › e2e/astryx-product.spec.ts:247:7 › 详情规格同变体 › 单选控件按 productionCode 选择，选中后询盘绑定该 code (3.1s)
+  ✓  11 [chromium] › e2e/astryx-product.spec.ts:265:7 › CTA › 直接询盘 CTA 打开弹窗，未选配置时提交 variant_pending (3.4s)
+  ✓  12 [chromium] › e2e/astryx-product.spec.ts:281:7 › CTA › 清单 CTA 加入后浮动清单可见且不清空 (3.4s)
+  ✓  13 [chromium] › e2e/astryx-product.spec.ts:299:7 › 目录 + 详情 @ 320：0 控制台错误、无横向溢出 (14.5s)
+  ✓  14 [chromium] › e2e/astryx-product.spec.ts:299:7 › 目录 + 详情 @ 390：0 控制台错误、无横向溢出 (4.6s)
+  ✓  15 [chromium] › e2e/astryx-product.spec.ts:299:7 › 目录 + 详情 @ 768：0 控制台错误、无横向溢出 (3.8s)
+  ✓  16 [chromium] › e2e/astryx-product.spec.ts:299:7 › 目录 + 详情 @ 1440：0 控制台错误、无横向溢出 (2.9s)
+  ✓  17 [chromium] › e2e/astryx-product.spec.ts:315:5 › SEO：目录 title/canonical/robots 完整 (1.0s)
+  ✓  18 [chromium] › e2e/astryx-product.spec.ts:329:5 › SEO：详情 title/canonical/robots 完整 (634ms)
+  ✓  19 [chromium] › e2e/astryx-product.spec.ts:352:9 › 能力线首屏 › /products/ev-components 的 h1 在深色表面上仍是浅色 (640ms)
+  ✓  20 [chromium] › e2e/astryx-product.spec.ts:352:9 › 能力线首屏 › /products/custom-aluminum 的 h1 在深色表面上仍是浅色 (596ms)
+  ✓  21 [chromium] › e2e/astryx-product.spec.ts:352:9 › 能力线首屏 › /products/safety-tires 的 h1 在深色表面上仍是浅色 (1.3s)
+  ✓  22 [chromium] › e2e/astryx-product.spec.ts:352:9 › 能力线首屏 › /products/wheels/flow-formed 的 h1 在深色表面上仍是浅色 (1.5s)
+  ✓  23 [chromium] › e2e/astryx-product.spec.ts:352:9 › 能力线首屏 › /products/wheels/forged 的 h1 在深色表面上仍是浅色 (450ms)
+
+  23 passed (1.2m)

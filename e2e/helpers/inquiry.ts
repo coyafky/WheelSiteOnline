@@ -5,9 +5,17 @@ export async function completeInquiryForm(
   options: { productLine?: string; email?: string } = {},
 ) {
   await page.getByLabel("Business").check();
-  const productLine = page.getByLabel("Product line");
-  if (!(await productLine.inputValue())) {
-    await productLine.selectOption(options.productLine ?? "wheels");
+  const productLineValue = page.locator('input[name="productLine"]');
+  if (!(await productLineValue.inputValue())) {
+    const value = options.productLine ?? "wheels";
+    const labels: Record<string, string> = {
+      wheels: "Wheels",
+      "ev-components": "EV Powertrain Housings",
+      "custom-aluminum": "Custom Aluminum",
+      "safety-tires": "Safety Tires",
+    };
+    await page.getByRole("combobox", { name: /^Product line/ }).click();
+    await page.getByRole("option", { name: labels[value], exact: true }).click();
   }
   await page
     .getByLabel("Describe the part, product or result you need")

@@ -1,0 +1,242 @@
+[
+  {
+    "viewport": "320x568",
+    "state": "open/request-a-quote",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "open/dialog",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "validation/client",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "focused": {
+      "tag": "INPUT",
+      "name": "_R_2mj3sav5tnb_"
+    },
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "validation/server-422",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+    ],
+    "focused": "_r_a_",
+    "hasServerMessage": true,
+    "hasLocalizedMessage": false,
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "submitting",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "submitLabel": null,
+    "submitDisabled": null,
+    "backDisabled": null,
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "success",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "server-error/503",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "alertVisible": true,
+    "emailValue": "p2-evidence@example.com",
+    "successAbsent": true,
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "isolation/direct-fail-preserves-cart",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "dialogHasCart": false,
+    "emailAfter": "p2-direct@example.com",
+    "cartAfterLen": 1,
+    "cartAfterQty": 3,
+    "overflow": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "320x568",
+    "state": "focus/escape-restores-trigger",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [],
+    "trapAllInside": false,
+    "dialogGone": false,
+    "refocused": false
+  },
+  {
+    "viewport": "768x1024",
+    "state": "open/request-a-quote",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "open/dialog",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "validation/client",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "focused": {
+      "tag": "INPUT",
+      "name": "_R_2mj3sav5tnb_"
+    },
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "validation/server-422",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+    ],
+    "focused": "_r_a_",
+    "hasServerMessage": true,
+    "hasLocalizedMessage": false,
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "submitting",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "submitLabel": null,
+    "submitDisabled": null,
+    "backDisabled": null,
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "success",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [],
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "server-error/503",
+    "url": "http://127.0.0.1:3210/request-a-quote",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "alertVisible": true,
+    "emailValue": "p2-evidence@example.com",
+    "successAbsent": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "isolation/direct-fail-preserves-cart",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "dialogHasCart": false,
+    "emailAfter": "p2-direct@example.com",
+    "cartAfterLen": 1,
+    "cartAfterQty": 3,
+    "overflow": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": 0
+    }
+  },
+  {
+    "viewport": "768x1024",
+    "state": "focus/escape-restores-trigger",
+    "url": "http://127.0.0.1:3210/products/wheels/dm902?model=DM902&product_line=wheels&intent=wheel_model_quote&variant=DM902177501W&code=DM902177501W",
+    "consoleErrors": [],
+    "trapAllInside": false,
+    "dialogGone": false,
+    "refocused": false
+  }
+]

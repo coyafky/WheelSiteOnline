@@ -2,7 +2,9 @@
 
 import { useMemo, useState } from "react";
 
-import { wheelDetailConfigurations as copy, finishNamePending } from "@/content/wheel-detail";
+import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
+import { wheelFinishPendingFor } from "@/lib/i18n/wheel-enquiry-copy";
+import type { Locale } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
 
 import {
@@ -40,6 +42,8 @@ import {
  */
 
 type WheelVariantSelectorProps = {
+  locale: Locale;
+  model: string;
   variants: WheelVariantSpec[];
   /** `null` until the visitor chooses (multi-variant models start unselected). */
   selectedCode: string | null;
@@ -74,12 +78,16 @@ function haystack(variant: WheelVariantSpec): string {
 }
 
 export function WheelVariantSelector({
+  locale,
+  model,
   variants,
   selectedCode,
   onSelect,
   baseId,
   headingId,
 }: WheelVariantSelectorProps) {
+  const copy = wheelDetailCopyFor(locale).configurations;
+  const finishNamePending = wheelFinishPendingFor(locale);
   const [query, setQuery] = useState("");
   const filterEnabled = variants.length > FILTER_THRESHOLD;
 
@@ -159,7 +167,7 @@ export function WheelVariantSelector({
             mobile visitor has to scroll sideways. */}
         <div className="mt-8 hidden lg:block">
           <table className="w-full border-collapse text-left text-[0.85rem]">
-            <caption className="sr-only">{copy.tableCaption("this model")}</caption>
+            <caption className="sr-only">{copy.tableCaption(model)}</caption>
             <thead>
               <tr>
                 {[

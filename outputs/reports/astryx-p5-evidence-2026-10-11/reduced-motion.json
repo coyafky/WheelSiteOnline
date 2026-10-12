@@ -1,0 +1,32 @@
+[
+ {
+  "route": "/",
+  "total": 15,
+  "hidden": 0,
+  "kenburnsAnimating": 0
+ },
+ {
+  "route": "/about",
+  "total": 18,
+  "hidden": 0,
+  "kenburnsAnimating": 0
+ },
+ {
+  "route": "/support/returns",
+  "total": 13,
+  "hidden": 0,
+  "kenburnsAnimating": 0
+ },
+ {
+  "route": "/insights",
+  "total": 9,
+  "hidden": 0,
+  "kenburnsAnimating": 0
+ },
+ {
+  "route": "/products/wheels",
+  "total": 1,
+  "hidden": 0,
+  "kenburnsAnimating": 0
+ }
+]

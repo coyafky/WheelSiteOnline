@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { Theme } from "@astryxdesign/core/theme";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
 
 import { cn } from "@/lib/utils";
 import type { CatalogueFacets, WheelCatalogueInput } from "@/lib/wheels";
@@ -46,19 +49,16 @@ export function WheelCatalogueEmptyState({
 }) {
   return (
     <section
-      aria-labelledby="wheel-catalogue-empty-title"
+      aria-label="Wheel catalogue empty results"
       className={cn("rounded-lg border border-border bg-card p-6 lg:p-8", className)}
     >
-      <h2
-        id="wheel-catalogue-empty-title"
-        className="font-display text-[clamp(1.3rem,2.8vw,1.75rem)] font-800 uppercase leading-tight tracking-[-0.01em] text-ink"
-      >
-        No published model matches all selected specifications
-      </h2>
-      <p className="mt-4 max-w-[680px] text-[0.95rem] leading-relaxed text-steel">
-        Try removing one filter, check that the selected size and PCD belong to the same
-        required configuration, or send the project details for an engineering review.
-      </p>
+      <Theme theme={neutralTheme} mode="light">
+        <EmptyState
+          title="No published model matches all selected specifications"
+          description="Try removing one filter, check that the selected size and PCD belong to the same required configuration, or send the project details for an engineering review."
+          headingLevel={2}
+        />
+      </Theme>
 
       {/* 筛选摘要：可逐项移除（§9 W03「保留当前筛选摘要」） */}
       <WheelCatalogueAppliedChips facets={facets} query={query} className="mt-5" />

@@ -10,6 +10,11 @@ import {
   WHEEL_PUBLICATION_TAG,
   wheelRevalidationPaths,
 } from "@/lib/wordpress/wheels-contract";
+import {
+  SITE_PAGES_CACHE_TAG,
+  sitePageRevalidationPaths,
+  validSitePageKey,
+} from "@/lib/wordpress/pages-contract";
 
 function validSignature(body: string, provided: string | null): boolean {
   const expected = process.env.WP_REVALIDATE_SECRET?.trim();
@@ -36,15 +41,18 @@ export async function POST(request: Request) {
     type?: unknown;
     slug?: unknown;
   } | null;
-  const type = body?.type === "wheels" ? "wheels" : body?.type === "insights" ? "insights" : null;
+  const type = body?.type === "wheels" ? "wheels" : body?.type === "insights" ? "insights" : body?.type === "pages" ? "pages" : null;
   if (!type) {
     return NextResponse.json({ ok: false, error: "Invalid content type." }, { status: 422 });
   }
-  const slug = validInsightPreviewSlug(typeof body?.slug === "string" ? body.slug : null);
-  const tag = type === "wheels" ? WHEEL_PUBLICATION_TAG : INSIGHTS_CACHE_TAG;
+  const rawSlug = typeof body?.slug === "string" ? body.slug : null;
+  const slug = type === "pages" ? validSitePageKey(rawSlug) : validInsightPreviewSlug(rawSlug);
+  const tag = type === "wheels" ? WHEEL_PUBLICATION_TAG : type === "insights" ? INSIGHTS_CACHE_TAG : SITE_PAGES_CACHE_TAG;
   const paths = type === "wheels"
     ? wheelRevalidationPaths(slug ?? undefined)
-    : insightRevalidationPaths(slug ?? undefined);
+    : type === "insights"
+    ? insightRevalidationPaths(slug ?? undefined)
+    : sitePageRevalidationPaths(slug ?? undefined);
   revalidateTag(tag, { expire: 0 });
   for (const path of paths) revalidatePath(path);
   return NextResponse.json({ ok: true, type, tag, paths });

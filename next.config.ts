@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { networkInterfaces } from "node:os";
 
 const remotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [
   {
@@ -34,7 +35,32 @@ if (process.env.WP_API_URL) {
   }
 }
 
+const localInterfaceOrigins = Object.values(networkInterfaces())
+  .flat()
+  .filter(
+    (address): address is NonNullable<typeof address> =>
+      Boolean(address && address.family === "IPv4" && !address.internal),
+  )
+  .map((address) => address.address);
+
+const allowedDevOrigins = Array.from(
+  new Set([
+    "127.0.0.1",
+    ...localInterfaceOrigins,
+    ...(process.env.NEXT_DEV_ALLOWED_ORIGINS ?? "")
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  ]),
+);
+
 const nextConfig: NextConfig = {
+  // Next.js 16 blocks dev-only scripts, fonts and HMR when the browser hostname
+  // differs from the hostname passed to `next dev`. This project is commonly
+  // started on 0.0.0.0 and viewed through 127.0.0.1 or a LAN address, so allow
+  // loopback plus this machine's active IPv4 interfaces. Explicit env entries
+  // remain available for stable aliases and development tunnels.
+  allowedDevOrigins,
   output: "standalone",
   poweredByHeader: false,
   images: {
@@ -58,13 +84,17 @@ const nextConfig: NextConfig = {
         return "";
       }
     })();
+    const scriptSource = [
+      "script-src 'self' 'unsafe-inline'",
+      ...(process.env.NODE_ENV === "development" ? ["'unsafe-eval'"] : []),
+    ].join(" ");
     const contentSecurityPolicy = [
       "default-src 'self'",
       "base-uri 'self'",
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      "script-src 'self' 'unsafe-inline'",
+      scriptSource,
       "style-src 'self' 'unsafe-inline'",
       `img-src 'self' data: blob:${cmsOrigin ? ` ${cmsOrigin}` : ""}`,
       `connect-src 'self'${cmsOrigin ? ` ${cmsOrigin}` : ""}`,

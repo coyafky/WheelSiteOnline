@@ -1,0 +1,121 @@
+{
+ "generatedAt": "2026-10-11T09:15:03.182Z",
+ "method": "clip-screenshot pixel diff focused vs blurred",
+ "routes": {
+  "/@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/products/wheels@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/products/wheels@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/request-a-quote@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/request-a-quote@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/products/wheels/dx035@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/products/wheels/dx035@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/tools/offset-calculator@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/tools/offset-calculator@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/support/returns@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/support/returns@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/insights/bolt-patterns/5x120@320x568": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  },
+  "/insights/bolt-patterns/5x120@1440x900": {
+   "tabbed": 28,
+   "withoutRenderedChange": [],
+   "errors": []
+  }
+ },
+ "dialog": {
+  "route": "/products/wheels/dx035",
+  "steps": [],
+  "triggerText": "Request this wheel model",
+  "dialogElement": {
+   "tag": "dialog",
+   "role": null,
+   "ariaModal": "true",
+   "parentTag": "div",
+   "parentCls": "xjp7ctv x1tgivj0 x9ynric x19aimcq"
+  },
+  "outsideStateWhileOpen": {
+   "outsideCount": 54,
+   "stillReachable": 54,
+   "sample": [
+    "a# FHFenghuai制造",
+    "button# 产品中心",
+    "a# 全部产品线",
+    "a# 轮毂",
+    "a# 新能源三电壳体"
+   ]
+  },
+  "forwardTab": {
+   "presses": 40,
+   "leftDialog": 2,
+   "leftDialogEvents": [
+    "#12: body body=true \"FHFenghuai制造产品中心全部产品线轮毂新能源三电壳体铝制品定制安\"",
+    "#35: body body=true \"FHFenghuai制造产品中心全部产品线轮毂新能源三电壳体铝制品定制安\""
+   ],
+   "distinctTargets": 10
+  },
+  "afterEscape": {
+   "dialogClosed": false,
+   "focusOnTrigger": false,
+   "activeTag": "input",
+   "activeId": "_R_m7ar9qqnpfiv5tnb_",
+   "activeText": "",
+   "isBody": false
+  },
+  "reopenFromWhereverFocusLanded": {
+   "dialogOpen": true,
+   "activeTag": "input",
+   "activeText": ""
+  }
+ }
+}

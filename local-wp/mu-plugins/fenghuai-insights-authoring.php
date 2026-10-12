@@ -13,29 +13,35 @@ if (!defined('ABSPATH')) {
 }
 
 const FH_GUIDE_AUTHORING_POST_TYPE = 'fh_guide';
+const FH_GUIDE_AUTHORING_NATIVE_POST_TYPE = 'post';
 
 add_action('init', 'fh_guide_authoring_register_meta', 20);
 function fh_guide_authoring_register_meta(): void
 {
-    register_post_meta(FH_GUIDE_AUTHORING_POST_TYPE, 'fh_featured_media_id', [
-        'type' => 'integer',
-        'single' => true,
-        'default' => 0,
-        'show_in_rest' => false,
-        'auth_callback' => static fn(): bool => current_user_can('edit_posts'),
-        'sanitize_callback' => static fn($value): int => absint($value),
-    ]);
+    foreach ([FH_GUIDE_AUTHORING_POST_TYPE, FH_GUIDE_AUTHORING_NATIVE_POST_TYPE] as $postType) {
+        register_post_meta($postType, 'fh_featured_media_id', [
+            'type' => 'integer',
+            'single' => true,
+            'default' => 0,
+            'show_in_rest' => false,
+            'auth_callback' => static fn(): bool => current_user_can('edit_posts'),
+            'sanitize_callback' => static fn($value): int => absint($value),
+        ]);
+    }
 }
 
 add_action('add_meta_boxes_' . FH_GUIDE_AUTHORING_POST_TYPE, 'fh_guide_authoring_replace_meta_box', 50);
+add_action('add_meta_boxes_' . FH_GUIDE_AUTHORING_NATIVE_POST_TYPE, 'fh_guide_authoring_replace_meta_box', 50);
 function fh_guide_authoring_replace_meta_box(): void
 {
-    remove_meta_box('fh-guide-fields', FH_GUIDE_AUTHORING_POST_TYPE, 'normal');
+    $screen = get_current_screen();
+    if (!$screen || !in_array($screen->post_type, [FH_GUIDE_AUTHORING_POST_TYPE, FH_GUIDE_AUTHORING_NATIVE_POST_TYPE], true)) return;
+    remove_meta_box('fh-guide-fields', $screen->post_type, 'normal');
     add_meta_box(
         'fh-guide-structured-fields',
         'Insights 结构化文章字段',
         'fh_guide_authoring_render_meta_box',
-        FH_GUIDE_AUTHORING_POST_TYPE,
+        $screen->post_type,
         'normal',
         'high'
     );
@@ -84,6 +90,11 @@ function fh_guide_authoring_render_meta_box(WP_Post $post): void
         <label for="<?php echo esc_attr($name); ?>"><?php echo esc_html($label); ?></label>
         <div><?php if ($type === 'textarea') : ?><textarea rows="3" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>"><?php echo esc_textarea($value); ?></textarea><?php else : ?><input type="text" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>"><?php endif; ?></div>
       <?php endforeach; ?>
+
+      <label for="fh_translations_json">多语言正文 JSON</label>
+      <div><textarea rows="8" id="fh_translations_json" name="fh_translations_json"><?php echo esc_textarea((string) get_post_meta($post->ID, 'fh_translations_json', true)); ?></textarea><p class="fh-guide-help">格式：{"zh":{"title":"...","summary":"...","detail":[...],"sections":[...]},"es":{...},"th":{...}}。</p></div>
+      <label for="fh_translation_status_json">多语言发布状态 JSON</label>
+      <div><textarea rows="3" id="fh_translation_status_json" name="fh_translation_status_json"><?php echo esc_textarea((string) get_post_meta($post->ID, 'fh_translation_status_json', true)); ?></textarea><p class="fh-guide-help">只有 approved 的语言正文会进入公开 REST；draft/withdrawn 只在编辑预览可见。</p></div>
 
       <label>列表页短版</label>
       <div><div class="fh-guide-blocks" id="fh-guide-detail-blocks" data-array-key="paragraphs"><?php fh_guide_authoring_render_blocks($detail, 'paragraphs'); ?></div><button type="button" class="button fh-guide-add-block" data-target="fh-guide-detail-blocks">新增短版段落</button><input type="hidden" id="fh_detail_json" name="fh_detail_json" value=""></div>
@@ -143,6 +154,7 @@ function fh_guide_authoring_render_blocks(array $rows, string $arrayKey): void
 }
 
 add_action('save_post_' . FH_GUIDE_AUTHORING_POST_TYPE, 'fh_guide_authoring_save_media', 20);
+add_action('save_post_' . FH_GUIDE_AUTHORING_NATIVE_POST_TYPE, 'fh_guide_authoring_save_media', 20);
 function fh_guide_authoring_save_media(int $postId): void
 {
     if (!isset($_POST['fh_guide_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['fh_guide_nonce'])), 'fh_guide_save')) return;

@@ -5,6 +5,7 @@
 - 视口：QF01–QF03
 - 状态：应用层已实现并复验（2026-10-08）。QF01–QF03 两步四线/B-C 表单、来源上下文、浏览器幂等、统一 `/api/inquiries`、服务端校验、WordPress 同库事务、outbox、隐私版本门槛、应用层反滥用、感谢页和最小权限角色均已落地。正式隐私文本与联系信息、邮件提供商事件回调、生产平台 cron/边缘限流、预发布 UAT 仍待外部资源。
 - 公开语言：英文优先
+- 四语接线（2026-10-12）：`request-a-quote` 与 `contact` 是两个独立 WordPress Page 业务正文正本，均有 `en/zh/es/th` 本地批准译文；按钮、标签、状态走 Next.js 本地字典。`privacy` 是独立同意版本门槛，法律/隐私草稿不能因业务正文获批而开放表单。非英语仍不索引。正式批准与商用发布另行验收。
 - 结构参考：[2N Request Wheel Quote](https://2nforged.com/contact-us/)；只借鉴低门槛说明、短准备清单、紧凑表单和直接联系兜底
 - 后端依据：[数据与询盘设计](../outputs/site-launch-plan/02-data-and-inquiry-design.md)
 - 硬规则：正常基准视口中，每个表单步骤必须连同主按钮完整可见；键盘弹出、200% 放大和辅助设备下允许自然滚动
@@ -52,7 +53,8 @@ QF01 与 QF02 在桌面可合并进同一屏，但只能共同回答“怎样开
 
 - 全站 Header、首页 H05、Footer：只有产品线或来源页面上下文；
 - 产品线页：自动带入 `productLine`；
-- 轮毂详情：带入批准的 `model`、`productionCode` 和同一 variant 的规格快照；
+- 轮毂详情的“加入总询盘”路径：带入批准的 `model`、`productionCode` 和同一 variant 的规格
+  快照；详情页“直接询盘”在当前页弹窗提交，不经过本页，也不读取或清空这里的总询盘清单；
 - 轮毂目录：可带入型号，未选择 variant 时不得制造规格快照；
 - `/contact`：带入 `from=contact`，不预选未知产品线。
 
@@ -122,6 +124,8 @@ QF01 与 QF02 在桌面可合并进同一屏，但只能共同回答“怎样开
 | `inputsAvailable` | 多选 | 否 | `2D drawing` / `3D data` / `physical sample` / `product code` / `none yet`；按产品线显示 |
 
 本步必填共 3 个。产品上下文来自详情页时仍可见，但不作为第四个让客户重复填写的必填项。
+总询盘清单中每个 `items[].quantity` 是独立的单配置正整数，没有业务上限；这里的 `quantity`
+仍是项目规模文本。两者不能互相覆盖或用 999 等任意数字限制。
 
 ### 5.2 英文内容
 

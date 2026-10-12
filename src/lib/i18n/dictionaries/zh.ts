@@ -1,7 +1,7 @@
 import type { Dictionary } from "../types";
 
 /**
- * 中文字典 —— 与 `en.ts` 键集必须完全一致。
+ * 中文字典 —— 与 `en.ts` 及其它公开语言键集必须完全一致。
  *
  * ⚠️ 缺键会静默回退到英文，运行时看不出问题 → 新增键必须两边同时加。
  * 语料依据：`assets/site-data/峰徊科技独立站-中英内容语料库.md`（峰徊画册中英对照）。
@@ -34,7 +34,39 @@ export const zh: Dictionary = {
   "cta.requestQuote": "获取报价",
   "cta.viewRange": "查看产品线",
   "cta.backToTop": "回到顶部",
+  // 共享 <DealerCta> 的默认文案：所有裸 `<DealerCta />` 调用点共用。
+  // 有自己说法的页面通过 title/body 覆盖，默认值只是兜底。
+  "cta.enquiriesEyebrow": "询盘",
+  "cta.dealerTitle": "告诉我们这个零件要做到什么",
+  "cta.dealerBody": "请提供图纸、样件或目标规格。我们会回复工艺路线、模具方案与价格。",
+
+  // ── 产品中心页面框架（/products）───────────────────────────────────────
+  // 产品中心的正文由 WordPress 提供；这里是写在 JSX 里的固定文案。
+  "catalogue.families.eyebrow": "四条产品线",
+  "catalogue.families.heading": "四条产品线，一座工厂",
+  "catalogue.families.lede": "轮毂、三电壳体、铝制品定制与自密封轮胎 —— 同一工厂制造，同一套规格纪律。",
+  "catalogue.card.explore": "了解详情",
+  "catalogue.fitmentLink": "适配资料",
+  "catalogue.resources.eyebrow": "继续了解",
+  "catalogue.resources.heading": "相关资料",
+  "catalogue.faq.eyebrow": "常见问题",
+  "catalogue.faq.heading": "下单前的常见问题",
+  "catalogue.faq.lede": "经销商在首次下单前最常问的问题。如果你的问题不在这里，请直接问我们 —— 我们宁愿提前答复，也不愿在订单阶段才发现。",
   "brand.division": "制造",
+  "breadcrumb.label": "面包屑导航",
+  "breadcrumb.home": "首页",
+  "outline.heading": "本页内容",
+  "outline.label": "页面章节",
+
+  // ── 首页采购起点 ──────────────────────────────────────────────────────
+  "home.intent.eyebrow": "从你已有的资料开始",
+  "home.intent.heading": "你想开发或采购什么？",
+  "home.intent.wheelModel": "我已有轮毂型号",
+  "home.intent.wheelModelHint": "从型号、编码或适配要求开始。",
+  "home.intent.drawingSample": "我有图纸或样件",
+  "home.intent.drawingSampleHint": "提交需求，我们会转给对应产品线。",
+  "home.intent.productLine": "我正在了解产品线",
+  "home.intent.productLineHint": "比较四条制造路径。",
 
   // ── 无障碍标签 ─────────────────────────────────────────────────────────
   "a11y.primaryNav": "主导航",

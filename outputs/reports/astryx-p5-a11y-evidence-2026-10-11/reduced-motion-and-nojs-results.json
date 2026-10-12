@@ -1,0 +1,375 @@
+{
+ "generatedAt": "2026-10-11T09:19:02.511Z",
+ "base": "http://127.0.0.1:3210",
+ "reducedMotion": {
+  "/@320x568": {
+   "revealCount": 21,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/@1440x900": {
+   "revealCount": 21,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/about@320x568": {
+   "revealCount": 33,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/about@1440x900": {
+   "revealCount": 33,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/capabilities@320x568": {
+   "revealCount": 27,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/capabilities@1440x900": {
+   "revealCount": 27,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/products/wheels@320x568": {
+   "revealCount": 1,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/products/wheels@1440x900": {
+   "revealCount": 1,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/insights@320x568": {
+   "revealCount": 12,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/insights@1440x900": {
+   "revealCount": 12,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/insights/how-to-measure-fitment@320x568": {
+   "revealCount": 13,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/insights/how-to-measure-fitment@1440x900": {
+   "revealCount": 13,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/support/returns@320x568": {
+   "revealCount": 16,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/support/returns@1440x900": {
+   "revealCount": 16,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/products/wheels/dx035@320x568": {
+   "revealCount": 7,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  },
+  "/products/wheels/dx035@1440x900": {
+   "revealCount": 7,
+   "hiddenBeforeScroll": 0,
+   "hiddenAfterScroll": 0,
+   "hiddenDetail": [],
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "reducedMotionMatches": true,
+   "animationsStillRunning": 0,
+   "animationsSample": [],
+   "kenburns": []
+  }
+ },
+ "noJs": {
+  "faq:/about": {
+   "detailCount": 0,
+   "openCount": 0,
+   "sample": [],
+   "allFaqTextLen": 0
+  },
+  "faq:/capabilities": {
+   "detailCount": 0,
+   "openCount": 0,
+   "sample": [],
+   "allFaqTextLen": 0
+  },
+  "faq:/dealers": {
+   "detailCount": 0,
+   "openCount": 0,
+   "sample": [],
+   "allFaqTextLen": 0
+  },
+  "faq:/tools/offset-calculator": {
+   "detailCount": 1,
+   "openCount": 0,
+   "sample": [
+    {
+     "summaryLen": 23,
+     "bodyLen": 110,
+     "bodyText": "Original backspace136.6 mmReplacement backspace149.3 mmOriginal frontspace66.6 mmReplaceme"
+    }
+   ],
+   "allFaqTextLen": 133
+  },
+  "outline:/support/returns": {
+   "outlineFound": true,
+   "outlineLinkCount": 0,
+   "resolved": [],
+   "resolvedAllOk": true,
+   "h2WithIdCount": 4,
+   "h2s": [
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 5623
+  },
+  "outline:/support/privacy": {
+   "outlineFound": true,
+   "outlineLinkCount": 0,
+   "resolved": [],
+   "resolvedAllOk": true,
+   "h2WithIdCount": 5,
+   "h2s": [
+    {
+     "id": "privacy-template-title",
+     "text": "询盘隐私版本与同意文本"
+    },
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 7774
+  },
+  "catalogue:/products/wheels": {
+   "error": "elementHandle.fill: Timeout 30000ms exceeded."
+  },
+  "article:/insights/how-to-measure-fitment": {
+   "h1": "How to measure your fitment",
+   "paragraphCount": 28,
+   "bodyTextLen": 4820,
+   "totalTextLen": 6183,
+   "tables": 0,
+   "lists": 2
+  },
+  "article:/insights/bolt-patterns/5x120": {
+   "h1": "5x120",
+   "paragraphCount": 53,
+   "bodyTextLen": 8085,
+   "totalTextLen": 10024,
+   "tables": 0,
+   "lists": 2
+  }
+ },
+ "noJsHiddenCensus": {
+  "/": {
+   "revealCount": 21,
+   "hidden": 0,
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "detail": []
+  },
+  "/about": {
+   "revealCount": 33,
+   "hidden": 0,
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "detail": []
+  },
+  "/products/wheels": {
+   "revealCount": 1,
+   "hidden": 0,
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "detail": []
+  },
+  "/insights/how-to-measure-fitment": {
+   "revealCount": 13,
+   "hidden": 0,
+   "htmlAttrs": {
+    "motionReady": false,
+    "motionArmed": false
+   },
+   "detail": []
+  }
+ }
+}

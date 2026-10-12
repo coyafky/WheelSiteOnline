@@ -14,6 +14,18 @@ export type WordpressGuideFields = {
   sections?: unknown;
   seo_title?: string;
   seo_description?: string;
+  translations?: Record<string, Partial<{
+    title: string;
+    summary: string;
+    category: string;
+    reading_time: string;
+    answer: string;
+    detail: unknown;
+    sections: unknown;
+    seo_title: string;
+    seo_description: string;
+  }>>;
+  translation_status?: Record<string, "draft" | "approved" | "withdrawn">;
   image?: {
     id?: number;
     src?: string;
@@ -116,7 +128,7 @@ function normalizeImage(value: WordpressGuideFields["image"]): MediaAsset | unde
 
 export function normalizeWordpressGuide(
   record: WordpressGuideRecord,
-  options: { preview?: boolean } = {},
+  options: { preview?: boolean; locale?: import("@/lib/i18n/types").Locale } = {},
 ): InsightGuideDocument | null {
   const preview = options.preview === true;
   const fields = record.guide ?? record.acf;
@@ -124,13 +136,18 @@ export function normalizeWordpressGuide(
   if (!preview && (record.status !== "publish" || publicationStatus !== "approved")) return null;
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(record.slug)) return null;
 
-  const title = text(record.title?.rendered);
-  const summary = text(fields?.summary) || text(record.excerpt?.rendered);
-  const category = text(fields?.category);
-  const answer = text(fields?.answer);
-  const detail = normalizeDetail(fields?.detail);
-  const sections = normalizeSections(fields?.sections);
-  const readingTime = text(fields?.reading_time)
+  const locale = options.locale ?? "en";
+  const translation = locale === "en" ? undefined : fields?.translations?.[locale];
+  if (locale !== "en" && !translation) return null;
+  if (locale !== "en" && !preview && fields?.translation_status?.[locale] !== "approved") return null;
+  const localized = translation ?? {};
+  const title = text(localized.title) || text(record.title?.rendered);
+  const summary = text(localized.summary) || text(fields?.summary) || text(record.excerpt?.rendered);
+  const category = text(localized.category) || text(fields?.category);
+  const answer = text(localized.answer) || text(fields?.answer);
+  const detail = normalizeDetail(localized.detail ?? fields?.detail);
+  const sections = normalizeSections(localized.sections ?? fields?.sections);
+  const readingTime = text(localized.reading_time) || text(fields?.reading_time)
     || (Number.isFinite(fields?.reading_minutes) ? `${fields?.reading_minutes} min read` : "");
   if (!title || !summary || !category || !answer || !readingTime || !detail || !sections) return null;
 
@@ -147,8 +164,8 @@ export function normalizeWordpressGuide(
   };
   return {
     guide,
-    seoTitle: text(fields?.seo_title) || `${title} — ${category} Guide`,
-    seoDescription: text(fields?.seo_description) || summary,
+    seoTitle: text(localized.seo_title) || text(fields?.seo_title) || `${title} — ${category} Guide`,
+    seoDescription: text(localized.seo_description) || text(fields?.seo_description) || summary,
     source: "wordpress",
     preview,
     publicationStatus,

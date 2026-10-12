@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Clock, Wrench } from "lucide-react";
 import { tools, toolsHubCopy, toolsPathways } from "@/content/tools";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
 
 export const metadata: Metadata = {
   title: "Wheel Tools — Offset Calculator & Fitment Aids",
@@ -22,51 +23,25 @@ export default function ToolsPage() {
 
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. */}
+      <PageHero
         id="top"
-        aria-labelledby="tools-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="tools-title"
+        tone="dark"
+        eyebrow={toolsHubCopy.eyebrow}
+        heading={toolsHubCopy.heading}
+        lede={toolsHubCopy.lede}
+        supporting={toolsHubCopy.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_78%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{toolsHubCopy.eyebrow}</p>
-          <h1
-            id="tools-title"
-            className="mt-5 font-display text-[clamp(2.6rem,8vw,5.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            {toolsHubCopy.heading}
-          </h1>
-          <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
-            {toolsHubCopy.lede}
-          </p>
-          <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-white/55">
-            {toolsHubCopy.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link
-              href="/tools/offset-calculator"
-              className="btn-pill-solid"
-            >
-              Open the offset calculator
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/insights" className="btn-pill-outline !text-white">
-              Fitment guides
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="/tools/offset-calculator" className="btn-pill-solid">
+          Open the offset calculator
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/insights" className="btn-pill-outline !text-white">
+          Fitment guides
+        </Link>
+      </PageHero>
 
       {/* B. Available tools ------------------------------------------------ */}
       <section

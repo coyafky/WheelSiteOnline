@@ -1,0 +1,322 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Fenghuai home" [ref=e5] [cursor=pointer]:
+          - /url: /zh
+          - generic [ref=e6]:
+            - generic [ref=e7]: FH
+            - generic [ref=e8]:
+              - generic [ref=e9]: Fenghuai
+              - generic [ref=e10]: 制造
+        - navigation "主导航" [ref=e11]:
+          - generic [ref=e12]:
+            - button "产品中心" [ref=e13] [cursor=pointer]:
+              - text: 产品中心
+              - img [ref=e14]
+            - generic:
+              - generic:
+                - link "全部产品线":
+                  - /url: /zh/products
+                - link "轮毂":
+                  - /url: /zh/products/wheels
+                - link "新能源三电壳体":
+                  - /url: /zh/products/ev-components
+                - link "铝制品定制":
+                  - /url: /zh/products/custom-aluminum
+                - link "安全轮胎":
+                  - /url: /zh/products/safety-tires
+          - generic [ref=e16]:
+            - button "制造与质量" [ref=e17] [cursor=pointer]:
+              - text: 制造与质量
+              - img [ref=e18]
+            - generic:
+              - generic:
+                - link "制造与质量":
+                  - /url: /zh/capabilities
+                - link "定制开发":
+                  - /url: /zh/custom-development
+          - generic [ref=e20]:
+            - button "经销商项目" [ref=e21] [cursor=pointer]:
+              - text: 经销商项目
+              - img [ref=e22]
+            - generic:
+              - generic:
+                - link "经销商供货":
+                  - /url: /zh/dealers
+                - link "贴牌代工":
+                  - /url: /zh/dealers/private-label
+          - generic [ref=e24]:
+            - button "技术与见解" [ref=e25] [cursor=pointer]:
+              - text: 技术与见解
+              - img [ref=e26]
+            - generic:
+              - generic:
+                - link "全部指南":
+                  - /url: /zh/insights
+                - link "孔距指南":
+                  - /url: /zh/insights/bolt-patterns
+          - link "关于我们" [ref=e28] [cursor=pointer]:
+            - /url: /zh/about
+        - generic [ref=e29]:
+          - generic [ref=e31]:
+            - generic [ref=e32]: 切换语言
+            - generic [ref=e33]: ZH
+            - combobox "切换语言" [ref=e34] [cursor=pointer]:
+              - option "English"
+              - option "中文" [selected]
+              - option "Español"
+              - option "ไทย"
+          - link "获取报价" [ref=e35] [cursor=pointer]:
+            - /url: /zh/request-a-quote
+            - text: 获取报价
+            - img [ref=e36]
+    - main [ref=e39]:
+      - region "Tell us what you need to source or develop" [ref=e40]:
+        - generic [ref=e41]:
+          - navigation "面包屑导航" [ref=e44]:
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "首页" [ref=e47] [cursor=pointer]:
+                  - /url: /zh
+              - listitem [ref=e48]:
+                - generic [ref=e50]: /
+                - generic [ref=e51]: 获取报价
+          - paragraph [ref=e52]: Project enquiry
+          - heading "Tell us what you need to source or develop" [level=1] [ref=e53]
+          - paragraph [ref=e54]: Choose a product line and send what you already know. A model number, drawing status or application description is enough to start the review. You do not need every specification ready; missing technical details are confirmed before quotation or production approval.
+      - region "Project enquiry" [ref=e55]:
+        - generic [ref=e57]:
+          - heading "Project enquiry" [level=2] [ref=e58]
+          - paragraph [ref=e59]: Choose a product line and send what you already know. Missing technical details can be confirmed before quotation or production approval.
+          - form "Project enquiry form" [ref=e61]:
+            - list "Enquiry form progress" [ref=e62]:
+              - listitem [ref=e63]:
+                - generic [ref=e64]:
+                  - generic [ref=e65]: "1"
+                  - generic [ref=e66]:
+                    - generic [ref=e67]: Step 1 of 2
+                    - generic [ref=e68]: Project details
+              - listitem [ref=e70]:
+                - generic [ref=e71]:
+                  - generic [ref=e72]: "2"
+                  - generic [ref=e73]:
+                    - generic [ref=e74]: Step 2 of 2
+                    - generic [ref=e75]: Contact details
+            - heading "What are you asking about?" [level=3] [ref=e76]
+            - paragraph [ref=e77]: First, give us enough context to route the enquiry to the right product team.
+            - paragraph [ref=e78]: "* Required field"
+            - generic [ref=e80]:
+              - generic [ref=e82]:
+                - generic [ref=e83] [cursor=pointer]:
+                  - text: Customer type
+                  - generic [ref=e84]: ∙ 必填
+                - radiogroup "Customer type 必填" [ref=e85]:
+                  - generic [ref=e86] [cursor=pointer]:
+                    - radio "Business" [ref=e89]
+                    - generic [ref=e93]: Business
+                  - generic [ref=e94] [cursor=pointer]:
+                    - radio "Individual" [ref=e97]
+                    - generic [ref=e101]: Individual
+              - generic [ref=e103]:
+                - generic [ref=e104] [cursor=pointer]:
+                  - text: Product line
+                  - generic [ref=e105]: ∙ 必填
+                - generic [ref=e107] [cursor=pointer]:
+                  - combobox "Product line 必填" [ref=e108]:
+                    - generic [ref=e109]: Select a product line…
+                  - img [ref=e111]
+              - generic [ref=e113]:
+                - paragraph [ref=e114]: Useful details, if available
+                - list [ref=e115]:
+                  - listitem [ref=e116]: • What you need
+                  - listitem [ref=e117]: • What information you already have
+                  - listitem [ref=e118]: • Approximate quantity and market
+              - generic [ref=e120]:
+                - generic [ref=e121]:
+                  - generic [ref=e122] [cursor=pointer]:
+                    - text: Describe the part, product or result you need
+                    - generic [ref=e123]: ∙ 必填
+                  - generic [ref=e124] [cursor=pointer]: Include the application, known specifications, quantity or market if you have them.
+                - textbox "Describe the part, product or result you need 必填" [ref=e127]
+              - generic [ref=e129]:
+                - generic [ref=e130] [cursor=pointer]: Approximate quantity (optional)
+                - textbox "Approximate quantity (optional)" [ref=e133]:
+                  - /placeholder: e.g. prototype, 10 sets, or 500/year
+              - generic [ref=e135]:
+                - generic [ref=e136] [cursor=pointer]: Useful inputs already available (optional)
+                - group "Useful inputs already available (optional)" [ref=e137]:
+                  - list [ref=e138]:
+                    - listitem [ref=e139] [cursor=pointer]:
+                      - generic [ref=e142]:
+                        - generic [ref=e143]:
+                          - checkbox "2D drawing" [ref=e144]
+                          - img [ref=e147]
+                        - generic:
+                          - generic: 2D drawing
+                      - generic [ref=e150]: 2D drawing
+                    - listitem [ref=e151] [cursor=pointer]:
+                      - generic [ref=e154]:
+                        - generic [ref=e155]:
+                          - checkbox "3D data" [ref=e156]
+                          - img [ref=e159]
+                        - generic:
+                          - generic: 3D data
+                      - generic [ref=e162]: 3D data
+                    - listitem [ref=e163] [cursor=pointer]:
+                      - generic [ref=e166]:
+                        - generic [ref=e167]:
+                          - checkbox "Physical sample" [ref=e168]
+                          - img [ref=e171]
+                        - generic:
+                          - generic: Physical sample
+                      - generic [ref=e174]: Physical sample
+                    - listitem [ref=e175] [cursor=pointer]:
+                      - generic [ref=e178]:
+                        - generic [ref=e179]:
+                          - checkbox "Product code" [ref=e180]
+                          - img [ref=e183]
+                        - generic:
+                          - generic: Product code
+                      - generic [ref=e186]: Product code
+                    - listitem [ref=e187] [cursor=pointer]:
+                      - generic [ref=e190]:
+                        - generic [ref=e191]:
+                          - checkbox "None yet" [ref=e192]
+                          - img [ref=e195]
+                        - generic:
+                          - generic: None yet
+                      - generic [ref=e198]: None yet
+              - button "Continue" [ref=e199] [cursor=pointer]:
+                - generic [ref=e201]: Continue
+                - status
+      - region "How we handle your details" [ref=e202]:
+        - generic [ref=e204]:
+          - paragraph [ref=e205]: How we handle your details
+          - heading "How we handle your details" [level=2] [ref=e206]
+          - paragraph [ref=e207]: We use the information you send here to prepare and discuss your quotation. It is stored on our own systems and shared only with the people who need it to answer you. We do not add you to a mailing list.
+          - link "Have another question? Go to the contact page" [ref=e208] [cursor=pointer]:
+            - /url: /contact
+    - contentinfo [ref=e209]:
+      - generic [ref=e210]:
+        - generic [ref=e211]:
+          - generic [ref=e212]:
+            - paragraph [ref=e213]: 开始沟通生产需求
+            - heading "把需求交给我们" [level=2] [ref=e214]
+          - generic [ref=e215]:
+            - paragraph [ref=e216]: 请提供图纸、适配要求或供货需求。我们会将询盘转给对应产品线，并回复下一步需要确认的信息。
+            - link "获取报价" [ref=e217] [cursor=pointer]:
+              - /url: /zh/request-a-quote
+              - text: 获取报价
+              - img [ref=e218]
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - generic [ref=e224]: FH
+              - generic [ref=e225]:
+                - paragraph [ref=e226]: Fenghuai
+                - paragraph [ref=e227]: 制造
+            - paragraph [ref=e228]:
+              - text: 四条产品线的铝制部件制造商 ——
+              - text: 轮毂 · 三电壳体 · 铝制品定制 · 安全轮胎
+          - navigation "页脚导航" [ref=e229]:
+            - generic [ref=e230]:
+              - paragraph [ref=e231]: "01"
+              - heading "产品" [level=2] [ref=e232]
+              - list [ref=e233]:
+                - listitem [ref=e234]:
+                  - link "轮毂" [ref=e235] [cursor=pointer]:
+                    - /url: /zh/products/wheels
+                - listitem [ref=e236]:
+                  - link "新能源三电壳体" [ref=e237] [cursor=pointer]:
+                    - /url: /zh/products/ev-components
+                - listitem [ref=e238]:
+                  - link "铝制品定制" [ref=e239] [cursor=pointer]:
+                    - /url: /zh/products/custom-aluminum
+                - listitem [ref=e240]:
+                  - link "安全轮胎" [ref=e241] [cursor=pointer]:
+                    - /url: /zh/products/safety-tires
+            - generic [ref=e242]:
+              - paragraph [ref=e243]: "02"
+              - heading "公司" [level=2] [ref=e244]
+              - list [ref=e245]:
+                - listitem [ref=e246]:
+                  - link "关于我们" [ref=e247] [cursor=pointer]:
+                    - /url: /zh/about
+                - listitem [ref=e248]:
+                  - link "制造与质量" [ref=e249] [cursor=pointer]:
+                    - /url: /zh/capabilities
+                - listitem [ref=e250]:
+                  - link "定制开发" [ref=e251] [cursor=pointer]:
+                    - /url: /zh/custom-development
+                - listitem [ref=e252]:
+                  - link "经销商供货" [ref=e253] [cursor=pointer]:
+                    - /url: /zh/dealers
+                - listitem [ref=e254]:
+                  - link "贴牌代工" [ref=e255] [cursor=pointer]:
+                    - /url: /zh/dealers/private-label
+                - listitem [ref=e256]:
+                  - link "技术与见解" [ref=e257] [cursor=pointer]:
+                    - /url: /zh/insights
+            - generic [ref=e258]:
+              - paragraph [ref=e259]: "03"
+              - heading "支持" [level=2] [ref=e260]
+              - list [ref=e261]:
+                - listitem [ref=e262]:
+                  - link "质保政策" [ref=e263] [cursor=pointer]:
+                    - /url: /zh/support/warranty
+                - listitem [ref=e264]:
+                  - link "退换货政策" [ref=e265] [cursor=pointer]:
+                    - /url: /zh/support/returns
+                - listitem [ref=e266]:
+                  - link "运输与包装" [ref=e267] [cursor=pointer]:
+                    - /url: /zh/support/shipping
+                - listitem [ref=e268]:
+                  - link "服务条款" [ref=e269] [cursor=pointer]:
+                    - /url: /zh/support/terms
+                - listitem [ref=e270]:
+                  - link "隐私政策" [ref=e271] [cursor=pointer]:
+                    - /url: /zh/support/privacy
+            - generic [ref=e272]:
+              - paragraph [ref=e273]: "04"
+              - heading "业务咨询" [level=2] [ref=e274]
+              - list [ref=e275]:
+                - listitem [ref=e276]:
+                  - link "获取报价" [ref=e277] [cursor=pointer]:
+                    - /url: /zh/request-a-quote
+                - listitem [ref=e278]:
+                  - link "联系我们" [ref=e279] [cursor=pointer]:
+                    - /url: /zh/contact
+                - listitem [ref=e280]:
+                  - link "偏距计算器" [ref=e281] [cursor=pointer]:
+                    - /url: /zh/tools/offset-calculator
+        - generic [ref=e282]:
+          - generic [ref=e283]:
+            - paragraph [ref=e284]: © 2026 Fenghuai. 版权所有.
+            - generic [ref=e285]:
+              - generic [ref=e286]: 切换语言
+              - generic [ref=e287]: ZH
+              - combobox "切换语言" [ref=e288] [cursor=pointer]:
+                - option "English"
+                - option "中文" [selected]
+                - option "Español"
+                - option "ไทย"
+          - link "回到顶部" [ref=e289] [cursor=pointer]:
+            - /url: "#top"
+            - text: 回到顶部
+            - img [ref=e291]
+    - link:
+      - /url: /zh/request-a-quote
+      - text: 获取报价
+  - generic [ref=e297] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e298]:
+      - img [ref=e299]
+    - generic [ref=e302]:
+      - button "Open issues overlay" [ref=e303]:
+        - generic [ref=e304]:
+          - generic [ref=e305]: "0"
+          - generic [ref=e306]: "1"
+        - generic [ref=e307]: Issue
+      - button "Collapse issues badge" [ref=e308]:
+        - img [ref=e309]
+  - alert [ref=e311]

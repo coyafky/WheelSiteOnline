@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { draftMode } from "next/headers";
 import {
   ArrowRight,
   Check,
@@ -9,24 +10,25 @@ import {
   Phone,
   TriangleAlert,
 } from "lucide-react";
-import {
-  contactAside,
-  contactDetailsCopy,
-  contactFormCopy,
-  contactFormHeading,
-  contactHero,
-  contactPathways,
-  contactSteps,
-  contactWhatHappens,
-} from "@/content/contact";
 import { site } from "@/content/site";
 import { InquiryForm } from "@/components/inquiry-form";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { contactFormCopyFor, contactLabelsFor } from "@/lib/i18n/conversion-ui-copy";
+import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
+import { getContactPageBody } from "@/lib/wordpress/conversion-pages";
 
-export const metadata: Metadata = {
-  title: "Contact Us — Request a Quote",
-  description:
-    "Send Fenghuai your drawing, sample or target specification, along with the volumes you are planning. We come back with a process route, a delivery position and pricing.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const { isEnabled: preview } = await draftMode();
+  const body = await getContactPageBody({ locale, preview });
+  return {
+    title: body.seo.title,
+    description: body.seo.description,
+    alternates: { canonical: localizedPath("/contact", locale) },
+    robots: { index: locale === "en" && !preview, follow: true },
+  };
+}
 
 /**
  * Quote request page.
@@ -35,10 +37,15 @@ export const metadata: Metadata = {
  * `<DealerCta />` — the form is the call to action. The floating quote button
  * is also suppressed on `/contact` (see `floating-quote.tsx`).
  *
- * The form is a client component and submission is NOT wired to a backend
- * yet — see the comment block at the top of `inquiry-form.tsx`.
+ * The shared form uses the WordPress inquiry API. Without an approved privacy
+ * version the form fails closed, including when business copy is approved.
  */
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale();
+  const { isEnabled: preview } = await draftMode();
+  const body = await getContactPageBody({ locale, preview });
+  const labels = contactLabelsFor(locale);
+  const inquiryContent = await getInquiryContent({ locale });
   return (
     <>
       {/* A. Hero ----------------------------------------------------------- */}
@@ -58,18 +65,18 @@ export default function ContactPage() {
         />
 
         <div className="container-fh pb-14 pt-[140px] lg:pb-16 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{contactHero.eyebrow}</p>
+          <p className="eyebrow !text-forge-bright">{body.hero.eyebrow}</p>
           <h1
             id="contact-title"
             className="mt-5 max-w-[900px] font-display text-[clamp(2.4rem,6.8vw,4.9rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
           >
-            {contactHero.heading}
+            {body.hero.heading}
           </h1>
           <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
-            {contactHero.lede}
+            {body.hero.lede}
           </p>
           <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-white/55">
-            {contactHero.supporting}
+            {body.hero.supporting}
           </p>
         </div>
       </section>
@@ -86,26 +93,32 @@ export default function ContactPage() {
               id="enquiry-title"
               className="font-display text-[clamp(1.6rem,3.6vw,2.2rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              {contactFormHeading.title}
+              {body.formHeading.title}
             </h2>
             <p className="mt-3 max-w-[560px] text-[0.98rem] leading-relaxed text-steel">
-              {contactFormHeading.body}
+              {body.formHeading.body}
             </p>
 
             <div className="mt-8">
-              <InquiryForm copy={contactFormCopy} />
+              <InquiryForm
+                locale={locale}
+                copy={contactFormCopyFor(locale)}
+                ui={inquiryContent.formUi}
+                preparation={inquiryContent.preparation}
+                privacyVersion={inquiryContent.privacyVersion}
+              />
             </div>
           </div>
 
           {/* Details column */}
           <aside data-reveal className="grid content-start gap-8">
             <div className="rounded-xl border border-border bg-white p-7">
-              <p className="eyebrow">{contactDetailsCopy.eyebrow}</p>
+              <p className="eyebrow">{body.details.eyebrow}</p>
               <h2 className="mt-4 font-display text-[1.3rem] font-700 uppercase leading-tight tracking-[0.01em] text-ink">
-                {contactDetailsCopy.heading}
+                {body.details.heading}
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-steel">
-                {contactDetailsCopy.body}
+                {body.details.body}
               </p>
 
               {site.contact.confirmed ? (
@@ -116,7 +129,7 @@ export default function ContactPage() {
                   </span>
                   <div>
                     <dt className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-steel">
-                      Sales enquiries
+                      {labels.sales}
                     </dt>
                     <dd className="mt-1 text-sm">
                       <a
@@ -135,7 +148,7 @@ export default function ContactPage() {
                   </span>
                   <div>
                     <dt className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-steel">
-                      Telephone
+                      {labels.phone}
                     </dt>
                     <dd className="mt-1 text-sm">
                       <a
@@ -154,7 +167,7 @@ export default function ContactPage() {
                   </span>
                   <div>
                     <dt className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-steel">
-                      Factory
+                      {labels.factory}
                     </dt>
                     <dd className="mt-1 text-sm leading-relaxed text-ink">
                       {site.contact.addressLines.map((line) => (
@@ -172,7 +185,7 @@ export default function ContactPage() {
                   </span>
                   <div>
                     <dt className="font-display text-[0.66rem] font-700 uppercase tracking-[0.14em] text-steel">
-                      Office hours
+                      {labels.hours}
                     </dt>
                     <dd className="mt-1 text-sm text-ink">
                       {site.contact.hours}
@@ -184,8 +197,7 @@ export default function ContactPage() {
               <p className="mt-7 flex items-start gap-2.5 rounded-lg border border-forge/35 bg-forge-soft px-4 py-3.5 text-[0.78rem] leading-relaxed text-forge-deep">
                 <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 <span>
-                  Direct contact details are still being verified. Use the project
-                  enquiry form so your request follows the tracked intake process.
+                  {labels.unverified}
                 </span>
               </p>
               )}
@@ -193,13 +205,13 @@ export default function ContactPage() {
 
             {/* What makes a quote fast */}
             <div className="rounded-xl border border-border bg-ink p-7">
-              <p className="eyebrow !text-forge">{contactAside.eyebrow}</p>
+              <p className="eyebrow !text-forge-bright">{body.aside.eyebrow}</p>
               <h2 className="mt-4 font-display text-[1.2rem] font-700 uppercase leading-tight tracking-[0.01em] text-white">
-                {contactAside.heading}
+                {body.aside.heading}
               </h2>
 
               <ul className="mt-6 grid gap-3.5">
-                {contactAside.points.map((point) => (
+                {body.aside.points.map((point) => (
                   <li key={point} className="flex items-start gap-3">
                     <span className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-forge/20 text-forge">
                       <Check className="size-3" strokeWidth={3} aria-hidden="true" />
@@ -223,15 +235,15 @@ export default function ContactPage() {
       >
         <div className="container-fh">
           <div className="max-w-[720px]">
-            <p className="eyebrow">{contactWhatHappens.eyebrow}</p>
+            <p className="eyebrow">{body.whatHappens.eyebrow}</p>
             <h2
               id="next-title"
               className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
             >
-              {contactWhatHappens.heading}
+              {body.whatHappens.heading}
             </h2>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-steel">
-              {contactWhatHappens.body}
+              {body.whatHappens.body}
             </p>
           </div>
 
@@ -240,7 +252,7 @@ export default function ContactPage() {
               data-reveal-group
               className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2"
             >
-              {contactSteps.map((step) => (
+              {body.steps.map((step) => (
                 <li key={step.step} className="bg-white p-7">
                   <span className="font-display text-[0.88rem] font-800 tracking-[0.08em] text-forge">
                     {step.step}
@@ -259,7 +271,7 @@ export default function ContactPage() {
               data-reveal-group
               className="grid content-start gap-5 self-start rounded-xl border border-border bg-soft p-8"
             >
-              {contactWhatHappens.points.map((point) => (
+              {body.whatHappens.points.map((point) => (
                 <li key={point} className="flex items-start gap-3.5">
                   <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-forge/12 text-forge">
                     <Check className="size-3.5" strokeWidth={3} />
@@ -282,12 +294,12 @@ export default function ContactPage() {
       >
         <div className="container-fh">
           <div className="max-w-[640px]">
-            <p className="eyebrow">{contactPathways.eyebrow}</p>
+            <p className="eyebrow">{body.pathways.eyebrow}</p>
             <h2
               id="contact-pathways-title"
               className="mt-4 font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              {contactPathways.heading}
+              {body.pathways.heading}
             </h2>
           </div>
 
@@ -295,10 +307,10 @@ export default function ContactPage() {
             data-reveal-group
             className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2"
           >
-            {contactPathways.links.map((pathway) => (
+            {body.pathways.links.map((pathway) => (
               <Link
                 key={pathway.href}
-                href={pathway.href}
+                href={localizedPath(pathway.href, locale)}
                 className="group flex flex-col rounded-xl border border-border bg-white p-7 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:border-forge"
               >
                 <p className="eyebrow">{pathway.eyebrow}</p>

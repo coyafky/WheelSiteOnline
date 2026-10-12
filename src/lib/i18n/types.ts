@@ -1,12 +1,12 @@
 /**
  * Locale contracts.
  *
- * The site is bilingual (the client's source corpus is already zh/en paired —
- * see ARCHITECTURE/page-architecture/README.md §3.3). English is the default
- * because the audience is overseas distributors; Chinese is the second locale.
+ * English is the default because the audience is overseas distributors. The
+ * other locales are independently addressable, but remain noindex until their
+ * page body, metadata and business review are complete.
  */
 
-export const LOCALES = ["en", "zh"] as const;
+export const LOCALES = ["en", "zh", "es", "th"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
@@ -19,24 +19,53 @@ export const LOCALE_COOKIE = "fh-locale";
 export const LOCALE_PREFIX: Record<Locale, string> = {
   en: "",
   zh: "/zh",
+  es: "/es",
+  th: "/th",
 };
+
+/** Names shown in the language dropdown; each is recognizable in its locale. */
+export const LOCALE_LABELS: Record<Locale, string> = {
+  en: "English",
+  zh: "中文",
+  es: "Español",
+  th: "ไทย",
+};
+
+/** Only reviewed locales may be indexed. English is the current release gate. */
+export const INDEXABLE_LOCALES = ["en"] as const;
+
+export function isIndexableLocale(locale: Locale): boolean {
+  return (INDEXABLE_LOCALES as readonly Locale[]).includes(locale);
+}
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 }
 
 export function stripLocalePrefix(pathname: string): string {
-  if (pathname === "/zh") return "/";
-  return pathname.startsWith("/zh/") ? pathname.slice(3) || "/" : pathname;
+  for (const locale of LOCALES) {
+    const prefix = LOCALE_PREFIX[locale];
+    if (!prefix) continue;
+    if (pathname === prefix) return "/";
+    if (pathname.startsWith(`${prefix}/`)) return pathname.slice(prefix.length) || "/";
+  }
+  return pathname || "/";
 }
 
 export function localeFromPathname(pathname: string): Locale {
-  return pathname === "/zh" || pathname.startsWith("/zh/") ? "zh" : "en";
+  for (const locale of LOCALES) {
+    const prefix = LOCALE_PREFIX[locale];
+    if (prefix && (pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+      return locale;
+    }
+  }
+  return "en";
 }
 
 export function localizedPath(pathname: string, locale: Locale): string {
   const base = stripLocalePrefix(pathname);
-  if (locale === "zh") return base === "/" ? "/zh" : `/zh${base}`;
+  const prefix = LOCALE_PREFIX[locale];
+  if (prefix) return base === "/" ? prefix : `${prefix}${base}`;
   return base;
 }
 

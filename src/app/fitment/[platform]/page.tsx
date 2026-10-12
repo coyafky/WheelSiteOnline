@@ -10,6 +10,10 @@ import {
   platformFitments,
 } from "@/content/fitment";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 type PlatformPageProps = {
   params: Promise<{ platform: string }>;
@@ -50,6 +54,7 @@ export async function generateMetadata({
 export default async function PlatformFitmentPage({
   params,
 }: PlatformPageProps) {
+  const locale = await getLocale();
   const { platform: slug } = await params;
   const platform = getPlatform(slug);
 
@@ -62,55 +67,34 @@ export default async function PlatformFitmentPage({
 
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. No eyebrow on this family; the
+          breadcrumb carries the position. */}
+      <PageHero
         id="top"
-        aria-labelledby="platform-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="platform-title"
+        tone="dark"
+        breadcrumb={
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Fitment", href: localizedPath("/fitment", locale) },
+              { label: platform.name },
+            ]}
+          />
+        }
+        heading={`${platform.name} Wheels`}
+        lede={platform.intro}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_80%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/fitment" className="transition-colors hover:!text-forge">
-              Fitment
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">{platform.name}</span>
-          </nav>
-
-          <h1
-            id="platform-title"
-            className="mt-6 font-display text-[clamp(2.6rem,8vw,5.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            {platform.name} Wheels
-          </h1>
-
-          <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
-            {platform.intro}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="btn-pill-solid">
-              Send your vehicle details
-              <ArrowRight className="size-4" />
-            </Link>
-            {/* "Browse designs → /gallery/wheels" removed 2026-10-06 (DEC-059):
-                that catalogue was fictional and is archived. The real
-                catalogue is reachable from the navigation and /products. */}
-          </div>
-        </div>
-      </section>
+        <Link href="/contact" className="btn-pill-solid">
+          Send your vehicle details
+          <ArrowRight className="size-4" />
+        </Link>
+        {/* "Browse designs → /gallery/wheels" removed 2026-10-06 (DEC-059):
+            that catalogue was fictional and is archived. The real
+            catalogue is reachable from the navigation and /products. */}
+      </PageHero>
 
       {/* B. Answer + standing notice --------------------------------------- */}
       <section

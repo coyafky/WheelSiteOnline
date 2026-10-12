@@ -15,13 +15,16 @@ import {
   sizeLabel,
   toBrowserVariant,
 } from "@/components/wheels/spec-format";
-import { wheelDetailSeo } from "@/content/wheel-detail";
+import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
 import {
   getWheelDetailPage,
   listPublishedWheelSlugs,
   type PublicWheelVariant,
   type WheelDetailView,
 } from "@/lib/wheels";
+import { getLocale } from "@/lib/i18n";
+import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 
 /**
  * Wheel detail page — `/products/wheels/[model]`, viewports WD01–WD06.
@@ -57,20 +60,23 @@ export async function generateMetadata({
 }: Pick<WheelModelPageProps, "params">): Promise<Metadata> {
   const { model } = await params;
   const detail = await getWheelDetailPage(model);
+  const locale = await getLocale();
 
   if (!detail) {
     return { title: "Wheel model not found", robots: { index: false, follow: false } };
   }
 
   return {
+    // A translated page is not yet a publishable locale until its business copy
+    // and source content have been reviewed. Keep non-English routes out of SEO.
     // §11 verbatim. `absolute` because the root layout would otherwise append the
     // brand a second time.
-    title: { absolute: wheelDetailSeo.title(detail.model) },
-    description: wheelDetailSeo.description(detail.model),
+    title: { absolute: wheelDetailCopyFor(locale).seo.title(detail.model) },
+    description: wheelDetailCopyFor(locale).seo.description(detail.model),
     // §11: canonical is the model URL and never carries `variant`, so a shared
     // configuration link cannot be indexed as a separate page.
-    alternates: { canonical: `/products/wheels/${detail.slug}` },
-    robots: { index: true, follow: true },
+    alternates: { canonical: localizedPath(`/products/wheels/${detail.slug}`, locale) },
+    robots: { index: locale === "en", follow: true },
   };
 }
 
@@ -83,12 +89,14 @@ export default async function WheelModelPage({
   if (!detail) notFound();
 
   const query = await searchParams;
+  const locale = await getLocale();
+  const inquiryContent = await getInquiryContent({ locale });
 
   // §11: a case variation (or a stale link) is folded onto the canonical slug —
   // only because the public collection resolved it, i.e. the mapping is certain.
   // Anything that resolves to nothing has already 404'd above.
   if (requestedModel !== detail.slug) {
-    permanentRedirect(`/products/wheels/${detail.slug}${rawQuerySuffix(query)}`);
+    permanentRedirect(`${localizedPath(`/products/wheels/${detail.slug}`, locale)}${rawQuerySuffix(query)}`);
   }
 
   const selectedCode = resolveSelectedCode(
@@ -102,7 +110,7 @@ export default async function WheelModelPage({
         type="application/ld+json"
         // Only our own resolved catalogue data is serialised — no visitor input
         // reaches this node.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(detail)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(detail, locale)) }}
       />
 
       {/* WD01 — identity: one approved image, the real model, recorded process */}
@@ -110,6 +118,7 @@ export default async function WheelModelPage({
         model={detail.model}
         primaryImage={detail.primaryImage}
         processLabel={detail.processLabel}
+        locale={locale}
       />
 
       {/* WD02 + WD03 — configuration selection and the embedded enquiry.
@@ -120,16 +129,21 @@ export default async function WheelModelPage({
         model={detail.model}
         variants={detail.approvedVariants.map(toBrowserVariant)}
         initialSelectedCode={selectedCode}
+        locale={locale}
+        privacyVersion={inquiryContent.privacyVersion}
+        privacyConsent={inquiryContent.privacy.consentText}
+        privacyLinkLabel={inquiryContent.privacy.linkLabel}
+        privacyLinkHref={inquiryContent.privacy.linkHref}
       />
 
       {/* WD04 — hidden until a finish has an approved public name (§4, §8) */}
-      <WheelFinishSection model={detail.model} variants={detail.approvedVariants} />
+      <WheelFinishSection model={detail.model} variants={detail.approvedVariants} locale={locale} />
 
       {/* WD05 — application boundary: production record ≠ vehicle fitment */}
-      <WheelFitmentSection />
+      <WheelFitmentSection locale={locale} />
 
       {/* WD06 — related models, already scored from the public collection (§10) */}
-      <WheelRelatedModels related={detail.relatedModels} />
+      <WheelRelatedModels related={detail.relatedModels} locale={locale} />
     </>
   );
 }
@@ -191,15 +205,15 @@ function resolveSelectedCode(
  * `additionalProperty`, restricted to the public specification values: no finish
  * (no approved public name), no vehicle fitment, no availability.
  */
-function productSchema(detail: WheelDetailView) {
+function productSchema(detail: WheelDetailView, locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: detail.model,
     sku: detail.model,
     image: detail.primaryImage,
-    description: wheelDetailSeo.description(detail.model),
-    url: `/products/wheels/${detail.slug}`,
+    description: wheelDetailCopyFor(locale).seo.description(detail.model),
+    url: localizedPath(`/products/wheels/${detail.slug}`, locale),
     brand: { "@type": "Brand", name: "Fenghuai" },
     additionalProperty: detail.approvedVariants.map((variant) => ({
       "@type": "PropertyValue",

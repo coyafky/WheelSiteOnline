@@ -12,6 +12,7 @@ import {
 } from "@/content/dealer-programs";
 import { faqs } from "@/content/faq";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
 
 export const metadata: Metadata = {
   title: "Dealer Supply Programme — Supply Without Stock",
@@ -30,48 +31,25 @@ export const metadata: Metadata = {
 export default function DealersPage() {
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. */}
+      <PageHero
         id="top"
-        aria-labelledby="dealers-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="dealers-title"
+        tone="dark"
+        eyebrow={dealerHero.eyebrow}
+        heading={dealerHero.heading}
+        lede={dealerHero.lede}
+        supporting={dealerHero.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_100%_at_86%_0%,rgba(194,101,10,0.28)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{dealerHero.eyebrow}</p>
-          <h1
-            id="dealers-title"
-            className="mt-5 max-w-[1000px] font-display text-[clamp(2.4rem,6.8vw,4.9rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
-          >
-            {dealerHero.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {dealerHero.lede}
-          </p>
-          <p className="mt-4 max-w-[660px] text-sm leading-relaxed text-white/55">
-            {dealerHero.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="btn-pill-solid">
-              Start a dealer enquiry
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/dealers/private-label" className="btn-pill-outline !text-white">
-              Private label programme
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="/contact" className="btn-pill-solid">
+          Start a dealer enquiry
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/dealers/private-label" className="btn-pill-outline !text-white">
+          Private label programme
+        </Link>
+      </PageHero>
 
       {/* B. The dealer model ----------------------------------------------- */}
       <section

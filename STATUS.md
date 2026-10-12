@@ -1,9 +1,713 @@
 # 项目状态
 
+## 2026-10-12 询盘转化页四语切片已验；远端预发布暂缓
+
+- `/request-a-quote` 与 `/contact` 现在分别读取 WordPress Page 的四语业务正文和 SEO；本地记录 1339、1428 的 `en/zh/es/th` 业务译文均为 `approved`。迁移前的询盘聚合草稿保存在该记录的 `fh_conversion_legacy_backup_json`，隐私草稿未批准、未改动。
+- `privacy` Page 是唯一同意版本门槛；预览不能借隐私草稿开启收集。真实本地 WordPress 模式下两页四语均展示停用提示，没有可提交表单；模拟模式的测试表单仍可用于隔离回归。
+- `npm test` 42/42、lint、typecheck、build 通过；Playwright 模拟模式 11/11、真实本地 WP 模式 12/12（含隐私版本展示复核）。320px 下无横向溢出或破图，页面无 JS 异常，canonical/非英语 noindex 核对通过。覆盖脚本从 46 降至 **42 个未通过的页面×语言组合**；整站四语目标仍未完成。
+- 远端 9080/7080 仍为旧预发布；7080 的 `fh/v1/pages` 返回 404，且 SSH 公钥登录被拒。仓库有大量未提交的并行改动；不能把当前工作树直接打包或推送。待取得服务器访问并确定受控发布快照、备份与回滚后，再做远端预发布，不宣称已上线。
+- 下一步：轮毂目录 `/products/wheels` 的页面/筛选/排序/空态/分页 UI 四语化；随后处理其余业务 Page、文章、媒体与错误码。`privacy` 法务审核和直接联系方式核实继续独立排队。
+
+## 2026-10-12 四语全文实施中：轮毂详情切片已验，整站未通过
+
+- `/products/wheels/[model]` 的页面说明、配置选择、直接询盘、相关卡片、SEO
+  文案新增 `en/zh/es/th` 本地语言副本；规格代码和数值不翻译。询盘表单的
+  标签、准备提示和清单反馈已接语言，`contact` 入口也改为读取 WordPress
+  隐私版本；明确的空版本不再被环境变量兜底打开。
+- 本地 WordPress 只读审计：15 条 Page 正本 + 缺失的 `request-a-quote`、
+  `privacy`，共 17 个必查键 × 4 语言，**46 组缺失或未批准**；`es/th`
+  目前没有任何已批准 Page 正文，不能宣称全站四语完成。`/es/contact`、
+  `/es/request-a-quote` 的标题/正文仍回落英文。`zh/es/th` 继续 noindex。
+- 已通过：`npm test` 42/42、`npm run typecheck`、`npm run lint`、
+  `npm run build`；最新表单接线后复跑生产构建隔离端口的 Playwright
+  轮毂详情测试 4/4。另以隔离端口模拟 WordPress 不可达且环境变量含隐私版本，
+  Playwright CLI 确认 `/zh/contact` 仍显示“项目询盘暂未开放”。
+  全站四语人工/浏览器验收仍未完成。
+- 下一步：按 `outputs/reports/36-sitewide-multilingual-text-coverage-2026-10-12.md`
+  的路由矩阵补齐 WordPress 正文、SEO/媒体和界面字典；法律/工程译文仍需
+  法务与业务审核。当前任务留在 `work/active/`，**不得标记全站验收完成**。
+
+## 2026-10-11 四个 A 类页中文落地 + 修掉一个全站性图注缺陷
+
+`capabilities` / `ev-components` / `custom-aluminum` / `safety-tires` 四页补齐 zh 正文：
+`translations_zh.py` 词表增至 **7 页**，WP posts 1313/1315/1316/1317 均写入
+`locale_status {en:approved, zh:approved}`。实测 4 条 `/zh` 路由全部渲染中文，英文侧未变。
+
+**🔴🔴 顺带挖出并修掉一个影响全站多语言的既存缺陷**：
+
+`/zh/products/safety-tires` 正文已全中文，**但图片说明仍全是英文**。逐层排查确认
+WP 载荷里的 zh caption **是中文**，问题在渲染层 —— `src/lib/wordpress/media.ts` 的
+media 合并**让媒体库优先于内容载荷**：
+
+```ts
+caption: stripHtml(wordpressMedia.caption.rendered) || media.caption,   // ❌ 媒体库优先
+```
+
+但媒体库（`wp/v2/media`）的 `alt_text`/`caption` 是**英文单语资源、无 locale 分版**，
+而载荷里的 `alt`/`caption` 才是按语言翻译好的 → **任何非英文页面都被强制回落英文图注**。
+
+**实测影响面**：四页共 **36 条图注**全中（capabilities 12 / ev-components 4 / custom-aluminum 3 / safety-tires 17），
+且属**先于本轮的既存缺陷**（about / product-lines 同样中招，只是上一轮没扫到 caption 这一层）。
+
+**修法**：反转优先级（载荷优先、媒体库兜底），`src` 仍取媒体库。
+**已验证 en 零回归** —— 实测 `content_by_locale.en` 的 caption 与媒体库逐字一致，
+故英文侧两种优先级结果相同；`/products/safety-tires` 的 caption/alt 实测未变。
+
+**收尾扫描**：4 条 zh 路由的渲染后 HTML 剩余拉丁文本**全部为结构/技术 token**
+（品牌名、语言切换器、区块 ID `WM01`/`EV02`、工艺缩写 `CNC`/`HPDC`、锚点 slug），
+无真实文案缺口。
+
+📌 **重要结论**：「生成器报 0 untranslated」**不等于**「渲染无英文」——
+生成器测的是「载荷是否漏译」，渲染扫描测的是「页面是否漏译」，**两者必须都做**（本轮正是靠后者才发现）。
+
+门禁：`npm test` 42/42 ｜ typecheck ｜ lint 0/0 ｜ build 全绿 ｜ 无 commit。
+任务见 `work/active/2026-10-11-four-a-type-pages-zh.md`。
+
+## 2026-10-11 /products 收尾：硬编码字面量 + DealerCta 全站字典化
+
+`/products` 的 WP 业务正文已中文化，但页面自身的 JSX 字面量与共享组件 `DealerCta` 仍是英文。
+
+**做法（与既有架构一致）**：这些是 **UI chrome 不是 CMS 内容** → 走 `src/lib/i18n/dictionaries/*`（四语言），
+**不塞进 WordPress**（否则运营会在后台看到一堆不该编辑的界面标签）。
+
+**改动**：字典各 **+12 键**（60 → 72）；`/products` 10 处字面量改 `t()`；
+`DealerCta` 改 `async` + 默认值走 `t()`（**props 覆盖能力保留**，`custom-development` / `private-label` 仍用自己的文案）。
+
+**🔴 复核抓到子 agent 漏掉的一处**：它只 grep 了 `products/page.tsx`，**没跟着组件树下钻** →
+漏掉 `family-card.tsx:98` 的卡片脚注 `Explore`（四张产品线卡片各一处）。我扫渲染后的 HTML 才发现并补修。
+
+**实测**：`/zh/products` 现在**全中文**，剩余拉丁文本只有 `Fenghuai`（品牌）与 `English`/`Español`（语言切换器）——
+均属正确。`/products` 零中文泄漏。**全站 DealerCta** 在 `/zh/insights` `/zh/tools` `/zh/fitment`
+`/zh/gallery/finishes` `/zh/dealers` **五页全部中文**。**四语言字典键集合一致性断言 PASS（各 72 键）**。
+
+门禁：`npm test` 42/42 ｜ typecheck ｜ lint 0/0 ｜ build 全绿 ｜ 无 commit。
+
+📌 **纪律**：验证「页面是否全中文」**必须扫渲染后的 HTML**，不能只看页面文件本身 —— 组件树的字面量不在页面文件里。
+
+任务见 `work/active/2026-10-11-products-hardcoded-and-dealercta-i18n.md`。
+
+## 2026-10-11 混合页改造：/products 的 86% 本地区块已搬进 WordPress（方案 A）
+
+`/products` 是唯一混合页（卡片来自 WP，其余 86% 来自 `src/content/products.ts` + `faq.ts`），
+导致 `/zh/products` 是半中文页（卡片中文、H1 仍 `Four product lines`）。本轮按方案 A 改造。
+
+**核心简化**：实测 **WP 对 `content` 字段是自由 JSON 透传、无 schema 校验** → **插件一行未改**，
+只改 Next 侧类型/守卫/接线 + 重新 seed。
+
+**改动**：`content` 从裸数组改为 `{ lines, catalogue }` 包装对象；新增 `getProductLinesContent()`，
+`getProductLines()` 保留为薄封装；页面重接 18 处引用；zh 词表 16 → 62 条。
+
+**实测**：`/products` H1 = `Four product lines` ｜ **`/zh/products` H1 = `四条产品线`** ｜
+七块全部中文 ｜ es/th 回落且日志留痕 ｜ 四张卡片 zh 未回归 ｜ CJK 计数 zh 1836 / en 6（后者全是语言下拉选项）。
+门禁：`npm test` 42/42、typecheck、lint 0/0、build 全绿。
+
+**🔴 关键发现（原计划漏了）**：英文有**独立的「正本」meta `fh_content_json`**，
+而 `normalizeWordpressPage` 对 `en` 读的是它、**不是** `content_by_locale.en`
+（`pages-contract.ts:78-80`）→ **只写 `content_by_locale` 会让 en 侧静默回落**（页面照 200，肉眼难发现）。
+seeder 已两份都写。**凡迁移形状必须正本 + by_locale 两份同时写。**
+
+**仍未翻译（范围外）**：`/zh/products` 还有 **8 处页面自身的硬编码 JSX 字面量**
+（`Four lines, one factory` / `Keep exploring` / `Related resources` / `Ordering questions, answered` 等）
++ `DealerCta`（共享组件，按计划另切片）。盘点文档里估的「5 处」是下限，本页实测 8 处。
+
+任务见 `work/active/2026-10-11-product-lines-catalogue-in-wp.md`。
+
+## 2026-10-11 多语言正文：第二个页面（/about）落地 + 修掉一个真缺陷
+
+承接同日「多语言正文链路打通」。本轮两件事：
+
+**① 修掉 `safety-tires.ts` 的真实缺陷**（第一刀只标记未修）
+五个 viewport 从**本地英文常量**取数而不是 WP 解析后的 `source`：
+`painPoint: resolveViewport(selfSealingTirePage.painPoint)` → 应为 `source.painPoint`。
+后果是即使 WordPress 返回了已批准译文，这五个视口仍渲染英文正本。
+**全仓扫描确认是孤例**：`about` / `wheel-capabilities` / `custom-aluminum` / `ev-components`
+四个 resolver 都正确使用 `source.*`。
+
+**② `/zh/about` 中文已落地**
+生成器重构为**页面无关**（词表拆到 `scripts/i18n/translations_zh.py`，按 page key 分组）。
+`about` 全字段覆盖，未翻译叶子 **0**；已 seed 进 WP（post 1312），
+`locale_status: {en: approved, zh: approved}`。
+
+**实测矩阵**：`/zh` → 中文 ｜ `/zh/about` → 中文 ｜ `/` `/about` → 英文 ｜
+`/es` `/th` 两页 → 英文回落**并留痕** ｜ `zh` 的 fallback 日志计数 **0**（有译文就不回落）。
+`en/about` 的 6 个 CJK 字符已逐一定位 = 语言下拉里的「中文」选项（预期，非泄漏）。
+
+**🔴 本轮最重要发现：Next 16 的 data cache 删目录清不掉**
+seed 后 `/zh/about` 仍渲染英文且持续打 fallback 日志，而同一 REST 端点 curl 返回 `zh: approved`。
+逐层排查（复现契约逻辑 → 契约层诊断 → fetch 层探针**从未触发**）定位为
+**响应来自进程内存缓存**：`rm -rf .next/cache/fetch-cache` 无效，
+**必须 `kill` + `rm -rf .next` + 重启** 才生效。
+📌 纪律：改 WP 内容后验证，标准动作 = 杀进程 → 删 `.next` → 重启，否则会把「缓存未失效」
+误判成「代码有 bug」。
+
+**门禁**：`npm test` 42/42 ｜ typecheck exit 0 ｜ lint 0/0 ｜ build exit 0 ｜ 无 commit。
+任务见 `work/active/2026-10-11-i18n-content-seam-wiring.md`。
+
+## 2026-10-11 多语言正文链路打通（预览版口径：功能优先）
+
+用户指令：「正文一定要多语言模式执行好；现在是预览版本，先把功能实现，再考虑权限问题」。
+
+此前只有站点 chrome（Header/Footer）做了多语言，**页面正文始终渲染英文**，无论 `/zh`、`/es`、`/th`。
+根因是三层：`src/content/*.ts`（38 模块 / 77k 行）无 locale 维度；WP 适配器有 `locale` 参数但
+**调用方从不传**；非 en 回落**静默**无痕。
+
+本轮完成：
+
+- **`resolveLocalized()`（新增 `src/lib/i18n/localized-page.ts`）**：把英文回落从静默改成
+  服务端留痕 `[i18n] fallback locale=<x> scope=<y> reason=no-approved-translation`；`en` 是严格 no-op；
+- **10 处适配器调用点全部传 locale**，含诊断阶段**遗漏的 2 处**——`src/app/page.tsx` 与
+  `src/app/about/page.tsx` 在 `generateMetadata()` 里直接调适配器、绕过 resolver，只修 7 个 resolver
+  会让每个本地化 URL 吐英文 SEO；
+- **Insights 列表/详情页补 locale**（此前连 `getLocale` 都没导入）；
+- **WP 侧填入 home 中文正文并验证**：新增 `scripts/i18n/make-locale-content.py`（从 en 结构派生
+  **同构**中文 JSON，硬校验形状一致）+ `seed-locale-content.php`（合并写入、不覆盖其他语言）。
+
+验收证据：`curl /zh` → `<h1>以专业制造能力支撑的汽车部件`；`curl /` → 英文（零回归）；
+`/es` `/th` 回落英文并留痕；中文零泄漏进 en 页；`npm test` 42/42、typecheck / lint 全绿。
+
+**撤回门实测是双层的**：WordPress 插件 `fenghuai-pages.php:104` 先把非 `approved` 语言从公开 payload
+剔除，Next `pages-contract.ts:81` 再判一次 → 任一层都能独立阻断，比设计预期更稳。
+
+**未做（刻意）**：`INDEXABLE_LOCALES` 仍为 `["en"]`，noindex / hreflang / sitemap 门槛未动；其余
+6 个 WP 页面与 26 个非 WP 页面（正文在 `src/content/*.ts`）尚未接 locale。任务见
+`work/active/2026-10-11-i18n-content-seam-wiring.md`。
+
+## 2026-10-11 最新结论：Astryx P0–P5 本地验收完成，商用发布仍 No-Go
+
+全站暖白 Neutral 主题及选择性 Astryx 交互原语已按页面族迁移；用户不需要的全站浮动 Request Quote 已移除，桌面／移动导航、Footer、产品直接询盘和总询盘路径保留。31 个渲染模板在 320／390／768／1440 四视口均通过首屏截图、单一 main、h1、主题、溢出、键盘和 axe 基础检查；四语言各模板路径与 noindex 门槛已核。隔离 `WP_MODE=mock` 的完整 Playwright **116/116**，`npm run check` **42/42 单测、lint、typecheck、191 页构建**与 `git diff --check` 通过。首页语言链接与 RSC 预取循环也已修复并回归。P0–P5 与全站迁移任务已归档到 `work/completed/`；最终报告：[`33-astryx-p5-final-commercial-seo-handoff-2026-10-11.md`](outputs/reports/33-astryx-p5-final-commercial-seo-handoff-2026-10-11.md)。
+
+**当前重点**是 `work/queued/2026-10-08-commercial-launch-remediation.md`：先取得公司／首批产品／图权／法务批准，再建立 OpenNext 隔离预发布、真实落库与 Outbox 监控恢复，随后逐页审批英文内容和正式域名 SEO，最后做真机、性能、恢复和回滚 UAT。正式域名、索引与真实邮件仍未获放行；本地 P5 通过不等于可商用上线。未提交、推送、部署或向真实邮箱发信。
+
+下方 2026-10-11 的“进行中／排队／下一步先做 P0”均为当时阶段记录，不再代表当前状态；请以上述最新结论和 33 号报告为准。
+
+## 2026-10-11 Astryx P5 阶段记录（历史，已由上文取代）
+
+P5 阶段性成果：**整套 E2E 从 3 failed 修到 84 passed / 0 failed**，并挖出三个真缺陷。
+**总任务未收口**，不移入 `work/completed/`。报告：
+[`outputs/reports/32-astryx-p5-regression-closure-alma-2026-10-11.md`](outputs/reports/32-astryx-p5-regression-closure-alma-2026-10-11.md)。
+
+⚠️ **默认 E2E 端口 3100 被另一个项目占用**（实测返回蓝辉的 title）→ 按 `playwright.config.ts` 自身注释，
+复用他人服务会「静默跑在错误的站上」→ 本轮改用隔离 `PLAYWRIGHT_PORT=3214` + `WP_MODE=mock`。
+
+### 修掉的三个真缺陷
+
+1. **询盘 422 服务端消息被客户端文案覆盖（P2 引入的回归）**
+   `localizeServerErrors()` 无条件用通用文案覆盖服务端消息 → 「This address cannot receive replies.」
+   被替换掉。修法：通用文案降级为**兜底**而非覆盖。→ 询盘全量 17 passed（成功判定保护用例未被破坏）。
+2. **首页 `<h2>`/`<h3>` 继承浅色墨色 = 实测 1.06:1**（**正是 P1 那个 bug 类，首页仍在**，9 个标题）
+   → 逐个显式 `text-white`，**未加全局覆盖**。
+3. **深色表面强调色过暗**：`--fh-forge-bright: #c77c45` 在 hero 上仅 4.32:1 → **令牌改 `#cb8150`**（4.58/4.88）；
+   证据卡计数器误用 `text-forge`（2.31:1）→ 改 `forge-bright`；Insights 标签 3.2:1 → 改 `text-white/75`。
+   → `/` 与 `/insights` 对比度失败 **22/2 → 0/0**；`accessibility.spec.ts` **18 passed**。
+4. 顺带修：首页卡片链接 `focus-visible:outline-none` 只换边框色（WCAG 2.4.7，HEAD 即存在）→ 补真实焦点环。
+
+> ⚠️ **踩坑**：改 `globals.css` 令牌后页面仍显示旧色 —— Next dev 的 CSS 缓存要**整个删掉 `.next` 重启**才生效。
+
+### A11y 子 agent 的采集**大部分不可用**（已复核更正）
+`axe-results.json` 62 行中，`/fitment/bmw-m` 的 `html-has-lang`/`document-title`/`landmark-one-main`/
+`page-has-heading-one` **经复核全是假阳性**（实测该页有 `<html lang="en">`、正确 `<title>`、`<main>`）——
+根因是它采集期间服务器（:3210）未真正服务该路由。**该 JSON 保留为原始记录，不作结论引用。**
+
+### 已实测的正面结论
+弹窗焦点回触发器 ✅ ｜ 焦点陷阱 `shiftTabBack.escapes=0` ✅ ｜
+**无 JS 目录筛选可提交**（`?q=dx` → 26→17）✅ ｜ **无 JS FAQ 全文在 DOM** ✅ ｜
+7 个重定向：6×308 + 1×307（**刻意，未改动**）✅ ｜ 索引门：`en` 可索引、`zh/es/th` 全 `noindex, follow` ✅
+
+### 门禁（全绿）
+`npx playwright test` **84 passed / 0 failed** ｜ `theme:check` ok ｜ `npm test` **42/42** ｜
+`lint` **0 error 0 warning** ｜ `typecheck` clean ｜ `build` exit 0 ｜ `git diff --check` clean
+
+### **尚未完成（未收口）**
+① 四语言**全站**回归 ｜② 键盘 **31 模板全序** ｜③ **全模板 axe**（子 agent 采集不可用，需重跑）｜
+④ 31 模板 × 4 视口一次性全量 sweep ｜⑤ **收缩重复外壳/样式** ｜⑥ `DESIGN.md` 其余历史章节回写 ｜
+⑦ Page SPEC 回写 ｜⑧ 总任务移入 `work/completed/`（**该目录尚不存在**）
+
+本轮改动 6 个文件：`inquiry-form.tsx`、`home/project-route-section.tsx`、`insights/page.tsx`、
+`globals.css`、`sections/product-showcase.tsx`、`eslint.config.mjs`。
+**未 commit/push/deploy**（HEAD 仍 `338d228`）；未向真实 QQ SMTP 发信；全部 dev server 已停止。
+
+## 2026-10-11 Astryx 产品链（P3）与内容/工具/政策链（P4）范围完成
+
+### P4：消除 10 处手写首屏漂移 + 修掉一个真溢出
+
+给共享 `src/components/sections/page-hero.tsx` **新增 `tone: "light" | "dark"`**，
+把散落各页的深色/浅色首屏统一收进来，**净减 96 行**（10 files, +332/−428）。
+之所以用 `tone` 而非全局改色：P1 实测 Astryx 生成主题按 **landmark 而非按表面**取 h1 墨色，
+10 处手写首屏各自的渐变/alpha/clamp **逐个文件都在漂移**；收进来后**表面与文字颜色由 `tone` 一处决定**，
+深色首屏也不必强改浅色（尊重 P1 保留的照片/工程语气带）。
+
+🔴 **顺手修掉真缺陷**：`/support/returns` 在 320px 溢出 **33px**。真 Chrome 逐元素定位到
+`legal-document.tsx:132` 的 `<aside>` —— CSS Grid 子项默认 `min-width:auto`，而 Astryx `Outline`
+是**不换行的导航轨道**，不会收缩到内容宽度以下。补 `min-w-0` 后 **33px → 0px**，
+并对 15 条 P4 路由 × 3 移动视口（45 组合）复扫**全部 0 溢出**。该缺陷早于 P4（Outline 迁移遗留），由 P4 扫描暴露。
+
+**76 组合实测**（19 路由 × 4 视口，after 采集）：非 200 **0** ｜ 横向溢出 **0** ｜ 控制台错误 **0** ｜
+缺 `data-astryx-theme="neutral"` **0**。四语言 16 组合**全部 200**。
+KEEP 清单实测未破坏：FAQ 服务端全文 + 无 JS、Insights 分类非 tabs、长文锚点/无 JS 目录、偏距公式。
+证据：[`outputs/reports/31-astryx-p4-content-evidence-alma-2026-10-11.md`](outputs/reports/31-astryx-p4-content-evidence-alma-2026-10-11.md)。
+
+### P3：四条契约本来就对，本轮把它们变成回归资产
+
+筛选 / 分页 / 上架门槛 / 同变体规格本来就被正确实现，**未改写**。净交付是新增
+**`e2e/astryx-product.spec.ts`（23 条断言，23 passed / 0 failed）**，覆盖原生 GET 多值筛选、
+真实 `<a href>` 分页、URL 可复制、320px Filter 入口、**无图型号不可公开**（真实反例）、
+**同 productionCode 变体规格**、询盘绑定、四视口 0 控制台错误/0 溢出、SEO 完整，
+以及**能力线首屏 h1 深度守护**（守住 P1 的 1.00–1.06:1 → 14+ 修复，后续切片弄不坏它）。
+
+Astryx 候选探针结论 **1 可用 / 3 拒绝**：
+
+| 候选 | 结论 | 依据 |
+|---|---|---|
+| `Table` | ❌ **拒绝** | **无 `caption` prop** —— 传 `caption="…"` 只落到 `<table>` 的**无效 HTML 属性**，**不产生 `<caption>` 元素**；项目 3 处 `<caption class="sr-only">` 会静默失去表格名称。0.6.7 的 SSR 路径另抛 React key 警告 |
+| `ClickableCard` | ✅ 可用（Next Link 已验） | `LinkProvider` 下渲染 `<a href data-next-link="1">`，可爬取 + 走软导航 |
+| `MetadataList` | ✅ 语义成立，**不采用** | 真实 `<dl>/<dt>/<dd>`；但 `columns="multi"` 引入 `Show more` 折叠，规格必须默认全可见 |
+| `Card` | ✅ 服务端安全，**不采用** | 纯容器，替换产品卡外壳无净收益 |
+
+证据：[`outputs/reports/30-astryx-p3-product-evidence-alma-2026-10-11.md`](outputs/reports/30-astryx-p3-product-evidence-alma-2026-10-11.md)。
+
+门禁：`theme:check` ok ｜ `npm test` 42/42 ｜ `lint` 0 error ｜ `typecheck` clean ｜ `build` exit 0 ｜ `git diff --check` clean。
+**无 commit/push/deploy**；未向真实 QQ SMTP 发信；临时探针脚本已清理。
+P3/P4 任务**留在 `work/queued/`，不声明 completed**（须等 P5）。
+剩余：P5 全站回归收口（四语言全站、键盘全序、axe、全模板族）。
+
+## 2026-10-11 Astryx 询盘转化链（P2）范围完成
+
+P2 已把**直接询盘**与**清单询盘**两条分叉路径收进同一个 `InquiryForm`（`mode: "direct" | "cart"`），
+证据见 [`outputs/reports/29-astryx-p2-inquiry-evidence-alma-2026-10-11.md`](outputs/reports/29-astryx-p2-inquiry-evidence-alma-2026-10-11.md)
+与[四态截图](outputs/reports/astryx-p2-evidence-2026-10-11/)。
+
+**成功判定本来就是对的，本轮没有改它**：`ok && persisted === true` 才成功
+（`inquiry-form.tsx:406-415` ← `api/inquiries/route.ts:151` ← `lib/inquiry/store.ts:312`），
+**SMTP / Outbox 从未参与成功判定**。刻意未改 API 路由、store、schema 与 mailer 链路。
+
+三处实测结论：
+1. **隔离性成立** —— `clearInquiryCart()` 只在 `mode === "cart"` 且已进入成功分支后执行（`inquiry-form.tsx:412`）
+   → **直接询盘失败永不触碰清单**；已捕获 `isolation/direct-fail-preserves-cart` 截图（320/768）。
+2. **数量无 999 上限** —— `lib/inquiry/schema.ts:29-35` = `.int().min(1).refine(Number.isSafeInteger)`，`grep 999` 零命中。
+3. **四态 × 双视口 18 组合**全部取证：Open / Validation(client+server-422) / Submitting / Success /
+   Server Error(503) / isolation / focus-escape，**横向溢出全 0**；仅有的 2 类控制台错误是测试注入的 422/503（预期）。
+
+改动：`src/components/inquiry-form.tsx`（−284/+390）、`src/content/inquiry-form.ts`（+20）；
+**调用方零改动**（新 props 全可选）。测试用**隔离的 `127.0.0.1:3210` + `WP_MODE=mock`**，
+未复用 3200 主服务器、**未向真实 QQ 邮箱发信**。
+门禁：`theme:check` ok ｜ `npm test` 42/42 ｜ `lint` 0 error ｜ `typecheck` clean ｜ `build` exit 0 ｜ `git diff --check` clean。
+
+P2 任务**留在 `work/queued/`，不声明 completed**（须等 P3–P5）。`/thank-you` 视觉未单独评审；
+键盘全序、axe 扫描与四语言全站回归仍在 P5。
+
+## 2026-10-11 Astryx 暖白首屏与共享外壳（P1）范围完成
+
+P1 已逐页审计全部 39 个含 `bg-ink`/`bg-hero` 的文件，证据见
+[`outputs/reports/28-astryx-p1-warm-hero-evidence-alma-2026-10-11.md`](outputs/reports/28-astryx-p1-warm-hero-evidence-alma-2026-10-11.md)
+与[截图/采集](outputs/reports/astryx-p1-evidence-2026-10-11/)。
+
+**交接估算的「约 21 个旧深色 Hero」实测不成立**：真正的旧深色页面首屏只有 **3 个**
+（`/` 已暖白；`/about`、`/capabilities` 本轮迁移）；其余 36 个命中是共享控件的选中态、
+`bg-ink/16` 发丝分隔线、以及首屏**以下**的深色对比段与图片底板，均按原样保留
+（承载真实照片或工程语气，机械转白会破坏图文对比）。
+
+**顺带挖出并修复一个既有 WCAG 缺陷**（交接与 P0 都未记录）：Astryx 生成主题的
+`:where(h1…) { color: var(--color-text-primary) }`（`src/theme/fenghuai-neutral/site-theme.css:11-14`）
+按 **landmark** 而非按**表面**取头条墨色。凡 `<h1>` 纯靠继承的深色首屏，会拿到浅色模式墨色 →
+**实测 1.00–1.06:1 的不可读大标题**，**7 路由 × 4 视口全部命中**（WCAG 1.4.3 失败）。
+修法是让这 7 个 `<h1>` **各自声明颜色**（暖白页 `text-ink`、保留深色页 `text-white`），
+**未加全局 CSS 覆盖**（交接明确否决 `section#top` 探针）、未改 `@generated` 主题、未改 `--fh-*` 数值。
+
+实测验：`/about`、`/capabilities` 改用共享 `PageHero`（暖白），保留深色的 5 个首屏
+（三条其他能力线 + 旋压 + 锻造）只修墨色。**before → after 对比度：1.00–1.06:1 → 14.17–15.07:1**
+（7 路由 × 4 视口 = 28 组合全部 AA 通过）；28 个 after 组合 0 溢出 / 0 控制台错误 / 0 非 200；
+四语言 `/about` 全 200 且带 `data-astryx-theme="neutral"`；`<section id="top">`、`aria-labelledby`、
+CTA 真实 `<a href>` 与查询参数全部保留。
+门禁：`theme:check` ok ｜ `npm test` 42/42 ｜ `lint` clean ｜ `typecheck` clean ｜ `build` exit 0 ｜ `git diff --check` clean。
+
+`DESIGN.md` 已补入本切片的实测结论。P1 任务**留在 `work/queued/`，不声明 completed**——
+按完成条件须等 P2–P5；全站回归、询盘四态、键盘/axe 扫描与真实浏览器焦点验证仍在 P5。
+
+## 2026-10-11 Astryx 组件兼容性基线与全站盘点（P0）完成
+
+全站迁移第一项 P0 只读审计已完成，产出兼容性基线与四态矩阵，
+报告见 [`outputs/reports/26-astryx-component-compatibility-matrix-alma-2026-10-11.md`](outputs/reports/26-astryx-component-compatibility-matrix-alma-2026-10-11.md)
+与[探针证据](outputs/reports/27-astryx-probe-evidence-alma-2026-10-11.md)。
+实测当前工作树 `find src/app -name page.tsx` = 38，其中纯重定向 7 个
+（`/gallery`、`/gallery/wheels`、`/manufacturing`、`/resources`、`/resources/[slug]`、
+`/resources/bolt-patterns`、`/resources/bolt-patterns/[pattern]`），故 **38 − 7 = 31 个渲染模板**，
+全部登记归属；`products/wheels/[model]` 是渲染模板（仅在 slug 规范化时 308），不计入重定向。
+
+以 `@astryxdesign/core@0.6.7` 做真实探针（`react-dom/server` 静态渲染 + `.d.ts` 逐 props +
+:3200 运行中服务器的实际 HTML）：**Pagination** 的 `onChange` 必填且**无 `href`**，SSR 实测产出
+`<button>` 无 `<a>`，故**保留原生链接分页**（可爬取 + 无 JS）；**CheckboxInput** 是受控单布尔，
+而目录筛选实测为 **76 个原生同名多值 checkbox + `<form method="get">`**，故**保留原生多值筛选**；
+**TopNav** 是扁平 strip、**MobileNav** 是单层 `dialog`，现有 Header 是多级 flyout，
+故**保留项目 Header**；**Card** 无 `use client`（服务端安全）→ 已探针待验收；
+**Table**、FAQ **Collapsible**、长文 **Markdown**、Insights 分类 **TabList** 均给出具体保留/不适用理由。
+四态计数：已采用 15 / 已探针待验收 5 / 有理由保留 7 / 不适用 2。
+
+本轮未改任何业务逻辑、页面 JSX 或组件代码；未提交、推送或部署；未新起 `next dev`（复用 :3200）；
+未提交真实询盘。任务记录见
+[`work/completed/2026-10-11-astryx-component-compatibility-matrix.md`](work/completed/2026-10-11-astryx-component-compatibility-matrix.md)。
+遗留（交 P1–P4）：Next Link 软导航/预取、无 JS/键盘/焦点/四语言/320px 逐切片自测、`ClickableCard`
+与 `MetadataList` 的生产验收。
+
+## 2026-10-11 Astryx Neutral 暖白全站迁移进行中
+
+用户已定案以白色、暖灰和克制铜色取代旧版黑灰橙作为全站目标。根 Astryx Theme、可编辑 Neutral 源码及静态构建产物已接入，品牌色继续由 `globals.css` 的 `--fh-*` 统一定义；首页、通用 PageHero、产品总览、轮毂目录、Header/Footer 已改为暖白首屏/外壳。既有 Astryx 询盘、目录、偏距输入和长文适配器改从本地主题获取一致令牌，Next.js/WordPress 内容与发布边界未变。
+
+19 个代表路由在 320×568、390×844、768×1024、1440×900 共 76 个路由-视口组合均返回 200，根主题为 Neutral，且无页面级横向溢出；320px 发现并修复了 About、Capabilities、轮毂排序、锻造与定制铝件的最小内容宽度问题。Playwright CLI 已确认目录筛选入口可展开、直接询盘 Dialog 在 320/768 可见、控制台 0 error。42 个单测、lint、typecheck、191 页 production build 及主题产物新鲜度校验通过。未向真实地址发信，未提交、推送或部署。
+
+当时任务仍在 [`2026-10-11-astryx-neutral-sitewide-migration.md`](work/completed/2026-10-11-astryx-neutral-sitewide-migration.md)：旧版约 21 个文件含深色 Hero 模板，需 Alma 按页面族逐一判断改暖白或保留为有证据的深色照片区；四语言逐页视觉/键盘与完整 E2E 也未在本轮重跑。现已编写 [Alma 交接](outputs/reports/24-astryx-neutral-warm-handoff-alma-2026-10-11.md)和[全站 Astryx 组件化计划](outputs/reports/25-astryx-sitewide-component-plan-alma-2026-10-11.md)，拆分 P0–P5 六个排队切片；下一步先做 P0 兼容性基线，尚未执行这些新切片。
+
+## 2026-10-11 轮毂筛选入口与移动端提交动作修复
+
+移动目录现在明确显示“Filter wheels”入口；展开后在选项末尾也有“Apply filters”按钮。修正嵌套折叠项的展开样式，并让结果区的浮动询盘按钮在长页面中正确隐藏，避免遮挡筛选和排序。Playwright CLI 实测 390×844 下组合筛选 PCD 5×112 与 18 英寸后显示 23 个型号，控制台 0 error；4 条 Chromium 筛选回归、lint、typecheck、191 页 production build 与 `git diff --check` 均通过。已有开发进程占用 Next 的开发锁，回归测试经核对后复用本仓库本地服务执行。未提交、推送或部署。
+
+## 2026-10-11 询盘持久化与 QQ SMTP 端到端修复完成
+
+询盘成功语义现已收紧为：只有 WordPress/MySQL 同事务写入询盘、幂等键和 Outbox，API 才返回
+成功；未配置 CMS、写入失败或任何 `persisted:false` 均返回/显示失败，并保留表单与总询盘清单。
+前端同时校验 `ok:true && persisted:true`，邮件接受、送达或失败继续作为落库后的独立状态。
+
+本地 Next.js 已接入 WordPress REST，并只发送 1 条明确标记的合成询盘完成真实链路：HTTP 201、
+`persisted:true`、QQ SMTP `accepted`、`mock:false`；写入时 MySQL 中 CPT、幂等键与 Outbox 各 1 条，
+Outbox 尝试 1 次且无错误。SMTP 接受不等于 QQ 收件箱最终投递，仍需人工按询盘号
+`INQ-20261011-0001` 核对收件箱/垃圾箱。
+
+后续后端验收暴露出脚本会清空本地全部询盘，导致上述合成记录被清理；现已改为只删除脚本自己的
+测试邮箱/固定探针记录，并以保护性哨兵证明普通询盘保留、测试夹具删除。Playwright 也不再复用
+端口上的陌生站点，并固定 `WP_MODE=mock`，避免自动化误发真实邮件。
+
+验收：42/42 单元测试、lint、typecheck、191/191 页面 production build、18/18 询盘 Chromium E2E、
+WordPress 后端 80/80、邮件事件/积压恢复 18/18、PHP 语法与清理边界探针通过。报告见
+[`outputs/reports/23-inquiry-persistence-smtp-e2e-2026-10-11.md`](outputs/reports/23-inquiry-persistence-smtp-e2e-2026-10-11.md)，
+决定见 DEC-092。未提交、推送或部署。
+
+## 2026-10-11 本地交互整体失效已修复
+
+本地“页面有样式但所有互动失效”并非轮毂筛选、询盘与导航三个模块同时损坏，而是开发资源未被
+浏览器加载：轮毂站以 `0.0.0.0:3200` 启动后，Next.js 16 阻止来自 `127.0.0.1` 和本机局域网
+地址的 dev-only 脚本、字体与 HMR 请求，React 因此没有完成水合。与此同时，浏览器中遗留的
+`127.0.0.1:3000` 实际由另一个 PersonalWebsite 项目占用，不是当前轮毂站。
+
+`next.config.ts` 现默认允许回环地址并自动收集本机活动 IPv4 接口；稳定别名或开发隧道可通过
+`NEXT_DEV_ALLOWED_ORIGINS` 显式追加。桌面导航另有一个真实缺陷：hover 已展开后，随后 click
+会立刻切回关闭；现已让鼠标点击保持展开、键盘 Enter 保留切换、Escape 关闭。新增 Playwright
+水合与导航回归，并实测筛选 GET、直接询盘 Dialog、总询盘 Toast/Badge 和局域网开发脚本均恢复。
+
+验收：42/42 单元测试、lint、typecheck、191/191 页面 production build、55/55 Chromium E2E、
+`git diff --check` 通过。修复说明见
+[`outputs/reports/22-local-interaction-recovery-2026-10-11.md`](outputs/reports/22-local-interaction-recovery-2026-10-11.md)，
+任务见 `work/completed/2026-10-11-local-interaction-recovery.md`。未提交、推送或部署。
+
+## 2026-10-10 Astryx 长文 Outline 已完成
+
+法律文档与 Insights 正文已共用薄 `LongformOutline` 适配器：服务端继续生成标题、正文、稳定
+`section-*` ID 和普通 hash 链接，Astryx 只接管滚动激活与 Arrow/Home/End 键盘导航。英文、中文、
+西班牙语与泰语均补齐“本页内容/页面章节”界面标签；无 JavaScript 时目录和全文仍直接可用。
+
+Playwright CLI 发现原 `data-reveal-group` 会让锚点本身先位移、滚动后再上移到固定 Header 下方；现已
+保留稳定的 `article` 锚点，只让内部正文执行声明式 reveal。桌面最终落点为 109.67px，Header 底部
+为 93px；390px 与等效 200% 均无横向溢出，控制台 0 error。新增隐私页 axe 代表扫描还发现其浅色
+询盘政策面板与透明白字 Header 冲突，现已让该路径首屏使用实色 Header 并预留导航高度。
+
+验收：41/41 单元测试、lint、typecheck、191/191 页面 production build、53/53 Chromium E2E 和
+`git diff --check` 通过。报告与截图见
+[`outputs/reports/21-astryx-longform-outline-2026-10-10.md`](outputs/reports/21-astryx-longform-outline-2026-10-10.md)，
+任务见 `work/completed/2026-10-10-astryx-longform-outline.md`，决定见 DEC-091。未提交、推送或部署。
+
+## 2026-10-10 Astryx 询盘反馈、弹窗基线与偏距输入已完成
+
+本轮完成询盘清单 `Toast`/`Badge`、偏距计算器六个 Astryx `NumberInput`、直接询盘两档视口与五种
+状态截图，并完成 FAQ、制造能力和 Insights 分类交互审计。Toast 区分新增、重复数量合并和 20 个
+配置满额；Badge 表示配置项数量，不把采购件数伪装成购物车商品数。偏距公式已抽成纯函数，负偏距、
+小数、清空草稿、390px、等效 200% 和 axe 均有回归。
+
+Playwright CLI 在 320×568 Success 基线中发现弹窗仍保留提交前滚动位置，导致标题和关闭入口被裁掉；
+现已在成功后把内部内容滚回顶部。768×1024 与 320×568 的 Open、Validation、Submitting、Success、
+Server Error 共 10 张基线均已保存。
+
+交互审计结论：公开 FAQ 继续用服务端 `<dl>` 展示全文；`/capabilities` 没有真实 Tabs，不启用孤立未
+调用的 `ProcessExplorer`；Insights 分类是结果筛选而非视图导航，继续使用 `aria-pressed`，不误用
+Astryx `TabList`。详细报告与截图见
+[`outputs/reports/20-astryx-interaction-feedback-and-baselines-2026-10-10.md`](outputs/reports/20-astryx-interaction-feedback-and-baselines-2026-10-10.md)，
+决定见 DEC-090。
+
+验收：41/41 单元测试、lint、typecheck、191/191 页面 production build、47/47 Chromium E2E 和
+`git diff --check` 通过。任务见
+`work/completed/2026-10-10-astryx-interaction-feedback-and-baselines.md` 与
+`work/completed/2026-10-10-astryx-offset-number-input.md`；下一条独立 Astryx 切片仍是排队中的长文
+`Outline`。未提交、推送或部署。
+
+## 2026-10-10 Astryx 全页面 UI 审计完成
+
+已按 `fenghuai-engineering-workflow` 审计 `src/app` 的 38 个页面路由文件，其中 31 个为实际渲染
+模板、7 个为纯重定向。Playwright CLI 在当前仓库独立的 3100 端口完成 1440×900 与 390×844
+巡检：31/31 页面返回 200，桌面/移动均无页面级横向溢出。动态型号、平台和文章按共享模板族审计，
+没有把同模板的 138 个型号和四语言 URL 重复计算。
+
+结论：Astryx 下一步优先用于轮毂详情 `Dialog` 直接询盘、法律/文章 `Outline`、偏距计算器
+`NumberInput` 和询价清单 `Toast`；Insights `SegmentedControl` 与状态 `Badge` 只做 P2 探针。
+继续拒绝用 `TopNav`/`MobileNav`、`Pagination`、`CheckboxInput`、`BottomSheet`、`Table` 或通用
+`Card` 改写导航、服务端筛选、工程规格和品牌 Hero。
+
+审计同时发现 P1 独立缺陷：轮毂详情为白色首屏，但全局 Header 仍按深色 Hero 使用透明白字，
+桌面和移动端导航几乎不可见；本地隐私诊断浅色首屏有同类问题。已建立 Header tone、长文
+Outline 和偏距 NumberInput 三个排队任务，并把 Astryx 组件选择补入既有直接询盘计划。完整矩阵与
+截图见 [`outputs/reports/18-astryx-all-page-ui-audit-2026-10-10.md`](outputs/reports/18-astryx-all-page-ui-audit-2026-10-10.md)。
+本轮只新增审计文档与任务记录，没有修改运行时代码、提交或部署。
+
+## 2026-10-10 轮毂直接询盘弹窗与无数量上限已完成
+
+轮毂详情页已拆成“加入总询盘”和“直接询问当前产品”两条路径：前者继续持久化多配置清单，
+后者使用 Astryx `Dialog purpose="form"` 在当前页打开共享表单，只发送当前型号/配置，不读取、
+提交或清空已有清单。未选 variant 时仍允许型号级询盘，并由既有 `variant_pending` 语义跟进。
+
+单配置数量已从浏览器、Zod 和 WordPress 三层删除 999 业务上限，统一为安全正整数；项目数量
+文本继续允许 `prototype`、`500/year` 等表达。Astryx `NumberInput` 已用于配置数量，5,000 件
+通过真实 WordPress 快照验证。开发态 CSP 允许 React 调试所需 `unsafe-eval`，生产态继续禁止；
+Playwright CLI 控制台 0 error，没有再出现原 eval 报错。
+
+验收：37/37 单元测试、lint、typecheck、191 页 production build、26/26 Chromium E2E、
+WordPress 后端 80/80、邮件事件/积压恢复验收、PHP 语法和 `git diff --check` 全部通过。390×844
+弹窗无横向溢出、内部可滚动、Escape 关闭并恢复触发焦点；证据见
+[`outputs/reports/ui-evidence-2026-10-10/direct-wheel-inquiry-mobile.png`](outputs/reports/ui-evidence-2026-10-10/direct-wheel-inquiry-mobile.png)。
+任务见 [`work/completed/2026-10-10-direct-wheel-inquiry-dialog-and-quantity.md`](work/completed/2026-10-10-direct-wheel-inquiry-dialog-and-quantity.md)，决定见 DEC-089。
+
+## 2026-10-10 Astryx Banner / FormLayout 反馈外壳评估完成
+
+按 `fenghuai-engineering-workflow` 完成 Astryx 第三条 UI 纵向切片：轮毂目录的筛选组合规则已迁移到
+Astryx `Banner status="info"`，桌面和移动筛选面板均保留服务端渲染。普通结果数量仍是文本摘要，
+无结果继续使用 `EmptyState`；`FormLayout` 仅适合询盘字段布局，不包裹轮毂筛选器，避免破坏原生
+`fieldset`、GET 字段和无 JavaScript 语义。
+
+新增 `tests/astryx-feedback-shell-probe.test.mts` 与筛选 Banner 契约测试；35/35 单元测试、lint、
+typecheck、191 页面 production build、39/39 Chromium E2E、`git diff --check` 全部通过。桌面/移动
+证据与完整结论见 [`outputs/reports/17-astryx-feedback-shell-probe-2026-10-10.md`](outputs/reports/17-astryx-feedback-shell-probe-2026-10-10.md)。
+决定记录见 DEC-088。Astryx UI 主线下一步可评估询盘成功/待投递反馈，但不再为了组件覆盖率改写结果摘要或原生筛选。
+
+## 2026-10-10 Astryx 轮毂筛选器外壳评估完成
+
+按 `fenghuai-engineering-workflow` 完成 Astryx 第二条 UI 纵向切片：轮毂目录的型号搜索已接入
+Astryx `Field`，实际查询仍由原生 `input[name=q]`、GET URL 和服务端解析负责。对
+`CheckboxInput` 做了固定版本静态探针，确认其布尔 `value` 不能承载 `diameter=18`、
+`pcd=5x112` 这类业务值；为保持无 JavaScript 多选提交，直径/宽度/PCD/工艺 checkbox 保留原生实现。
+
+筛选计数的对比度从 3.59:1 修复为 `text-steel` 令牌；新增筛选 URL、服务端 HTML、axe、键盘焦点和
+等效 200% 视口回归。桌面/移动截图与探针记录见
+[`outputs/reports/16-astryx-wheel-filter-shell-probe-2026-10-10.md`](outputs/reports/16-astryx-wheel-filter-shell-probe-2026-10-10.md)。
+验收证据：33/33 单元测试、lint、typecheck、191 页面 production build、38/38 Chromium E2E、
+`git diff --check` 全部通过。当前任务仍在 `work/active/2026-10-10-astryx-ui-expansion.md`，下一步评估
+`Banner` 或 `FormLayout`，不改变筛选状态模型；排队任务见
+`work/queued/2026-10-10-astryx-feedback-shell.md`。
+
+## 2026-10-10 Astryx Pagination 探针完成，保留服务端链接分页
+
+按 `fenghuai-engineering-workflow` 执行下一条纵向切片的第一步：用固定版本
+`@astryxdesign/core@0.6.7` 对官方 `Pagination` 做服务端静态渲染探针。组件有正确的分页
+landmark、当前页语义和可访问名称，但要求 `onChange` 并输出按钮，不是普通 `<a href>`。
+
+因此没有替换现有 `WheelCataloguePagination`，继续保持筛选参数、页码、工艺锁定、复制 URL、
+无 JavaScript 和爬虫行为。探针测试和报告见
+[`outputs/reports/15-astryx-pagination-server-link-probe-2026-10-10.md`](outputs/reports/15-astryx-pagination-server-link-probe-2026-10-10.md)。
+原排队任务已移动到 `work/active/2026-10-10-astryx-ui-expansion.md`，下一步是评估筛选器外壳。
+
+## 2026-10-10 Astryx 面包屑与轮毂空状态第二切片已完成
+
+按路线图完成了第一个可回滚的导航/筛选反馈切片：轮毂目录、详情、旋压路线、Dealer、Fitment、
+Insights、工具与法律页面均改用共享 `SiteBreadcrumbs`；轮毂合法无结果分支改用 Astryx
+`EmptyState`，仍保留筛选摘要、清空筛选与带当前筛选快照的询盘入口。所有业务 URL、服务端 GET
+筛选、分页、产品事实和无 JS 兜底均未交给客户端组件接管，中文前缀会生成 `/zh/*` 面包屑路径。
+
+本切片的 Playwright 契约覆盖英文公开页面、中文轮毂目录与无结果状态；`npm run typecheck` 和
+`npm run lint` 已通过。任务已从 `work/queued/2026-10-10-astryx-breadcrumb-empty-state.md`
+移至 `work/completed/2026-10-10-astryx-breadcrumb-empty-state.md`。收尾门禁已通过：31/31 单元测试、
+lint、typecheck、191 页面 production build、34/34 Chromium E2E（`--retries=0`）和
+`git diff --check`；截图见 `outputs/reports/ui-evidence-2026-10-10/astryx-empty-state/`。
+
+## 2026-10-10 Astryx 页面组件第一性原理评估完成
+
+已确认 Astryx 适合解决跨页面重复的交互基础设施，不适合替换首页 Hero、产品卡片、工程规格表
+或服务端筛选状态。官方组件目录和设计原则已与现有页面逐项映射：下一条排队任务是扩展共享
+面包屑，并只迁移轮毂目录的空状态/筛选反馈外壳；分页、筛选器状态和语言导航暂不强行迁移。
+详细报告见 [`outputs/reports/14-astryx-first-principles-component-roadmap-2026-10-10.md`](outputs/reports/14-astryx-first-principles-component-roadmap-2026-10-10.md)，任务见
+`work/queued/2026-10-10-astryx-breadcrumb-empty-state.md`。
+
+## 2026-10-10 首页已恢复完整工业品牌首屏
+
+按用户复核结果，首页不再把三个采购起点卡片塞入 Hero。首屏已恢复上一版的大标题比例、留白、
+双行动按钮和展示字体；页面下方的产品线、能力、交付流程与收尾询盘仍完整保留，因此首页仍是
+五区块品牌与转化页面，不是单一组件展示页。
+
+本次只回退首页视觉增量：WordPress 首页内容/SEO、四语言路由、Hero 媒体加载失败兜底、询盘
+上下文解析、Astryx 面包屑与询盘表单均继续保留。桌面 1440×1000 和移动 390×844 均无横向
+溢出，截图见 `outputs/reports/ui-evidence-2026-10-10/homepage-rollback/`。
+
+验收证据：31/31 单元测试、31/31 Chromium E2E、lint、typecheck、191 页面 production build、
+`git diff --check` 通过。开发模式截图中的 CSP `eval()` 与 HMR 跨源消息不进入 production build。
+
+## 2026-10-10 Astryx Neutral 面包屑与询盘表单第一切片已完成
+
+本轮没有假造不存在的“Meta 品牌主题”。Astryx 是在 Meta 内部成长并开源的组件系统，公开主题中
+适合当前工业独立站作为迁移起点的是 Neutral。已按纵向切片将 Astryx 引入询盘主链路，同时保留
+现有黑灰橙品牌令牌、Zod 校验、两步表单状态、购物清单、幂等键和 WordPress 载荷契约。
+
+已完成：
+
+- 安装 `@astryxdesign/core`、`@astryxdesign/theme-neutral` 与 `@stylexjs/stylex`，接入 Next.js
+  `LinkProvider` 和四语言国际化环境；
+- 新增共享 `SiteBreadcrumbs`，`/request-a-quote` 首屏使用 Astryx `Breadcrumbs`；
+- 询盘表单的输入框、文本域、选择器、单选、多选、复选、提示横幅和按钮均改用 Astryx 原生组件；
+- Neutral `Theme` 只包围 Astryx 表面，避免其语义颜色污染既有深色首页；CSS 明确声明
+  reset、Astryx 基础/主题与 Tailwind utilities 的级联顺序；
+- 保留自有两步进度组件：官方 Stepper 面向 3–7 步流程，不强行用于当前两步表单；
+- 英文、中文、西班牙语使用官方目录，泰语为当前切片补最小覆盖，缺失短语可见回退英文；
+- 桌面与 390px 移动端无横向溢出，UI 证据存于
+  `outputs/reports/ui-evidence-2026-10-10/astryx/`。
+
+验收证据：`npm test` 31/31、`npm run lint`、`npm run typecheck`、`npm run build`（191 页）、
+`CI=1 npx playwright test --project=chromium` 31/31、`npm run audit:prod` 0 漏洞、
+`git diff --check` 通过。Astryx Doctor 为 0 failure、8 pass、2 warning；两个警告分别来自手工接入
+主题/Provider 和未让 CLI 改写项目级 `AGENTS.md`，均为有意保留本项目治理规则。
+
+## 2026-10-10 第一批 UI 增量已完成，首页入口增量已按复核回退
+
+按第一性原理，网站的核心链路是“定位需求 → 找到产品/能力 → 验证证据 → 选择规格 → 提交询盘”。
+本轮曾按纵向切片完成 P0 首页需求入口、P0 移动端行动入口安全区和 P1 Hero 媒体失败兜底；
+后续用户复核决定回退首页三入口和 Hero 字体压缩，其余两项与普通控件字体收敛继续保留。详细路线图见
+[`outputs/reports/13-first-principles-incremental-roadmap-2026-10-10.md`](outputs/reports/13-first-principles-incremental-roadmap-2026-10-10.md)。
+
+已完成：
+
+- 首页三入口已由 DEC-083 回退；既有 `product_line`、`intent`、`input_type`、`from`
+  询盘上下文与四语言字典接缝继续保留，可供目录、详情和外部入口使用；
+- 移动端浮动询价入口保留 78px 内容安全区和系统 `safe-area-inset-bottom`，桌面端恢复原位置；
+  筛选抽屉、询盘页、感谢页和页脚隐藏与键盘可达性保持不变；
+- Hero 批准媒体失败时切换同尺寸工业网格，不改变标题/CTA 位置，也不以生成图替代产品事实；
+- 普通导航、表单和浮动询价入口继续使用 Inter 正文字体与普通句式；首页 Hero 双 CTA 按用户
+  复核恢复展示字体与大写字形，但不扩散到其他控件。
+
+验收证据：`npm test` 31/31、`npm run lint`、`npm run typecheck`、`npm run build` 191 页、
+`CI=1 npx playwright test --project=chromium` 31/31、`git diff --check`；截图存放在
+`outputs/reports/ui-evidence-2026-10-10/`。当前进行中任务见
+`work/active/2026-10-10-content-density-typography.md`，后续仍按 P1 目录选择效率、中文/多语言
+正文迁移、P2 最小匿名数据反馈顺序推进。
+
+## 2026-10-10 阶段 4：产品与图片可信度流程已明确，首发资料仍阻塞
+
+本轮没有把现有 138 个技术/迁移批准型号误报为商用首发。已把图片确认收缩为轻量流程：主图
+实体存在、型号/变体匹配、供货确认和公司负责人批量声明。只有第三方 Logo、客户车辆、外部
+供应商素材或授权明显不明时，才升级逐图权利核验。现有 WordPress 的发布、图权、供货、规格
+和批准变体门槛继续 fail-closed。
+
+当前阻塞：首发 10–20 个型号清单、工程与供应确认、公司负责人批量可发布声明、补图计划和最终
+批准人。开发可以先做候选资产检查报告（文件存在、哈希、尺寸、命名绑定），但不能自动提升
+公开状态。详细流程见 [`outputs/reports/12-product-image-trust-verification-process-2026-10-10.md`](outputs/reports/12-product-image-trust-verification-process-2026-10-10.md)，
+任务见 `work/active/2026-10-10-product-image-trust-verification.md`。
+
+备用图片采用分批策略：尚未确定型号的图片留在只读候选库；确定型号后再按一个型号/一个小批次
+上传 WordPress、绑定图库并单独验收，不要求一次性迁移全部图片。后续任务见
+`work/queued/2026-10-10-reserve-wheel-image-incremental-upload.md`。
+
+## 2026-10-10 P1：多语言路由、正文字段与 SEO 门禁第一切片已完成
+
+本轮按 `fenghuai-engineering-workflow` 先完成不依赖业务翻译批准的工程切片：英文根 URL
+保持不变，新增中文、西班牙语、泰语独立前缀；WordPress Page 与 Insights 契约预留按
+locale 的正文、SEO 和发布状态。未完成人工翻译和核验的语言不会被搜索引擎收录。
+
+已完成：
+
+- `src/lib/i18n` 支持 `en / zh / es / th`，Proxy 可将四种前缀 rewrite 到现有 App Router，
+  语言选择改为可访问的下拉控件，并保留当前路径、查询参数和片段；
+- 四种语言的站点 Header/Footer chrome 字典键集合一致；页面正文没有凭空复制成翻译；
+- WordPress 原生 Page 增加 `content_by_locale`、`seo_by_locale` 和 `locale_status` 字段；
+  只有 `approved` 的语言版本进入公开契约，编辑预览可以查看草稿；
+- Insights 原生文章增加 `translations` 与 `translation_status` 字段，保持既有
+  `GuideEntry` 适配器不变；
+- 根布局只为当前允许索引的语言输出 `hreflang`，语言未完成时响应带
+  `noindex, follow` 且不进入 sitemap；当前允许索引集合仍只有英文；
+- 验收证据：31/31 单元测试、WordPress 原生 Page/CMS 探针、Playwright 6/6 站点契约、
+  lint、typecheck、191 页面 production build 通过。
+
+尚未完成：
+
+1. 逐页补齐中文、西班牙语、泰语正文、metadata、媒体 alt 与业务核验；
+2. 将已完成语言加入 `INDEXABLE_LOCALES`，再验收 canonical、hreflang、sitemap 和真实域名；
+3. 运营在 WordPress 后台使用多语言 JSON 字段完成首批页面/Insights 翻译并做预览、批准、
+   撤回演练。
+
+详细任务见 `work/active/2026-10-10-multilingual-content-seo.md`。
+
+## 2026-10-10 阶段 3：原生 WordPress 内容接管第一、第二切片已完成
+
+本轮按 `expand–migrate–contract` 扩展内容后台，目标是让运营通过 WordPress 原生编辑器
+管理博客与站点页面，同时保持 Next.js 组件只接收既有稳定类型。当前状态为“已迁移并开启
+本地权威接管”，第三切片代码已完成，但正式隐私版本未确认，因此询盘 Page 保持草稿、
+表单继续 fail-closed。
+
+已完成：
+
+- 6 篇已审核 Insights 已复制到原生 WordPress `post`，保留结构化摘要、正文分段、SEO、
+  媒体和日期；`fh_guides_native_authoritative` 开启后，公开接口明确返回
+  `source=wordpress-post`；旧 `fh_guide` 保留为回退和对账源；
+- 新增原生 Page 内容插件与稳定 REST 契约，支持页面键、结构化内容 JSON、SEO 标题/描述、
+  特色媒体、草稿/批准/撤回和授权预览；7 个页面已导入：首页、公司、能力、产品中心、
+  EV、定制铝制品、自密封轮胎；
+- 首页、公司、能力和四条产品线服务端适配器均先归一化为既有 `src/content/types.ts`
+  类型，字段不完整时回退最后一次有效本地快照；产品页 SEO 已切换为读取 Page SEO；
+- 原生 post/page 保存、撤回、回收站和删除均接入 HMAC 缓存回调，失效对应页面、Insights
+  tag 和 `/sitemap.xml`；预览接口要求编辑权限，草稿不会进入公开集合；
+- 询盘入口、感谢页和隐私受控字段已加入原生 Page 迁移包：包括 Step 1/Step 2 提示、字段
+  错误、成功、网络失败、邮件待投递和隐私同意文本；当前因环境没有正式隐私版本号，
+  `request-a-quote` 与 `privacy` 在 WordPress 中保持草稿，公开接口返回空集合；
+- 已补充隐私版本/同意文本模板和前台观测路径：`outputs/templates/2026-10-10-privacy-consent-template.md`
+  记录待确认字段与发布门槛；`/api/preview?secret=...&page=privacy` 和
+  `...&page=request-a-quote` 可在授权预览态查看 WordPress 草稿，页面顶部显示预览横幅，
+  隐私页直接展示版本号、同意文本和链接；版本号为空时询盘表单仍显示不可用提示，不会写入数据；
+- 缓存失效的 `pages` 类型覆盖 `/request-a-quote`、`/support/privacy`、`/thank-you` 与
+  `/sitemap.xml`，并已加入 Playwright 契约测试；
+- 验收证据：`python3 scripts/verify-insights-cms.py`、`python3 scripts/verify-native-pages.py`
+  通过；`npm test` 29/29、`npm run lint`、`npm run typecheck`、`npm run build`、
+  `git diff --check` 通过。
+
+下一步：
+
+1. 由业务/法务确认正式隐私版本号和同意文本，重新导出并批准 `request-a-quote`、`privacy`；
+2. 在真实运营编辑一轮后再收缩本地录入职责，不删除本地最后一次有效快照；
+3. 生产环境补真实域名下的预览 token、回调密钥、备份和 sitemap 联调。
+
+详细 Issue 记录见 `work/active/2026-10-10-wordpress-native-content-takeover.md`，决定见
+`DECISIONS.md` 的 DEC-075。
+
+## 2026-10-10 阶段 2：多款轮毂询价清单已完成
+
+本阶段已把单产品询盘扩展为一次最多 20 款轮毂的结构化清单，且不破坏旧载荷和既有
+WordPress 记录。当前实现链路为：
+
+`目录/详情加入清单 → localStorage 刷新恢复 → Step 1/Step 2 表单 → Zod 服务端校验 →
+Next.js 按 model + productionCode 重查已发布集合 → WordPress CPT 事务保存
+inquiry_items_json 快照 → 同一快照生成 HTML/纯文本 QQ 通知 → 后台逐项查看`。
+
+本阶段已完成：
+
+- `InquiryItem[]` 类型与 Zod 契约：最多 20 项、数量 1–999 的整数；旧单产品载荷和旧记录
+  继续可读；重复清单项在客户端合并，服务端仍拒绝重复 canonical 配置；
+- 目录卡片可把首个已批准配置加入清单，详情页可把当前选择的配置加入清单；询价页支持
+  删除、改数量、清空和刷新恢复，成功提交后清空；浮动询价入口显示清单数量；
+- 服务端不信任客户端规格：每项以 `model + productionCode` 重新解析公开集合并覆盖规格；
+  未发布、篡改或不存在配置返回 422，整次提交不写入；
+- WordPress 新增 `inquiry_items_json` 自定义字段，在 CPT 写入事务中保存不可变快照；后台
+  详情、列表关联记录、HTML 邮件和纯文本备用正文显示同一逐项清单；
+- 验收证据：`npm run lint`、`npm run typecheck`、`npm test`（26/26）、`npm run build`
+  全部通过；`CI=1 npx playwright test e2e/inquiry.spec.ts --project=chromium`
+  12/12 通过（开发环境离线字体下载仅产生 fallback 警告）；`python3 scripts/verify-inquiry-backend.py`
+  80/80 通过；PHP 语法检查与 Docker 配置检查通过。
+
+本阶段的取舍与迁移门槛记录在 `DECISIONS.md` 的 DEC-074；Issue 已移至
+`work/completed/2026-10-10-inquiry-cart-multi-item.md`。尚未包含价格、下单、支付、客户
+账号或独立 `fh_inquiry_item` 查询表。
+
 ## 2026-10-09 商用基线继续收口
 
 **当前判断仍为 No-Go。** 本轮已关闭所有不依赖管理层决定的本地工程基线，但正式
-主体/域名/法律文本/首发产品签字/OpenNext 平台/邮件事件/监控恢复仍未具备，不能部署
+主体/域名/法律文本/首发产品签字/OpenNext 平台/生产邮件事件/监控恢复仍未具备，不能部署
 生产、开放索引或向客户发信。
 
 本轮完成：
@@ -72,11 +776,35 @@
 当前可继续由开发推进但尚未完成：其余页面正文/SEO 迁入 WordPress 稳定适配器、逐页
 中文内容翻译与核验、中文 `hreflang`/sitemap 放行、真机软键盘和屏幕阅读器 UAT。
 
-本轮核验新增一项已排队的 P1：当前询盘仍是一条轮毂上下文，不支持一次提交多款轮毂；
-多产品询价清单的实现计划见 `work/queued/2026-10-09-inquiry-cart-multi-item.md`。
+本轮核验新增的 P1 已完成：当前询盘已经支持一次提交多款轮毂；实现与证据见
+`work/completed/2026-10-10-inquiry-cart-multi-item.md` 和 `outputs/reports/09-multi-wheel-inquiry-implementation-2026-10-10.md`。
 邮件通道核验确认没有引入 Nodemailer，远程由 WordPress 自带 PHPMailer 走 QQ SMTP；
 Insights 首批 6 篇已由 `fh_guide` 自定义内容类型接管，`src/content/resources.ts`
 仅作为 CMS 不可用时的回退。
+
+2026-10-10 已形成基于第一性原理的增量路线图，按“询盘可靠性 → 多产品询价 →
+WordPress 内容接管 → 产品/图片可信度 → 中文 i18n → 正式部署演练”排序，并将外部阻塞
+与可自主推进的工程切片分开：[`outputs/reports/08-incremental-roadmap-first-principles-2026-10-10.md`](outputs/reports/08-incremental-roadmap-first-principles-2026-10-10.md)。
+
+## 2026-10-10 询盘可靠性生产化：本地闭环已完成
+
+本地继续沿用 WordPress 内置 PHPMailer/QQ SMTP，不引入 Nodemailer。SMTP 成功只代表
+提供商接受（`accepted`），因此新增独立的签名事件接缝：
+
+- `POST /wp-json/fh/v1/email-events` 使用时间戳 + HMAC-SHA256，支持 `delivered`、
+  `bounced`、`failed`，事件表以 `provider_event_id + event_type` 去重；
+- 事件只保存最小化审计字段，回写同一条 WordPress 询盘和 outbox；乱序的
+  `delivered` 不会覆盖已确认的 `bounced/failed`；未匹配事件返回 `202` 并保留审计；
+- outbox worker 原有租约、退避、最大尝试次数保持不变，新增五分钟积压摘要、已放弃和
+  过期租约告警；日志只有计数与时间，不含邮箱、电话或正文；
+- `scripts/verify-inquiry-delivery.py` 使用合成询盘完成签名、重复/乱序、未匹配、错误
+  签名、积压告警和过期租约恢复演练，全部通过；`php -l` 和既有后端验收通过（既有
+  列表字段顺序探针仍有 1 项历史失败，与本次改动无关）。
+
+生产剩余项是选择支持 Webhook 的邮件提供商、配置 `FH_INQUIRY_WEBHOOK_SECRET`、公开
+HTTPS 回调地址、可靠系统 cron/队列和告警接收方；QQ SMTP 本身不能凭发送成功生成
+`delivered/bounced` 事件。实施记录见
+`work/active/2026-10-10-inquiry-delivery-productionization.md`。
 
 本轮未改 DNS；已部署 7080/9080 公网联调环境，并向已配置的内部 QQ
 收件邮箱发出 1 封合成 SMTP 验收通知。当前仍是 IP + HTTP、强制 `noindex` 的上线验收

@@ -1,0 +1,241 @@
+{
+ "generatedAt": "2026-10-11T09:14:07.055Z",
+ "base": "http://127.0.0.1:3210",
+ "wheel": "/products/wheels/dx035",
+ "dialog": {
+  "route": "/products/wheels/dx035",
+  "steps": [],
+  "trigger": {
+   "text": "Request this wheel model",
+   "html": "<button type=\"button\" class=\"astryx-button primary lg none x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x16bblx1 x1wfwxd8 x13aywxo x1n2onr6 x3nfvp2 x6s0dn4 xl56j7k x1txdalj xce4md1 xrrkdod xc342km xng3",
+   "allVisibleButtons": [
+    "产品中心",
+    "制造与质量",
+    "经销商项目",
+    "技术与见解",
+    "Request this wheel model",
+    "Add to enquiry",
+    "Add to enquiry",
+    "Add to enquiry"
+   ]
+  },
+  "opened": {
+   "present": true,
+   "role": null,
+   "ariaModal": "true",
+   "labelledby": "_R_b9qqnpfiv5tnb_",
+   "labelText": "Request this wheel model",
+   "focusables": 13
+  },
+  "trap": {
+   "tabs": 30,
+   "escapes": 1,
+   "escapedAt": [
+    "body inBody=true \"FHFenghuai制造产品中心全部产品线轮毂新能源三电壳体铝制品定制安全轮胎制\""
+   ],
+   "uniques": 12
+  },
+  "shiftTabBack": {
+   "escapes": 0,
+   "samples": [
+    {
+     "tag": "input",
+     "inside": true
+    },
+    {
+     "tag": "input",
+     "inside": true
+    },
+    {
+     "tag": "textarea",
+     "inside": true
+    },
+    {
+     "tag": "button",
+     "inside": true
+    }
+   ]
+  },
+  "afterEscape": {
+   "dialogClosed": false,
+   "activeIsTrigger": false,
+   "activeTag": "button",
+   "activeText": "",
+   "activeInBody": false
+  },
+  "reopenByKeyboard": {
+   "reopened": false,
+   "activeInsideDialog": false
+  }
+ },
+ "mobileNav_": {
+  "route": "/",
+  "steps": [],
+  "before": {
+   "buttonFound": true,
+   "buttonLabel": "打开导航",
+   "ariaExpanded": "false",
+   "panelFound": true,
+   "panelHeight": 1,
+   "panelVisibleLinks": 17,
+   "panelTabbableLinks": 17
+  },
+  "opened": {
+   "ariaExpanded": "true",
+   "panelHeight": 391,
+   "visibleLinks": 17,
+   "firstVisibleLink": {
+    "href": "/zh/products",
+    "text": "产品中心"
+   }
+  },
+  "firstLinkViaTab": {
+   "tag": "a",
+   "href": "/zh/products",
+   "label": "产品中心",
+   "inPanel": true,
+   "tabs": 1
+  },
+  "afterEscape": {
+   "ariaExpanded": "true",
+   "panelHeight": 391,
+   "focusOnButton": false,
+   "activeTag": "a"
+  },
+  "closedAgain": {
+   "ariaExpanded": "false",
+   "panelHeight": 1
+  },
+  "submenu": {
+   "expanded": "true",
+   "navLinksInPanel": 17,
+   "visibleNavLinks": 17
+  }
+ },
+ "mobileNav_products_wheels": {
+  "route": "/products/wheels",
+  "steps": [],
+  "before": {
+   "buttonFound": true,
+   "buttonLabel": "打开导航",
+   "ariaExpanded": "false",
+   "panelFound": true,
+   "panelHeight": 1,
+   "panelVisibleLinks": 17,
+   "panelTabbableLinks": 17
+  },
+  "opened": {
+   "ariaExpanded": "true",
+   "panelHeight": 391,
+   "visibleLinks": 17,
+   "firstVisibleLink": {
+    "href": "/zh/products",
+    "text": "产品中心"
+   }
+  },
+  "firstLinkViaTab": {
+   "tag": "a",
+   "href": "/zh/products",
+   "label": "产品中心",
+   "inPanel": true,
+   "tabs": 1
+  },
+  "afterEscape": {
+   "ariaExpanded": "true",
+   "panelHeight": 391,
+   "focusOnButton": false,
+   "activeTag": "a"
+  },
+  "closedAgain": {
+   "ariaExpanded": "false",
+   "panelHeight": 1
+  },
+  "submenu": {
+   "expanded": "true",
+   "navLinksInPanel": 17,
+   "visibleNavLinks": 17
+  }
+ },
+ "focusRings": {
+  "/@320x568": {
+   "tabbed": 28,
+   "missingRing": [
+    "a \"Explore wheels\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none",
+    "a \"Review EV housing categories\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none"
+   ],
+   "distinctTargets": 27
+  },
+  "/@1440x900": {
+   "tabbed": 28,
+   "missingRing": [
+    "a \"Explore wheels\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none",
+    "a \"Review EV housing categories\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none",
+    "a \"Start with your input\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none",
+    "a \"Review self-sealing tires\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=1px shadow=none"
+   ],
+   "distinctTargets": 27
+  },
+  "/products/wheels@320x568": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 27
+  },
+  "/products/wheels@1440x900": {
+   "tabbed": 28,
+   "missingRing": [
+    "input#desktop-q \"Model search\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=0px shadow=none",
+    "input \"Search Bolt pattern (PCD)\" fv=true outline=none 1px oklab(0.505813 0.0826646 0.0888046 / 0.5) off=0px shadow=none"
+   ],
+   "distinctTargets": 28
+  },
+  "/request-a-quote@320x568": {
+   "tabbed": 28,
+   "missingRing": [
+    "button#_R_53sav5tnb_ \"Product line ∙ 必填\" fv=true outline=none 3px rgb(98, 92, 84) off=0px shadow=none",
+    "textarea#_R_93sav5tnb_ \"Describe the part, product or result you nee\" fv=true outline=none 3px rgb(41, 38, 33) off=0px shadow=none"
+   ],
+   "distinctTargets": 27
+  },
+  "/request-a-quote@1440x900": {
+   "tabbed": 28,
+   "missingRing": [
+    "button#_R_53sav5tnb_ \"Product line ∙ 必填\" fv=true outline=none 3px rgb(98, 92, 84) off=0px shadow=none",
+    "textarea#_R_93sav5tnb_ \"Describe the part, product or result you nee\" fv=true outline=none 3px rgb(41, 38, 33) off=0px shadow=none",
+    "input#_R_b3sav5tnb_ \"Approximate quantity (optional)\" fv=true outline=none 3px rgb(41, 38, 33) off=0px shadow=none"
+   ],
+   "distinctTargets": 28
+  },
+  "/products/wheels/dx035@320x568": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 27
+  },
+  "/products/wheels/dx035@1440x900": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 28
+  },
+  "/tools/offset-calculator@320x568": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 27
+  },
+  "/tools/offset-calculator@1440x900": {
+   "tabbed": 28,
+   "missingRing": [
+    "input#_R_mlplfiv5tnb_ \"Original wheel width\" fv=true outline=none 3px rgb(41, 38, 33) off=0px shadow=none"
+   ],
+   "distinctTargets": 28
+  },
+  "/support/returns@320x568": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 27
+  },
+  "/support/returns@1440x900": {
+   "tabbed": 28,
+   "missingRing": [],
+   "distinctTargets": 28
+  }
+ }
+}

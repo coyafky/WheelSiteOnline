@@ -4,6 +4,10 @@ import { ArrowRight, Clock, TriangleAlert } from "lucide-react";
 import type { GuideEntry, MediaAsset } from "@/content/types";
 import { guideVerificationNotice } from "@/content/resources";
 import { site } from "@/content/site";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { LongformOutline } from "@/components/longform-outline";
+import { getTranslator } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 /**
  * Shared renderer for a long-form guide article.
@@ -18,7 +22,7 @@ import { site } from "@/content/site";
  * sign-off always shows the warning, and cannot accidentally be rendered
  * without it.
  */
-export function ProseArticle({
+export async function ProseArticle({
   guide,
   related,
   heroMedia,
@@ -27,6 +31,7 @@ export function ProseArticle({
   related: GuideEntry[];
   heroMedia?: MediaAsset;
 }) {
+  const { locale, t } = await getTranslator();
   return (
     <>
       {/* A. Hero ----------------------------------------------------------- */}
@@ -59,24 +64,15 @@ export function ProseArticle({
         />
 
         <div className="container-fh pb-14 pt-[140px] lg:pb-16 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/" className="transition-colors hover:!text-forge">
-              Home
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <Link
-              href="/insights"
-              className="transition-colors hover:!text-forge"
-            >
-              Resources
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">{guide.category}</span>
-          </nav>
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Home", href: localizedPath("/", locale) },
+              { label: "Resources", href: localizedPath("/insights", locale) },
+              { label: guide.category },
+            ]}
+          />
 
           <p className="eyebrow mt-6 !text-forge">{guide.category}</p>
           <h1
@@ -149,28 +145,24 @@ export function ProseArticle({
       >
         <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,1fr)] lg:gap-16">
           {/* Table of contents + contact rail */}
-          <aside className="lg:sticky lg:top-[110px] lg:self-start">
+          <aside className="min-w-0 lg:sticky lg:top-[110px] lg:self-start">
             <h2
               id="article-body-title"
               className="font-display text-[0.72rem] font-700 uppercase tracking-[0.16em] text-steel"
             >
-              On this page
+              {t("outline.heading")}
             </h2>
 
-            <nav aria-label="Article sections" className="mt-5">
-              <ol className="grid gap-2.5">
-                {guide.sections.map((section, index) => (
-                  <li key={section.heading}>
-                    <a
-                      href={`#section-${index + 1}`}
-                      className="text-sm leading-snug text-ink/70 transition-colors hover:text-forge"
-                    >
-                      {section.heading}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <div className="mt-5">
+              <LongformOutline
+                label={t("outline.label")}
+                items={guide.sections.map((section, index) => ({
+                  id: `section-${index + 1}`,
+                  label: section.heading,
+                  level: 2,
+                }))}
+              />
+            </div>
 
             <div className="mt-9 rounded-xl border border-border bg-soft p-6">
               <p className="font-display text-[0.94rem] font-700 uppercase leading-snug tracking-[0.01em] text-ink">
@@ -202,26 +194,28 @@ export function ProseArticle({
 
           {/* Prose */}
           <div>
-            <div data-reveal-group className="grid gap-12">
+            <div className="grid gap-12">
               {guide.sections.map((section, index) => (
                 <article
                   key={section.heading}
                   id={`section-${index + 1}`}
                   className="scroll-mt-[110px] border-t border-border pt-8 first:border-t-0 first:pt-0"
                 >
-                  <h2 className="font-display text-[clamp(1.24rem,2.8vw,1.7rem)] font-800 uppercase leading-[1.04] tracking-[-0.005em] text-ink">
-                    {section.heading}
-                  </h2>
+                  <div data-reveal>
+                    <h2 className="font-display text-[clamp(1.24rem,2.8vw,1.7rem)] font-800 uppercase leading-[1.04] tracking-[-0.005em] text-ink">
+                      {section.heading}
+                    </h2>
 
-                  <div className="mt-5 grid gap-4">
-                    {section.body.map((paragraph) => (
-                      <p
-                        key={paragraph}
-                        className="max-w-[720px] text-[0.98rem] leading-relaxed text-steel"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
+                    <div className="mt-5 grid gap-4">
+                      {section.body.map((paragraph) => (
+                        <p
+                          key={paragraph}
+                          className="max-w-[720px] text-[0.98rem] leading-relaxed text-steel"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </article>
               ))}

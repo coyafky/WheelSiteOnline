@@ -1,22 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Check, CircleAlert, Clock, Mail } from "lucide-react";
-import {
-  thankYouConfirm,
-  thankYouResponsePromise,
-  thankYouUnverified,
-  thankYouUrgentContact,
-} from "@/content/thank-you";
 import { site } from "@/content/site";
 import { verifyInquiryReceipt } from "@/lib/inquiry/receipt";
+import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
+import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 
-export const metadata: Metadata = {
-  title: "Inquiry Received — Fenghuai",
-  description:
-    "Confirmation that your forged wheel inquiry reached Fenghuai, and what happens next.",
-  // A confirmation page should never be indexed or used as a landing page.
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getWordpressPageDocument("thank-you");
+  return {
+    title: page?.seoTitle || "Inquiry Received — Fenghuai",
+    description:
+      page?.seoDescription ||
+      "Confirmation that your forged wheel inquiry reached Fenghuai, and what happens next.",
+    robots: { index: false, follow: false },
+  };
+}
 
 /**
  * `/thank-you` — the submission confirmation page.
@@ -36,6 +35,7 @@ export default async function ThankYouPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const content = await getInquiryContent();
   const params = await searchParams;
   const rawId = params.id;
   const referenceId = (Array.isArray(rawId) ? rawId[0] : rawId)?.trim() || undefined;
@@ -44,7 +44,7 @@ export default async function ThankYouPage({
   const confirmed = Boolean(
     referenceId && receipt && verifyInquiryReceipt(referenceId, receipt),
   );
-  const confirmationCopy = confirmed ? thankYouConfirm : thankYouUnverified;
+  const confirmationCopy = confirmed ? content.thankYou.confirm : content.thankYou.unverified;
 
   const { contact } = site;
   const hasRealContact = contact.confirmed;
@@ -124,27 +124,27 @@ export default async function ThankYouPage({
         className="border-b border-border bg-white py-16 lg:py-20"
       >
         <div className="container-fh max-w-[720px]">
-          <p className="eyebrow">{thankYouResponsePromise.eyebrow}</p>
+          <p className="eyebrow">{content.thankYou.response.eyebrow}</p>
           <h2
             id="thank-you-promise-title"
             className="mt-4 font-display text-[clamp(1.6rem,3.6vw,2.2rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
           >
-            {thankYouResponsePromise.heading}
+            {content.thankYou.response.heading}
           </h2>
 
           <p className="mt-6 inline-flex items-center gap-3 rounded-lg border border-border bg-soft px-5 py-4">
             <Clock className="size-4 shrink-0 text-forge" aria-hidden="true" />
             <span className="text-[0.95rem] text-ink">
-              {thankYouResponsePromise.window}
+              {content.thankYou.response.window}
             </span>
           </p>
 
           <p className="mt-4 text-[0.82rem] leading-relaxed text-steel">
-            {thankYouResponsePromise.windowNote}
+            {content.thankYou.response.windowNote}
           </p>
 
           <p className="mt-6 text-[0.98rem] leading-relaxed text-steel">
-            {thankYouResponsePromise.nextStepNote}
+            {content.thankYou.response.nextStepNote}
           </p>
         </div>
       </section> : null}
@@ -156,12 +156,12 @@ export default async function ThankYouPage({
         className="bg-soft py-16 lg:py-20"
       >
         <div className="container-fh max-w-[720px]">
-          <p className="eyebrow">{thankYouUrgentContact.eyebrow}</p>
+          <p className="eyebrow">{content.thankYou.urgent.eyebrow}</p>
           <h2
             id="thank-you-urgent-title"
             className="mt-4 font-display text-[clamp(1.6rem,3.6vw,2.2rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
           >
-            {thankYouUrgentContact.heading}
+            {content.thankYou.urgent.heading}
           </h2>
 
           {hasRealContact ? (
@@ -192,16 +192,16 @@ export default async function ThankYouPage({
           ) : (
             <p className="mt-6 flex items-start gap-2.5 rounded-lg border border-border bg-white px-5 py-4 text-[0.86rem] leading-relaxed text-steel">
               <Mail className="mt-0.5 size-4 shrink-0 text-forge" aria-hidden="true" />
-              <span>{thankYouUrgentContact.pendingNote}</span>
+              <span>{content.thankYou.urgent.pendingNote}</span>
             </p>
           )}
 
           <p className="mt-6 text-[0.86rem]">
             <Link
-              href={thankYouUrgentContact.contactHref}
+              href={content.thankYou.urgent.contactHref}
               className="text-steel underline decoration-border underline-offset-4 transition-colors hover:text-forge"
             >
-              {thankYouUrgentContact.contactLabel}
+              {content.thankYou.urgent.contactLabel}
             </Link>
           </p>
         </div>

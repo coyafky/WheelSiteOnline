@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getLegalDocument } from "@/content/legal";
+import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
 
 export const metadata: Metadata = {
@@ -10,18 +10,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * Thin route: the document body lives in `@/content/legal` and the shared
- * renderer handles structure, the draft-pending-legal-review notice and
- * cross-navigation. Nothing is duplicated across the five support routes.
+ * Thin route: the document body is read from Headless WordPress (page key
+ * `legal-<slug>`) through `@/lib/wordpress/legal`, which falls back to the
+ * checked-in English constant. The shared renderer handles structure, the
+ * draft-pending-legal-review notice and cross-navigation. Nothing is
+ * duplicated across the five support routes.
  */
-export default function Page() {
-  const doc = getLegalDocument("shipping");
-
-  // The slug is a literal, so this cannot be undefined at runtime; the guard
-  // exists so the type narrows without a non-null assertion.
-  if (!doc) {
-    throw new Error("Missing legal document: shipping");
-  }
+export default async function Page() {
+  const doc = await getLegalDocumentContent("shipping");
 
   return <LegalDocumentPage doc={doc} />;
 }

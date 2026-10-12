@@ -57,6 +57,11 @@ export function buildInquiryContext(
 /** True when the context carries anything worth showing back to the visitor. */
 export function hasContext(context: InquiryContext): boolean {
   return Boolean(
-    context.model || (context.selectedSpec && Object.keys(context.selectedSpec).length > 0),
+    context.model ||
+      (context.selectedSpec && Object.keys(context.selectedSpec).length > 0) ||
+      context.productLine ||
+      context.application ||
+      context.inputType ||
+      context.intent,
   );
 }

@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { headers } from "next/headers";
+import { Barlow_Condensed, Figtree } from "next/font/google";
 import { SiteMotion } from "@/components/site-motion";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { FloatingQuote } from "@/components/floating-quote";
 import { getLocale } from "@/lib/i18n";
+import {
+  INDEXABLE_LOCALES,
+  localizedPath,
+  stripLocalePrefix,
+  type Locale,
+} from "@/lib/i18n/types";
 import { siteUrl } from "@/lib/site-url";
+import { Providers } from "./providers";
 import "./globals.css";
 
-const inter = Inter({
+const figtree = Figtree({
   variable: "--font-text",
   subsets: ["latin"],
   display: "swap",
@@ -38,7 +45,7 @@ const barlow = Barlow_Condensed({
  * ⚠️ `metadataBase` is still the placeholder domain in `content/site.ts`
  * (`fenghuai.com`) — confirm before launch along with the contact details.
  */
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: {
     default: "Fenghuai | Aluminum Component Manufacturer",
     template: "%s | Fenghuai",
@@ -47,6 +54,21 @@ export const metadata: Metadata = {
     "Fenghuai manufactures aluminium components across four product lines — forged wheels, EV powertrain housings, custom aluminium parts and self-healing safety tires — for dealers, Tier 1 suppliers and OEM programmes.",
   metadataBase: siteUrl,
 };
+
+/** 只为已经通过正文审核的语言输出 hreflang，避免把未翻译页面伪装成多语言页面。 */
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const locale = await getLocale();
+  const publicPath = requestHeaders.get("x-fh-public-path") || "/";
+  const basePath = stripLocalePrefix(publicPath);
+  if (!INDEXABLE_LOCALES.includes(locale as (typeof INDEXABLE_LOCALES)[number])) {
+    return { ...baseMetadata, alternates: { languages: {} } };
+  }
+  const languages = Object.fromEntries(
+    INDEXABLE_LOCALES.map((locale) => [locale, localizedPath(basePath, locale)]),
+  );
+  return { ...baseMetadata, alternates: { languages } };
+}
 
 export default async function RootLayout({
   children,
@@ -57,19 +79,25 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={locale === "zh" ? "zh-CN" : "en"}
+      lang={htmlLanguage(locale)}
+      data-theme="light"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${barlow.variable} h-full antialiased`}
+      className={`${figtree.variable} ${barlow.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <SiteMotion />
-        <SiteHeader locale={locale} />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter locale={locale} />
-        <FloatingQuote locale={locale} />
+        <Providers locale={locale}>
+          <SiteMotion />
+          <SiteHeader locale={locale} />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter locale={locale} />
+        </Providers>
       </body>
     </html>
   );
+}
+
+function htmlLanguage(locale: Locale): string {
+  return locale === "zh" ? "zh-CN" : locale === "th" ? "th-TH" : locale === "es" ? "es-ES" : "en";
 }

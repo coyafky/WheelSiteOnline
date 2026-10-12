@@ -1,8 +1,17 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { RotateCcw } from "lucide-react";
+import { NumberInput } from "@astryxdesign/core/NumberInput";
+import { Theme } from "@astryxdesign/core/theme";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
 import { cn } from "@/lib/utils";
+import {
+  backspaceMm,
+  computeOffset,
+  frontspaceMm,
+  type WheelInput,
+} from "@/lib/wheels/offset-calculator";
 
 /**
  * Wheel offset calculator.
@@ -35,10 +44,10 @@ import { cn } from "@/lib/utils";
  * confirmed by Fenghuai per order. This is a planning aid and the UI says so.
  */
 
-type WheelInput = {
-  width: number;
-  offset: number;
-  diameter: number;
+type WheelDraft = {
+  width: number | null;
+  offset: number | null;
+  diameter: number | null;
 };
 
 type Preset = {
@@ -82,59 +91,16 @@ const PRESETS: Preset[] = [
   },
 ];
 
-const MM_PER_INCH = 25.4;
-
-const DEFAULTS: { original: WheelInput; replacement: WheelInput } = {
+const DEFAULTS: { original: WheelDraft; replacement: WheelDraft } = {
   original: { width: 8, offset: 35, diameter: 18 },
   replacement: { width: 9, offset: 35, diameter: 18 },
 };
 
-/** Distance from the mounting face to the inner edge, in mm. */
-export function backspaceMm(wheel: WheelInput): number {
-  return (wheel.width * MM_PER_INCH) / 2 + wheel.offset;
-}
-
-/** Distance from the mounting face to the outer edge, in mm. */
-export function frontspaceMm(wheel: WheelInput): number {
-  return (wheel.width * MM_PER_INCH) / 2 - wheel.offset;
-}
-
-export type OffsetResult = {
-  innerChange: number;
-  outerChange: number;
-  diameterChange: number;
-  oldBackspace: number;
-  newBackspace: number;
-  oldFrontspace: number;
-  newFrontspace: number;
-  valid: boolean;
-};
-
-/** Compare two wheels. Pure, so it can be reasoned about and tested. */
-export function computeOffset(original: WheelInput, replacement: WheelInput): OffsetResult {
-  const oldBackspace = backspaceMm(original);
-  const newBackspace = backspaceMm(replacement);
-  const oldFrontspace = frontspaceMm(original);
-  const newFrontspace = frontspaceMm(replacement);
-  const rawDiameter = replacement.diameter - original.diameter;
-  // Diameter growth pushes both edges outward by half the increase.
-  const diameterShift = (rawDiameter * MM_PER_INCH) / 2;
-
-  const valid =
-    Number.isFinite(original.width) &&
-    Number.isFinite(replacement.width) &&
-    original.width > 0 &&
-    replacement.width > 0;
-
+function committedWheel(wheel: WheelDraft): WheelInput {
   return {
-    innerChange: newBackspace - oldBackspace + diameterShift,
-    outerChange: newFrontspace - oldFrontspace + diameterShift,
-    diameterChange: rawDiameter,
-    oldBackspace,
-    newBackspace,
-    oldFrontspace,
-    newFrontspace,
-    valid,
+    width: wheel.width ?? Number.NaN,
+    offset: wheel.offset ?? Number.NaN,
+    diameter: wheel.diameter ?? Number.NaN,
   };
 }
 
@@ -168,14 +134,14 @@ function describeOuter(change: number): string {
 }
 
 export function OffsetCalculator() {
-  const [original, setOriginal] = useState<WheelInput>(DEFAULTS.original);
-  const [replacement, setReplacement] = useState<WheelInput>(
+  const [original, setOriginal] = useState<WheelDraft>(DEFAULTS.original);
+  const [replacement, setReplacement] = useState<WheelDraft>(
     DEFAULTS.replacement,
   );
   const [preset, setPreset] = useState<string | null>(null);
 
   const result = useMemo(
-    () => computeOffset(original, replacement),
+    () => computeOffset(committedWheel(original), committedWheel(replacement)),
     [original, replacement],
   );
 
@@ -192,7 +158,8 @@ export function OffsetCalculator() {
   };
 
   return (
-    <div className="grid gap-8">
+    <Theme theme={neutralTheme} mode="light">
+      <div className="grid gap-8">
       {/* Presets ---------------------------------------------------------- */}
       <div>
         <p className="font-display text-[0.7rem] font-700 uppercase tracking-[0.16em] text-steel">
@@ -335,7 +302,8 @@ export function OffsetCalculator() {
         clearance and load rating are confirmed by Fenghuai against your
         vehicle before an order is cut.
       </p>
-    </div>
+      </div>
+    </Theme>
   );
 }
 
@@ -349,12 +317,10 @@ function WheelFieldset({
 }: {
   legend: string;
   caption: string;
-  wheel: WheelInput;
-  onChange: (wheel: WheelInput) => void;
+  wheel: WheelDraft;
+  onChange: (wheel: WheelDraft) => void;
   accent: boolean;
 }) {
-  const baseId = useId();
-
   return (
     <fieldset
       className={cn(
@@ -369,8 +335,7 @@ function WheelFieldset({
 
       <div className="mt-5 grid gap-4">
         <NumberField
-          id={`${baseId}-width`}
-          label="Width"
+          label={`${legend} width`}
           suffix="inches"
           min={4}
           max={16}
@@ -379,8 +344,7 @@ function WheelFieldset({
           onChange={(width) => onChange({ ...wheel, width })}
         />
         <NumberField
-          id={`${baseId}-offset`}
-          label="Offset (ET)"
+          label={`${legend} offset`}
           suffix="mm"
           min={-80}
           max={100}
@@ -389,8 +353,7 @@ function WheelFieldset({
           onChange={(offset) => onChange({ ...wheel, offset })}
         />
         <NumberField
-          id={`${baseId}-diameter`}
-          label="Diameter"
+          label={`${legend} diameter`}
           suffix="inches"
           min={13}
           max={26}
@@ -406,7 +369,7 @@ function WheelFieldset({
             Backspace
           </dt>
           <dd className="mt-1 font-mono text-[0.82rem] text-ink">
-            {backspaceMm(wheel).toFixed(1)} mm
+            {formatDistance(backspaceMm(committedWheel(wheel)))}
           </dd>
         </div>
         <div>
@@ -414,7 +377,7 @@ function WheelFieldset({
             Frontspace
           </dt>
           <dd className="mt-1 font-mono text-[0.82rem] text-ink">
-            {frontspaceMm(wheel).toFixed(1)} mm
+            {formatDistance(frontspaceMm(committedWheel(wheel)))}
           </dd>
         </div>
       </dl>
@@ -424,7 +387,6 @@ function WheelFieldset({
 
 /** A numeric input with a real label and a unit suffix. */
 function NumberField({
-  id,
   label,
   suffix,
   value,
@@ -433,48 +395,33 @@ function NumberField({
   step,
   onChange,
 }: {
-  id: string;
   label: string;
   suffix: string;
-  value: number;
+  value: number | null;
   min: number;
   max: number;
   step: number;
-  onChange: (value: number) => void;
+  onChange: (value: number | null) => void;
 }) {
   return (
-    <div className="grid gap-1.5">
-      <label
-        htmlFor={id}
-        className="font-display text-[0.68rem] font-700 uppercase tracking-[0.12em] text-steel"
-      >
-        {label}
-      </label>
-      <div className="flex items-center gap-3">
-        <input
-          id={id}
-          type="number"
-          inputMode="decimal"
-          value={value}
-          min={min}
-          max={max}
-          step={step}
-          onChange={(event) => {
-            const next = Number(event.target.value);
-            onChange(Number.isFinite(next) ? next : 0);
-          }}
-          className={cn(
-            "min-h-[46px] w-full rounded-lg border border-border bg-white px-3.5 text-[0.95rem] text-ink",
-            "outline-none transition-[border-color,box-shadow] duration-200",
-            "focus:border-forge focus:ring-2 focus:ring-forge/25",
-          )}
-        />
-        <span className="shrink-0 font-display text-[0.68rem] font-700 uppercase tracking-[0.1em] text-steel">
-          {suffix}
-        </span>
-      </div>
-    </div>
+    <NumberInput
+      label={label}
+      value={value}
+      min={min}
+      max={max}
+      step={step}
+      units={suffix}
+      width="100%"
+      size="lg"
+      hasClear
+      hasNumberSteppers
+      onChange={onChange}
+    />
   );
+}
+
+function formatDistance(value: number): string {
+  return Number.isFinite(value) ? `${value.toFixed(1)} mm` : "—";
 }
 
 /** One headline result cell. */

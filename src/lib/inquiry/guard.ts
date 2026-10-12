@@ -34,6 +34,16 @@ function configuredOrigins(): Set<string> {
 export function originAllowed(request: Request): boolean {
   const origin = request.headers.get("origin");
   if (!origin) return process.env.NODE_ENV !== "production";
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const url = new URL(origin);
+      if (url.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]", "::1"].includes(url.hostname)) {
+        return true;
+      }
+    } catch {
+      // Fall through to the configured-origin check.
+    }
+  }
   return configuredOrigins().has(origin);
 }
 

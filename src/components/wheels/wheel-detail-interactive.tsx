@@ -6,6 +6,7 @@ import {
   WHEEL_DETAIL_CONFIGURATION_ANCHOR,
   wheelDetailEnquiryContext,
 } from "@/content/wheel-detail";
+import type { Locale } from "@/lib/i18n/types";
 
 import type { WheelVariantSpec } from "./spec-format";
 import { WheelInquiryPanel } from "./wheel-inquiry-panel";
@@ -41,6 +42,11 @@ export function WheelDetailInteractive({
   model,
   variants,
   initialSelectedCode,
+  locale,
+  privacyVersion,
+  privacyConsent,
+  privacyLinkLabel,
+  privacyLinkHref,
 }: {
   model: string;
   /** Already projected for the browser — the raw source `finish` is not sent. */
@@ -50,6 +56,11 @@ export function WheelDetailInteractive({
    * model with no valid selection — the visitor is never pre-decided for (§6).
    */
   initialSelectedCode: string | null;
+  locale: Locale;
+  privacyVersion: string;
+  privacyConsent: string;
+  privacyLinkLabel: string;
+  privacyLinkHref: string;
 }) {
   const baseId = useId();
   const [selectedCode, setSelectedCode] = useState<string | null>(initialSelectedCode);
@@ -78,6 +89,8 @@ export function WheelDetailInteractive({
   return (
     <>
       <WheelVariantSelector
+        locale={locale}
+        model={model}
         variants={variants}
         selectedCode={selectedCode}
         onSelect={setSelectedCode}
@@ -88,6 +101,11 @@ export function WheelDetailInteractive({
         model={model}
         selectedVariant={selectedVariant}
         headingId={ENQUIRY_SECTION_ID}
+        locale={locale}
+        privacyVersion={privacyVersion}
+        privacyConsent={privacyConsent}
+        privacyLinkLabel={privacyLinkLabel}
+        privacyLinkHref={privacyLinkHref}
       />
     </>
   );

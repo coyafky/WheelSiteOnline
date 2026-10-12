@@ -172,11 +172,15 @@ export function CustomAluminumHero({ content }: { content: CustomAluminumPage })
       />
 
       <div className="container-fh grid gap-10 pb-16 pt-[128px] lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-start lg:gap-16 lg:pb-24 lg:pt-[164px]">
-        <div data-reveal>
+        <div className="min-w-0" data-reveal>
           <p className="eyebrow">{hero.eyebrow}</p>
+          {/* The colour is stated on the <h1> itself, not inherited from the
+              section. The generated theme sets heading ink by landmark
+              (`site-theme.css:11-14`), so an inherited `text-white` never
+              reached this heading: it measured #292621 on #292621 — 1.00:1. */}
           <h1
             id="ca01-title"
-            className="mt-5 max-w-[680px] font-display text-[clamp(2.1rem,6.4vw,4.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.035em]"
+            className="mt-5 max-w-[680px] font-display text-[clamp(2.1rem,6.4vw,4.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.035em] text-white [overflow-wrap:anywhere]"
           >
             {hero.heading}
           </h1>
@@ -188,11 +192,11 @@ export function CustomAluminumHero({ content }: { content: CustomAluminumPage })
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link href={hero.primaryCta.href} className="btn-pill-solid">
+            <Link href={hero.primaryCta.href} className="btn-pill-solid min-w-0 text-center">
               {hero.primaryCta.label}
               <ArrowDownRight className="size-4" aria-hidden="true" />
             </Link>
-            <Link href={hero.secondaryCta.href} className="btn-pill-outline !text-white">
+            <Link href={hero.secondaryCta.href} className="btn-pill-outline min-w-0 text-center !text-white">
               {hero.secondaryCta.label}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -204,7 +208,7 @@ export function CustomAluminumHero({ content }: { content: CustomAluminumPage })
           part photograph. On mobile it follows the copy, inside the first
           screen, so the H1 and a CTA are never pushed below the fold.
         */}
-        <div aria-labelledby="ca01-inputs-title" className="lg:pt-2">
+        <div aria-labelledby="ca01-inputs-title" className="min-w-0 lg:pt-2">
           <h2
             id="ca01-inputs-title"
             className="font-display text-[0.68rem] font-700 uppercase tracking-[0.16em] text-white/48"
@@ -674,7 +678,7 @@ export function AssessmentInquiry({ section }: { section: CustomAluminumPage["in
       className="scroll-mt-[120px] border-b border-border bg-ink py-20 text-white lg:py-28"
     >
       <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.7fr)] lg:gap-20">
-        <div>
+        <div className="min-w-0">
           <Heading section={section} dark />
 
           <div className="mt-10" data-reveal>
@@ -692,7 +696,7 @@ export function AssessmentInquiry({ section }: { section: CustomAluminumPage["in
           </div>
         </div>
 
-        <div data-reveal className="lg:pt-24">
+        <div data-reveal className="min-w-0 lg:pt-24">
           {/*
             No upload control. The spec forbids a direct file-upload path until
             a controlled exchange exists, so the panel states what happens
@@ -704,11 +708,11 @@ export function AssessmentInquiry({ section }: { section: CustomAluminumPage["in
           </p>
 
           <div className="mt-6 flex flex-col gap-3">
-            <Link href={section.primaryCta.href} className="btn-pill-solid w-fit">
+            <Link href={section.primaryCta.href} className="btn-pill-solid min-w-0 text-center">
               {section.primaryCta.label}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-            <Link href={section.secondaryCta.href} className="btn-pill-outline w-fit !text-white">
+            <Link href={section.secondaryCta.href} className="btn-pill-outline min-w-0 text-center !text-white">
               {section.secondaryCta.label}
             </Link>
           </div>
@@ -738,7 +742,7 @@ export function CustomAluminumClosing({ closing }: { closing: CustomAluminumPage
   return (
     <section aria-labelledby="custom-aluminum-closing-title" className="bg-forge-soft">
       <div className="container-fh grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:py-20">
-        <div data-reveal>
+        <div className="min-w-0" data-reveal>
           <p className="eyebrow">{closing.eyebrow}</p>
           <h2
             id="custom-aluminum-closing-title"
@@ -751,12 +755,12 @@ export function CustomAluminumClosing({ closing }: { closing: CustomAluminumPage
           </p>
         </div>
 
-        <div data-reveal className="flex flex-col items-start gap-3">
-          <Link href={closing.primaryCta.href} className="btn-pill-solid">
+        <div data-reveal className="flex min-w-0 flex-col items-start gap-3">
+          <Link href={closing.primaryCta.href} className="btn-pill-solid max-w-full min-w-0 whitespace-normal px-4 text-center">
             {closing.primaryCta.label}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
-          <Link href={closing.secondaryCta.href} className="btn-pill-outline text-ink">
+          <Link href={closing.secondaryCta.href} className="btn-pill-outline max-w-full min-w-0 whitespace-normal px-4 text-center text-ink">
             {closing.secondaryCta.label}
           </Link>
         </div>

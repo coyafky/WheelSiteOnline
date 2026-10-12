@@ -135,6 +135,12 @@ export function buildSnapshot(
     productionCode: context.productionCode,
     spec: context.selectedSpec,
     sourcePage: context.pageUrl,
+    items: input.items?.map((item) => ({
+      model: item.model,
+      productionCode: item.productionCode,
+      quantity: item.quantity,
+      ...(item.spec ? { spec: item.spec } : {}),
+    })),
   };
 }
 
@@ -226,6 +232,12 @@ function buildWpPayload(
       intent: context.intent ?? context.inputType,
       variantPending: context.variantPending === true,
     },
+    items: input.items?.map((item) => ({
+      model: item.model,
+      productionCode: item.productionCode,
+      quantity: item.quantity,
+      ...(item.spec ? { spec: item.spec } : {}),
+    })) ?? [],
   };
 }
 

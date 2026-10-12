@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { HomepageContent } from "@/content/types";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
 
 export function TrustStrip({
   capabilities,
+  locale,
 }: {
   capabilities: HomepageContent["capabilities"];
+  locale: Locale;
 }) {
   return (
     <section
@@ -24,7 +27,7 @@ export function TrustStrip({
               {capabilities.heading}
             </h2>
           </div>
-          <Link href={capabilities.action.href} className="btn-pill-outline text-ink">
+          <Link href={localizedPath(capabilities.action.href, locale)} className="btn-pill-outline text-ink">
             {capabilities.action.label}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>

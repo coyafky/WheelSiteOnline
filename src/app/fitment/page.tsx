@@ -6,6 +6,7 @@ import {
   platformFitments,
 } from "@/content/fitment";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
 
 export const metadata: Metadata = {
   title: "Vehicle Fitment — Forged Wheels by Platform",
@@ -23,48 +24,35 @@ export const metadata: Metadata = {
 export default function FitmentIndexPage() {
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Identity band from the shared `PageHero` (tone="dark"). This page
+          family keeps the ink surface — no photograph, an engineering
+          register — but the composition is no longer a local copy: the radial
+          wash, grid and copy rhythm come from one place, so it cannot drift
+          from `/old`… `/support/*` again. */}
+      <PageHero
         id="top"
-        aria-labelledby="fitment-index-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
-      >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_72%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">Fitment</p>
-          <h1
-            id="fitment-index-title"
-            className="mt-5 max-w-[900px] font-display text-[clamp(2.6rem,7.6vw,5.2rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            Fitment by Platform
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
+        titleId="fitment-index-title"
+        tone="dark"
+        eyebrow="Fitment"
+        heading="Fitment by Platform"
+        lede={
+          <>
             High-intent starting points for the platforms we build for most
             often. Each page lists the chassis codes we discuss, a starting size
             reference and the design directions that suit the car — never a
             fitment table you are expected to match yourself.
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="btn-pill-solid">
-              Send your vehicle details
-              <ArrowRight className="size-4" />
-            </Link>
-            {/* "Browse designs → /gallery/wheels" removed 2026-10-06 (DEC-059):
-                that catalogue was fictional and is archived. The real
-                catalogue is reachable from the navigation and /products. */}
-          </div>
-        </div>
-      </section>
+          </>
+        }
+      >
+        <Link href="/contact" className="btn-pill-solid">
+          Send your vehicle details
+          <ArrowRight className="size-4" />
+        </Link>
+        {/* "Browse designs → /gallery/wheels" removed 2026-10-06 (DEC-059):
+            that catalogue was fictional and is archived. The real
+            catalogue is reachable from the navigation and /products. */}
+      </PageHero>
 
       {/* B. Platform cards -------------------------------------------------- */}
       <section

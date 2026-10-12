@@ -1,0 +1,77 @@
+[
+ {
+  "route": "/",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/about",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/capabilities",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/products",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/products/wheels",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/products/wheels/forged",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/request-a-quote",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/contact",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/insights",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/tools/offset-calculator",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/support/returns",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/fitment",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/dealers",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/gallery/finishes",
+  "tabbables": 45,
+  "noRing": []
+ },
+ {
+  "route": "/thank-you",
+  "tabbables": 45,
+  "noRing": []
+ }
+]

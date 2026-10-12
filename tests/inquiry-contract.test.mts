@@ -15,6 +15,7 @@ import {
 import {
   inquiryStepOneSchema,
   inquiryStepTwoSchema,
+  inquirySubmissionSchema,
   zodFieldErrors,
 } from "../src/lib/inquiry/schema.ts";
 
@@ -39,6 +40,54 @@ test("四线询盘有效输入通过且不截断", () => {
     assert.equal(result.input.customerType, "business");
     assert.equal(result.input.productLine, "wheels");
     assert.equal(result.input.quantity, "prototype");
+  }
+});
+
+test("多款轮毂清单最多 20 项，旧单产品载荷仍兼容", () => {
+  const legacy = validate(validBody, "privacy-2026-10");
+  assert.equal(legacy.ok, true);
+  if (legacy.ok) assert.equal(legacy.input.items, undefined);
+
+  const items = Array.from({ length: 2 }, (_, index) => ({
+    model: `FH-${index + 1}`,
+    productionCode: `FH-${index + 1}-001`,
+    quantity: index + 1,
+  }));
+  const accepted = validate({ ...validBody, items }, "privacy-2026-10");
+  assert.equal(accepted.ok, true);
+  if (accepted.ok) {
+    assert.deepEqual(accepted.input.items?.map((item) => item.quantity), [1, 2]);
+  }
+
+  const tooMany = inquirySubmissionSchema.safeParse({
+    ...validBody,
+    items: Array.from({ length: 21 }, (_, index) => ({
+      model: `FH-${index}`,
+      productionCode: `FH-${index}-001`,
+      quantity: 1,
+    })),
+  });
+  assert.equal(tooMany.success, false);
+});
+
+test("轮毂配置数量接受任意安全正整数，不设置业务上限", () => {
+  const result = inquirySubmissionSchema.safeParse({
+    ...validBody,
+    items: [
+      { model: "FH-001", productionCode: "FH001-001", quantity: 5_000 },
+      { model: "FH-002", productionCode: "FH002-001", quantity: 1_000_000 },
+    ],
+  });
+  assert.equal(result.success, true);
+});
+
+test("轮毂配置数量拒绝零、负数、小数和不安全整数", () => {
+  for (const quantity of [0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1]) {
+    const result = inquirySubmissionSchema.safeParse({
+      ...validBody,
+      items: [{ model: "FH-001", productionCode: "FH001-001", quantity }],
+    });
+    assert.equal(result.success, false, `quantity=${quantity} 应被拒绝`);
   }
 });
 
@@ -119,8 +168,12 @@ test("Origin 白名单拒绝跨站来源", () => {
   const rejected = new Request("http://localhost/api/inquiries", {
     headers: { origin: "https://evil.example" },
   });
+  const localDevPort = new Request("http://localhost/api/inquiries", {
+    headers: { origin: "http://127.0.0.1:3100" },
+  });
   assert.equal(originAllowed(allowed), true);
   assert.equal(originAllowed(rejected), false);
+  assert.equal(originAllowed(localDevPort), true);
 });
 
 test("同一邮箱十分钟内第四次请求被限流", () => {

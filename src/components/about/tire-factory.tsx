@@ -81,9 +81,9 @@ export function TireFactory({ section }: { section: AboutContent["tireFactory"] 
 
       <div className="border-b border-muted py-20 sm:py-24 lg:py-28">
         <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20">
-          <div data-reveal>
+          <div className="min-w-0" data-reveal>
             <p className="eyebrow">{section.evidenceEyebrow}</p>
-            <h3 className="mt-5 font-display text-4xl font-700 uppercase leading-[0.96] tracking-[-0.03em] text-ink sm:text-5xl">
+            <h3 className="mt-5 font-display text-4xl font-700 uppercase leading-[0.96] tracking-[-0.03em] text-ink [overflow-wrap:anywhere] sm:text-5xl">
               {section.evidenceHeading}
             </h3>
             <dl className="mt-10 border-t border-muted">
@@ -95,14 +95,14 @@ export function TireFactory({ section }: { section: AboutContent["tireFactory"] 
               ))}
             </dl>
           </div>
-          <aside className="self-start bg-ink p-7 text-white sm:p-9 lg:sticky lg:top-28" data-reveal>
+          <aside className="min-w-0 self-start bg-ink p-7 text-white sm:p-9 lg:sticky lg:top-28" data-reveal>
             <p className="text-base leading-7 text-white/68">{section.evidenceIntro}</p>
             <div className="mt-8 flex flex-col gap-3">
-              <Link href={section.primaryAction.href} className="btn-pill-solid w-full">
+              <Link href={section.primaryAction.href} className="btn-pill-solid w-full min-w-0 text-center">
                 {section.primaryAction.label}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              <Link href={section.secondaryAction.href} className="btn-pill-outline w-full text-white">
+              <Link href={section.secondaryAction.href} className="btn-pill-outline w-full min-w-0 text-center text-white">
                 {section.secondaryAction.label}
               </Link>
             </div>

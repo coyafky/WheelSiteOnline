@@ -1,6 +1,6 @@
 # 项目文档导航
 
-更新：2026-10-05。本文件是项目文档的唯一入口，用来区分现行正本、执行记录、研究材料与历史快照。
+更新：2026-10-11。本文件是项目文档的唯一入口，用来区分现行正本、执行记录、研究材料与历史快照。
 
 ## 先读什么
 
@@ -11,6 +11,9 @@
 | 3 | [ARCHITECTURE.md](ARCHITECTURE.md) | 模块边界与数据流 | 现行架构总纲 |
 | 4 | [首发总计划](outputs/site-launch-plan/README.md) | 一个月排期、预算、部署与验收 | 现行执行计划 |
 | 5 | [首发页面规格](PAGE-SPECS/2026-10-04-launch-viewport-spec.md) | 逐页、逐视口内容与素材 | 唯一现行页面施工正本 |
+| 5a | [Astryx Neutral 暖白界面规格](PAGE-SPECS/astryx-neutral-global.md) | 跨页视觉与通用控件，不改变内容门槛 | 本地 P5 验收完成 |
+| 5a.1 | [现行设计正本](DESIGN.md) | 暖白令牌、组件选用、无浮动询盘与验收规则 | 现行；旧版已归档 |
+| 5b | [Astryx P5 最终交接与商用 SEO 下一步](outputs/reports/33-astryx-p5-final-commercial-seo-handoff-2026-10-11.md) | P0–P5 本地验收与下一阶段 No-Go 门槛；[原执行计划](outputs/reports/25-astryx-sitewide-component-plan-alma-2026-10-11.md)供追溯 | 现行交接 |
 | 6 | [当前任务](work/active/2026-10-04-launch-phase-0-baseline.md) | 本阶段已经完成和仍待处理的事项 | 进行中 |
 
 ## 文档模块
@@ -48,6 +51,8 @@
 - [新能源三电铝制品](PAGE-SPECS/ev-components.md)：三类有图壳体、工程问题、制造路线证据、WordPress 媒体绑定和询盘输入。
 - [定制铝制品](PAGE-SPECS/custom-aluminum.md)：来图来样评估、四类应用范围、工程方法示例、五阶段开发和发布门槛。
 - [项目询盘页](PAGE-SPECS/request-a-quote.md)：四条产品线与 B/C 分流、两步短表单、产品上下文、事务持久化、隐私和错误状态。
+- [Astryx Neutral 页面族映射](PAGE-SPECS/astryx-neutral-page-families.md)：全站外壳、各路由族控件选择、业务禁区和验收状态。
+- [给 Alma 的 Astryx 暖白交接](outputs/reports/24-astryx-neutral-warm-handoff-alma-2026-10-11.md)与[全站组件化执行计划](outputs/reports/25-astryx-sitewide-component-plan-alma-2026-10-11.md)：既有证据、未完边界、六阶段任务与停止条件。
 - [架构与 README 校准审计](outputs/architecture-alignment-audit.md)：旧描述与当前代码/决策的差异、三份核心文档修正和剩余实现缺口。
 
 ## 历史版本

@@ -1,0 +1,462 @@
+{
+ "generatedAt": "2026-10-11T09:17:13.951Z",
+ "route": "/products/wheels/dx035",
+ "events": [
+  {
+   "name": "before-open",
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "body",
+   "activeId": null,
+   "activeText": "FHFenghuai制造产品中心全部产品线轮毂新能源三电壳体铝制品定制安全轮胎制",
+   "activeIsTrigger": false,
+   "activeIsBody": true,
+   "activeInside": false
+  },
+  {
+   "name": "after-click-open",
+   "nativeDialogPresent": true,
+   "nativeOpen": true,
+   "nativeDisplay": "flex",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "h2",
+   "activeId": "_R_b9qqnpfiv5tnb_",
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": false,
+   "activeIsBody": false,
+   "activeInside": true
+  },
+  {
+   "name": "focus-trigger",
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "name": "after-enter",
+   "nativeDialogPresent": true,
+   "nativeOpen": true,
+   "nativeDisplay": "flex",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "h2",
+   "activeId": "_R_b9qqnpfiv5tnb_",
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": false,
+   "activeIsBody": false,
+   "activeInside": true
+  },
+  {
+   "name": "after-2nd-escape",
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  }
+ ],
+ "trigger": {
+  "text": "Request this wheel model",
+  "html": "<button type=\"button\" class=\"astryx-button primary lg none x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x16bblx1 x1wfwxd8 x13aywxo x1n2onr6 x3nfvp2 x6s0dn4 xl56j7k x1txdalj xce4md1 "
+ },
+ "containment": {
+  "tabs": 30,
+  "departures": 1,
+  "departureDetail": [
+   {
+    "i": 12,
+    "tag": "body",
+    "id": null,
+    "inside": false,
+    "isBody": true,
+    "text": "FHFenghuai制造产品中心全部产品线轮毂新能源"
+   }
+  ],
+  "distinctInside": 10,
+  "sequence": [
+   {
+    "i": 1,
+    "tag": "button",
+    "id": null,
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 2,
+    "tag": "input",
+    "id": "_R_5d67ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 3,
+    "tag": "button",
+    "id": "_R_a7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": "Wheels"
+   },
+   {
+    "i": 4,
+    "tag": "textarea",
+    "id": "_R_i7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 5,
+    "tag": "input",
+    "id": "_R_m7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 6,
+    "tag": "input",
+    "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 7,
+    "tag": "input",
+    "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 8,
+    "tag": "input",
+    "id": "_R_2etdq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 9,
+    "tag": "input",
+    "id": "_R_2f5dq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 10,
+    "tag": "input",
+    "id": "_R_2fddq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 11,
+    "tag": "button",
+    "id": null,
+    "inside": true,
+    "isBody": false,
+    "text": "Continue"
+   },
+   {
+    "i": 12,
+    "tag": "body",
+    "id": null,
+    "inside": false,
+    "isBody": true,
+    "text": "FHFenghuai制造产品中心全部产品线轮毂新能源"
+   },
+   {
+    "i": 13,
+    "tag": "button",
+    "id": null,
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 14,
+    "tag": "input",
+    "id": "_R_5d67ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 15,
+    "tag": "button",
+    "id": "_R_a7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": "Wheels"
+   },
+   {
+    "i": 16,
+    "tag": "textarea",
+    "id": "_R_i7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 17,
+    "tag": "input",
+    "id": "_R_m7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 18,
+    "tag": "input",
+    "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 19,
+    "tag": "input",
+    "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 20,
+    "tag": "input",
+    "id": "_R_2etdq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 21,
+    "tag": "input",
+    "id": "_R_2f5dq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 22,
+    "tag": "input",
+    "id": "_R_2fddq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 23,
+    "tag": "button",
+    "id": null,
+    "inside": true,
+    "isBody": false,
+    "text": "Continue"
+   },
+   {
+    "i": 24,
+    "tag": "button",
+    "id": null,
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 25,
+    "tag": "input",
+    "id": "_R_5d67ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 26,
+    "tag": "button",
+    "id": "_R_a7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": "Wheels"
+   },
+   {
+    "i": 27,
+    "tag": "textarea",
+    "id": "_R_i7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 28,
+    "tag": "input",
+    "id": "_R_m7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 29,
+    "tag": "input",
+    "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   },
+   {
+    "i": 30,
+    "tag": "input",
+    "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+    "inside": true,
+    "isBody": false,
+    "text": ""
+   }
+  ]
+ },
+ "escapeTimeline": [
+  {
+   "t": 0,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 50,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 150,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 300,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 600,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 1000,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  },
+  {
+   "t": 1600,
+   "nativeDialogPresent": true,
+   "nativeOpen": false,
+   "nativeDisplay": "none",
+   "anyDialogPresent": true,
+   "ariaModal": "true",
+   "activeTag": "button",
+   "activeId": null,
+   "activeText": "Request this wheel model",
+   "activeIsTrigger": true,
+   "activeIsBody": false,
+   "activeInside": false
+  }
+ ],
+ "escapeResult": {
+  "dialogClosed": true,
+  "dialogClosedByDisplay": true,
+  "focusReturnedToTrigger": true,
+  "focusLanded": "button#null \"Request this wheel model\"",
+  "focusIsBody": false
+ },
+ "afterEscapeContext": {
+  "chain": [
+   "button.astryx-button.primary",
+   "div.xjp7ctv.x1tgivj0",
+   "div.mt-4",
+   "div.rounded-xl.border",
+   "div.mt-8.grid"
+  ],
+  "outer": "<button type=\"button\" class=\"astryx-button primary lg none x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv xx47ajj x16bblx1 x1wfwxd8 x13aywxo x1n2onr6 x3nfvp2 x6s0dn4 xl56j7k x1txdalj xce4md1 xrrkdod xc342km xng3xce x1jxw6zd xjb2p0i xcr08ib x1kq96og x1e4wzip xuxw1ft xeuug"
+ },
+ "reopenWithEnter": {
+  "open": true,
+  "activeInside": true
+ },
+ "secondEscape": {
+  "closed": true,
+  "focusReturnedToTrigger": true
+ }
+}

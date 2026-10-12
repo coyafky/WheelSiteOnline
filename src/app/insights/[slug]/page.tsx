@@ -5,6 +5,7 @@ import { guides } from "@/content/resources";
 import { ProseArticle } from "@/components/prose-article";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PreviewBanner } from "@/components/preview-banner";
+import { getLocale } from "@/lib/i18n";
 import {
   getInsightGuideDocument,
   getInsightGuideDocuments,
@@ -24,7 +25,8 @@ export async function generateMetadata({
 }: GuidePageProps): Promise<Metadata> {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
-  const document = await getInsightGuideDocument(slug, { preview });
+  const locale = await getLocale();
+  const document = await getInsightGuideDocument(slug, { preview, locale });
 
   if (!document) {
     return { title: "Guide not found" };
@@ -47,13 +49,14 @@ export async function generateMetadata({
 export default async function GuideArticlePage({ params }: GuidePageProps) {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
-  const document = await getInsightGuideDocument(slug, { preview });
+  const locale = await getLocale();
+  const document = await getInsightGuideDocument(slug, { preview, locale });
 
   if (!document) {
     notFound();
   }
   const guide = document.guide;
-  const documents = await getInsightGuideDocuments({ preview });
+  const documents = await getInsightGuideDocuments({ preview, locale });
   const liveGuides = documents.map((item) => item.guide);
 
   // Three siblings, preferring the same category so the footer stays relevant.

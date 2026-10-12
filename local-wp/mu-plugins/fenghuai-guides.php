@@ -14,6 +14,15 @@ if (!defined('ABSPATH')) {
 
 const FH_GUIDE_POST_TYPE = 'fh_guide';
 const FH_GUIDE_OPTION_AUTHORITATIVE = 'fh_guides_authoritative';
+/** 迁移期保留 fh_guide；权威接管后改读 WordPress 原生 post。 */
+const FH_GUIDE_NATIVE_POST_TYPE = 'post';
+const FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE = 'fh_guides_native_authoritative';
+
+/** @return string[] */
+function fh_guide_editable_post_types(): array
+{
+    return [FH_GUIDE_POST_TYPE, FH_GUIDE_NATIVE_POST_TYPE];
+}
 
 /** @return array<string, array{label:string,type:string}> */
 function fh_guide_fields(): array
@@ -29,6 +38,8 @@ function fh_guide_fields(): array
         'sections_json' => ['label' => '正文分段 JSON', 'type' => 'string'],
         'seo_title' => ['label' => 'SEO 标题', 'type' => 'string'],
         'seo_description' => ['label' => 'SEO 描述', 'type' => 'string'],
+        'translations_json' => ['label' => '多语言正文 JSON', 'type' => 'string'],
+        'translation_status_json' => ['label' => '多语言发布状态 JSON', 'type' => 'string'],
     ];
 }
 
@@ -63,8 +74,9 @@ function fh_guide_register_content_type(): void
         'map_meta_cap' => true,
     ]);
 
-    foreach (fh_guide_fields() as $key => $definition) {
-        register_post_meta(FH_GUIDE_POST_TYPE, 'fh_' . $key, [
+    foreach (fh_guide_editable_post_types() as $postType) {
+        foreach (fh_guide_fields() as $key => $definition) {
+            register_post_meta($postType, 'fh_' . $key, [
             'type' => $definition['type'],
             'single' => true,
             'default' => $definition['type'] === 'boolean' ? false : '',
@@ -73,7 +85,8 @@ function fh_guide_register_content_type(): void
                 ? 'rest_sanitize_boolean'
                 : 'sanitize_text_field',
             'auth_callback' => static fn(): bool => current_user_can('edit_posts'),
-        ]);
+            ]);
+        }
     }
 }
 
@@ -89,8 +102,15 @@ function fh_guide_decode_json(int $post_id, string $key): ?array
 }
 
 /** @return array<string,mixed> */
-function fh_guide_rest_fields(int $post_id): array
+function fh_guide_rest_fields(int $post_id, bool $preview = false): array
 {
+    $translations = fh_guide_decode_json($post_id, 'fh_translations_json') ?? [];
+    $translationStatus = fh_guide_decode_json($post_id, 'fh_translation_status_json') ?? [];
+    if (!$preview) {
+        foreach ($translations as $locale => $_translation) {
+            if (($translationStatus[$locale] ?? '') !== 'approved') unset($translations[$locale]);
+        }
+    }
     return [
         'publication_status' => (string) get_post_meta($post_id, 'fh_publication_status', true),
         'summary' => (string) get_post_meta($post_id, 'fh_summary', true),
@@ -102,6 +122,8 @@ function fh_guide_rest_fields(int $post_id): array
         'sections' => fh_guide_decode_json($post_id, 'fh_sections_json'),
         'seo_title' => (string) get_post_meta($post_id, 'fh_seo_title', true),
         'seo_description' => (string) get_post_meta($post_id, 'fh_seo_description', true),
+        'translations' => $translations,
+        'translation_status' => $translationStatus,
         'image' => function_exists('fh_guide_authoring_public_image')
             ? fh_guide_authoring_public_image($post_id)
             : null,
@@ -111,7 +133,7 @@ function fh_guide_rest_fields(int $post_id): array
 /** WordPress publish 与编辑批准必须同时成立。 */
 function fh_guide_is_public(int $post_id): bool
 {
-    return get_post_type($post_id) === FH_GUIDE_POST_TYPE
+    return in_array(get_post_type($post_id), fh_guide_editable_post_types(), true)
         && get_post_status($post_id) === 'publish'
         && get_post_meta($post_id, 'fh_publication_status', true) === 'approved';
 }
@@ -146,8 +168,9 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
         return new WP_Error('fh_guide_forbidden', '预览需要文章编辑权限。', ['status' => 401]);
     }
 
+    $useNative = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1';
     $query = [
-        'post_type' => FH_GUIDE_POST_TYPE,
+        'post_type' => $useNative ? FH_GUIDE_NATIVE_POST_TYPE : FH_GUIDE_POST_TYPE,
         'post_status' => $preview ? ['publish', 'draft', 'pending', 'future', 'private'] : 'publish',
         'posts_per_page' => 100,
         'orderby' => ['menu_order' => 'ASC', 'date' => 'DESC'],
@@ -169,22 +192,28 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
             'status' => $post->post_status,
             'title' => ['rendered' => get_the_title($post)],
             'excerpt' => ['rendered' => get_the_excerpt($post)],
-            'guide' => fh_guide_rest_fields($post->ID),
+            'guide' => fh_guide_rest_fields($post->ID, $preview),
         ];
     }
 
     return new WP_REST_Response([
         // false 表示 CMS 迁移尚未接管；Next 必须继续使用已审核的本地内容。
         // 只有内容全部导入并人工核验后，管理员才可把它切为 true。
-        'authoritative' => get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1',
+        'authoritative' => $useNative
+            ? get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1'
+            : get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1',
         'items' => $items,
+        'source' => $useNative ? 'wordpress-post' : 'legacy-cpt',
     ], 200);
 }
 
 add_action('add_meta_boxes_' . FH_GUIDE_POST_TYPE, 'fh_guide_add_meta_box');
+add_action('add_meta_boxes_' . FH_GUIDE_NATIVE_POST_TYPE, 'fh_guide_add_meta_box');
 function fh_guide_add_meta_box(): void
 {
-    add_meta_box('fh-guide-fields', 'Insights 文章字段', 'fh_guide_render_meta_box', FH_GUIDE_POST_TYPE, 'normal', 'high');
+    $screen = get_current_screen();
+    if (!$screen || !in_array($screen->post_type, fh_guide_editable_post_types(), true)) return;
+    add_meta_box('fh-guide-fields', 'Insights 文章字段', 'fh_guide_render_meta_box', $screen->post_type, 'normal', 'high');
 }
 
 function fh_guide_render_meta_box(WP_Post $post): void
@@ -222,6 +251,7 @@ function fh_guide_render_meta_box(WP_Post $post): void
 }
 
 add_action('save_post_' . FH_GUIDE_POST_TYPE, 'fh_guide_save_meta');
+add_action('save_post_' . FH_GUIDE_NATIVE_POST_TYPE, 'fh_guide_save_meta');
 function fh_guide_save_meta(int $post_id): void
 {
     if (!isset($_POST['fh_guide_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['fh_guide_nonce'])), 'fh_guide_save')) {
@@ -264,12 +294,26 @@ function fh_guide_register_setting(): void
         'default' => false,
         'sanitize_callback' => static fn($value): string => $value ? '1' : '0',
     ]);
+    register_setting('writing', FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, [
+        'type' => 'boolean',
+        'default' => false,
+        'sanitize_callback' => static fn($value): string => $value ? '1' : '0',
+    ]);
     add_settings_field(
         FH_GUIDE_OPTION_AUTHORITATIVE,
         'Insights 内容接管',
         static function (): void {
             $enabled = get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1';
             echo '<label><input type="checkbox" name="' . esc_attr(FH_GUIDE_OPTION_AUTHORITATIVE) . '" value="1" ' . checked($enabled, true, false) . '> WordPress 已完整导入并核验文章，可作为权威内容源</label>';
+        },
+        'writing'
+    );
+    add_settings_field(
+        FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE,
+        '原生博客接管',
+        static function (): void {
+            $enabled = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1';
+            echo '<label><input type="checkbox" name="' . esc_attr(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE) . '" value="1" ' . checked($enabled, true, false) . '> 已将审核文章迁移到 WordPress 原生“文章”，允许前台读取</label>';
         },
         'writing'
     );
@@ -283,6 +327,8 @@ function fh_guide_self_check(): array
         'registered' => $type !== null,
         'rest_base' => $type?->rest_base ?? '',
         'authoritative' => get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1',
+        'native_authoritative' => get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1',
+        'native_post_type' => FH_GUIDE_NATIVE_POST_TYPE,
         'field_keys' => array_keys(fh_guide_fields()),
     ];
 }
