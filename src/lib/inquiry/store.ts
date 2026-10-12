@@ -222,7 +222,9 @@ function buildWpPayload(
     company: input.company,
     whatsapp: input.whatsapp,
     privacyVersion: input.privacyVersion,
-    consentedAt: new Date().toISOString(),
+    // No consent checkbox is required on the current enquiry path. Do not
+    // fabricate a consent timestamp when the client did not provide consent.
+    consentedAt: undefined,
     context: {
       model: context.model ?? input.model,
       productionCode: context.productionCode,

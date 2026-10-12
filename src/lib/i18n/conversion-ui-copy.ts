@@ -45,22 +45,22 @@ const labels: Record<Locale, ContactLabels> = {
   en: {
     sales: "Sales enquiries", phone: "Telephone", factory: "Factory", hours: "Office hours",
     unverified: "Direct contact details are still being verified. Use the project enquiry form so your request follows the tracked intake process.",
-    privacyPending: "The privacy notice is still under review. The enquiry form remains closed until an approved version is available.",
+    privacyPending: "The privacy notice is available for information. The project enquiry form accepts the information you already have.",
   },
   zh: {
     sales: "销售询盘", phone: "电话", factory: "工厂", hours: "办公时间",
     unverified: "直接联系方式仍在核实中。请使用项目询盘表单，以便需求进入可追踪的处理流程。",
-    privacyPending: "隐私声明仍在审核中。获得批准版本前，询盘表单保持关闭。",
+    privacyPending: "隐私声明页面用于说明信息处理方式；项目询盘可直接提交您已经掌握的信息。",
   },
   es: {
     sales: "Consultas comerciales", phone: "Teléfono", factory: "Fábrica", hours: "Horario de oficina",
     unverified: "Los datos de contacto directo aún se están verificando. Utilice el formulario de consulta para que su solicitud siga el proceso registrado.",
-    privacyPending: "El aviso de privacidad sigue en revisión. El formulario permanecerá cerrado hasta que se apruebe una versión.",
+    privacyPending: "El aviso de privacidad ofrece información sobre el tratamiento de datos; puede enviar los datos que ya tenga para iniciar la consulta.",
   },
   th: {
     sales: "สอบถามฝ่ายขาย", phone: "โทรศัพท์", factory: "โรงงาน", hours: "เวลาทำการ",
     unverified: "ข้อมูลติดต่อโดยตรงยังอยู่ระหว่างตรวจสอบ โปรดใช้แบบฟอร์มสอบถามโครงการเพื่อให้คำขอของคุณเข้าสู่กระบวนการที่ติดตามได้",
-    privacyPending: "ประกาศความเป็นส่วนตัวยังอยู่ระหว่างตรวจสอบ แบบฟอร์มสอบถามจะปิดไว้จนกว่าจะมีฉบับที่อนุมัติ",
+    privacyPending: "ประกาศความเป็นส่วนตัวให้ข้อมูลเกี่ยวกับการจัดการข้อมูล และคุณสามารถส่งข้อมูลที่มีอยู่เพื่อเริ่มคำสอบถามได้",
   },
 };
 

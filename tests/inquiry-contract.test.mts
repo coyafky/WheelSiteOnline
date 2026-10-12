@@ -144,13 +144,13 @@ test("超长字段显式返回错误而不是静默截断", () => {
   if (!result.ok) assert.match(result.fieldErrors.message, /5000/);
 });
 
-test("政策版本不匹配或未勾选时拒绝", () => {
+test("不需要隐私勾选字段也可提交询盘", () => {
   const result = validate(
-    { ...validBody, privacyConsent: false, privacyVersion: "old" },
+    { ...validBody, privacyConsent: undefined, privacyVersion: undefined },
     "privacy-2026-10",
   );
-  assert.equal(result.ok, false);
-  if (!result.ok) assert.ok(result.fieldErrors.privacyConsent);
+  assert.equal(result.ok, true);
+  if (result.ok) assert.equal(result.input.privacyVersion, "");
 });
 
 test("蜜罐与时间陷阱阻止自动提交", () => {

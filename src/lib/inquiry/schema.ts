@@ -93,9 +93,8 @@ export const inquiryStepTwoSchema = z.object({
     .max(40, { error: "Keep this field to 40 characters or fewer." })
     .optional()
     .default(""),
-  privacyConsent: z.literal(true, {
-    error: "Consent is required before submission.",
-  }),
+  // Kept as a compatibility field for older callers; it is not a submission gate.
+  privacyConsent: z.boolean().optional().default(false),
 });
 
 export const inquirySubmissionSchema = inquiryStepOneSchema
@@ -104,8 +103,9 @@ export const inquirySubmissionSchema = inquiryStepOneSchema
     privacyVersion: z
       .string({ error: "Use text for this field." })
       .trim()
-      .min(1, { error: "The privacy notice changed. Review it and agree again." })
-      .max(80, { error: "Keep this field to 80 characters or fewer." }),
+      .max(80, { error: "Keep this field to 80 characters or fewer." })
+      .optional()
+      .default(""),
     model: z
       .string({ error: "Use text for this field." })
       .trim()

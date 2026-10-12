@@ -1,8 +1,8 @@
 /**
  * 四条产品线共用的询盘表单内容。
  *
- * 组件只负责交互与校验，所有对外文字保留在内容接缝中。正式隐私政策版本由
- * `NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION` 注入；没有版本时表单 fail-closed。
+ * 组件只负责交互与校验，所有对外文字保留在内容接缝中。隐私页面作为说明性
+ * 内容单独维护；询盘提交不再以隐私版本或勾选字段作为业务入口门槛。
  */
 export const inquiryFormUi = {
   ariaLabel: "Project enquiry form",
@@ -57,13 +57,13 @@ export const inquiryFormUi = {
   submittingLabel: "Submitting…",
   formUnavailableTitle: "Project enquiry is not open yet",
   formUnavailableBody:
-    "The privacy notice has not been approved and versioned, so this form is disabled rather than collecting details without a valid consent record.",
+    "The enquiry service is temporarily unavailable. Please try again later.",
   rateLimited:
     "Too many attempts were received. Please wait a few minutes before trying again.",
   referenceLabel: "Reference",
   notSpecified: "Not specified",
   privacyConsentChanged:
-    "The privacy notice changed since you agreed. Read the updated notice and tick the consent box again.",
+    "The enquiry details changed while you were submitting. Please review and try again.",
   validationMessages: {
     customerType: "Choose Business or Individual.",
     productLine: "Choose one of the four product lines.",
@@ -75,7 +75,7 @@ export const inquiryFormUi = {
     country: "Use a 2–8 letter country or market code.",
     company: "Keep the company name to 160 characters or fewer.",
     whatsapp: "Keep the phone or WhatsApp number to 40 characters or fewer.",
-    privacyConsent: "Consent is required before submission.",
+    privacyConsent: "This optional field does not need to be completed.",
   },
 } as const;
 

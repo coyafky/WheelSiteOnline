@@ -53,13 +53,6 @@ export type InquiryContent = {
   };
 };
 
-type PrivacyPageContent = {
-  version: string;
-  consentText: string;
-  linkLabel: string;
-  linkHref: string;
-};
-
 const localPrivacy = {
   version: process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim() ?? "",
   consentText: localFormUi.privacyConsent,
@@ -203,7 +196,7 @@ async function readInquiryPage<T>(
   };
 }
 
-/** 读取询盘入口、同意版本和感谢页文案；字段不完整时整体回退。 */
+/** 读取询盘入口和感谢页文案；字段不完整时整体回退。 */
 export async function getInquiryContent(
   options: { preview?: boolean; locale?: Locale } = {},
 ): Promise<InquiryContent> {
@@ -219,40 +212,16 @@ export async function getInquiryContent(
     preparation: inquiryPreparationFor(locale),
   });
   const native = await readInquiryPage<InquiryContent>("request-a-quote", options);
-  // Draft previews may show business copy, but never authorize consent.
-  const privacyPage = await readInquiryPage<PrivacyPageContent>("privacy", { ...options, preview: false });
   // Legacy aggregate pages may still carry thank-you and form copy. New quote
-  // pages only carry business body; they must not determine consent validity.
+  // pages only carry business body; privacy content is informational and does
+  // not determine whether the business enquiry form is open.
   const base = native.mode === "authoritative" && native.document && isContent(native.document.content)
     ? native.document.content
     : localContent;
-  // The local fixture may use a test-only version. A live WordPress outage or
-  // partial response must never reuse that version as if consent were approved.
   if (getWpConfig().mode !== "live") {
     return withLocalUi(localContent);
   }
-  const withoutApprovedPrivacy = (): InquiryContent => withLocalUi({
-    ...base,
-    privacyVersion: "",
-    privacy: { ...base.privacy, version: "" },
-  });
-  if (privacyPage.mode !== "authoritative" || !privacyPage.document) {
-    return withoutApprovedPrivacy();
-  }
-  const privacy = object(privacyPage.document.content);
-  if (!privacy || !stringValue(privacy.version) || !string(privacy.consentText) || !string(privacy.linkLabel) || !string(privacy.linkHref)) {
-    return withoutApprovedPrivacy();
-  }
-  return withLocalUi({
-    ...base,
-    privacyVersion: privacy.version,
-    privacy: {
-      version: privacy.version,
-      consentText: privacy.consentText,
-      linkLabel: privacy.linkLabel,
-      linkHref: privacy.linkHref,
-    },
-  });
+  return withLocalUi(base);
 }
 
 export { localContent as inquiryContentFallback };

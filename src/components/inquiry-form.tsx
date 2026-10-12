@@ -1,12 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { Banner } from "@astryxdesign/core/Banner";
 import { Button } from "@astryxdesign/core/Button";
-import { CheckboxInput } from "@astryxdesign/core/CheckboxInput";
 import { CheckboxList, CheckboxListItem } from "@astryxdesign/core/CheckboxList";
 import { FormLayout } from "@astryxdesign/core/FormLayout";
 import { RadioList, RadioListItem } from "@astryxdesign/core/RadioList";
@@ -298,8 +296,8 @@ function InquiryFormContent({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [idempotencyKey, setIdempotencyKey] = useState(createIdempotencyKey);
   const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
-  // An explicitly empty version is a fail-closed decision from the server.
-  // Never revive it from a build-time environment variable.
+  // Keep the version for backward-compatible payloads and old direct callers;
+  // an empty version no longer disables the business enquiry form.
   const privacyVersion = configuredPrivacyVersion === undefined
     ? process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim() || ""
     : configuredPrivacyVersion.trim();
@@ -317,19 +315,6 @@ function InquiryFormContent({
     }, 0);
     return () => window.clearTimeout(timer);
   }, [submissionContext?.productLine]);
-
-  if (!privacyVersion) {
-    return (
-      <div className="max-w-[760px]">
-        <Banner
-          status="warning"
-          title={ui.formUnavailableTitle}
-          description={ui.formUnavailableBody}
-          container="card"
-        />
-      </div>
-    );
-  }
 
   const fieldId = (name: FormKey) => `${baseId}-${name}`;
   const set = <K extends FormKey>(name: K, value: FormValues[K]) => {
@@ -452,12 +437,6 @@ function InquiryFormContent({
       );
       setErrors(localized);
       setStatus("idle");
-      // A changed privacy notice invalidates the consent the visitor gave. Clear
-      // the box so a resubmit cannot silently reuse consent for a notice they
-      // have not read — the checkbox is the only legal gate on this form.
-      if (localized.privacyConsent) {
-        setValues((current) => ({ ...current, privacyConsent: false }));
-      }
       if (Object.keys(localized).length > 0) focusFirstError(localized);
       else setSubmitError(body.error);
       return;
@@ -752,24 +731,6 @@ function InquiryFormContent({
             className="sm:col-span-2"
             onChange={(value) => set("whatsapp", value)}
           />
-          <div className="sm:col-span-2">
-            <div id={fieldId("privacyConsent")}>
-              <CheckboxInput
-                label={ui.privacyConsent}
-                value={values.privacyConsent}
-                onChange={(checked) => set("privacyConsent", checked)}
-                isRequired
-                status={errorStatus(errors.privacyConsent)}
-                width="100%"
-              />
-              <Link
-                href={ui.privacyHref}
-                className="mt-2 inline-block text-sm underline underline-offset-4"
-              >
-                {ui.privacyLinkLabel}
-              </Link>
-            </div>
-          </div>
           <div className="absolute -left-[9999px]" aria-hidden="true">
             <label htmlFor={fieldId("website")}>Website</label>
             <input

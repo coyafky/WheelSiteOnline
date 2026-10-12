@@ -1754,3 +1754,13 @@
 - 理由：让功能测试可进行，同时保留“测试声明不等于正式法律批准”的边界；避免用一个模糊的全局开关绕过 WordPress 权威内容。
 - 影响：预发布可以完成真实 UI 提交，但正式商用前必须替换法务批准版本并重新验收。隐私 Page 的缓存失效同时覆盖隐私页、询盘页、联系页和 sitemap。
 - 相关：`scripts/i18n/seed-staging-test-privacy.php`、`src/lib/wordpress/pages-contract.ts`、`outputs/reports/39-staging-inquiry-open-and-e2e-2026-10-12.md`。
+
+## DEC-100 · 询盘业务提交不以隐私勾选或版本字段为门槛
+
+- 日期：2026-10-12
+- 状态：已实施；已部署到本地与 9080 预发布并完成真实 SMTP 接受验证。
+- 背景：用户明确要求项目询盘可以直接提交；此前前端、Next API 和 WordPress MU 插件仍把隐私版本与勾选字段当成硬门槛，导致 UI 显示“项目询盘暂未开放”，无法验证完整转化链。
+- 决定：询盘表单不渲染隐私勾选框，不因隐私版本缺失返回 503，Next/WordPress 接口允许缺少 `privacyConsent`、`privacyVersion` 和 `consentedAt`，但保留三层输入校验、Origin、蜜罐、时间陷阱、幂等、限流、落库优先和 Outbox 投递。旧字段只作为兼容载荷保留，不伪造同意记录。
+- 理由：询盘是项目线索收集，不是购物车结算；最低成功标准是询盘先写入 WordPress/MySQL，再由 Outbox 尝试通知。业务入口不应因未填写一个不再使用的字段而失效。
+- 边界：这项决定只改变询盘业务提交流程，不宣称法律隐私文本已获批准，也不删除隐私说明页面；正式上线仍须由业务/法务替换正式隐私版本并完成相应合规审查。QQ SMTP 本次验证证明服务端接受消息，不等同于从邮箱客户端独立读取到收件箱。
+- 相关：`src/lib/inquiry/schema.ts`、`src/lib/inquiry/validate.ts`、`src/app/api/inquiries/route.ts`、`local-wp/mu-plugins/fenghuai-inquiries.php`、`scripts/i18n/update-consentless-conversion-copy.php`、`outputs/reports/40-consentless-inquiry-qq-smtp-2026-10-12.md`。

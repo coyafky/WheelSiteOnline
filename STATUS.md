@@ -1,5 +1,16 @@
 # 项目状态
 
+## 2026-10-12 询盘无隐私勾选门槛与 QQ SMTP 端到端验证完成
+
+- `/request-a-quote` 已移除隐私勾选和“隐私未批准导致表单关闭”的业务门槛；页面保留隐私说明入口，但可以直接填写并提交项目询盘。
+- 本地与 9080 远程 WordPress MU 插件均已同步：`privacyConsent`、`privacyVersion`、`consentedAt` 为兼容字段，不再是必填；数据库保存成功仍是客户看到成功页的最低标准。
+- 本地无隐私字段 POST 已返回 `201` 并成功落库；本地 SMTP 配置无法连接，因此只验证到 Outbox 保存，未把本地失败误报为客户询盘失败。
+- 9080 Playwright CLI 最终验收：无关闭提示、无隐私 checkbox、页面表单存在、控制台 0 错误；真实 UI 提交返回 `201` 并进入 `/zh/thank-you`。
+- 远程最近验收记录 `INQ-20261012-0013`：WordPress/MySQL 记录存在，Outbox `accepted`，尝试 1 次，`last_error` 为 `NULL`，说明 QQ SMTP 服务端已接受通知消息。当前工具无法直接读取 QQ 收件箱，因此收件箱可见性仍需人工打开 QQ 邮箱确认。
+- 9080 当前前端镜像为 `fenghuai-frontend-9080:consentless-20261012-final2-amd64`，容器健康；镜像压缩包 SHA-256：`47d09559e43401656f7cba9a4c05bd6c277e29280670ba8ee7a11491bace3bac`。
+- 本轮门禁：`npm test` 42/42、`npm run lint`、`npm run typecheck`、`npm run build` 通过；最终远程 Playwright 页面控制台 0 错误。
+- 正式上线前剩余事项：把测试/过渡隐私页面替换为业务/法务确认的正式版本，人工核验 QQ 收件箱显示，并按正式域名重新构建与核对 canonical、sitemap、robots 和 SMTP 收件人配置。
+
 ## 2026-10-12 预发布询盘已开放并完成本地/远程端到端验收
 
 - 用户要求为测试开放询盘后，本地与远程 WordPress 均写入明确标注为

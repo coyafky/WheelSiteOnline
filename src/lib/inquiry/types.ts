@@ -41,7 +41,7 @@ export type InquiryInput = {
   finish?: string;
   quantity?: string;
   inputsAvailable?: string[];
-  /** Approved policy version presented beside the checkbox. */
+  /** Optional legacy policy version retained for backwards-compatible payloads. */
   privacyVersion: string;
   message: string;
   /** 新版轮毂清单；缺省/空数组保持旧单产品载荷兼容。 */

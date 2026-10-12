@@ -8,7 +8,7 @@ import { QuoteContextBar } from "@/components/quote-context-bar";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getTranslator, getLocale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/i18n/types";
-import { quoteContextCopyFor, quoteFormCopyFor, quoteSpecLabelsFor, contactLabelsFor } from "@/lib/i18n/conversion-ui-copy";
+import { quoteContextCopyFor, quoteFormCopyFor, quoteSpecLabelsFor } from "@/lib/i18n/conversion-ui-copy";
 import { buildInquiryContext, hasContext } from "@/lib/inquiry-context";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getQuotePageBody } from "@/lib/wordpress/conversion-pages";
@@ -128,7 +128,7 @@ export default async function RequestAQuotePage({
               {body.dataNotice.eyebrow}
             </h2>
             <p className="mt-4 text-[0.94rem] leading-relaxed text-steel">
-              {inquiry.privacyVersion ? body.dataNotice.body : contactLabelsFor(locale).privacyPending}
+              {body.dataNotice.body}
             </p>
             <Link
               href={localizedPath(body.dataNotice.footHref, locale)}

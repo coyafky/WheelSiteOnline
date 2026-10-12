@@ -806,8 +806,10 @@ function fh_inquiry_validate_payload(array $body): array
     }
 
     // ── 合规 ───────────────────────────────────────────────────────────────
-    $privacyVersion = $text('privacyVersion', 40, true);
-    $consentedAt    = $text('consentedAt', 40, true);
+    // The enquiry path does not require a consent checkbox or version. Keep
+    // both fields optional for older callers and preserve empty audit values.
+    $privacyVersion = $text('privacyVersion', 40, false);
+    $consentedAt    = $text('consentedAt', 40, false);
     if ($consentedAt !== '' && strtotime($consentedAt) === false) {
         $errors['consentedAt'] = '同意时间必须是可解析的时间戳。';
     }
@@ -1415,7 +1417,7 @@ function fh_inquiry_render_email(int $postId): array
         . nl2br(esc_html($dash($meta('message'))), false)
         . '</div></td></tr>'
         . $section('Submitted configuration', $configurationRows)
-        . $section('Source & consent', $originRows)
+        . $section('Source', $originRows)
         . '<tr><td style="padding:0 24px 24px;color:#667085;font-size:12px;line-height:1.5">'
         . 'This notification is a copy. WordPress is the system of record for this inquiry.'
         . '</td></tr></table></td></tr></table></body></html>';

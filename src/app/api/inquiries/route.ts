@@ -79,15 +79,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: trapError }, { status: 422 });
   }
 
-  const privacyVersion = process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim();
-  if (!privacyVersion) {
-    return NextResponse.json(
-      { ok: false, error: "The enquiry form is not enabled." },
-      { status: 503 },
-    );
-  }
-
-  const parsed = validate(body, privacyVersion);
+  const parsed = validate(body);
   if (!parsed.ok) {
     return NextResponse.json(
       { ok: false, error: "Validation failed.", fieldErrors: parsed.fieldErrors },

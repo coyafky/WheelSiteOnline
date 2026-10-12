@@ -39,7 +39,7 @@ const quote: Record<Locale, ConversionQuoteBody> = {
     formHeading: quoteFormHeading,
     dataNotice: {
       eyebrow: "How we handle your details",
-      body: "The privacy notice must be approved before this form can accept a project enquiry.",
+      body: "Share the information you already have. Missing technical details can be confirmed before quotation or production approval.",
       footLabel: "Have another question? Go to the contact page",
       footHref: "/contact",
     },
@@ -60,7 +60,7 @@ const quote: Record<Locale, ConversionQuoteBody> = {
     },
     dataNotice: {
       eyebrow: "我们如何处理您的信息",
-      body: "隐私声明须经批准后，此表单才会接收项目询盘。",
+      body: "告诉我们您已经掌握的信息即可；缺失的技术细节可在报价或生产批准前确认。",
       footLabel: "还有其他问题？前往联系页面",
       footHref: "/contact",
     },
@@ -81,7 +81,7 @@ const quote: Record<Locale, ConversionQuoteBody> = {
     },
     dataNotice: {
       eyebrow: "Cómo tratamos sus datos",
-      body: "El aviso de privacidad debe aprobarse antes de que este formulario pueda recibir consultas de proyecto.",
+      body: "Comparta la información que ya tenga; los detalles técnicos pendientes se pueden confirmar antes de aprobar la oferta o la producción.",
       footLabel: "¿Tiene otra pregunta? Vaya a la página de contacto",
       footHref: "/contact",
     },
@@ -102,7 +102,7 @@ const quote: Record<Locale, ConversionQuoteBody> = {
     },
     dataNotice: {
       eyebrow: "การจัดการข้อมูลของคุณ",
-      body: "ต้องอนุมัติประกาศความเป็นส่วนตัวก่อนแบบฟอร์มนี้จึงจะรับคำสอบถามโครงการได้",
+      body: "ส่งข้อมูลที่คุณมีอยู่แล้วได้เลย รายละเอียดทางเทคนิคที่ขาดสามารถยืนยันก่อนอนุมัติใบเสนอราคาหรือการผลิต",
       footLabel: "มีคำถามอื่นหรือไม่? ไปที่หน้าติดต่อ",
       footHref: "/contact",
     },

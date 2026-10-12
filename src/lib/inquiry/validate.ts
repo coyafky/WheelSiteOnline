@@ -16,7 +16,7 @@ function contextString(value: unknown, max: number): string {
   return typeof value === "string" && value.trim().length <= max ? value.trim() : "";
 }
 
-export function validate(body: unknown, expectedPrivacyVersion: string): ValidationResult {
+export function validate(body: unknown, _expectedPrivacyVersion = ""): ValidationResult {
   if (typeof body !== "object" || body === null) {
     return { ok: false, fieldErrors: { _form: "Invalid payload." } };
   }
@@ -24,21 +24,7 @@ export function validate(body: unknown, expectedPrivacyVersion: string): Validat
   const parsed = inquirySubmissionSchema.safeParse(raw);
   if (!parsed.success) {
     const fieldErrors = zodFieldErrors(parsed.error);
-    const privacyVersion =
-      typeof raw.privacyVersion === "string" ? raw.privacyVersion.trim() : "";
-    if (!privacyVersion || privacyVersion !== expectedPrivacyVersion) {
-      fieldErrors.privacyConsent = "The privacy notice changed. Review it and agree again.";
-    }
     return { ok: false, fieldErrors };
-  }
-
-  if (parsed.data.privacyVersion !== expectedPrivacyVersion) {
-    return {
-      ok: false,
-      fieldErrors: {
-        privacyConsent: "The privacy notice changed. Review it and agree again.",
-      },
-    };
   }
 
   const data = parsed.data;

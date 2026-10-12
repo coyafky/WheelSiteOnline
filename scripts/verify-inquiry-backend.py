@@ -860,7 +860,6 @@ def main() -> int:
             ("非法 productLine", payload(idem("badline"), productLine="spaceships"), "productLine"),
             ("非法 idempotencyKey", payload("short", ), "idempotencyKey"),
             ("非法 customerType", payload(idem("badtype"), customerType="robot"), "customerType"),
-            ("缺少合规字段", payload(idem("noconsent"), privacyVersion="", consentedAt=""), "privacyVersion"),
         ]
         for label, body, want_field in cases:
             code, text = http("POST", REST_URL, body, {"X-FH-Service-Key": service_key})
