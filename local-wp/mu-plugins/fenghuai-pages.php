@@ -123,8 +123,18 @@ function fh_pages_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
             ],
         ];
     }
+    $globalAuthoritative = get_option(FH_PAGE_OPTION_AUTHORITATIVE, '0') === '1';
+    // 迁移可以按页面键分批完成：单页请求只要拿到已批准页面即可交给
+    // WordPress；全量请求仍必须由站点级开关明确接管，避免半迁移时误宣称
+    // 整站内容都已由 CMS 负责。
+    $scopedAuthoritative = $key !== '' && $items !== [] && array_reduce(
+        $items,
+        static fn (bool $approved, array $item): bool => $approved
+            && ($item['page']['publication_status'] ?? '') === 'approved',
+        true,
+    );
     return new WP_REST_Response([
-        'authoritative' => get_option(FH_PAGE_OPTION_AUTHORITATIVE, '0') === '1',
+        'authoritative' => $globalAuthoritative || $scopedAuthoritative,
         'items' => $items,
     ], 200);
 }
