@@ -1744,3 +1744,13 @@
 - 理由：内容编辑可独立推进业务页面，而法律未批准时系统继续阻止收集线索；页面级 `approved` 不等于法务同意。
 - 影响：`privacy` 未批准时转化页可展示，但表单关闭；向远端部署必须先同步 Pages 插件与受控内容迁移，不能只替换前端镜像。非英语仍按整站门槛 `noindex`。
 - 相关：`src/content/conversion-pages.ts`、`src/lib/wordpress/conversion-pages.ts`、`src/lib/wordpress/inquiry-content.ts`、`local-wp/mu-plugins/fenghuai-pages.php`、`ARCHITECTURE.md`。
+
+## DEC-099 · 预发布询盘使用明确隔离的测试隐私版本
+
+- 日期：2026-10-12
+- 状态：已实施；仅限 9080 预发布功能验证。
+- 背景：询盘业务链已经实现，但隐私 Page 未批准时系统按设计 fail-closed，导致无法验证浏览器提交、WordPress/MySQL 持久化和 Outbox。用户明确要求先开放测试。
+- 决定：为本地和 9080 预发布写入版本前缀为 `staging-test-` 的四语测试隐私 Page，并把它标记为 `staging_only`；种子脚本必须显式设置 `FH_ALLOW_STAGING_SEED=1`，且拒绝覆盖非测试版已批准隐私记录。前端构建时使用同一版本，提交仍必须带同意值和版本值。
+- 理由：让功能测试可进行，同时保留“测试声明不等于正式法律批准”的边界；避免用一个模糊的全局开关绕过 WordPress 权威内容。
+- 影响：预发布可以完成真实 UI 提交，但正式商用前必须替换法务批准版本并重新验收。隐私 Page 的缓存失效同时覆盖隐私页、询盘页、联系页和 sitemap。
+- 相关：`scripts/i18n/seed-staging-test-privacy.php`、`src/lib/wordpress/pages-contract.ts`、`outputs/reports/39-staging-inquiry-open-and-e2e-2026-10-12.md`。

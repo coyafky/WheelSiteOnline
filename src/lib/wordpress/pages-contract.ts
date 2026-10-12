@@ -107,6 +107,9 @@ export function sitePageRevalidationPaths(key?: string): string[] {
     privacy: ["/support/privacy"],
     "thank-you": ["/thank-you"],
   };
+  if (key === "privacy") {
+    pathsByKey.privacy.push("/request-a-quote", "/contact");
+  }
   return [...new Set([...(key && pathsByKey[key] ? pathsByKey[key] : []), "/sitemap.xml"])]
     .concat(key && pathsByKey[key] ? [] : ["/"]);
 }

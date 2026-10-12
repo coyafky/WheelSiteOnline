@@ -1,5 +1,17 @@
 # 项目状态
 
+## 2026-10-12 预发布询盘已开放并完成本地/远程端到端验收
+
+- 用户要求为测试开放询盘后，本地与远程 WordPress 均写入明确标注为
+  `staging-test-2026-10-12` 的测试隐私版本；四语均为 `approved`，但该版本只代表
+  预发布功能测试，不代表正式法律隐私政策。
+- 9080 远程 Playwright CLI 实测：`/zh/request-a-quote?product_line=wheels` 从第 1 步进入第 2 步，填写姓名、邮箱、国家并勾选测试声明后，`POST /api/inquiries` 返回 `201 Created`，进入确认页，控制台错误 0。
+- 本地 `127.0.0.1:3200` 同样完成真实 UI 提交：`POST /api/inquiries` 返回 `201 Created`，确认页加载成功，控制台错误 0。
+- MySQL / WordPress 核验：本地 `fh_inquiry` 1 条、Outbox 1 条且为 `accepted`；远程 `fh_inquiry` 9 条、Outbox 9 条且全部为 `accepted`，最近记录无 `last_error`。成功最低标准继续执行 DEC-092：必须先落库再显示成功。
+- 询盘页面缓存失效已补齐：隐私 Page 更新时同时刷新 `/support/privacy`、`/request-a-quote`、`/contact` 和 sitemap，避免隐私版本已更新但转化页仍显示旧关闭状态。
+- 本轮门禁：`npm test` 42/42、`npm run lint`、`npm run typecheck`、`npm run build` 全部通过；远程镜像已包含本轮前端修复。远程轮毂目录图片此前已实测 25/25 加载、0 破图。
+- 重要边界：本地与远程并非整库镜像。询盘数据保留各自环境，不能用本地 dump 覆盖远程；远程仍只有已迁移的转化页和历史测试询盘，其余 WordPress Page 需另行迁移。
+
 ## 2026-10-12 远程媒体图片故障已定位，询盘页同步已核验
 
 - 9080 轮毂目录旧镜像的 WordPress 图片直链抽样均为 200，但 Next.js `/_next/image` 因公网 WordPress 媒体源未进入 `images.remotePatterns` 返回 400；Playwright 实测第 2 页 25 张图仅 1 张加载成功。

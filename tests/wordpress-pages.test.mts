@@ -72,7 +72,7 @@ test("页面缓存失效覆盖页面、首页和 sitemap，键不接受路径穿
   assert.deepEqual(sitePageRevalidationPaths("about"), ["/about", "/sitemap.xml"]);
   assert.deepEqual(sitePageRevalidationPaths("request-a-quote"), ["/request-a-quote", "/sitemap.xml"]);
   assert.deepEqual(sitePageRevalidationPaths("contact"), ["/contact", "/sitemap.xml"]);
-  assert.deepEqual(sitePageRevalidationPaths("privacy"), ["/support/privacy", "/sitemap.xml"]);
+  assert.deepEqual(sitePageRevalidationPaths("privacy"), ["/support/privacy", "/request-a-quote", "/contact", "/sitemap.xml"]);
   assert.deepEqual(sitePageRevalidationPaths("thank-you"), ["/thank-you", "/sitemap.xml"]);
   assert.equal(SITE_PAGES_CACHE_TAG, "site-pages");
 });
