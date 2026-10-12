@@ -1724,6 +1724,17 @@
 - 边界：此决定不改变产品事实、后端询盘契约或“落库才成功”；法律/工程译文不得因前端有四语言字符串就视为批准。
 - 相关：`src/content/inquiry-form.ts`、`src/lib/i18n/inquiry-form-copy.ts`、`src/lib/wordpress/inquiry-content.ts`、`src/components/inquiry-form.tsx`、`src/app/contact/page.tsx`。
 
+## DEC-098 · WordPress 内部读取源与公网媒体源分开配置
+
+- **日期**：2026-10-12
+- **状态**：已采纳
+- **背景**：前端容器通过 Docker 内网读取 WordPress，但媒体记录保存的是浏览器可访问的公网 URL。只把内网 API 地址用于 Next.js 构建，会让图片优化器拒绝公网媒体 URL，页面返回 400 破图。
+- **考虑的方案**：① 关闭 Next 图片优化；② 把公网 IP 写死进 `next.config.ts`；③ 用独立的 `WP_PUBLIC_API_URL` 在构建时加入媒体白名单，同时保留运行时内网读取地址。
+- **决策**：选 ③。`WP_API_URL`/`WP_REST_ROOT` 负责 CMS 读取，`WP_PUBLIC_API_URL` 只负责构建期 `images.remotePatterns`。
+- **理由**：保留优化与安全的路径白名单，不把预发布 IP 固化进代码，也不让浏览器接触服务密钥；部署配置能明确表达两种网络视角。
+- **影响**：每次预构建必须提供正确的 `WP_PUBLIC_API_URL`，并在远程页面用 Playwright 检查图片实际加载；缺少该值视为部署门禁失败。
+- **相关**：`next.config.ts`、`deploy/frontend/Dockerfile`、`deploy/frontend/compose.yml`、`outputs/reports/38-remote-wordpress-media-optimizer-2026-10-12.md`。
+
 ## DEC-097 · 询盘业务页面与隐私同意页分开审批
 
 - 日期：2026-10-12

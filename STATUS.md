@@ -1,5 +1,12 @@
 # 项目状态
 
+## 2026-10-12 远程媒体图片故障已定位，询盘页同步已核验
+
+- 9080 轮毂目录旧镜像的 WordPress 图片直链抽样均为 200，但 Next.js `/_next/image` 因公网 WordPress 媒体源未进入 `images.remotePatterns` 返回 400；Playwright 实测第 2 页 25 张图仅 1 张加载成功。
+- 本地与远程 WordPress 的 `request-a-quote`、`contact` 四语正文、SEO 和批准状态逐字段一致；本地与远程 8 条询盘/联系路径的渲染正文哈希全部一致。隐私未批准导致表单关闭是预期门禁，不是同步故障。
+- 已在 `next.config.ts`、前端 Docker 构建参数和部署说明中增加 `WP_PUBLIC_API_URL`，明确区分内部 CMS 地址和公网媒体地址。lint、typecheck、npm test 42/42、生产构建均通过；远程全量镜像发布待本轮提交后执行。
+- 证据报告：`outputs/reports/38-remote-wordpress-media-optimizer-2026-10-12.md`。当前工作仍在 `work/active/`，远程图片修复未完成前不标记完成。
+
 ## 2026-10-12 当前全量快照已推送并部署到 9080 预发布
 
 - 发布分支为 `codex/full-site-current-20261012`，最新提交 `d98bbd1`；基础全量快照 `d91d8ae` 已推送到远端仓库。当前工作树干净。

@@ -10,6 +10,7 @@ services:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
         NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION: ${NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION}
         WP_API_URL: ${WP_PUBLIC_API_URL}
+        WP_PUBLIC_API_URL: ${WP_PUBLIC_API_URL}
         WP_REST_ROOT: ${WP_PUBLIC_REST_ROOT}
         # 构建只生成仓库兜底快照，避免在 2 GB 服务器构建期抓取 138 个 CMS 页面；
         # 运行时仍为 live，并在启动后通过签名回调刷新 WordPress 内容。

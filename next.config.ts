@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 import { networkInterfaces } from "node:os";
 
-const remotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [
+const remotePatterns: NonNullable<
+  NonNullable<NextConfig["images"]>["remotePatterns"]
+> = [
   {
     protocol: "http",
     hostname: "localhost",
@@ -18,12 +20,11 @@ const remotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [
 
 let allowLocalWordpressMedia = false;
 
-if (process.env.WP_API_URL) {
+function addWordpressMediaPattern(rawUrl: string | undefined): void {
+  if (!rawUrl) return;
+
   try {
-    const wordpressUrl = new URL(process.env.WP_API_URL);
-    allowLocalWordpressMedia = ["localhost", "127.0.0.1", "::1"].includes(
-      wordpressUrl.hostname,
-    );
+    const wordpressUrl = new URL(rawUrl);
     remotePatterns.push({
       protocol: wordpressUrl.protocol === "http:" ? "http" : "https",
       hostname: wordpressUrl.hostname,
@@ -34,6 +35,23 @@ if (process.env.WP_API_URL) {
     // Runtime validation in the WordPress client handles malformed URLs.
   }
 }
+
+if (process.env.WP_API_URL) {
+  try {
+    const wordpressUrl = new URL(process.env.WP_API_URL);
+    allowLocalWordpressMedia = ["localhost", "127.0.0.1", "::1"].includes(
+      wordpressUrl.hostname,
+    );
+  } catch {
+    // Runtime validation in the WordPress client handles malformed URLs.
+  }
+}
+
+// Server-side CMS reads use the Docker-internal URL in production, while
+// WordPress media records contain the browser-visible public URL. Both origins
+// must be allowed at build time for Next's image optimizer to fetch those files.
+addWordpressMediaPattern(process.env.WP_API_URL);
+addWordpressMediaPattern(process.env.WP_PUBLIC_API_URL);
 
 const localInterfaceOrigins = Object.values(networkInterfaces())
   .flat()

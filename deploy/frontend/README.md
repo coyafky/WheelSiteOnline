@@ -14,6 +14,11 @@ WordPress 公网后台/API → :7080
 canonical、OG 与 sitemap 会被静默写成错误地址。运行阶段的 CMS 读取和询盘提交走
 Docker 内部网络，浏览器不会接触 WordPress 服务密钥。
 
+构建阶段还必须提供 `WP_PUBLIC_API_URL`（例如
+`http://119.91.205.130:7080/wp-json/wp/v2`）。WordPress 返回的媒体记录使用公网
+上传地址，Next.js 图片优化器需要在构建时把该源加入 `images.remotePatterns`；只配置
+容器内的 `http://wordpress/...` 会导致页面图片请求返回 400。
+
 镜像构建使用仓库内最后有效快照，避免构建阶段依赖 CMS 可用性；容器运行时切换为
 `WP_MODE=live`，启动后必须调用签名缓存失效接口，使页面读取当前 WordPress 内容。
 
