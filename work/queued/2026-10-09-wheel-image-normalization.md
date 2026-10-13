@@ -5,7 +5,7 @@
 目录 UI 已改为白底无框陈列，但现有批准图片来自不同拍摄环境：背景颜色、轮毂占比、
 角度、阴影、裁切和清晰度不一致。CSS 可以统一容器，不能把来源照片变成一致的商业棚拍。
 
-本任务必须在 `work/active/2026-10-10-product-image-trust-verification.md` 的身份、规格、
+本任务必须在 `work/queued/2026-10-10-product-image-trust-verification.md` 的身份、规格、
 图权、供货和业务门槛之后执行。图片处理本身不能把候选素材升级为已批准素材。
 
 ## 目标

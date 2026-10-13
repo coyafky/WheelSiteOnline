@@ -1,56 +1,31 @@
-# outputs/
+# 可交付成果与验收证据
 
-保存**可以交付、审核或使用的结果**。
+`outputs/` 保存可以交付、审核或复核的成果。每项成果应能说明服务对象、日期/版本、范围和结论，并链接回现行规格或任务。
 
-```
-outputs/
-├── reports/      # 审计报告、分析报告
-├── designs/      # 设计稿、原型
-├── exports/      # 导出文件
-├── documents/    # 成文文档
-└── releases/     # 发布产物
-```
+## 目录归属
 
-判断标准：如果这个文件可以发给用户、客户、同事、开发团队或运营团队进行审核
-或使用，它通常属于 outputs。
+| 路径 | 内容 |
+|---|---|
+| `reports/` | 商业、内容、SEO、实现审计与验收报告；报告是证据，不是当前状态正本 |
+| `site-launch-plan/` | 项目启动范围、内容/询盘数据方案和相关任务卡；若与现行计划冲突，按 `STATUS.md` 与当前任务判断 |
+| `designs/` | 可评审的设计或技术方案 |
+| `exports/` | 从只读数据源生成、供审核使用的导出清单 |
+| `*-review/`、`architecture-diagrams/` | 被报告引用的选定截图和图示证据 |
+| `hangpeng-wheel-media/` | 经来源追溯的候选素材浏览交付物；候选不代表已批准发布 |
+| `templates/` | 可复用交付模板；模板不等于已审核的法律正文 |
 
-## 与 docs/ 的区别
+## 验收记录整理
 
-| | `outputs/` | `docs/` |
-|---|---|---|
-| 性质 | 交付物 | 项目文档 |
-| 生命周期 | 交付后即可归档 | 长期维护 |
-| 例子 | 给丰怀看的审计报告 | next-wp 架构调研（见 DEC-007） |
+- 保留最终报告和能证明关键结论的截图；重复视口、逐次调试截图和原始 runner 输出优先放在本机临时目录。
+- 每个新审计应关联任务、标明实际执行的检查、环境/版本和未覆盖边界，并同步 `STATUS.md`。
+- 日期化报告保留其历史结论，不得把旧验收误当成当前状态；被替代的方案或长篇中间记录归档并链接至替代结论。
+- 不为“测试通过”创建独立流水账；测试框架的 `test-results/`、`playwright-report/` 等生成目录不是项目文档。
 
-## 注意
+## 现有入口
 
-**不要把临时文件放这里。** 本目录只放成型、可交付的东西。
+- [`site-launch-plan/README.md`](site-launch-plan/README.md)：首发范围、排期和验证框架。
+- [`architecture-alignment-audit.md`](architecture-alignment-audit.md)：架构与代码的一次性差异核验。
+- [`reports/`](reports/)：按日期追溯审计与验收结果。
+- [`page-spec-agent-prompts/README.md`](page-spec-agent-prompts/README.md)：仍需按 Page SPEC 执行时可复用的提示模板。
 
-## 当前内容
-
-- [轮毂公开目录架构方案（讨论稿）](designs/wheel-publication-architecture-2026-10-06.md)：定义源记录、WordPress 发布覆盖层和公开目录模块，覆盖目录、详情、旋压、sitemap 与询盘。
-- [当前实现状态审计（2026-10-06）](reports/current-implementation-status-2026-10-06.md)：逐路由核对 Page SPEC、WordPress、真实目录、询盘、SEO、部署与构建结果，并列出首发阻断项。
-- `site-launch-plan/`：2026-10-04 英文首发计划、数据与询盘设计、素材分配、任务卡和代码资产盘点。
-- `hangpeng-wheel-media/`：从航鹏画册提取的 68 张候选图片、清单、来源记录与本地浏览页。
-- [架构与 README 校准审计](architecture-alignment-audit.md)：三份核心文档与当前代码、决策、Page SPEC 的差异和剩余实现缺口。
-- `self-sealing-tire-page-review/`：自密封轮胎页 1440×900、1280×800、390×844 与 360×800 全页验收截图。
-- [`page-spec-agent-prompts/`](page-spec-agent-prompts/README.md)：供其他 agent 按 Page SPEC 实施剩余页面的主提示词、WordPress 媒体提示词、独立验收提示词和七类剩余页面启动提示词。
-- [`forged-wheel-review/`](forged-wheel-review/)：锻造轮毂定制页 1440×900 与 390×844 浏览器验收截图；WF05 因证据不足未公开。
-
-以上均为可评审成果；候选素材尚未自动发布到网站。
-
-## 定制铝制品页验收截图（2026-10-06）
-
-- 目录：`outputs/custom-aluminum-review/`
-- `custom-aluminum-1440x900.png` — 桌面基准视口
-- `custom-aluminum-390x844.png` — 移动基准视口
-- `custom-aluminum-200pct-zoom.png` — 200% 放大等效检查
-- 对应路由：`/products/custom-aluminum`（Page SPEC `PAGE-SPECS/custom-aluminum.md`，当前 `noindex,follow`）
-
-## 三电铝制品页验收截图（2026-10-06）
-
-- 目录：`outputs/ev-components-review/`
-- `ev-components-1440x900.png` — 桌面基准视口
-- `ev-components-390x844.png` — 移动基准视口
-- `ev-components-200pct-zoom.png` / `-720x450.png` — 200% 放大等效检查
-- 对应路由：`/products/ev-components`（Page SPEC `PAGE-SPECS/ev-components.md`）
+当前进度以根目录 `STATUS.md` 为准，施工规格以 `PAGE-SPECS/` 为准，系统边界以 `ARCHITECTURE.md` 为准。

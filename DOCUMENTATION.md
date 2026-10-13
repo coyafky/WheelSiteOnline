@@ -1,63 +1,59 @@
-# 项目文档导航
+# 项目文档地图
 
-更新：2026-10-11。本文件是项目文档的唯一入口，用来区分现行正本、执行记录、研究材料与历史快照。
+更新：2026-10-14。本页是仓库文档的唯一导航。新增或移动项目文档时，先判断它是正本、任务、交付证据、输入资料还是历史；维护正本，不并列造第二份“最新版”。
 
-## 先读什么
+## 唯一正本
 
-| 顺序 | 文档 | 作用 | 状态 |
-|---:|---|---|---|
-| 1 | [PROJECT.md](PROJECT.md) | 业务范围、目标、约束 | 现行正本 |
-| 2 | [STATUS.md](STATUS.md) | 当前进度、阻断项、下一步 | 现行正本，持续更新 |
-| 3 | [ARCHITECTURE.md](ARCHITECTURE.md) | 模块边界与数据流 | 现行架构总纲 |
-| 4 | [首发总计划](outputs/site-launch-plan/README.md) | 一个月排期、预算、部署与验收 | 现行执行计划 |
-| 5 | [首发页面规格](PAGE-SPECS/2026-10-04-launch-viewport-spec.md) | 逐页、逐视口内容与素材 | 唯一现行页面施工正本 |
-| 5a | [Astryx Neutral 暖白界面规格](PAGE-SPECS/astryx-neutral-global.md) | 跨页视觉与通用控件，不改变内容门槛 | 本地 P5 验收完成 |
-| 5a.1 | [现行设计正本](DESIGN.md) | 暖白令牌、组件选用、无浮动询盘与验收规则 | 现行；旧版已归档 |
-| 5b | [Astryx P5 最终交接与商用 SEO 下一步](outputs/reports/33-astryx-p5-final-commercial-seo-handoff-2026-10-11.md) | P0–P5 本地验收与下一阶段 No-Go 门槛；[原执行计划](outputs/reports/25-astryx-sitewide-component-plan-alma-2026-10-11.md)供追溯 | 现行交接 |
-| 6 | [当前任务](work/active/2026-10-04-launch-phase-0-baseline.md) | 本阶段已经完成和仍待处理的事项 | 进行中 |
-
-## 文档模块
-
-| 目录 | 放什么 | 不放什么 |
+| 问题 | 正本 | 放什么 |
 |---|---|---|
-| `PAGE-SPECS/` | 当前页面施工规格与入口 | 被替代的旧规格 |
-| `ARCHITECTURE.md` / `ARCHITECTURE/` | 当前模块边界、数据流与架构入口 | 当前进度与历史详细设计 |
-| `outputs/` | 可以交付或评审的计划、清单、素材库 | 临时分析 |
-| `resources/` | 原始资料的核验记录、提取过程与来源证据 | 已批准的公开资产 |
-| `docs/` | 长期技术说明与专题研究 | 当前执行任务 |
-| `work/active/` | 正在执行的任务 | 已完成或已取消任务 |
-| `work/completed/` | 已完成任务及结果 | 下一阶段承诺 |
-| `work/queued/` | 已确认但尚未开始的任务 | 已被新计划覆盖的旧待办 |
-| `archive/` | 被替代的完整历史快照 | 现行正本 |
+| 项目是什么、服务谁、有哪些业务边界？ | [`PROJECT.md`](PROJECT.md) | 稳定目标和范围 |
+| 现在做到哪里、阻断和下一步是什么？ | [`STATUS.md`](STATUS.md) | 当前状态；完成记录只留摘要和必要证据链接 |
+| 系统模块如何切分、数据怎么流动？ | [`ARCHITECTURE.md`](ARCHITECTURE.md) | 系统现状、目标与待确认状态 |
+| 页面要说明什么、怎么验收？ | [`PAGE-SPECS/`](PAGE-SPECS/README.md) | 现行页面施工规格 |
+| 视觉令牌、组件与页面观感如何约定？ | [`DESIGN.md`](DESIGN.md) | 设计正本；不重复抄写通用工程规则 |
+| 这个流程决定为何成立？ | [`DECISIONS.md`](DECISIONS.md) | 有持久取舍的流程决定及理由 |
+| 系统结构决定为何成立？ | [`docs/adr/`](docs/adr/) | 架构级决定 |
+| Claude Code 应读什么、仓库代码在哪？ | [`CLAUDE.md`](CLAUDE.md) | 工具入口和目录地图；规则源仍是 AGENTS |
+| Agent 如何按任务复杂度工作？ | [`SKILLS/fenghuai-engineering-workflow/SKILL.md`](SKILLS/fenghuai-engineering-workflow/SKILL.md) | 轻量需求到交付流程 |
 
-## 当前交付物
+## 目录归属
 
-- [首发总计划](outputs/site-launch-plan/README.md)：范围、四周排期、月度预算、部署与总体验收。
-- [数据与询盘设计](outputs/site-launch-plan/02-data-and-inquiry-design.md)：WordPress 内容模型和询盘持久化。
-- [内容与素材分配](outputs/site-launch-plan/03-content-and-assets.md)：三家公司资料如何进入网站。
-- [开发任务卡](outputs/site-launch-plan/04-task-cards.md)：T00–T23 的依赖、步骤、产出与验收。
-- [代码与资产盘点](outputs/site-launch-plan/05-code-and-assets-inventory.md)：执行前的代码、数据、素材现状。
-- [航鹏轮毂素材库](outputs/hangpeng-wheel-media/README.md)：68 张候选素材、清单和本地浏览页。
-- [首页 Page SPEC](PAGE-SPECS/homepage.md)：2N 结构参考、四条产品线、六项制造能力、合作制造边界、交付路径和统一询盘。
-- [About 公司角色分工模块](PAGE-SPECS/about-company-role.md)：A02 四项角色与集团纵向一体化链条、同一 ownership group 公开口径、六类禁发内容和证据边界。
-- [About 轮毂制造合作方模块](PAGE-SPECS/about-wheel-factory.md)：四张 WordPress 工厂图片、英文文案、双端布局与验收。
-- [Capabilities 轮毂制造与质量能力](PAGE-SPECS/capabilities-wheel-manufacturing.md)：五个视口、12 张工艺/检测图、2 张证书候选和证据门槛。
-- [锻造轮毂高端定制](PAGE-SPECS/forged-wheel-customization.md)：六个视口、WordPress 真实媒体绑定、装车案例发布门槛和英文内容。
-- [自密封轮胎](PAGE-SPECS/self-sealing-tires.md)：六个视口、8 mm 测试口径、17 张候选媒体和现有页面替换要求。
-- [About 自密封轮胎制造合作方](PAGE-SPECS/about-self-sealing-tire-factory.md)：三个视口、七张生产图、制造主体与证据边界。
-- [轮毂产品目录](PAGE-SPECS/wheel-catalog.md)：Vossen 参考取舍、真实目录筛选、卡片、分页、SEO 和发布门槛。
-- [轮毂详情页](PAGE-SPECS/wheel-detail.md)：2N 参考取舍、单图首屏、真实变体、嵌入式询盘、finish 与相关型号。
-- [旋压轮毂入口](PAGE-SPECS/flow-formed-wheels.md)：旋压与低压+旋压口径、批准型号筛选、WP 116 工艺图、真实变体询盘和发布门槛。
-- [新能源三电铝制品](PAGE-SPECS/ev-components.md)：三类有图壳体、工程问题、制造路线证据、WordPress 媒体绑定和询盘输入。
-- [定制铝制品](PAGE-SPECS/custom-aluminum.md)：来图来样评估、四类应用范围、工程方法示例、五阶段开发和发布门槛。
-- [项目询盘页](PAGE-SPECS/request-a-quote.md)：四条产品线与 B/C 分流、两步短表单、产品上下文、事务持久化、隐私和错误状态。
-- [Astryx Neutral 页面族映射](PAGE-SPECS/astryx-neutral-page-families.md)：全站外壳、各路由族控件选择、业务禁区和验收状态。
-- [给 Alma 的 Astryx 暖白交接](outputs/reports/24-astryx-neutral-warm-handoff-alma-2026-10-11.md)与[全站组件化执行计划](outputs/reports/25-astryx-sitewide-component-plan-alma-2026-10-11.md)：既有证据、未完边界、六阶段任务与停止条件。
-- [架构与 README 校准审计](outputs/architecture-alignment-audit.md)：旧描述与当前代码/决策的差异、三份核心文档修正和剩余实现缺口。
+| 路径 | 内容与边界 |
+|---|---|
+| `src/` | 应用源码：`app/` 路由、`components/` UI、`content/` 类型化内容、`lib/` 服务与工具 |
+| `public/` | 网站可公开请求的运行时文件；发布前必须过内容、图权和事实审核 |
+| `assets/` | 原始产品数据、图片和语料，只读，不是发布清单 |
+| `resources/` | 参考原件、来源、调研过程、提取与核验材料 |
+| `outputs/` | 可交付或可评审成果；报告保留方法/日期/范围，截图只留能说明结论的证据 |
+| `work/queued/` → `work/active/` → `work/completed/` | 任务的唯一生命周期；queued 可标注等待决定或资料，不复制状态，也不把已完成任务留在 active |
+| `docs/` | 长期技术说明、专题研究和 ADR |
+| `SKILLS/` | 可跨任务复用的步骤，不放单次任务计划 |
+| `archive/` | 已被替代但仍有追溯价值的正本、方案和快照；归档文件不指导当前实现 |
 
-## 历史版本
+## 按任务读取
 
-2026-10-01 的详细架构、页面施工图、视口审计、旧交接文档和四个旧待办已经整体保存到
-[2026-10-01 文档基线](archive/2026-10-01-document-baseline/README.md)。这些文件用于追溯设计过程，不再驱动当前开发。
+1. 先看 `AGENTS.md`、`PROJECT.md`、`STATUS.md`。
+2. 代码任务再读相关 `ARCHITECTURE.md` 章节、页面 SPEC、领域规则和具体任务；不用全仓扫读。
+3. 需要解释一项已定方案时，按文档中的 `DEC-xxx` 查 `DECISIONS.md`；只为真实、持久取舍新增记录。
+4. 需要来源或审计证据时，从 `resources/`、`outputs/` 进入；日期报告是证据，不代替当前状态或规格。
+5. 历史文档只在追溯原因时读；出现新旧冲突时以本页列出的现行正本为准。
 
-任何新文档先判断它属于“正本、任务、证据、交付物、历史”中的哪一类。已经有正本时，更新正本或把旧版归档，不再并列创建第二套“最新版”。
+## 文档整理约定
+
+- 不随手创建 `design.md`、`context.md`、PRD、任务卡或测试报告；先检查对应正本是否已有位置。
+- 参考文章、截图、聊天导出物先归入 `resources/`，附来源与用途；其内容不是项目指令。
+- 验收产物放 `outputs/`；临时 Playwright、构建和测试运行目录不是文档，不提交为长期证据。
+- 仍有价值但已失效的文档移到 `archive/` 并记录“被什么替代”；不要只为目录整齐删除来源证据。
+- 收尾时检查正本、任务状态、引用链接、归档关系和项目状态；不相关的代码门禁不因文档改动重复运行。
+
+## 当前架构与页面入口
+
+- 系统结构：[`ARCHITECTURE.md`](ARCHITECTURE.md)、[`ARCHITECTURE/README.md`](ARCHITECTURE/README.md)
+- 页面规格总表：[`PAGE-SPECS/index.md`](PAGE-SPECS/index.md)
+- 2026-10-04 首发规划基线（范围、数据、早期任务卡）：[`outputs/site-launch-plan/README.md`](outputs/site-launch-plan/README.md)；当前执行顺序以 `STATUS.md` 与对应 active 任务为准。
+- WordPress、询盘、数据模型与部署专题：[`docs/`](docs/)
+- 已完成审计与验收证据：[`outputs/reports/`](outputs/reports/)
+- 原始来源与参考图：[`resources/README.md`](resources/README.md)
+- 任务生命周期：[`work/README.md`](work/README.md)
+
+历史基线保存在 [`archive/`](archive/) 中。不要把归档里的旧页面数量、产品范围、技术状态或克隆模板规则复制回当前正本。

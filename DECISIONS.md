@@ -1,5 +1,7 @@
 # 决策日志
 
+本文件是有持久取舍的历史理由库，不是项目当前状态、完整规则清单或每次任务的必读材料。当前事实分别以 `PROJECT.md`、`STATUS.md`、`ARCHITECTURE.md`、`DESIGN.md` 和页面 SPEC 为准；只在相关正本/任务引用某个 `DEC-xxx` 时，读取对应条目。新增决定前先确认它记录了真实取舍，而不是重复当前规则。
+
 > 记录**为什么这样决定**，不记录做了什么（做了什么看 `STATUS.md`）。
 >
 > - 与 `docs/adr/` 的分工：ADR 记录**架构级**决策（编号制、一旦接受罕有变更）；
@@ -1410,7 +1412,7 @@
   公司授权事实，尤其资产中存在第三方来源。用一条批量声明保留最小责任链，异常素材再升级
   处理，可以兼顾开发速度、管理成本和撤回能力。
 - 相关：`outputs/reports/12-product-image-trust-verification-process-2026-10-10.md`、
-  `work/active/2026-10-10-product-image-trust-verification.md`、
+  `work/queued/2026-10-10-product-image-trust-verification.md`、
   `work/queued/2026-10-09-wheel-image-normalization.md`、DEC-018。
 
 ## DEC-079 · 备用轮毂图片按型号分批上传，不做一次性媒体迁移
@@ -1764,3 +1766,17 @@
 - 理由：询盘是项目线索收集，不是购物车结算；最低成功标准是询盘先写入 WordPress/MySQL，再由 Outbox 尝试通知。业务入口不应因未填写一个不再使用的字段而失效。
 - 边界：这项决定只改变询盘业务提交流程，不宣称法律隐私文本已获批准，也不删除隐私说明页面；正式上线仍须由业务/法务替换正式隐私版本并完成相应合规审查。QQ SMTP 本次验证证明服务端接受消息，不等同于从邮箱客户端独立读取到收件箱。
 - 相关：`src/lib/inquiry/schema.ts`、`src/lib/inquiry/validate.ts`、`src/app/api/inquiries/route.ts`、`local-wp/mu-plugins/fenghuai-inquiries.php`、`scripts/i18n/update-consentless-conversion-copy.php`、`outputs/reports/40-consentless-inquiry-qq-smtp-2026-10-12.md`。
+
+## DEC-101 · Agent 工作流按复杂度伸缩，项目文档各保留一份正本
+
+- 日期：2026-10-13
+- 状态：已采纳
+- 背景：项目文档和执行步骤逐渐膨胀，Claude Code 缺少当前目录地图；同一进度与归档规则分散在多个 README。用户提供的 AI 开发心得与两张流程图建议按任务复杂度选择澄清、规划、并行、交叉审查和端到端验证。
+- 决定：
+  1. 小而明确的任务直接实施，以最小相关检查验收；只有会改变实现方向的问题才先澄清。
+  2. 复杂或高风险任务才增加短规格、独立切片、并行、对抗审查和端到端验证；自动化证据用于核实规格，不替业务定义正确结果。
+  3. 保留项目本身的内容证据、真实产品/法律审核、询盘持久化、部署与对外动作门槛；不因简化流程而放宽产品或上线安全边界。
+  4. `DOCUMENTATION.md` 是文档地图，`CLAUDE.md` 是 Claude Code 目录与流程入口；项目事实继续写入 `PROJECT.md`、`STATUS.md`、`ARCHITECTURE.md`、`DESIGN.md`、`PAGE-SPECS/` 和本决策日志，不复制第二份正本。
+  5. 用户提供的外部流程原件归档在 `resources/references/ai-development-workflow/`，仅作参考；适配后的操作流程以 `SKILLS/fenghuai-engineering-workflow/SKILL.md` 为准。
+- 理由：模型与工具能力会变化，固定执行完整流程会增加重复文档、等待和审查负担。按风险选择方法能保留必要证据与人工责任，同时让简单改动保持直接。
+- 相关：`AGENTS.md`、`CLAUDE.md`、`DOCUMENTATION.md`、`DESIGN.md`、`SKILLS/fenghuai-engineering-workflow/SKILL.md`。

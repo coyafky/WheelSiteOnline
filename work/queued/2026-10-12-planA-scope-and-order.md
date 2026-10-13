@@ -1,9 +1,9 @@
 # 方案甲 · 定稿：实测修正后的范围与顺序
 
-- **状态**：待用户确认（**仍未动任何代码**）
+- **状态**：待用户确认范围，尚未实施；进入队列等待决定
 - **日期**：2026-10-12
 - **用户已拍板**：**方案甲（把本地区块搬进 WordPress）**
-- **前置**：`work/active/2026-10-12-content-ownership-then-locale-plan.md`（归属决策）
+- **前置**：`archive/superseded-work-plans/2026-10-12-content-ownership-then-locale-plan.md`（归属调研；本计划已更新其执行范围）
 
 ---
 

@@ -1,121 +1,42 @@
-# SKILLS — 独立站开发技能库
+# 项目 Skills 使用地图
 
-本目录存放本项目专属的开发技能。**与全局技能库（`~/.config/alma/skills/`）
-是两回事** —— 这里是项目资产，随仓库走。
+`SKILLS/` 是随仓库维护的本地技能库。按 [项目工程工作流](fenghuai-engineering-workflow/SKILL.md) 选择当前步骤需要的技能；**不默认加载所有技能**，一个步骤通常选一个主技能，专门工具只在对应工作发生时加载。
 
-- 建立日期：2026-10-01
-- 来源：从兄弟项目 `深圳公司的独立站搭建`（`ChatGPT/深圳公司的独立站搭建/.agents/skills/`）迁移
-- 规模：**21 个技能**（全部含 `SKILL.md`）｜ 3.2 MB
-- 来源记录：`skills-lock.json`（含每个技能的来源与 computedHash）
+## 按工作流步骤选择
 
-> ⚠️ **这些是复制，不是软链。** 两个项目各自演进，
-> **不要假定与兄弟项目同步**。需要更新时显式对比。
-
----
-
-## 1. 五个分组
-
-### 1.1 设计品味
-
-决定视觉方向与「像不像高端站」。
-
-| 技能 | 用途 |
-|---|---|
-| `design-taste-frontend` | 前端设计品味主技能（v2） |
-| `design-taste-frontend-v1` | 上一版，保留对照 |
-| `gpt-taste` | 模型侧的品味校准 |
-| `stitch-design-taste` | Google Stitch 风格 |
-| `high-end-visual-design` | 高端视觉设计 |
-| `minimalist-ui` | 极简方向 |
-| `industrial-brutalist-ui` | 工业粗野方向 |
-
-> **本项目相关**：我们的基调是「石墨/钢灰 + 炉火琥珀」的工业质感。
-> `high-end-visual-design` 与 `industrial-brutalist-ui` 最贴近，
-> `minimalist-ui` 可作对照。
-
-### 1.2 图像与还原
-
-| 技能 | 用途 |
-|---|---|
-| `image-to-code` | 设计稿 → 代码 |
-| `imagegen-frontend-web` | Web 界面配图生成 |
-| `imagegen-frontend-mobile` | 移动端界面配图 |
-| `impeccable` | 视觉精修（56 文件，最大的一个） |
-
-> **本项目相关**：2757 张轮毂图是**真实产品照**，不是生成图。
-> 这组技能用于**站点营销位**（首页 hero、工艺场景、能力配图），
-> **不得用于生成轮毂产品图** —— 那会与真实型号数据对不上。
-
-### 1.3 改造与迁移 ★ 本项目当前主力
-
-| 技能 | 用途 |
-|---|---|
-| `redesign-existing-projects` | **改造既有项目** ← 去竞品化的主力 |
-| `migrate-radix-to-base` | Radix → Base UI 迁移 |
-| `shadcn` | shadcn/ui 组件 |
-| `brandkit` | 品牌套件 |
-
-> **本项目相关**：前端的核心工作是「把克隆自竞品 2nforged 的 UI 改造为丰怀的」。
-> `redesign-existing-projects` 正是为此而装（见 `DEC-010`）。
-> 另注意本仓库依赖里已经有 `@base-ui/react` —— `migrate-radix-to-base` 可能相关。
-
-### 1.4 质量与安全
-
-| 技能 | 用途 |
-|---|---|
-| `open-code-review` | 代码评审（默认模型已规范） |
-| `open-code-review-delegate` | 评审委派 |
-| `security-audit` | 安全审计 |
-| `full-output-enforcement` | 强制完整输出（防空转） |
-
-### 1.5 市场研究
-
-| 技能 | 用途 |
-|---|---|
-| `seo-market-research` | SEO 与市场情报 |
-
-### 1.6 工程流程
-
-| 技能 | 用途 |
-|---|---|
-| `fenghuai-engineering-workflow` | 规格 → 纵向 Issue → TDD/诊断 → 双轴评审 → 中文项目收尾 |
-
-该技能适配自 `mattpocock/skills@v1.3.1`。它不是上游英文文件的直接副本，而是与本项目
-`PAGE-SPECS/`、`work/`、`STATUS.md`、`DECISIONS.md` 和发布门槛整合后的中文正本。
-上游固定版本见技能内 `UPSTREAM.md`，有意偏离见 `.local-patch.md`。
-
----
-
-## 2. 使用纪律
-
-1. **不要绕过技能自造流程。** 技能里是验证过的命令与参数，
-   自己发明一套通常更慢且更糟。
-2. **`open-code-review` 的默认模型已规范为 `group/auto-deepseek-v4-flash`**
-   —— 见技能内 `LOCAL-CONFIG.md`。别手动改成会撞套餐限额的直连模型。
-3. **`security-audit` 需要 OS 级沙箱**（断网/干净 env/只读/限额）。
-   本机若无 Docker/podman/lima，只能跑只读部分，**结论会降级为
-   `needs_validation`** —— 这种降级必须如实标注，不得当成通过。
-4. **技能是复制来的**，不带兄弟项目的 `.local-patch.md` 之外的本地改动历史。
-   若要修改技能，**新建 `.local-patch.md` 记录偏离上游的内容与理由**。
-
----
-
-## 3. 与全局技能的区别
-
-| | `SKILLS/`（本目录） | `~/.config/alma/skills/` |
+| 工作流步骤 | 主技能 / 可选技能 | 什么时候用 |
 |---|---|---|
-| 归属 | 本项目资产 | 跨项目通用 |
-| 随仓库走 | ✅ | ❌ |
-| 装载方式 | agent 显式读取 | Alma 自动注入 |
-| 数量 | 19 | 100+ |
+| 0. 任务分流与收尾 | [`fenghuai-engineering-workflow`](fenghuai-engineering-workflow/SKILL.md) | 工程工作时参考。它负责选择流程，不替代项目规则，也不要求小改动写规格 |
+| 1. 需求理解与方案 | [`redesign-existing-projects`](redesign-existing-projects/SKILL.md)、[`seo-market-research`](seo-market-research/SKILL.md) | 仅在重做现有业务/架构，或需要 SEO 市场证据时使用 |
+| 2. 视觉方案 | [`design-taste-frontend`](design-taste-frontend/SKILL.md)、[`brandkit`](brandkit/SKILL.md)、[`impeccable`](impeccable/SKILL.md) | 有明确界面/品牌任务时选用；品牌套件只用于品牌工作，常规页面不必先生成整套视觉系统 |
+| 3. 设计到实现 | [`image-to-code`](image-to-code/SKILL.md)、[`shadcn`](shadcn/SKILL.md)、[`migrate-radix-to-base`](migrate-radix-to-base/SKILL.md) | 还原已提供设计、使用对应 UI 原语或执行明确组件迁移时用；技能对生成图像的要求不能覆盖用户给定素材与项目图权门槛 |
+| 3a. 新视觉资产 | [`imagegen-frontend-web`](imagegen-frontend-web/SKILL.md)、[`imagegen-frontend-mobile`](imagegen-frontend-mobile/SKILL.md) | 仅在任务明确需要新的网页视觉参考或移动端概念稿时使用；生成图不得伪装成真实产品、工厂、认证或测试证据 |
+| 4. 自测与风险验证 | [`security-audit`](security-audit/SKILL.md) | 安全问题做聚焦检查；只有用户明确要求完整安全审计、渗透测试或报告时才跑完整审计流程 |
+| 5. 独立审查 | [`open-code-review`](open-code-review/SKILL.md)、[`open-code-review-delegate`](open-code-review-delegate/SKILL.md) | 中高风险、跨模块或准备交付的代码改动；选择一种审查路径，不对每个小改动强制委派 |
+| 6. 交付完整性 | [`full-output-enforcement`](full-output-enforcement/SKILL.md) | 用户要求完整、无截断的大型输出时；一般代码任务不加载 |
 
-**放哪的判断**：只服务本项目的 → `SKILLS/`；任何项目都能用的 → 全局。
+## 视觉参考（不是并行强制流程）
 
----
+以下技能提供不同设计视角，按实际方向选一个参考，不同时套用：
 
-## 4. 变更记录
+- [`impeccable`](impeccable/SKILL.md)：界面文案和视觉精修。
+- [`gpt-taste`](gpt-taste/SKILL.md)：视觉品味评估。
+- [`stitch-design-taste`](stitch-design-taste/SKILL.md)：Stitch 设计产出协作。
+- [`high-end-visual-design`](high-end-visual-design/SKILL.md)：高端视觉方向。
+- [`minimalist-ui`](minimalist-ui/SKILL.md)：极简方向。
+- [`industrial-brutalist-ui`](industrial-brutalist-ui/SKILL.md)：工业粗粝方向。
+- `design-taste-frontend-v1`：旧版存档，仅在比较迁移差异时读取；默认使用当前 `design-taste-frontend`。
 
-| 日期 | 变更 |
-|---|---|
-| 2026-10-08 | 新增 `fenghuai-engineering-workflow`：归并 Matt Pocock 的规格、纵向 Issue、TDD、诊断、双轴评审与复盘方法；保持中文记录和现有任务体系；同时补齐此前漏记的 `impeccable`、`seo-market-research` 来源锁 |
-| 2026-10-01 | 从兄弟项目迁移 19 个技能 + `skills-lock.json`，建立本 README |
+当前站点的实际视觉正本在 [`DESIGN.md`](../DESIGN.md)，不是以上技能中的通用审美描述。当前为 Astryx Neutral 暖白主题。
+
+## 使用纪律
+
+1. 先读工作流分流结果，再加载当前步骤直接相关的技能；不要把技能数量当作质量指标。
+2. 技能是操作参考，项目 `AGENTS.md`、事实正本、页面 SPEC 和用户要求优先。
+3. 技能建议与项目现状不符时，不执行冲突步骤；只吸收满足用户目标的部分。
+4. 本地技能复制自其他项目/上游不代表自动同步。来源、锁定版本及本地补丁分别见 `skills-lock.json` 与各技能的 `UPSTREAM.md` / `.local-patch.md`（如存在）。
+5. 新增技能前先确认同一步骤没有现成技能；可复用能力稳定重复多次后再沉淀，单次提示词不放进技能库。
+
+## 来源
+
+技能由不同来源逐步迁入。旧 README 中的目录数量、项目视觉方向、模型配置和兄弟项目同步说明已不再作为当前事实；逐项以目录和技能内来源文件为准。

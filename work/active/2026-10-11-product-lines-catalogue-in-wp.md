@@ -2,7 +2,7 @@
 
 - **状态**：进行中
 - **日期**：2026-10-11
-- **前置**：`work/active/2026-10-11-i18n-page-body-classification.md`（盘点结论：`/products` 是唯一混合页）
+- **前置**：`work/completed/2026-10-11-i18n-page-body-classification.md`（历史盘点结论；执行前需按当前代码复核）
 
 ## 问题
 

@@ -3,7 +3,7 @@
 - 日期：2026-10-12
 - 状态：实施中；轮毂详情与询盘 UI 切片已改，整站四语验收未通过
 - 目标：`en`、`zh`、`es`、`th` 的每个已发布页面，其可见和辅助技术可读文字均来自明确的语言正本；未完成页面不得冒充完整译文
-- 与现有任务关系：`work/active/2026-10-12-planA-scope-and-order.md` 负责正文归 WordPress；`work/queued/2026-10-10-multilingual-page-body-migration.md` 负责逐页翻译/SEO。本文件补齐二者未覆盖的**组件、错误、媒体和全站验收**，不另建重复的迁移任务。
+- 与现有任务关系：`work/queued/2026-10-12-planA-scope-and-order.md` 负责正文归 WordPress（等待用户确认范围）；`work/queued/2026-10-10-multilingual-page-body-migration.md` 负责逐页翻译/SEO。本文件补齐二者未覆盖的**组件、错误、媒体和全站验收**，不另建重复的迁移任务。
 
 ## 1. 一种语言路由，三类文字正本
 

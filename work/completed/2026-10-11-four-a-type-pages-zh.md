@@ -2,7 +2,7 @@
 
 - **状态**：已完成
 - **日期**：2026-10-11
-- **前置**：`work/active/2026-10-11-i18n-page-body-classification.md`（分类结论：这 4 页是纯 WP 页）
+- **前置**：`work/completed/2026-10-11-i18n-page-body-classification.md`（历史分类结论）
 
 ## 目标
 

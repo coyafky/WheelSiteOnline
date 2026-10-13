@@ -60,12 +60,6 @@ B/C 使用同一产品库与询盘系统，以客户类型区分。个人客户�
 7. 隐私与交易相关政策经实际业务审核；授权与专业审核事项完成。
 8. 备份还原与代码回滚经过第二人演练，销售/编辑接手操作，费用有报警与负责人。
 
-## 计划入口
+## 当前执行入口
 
-- `outputs/site-launch-plan/README.md`：范围、排期、预算、部署与运维。
-- `outputs/site-launch-plan/02-data-and-inquiry-design.md`：内容模型与询盘数据库。
-- `outputs/site-launch-plan/03-content-and-assets.md`：PPT 页码与素材分配。
-- `outputs/site-launch-plan/04-task-cards.md`：T00–T23 开发任务和模型执行模板。
-- `PAGE-SPECS/2026-10-04-launch-viewport-spec.md`：逐页面、逐视口施工正本。
-- `resources/research/2026-10-04-site-plan/README.md`：原始资料与技术核验记录。
-- `STATUS.md`、`ARCHITECTURE.md`、`DECISIONS.md`：当前进度、结构与决定。
+当前状态、阻断和下一步只维护在 [`STATUS.md`](STATUS.md)；项目文档位置见 [`DOCUMENTATION.md`](DOCUMENTATION.md)。2026-10-04 的首发计划、任务卡和早期页面基线保留在 `outputs/site-launch-plan/` 与 `PAGE-SPECS/` 供追溯，若与当前状态或现行页面 SPEC 不同，不作为实时执行清单。
