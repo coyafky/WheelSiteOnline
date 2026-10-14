@@ -50,7 +50,13 @@ test("已批准正文翻译返回 translated", () => {
 });
 
 test("未完成中文正文没有索引资格", () => {
-  assert.equal(resolveLocalized({ en: "English copy" }, "zh").status, "unavailable");
+  assert.equal(
+    resolveLocalized(
+      { en: { value: "English copy", approved: true } },
+      "zh",
+    ).status,
+    "unavailable",
+  );
   assert.equal(
     resolveLocalized(
       { zh: { value: "中文正文", approved: true } },
