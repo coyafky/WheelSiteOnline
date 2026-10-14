@@ -1,5 +1,16 @@
 # 轮毂目录、详情、旋压与 sitemap 统一改造
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#3](https://github.com/coyafky/WheelSiteOnline/issues/3)
+- **Delivery Batch**：轮毂公开集合批次，按目录/详情/旋压/sitemap 拆分
+- **依赖**：公开资格、重复型号处理和架构决定
+- **S.U.P.E.R 关注**：Single Purpose（统一公开集合）；Unidirectional Flow（事实→批准集合→页面/询盘/sitemap）；Replaceable Parts（静态快照与 WordPress 适配器）
+- **验证命令**：`npm run lint`、`npm run typecheck`、`npm run build`、路由/页面验收、`git diff --check`
+- **漂移规则**：公开资格或规格契约变化时 drift ≥ 3，回 Phase 2
+
 - 状态：待执行
 - 创建日期：2026-10-06
 - 来源：当前实现状态审计

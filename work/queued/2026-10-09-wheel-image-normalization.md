@@ -1,5 +1,16 @@
 # 轮毂目录图片规范化与重制
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#8](https://github.com/coyafky/WheelSiteOnline/issues/8)
+- **Delivery Batch**：图片衍生与人工复核批次
+- **依赖**：首发型号集合、图权、人工复核和公开媒体接缝
+- **S.U.P.E.R 关注**：Single Purpose（只处理衍生图）；Environment-Agnostic（保留可复现处理记录）；Replaceable Parts（原始 assets 只读，衍生层可替换）
+- **验证命令**：断图、LCP、移动裁切、视觉回归、来源映射检查、`git diff --check`
+- **漂移规则**：任何生成式改图或产品事实变化立即停止并进入 Deep Discuss
+
 ## 背景
 
 目录 UI 已改为白底无框陈列，但现有批准图片来自不同拍摄环境：背景颜色、轮毂占比、

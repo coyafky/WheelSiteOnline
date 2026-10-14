@@ -252,20 +252,36 @@ IntersectionObserver。** 两个效果都必须保持挂在 JS 添加的 `motion
 5. `STATUS.md` 反映新状态。
 6. 若做了决定，已记入 `DECISIONS.md`。
 
-## 10. 工程工作流技能
+## 10. Spec-Driven Develop 与工程工作流
 
-新功能、缺陷修复、重构、规格整理、Issue 拆分、代码评审和 session 复盘，使用项目
-技能 `SKILLS/fenghuai-engineering-workflow/SKILL.md`。可发现入口在
-`.agents/skills/fenghuai-engineering-workflow/`。
+非简单任务先使用项目级 Spec-Driven Develop 正本
+`SKILLS/spec-driven-development/SKILL.md`，发现入口为
+`.agents/skills/spec-driven-development/`。需求不明确时使用
+`SKILLS/deep-discuss/SKILL.md`；用户要求审查时使用
+`SKILLS/review-spd/SKILL.md`。`SKILLS/fenghuai-engineering-workflow/SKILL.md`
+是项目适配层，负责 TDD、诊断、页面/内容/安全门禁，不与 Spec-Driven Develop 竞争。
 
-该技能引入 Matt Pocock 的规格、纵向切片、TDD、证据化诊断、双轴评审与复盘方法，
-但以下本项目原则永远优先：
+所有 agent 必须遵循：
+
+1. Phase 0–2 先捕获意图、分析事实与风险、完成用户确认；
+2. Phase 3 生成规格、任务树、依赖、S.U.P.E.R、Delivery Batch 和 GitHub Full 映射；
+3. Phase 4 将当前状态写入 `docs/progress/MASTER.md`；
+4. Phase 5 只有用户明确确认后执行，按互不相交文件集的 worktree 泳道推进，最多 4 条；
+5. Phase 6 归档规格、遥测、Review SPD、验证证据和未决项。
+
+当前项目模式固定为 `GITHUB_FULL`：Issue 是任务事实，Milestone 是阶段聚合，Project 是跨阶段看板，
+Delivery Batch/批次 PR 是集成边界；本地现行任务与 Issue 必须双向链接。历史
+`work/completed/` 和 `archive/` 不补造 Issue/PR、不重写结论。Project、worktree、PR 自动关联
+等未实测能力必须标 WARN，不得伪造完成。
+
+以下原则永远优先：
 
 - 所有项目记录用中文；
 - Issue 生命周期仍走 `work/queued → work/active → work/completed`；
-- 页面规格、架构、决定与状态继续放在本文件规定的位置；
-- 不得因为通用技能的默认动作而自动 commit、push、deploy 或创建外部 Issue；
-- 项目完成门禁、内容接缝、证据纪律和发布门槛不得被通用流程放宽。
+- 页面规格、架构、决定、状态与跨 session 索引放在规定位置；
+- 只在本次授权范围内创建 GitHub 资源，创建前先核对目标、权限和重复项；
+- 不自动 commit、push、deploy、改 DNS、真实发信、付费或创建批次 PR；
+- 项目完成门禁、内容接缝、证据纪律、无图不上架和发布门槛不得被通用流程放宽。
 
 ---
 

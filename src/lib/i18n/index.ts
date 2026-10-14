@@ -35,14 +35,14 @@ export async function getTranslator(): Promise<{
   const dict = DICTIONARIES[locale];
   return {
     locale,
-    t: (key: string) => translate(dict, DICTIONARIES[DEFAULT_LOCALE], key),
+    t: (key: string) => translate(dict, key),
   };
 }
 
 /** Synchronous lookup for a known locale — for client components. */
 export function translatorFor(locale: Locale) {
   const dict = DICTIONARIES[locale];
-  return (key: string) => translate(dict, DICTIONARIES[DEFAULT_LOCALE], key);
+  return (key: string) => translate(dict, key);
 }
 
 export { DICTIONARIES };

@@ -1,5 +1,5 @@
 import { DICTIONARIES } from "./dictionaries";
-import { DEFAULT_LOCALE, translate, type Locale } from "./types";
+import { translate, type Locale } from "./types";
 
 /**
  * Client-safe translation helper.
@@ -12,7 +12,7 @@ import { DEFAULT_LOCALE, translate, type Locale } from "./types";
 /** Returns a bound translator for a locale known at render time. */
 export function createT(locale: Locale) {
   const dict = DICTIONARIES[locale];
-  return (key: string) => translate(dict, DICTIONARIES[DEFAULT_LOCALE], key);
+  return (key: string) => translate(dict, key);
 }
 
 export type { Locale };

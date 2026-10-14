@@ -1,13 +1,13 @@
-import type { Dictionary } from "../types";
-
 /**
  * 中文字典 —— 与 `en.ts` 键集必须完全一致。
  *
- * ⚠️ 缺键会静默回退到英文，运行时看不出问题 → 新增键必须两边同时加。
+ * ⚠️ 缺键不能静默回退到英文；类型合同和覆盖测试会在验收前暴露问题。
  * 语料依据：`assets/site-data/峰徊科技独立站-中英内容语料库.md`（峰徊画册中英对照）。
  */
 
-export const zh: Dictionary = {
+import type { en } from "./en.ts";
+
+export const zh = {
   // ── 导航 ───────────────────────────────────────────────────────────────
   "nav.products": "产品中心",
   "nav.products.allWheels": "全部轮毂",
@@ -62,4 +62,4 @@ export const zh: Dictionary = {
 "footer.enquiries.offsetCalculator": "偏距计算器",
 "footer.group.support": "支持",
   "footer.group.enquiries": "业务咨询",
-};
+} satisfies Record<keyof typeof en, string>;

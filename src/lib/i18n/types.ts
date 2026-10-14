@@ -46,11 +46,38 @@ export function localizedPath(pathname: string, locale: Locale): string {
  */
 export type Dictionary = Record<string, string>;
 
-/** Look up a key, falling back to the default locale, then to the key itself. */
-export function translate(
-  dict: Dictionary,
-  fallback: Dictionary,
-  key: string,
-): string {
-  return dict[key] ?? fallback[key] ?? key;
+/** A page/body translation must be explicitly approved before it is renderable. */
+export type LocalizedValue = {
+  value: string;
+  approved: boolean;
+};
+
+export type LocalizedContent = Partial<Record<Locale, LocalizedValue>>;
+
+export type LocalizedResolution =
+  | {
+      status: "translated";
+      locale: Locale;
+      value: string;
+    }
+  | {
+      status: "unavailable";
+      locale: Locale;
+    };
+
+/** Look up a UI key without falling back to another language. */
+export function translate(dict: Dictionary, key: string): string {
+  return dict[key] ?? key;
+}
+
+/** Resolve approved body copy; missing or unapproved translations stay unavailable. */
+export function resolveLocalized(
+  content: LocalizedContent,
+  locale: Locale,
+): LocalizedResolution {
+  const candidate = content[locale];
+  if (candidate?.approved === true) {
+    return { status: "translated", locale, value: candidate.value };
+  }
+  return { status: "unavailable", locale };
 }

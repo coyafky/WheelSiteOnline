@@ -1,5 +1,16 @@
 # Issue：支持一次询盘提交多款轮毂
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#7](https://github.com/coyafky/WheelSiteOnline/issues/7)
+- **Delivery Batch**：多产品询盘批次
+- **依赖**：单产品询盘契约、公开集合和 WordPress 快照模型
+- **S.U.P.E.R 关注**：Single Purpose（询盘清单而非购物车）；Ports over Implementation（客户端清单与服务端逐项解析分离）；Replaceable Parts（邮件/后台展示消费同一快照）
+- **验证命令**：`npm run lint`、`npm run typecheck`、`npm test`、`npm run build`、浏览器 E2E 与邮件失败路径
+- **漂移规则**：若引入价格、支付、账户或订单，立即停止并进入 Deep Discuss
+
 状态：已排队，尚未开始
 优先级：P1（不阻塞当前单产品询盘链路）
 来源：2026-10-09 询盘多产品核验

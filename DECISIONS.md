@@ -1227,6 +1227,20 @@
 - 相关：`deploy/wordpress/`、`work/completed/2026-10-09-headless-wordpress-remote-deployment.md`、
   DEC-009、DEC-028、DEC-060、DEC-069。
 
+## DEC-072 · 采用 Spec-Driven Develop Phase 0–6 与 GITHUB_FULL 治理
+
+- 日期：2026-10-15
+- 状态：已决定，资源创建与演练待完成
+- 背景：现有项目技能已覆盖规格、纵向切片、TDD、双轴评审和复盘，但缺少统一的 Phase 0–6、S.U.P.E.R、跨 session MASTER、Delivery Batch、Deep Discuss 和 Review SPD 入口。
+- 决定：
+  1. `SKILLS/spec-driven-development/SKILL.md` 是项目级流程正本；`SKILLS/fenghuai-engineering-workflow/` 保留为项目适配层，不维护竞争流程。
+  2. 当前模式固定为 `GITHUB_FULL`：Issue 是任务事实，Milestone 是阶段聚合，Project 是跨阶段看板，Delivery Batch/批次 PR 是集成边界，`work/` 保存中文规格与证据。
+  3. `docs/progress/MASTER.md` 是跨 session 索引；现行本地任务与 GitHub Issue 双向链接，历史 completed/archive 不补造资源、不重写结论。
+  4. Phase 5 只有用户明确确认后执行；外部资源创建限于本次流程治理范围；不自动 commit、push、deploy、改 DNS、真实发信或创建批次 PR。
+  5. drift score 达到 2 重新分解，达到 3 回 Phase 2，达到 4–5 停止并进入 Deep Discuss。
+- 理由：将已有工程纪律统一到一条可追溯链路，避免本地任务、GitHub 和 agent 入口形成互相竞争的状态；保留项目既有 No-Go、证据和安全边界。
+- 相关：`SKILLS/spec-driven-development/`、`SKILLS/deep-discuss/`、`SKILLS/review-spd/`、`docs/progress/MASTER.md`、`CLAUDE.md`、`AGENTS.md`。
+
 ## DEC-071 · 119.91.205.130:9080 仅作为询盘端到端联调前端
 
 - 日期：2026-10-09
