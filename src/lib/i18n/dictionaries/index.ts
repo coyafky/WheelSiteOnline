@@ -1,6 +1,6 @@
-import { en } from "./en";
-import { zh } from "./zh";
+import { en } from "./en.ts";
+import { zh } from "./zh.ts";
 import type { Dictionary, Locale } from "../types";
 
 /** Locale → dictionary. Importable from both server and client. */
-export const DICTIONARIES: Record<Locale, Dictionary> = { en, zh };
+export const DICTIONARIES = { en, zh } satisfies Record<Locale, Dictionary>;

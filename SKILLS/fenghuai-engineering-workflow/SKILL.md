@@ -8,9 +8,12 @@ metadata:
 
 # 丰怀工程工作流
 
-本技能是 `mattpocock/skills` 工程方法在本项目中的中文适配层。核心原则保持一致：
-先对齐问题，再以可验证的纵向切片推进；先建立反馈回路，再判断原因；实现与评审
-分开；所有结论都要有证据。
+本技能是项目约束与工程方法适配层；跨 session 的流程正本是
+`SKILLS/spec-driven-development/SKILL.md`。需求不明确使用 `SKILLS/deep-discuss/SKILL.md`，
+评审使用 `SKILLS/review-spd/SKILL.md`。本技能不另定义 Phase、Issue 正本或外部追踪规则。
+
+核心原则保持一致：先对齐问题，再以可验证的纵向切片推进；先建立反馈回路，再判断原因；
+实现与评审分开；所有结论都要有证据。
 
 ## 1. 不可覆盖的项目约束
 
@@ -18,8 +21,9 @@ metadata:
 2. `AGENTS.md`、更近目录的 `AGENTS.md` 和用户当前要求优先于本技能。
 3. 未经明确授权，不得 commit、push、deploy、修改 DNS、真实群发、付费或执行其他
    不可逆/对外动作。
-4. Issue 正本仍是 `work/queued/`、`work/active/`、`work/completed/`。除非用户明确
-   要求，不另建 GitHub Issue 或 `.scratch/`，避免两套状态漂移。
+4. 当前流程模式固定为 `GITHUB_FULL`，Issue 与本地 `work/` 双向映射；Milestone、Project、
+   Delivery Batch 和批次 PR 的职责以 Spec-Driven 正本为准。历史任务不补造外部资源；权限
+   不足时记录 WARN，不伪造编号或字段。
 5. 页面规格进入 `PAGE-SPECS/`；系统形状进入 `ARCHITECTURE.md`；架构决定进入
    `docs/adr/`；流程决定进入 `DECISIONS.md`；当前事实进入 `STATUS.md`。
 6. 保持内容接缝、无图不上架、未确认不上架、OpenNext、不发布竞品内容等项目硬约束。

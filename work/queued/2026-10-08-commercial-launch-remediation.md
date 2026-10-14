@@ -1,5 +1,16 @@
 # 商用上线整改与验收
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#4](https://github.com/coyafky/WheelSiteOnline/issues/4)
+- **Delivery Batch**：商用放行批次；按事实冻结、询盘、内容 SEO、预发布恢复拆分
+- **依赖**：业务/工程/销售/法务联合批准与生产平台决定
+- **S.U.P.E.R 关注**：Environment-Agnostic（本地/预发布/生产证据分层）；Replaceable Parts（平台、邮件、存储适配器）；No-Go 门槛不可放宽
+- **验证命令**：按各阶段验收执行；至少 `npm run check`、依赖审计、API、关键视口和恢复/回滚演练
+- **漂移规则**：任何生产授权、公开索引或法律边界变化立即回 Phase 2/Deep Discuss
+
 状态：queued
 建立日期：2026-10-08
 来源：2026-10-08 商用完整核验

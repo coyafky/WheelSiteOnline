@@ -1,5 +1,16 @@
 # 开发依赖高危公告核验与升级
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#6](https://github.com/coyafky/WheelSiteOnline/issues/6)
+- **Delivery Batch**：依赖安全批次
+- **依赖**：上游兼容版本、lockfile 变更和完整回归环境
+- **S.U.P.E.R 关注**：Replaceable Parts（避免不必要的直接依赖升级）；Environment-Agnostic（生产依赖与开发依赖分层）
+- **验证命令**：`npm audit --audit-level=high`、`npm run lint`、`npm run typecheck`、`npm test`、Playwright、`npm run build`
+- **漂移规则**：需要 `--force`、改变生产依赖或无法证明兼容时回 Phase 2
+
 - **状态**：排队中
 - **日期**：2026-10-09
 - **来源**：远端部署收尾时执行完整 `npm audit`

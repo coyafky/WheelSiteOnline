@@ -1,5 +1,16 @@
 # 四线询盘页与生产持久化
 
+## Spec-Driven 元数据
+
+- **Phase**：3
+- **Milestone**：待创建/映射
+- **GitHub Issue**：[#2](https://github.com/coyafky/WheelSiteOnline/issues/2)
+- **Delivery Batch**：询盘闭环批次，待拆分
+- **依赖**：正式隐私文本、销售邮箱/电话、WordPress 生产边界
+- **S.U.P.E.R 关注**：Ports over Implementation（表单与存储/邮件适配器解耦）；Unidirectional Flow（客户端体验→服务端真相→持久化→邮件事件）
+- **验证命令**：`npm test`、`npm run lint`、`npm run typecheck`、`npm run build`、API 集成与故障路径检查
+- **漂移规则**：契约、权限或隐私边界变化时回 Phase 2
+
 - 状态：待执行
 - 创建日期：2026-10-06
 - 来源：当前实现状态审计

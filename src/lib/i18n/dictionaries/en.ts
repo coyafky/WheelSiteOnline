@@ -1,18 +1,16 @@
-import type { Dictionary } from "../types";
-
 /**
  * English dictionary — the source of truth.
  *
  * ⚠️ Rules:
- *   1. Every key here must also exist in `zh.ts`. A missing key falls back to
- *      English, so a gap is invisible at runtime — never leave one.
+ *   1. Every key here must also exist in `zh.ts`. The TypeScript contract and
+ *      coverage tests make missing keys visible before a build is accepted.
  *   2. Keys are dot-namespaced by UI region: `nav.*`, `footer.*`, `cta.*`,
  *      `common.*`. Do not invent new namespaces without updating both files.
  *   3. This file holds CHROME text only. Page body copy lives in
  *      `src/content/*` — do not migrate page content here.
  */
 
-export const en: Dictionary = {
+export const en = {
   // ── Navigation ─────────────────────────────────────────────────────────
   "nav.products": "Products",
   "nav.products.allWheels": "All Wheels",
