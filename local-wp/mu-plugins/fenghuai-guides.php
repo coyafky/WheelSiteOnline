@@ -12,6 +12,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Shape version of an insights record. Bump when an existing field changes
+ * meaning, not when adding one older records may legitimately lack.
+ */
+const FH_GUIDE_SCHEMA_VERSION = 1;
 const FH_GUIDE_POST_TYPE = 'fh_guide';
 const FH_GUIDE_OPTION_AUTHORITATIVE = 'fh_guides_authoritative';
 /** 迁移期保留 fh_guide；权威接管后改读 WordPress 原生 post。 */
@@ -44,6 +49,15 @@ function fh_guide_fields(): array
         'sections_json' => ['label' => '正文分段 JSON', 'type' => 'string'],
         'seo_title' => ['label' => 'SEO 标题', 'type' => 'string'],
         'seo_description' => ['label' => 'SEO 描述', 'type' => 'string'],
+        /*
+         * Shape version of one insights record.
+         *
+         * Pages and wheels carry one; insights did not, so a record written by
+         * an older importer was indistinguishable from a current one. Readers
+         * can now reject a shape they do not understand instead of misreading
+         * it. Stored as a string like the rest of this table, compared as int.
+         */
+        'schema_version' => ['label' => '记录结构版本', 'type' => 'string'],
         'translations_json' => ['label' => '多语言正文 JSON', 'type' => 'string'],
         'translation_status_json' => ['label' => '多语言发布状态 JSON', 'type' => 'string'],
     ];
@@ -241,6 +255,16 @@ function fh_guide_register_rest_routes(): void
                     'type' => 'string',
                     'sanitize_callback' => 'sanitize_title',
                 ],
+                'page' => [
+                    'type' => 'integer',
+                    'default' => 1,
+                    'sanitize_callback' => 'absint',
+                ],
+                'per_page' => [
+                    'type' => 'integer',
+                    'default' => 100,
+                    'sanitize_callback' => 'absint',
+                ],
             ],
         ],
     ]);
@@ -256,20 +280,46 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
     // One resolver decides the source; see fh_guide_authoritative_source().
     $authoritative = fh_guide_authoritative_source();
     $useNative = $authoritative['source'] !== 'legacy';
+
+    /*
+     * Pagination.
+     *
+     * `posts_per_page => 100` with `no_found_rows => true` was a silent ceiling:
+     * article 101 simply never reached the frontend, and the response carried no
+     * total, so nothing could tell a complete list from a truncated one.
+     *
+     * `per_page` is now a request parameter (1–100, default 100 so existing
+     * callers see the same first page), `page` pages through the result, and the
+     * response reports `total`/`total_pages` so a caller can detect truncation
+     * instead of assuming completeness.
+     */
+    $perPage = $request->get_param('per_page');
+    $perPage = $perPage === null ? 100 : max(1, min(100, absint($perPage)));
+    $page = max(1, absint($request->get_param('page') ?? 1));
+
     $query = [
         'post_type' => $useNative ? FH_GUIDE_NATIVE_POST_TYPE : FH_GUIDE_POST_TYPE,
         'post_status' => $preview ? ['publish', 'draft', 'pending', 'future', 'private'] : 'publish',
-        'posts_per_page' => 100,
+        'posts_per_page' => $perPage,
+        'paged' => $page,
         'orderby' => ['menu_order' => 'ASC', 'date' => 'DESC'],
-        'no_found_rows' => true,
+        // Needed for total/total_pages. Costs one COUNT; worth it, because
+        // without it a truncated list is indistinguishable from a short one.
+        'no_found_rows' => false,
     ];
     $slug = (string) $request->get_param('slug');
     if ($slug !== '') {
         $query['name'] = $slug;
     }
 
+    // One query for both the page and the totals: `get_posts()` would discard
+    // `found_posts`, forcing a second identical COUNT.
+    $result = new WP_Query($query);
+    $total = (int) $result->found_posts;
+    $totalPages = $perPage > 0 ? (int) ceil($total / $perPage) : 0;
+
     $items = [];
-    foreach (get_posts($query) as $post) {
+    foreach ($result->posts as $post) {
         if (!$preview && !fh_guide_is_public($post->ID)) {
             continue;
         }
@@ -284,12 +334,21 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
         ];
     }
 
+    wp_reset_postdata();
+
     return new WP_REST_Response([
         // false 表示 CMS 迁移尚未接管；Next 必须继续使用已审核的本地内容。
         // 真正的判据是「解析出的来源是否为 native」——legacy 永远不算接管，
         // 否则 Next 会去读一个后台已经无法编辑的来源（死内容）。
         'authoritative' => $authoritative['source'] === 'native',
         'items' => $items,
+        // Pagination envelope. `total` is the full match set, so a caller can
+        // tell a complete list from a truncated one — the old fixed 100 gave no
+        // way to distinguish them.
+        'total' => $total,
+        'total_pages' => $totalPages,
+        'page' => $page,
+        'per_page' => $perPage,
         'source' => $useNative ? 'wordpress-post' : 'legacy-cpt',
     ], 200);
 }

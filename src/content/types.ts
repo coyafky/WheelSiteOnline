@@ -1183,6 +1183,15 @@ export type WheelModel = {
    */
   hasImage: boolean;
   /**
+   * Shape version of this record, written by the WordPress importer.
+   *
+   * Absent means the record predates the field; treated as current, because the
+   * WordPress side defaults new records to the same number. It exists so a
+   * record written by a *newer* importer is refused rather than parsed under the
+   * old assumption — see `hasReadableShape()` in `lib/wheels/publication.ts`.
+   */
+  schema_version?: number;
+  /**
    * 该型号的全部图片路径（webp，相对于 `public/`）。
    * ⚠️ 详情页**只取第一张**展示（DEC-014 单图展示）；
    * 其余图片保留供画廊等场景使用。

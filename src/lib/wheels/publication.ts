@@ -84,9 +84,36 @@ function passesHumanApproval(rec: WheelPublicationRecord): boolean {
   return true;
 }
 
+/**
+ * Highest record shape this build understands.
+ *
+ * Bump only together with the WordPress side (`FH_WHEEL_SCHEMA_VERSION`).
+ */
+const WHEEL_SCHEMA_VERSION = 1;
+
+/**
+ * Is this record a shape we can read?
+ *
+ * A record newer than this build is refused rather than parsed hopefully: a
+ * field that changed meaning would be read under the old assumption, and the
+ * result is a page that renders wrong specs with no error anywhere. Absent means
+ * the record predates the field, which WordPress defaults to the current
+ * version, so it is accepted.
+ */
+function hasReadableShape(fact: WheelModel): boolean {
+  const version = fact.schema_version;
+  if (version === undefined || version === null) return true;
+  return Number(version) <= WHEEL_SCHEMA_VERSION;
+}
+
 /** 机器那一半。 */
 function passesMachineGate(fact: WheelModel): boolean {
-  return fact.hasImage === true && Array.isArray(fact.images) && fact.images.length > 0;
+  return (
+    hasReadableShape(fact) &&
+    fact.hasImage === true &&
+    Array.isArray(fact.images) &&
+    fact.images.length > 0
+  );
 }
 
 /* ============================================================================

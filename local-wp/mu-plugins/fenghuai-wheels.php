@@ -34,6 +34,16 @@ const FH_WHEEL_TAX_PROCESS  = 'wheel_process';
 /** 事实快照字段的前缀：由导入脚本写入，后台只读。 */
 const FH_WHEEL_FACT_PREFIX = 'fact_';
 
+/**
+ * Shape version of a `wheel_model` record.
+ *
+ * Bump when the meaning of an existing field changes (not when adding one that
+ * older records can legitimately lack). Readers compare against this to decide
+ * whether they understand the record; see the meta registration for why.
+ */
+const FH_WHEEL_SCHEMA_VERSION = 1;
+const FH_WHEEL_META_SCHEMA_VERSION = 'fh_schema_version';
+
 /* ============================================================================
  * 字段定义
  * ========================================================================== */
@@ -318,6 +328,28 @@ function fh_wheel_register_meta(): void
         'type'              => 'integer',
         'single'            => true,
         'default'           => 0,
+        'show_in_rest'      => true,
+        'auth_callback'     => $auth,
+        'sanitize_callback' => static fn($v) => absint($v),
+    ]);
+
+    /*
+     * Record shape version.
+     *
+     * The pages domain has carried `fh_page_schema_version` from the start; the
+     * wheels and insights domains did not, so a reader could not tell a record
+     * written by an older importer from a current one. That matters when a field
+     * changes meaning: without a version the only way to know is to inspect the
+     * values and guess.
+     *
+     * Written by the importer alongside the facts it describes, surfaced in REST
+     * so the frontend can reject a shape it does not understand instead of
+     * silently misreading it.
+     */
+    register_post_meta(FH_WHEEL_POST_TYPE, FH_WHEEL_META_SCHEMA_VERSION, [
+        'type'              => 'integer',
+        'single'            => true,
+        'default'           => FH_WHEEL_SCHEMA_VERSION,
         'show_in_rest'      => true,
         'auth_callback'     => $auth,
         'sanitize_callback' => static fn($v) => absint($v),

@@ -29,6 +29,20 @@ RUN npm run build
 
 FROM node:24-bookworm-slim AS runtime
 
+# OCI standard labels — how "which commit is live?" gets answered.
+#
+# The tag alone is not enough: tags are mutable (someone can retag, or two
+# deploys can share the fallback `dev`). The revision label is baked into the
+# image at build time and survives any retagging, so
+# `docker image inspect` is authoritative.
+#
+# Passed as build args because the build has no access to the git history.
+ARG IMAGE_REVISION=""
+ARG IMAGE_TAG=""
+LABEL org.opencontainers.image.revision="${IMAGE_REVISION}" \
+      org.opencontainers.image.version="${IMAGE_TAG}" \
+      org.opencontainers.image.title="fenghuai-frontend"
+
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \

@@ -2,11 +2,24 @@ name: fenghuai-frontend
 
 services:
   frontend:
-    image: fenghuai-frontend-9080:2026-10-09
+    # Tag = the commit that produced this image.
+    #
+    # It used to be a hard-coded build date (`:2026-10-09`), which told you when
+    # someone last edited the file — not what was running. Two deploys on the
+    # same day were indistinguishable, and no image could be traced back to a
+    # commit. `deploy/frontend/tag.sh` renders this from git and also stamps
+    # `org.opencontainers.image.revision`, so `docker image inspect` answers
+    # "which commit is live?" directly.
+    #
+    # Fallback keeps `docker compose config` working without the script.
+    image: fenghuai-frontend-9080:${IMAGE_TAG:-dev}
     build:
       context: ../..
       dockerfile: deploy/frontend/Dockerfile
       args:
+        # Feed the OCI labels so `docker image inspect` can name the commit.
+        IMAGE_REVISION: ${IMAGE_REVISION:-}
+        IMAGE_TAG: ${IMAGE_TAG:-dev}
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
         NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION: ${NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION}
         WP_API_URL: ${WP_PUBLIC_API_URL}
