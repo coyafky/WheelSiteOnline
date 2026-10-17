@@ -102,7 +102,7 @@ function isFormUi(value: unknown): value is InquiryFormUi {
   const validation = candidate ? object(candidate.validationMessages) : null;
   const validationKeys = [
     "customerType", "productLine", "message", "quantity", "inputsAvailable",
-    "name", "email", "country", "company", "whatsapp", "privacyConsent",
+    "name", "email", "country", "company", "whatsapp",
   ];
   return Boolean(
     candidate &&
@@ -113,7 +113,7 @@ function isFormUi(value: unknown): value is InquiryFormUi {
         "optional", "customerTypeLabel", "productLineLabel", "productLinePlaceholder",
         "messageLabel", "messageHelp", "quantityLabel", "quantityPlaceholder",
         "inputsLabel", "continueLabel", "backLabel", "nameLabel", "emailLabel",
-        "countryLabel", "countryHelp", "companyLabel", "phoneLabel", "privacyConsent",
+        "countryLabel", "countryHelp", "companyLabel", "phoneLabel",
         "privacyLinkLabel", "privacyHref", "submitLabel", "submittingLabel",
         "formUnavailableTitle", "formUnavailableBody", "rateLimited", "referenceLabel",
         "notSpecified",
@@ -205,7 +205,6 @@ export async function getInquiryContent(
     ...content,
     formUi: {
       ...inquiryFormUiFor(locale),
-      privacyConsent: content.privacy.consentText,
       privacyLinkLabel: content.privacy.linkLabel,
       privacyHref: content.privacy.linkHref,
     },

@@ -29,19 +29,21 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "next dev",
+    "audit:prod": "npm audit --omit=dev",
     "build": "next build",
+    "check": "npm run theme:check && npm run contract:check && npm test && npm run lint && npm run typecheck && npm run build",
+    "contract:check": "node scripts/verify-contract-parity.mjs",
+    "dev": "next dev",
+    "lint": "eslint",
     "start": "next start",
     "test": "node --experimental-strip-types --test tests/*.test.mts",
-    "contract:check": "node scripts/verify-contract-parity.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "lint": "eslint",
-    "typecheck": "tsc --noEmit",
     "theme:build": "astryx theme build src/theme/fenghuai-neutral/neutralTheme.ts --out src/theme/fenghuai-neutral/site-theme.css",
     "theme:check": "astryx theme build src/theme/fenghuai-neutral/neutralTheme.ts --out src/theme/fenghuai-neutral/site-theme.css --check",
-    "audit:prod": "npm audit --omit=dev",
-    "check": "npm run theme:check && npm run contract:check && npm test && npm run lint && npm run typecheck && npm run build"
+    "typecheck": "tsc --noEmit",
+    "verify:inquiry": "python3 scripts/verify-inquiry-backend.py",
+    "verify:inquiry:delivery": "python3 scripts/verify-inquiry-delivery.py"
   },
   "dependencies": {
     "@astryxdesign/core": "^0.6.7",

@@ -93,8 +93,6 @@ export const inquiryStepTwoSchema = z.object({
     .max(40, { error: "Keep this field to 40 characters or fewer." })
     .optional()
     .default(""),
-  // Kept as a compatibility field for older callers; it is not a submission gate.
-  privacyConsent: z.boolean().optional().default(false),
 });
 
 export const inquirySubmissionSchema = inquiryStepOneSchema

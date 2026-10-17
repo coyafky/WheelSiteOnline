@@ -21,7 +21,6 @@ export function DirectWheelInquiryDialog({
   selectedSummary,
   locale,
   privacyVersion,
-  privacyConsent,
   privacyLinkLabel,
   privacyLinkHref,
 }: {
@@ -30,7 +29,6 @@ export function DirectWheelInquiryDialog({
   selectedSummary?: string;
   locale: Locale;
   privacyVersion: string;
-  privacyConsent: string;
   privacyLinkLabel: string;
   privacyLinkHref: string;
 }) {
@@ -41,8 +39,7 @@ export function DirectWheelInquiryDialog({
   const copy = wheelEnquiryCopyFor(locale);
   const formUi = {
     ...inquiryFormUiFor(locale),
-    privacyConsent,
-    privacyLinkLabel,
+      privacyLinkLabel,
     privacyHref: privacyLinkHref,
   };
   const triggerLabel = hasConfiguration ? copy.cta : copy.modelCta;

@@ -40,7 +40,6 @@ export function WheelInquiryPanel({
   headingId,
   locale,
   privacyVersion,
-  privacyConsent,
   privacyLinkLabel,
   privacyLinkHref,
 }: {
@@ -50,7 +49,6 @@ export function WheelInquiryPanel({
   headingId: string;
   locale: Locale;
   privacyVersion: string;
-  privacyConsent: string;
   privacyLinkLabel: string;
   privacyLinkHref: string;
 }) {
@@ -148,7 +146,6 @@ export function WheelInquiryPanel({
                 selectedSummary={summary ?? undefined}
                 locale={locale}
                 privacyVersion={privacyVersion}
-                privacyConsent={privacyConsent}
                 privacyLinkLabel={privacyLinkLabel}
                 privacyLinkHref={privacyLinkHref}
               />

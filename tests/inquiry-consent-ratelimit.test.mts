@@ -6,23 +6,17 @@ const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), "u
 const FORM = read("src/components/inquiry-form.tsx");
 const PHP = read("local-wp/mu-plugins/fenghuai-inquiries.php");
 
-test("表单提交带上同意时刻，且仅在真正同意时发送", () => {
-  // 没有 consentedAt，「何时同意」就没有证据；无条件发送则会在未勾选时
-  // 留下一条没有对应同意的假时间戳。
-  assert.match(
-    FORM,
-    /consentedAt:\s*values\.privacyConsent\s*\?\s*new Date\(\)\.toISOString\(\)\s*:\s*undefined/,
-    "consentedAt 必须由 privacyConsent 守卫",
-  );
-});
-
-test("同意时刻与填表开始时刻分开，不复用 formStartedAt", () => {
-  assert.match(FORM, /const \[formStartedAt, setFormStartedAt\] = useState/);
-  const consentedLine = FORM.split("\n").find((l) => l.includes("consentedAt:"));
-  assert.ok(consentedLine);
+test("privacyConsent 已按产品决策移除，未复活", () => {
+  // 10-12 的 4360b01「取消询盘同意门槛」删掉了勾选框，但字段与载荷残留至今，
+  // 且我 T-36 加的 consentedAt 依赖它 → 永远不触发的死分支。本轮彻底移除。
+  // 这条断言防的是「有人又把门槛加回来」——那是一个需要重新决策的产品变更。
   assert.ok(
-    !consentedLine.includes("formStartedAt"),
-    "formStartedAt 是防自动化用的挂载时间，不是同意时刻",
+    !/privacyConsent\s*:/.test(FORM),
+    "表单不应再发送 privacyConsent",
+  );
+  assert.ok(
+    !/consentedAt/.test(FORM),
+    "consentedAt 依赖已移除的 privacyConsent，不应残留",
   );
 });
 

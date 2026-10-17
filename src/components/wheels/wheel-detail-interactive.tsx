@@ -44,7 +44,6 @@ export function WheelDetailInteractive({
   initialSelectedCode,
   locale,
   privacyVersion,
-  privacyConsent,
   privacyLinkLabel,
   privacyLinkHref,
 }: {
@@ -58,7 +57,6 @@ export function WheelDetailInteractive({
   initialSelectedCode: string | null;
   locale: Locale;
   privacyVersion: string;
-  privacyConsent: string;
   privacyLinkLabel: string;
   privacyLinkHref: string;
 }) {
@@ -103,7 +101,6 @@ export function WheelDetailInteractive({
         headingId={ENQUIRY_SECTION_ID}
         locale={locale}
         privacyVersion={privacyVersion}
-        privacyConsent={privacyConsent}
         privacyLinkLabel={privacyLinkLabel}
         privacyLinkHref={privacyLinkHref}
       />

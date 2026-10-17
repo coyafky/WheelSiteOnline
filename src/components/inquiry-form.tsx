@@ -48,7 +48,6 @@ type FormValues = {
   country: string;
   company: string;
   whatsapp: string;
-  privacyConsent: boolean;
   website: string;
 };
 
@@ -128,7 +127,6 @@ const EMPTY: FormValues = {
   country: "",
   company: "",
   whatsapp: "",
-  privacyConsent: false,
   website: "",
 };
 
@@ -144,7 +142,6 @@ const SERVER_TO_FORM_FIELD: Partial<Record<string, FormKey>> = {
   country: "country",
   company: "company",
   whatsapp: "whatsapp",
-  privacyConsent: "privacyConsent",
 };
 
 function localizeErrors(errors: Record<string, string>, ui: InquiryFormUi): FormErrors {
@@ -179,9 +176,6 @@ function localizeServerErrors(errors: Record<string, string>, ui: InquiryFormUi)
   const generic: ReadonlySet<string> = new Set<string>(Object.values(ui.validationMessages));
   return Object.fromEntries(
     Object.entries(errors).map(([field, message]) => {
-      if (field === "privacyConsent" && /privacy notice changed/i.test(message)) {
-        return [field, ui.privacyConsentChanged];
-      }
       // A server message that is NOT just the client's own wording carries extra
       // meaning — keep it verbatim.
       if (message && !generic.has(message)) return [field, message];
@@ -389,19 +383,7 @@ function InquiryFormContent({
           country: values.country.toUpperCase(),
           company: values.company || undefined,
           whatsapp: values.whatsapp || undefined,
-          privacyConsent: values.privacyConsent,
           privacyVersion,
-          /*
-           * When the visitor actually gave consent — captured at submit, not at
-           * form mount (`formStartedAt`, which measures dwell time for the
-           * automation guard). The consent record has to point at the moment of
-           * the affirmative action; using the mount time would claim they
-           * agreed before they ever saw the notice.
-           *
-           * Only sent when consent is actually true, so the audit trail never
-           * shows a timestamp without the consent it documents.
-           */
-          consentedAt: values.privacyConsent ? new Date().toISOString() : undefined,
           items: submissionItems,
           context: buildContext(submissionContext),
         }),

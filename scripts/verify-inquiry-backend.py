@@ -1008,11 +1008,20 @@ def main() -> int:
         )
 
         guards = worker["guard_ids"]
-        expected_claimed = sorted([guards["dueId"], guards["expiredId"]])
+        claimed = worker["claimed_first"]
+        # 断言真正的不变量，而不是「领取集合恰好等于本轮两条」。
+        #
+        # 后者隐含假设「库里没有别的到期行」，只在全新库成立：实测在留有历史
+        # outbox 行（如 10-12 的 failed 行）时会多领到几条，把「worker 规则正确」
+        # 误判成失败。规则本身是：该领的必须领，不该领的必须不领。
+        must_claim = [guards["dueId"], guards["expiredId"]]
+        must_not_claim = [guards["futureId"], guards["leasedId"], guards["maxedId"]]
+        missing = [i for i in must_claim if i not in claimed]
+        overclaimed = [i for i in must_not_claim if i in claimed]
         record(
-            worker["claimed_first"] == expected_claimed,
+            not missing and not overclaimed,
             "只领取已到期且无有效租约的记录；过期租约可回收",
-            f"实得 {worker['claimed_first']}，期望 {expected_claimed}",
+            f"实得 {claimed}；漏领 {missing}（该领未领）｜越领 {overclaimed}（不该领却领了）",
         )
         record(
             worker["claimed_second"] == 0,
@@ -1088,11 +1097,14 @@ def main() -> int:
             edit_url,
         )
         record(
+            # 分区名随 4360b01「取消询盘同意门槛」由 `Source & consent` 改为
+            # `Source`（同意不再是收集项，邮件里自然也没有同意分区）。断言原先
+            # 未同步，已过期。
             '<meta charset="UTF-8">' in email_html
             and all(section in email_html for section in (
-                "Contact", "Inquiry details", "Submitted configuration", "Source &amp; consent"
+                "Contact", "Inquiry details", "Submitted configuration", "Source"
             )),
-            "HTML 邮件声明 UTF-8，并按联系人、需求、规格快照、来源与同意分区",
+            "HTML 邮件声明 UTF-8，并按联系人、需求、规格快照、来源分区",
         )
         record(
             edit_url in email_hrefs

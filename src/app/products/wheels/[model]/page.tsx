@@ -144,7 +144,6 @@ export default async function WheelModelPage({
         initialSelectedCode={selectedCode}
         locale={locale}
         privacyVersion={inquiryContent.privacyVersion}
-        privacyConsent={inquiryContent.privacy.consentText}
         privacyLinkLabel={inquiryContent.privacy.linkLabel}
         privacyLinkHref={inquiryContent.privacy.linkHref}
       />
