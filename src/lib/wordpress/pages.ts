@@ -2,7 +2,12 @@ import "server-only";
 
 import { getLocale } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/types";
-import { getWpConfig, wpRead } from "./client";
+import { getWpConfig } from "./client";
+import { wpReadValidated } from "./read-result";
+import {
+  wordpressLocalePageResponseSchema,
+  wordpressPageCollectionSchema,
+} from "./pages-schema";
 import {
   SITE_PAGES_CACHE_TAG,
   normalizeWordpressLocalePage,
@@ -25,10 +30,12 @@ export async function getWordpressPageResult<T>(
   const locale = options.locale ?? await getLocale();
   const params = new URLSearchParams({ key, locale });
   if (options.preview) params.set("preview", "true");
-  const independent = await wpRead<WordpressLocalePageResponse>(
+  const independentRead = await wpReadValidated(
     `/fh/v2/pages?${params.toString()}`,
+    wordpressLocalePageResponseSchema,
     { restRoot: true, tags: [SITE_PAGES_CACHE_TAG], noStore: options.preview === true },
   );
+  const independent: WordpressLocalePageResponse | null = independentRead.ok ? independentRead.data : null;
   if (independent?.authoritative === true) {
     if (independent.status === "withdrawn" || independent.status === "unpublished") {
       return { status: independent.status };
@@ -42,10 +49,12 @@ export async function getWordpressPageResult<T>(
 
   const legacyParams = new URLSearchParams({ key });
   if (options.preview) legacyParams.set("preview", "true");
-  const legacy = await wpRead<WordpressPageCollection>(
+  const legacyRead = await wpReadValidated(
     `/fh/v1/pages?${legacyParams.toString()}`,
+    wordpressPageCollectionSchema,
     { restRoot: true, tags: [SITE_PAGES_CACHE_TAG], noStore: options.preview === true },
   );
+  const legacy: WordpressPageCollection | null = legacyRead.ok ? legacyRead.data : null;
   if (!legacy || legacy.authoritative !== true || !Array.isArray(legacy.items)) {
     return independent?.authoritative === true
       ? { status: "missing-locale" }
@@ -83,14 +92,16 @@ export async function getWordpressPageDocument<T>(
   if (getWpConfig().mode !== "live") return null;
   const params = new URLSearchParams({ key });
   if (options.preview) params.set("preview", "true");
-  const response = await wpRead<WordpressPageCollection>(
+  const read = await wpReadValidated(
     `/fh/v1/pages?${params.toString()}`,
+    wordpressPageCollectionSchema,
     {
       restRoot: true,
       tags: [SITE_PAGES_CACHE_TAG],
       noStore: options.preview === true,
     },
   );
+  const response: WordpressPageCollection | null = read.ok ? read.data : null;
   if (!response || response.authoritative !== true || !Array.isArray(response.items)) return null;
   const record = response.items[0];
   const locale = options.locale ?? await getLocale();
