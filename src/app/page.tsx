@@ -1,11 +1,8 @@
+import { Fragment } from "react";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
-import { HomeClosing } from "@/components/home/home-closing";
-import { HomeHero } from "@/components/home/hero/home-hero";
-import { ProjectRouteSection } from "@/components/home/project-route-section";
-import { ProductShowcase } from "@/components/sections/product-showcase";
-import { TrustStrip } from "@/components/sections/trust-strip";
+import { renderHomeModule } from "@/components/home/home-module-registry";
 import { getHomepagePageView, getHomepagePublicLocales } from "@/lib/wordpress/homepage";
 import { getLocale } from "@/lib/i18n";
 import { localizedAlternates } from "@/lib/i18n/types";
@@ -41,20 +38,9 @@ export default async function HomePage() {
 
   return (
     <>
-      {result.page.modules.map((module) => {
-        switch (module.type) {
-          case "home.hero":
-            return <HomeHero key={module.id} hero={module.content} locale={locale} />;
-          case "home.product-lines":
-            return <ProductShowcase key={module.id} copy={module.content} locale={locale} />;
-          case "home.capabilities":
-            return <TrustStrip key={module.id} capabilities={module.content} locale={locale} />;
-          case "home.delivery":
-            return <ProjectRouteSection key={module.id} delivery={module.content} locale={locale} />;
-          case "home.closing":
-            return <HomeClosing key={module.id} closing={module.content} locale={locale} />;
-        }
-      })}
+      {result.page.modules.map((module) => (
+        <Fragment key={module.id}>{renderHomeModule(module, locale)}</Fragment>
+      ))}
     </>
   );
 }
