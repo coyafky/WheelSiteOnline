@@ -17,13 +17,21 @@ import { PageHero } from "@/components/sections/page-hero";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/i18n/types";
+import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
 
-export const metadata: Metadata = {
-  title: "Private Label Forged Wheels — Manufacture Under Your Own Brand",
-  description:
-    "Fenghuai manufactures private label forged wheels under your brand — custom centre caps, engraving, packaging and documentation, with confidentiality and design exclusivity available on request.",
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const extraPublicLocales = await getPublicLocalesForPath("/dealers/private-label");
+  return {
+    title: "Private Label Forged Wheels — Manufacture Under Your Own Brand",
+    description:
+      "Fenghuai manufactures private label forged wheels under your brand — custom centre caps, engraving, packaging and documentation, with confidentiality and design exclusivity available on request.",
+    alternates: await localizedRouteMetadata("/dealers/private-label", locale, {
+      extraPublicLocales,
+    }),
+    robots: { index: extraPublicLocales.includes(locale), follow: true },
+  };
+}
 
 /**
  * Private label programme.

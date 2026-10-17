@@ -17,7 +17,7 @@ import {
 } from "@/components/wheels/spec-format";
 import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
 import { localizedPath, type Locale } from "@/lib/i18n/types";
-import { localizedRouteMetadata } from "@/lib/i18n/publication";
+import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
 import {
   getWheelDetailPage,
   listPublishedWheelSlugs,
@@ -67,6 +67,9 @@ export async function generateMetadata({
     return { title: "Wheel model not found", robots: { index: false, follow: false } };
   }
 
+  // Rendering, sitemap and hreflang all read one publication decision
+  const extraPublicLocales = await getPublicLocalesForPath(`/products/wheels/${detail.slug}`);
+
   return {
     // `absolute` because the root layout would otherwise append the
     // brand a second time.
@@ -74,8 +77,8 @@ export async function generateMetadata({
     description: wheelDetailCopyFor(locale).seo.description(detail.model),
     // §11: canonical is the model URL and never carries `variant`, so a shared
     // configuration link cannot be indexed as a separate page.
-    alternates: await localizedRouteMetadata(`/products/wheels/${detail.slug}`, locale),
-    robots: { index: true, follow: true },
+    alternates: await localizedRouteMetadata(`/products/wheels/${detail.slug}`, locale, { extraPublicLocales }),
+    robots: { index: extraPublicLocales.includes(locale), follow: true },
   };
 }
 

@@ -473,7 +473,10 @@ export function normalizeWordpressGuide(
     detail,
     sections,
     answer,
-    needsVerification: fields?.needs_verification === true,
+    // Fail-closed: only an explicit `false` clears the verification notice. A
+    // missing or malformed field means we cannot prove the figures were signed
+    // off, so the article keeps advertising that it needs engineering review.
+    needsVerification: fields?.needs_verification !== false,
   };
   return {
     guide,

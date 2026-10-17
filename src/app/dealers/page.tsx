@@ -12,13 +12,20 @@ import {
 } from "@/content/dealer-programs";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
+import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
+import { getLocale } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Dealer Supply Programme — Supply Without Stock",
-  description:
-    "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const extraPublicLocales = await getPublicLocalesForPath("/dealers");
+  return {
+    title: "Dealer Supply Programme — Supply Without Stock",
+    description:
+      "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
+    alternates: await localizedRouteMetadata("/dealers", locale, { extraPublicLocales }),
+    robots: { index: extraPublicLocales.includes(locale), follow: true },
+  };
+}
 
 /**
  * Dealer supply programme hub.

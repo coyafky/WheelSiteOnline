@@ -97,7 +97,9 @@ function fh_guide_authoring_register_acf_fields(): void
         ['key' => 'field_fh_category', 'label' => '分类', 'name' => 'fh_category', 'type' => 'text'],
         ['key' => 'field_fh_reading_time', 'label' => '阅读时长', 'name' => 'fh_reading_time', 'type' => 'text'],
         ['key' => 'field_fh_answer', 'label' => '直接回答', 'name' => 'fh_answer', 'type' => 'textarea', 'rows' => 3],
-        ['key' => 'field_fh_needs_verification', 'label' => '需要工程确认', 'name' => 'fh_needs_verification', 'type' => 'true_false', 'ui' => 1, 'default_value' => 0],
+        // Defaults to 1 (needs verification). Unverified figures must never be
+        // published as fact by default; an editor has to actively clear this.
+        ['key' => 'field_fh_needs_verification', 'label' => '需要工程确认', 'name' => 'fh_needs_verification', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1],
         ['key' => 'field_fh_seo_title', 'label' => 'SEO 标题', 'name' => 'fh_seo_title', 'type' => 'text'],
         ['key' => 'field_fh_seo_description', 'label' => 'SEO 描述', 'name' => 'fh_seo_description', 'type' => 'textarea', 'rows' => 3],
         ['key' => 'field_fh_featured_media_id', 'label' => '文章图片', 'name' => 'fh_featured_media_id', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium', 'library' => 'all'],

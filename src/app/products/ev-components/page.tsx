@@ -11,7 +11,7 @@ import {
 import { getEvHousingPage } from "@/lib/wordpress/ev-components";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 import { getLocale } from "@/lib/i18n";
-import { localizedRouteMetadata } from "@/lib/i18n/publication";
+import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
 
 /**
  * `/products/ev-components` — EV01–EV06.
@@ -27,6 +27,8 @@ import { localizedRouteMetadata } from "@/lib/i18n/publication";
  */
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
+  // Rendering, sitemap and hreflang all read one publication decision
+  const extraPublicLocales = await getPublicLocalesForPath(`/products/ev-components`);
   const page = await getWordpressPageDocument("ev-components");
   return {
     title: {
@@ -37,8 +39,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Review supplier-supported aluminum housing categories for EV motor and controller projects, then submit drawing, cooling, sealing and volume requirements for engineering assessment.",
-    alternates: await localizedRouteMetadata("/products/ev-components", locale),
-    robots: { index: true, follow: true },
+    alternates: await localizedRouteMetadata("/products/ev-components", locale, { extraPublicLocales }),
+    robots: { index: extraPublicLocales.includes(locale), follow: true },
   };
 }
 

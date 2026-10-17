@@ -13,7 +13,7 @@ import { DealerCta } from "@/components/sections/dealer-cta";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/i18n/types";
-import { localizedRouteMetadata } from "@/lib/i18n/publication";
+import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
 
 type PatternPageProps = {
   params: Promise<{ pattern: string }>;
@@ -35,11 +35,14 @@ export async function generateMetadata({
     return { title: "Bolt pattern guide not found" };
   }
 
+  // Rendering, sitemap and hreflang all read one publication decision
+  const extraPublicLocales = await getPublicLocalesForPath(`/insights/bolt-patterns/${entry.slug}`);
+
   return {
     title: `${entry.pattern} Bolt Pattern — ${entry.label}`,
     description: entry.intro,
-    alternates: await localizedRouteMetadata(`/insights/bolt-patterns/${entry.slug}`, locale),
-    robots: { index: true, follow: true },
+    alternates: await localizedRouteMetadata(`/insights/bolt-patterns/${entry.slug}`, locale, { extraPublicLocales }),
+    robots: { index: extraPublicLocales.includes(locale), follow: true },
   };
 }
 
