@@ -3,11 +3,14 @@ import { redirect } from "next/navigation";
 import { getInsightGuideDocument } from "@/lib/wordpress/insights";
 import { validInsightPreviewSlug } from "@/lib/wordpress/insights-contract";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getWordpressPageResult } from "@/lib/wordpress/pages";
+import { isLocale, localizedPath } from "@/lib/i18n/types";
 
 const pagePreviewPaths: Record<string, string> = {
   "request-a-quote": "/request-a-quote",
   privacy: "/support/privacy",
   "thank-you": "/thank-you",
+  home: "/",
 };
 
 export async function GET(request: Request) {
@@ -21,12 +24,19 @@ export async function GET(request: Request) {
   }
 
   if (pagePath) {
-    const document = await getWordpressPageDocument(pageKey, { preview: true });
-    if (!document) return new Response("Preview content not found.", { status: 404 });
+    const requestedLocale = url.searchParams.get("locale");
+    const locale = isLocale(requestedLocale) ? requestedLocale : "en";
+    if (pageKey === "home") {
+      const result = await getWordpressPageResult(pageKey, { preview: true, locale });
+      if (result.status !== "ready") return new Response("Preview content not found.", { status: 404 });
+    } else {
+      const document = await getWordpressPageDocument(pageKey, { preview: true, locale });
+      if (!document) return new Response("Preview content not found.", { status: 404 });
+    }
 
     const draft = await draftMode();
     draft.enable();
-    redirect(pagePath);
+    redirect(localizedPath(pagePath, locale));
   }
 
   const document = await getInsightGuideDocument(slug!, { preview: true });

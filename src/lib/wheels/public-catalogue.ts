@@ -244,6 +244,19 @@ export function parseCatalogueSearchParams(
   };
 }
 
+/**
+ * Native GET forms submit an empty search input as `?q=`. The query parser
+ * correctly treats that as no search, but page routes use this predicate to
+ * redirect the browser to the equivalent clean URL instead of leaving a
+ * meaningless parameter in history, canonical checks or copied links.
+ */
+export function hasEmptySearchParam(
+  params: Record<string, string | string[] | undefined>,
+): boolean {
+  const raw = Array.isArray(params.q) ? params.q[0] : params.q;
+  return raw !== undefined && raw.trim() === "";
+}
+
 function normalizeQuery(input: WheelCatalogueInput): NormalizedQuery {
   const base = emptyQuery();
   return {

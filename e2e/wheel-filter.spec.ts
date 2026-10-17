@@ -23,6 +23,30 @@ test("移动端筛选入口明确且在选项末尾仍有提交按钮", async ({
   await expect(bottomApply).toHaveText("Apply filters");
 });
 
+test("移动端筛选抽屉支持关闭、Escape 和返回焦点", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/products/wheels");
+
+  const filter = page.locator("details[data-catalogue-mobile-filter]");
+  const trigger = filter.locator(":scope > summary");
+  const panel = filter.locator("[data-mobile-filter-panel]");
+  const close = filter.locator("[data-mobile-filter-close]");
+
+  await trigger.click();
+  await expect(panel).toHaveRole("dialog");
+  await expect(panel).toHaveAttribute("aria-modal", "true");
+  await expect(close).toBeFocused();
+
+  await page.keyboard.press("Escape");
+  await expect(filter).not.toHaveAttribute("open", "");
+  await expect(trigger).toBeFocused();
+
+  await trigger.click();
+  await close.click();
+  await expect(filter).not.toHaveAttribute("open", "");
+  await expect(trigger).toBeFocused();
+});
+
 test("移动端目录筛选入口不受全站悬浮询盘遮挡", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/products/wheels");
@@ -108,4 +132,28 @@ test("桌面型号搜索、排序、分页和清空都保留正确 URL 状态", 
     return [params.get("pcd"), params.get("page")];
   }).toEqual(["5x114.3", "2"]);
   await expect(results.locator("article")).toHaveCount(24);
+});
+
+test("移动端筛选提交后保持 24 张/页并使用两列卡片", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/products/wheels");
+
+  const cards = page.getByRole("region", { name: "Wheel catalogue results" }).locator("article");
+  await expect(cards).toHaveCount(24);
+
+  const first = await cards.nth(0).boundingBox();
+  const second = await cards.nth(1).boundingBox();
+  const third = await cards.nth(2).boundingBox();
+  expect(first).not.toBeNull();
+  expect(second).not.toBeNull();
+  expect(third).not.toBeNull();
+  expect(Math.abs((second?.y ?? 0) - (first?.y ?? 0))).toBeLessThanOrEqual(1);
+  expect(second?.x ?? 0).toBeGreaterThan(first?.x ?? 0);
+  expect(third?.y ?? 0).toBeGreaterThan(first?.y ?? 0);
+});
+
+test("空搜索参数会被清理", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/products/wheels?q=&diameter=17");
+  await expect.poll(() => new URL(page.url()).search).toBe("?diameter=17");
 });

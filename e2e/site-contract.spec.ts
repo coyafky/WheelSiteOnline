@@ -28,6 +28,10 @@ test("robots 与 sitemap 只发布配置域名和可索引页面", async ({ page
   expect(xml).not.toContain("/thank-you");
   expect(xml).not.toContain("/api/inquiries");
   expect(xml).not.toContain("/gallery/finishes");
+  expect(xml).toContain(`<loc>${configuredTestOrigin}/</loc>`);
+  expect(xml).not.toContain(`<loc>${configuredTestOrigin}/zh</loc>`);
+  expect(xml).not.toContain(`<loc>${configuredTestOrigin}/es</loc>`);
+  expect(xml).not.toContain(`<loc>${configuredTestOrigin}/th</loc>`);
 
   await page.goto("/");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
@@ -62,6 +66,10 @@ test("预览与 WordPress 缓存失效接口默认拒绝未授权请求", async 
     maxRedirects: 0,
   });
   expect(pagePreview.status()).toBe(401);
+  const homePreview = await request.get("/api/preview?page=home&locale=zh", {
+    maxRedirects: 0,
+  });
+  expect(homePreview.status()).toBe(401);
 
   const revalidate = await request.post("/api/revalidate/wordpress", {
     data: { slug: "how-to-measure-fitment" },
@@ -112,67 +120,51 @@ test("授权预览可以进入、退出，并按文章路径触发缓存失效",
   await expect(pageRevalidate.json()).resolves.toMatchObject({
     ok: true,
     tag: "site-pages",
-    paths: ["/request-a-quote", "/sitemap.xml"],
+    paths: ["/request-a-quote", "/zh/request-a-quote", "/es/request-a-quote", "/th/request-a-quote", "/sitemap.xml"],
   });
 });
 
-test("中文独立 URL、语言声明和切换路径保持正确", async ({ page, request }) => {
+test("未批准的中文内容直达返回 404，旧 cookie 不改变英文路径", async ({ page, request }) => {
   const response = await request.get("/zh/insights", {
     headers: { Cookie: "fh-locale=zh" },
   });
-  expect(response.status()).toBe(200);
+  expect(response.status()).toBe(404);
   expect(response.headers()["content-language"]).toBe("zh-CN");
-  expect(response.headers()["x-robots-tag"]).toBe("noindex, follow");
+  const deniedHtml = await response.text();
+  expect(deniedHtml).toContain('name="robots" content="noindex"');
+  expect(deniedHtml).not.toContain('rel="canonical"');
+  expect(deniedHtml).not.toContain('hreflang=');
 
   await page.context().addCookies([
     { name: "fh-locale", value: "zh", url: configuredTestOrigin },
   ]);
-  await page.goto("/zh/insights?from=language-test");
-  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
-  await expect(page.locator('link[rel="alternate"]')).toHaveCount(0);
-  await expect(page.getByRole("navigation", { name: "主导航" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "获取报价" }).first()).toHaveAttribute(
-    "href",
-    "/zh/request-a-quote",
-  );
-
-  await Promise.all([
-    page.waitForURL((url) => url.pathname === "/insights" && url.search === "?from=language-test"),
-    page.getByRole("combobox", { name: "切换语言" }).first().selectOption("en"),
-  ]);
+  await page.goto("/insights?from=language-test");
+  await expect(page).toHaveURL(/\/insights\?from=language-test$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("combobox", { name: "Switch language" }).first().locator("option")).toHaveCount(1);
 });
 
-test("西班牙语与泰语路径可访问但在正文审核前保持 noindex", async ({ request }) => {
+test("西班牙语与泰语未批准路径不可公开", async ({ request }) => {
   for (const [path, language] of [["/es/about", "es-ES"], ["/th/about", "th-TH"]] as const) {
     const response = await request.get(path, {
       headers: { Cookie: `fh-locale=${path.slice(1, 3)}` },
     });
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(404);
     expect(response.headers()["content-language"]).toBe(language);
-    expect(response.headers()["x-robots-tag"]).toBe("noindex, follow");
+    expect(await response.text()).toContain('name="robots" content="noindex"');
   }
 });
 
-test("中文首页的询盘链接保留语言路径，RSC 预取无重定向循环", async ({ page, request }) => {
-  const browserErrors: string[] = [];
-  page.on("console", (message) => {
-    if (message.type() === "error") browserErrors.push(message.text());
-  });
-  await page.goto("/zh");
-  const quoteLink = page.locator('main a[href="/zh/request-a-quote?from=home"]').first();
-  await expect(quoteLink).toBeVisible();
-  await quoteLink.click();
-  await expect(page).toHaveURL(/\/zh\/request-a-quote\?from=home$/);
-  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
-  expect(browserErrors).toEqual([]);
-
+test("未批准的中文首页不公开，旧 cookie 不改写英文询盘路径", async ({ request }) => {
+  const home = await request.get("/zh", { maxRedirects: 0 });
+  expect(home.status()).toBe(404);
+  expect(await home.text()).toContain('name="robots" content="noindex"');
   const documentVisit = await request.get("/request-a-quote?from=home", {
     headers: { Cookie: "fh-locale=zh", Accept: "text/html", "Sec-Fetch-Dest": "document" },
     maxRedirects: 0,
   });
-  expect(documentVisit.status()).toBe(307);
-  expect(documentVisit.headers().location).toContain("/zh/request-a-quote?from=home");
+  expect(documentVisit.status()).toBe(200);
+  expect(documentVisit.headers().location).toBeUndefined();
 });
 
 test("首页恢复完整品牌首屏并保留五个内容区块", async ({ page }) => {
@@ -215,12 +207,8 @@ test("公开内容页统一使用 Astryx 面包屑并标记当前页面", async 
     await expect(breadcrumb.locator('[aria-current="page"]')).toHaveCount(1);
   }
 
-  await page.goto("/zh/products/wheels");
-  const chineseBreadcrumb = page.getByRole("navigation", { name: "Breadcrumb" });
-  await expect(chineseBreadcrumb.getByRole("link", { name: "Products" })).toHaveAttribute(
-    "href",
-    "/zh/products",
-  );
+  const denied = await page.goto("/zh/products/wheels");
+  expect(denied?.status()).toBe(404);
 });
 
 test("轮毂无结果页使用 Astryx EmptyState 并保留筛选恢复入口", async ({ page }) => {
@@ -294,21 +282,10 @@ test("面包屑与空状态在无 JavaScript 的 HTML 中仍然存在", async ({
   expect(emptyHtml).toContain("No published model matches");
 });
 
-test("法律文档与 Insights 文章共享 Astryx Outline 并提供四语言标签", async ({ page }) => {
-  const locales = [
-    { prefix: "", heading: "On this page", label: "Page sections" },
-    { prefix: "/zh", heading: "本页内容", label: "页面章节" },
-    { prefix: "/es", heading: "En esta página", label: "Secciones de la página" },
-    { prefix: "/th", heading: "ในหน้านี้", label: "ส่วนต่าง ๆ ในหน้า" },
-  ];
-
-  for (const { prefix, heading, label } of locales) {
-    await page.goto(`${prefix}/support/privacy`);
-    await expect(page.getByRole("heading", { name: heading, level: 2 })).toBeVisible();
-    await expect(page.getByRole("navigation", { name: label })).toHaveClass(
-      /astryx-outline/,
-    );
-  }
+test("已公开的英文法律文档与 Insights 文章共享 Astryx Outline", async ({ page }) => {
+  await page.goto("/support/privacy");
+  await expect(page.getByRole("heading", { name: "On this page", level: 2 })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Page sections" })).toHaveClass(/astryx-outline/);
 
   await page.goto("/insights/how-to-measure-fitment");
   await expect(page.locator(".astryx-outline")).toHaveCount(1);

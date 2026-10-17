@@ -2,9 +2,45 @@
 /** 将旧 fh_guide 审核文章复制为 WordPress 原生 post；失败时不打开原生权威开关。 */
 
 require '/var/www/html/wp-load.php';
+
+/**
+ * 为迁移期旧结构生成最小 Gutenberg HTML。
+ *
+ * 只接受标题和纯文本段落，并逐项转义；已有原生正文永不覆盖。
+ */
+function fh_guide_migration_content(WP_Post $source, ?WP_Post $existing): string
+{
+    $existingContent = trim((string) ($existing?->post_content ?? ''));
+    if ($existingContent !== '') return $existingContent;
+
+    $sourceContent = trim((string) $source->post_content);
+    if ($sourceContent !== '') return $sourceContent;
+
+    $raw = get_post_meta($source->ID, 'fh_sections_json', true);
+    $sections = is_string($raw) ? json_decode($raw, true) : null;
+    if (!is_array($sections)) return '';
+
+    $blocks = [];
+    foreach ($sections as $section) {
+        if (!is_array($section)) continue;
+        $heading = trim((string) ($section['heading'] ?? ''));
+        if ($heading !== '') $blocks[] = '<h2>' . esc_html($heading) . '</h2>';
+
+        $body = $section['body'] ?? [];
+        if (!is_array($body)) continue;
+        foreach ($body as $paragraph) {
+            $paragraph = trim((string) $paragraph);
+            if ($paragraph !== '') $blocks[] = '<p>' . esc_html($paragraph) . '</p>';
+        }
+    }
+
+    return implode("\n\n", $blocks);
+}
+
 $originalNative = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0');
 $created = 0;
 $updated = 0;
+$contentBackfilled = 0;
 $failures = [];
 $legacy = get_posts([
     'post_type' => FH_GUIDE_POST_TYPE,
@@ -15,6 +51,7 @@ $legacy = get_posts([
 foreach ($legacy as $source) {
     $slug = sanitize_title($source->post_name);
     $existing = get_page_by_path($slug, OBJECT, FH_GUIDE_NATIVE_POST_TYPE);
+    $content = fh_guide_migration_content($source, $existing);
     $postId = wp_insert_post([
         'ID' => $existing?->ID ?? 0,
         'post_type' => FH_GUIDE_NATIVE_POST_TYPE,
@@ -22,7 +59,7 @@ foreach ($legacy as $source) {
         'post_name' => $slug,
         'post_status' => $source->post_status,
         'post_excerpt' => $source->post_excerpt,
-        'post_content' => $source->post_content,
+        'post_content' => $content,
         'post_date' => $source->post_date,
     ], true);
     if (is_wp_error($postId)) {
@@ -30,6 +67,9 @@ foreach ($legacy as $source) {
         continue;
     }
     $existing ? $updated++ : $created++;
+    if (trim((string) ($existing?->post_content ?? '')) === '' && $content !== '') {
+        $contentBackfilled++;
+    }
     foreach (array_keys(fh_guide_fields()) as $key) {
         $value = get_post_meta($source->ID, 'fh_' . $key, true);
         update_post_meta($postId, 'fh_' . $key, is_string($value) ? $value : (string) $value);
@@ -45,6 +85,7 @@ echo wp_json_encode([
     'source_count' => count($legacy),
     'created' => $created,
     'updated' => $updated,
+    'content_backfilled' => $contentBackfilled,
     'native_authoritative' => get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1',
     'failures' => $failures,
 ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), "\n";

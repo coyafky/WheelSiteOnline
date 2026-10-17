@@ -1,10 +1,13 @@
 import type { MediaAsset } from "@/content/types";
-import type { Locale } from "@/lib/i18n/types";
+import { LOCALES, localizedPath, type Locale } from "../i18n/types.ts";
 
 export const SITE_PAGES_CACHE_TAG = "site-pages";
 
 export type WordpressPageFields = {
   page_key?: string;
+  locale?: Locale;
+  revision?: string;
+  schema_version?: number;
   publication_status?: "draft" | "approved" | "withdrawn";
   content?: unknown;
   content_by_locale?: Record<string, unknown>;
@@ -34,8 +37,21 @@ export type WordpressPageCollection = {
   items: WordpressPageRecord[];
 };
 
+/** 独立语言 Page 的公开读取结果；缺失和撤回必须保持可区分。 */
+export type WordpressLocalePageResponse = {
+  authoritative: boolean;
+  status: "ready" | "missing-locale" | "unpublished" | "withdrawn";
+  item?: WordpressPageRecord;
+};
+
+export type PageResult<T> =
+  | { status: "ready"; page: SitePageDocument<T> }
+  | { status: "missing-locale" | "unpublished" | "withdrawn" | "temporarily-unavailable" };
+
 export type SitePageDocument<T> = {
   key: string;
+  locale?: Locale;
+  revision?: string;
   content: T;
   seoTitle?: string;
   seoDescription?: string;
@@ -44,6 +60,42 @@ export type SitePageDocument<T> = {
   preview: boolean;
   publicationStatus: "draft" | "approved" | "withdrawn";
 };
+
+/** 独立语言记录不得从英文或另一种语言补正文、SEO。 */
+export function normalizeWordpressLocalePage<T>(
+  record: WordpressPageRecord,
+  key: string,
+  locale: Locale,
+  preview = false,
+): PageResult<T> {
+  const fields = record.page;
+  if (fields?.page_key !== key || fields.locale !== locale) return { status: "missing-locale" };
+  if (fields.publication_status === "withdrawn") return { status: "withdrawn" };
+  if (!preview && (record.status !== "publish" || fields.publication_status !== "approved")) {
+    return { status: "unpublished" };
+  }
+  if (!fields.content || typeof fields.content !== "object" || Array.isArray(fields.content)) {
+    return { status: "unpublished" };
+  }
+  const seoTitle = text(fields.seo_title);
+  const seoDescription = text(fields.seo_description);
+  if (!preview && (!seoTitle || !seoDescription)) return { status: "unpublished" };
+  return {
+    status: "ready",
+    page: {
+      key,
+      locale,
+      revision: text(fields.revision) || `page-${record.id}`,
+      content: fields.content as T,
+      seoTitle: seoTitle || undefined,
+      seoDescription: seoDescription || undefined,
+      media: normalizeImage(fields.image),
+      source: "wordpress",
+      preview,
+      publicationStatus: fields.publication_status ?? "draft",
+    },
+  };
+}
 
 function text(value: unknown): string {
   return typeof value === "string" ? value.replace(/<[^>]*>/g, " ").trim() : "";
@@ -110,8 +162,11 @@ export function sitePageRevalidationPaths(key?: string): string[] {
   if (key === "privacy") {
     pathsByKey.privacy.push("/request-a-quote", "/contact");
   }
-  return [...new Set([...(key && pathsByKey[key] ? pathsByKey[key] : []), "/sitemap.xml"])]
-    .concat(key && pathsByKey[key] ? [] : ["/"]);
+  const basePaths = key && pathsByKey[key] ? pathsByKey[key] : ["/"];
+  return [...new Set([
+    ...basePaths.flatMap((path) => LOCALES.map((locale) => localizedPath(path, locale))),
+    "/sitemap.xml",
+  ])];
 }
 
 export function validSitePageKey(value: string | null): string | null {

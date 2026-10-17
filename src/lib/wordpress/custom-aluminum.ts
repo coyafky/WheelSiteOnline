@@ -1,6 +1,6 @@
 import "server-only";
 
-import { customAluminumPage } from "@/content/custom-aluminum";
+import { customAluminumPage, isCustomAluminumIndexable } from "@/content/custom-aluminum";
 import type { CustomAluminumMethodItem, CustomAluminumPage, MediaAsset } from "@/content/types";
 import { getLocale } from "@/lib/i18n";
 import { resolveLocalized } from "@/lib/i18n/localized-page";
@@ -49,7 +49,7 @@ function isCustomAluminumPage(value: unknown): value is CustomAluminumPage {
     .every((key) => candidate[key] !== undefined);
 }
 
-export async function getCustomAluminumPage(): Promise<CustomAluminumPage> {
+async function getCustomAluminumSource(): Promise<CustomAluminumPage> {
   const locale = await getLocale();
   const native = await getWordpressPageDocument<CustomAluminumPage>("custom-aluminum", { locale });
   const { content: source } = resolveLocalized<CustomAluminumPage>({
@@ -58,6 +58,16 @@ export async function getCustomAluminumPage(): Promise<CustomAluminumPage> {
     locale,
     scope: "custom-aluminum",
   });
+  return source;
+}
+
+/** Indexability shares the same resolved content and fail-closed gate as the page. */
+export async function isCustomAluminumPageIndexable(): Promise<boolean> {
+  return isCustomAluminumIndexable(await getCustomAluminumSource());
+}
+
+export async function getCustomAluminumPage(): Promise<CustomAluminumPage> {
+  const source = await getCustomAluminumSource();
   const originals = source.methods.items.flatMap(methodMedia);
   const resolved = await resolveWordpressMediaCollection(originals);
   const byId = new Map(

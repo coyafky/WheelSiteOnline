@@ -7,7 +7,7 @@ import { PreviewBanner } from "@/components/preview-banner";
 import { QuoteContextBar } from "@/components/quote-context-bar";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getTranslator, getLocale } from "@/lib/i18n";
-import { localizedPath } from "@/lib/i18n/types";
+import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
 import { quoteContextCopyFor, quoteFormCopyFor, quoteSpecLabelsFor } from "@/lib/i18n/conversion-ui-copy";
 import { buildInquiryContext, hasContext } from "@/lib/inquiry-context";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
@@ -20,8 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: body.seo.title,
     description: body.seo.description,
-    alternates: { canonical: localizedPath("/request-a-quote", locale) },
-    robots: { index: locale === "en" && !preview, follow: true },
+    alternates: localizedAlternates("/request-a-quote", locale),
+    robots: { index: !preview, follow: true },
   };
 }
 

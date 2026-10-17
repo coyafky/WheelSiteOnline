@@ -160,7 +160,7 @@ export function TyreDefinition({ section }: { section: SelfSealingTirePage["defi
         <div className="mt-12 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(260px,0.45fr)]" data-reveal-group>
           {roadUse?.media ? (
             <article className="min-w-0 overflow-hidden bg-ink text-white">
-              <div className="relative aspect-[2.45/1] min-h-[280px] overflow-hidden bg-panel">
+              <div className="relative aspect-[1.35/1] overflow-hidden bg-panel sm:aspect-[1.65/1] lg:aspect-[2.45/1] lg:min-h-[280px]">
                 <MediaVisual media={roadUse.media} sizes="(min-width: 1024px) 75vw, 100vw" />
                 <div className="absolute inset-0 bg-linear-to-t from-hero/88 via-hero/10 to-transparent" aria-hidden="true" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
@@ -284,7 +284,13 @@ export function ProductEvidence({ section }: { section: SelfSealingTirePage["evi
           {research.map((item, index) => (
             <article key={item.id} className={`min-w-0 overflow-hidden border border-muted bg-white ${index === 0 ? "lg:row-span-2" : ""}`}>
               {item.media ? (
-                <div className={`relative overflow-hidden bg-panel ${index === 0 ? "aspect-[4/3] h-full min-h-[420px]" : "aspect-[2.3/1]"}`}>
+                <div
+                  className={`relative overflow-hidden bg-panel ${
+                    index === 0
+                      ? "aspect-[1.15/1] sm:aspect-[1.4/1] lg:aspect-[4/3] lg:h-full lg:min-h-[420px]"
+                      : "aspect-[1.35/1] sm:aspect-[2.3/1]"
+                  }`}
+                >
                   <MediaVisual media={item.media} sizes={index === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 50vw, 100vw"} />
                   <div className="absolute inset-0 bg-linear-to-t from-hero/90 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">

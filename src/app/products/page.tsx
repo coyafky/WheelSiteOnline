@@ -10,10 +10,10 @@ import { getTranslator } from "@/lib/i18n";
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getWordpressPageDocument("product-lines");
   return {
-    title: page?.seoTitle || "Products — Wheels, EV Components, Aluminum Parts & Tires",
+    title: page?.seoTitle || "Products | Wheels, EV Housings, Custom Aluminum & Self-Sealing Tires",
     description:
       page?.seoDescription ||
-      "Fenghuai manufactures across four product lines — forged wheels, EV powertrain housings, custom aluminum parts and self-healing safety tires.",
+      "Explore Fenghuai's four automotive product lines: wheels, EV aluminum housings, custom aluminum components and self-sealing tires. Review project categories and the information needed to start an assessment.",
   };
 }
 

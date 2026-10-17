@@ -18,6 +18,7 @@ export {
   SORT_KEYS,
   buildCatalogueHref,
   getWheelCataloguePage,
+  hasEmptySearchParam,
   getWheelDetailPage,
   isPageOutOfRange,
   listPublishedWheelSlugs,

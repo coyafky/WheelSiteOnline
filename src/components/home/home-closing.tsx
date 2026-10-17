@@ -11,7 +11,7 @@ export function HomeClosing({
   locale: Locale;
 }) {
   return (
-    <section className="bg-forge-soft py-20 sm:py-24 lg:py-28">
+    <section data-module-id="H05" className="bg-forge-soft py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div
           className="grid gap-12 border-t border-forge/30 pt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-20 lg:pt-14"

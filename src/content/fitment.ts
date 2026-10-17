@@ -285,6 +285,15 @@ export const platformFitments: PlatformFitment[] = [
   },
 ];
 
+/**
+ * Fitment pages become indexable only after every model shown on that page has
+ * been confirmed by engineering. This keeps the page metadata and sitemap on
+ * the same fail-closed publication boundary.
+ */
+export function isPlatformFitmentIndexable(platform: PlatformFitment): boolean {
+  return platform.models.length > 0 && platform.models.every((model) => model.verified);
+}
+
 export function getPlatform(slug: string): PlatformFitment | undefined {
   return platformFitments.find((platform) => platform.slug === slug);
 }

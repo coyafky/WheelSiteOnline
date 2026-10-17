@@ -1,21 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { productLines } from "@/content/product-lines";
 import type { HomepageContent } from "@/content/types";
+import type { HomepageProductLineCard } from "@/content/page-view";
 import { localizedPath, type Locale } from "@/lib/i18n/types";
 
 export function ProductShowcase({
   copy,
   locale,
 }: {
-  copy: HomepageContent["productLines"];
+  copy: HomepageContent["productLines"] & { items: HomepageProductLineCard[] };
   locale: Locale;
 }) {
 
   return (
     <section
       id="product-lines"
+      data-module-id="H02"
       aria-labelledby="product-lines-title"
       data-reveal
       className="scroll-mt-20 border-b border-border bg-white py-20 lg:py-28"
@@ -40,7 +41,7 @@ export function ProductShowcase({
           data-reveal-group
           className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:gap-6"
         >
-          {productLines.map((product, index) => (
+          {copy.items.map((product, index) => (
             <li key={product.slug}>
               <Link
                 href={localizedPath(product.href, locale)}
@@ -50,7 +51,7 @@ export function ProductShowcase({
                    detectable focus indicator (WCAG 2.4.7 — measured:
                    outline-style `none` on these four home cards). Keep the
                    border tint AND add a real ring. */
-                className="group relative flex h-full min-h-[390px] flex-col justify-end overflow-hidden rounded-xl border border-border bg-hero p-6 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-forge hover:shadow-[0_22px_50px_rgb(11_15_22/0.16)] focus-visible:border-forge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forge focus-visible:ring-offset-2 focus-visible:ring-offset-white lg:min-h-[440px] lg:p-8"
+                className="group isolate relative flex h-full min-h-[390px] flex-col justify-end overflow-hidden rounded-xl border border-border bg-hero p-6 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-forge hover:shadow-[0_22px_50px_rgb(11_15_22/0.16)] focus-visible:border-forge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forge focus-visible:ring-offset-2 focus-visible:ring-offset-white lg:min-h-[440px] lg:p-8"
               >
                 {product.hasRender ? (
                   <Image
@@ -58,21 +59,21 @@ export function ProductShowcase({
                     alt=""
                     fill
                     sizes="(min-width: 640px) 50vw, 100vw"
-                    className="-z-10 object-cover brightness-[0.58] transition-[filter,transform] duration-500 group-hover:scale-[1.035] group-hover:brightness-[0.72]"
+                    className="z-0 object-cover brightness-[0.58] transition-[filter,transform] duration-500 group-hover:scale-[1.035] group-hover:brightness-[0.72]"
                   />
                 ) : (
-                  <div className="fh-industrial-grid absolute inset-0 -z-10" aria-hidden="true" />
+                  <div className="fh-industrial-grid absolute inset-0 z-0" aria-hidden="true" />
                 )}
-                <div className="absolute inset-0 -z-10 bg-linear-to-t from-hero via-hero/58 to-hero/10" />
+                <div className="absolute inset-0 z-10 bg-linear-to-t from-hero via-hero/58 to-hero/10" />
 
                 <div
                   aria-hidden="true"
-                  className="absolute left-6 top-6 font-display text-sm font-700 tracking-[0.16em] text-white/70 lg:left-8 lg:top-8"
+                  className="absolute left-6 top-6 z-20 font-display text-sm font-700 tracking-[0.16em] text-white/70 lg:left-8 lg:top-8"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </div>
 
-                <div className="relative">
+                <div className="relative z-20">
                   <p className="font-display text-[0.78rem] font-600 uppercase tracking-[0.13em] text-forge-bright">
                     {product.subtitle}
                   </p>

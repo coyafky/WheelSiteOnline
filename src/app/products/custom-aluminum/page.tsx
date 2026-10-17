@@ -10,31 +10,17 @@ import {
   EngineeringMethods,
   ProjectInputs,
 } from "@/components/custom-aluminum/custom-aluminum-page";
-import { customAluminumPage } from "@/content/custom-aluminum";
-import { getCustomAluminumPage } from "@/lib/wordpress/custom-aluminum";
+import { getCustomAluminumPage, isCustomAluminumPageIndexable } from "@/lib/wordpress/custom-aluminum";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
-/**
- * `/products/custom-aluminum` — CA01–CA07.
- *
- * ── THE PUBLISHING GATE IS IN THE METADATA, NOT IN THE CSS ──────────────────
- * `capabilityBoundary.declinedConfirmed` is false because the business has not
- * confirmed which categories it declines. While it is false the route declares
- * `robots: { index: false, follow: true }` and publishes no canonical URL, so
- * an empty-boundary version of this page cannot be indexed. Nothing in the
- * component tree hides or reveals the gap by looking at a viewport — the flag
- * is the only switch.
- *
- * The moment the declined list is confirmed: set `declinedConfirmed: true` and
- * `publicationStatus: "approved"` in `src/content/custom-aluminum.ts`, add the
- * rows, and this file starts emitting `alternates.canonical` and drops the
- * robots block on its own. Removing the robots block by hand while the flag is
- * still false would publish the claim the gate exists to prevent.
- */
-const PUBLISHING_GATE_OPEN = customAluminumPage.boundary.declinedConfirmed;
+/** `/products/custom-aluminum` — public engineering assessment page. */
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const page = await getWordpressPageDocument("custom-aluminum");
+  const indexable = await isCustomAluminumPageIndexable();
   return {
     title: {
       absolute:
@@ -44,9 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Start a drawing-led aluminum component assessment with 2D drawings, 3D data or a physical sample, covering DFM, tooling, first article and supplier-supported production.",
-    ...(PUBLISHING_GATE_OPEN
-      ? { alternates: { canonical: "/products/custom-aluminum" } }
-      : { robots: { index: false, follow: true } }),
+    ...(indexable ? { alternates: localizedAlternates("/products/custom-aluminum", locale) } : {}),
+    robots: { index: indexable, follow: true },
   };
 }
 

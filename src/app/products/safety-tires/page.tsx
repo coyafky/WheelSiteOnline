@@ -15,10 +15,10 @@ import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getWordpressPageDocument("safety-tires");
   return {
-    title: page?.seoTitle || "Self-Sealing Tyres | Puncture Response & Test Conditions",
+    title: page?.seoTitle || "Self-Sealing Tires | Puncture Response & Test Conditions",
     description:
       page?.seoDescription ||
-      "Learn how an inner-liner sealing layer responds to an applicable tread puncture, what the supplier-stated 8 mm test condition means, and which tyre and market documents to confirm.",
+      "Learn how an inner-liner sealing layer responds to an applicable tread puncture, what the supplier-stated 8 mm test condition means, and which tire and market documents to confirm.",
   };
 }
 

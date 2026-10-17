@@ -21,6 +21,12 @@ const FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE = 'fh_guides_native_authoritative';
 /** @return string[] */
 function fh_guide_editable_post_types(): array
 {
+    return [FH_GUIDE_NATIVE_POST_TYPE];
+}
+
+/** @return string[] */
+function fh_guide_compatible_post_types(): array
+{
     return [FH_GUIDE_POST_TYPE, FH_GUIDE_NATIVE_POST_TYPE];
 }
 
@@ -62,19 +68,21 @@ function fh_guide_register_content_type(): void
         'public' => false,
         'publicly_queryable' => false,
         'exclude_from_search' => true,
-        'show_ui' => true,
-        'show_in_menu' => true,
+        // fh_guide is a migration-era read/rollback source, not an authoring UI.
+        'show_ui' => false,
+        'show_in_menu' => false,
         'show_in_nav_menus' => false,
         'menu_icon' => 'dashicons-welcome-write-blog',
         'menu_position' => 22,
         'has_archive' => false,
         'rewrite' => false,
         'query_var' => false,
-        'capability_type' => 'post',
+        'capability_type' => ['fh_guide', 'fh_guides'],
         'map_meta_cap' => true,
     ]);
 
-    foreach (fh_guide_editable_post_types() as $postType) {
+    // Keep legacy metadata registered so migration/import code can read it.
+    foreach (fh_guide_compatible_post_types() as $postType) {
         foreach (fh_guide_fields() as $key => $definition) {
             register_post_meta($postType, 'fh_' . $key, [
             'type' => $definition['type'],
@@ -90,6 +98,23 @@ function fh_guide_register_content_type(): void
     }
 }
 
+add_filter('map_meta_cap', 'fh_guide_block_legacy_editing', 10, 4);
+function fh_guide_block_legacy_editing(array $caps, string $cap, int $userId, array $args): array
+{
+    $legacyPrimitiveCaps = ['create_fh_guides', 'edit_fh_guide', 'delete_fh_guide', 'publish_fh_guides'];
+    if (in_array($cap, $legacyPrimitiveCaps, true)) {
+        return ['do_not_allow'];
+    }
+    if (!in_array($cap, ['edit_post', 'delete_post', 'publish_post'], true)) {
+        return $caps;
+    }
+    $postId = isset($args[0]) ? absint($args[0]) : 0;
+    if ($postId > 0 && get_post_type($postId) === FH_GUIDE_POST_TYPE) {
+        return ['do_not_allow'];
+    }
+    return $caps;
+}
+
 /** 严格解码数组字段；错误 JSON 一律返回 null，让前端 fail-closed。 */
 function fh_guide_decode_json(int $post_id, string $key): ?array
 {
@@ -99,6 +124,66 @@ function fh_guide_decode_json(int $post_id, string $key): ?array
     }
     $decoded = json_decode($raw, true);
     return is_array($decoded) ? $decoded : null;
+}
+
+/**
+ * 读取 ACF 原生字段；只允许原生 post 使用，避免旧 fh_guide 获得新的编辑入口。
+ * null 表示 ACF 没有该字段值，调用方应回退到既有 fh_* meta。
+ */
+function fh_guide_acf_value(int $post_id, string $fieldName): mixed
+{
+    if (get_post_type($post_id) !== FH_GUIDE_NATIVE_POST_TYPE
+        || !function_exists('get_field')
+        || !metadata_exists('post', $post_id, $fieldName)) {
+        return null;
+    }
+
+    return get_field($fieldName, $post_id, false);
+}
+
+/** @return array<int,array<string,mixed>>|null */
+function fh_guide_acf_repeater(int $post_id, string $fieldName, string $bodyKey): ?array
+{
+    $rows = fh_guide_acf_value($post_id, $fieldName);
+    if (!is_array($rows) || $rows === []) {
+        return null;
+    }
+
+    $normalized = [];
+    foreach ($rows as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $body = [];
+        $rawBody = $row[$bodyKey] ?? [];
+        if (is_array($rawBody)) {
+            foreach ($rawBody as $line) {
+                $value = is_array($line) ? ($line['paragraph'] ?? '') : $line;
+                if (is_scalar($value) && trim((string) $value) !== '') {
+                    $body[] = (string) $value;
+                }
+            }
+        }
+        $heading = is_scalar($row['heading'] ?? null) ? trim((string) $row['heading']) : '';
+        if ($heading !== '' || $body !== []) {
+            $normalized[] = ['heading' => $heading, $bodyKey => $body];
+        }
+    }
+
+    return $normalized !== [] ? $normalized : null;
+}
+
+function fh_guide_field_value(int $post_id, string $fieldName, string $fallbackKey): mixed
+{
+    $acfValue = fh_guide_acf_value($post_id, $fieldName);
+    return $acfValue !== null ? $acfValue : get_post_meta($post_id, $fallbackKey, true);
+}
+
+/** @return array<int,array<string,mixed>>|null */
+function fh_guide_structured_rows(int $post_id, string $acfField, string $jsonKey, string $bodyKey): ?array
+{
+    return fh_guide_acf_repeater($post_id, $acfField, $bodyKey)
+        ?? fh_guide_decode_json($post_id, $jsonKey);
 }
 
 /** @return array<string,mixed> */
@@ -112,16 +197,16 @@ function fh_guide_rest_fields(int $post_id, bool $preview = false): array
         }
     }
     return [
-        'publication_status' => (string) get_post_meta($post_id, 'fh_publication_status', true),
-        'summary' => (string) get_post_meta($post_id, 'fh_summary', true),
-        'category' => (string) get_post_meta($post_id, 'fh_category', true),
-        'reading_time' => (string) get_post_meta($post_id, 'fh_reading_time', true),
-        'answer' => (string) get_post_meta($post_id, 'fh_answer', true),
-        'needs_verification' => (bool) get_post_meta($post_id, 'fh_needs_verification', true),
-        'detail' => fh_guide_decode_json($post_id, 'fh_detail_json'),
-        'sections' => fh_guide_decode_json($post_id, 'fh_sections_json'),
-        'seo_title' => (string) get_post_meta($post_id, 'fh_seo_title', true),
-        'seo_description' => (string) get_post_meta($post_id, 'fh_seo_description', true),
+        'publication_status' => (string) fh_guide_field_value($post_id, 'fh_publication_status', 'fh_publication_status'),
+        'summary' => (string) fh_guide_field_value($post_id, 'fh_summary', 'fh_summary'),
+        'category' => (string) fh_guide_field_value($post_id, 'fh_category', 'fh_category'),
+        'reading_time' => (string) fh_guide_field_value($post_id, 'fh_reading_time', 'fh_reading_time'),
+        'answer' => (string) fh_guide_field_value($post_id, 'fh_answer', 'fh_answer'),
+        'needs_verification' => (bool) fh_guide_field_value($post_id, 'fh_needs_verification', 'fh_needs_verification'),
+        'detail' => fh_guide_structured_rows($post_id, 'fh_detail', 'fh_detail_json', 'paragraphs'),
+        'sections' => fh_guide_structured_rows($post_id, 'fh_sections', 'fh_sections_json', 'body'),
+        'seo_title' => (string) fh_guide_field_value($post_id, 'fh_seo_title', 'fh_seo_title'),
+        'seo_description' => (string) fh_guide_field_value($post_id, 'fh_seo_description', 'fh_seo_description'),
         'translations' => $translations,
         'translation_status' => $translationStatus,
         'image' => function_exists('fh_guide_authoring_public_image')
@@ -133,9 +218,9 @@ function fh_guide_rest_fields(int $post_id, bool $preview = false): array
 /** WordPress publish 与编辑批准必须同时成立。 */
 function fh_guide_is_public(int $post_id): bool
 {
-    return in_array(get_post_type($post_id), fh_guide_editable_post_types(), true)
+    return in_array(get_post_type($post_id), fh_guide_compatible_post_types(), true)
         && get_post_status($post_id) === 'publish'
-        && get_post_meta($post_id, 'fh_publication_status', true) === 'approved';
+        && fh_guide_field_value($post_id, 'fh_publication_status', 'fh_publication_status') === 'approved';
 }
 
 add_action('rest_api_init', 'fh_guide_register_rest_routes');
@@ -192,6 +277,7 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
             'status' => $post->post_status,
             'title' => ['rendered' => get_the_title($post)],
             'excerpt' => ['rendered' => get_the_excerpt($post)],
+            'content' => ['rendered' => apply_filters('the_content', $post->post_content)],
             'guide' => fh_guide_rest_fields($post->ID, $preview),
         ];
     }
@@ -323,12 +409,40 @@ function fh_guide_register_setting(): void
 function fh_guide_self_check(): array
 {
     $type = get_post_type_object(FH_GUIDE_POST_TYPE);
+    $nativeMeta = get_registered_meta_keys('post', FH_GUIDE_NATIVE_POST_TYPE);
+    $legacyPrimitiveCaps = ['create_fh_guides', 'edit_fh_guide', 'delete_fh_guide', 'publish_fh_guides'];
     return [
         'registered' => $type !== null,
         'rest_base' => $type?->rest_base ?? '',
+        'legacy_admin_hidden' => $type !== null && $type->show_ui === false && $type->show_in_menu === false,
+        'legacy_editable' => false,
+        'legacy_capability_type' => $type?->capability_type ?? null,
+        'legacy_primitive_caps_blocked' => array_reduce(
+            $legacyPrimitiveCaps,
+            static fn(bool $blocked, string $cap): bool => $blocked && fh_guide_block_legacy_editing([], $cap, 0, []) === ['do_not_allow'],
+            true
+        ),
         'authoritative' => get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1',
         'native_authoritative' => get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1',
         'native_post_type' => FH_GUIDE_NATIVE_POST_TYPE,
+        'native_fields_registered' => array_reduce(
+            array_keys(fh_guide_fields()),
+            static fn(bool $registered, string $key): bool => $registered && isset($nativeMeta['fh_' . $key]),
+            true
+        ),
         'field_keys' => array_keys(fh_guide_fields()),
+        'acf_installed' => function_exists('acf_add_local_field_group'),
+        'acf_group_registered' => function_exists('fh_guide_acf_group_registered')
+            ? fh_guide_acf_group_registered()
+            : false,
+        'acf_group_post_only' => function_exists('fh_guide_acf_group_post_only')
+            ? fh_guide_acf_group_post_only()
+            : false,
+        'acf_repeater_available' => function_exists('fh_guide_acf_repeater_available')
+            ? fh_guide_acf_repeater_available()
+            : false,
+        'acf_field_names' => function_exists('fh_guide_acf_field_names')
+            ? fh_guide_acf_field_names()
+            : [],
     ];
 }

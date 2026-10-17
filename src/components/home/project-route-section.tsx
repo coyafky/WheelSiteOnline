@@ -41,7 +41,7 @@ export function ProjectRouteSection({
   locale: Locale;
 }) {
   return (
-    <section className="bg-hero py-20 text-white sm:py-24 lg:py-32">
+    <section data-module-id="H04" className="bg-hero py-20 text-white sm:py-24 lg:py-32">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div
           className="grid gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20"

@@ -5,16 +5,20 @@ import { PreviewBanner } from "@/components/preview-banner";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { isEnabled: preview } = await draftMode();
+  const locale = await getLocale();
   const page = await getWordpressPageDocument("privacy", { preview });
   return {
     title: page?.seoTitle || "Privacy Policy",
     description:
       page?.seoDescription ||
       "Privacy policy template for enquiry data, consent and customer rights.",
-    robots: { index: false, follow: false },
+    alternates: localizedAlternates("/support/privacy", locale),
+    robots: { index: !preview, follow: true },
   };
 }
 

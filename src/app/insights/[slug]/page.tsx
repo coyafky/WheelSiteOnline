@@ -6,6 +6,7 @@ import { ProseArticle } from "@/components/prose-article";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PreviewBanner } from "@/components/preview-banner";
 import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 import {
   getInsightGuideDocument,
   getInsightGuideDocuments,
@@ -35,7 +36,8 @@ export async function generateMetadata({
   return {
     title: document.seoTitle,
     description: document.seoDescription,
-    robots: { index: false, follow: true },
+    alternates: localizedAlternates(`/insights/${slug}`, locale),
+    robots: { index: !preview, follow: true },
   };
 }
 

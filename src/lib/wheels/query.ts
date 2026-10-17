@@ -15,7 +15,7 @@
  * 工艺是**型号级**条件（`approved_process`），不参与 variant 交集。
  */
 
-import { normalizePcds } from "./normalize";
+import { normalizePcds } from "./normalize.ts";
 import {
   PROCESS_META,
   processLabelEn,
@@ -24,7 +24,7 @@ import {
   type FacetOption,
   type PublicWheelModel,
   type ProcessKey,
-} from "./types";
+} from "./types.ts";
 
 export const PAGE_SIZE = 24;
 

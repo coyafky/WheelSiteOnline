@@ -87,45 +87,45 @@ export function getProductFamily(slug: string): ProductFamily | undefined {
  * below it stops making sense.
  */
 export const catalogueIntro = {
-  eyebrow: "What we manufacture",
+  eyebrow: "Product lines",
   heading: "Four product lines",
-  lede: "Wheels, EV powertrain components, custom aluminum parts and self-healing tires — engineered and manufactured across four parallel lines.",
+  lede: "Wheels, EV aluminum housings, custom aluminum components and self-sealing tires, presented across four parallel product lines.",
   supporting:
-    "Not a wheel shop with side projects: each line has its own engineering and process route, and all four share the same facility, tooling discipline and documentation trail.",
+    "Each line follows its own engineering and process route. The responsible supplier, facility and supporting records are confirmed for each project.",
 } as const;
 
 export const catalogueGuidance = {
   eyebrow: "Getting started",
-  heading: "How to specify your order",
-  lede: "You do not need to arrive with a finished drawing. Send us the vehicle and the look you are after — we turn it into a buildable specification.",
+  heading: "Choose the right route for your project",
+  lede: "Start with the product line and the information you have. Each project route explains what can be reviewed and which details still need confirmation.",
 } as const;
 
 export const catalogueRoutes: RouteStep[] = [
   {
     step: "01",
-    title: "Tell us the vehicle",
-    body: "Make, model, trim and any brake or suspension changes. This sets the clearance envelope before any styling decisions.",
-    href: "/contact",
-    linkLabel: "Send vehicle details",
+    title: "Choose a product line",
+    body: "Select wheels, EV aluminum housings, custom aluminum components or self-sealing tires to reach the relevant project information.",
+    href: "/products",
+    linkLabel: "Review product lines",
   },
   {
     step: "02",
-    title: "Choose a construction",
-    body: "Monoblock for the lightest result, two-piece for deep lips and wide fitments, off-road for load-rated truck and SUV builds.",
-    href: "/products",
-    linkLabel: "Compare families",
+    title: "Share the available inputs",
+    body: "Provide the drawing, model, sample or vehicle details that apply to the project. Missing information remains open for review.",
+    href: "/request-a-quote",
+    linkLabel: "Start a project inquiry",
   },
   {
     step: "03",
-    title: "Set the fitment",
-    body: "Diameter, width, offset, PCD and centre bore. We check each against clearance and load rating and flag anything that will not fit.",
-    href: "/insights",
-    linkLabel: "Fitment resources",
+    title: "Confirm the project requirements",
+    body: "Product-specific requirements, validation evidence and supply scope are reviewed against the information provided; a page listing is not a fitment or feasibility approval.",
+    href: "/contact",
+    linkLabel: "Contact the project team",
   },
   {
     step: "04",
-    title: "Pick a finish",
-    body: "Brushed, polished, satin, matte or gloss. Choose from the finish reference or send a sample and we will match it.",
+    title: "Agree any finish or process details",
+    body: "Finish, process, inspection and delivery details depend on the selected product line and project. Confirm availability and acceptance criteria with the project team.",
     href: "/gallery/finishes",
     linkLabel: "See finishes",
   },
@@ -133,13 +133,13 @@ export const catalogueRoutes: RouteStep[] = [
 
 export const catalogueFitmentSupport = {
   eyebrow: "Fitment support",
-  heading: "Fitment engineering comes with the order",
-  lede: "Fitment is where custom forged orders go wrong. We review it before production so the wheel you receive clears the brakes, sits where you wanted, and carries the right load rating.",
+  heading: "Wheel fitment requires project review",
+  lede: "Recorded wheel dimensions help define a review, but they do not confirm vehicle fitment. Brake clearance, interfaces and load requirements must be checked for the selected variant and application.",
   points: [
-    "Brake and caliper clearance checked against your model data",
-    "Offset and width reviewed for the stance you are targeting",
-    "Load rating confirmed for truck, SUV and heavy-duty applications",
-    "Written specification returned for approval before material is cut",
+    "Vehicle, trim and modification details to review",
+    "Brake and caliper clearance requirements",
+    "Selected diameter, width, offset, PCD and center bore",
+    "Application load requirements and supporting evidence",
   ],
 } as const;
 

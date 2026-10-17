@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CircleHelp } from "lucide-react";
-import {
-  fitmentPageCopy,
-  platformFitments,
-} from "@/content/fitment";
+import { fitmentPageCopy, platformFitments } from "@/content/fitment";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
-export const metadata: Metadata = {
-  title: "Vehicle Fitment — Forged Wheels by Platform",
-  description:
-    "Fitment landing pages for BMW M, Mercedes-AMG and Audi RS. Starting size references, design directions and engineering notes — final specifications confirmed per order.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Vehicle Fitment — Forged Wheels by Platform",
+    description:
+      "Fitment landing pages for BMW M, Mercedes-AMG and Audi RS. Starting size references, design directions and engineering notes — final specifications confirmed per order.",
+    alternates: localizedAlternates("/fitment", locale),
+    robots: { index: true, follow: true },
+  };
+}
 
 /**
  * Fitment hub (`/fitment`).

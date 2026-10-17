@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { AutomotiveBackdrop } from "@/components/automotive-backdrop";
 import {
   getWheelCataloguePage,
+  buildCatalogueHref,
+  hasEmptySearchParam,
   isPageOutOfRange,
   parseCatalogueSearchParams,
   type WheelCatalogueInput,
@@ -24,8 +26,10 @@ import {
 } from "@/components/wheels/wheel-catalogue-empty";
 import { automotiveScenes } from "@/content/automotive-scenes";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
-import { getLocale } from "@/lib/i18n";
+import { getLocale, isIndexableLocale, translatorFor } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 import { localizedPath } from "@/lib/i18n/types";
+import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
 
 /**
  * `/products/wheels` — 轮毂目录（PAGE-SPECS/wheel-catalog.md W01–W03）。
@@ -53,25 +57,18 @@ type CataloguePageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const BASE_TITLE =
-  "Wheel Catalogue | Sizes, PCDs & Production Specifications | Fenghuai";
-const PAGE_TITLE = (page: number) =>
-  `Wheel Catalogue — Page ${page} | Sizes, PCDs & Production Specifications | Fenghuai`;
-const DESCRIPTION =
-  "Browse approved wheel models by diameter, width, PCD and recorded manufacturing process, then select an actual production configuration for enquiry.";
 const CANONICAL = "/products/wheels";
 
 /* ---------------------------------------------------------------------------
  * W02 结果文案模板（§4，逐字）
  * ------------------------------------------------------------------------- */
 
-function resultSummary(view: WheelCataloguePageView): string {
+function resultSummary(view: WheelCataloguePageView, locale: Awaited<ReturnType<typeof getLocale>>): string {
+  const copy = wheelCatalogueCopyFor(locale);
   const search = view.normalizedQuery.q;
-  if (search) return `${view.total} models found for “${search}”`;
-  if (view.isFiltered) {
-    return `${view.total} models match the selected production specifications`;
-  }
-  return `${view.total} published wheel models`;
+  if (search) return copy.resultSearch(view.total, search);
+  if (view.isFiltered) return copy.resultFiltered(view.total);
+  return copy.resultAll(view.total);
 }
 
 /* ---------------------------------------------------------------------------
@@ -83,27 +80,29 @@ export async function generateMetadata({
 }: CataloguePageProps): Promise<Metadata> {
   const query = parseCatalogueSearchParams(await searchParams);
   const view = await getWheelCataloguePage(query);
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
 
   const requestedPage = query.page ?? 1;
   const filtered = view.isFiltered;
-  const empty = view.total === 0;
   const paged = requestedPage > 1;
 
   // 带筛选/搜索的结果页 noindex,follow 且 canonical 指回基础目录（避免组合爆炸）；
-  // 空结果页始终 noindex；无筛选的基础页可索引，分页用自身 URL 作 canonical。
-  const noindex = filtered || empty;
+  // 搜索/筛选组合 noindex；无筛选的基础页和分页均可索引。
+  const noindex = filtered;
   const canonical = noindex
-    ? CANONICAL
+    ? localizedPath(CANONICAL, locale)
     : paged
-      ? `${CANONICAL}?page=${requestedPage}`
-      : CANONICAL;
+      ? `${localizedPath(CANONICAL, locale)}?page=${requestedPage}`
+      : localizedPath(CANONICAL, locale);
+  const indexable = !noindex && isIndexableLocale(locale);
 
   return {
     // `absolute`：根 layout 的 `%s | Fenghuai` 模板会再追加一次品牌。
-    title: { absolute: paged && !noindex ? PAGE_TITLE(requestedPage) : BASE_TITLE },
-    description: DESCRIPTION,
-    alternates: { canonical },
-    robots: { index: !noindex, follow: true },
+    title: { absolute: paged && !noindex ? copy.seoPageTitle(requestedPage) : copy.seoTitle },
+    description: copy.seoDescription,
+    alternates: localizedAlternates(canonical, locale),
+    robots: { index: indexable, follow: true },
   };
 }
 
@@ -115,6 +114,9 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
   const locale = await getLocale();
   const params = await searchParams;
   const query = parseCatalogueSearchParams(params);
+  if (hasEmptySearchParam(params)) {
+    redirect(localizedPath(buildCatalogueHref(query), locale));
+  }
   const view = await getWheelCataloguePage(query);
 
   // 越界页返回 404，而不是静默落到最后一页（§5.2）——否则爬虫会把不存在的页当内容收录。
@@ -122,7 +124,9 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
 
   // 之后一律用规范化查询生成 URL：未知参数已被忽略、非法值已被丢掉。
   const pageQuery: WheelCatalogueInput = view.normalizedQuery;
-  const summary = resultSummary(view);
+  const copy = wheelCatalogueCopyFor(locale);
+  const t = translatorFor(locale);
+  const summary = resultSummary(view, locale);
   const itemListPositionBase = (view.page - 1) * view.pageSize;
 
   return (
@@ -151,48 +155,44 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
 
         <div className="container-fh pb-9 pt-[100px] lg:pb-11 lg:pt-[112px]">
           <SiteBreadcrumbs
-            label="Breadcrumb"
+            label={t("breadcrumb.label")}
             tone="light"
             items={[
-              { label: "Products", href: localizedPath("/products", locale) },
-              { label: "Wheels" },
+              { label: copy.products, href: localizedPath("/products", locale) },
+              { label: copy.wheels },
             ]}
           />
 
-          <p className="eyebrow mt-5 !text-forge">WHEEL CATALOGUE</p>
+          <p className="eyebrow mt-5 !text-forge">{copy.eyebrow}</p>
           <h1
             id="wheel-catalogue-title"
             className="mt-3 max-w-[860px] font-display text-[clamp(1.85rem,4.4vw,2.6rem)] font-800 uppercase leading-[0.96] tracking-[-0.02em] text-ink"
           >
-            Find a wheel by verified production specification
+            {copy.heading}
           </h1>
           <p className="mt-4 max-w-[760px] text-[0.98rem] leading-relaxed text-steel">
-            Browse published wheel models by diameter, width, PCD and recorded
-            manufacturing process. Every result has an approved image, and every
-            selectable specification comes from an actual recorded variant.
+            {copy.intro}
           </p>
           <p className="mt-3 max-w-[760px] text-[0.82rem] leading-relaxed text-steel/85">
-            A catalogue match is a starting point for quotation. Vehicle fitment, brake
-            clearance, load requirements and destination-market documents are confirmed
-            before an order is approved.
+            {copy.boundary}
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Link
-              href="/products/wheels/flow-formed"
+              href={localizedPath("/products/wheels/flow-formed", locale)}
               className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-ink"
             >
-              Browse recorded flow-formed wheels
+              {copy.flowFormedLink}
               <ArrowRight
                 className="size-3.5 transition-transform group-hover:translate-x-0.5"
                 aria-hidden="true"
               />
             </Link>
             <Link
-              href="/products/wheels/forged"
+              href={localizedPath("/products/wheels/forged", locale)}
               className="group inline-flex items-center gap-2 font-display text-[0.74rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-ink"
             >
-              Discuss a custom forged wheel
+              {copy.forgedLink}
               <ArrowRight
                 className="size-3.5 transition-transform group-hover:translate-x-0.5"
                 aria-hidden="true"
@@ -204,7 +204,7 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
 
       {/* ═══ W02 · 结果区 / W03 · 空状态（§4、§9、§10）══════════════════ */}
       <section
-        aria-label="Wheel catalogue results"
+        aria-label={copy.resultsLabel}
         className="border-b border-border bg-white py-8 lg:py-14"
       >
         <div className="container-fh-wide">
@@ -249,17 +249,17 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
 
                   {/* 卡片边界说明 —— 只出现一次，不逐卡重复（§4 W02） */}
                   <p className="mt-5 max-w-[720px] text-[0.75rem] leading-relaxed text-muted-foreground">
-                    Specifications shown in the catalogue are production records, not a
-                    vehicle-fitment guarantee.
+                    {copy.catalogueDisclosure}
                   </p>
 
-                  {/* 每页 24 张；移动单列（360–639）→ 640 起两列 → 桌面四列，
-                      且任何一列都不窄于 230px（§5.4、§9、§10）。只给第一排 priority。 */}
-                  <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:gap-y-14">
+                  {/* 每页 24 张；移动两列（360–639）→ 640 起按卡片最小宽度扩展 → 桌面四列，
+                      且卡片信息必须完整可读（§5.4、§9、§10）。只给第一排 priority。 */}
+                  <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] sm:gap-x-6 sm:gap-y-12 lg:gap-y-14">
                     {view.cards.map((card, index) => (
                       <WheelCatalogueCardView
                         key={card.slug}
                         card={card}
+                        locale={locale}
                         priority={index < 4}
                       />
                     ))}
@@ -293,7 +293,7 @@ export default async function WheelCataloguePage({ searchParams }: CataloguePage
               itemListElement: view.cards.map((card, index) => ({
                 "@type": "ListItem",
                 position: itemListPositionBase + index + 1,
-                url: `${CANONICAL}/${card.slug}`,
+                url: `${localizedPath(CANONICAL, locale)}/${card.slug}`,
                 name: card.model,
               })),
             }),

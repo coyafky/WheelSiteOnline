@@ -4,7 +4,7 @@ import {
   DEFAULT_LOCALE,
   isLocale,
   LOCALE_COOKIE,
-  translate,
+  translateStrict,
   type Locale,
 } from "./types";
 
@@ -33,14 +33,14 @@ export async function getTranslator(): Promise<{
   const dict = DICTIONARIES[locale];
   return {
     locale,
-    t: (key: string) => translate(dict, DICTIONARIES[DEFAULT_LOCALE], key),
+    t: (key: string) => translateStrict(dict, key),
   };
 }
 
 /** Synchronous lookup for a known locale — for client components. */
 export function translatorFor(locale: Locale) {
   const dict = DICTIONARIES[locale];
-  return (key: string) => translate(dict, DICTIONARIES[DEFAULT_LOCALE], key);
+  return (key: string) => translateStrict(dict, key);
 }
 
 export { DICTIONARIES };

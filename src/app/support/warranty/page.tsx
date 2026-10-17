@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
-export const metadata: Metadata = {
-  title: "Warranty Policy",
-  description:
-    "Fenghuai's manufacturing warranty for aluminum components — coverage, exclusions, claim process and remedies.",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Warranty Policy",
+    description:
+      "Fenghuai's manufacturing warranty for aluminum components — coverage, exclusions, claim process and remedies.",
+    alternates: localizedAlternates("/support/warranty", locale),
+    robots: { index: true, follow: true },
+  };
+}
 
 /**
  * Thin route: the document body is read from Headless WordPress (page key

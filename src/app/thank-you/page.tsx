@@ -5,15 +5,19 @@ import { site } from "@/content/site";
 import { verifyInquiryReceipt } from "@/lib/inquiry/receipt";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const page = await getWordpressPageDocument("thank-you");
   return {
     title: page?.seoTitle || "Inquiry Received — Fenghuai",
     description:
       page?.seoDescription ||
       "Confirmation that your forged wheel inquiry reached Fenghuai, and what happens next.",
-    robots: { index: false, follow: false },
+    robots: { index: true, follow: true },
+    alternates: localizedAlternates("/thank-you", locale),
   };
 }
 

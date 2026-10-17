@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   SITE_PAGES_CACHE_TAG,
   normalizeWordpressPage,
+  normalizeWordpressLocalePage,
   sitePageRevalidationPaths,
   validSitePageKey,
   type WordpressPageRecord,
@@ -29,6 +30,33 @@ test("原生 Page 适配为稳定契约并保留 SEO", () => {
   assert.equal(result.source, "wordpress");
   assert.equal(result.content.hero.heading, "A native page");
   assert.equal(result.seoTitle, "About — CMS");
+});
+
+test("独立语言 Page 不跨语言回退，撤回优先于旧内容", () => {
+  const independent: WordpressPageRecord = {
+    ...record,
+    page: {
+      page_key: "home",
+      locale: "zh",
+      revision: "2026-10-16T12:00:00Z",
+      publication_status: "approved",
+      content: { modules: [] },
+      seo_title: "首页",
+      seo_description: "已批准的中文简介",
+    },
+  };
+  assert.deepEqual(normalizeWordpressLocalePage(independent, "home", "es"), { status: "missing-locale" });
+  const ready = normalizeWordpressLocalePage<{ modules: unknown[] }>(independent, "home", "zh");
+  assert.equal(ready.status, "ready");
+  if (ready.status === "ready") assert.equal(ready.page.revision, "2026-10-16T12:00:00Z");
+  assert.deepEqual(normalizeWordpressLocalePage({
+    ...independent,
+    page: { ...independent.page, publication_status: "withdrawn" },
+  }, "home", "zh"), { status: "withdrawn" });
+  assert.deepEqual(normalizeWordpressLocalePage({
+    ...independent,
+    page: { ...independent.page, seo_description: "" },
+  }, "home", "zh"), { status: "unpublished" });
 });
 
 test("原生 Page 按 locale 读取已批准翻译，未批准翻译 fail-closed", () => {
@@ -69,10 +97,15 @@ test("Page 草稿、撤回或键不匹配时 fail-closed", () => {
 test("页面缓存失效覆盖页面、首页和 sitemap，键不接受路径穿越", () => {
   assert.equal(validSitePageKey("about"), "about");
   assert.equal(validSitePageKey("../admin"), null);
-  assert.deepEqual(sitePageRevalidationPaths("about"), ["/about", "/sitemap.xml"]);
-  assert.deepEqual(sitePageRevalidationPaths("request-a-quote"), ["/request-a-quote", "/sitemap.xml"]);
-  assert.deepEqual(sitePageRevalidationPaths("contact"), ["/contact", "/sitemap.xml"]);
-  assert.deepEqual(sitePageRevalidationPaths("privacy"), ["/support/privacy", "/request-a-quote", "/contact", "/sitemap.xml"]);
-  assert.deepEqual(sitePageRevalidationPaths("thank-you"), ["/thank-you", "/sitemap.xml"]);
+  assert.deepEqual(sitePageRevalidationPaths("about"), ["/about", "/zh/about", "/es/about", "/th/about", "/sitemap.xml"]);
+  assert.deepEqual(sitePageRevalidationPaths("request-a-quote"), ["/request-a-quote", "/zh/request-a-quote", "/es/request-a-quote", "/th/request-a-quote", "/sitemap.xml"]);
+  assert.deepEqual(sitePageRevalidationPaths("contact"), ["/contact", "/zh/contact", "/es/contact", "/th/contact", "/sitemap.xml"]);
+  const privacyPaths = sitePageRevalidationPaths("privacy");
+  assert.ok(privacyPaths.includes("/zh/support/privacy"));
+  assert.ok(privacyPaths.includes("/es/request-a-quote"));
+  assert.ok(privacyPaths.includes("/th/contact"));
+  assert.ok(privacyPaths.includes("/sitemap.xml"));
+  assert.deepEqual(sitePageRevalidationPaths("thank-you"), ["/thank-you", "/zh/thank-you", "/es/thank-you", "/th/thank-you", "/sitemap.xml"]);
+  assert.deepEqual(sitePageRevalidationPaths("home"), ["/", "/zh", "/es", "/th", "/sitemap.xml"]);
   assert.equal(SITE_PAGES_CACHE_TAG, "site-pages");
 });

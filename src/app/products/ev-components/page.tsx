@@ -10,6 +10,8 @@ import {
 } from "@/components/ev-components/ev-components-page";
 import { getEvHousingPage } from "@/lib/wordpress/ev-components";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
 /**
  * `/products/ev-components` — EV01–EV06.
@@ -20,17 +22,11 @@ import { getWordpressPageDocument } from "@/lib/wordpress/pages";
  * supplier-provided photography; no SKUs, no stock, no grades, no tolerances,
  * no leak rates, no capacity and no certification marks.
  *
- * ── WHY THERE IS NO INDEXING GATE HERE ──────────────────────────────────────
- * `/products/custom-aluminum` stays `noindex, follow` because its declined
- * categories are unconfirmed, and an empty "what we decline" column would read
- * as a promise to make anything. This route has no such blank: everything it
- * publishes is either supplied material (attributed on the page) or an
- * evidence list the customer is asked to bring. Nothing is withheld behind a
- * flag, so the page declares its canonical URL and stays indexable. The
- * moment a claim on it becomes unconfirmed, that claim comes off the page —
- * the rule is not to hide it in metadata.
+ * This public content route is indexable at the owner's direction. Claims and
+ * project-specific scope remain subject to the page's visible evidence notes.
  */
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const page = await getWordpressPageDocument("ev-components");
   return {
     title: {
@@ -41,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Review supplier-supported aluminum housing categories for EV motor and controller projects, then submit drawing, cooling, sealing and volume requirements for engineering assessment.",
-    alternates: { canonical: "/products/ev-components" },
+    alternates: localizedAlternates("/products/ev-components", locale),
     robots: { index: true, follow: true },
   };
 }

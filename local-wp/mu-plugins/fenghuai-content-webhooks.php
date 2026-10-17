@@ -24,14 +24,19 @@ function fh_content_revalidate_config(): array
     return ['url' => trim($url), 'secret' => trim($secret)];
 }
 
-function fh_content_send_revalidation(string $type, string $slug): bool
+function fh_content_send_revalidation(string $type, string $slug, array $context = []): bool
 {
     $config = fh_content_revalidate_config();
     if ($config['url'] === '' || $config['secret'] === '') return false;
     if (!in_array($type, ['wheels', 'insights', 'pages'], true)) return false;
     $slug = sanitize_title($slug);
 
-    $body = wp_json_encode(['type' => $type, 'slug' => $slug]);
+    $payload = ['type' => $type, 'slug' => $slug];
+    if ($type === 'pages') {
+        if (isset($context['locale'])) $payload['locale'] = $context['locale'];
+        if (isset($context['revision'])) $payload['revision'] = $context['revision'];
+    }
+    $body = wp_json_encode($payload);
     $result = wp_remote_post($config['url'], [
         'timeout' => 0.5,
         'blocking' => false,
@@ -63,7 +68,12 @@ function fh_content_post_type_payload(int $postId): ?array
         return ['type' => 'insights', 'slug' => $post->post_name];
     }
     if ($post->post_type === 'page' && get_post_meta($postId, 'fh_page_key', true) !== '') {
-        return ['type' => 'pages', 'slug' => (string) get_post_meta($postId, 'fh_page_key', true)];
+        return [
+            'type' => 'pages',
+            'slug' => (string) get_post_meta($postId, 'fh_page_key', true),
+            'locale' => (string) get_post_meta($postId, 'fh_page_locale', true),
+            'revision' => (string) get_post_modified_time('c', true, $post),
+        ];
     }
     return null;
 }
@@ -72,7 +82,7 @@ function fh_content_revalidate_post(int $postId): void
 {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     $payload = fh_content_post_type_payload($postId);
-    if ($payload) fh_content_send_revalidation($payload['type'], $payload['slug']);
+    if ($payload) fh_content_send_revalidation($payload['type'], $payload['slug'], $payload);
 }
 
 add_action('save_post_wheel_model', 'fh_content_revalidate_post', 100);

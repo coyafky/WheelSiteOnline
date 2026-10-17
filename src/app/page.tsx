@@ -1,34 +1,60 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { HomeClosing } from "@/components/home/home-closing";
 import { HomeHero } from "@/components/home/hero/home-hero";
 import { ProjectRouteSection } from "@/components/home/project-route-section";
 import { ProductShowcase } from "@/components/sections/product-showcase";
 import { TrustStrip } from "@/components/sections/trust-strip";
-import { getHomepageContent } from "@/lib/wordpress/homepage";
-import { getWordpressPageDocument } from "@/lib/wordpress/pages";
-import type { HomepageContent } from "@/content/types";
+import { getHomepagePageView, getHomepagePublicLocales } from "@/lib/wordpress/homepage";
 import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
+import { siteUrlIsConfigured } from "@/lib/site-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  const page = await getWordpressPageDocument<HomepageContent>("home", { locale });
+  const { isEnabled: preview } = await draftMode();
+  const result = await getHomepagePageView({ locale, preview });
+  if (result.status !== "ready") {
+    return {
+      title: "Fenghuai",
+      robots: { index: false, follow: true },
+    };
+  }
+  const publicLocales = preview ? [] : await getHomepagePublicLocales();
+  const indexable = siteUrlIsConfigured && publicLocales.includes(locale);
   return {
-    title: { absolute: page?.seoTitle || "Fenghuai | Wheels, EV Housings, Custom Aluminum & Safety Tires" },
-    description: page?.seoDescription || "Explore Fenghuai's four automotive product lines, manufacturing capabilities, project process and inquiry entry point for global B2B programs.",
-    alternates: { canonical: "/" },
+    title: { absolute: result.page.seo.title },
+    description: result.page.seo.description,
+    robots: { index: indexable, follow: true },
+    alternates: indexable
+      ? localizedAlternates(result.page.seo.canonicalPath, locale, publicLocales)
+      : {},
   };
 }
 
 export default async function HomePage() {
-  const [content, locale] = await Promise.all([getHomepageContent(), getLocale()]);
+  const locale = await getLocale();
+  const { isEnabled: preview } = await draftMode();
+  const result = await getHomepagePageView({ locale, preview });
+  if (result.status !== "ready") notFound();
 
   return (
     <>
-      <HomeHero hero={content.hero} locale={locale} />
-      <ProductShowcase copy={content.productLines} locale={locale} />
-      <TrustStrip capabilities={content.capabilities} locale={locale} />
-      <ProjectRouteSection delivery={content.delivery} locale={locale} />
-      <HomeClosing closing={content.closing} locale={locale} />
+      {result.page.modules.map((module) => {
+        switch (module.type) {
+          case "home.hero":
+            return <HomeHero key={module.id} hero={module.content} locale={locale} />;
+          case "home.product-lines":
+            return <ProductShowcase key={module.id} copy={module.content} locale={locale} />;
+          case "home.capabilities":
+            return <TrustStrip key={module.id} capabilities={module.content} locale={locale} />;
+          case "home.delivery":
+            return <ProjectRouteSection key={module.id} delivery={module.content} locale={locale} />;
+          case "home.closing":
+            return <HomeClosing key={module.id} closing={module.content} locale={locale} />;
+        }
+      })}
     </>
   );
 }

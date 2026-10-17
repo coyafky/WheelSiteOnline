@@ -12,6 +12,7 @@ export function TrustStrip({
 }) {
   return (
     <section
+      data-module-id="H03"
       aria-labelledby="capabilities-title"
       data-reveal
       className="border-b border-border bg-soft py-20 lg:py-28"

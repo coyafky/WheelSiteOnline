@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
-export const metadata: Metadata = {
-  title: "Return & Refund Policy",
-  description:
-    "How Fenghuai handles returns for made-to-order aluminum components — defect, error, cancellation and restocking terms.",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Return & Refund Policy",
+    description:
+      "How Fenghuai handles returns for made-to-order aluminum components — defect, error, cancellation and restocking terms.",
+    alternates: localizedAlternates("/support/returns", locale),
+    robots: { index: true, follow: true },
+  };
+}
 
 /**
  * Thin route: the document body is read from Headless WordPress (page key

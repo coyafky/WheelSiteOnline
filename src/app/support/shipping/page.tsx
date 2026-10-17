@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 
-export const metadata: Metadata = {
-  title: "Shipping & Packaging",
-  description:
-    "How Fenghuai packs and ships orders — Incoterms, risk transfer, documentation and damage-in-transit procedure.",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Shipping & Packaging",
+    description:
+      "How Fenghuai packs and ships orders — Incoterms, risk transfer, documentation and damage-in-transit procedure.",
+    alternates: localizedAlternates("/support/shipping", locale),
+    robots: { index: true, follow: true },
+  };
+}
 
 /**
  * Thin route: the document body is read from Headless WordPress (page key

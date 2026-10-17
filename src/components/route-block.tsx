@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { RouteStep } from "@/content/types";
+import { getTranslator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,7 +15,7 @@ import { cn } from "@/lib/utils";
  * `RouteStep` shape already carries everything needed (`step`, `title`,
  * `body`, `href`, `linkLabel`), so no new contract is introduced here.
  */
-export function RouteBlock({
+export async function RouteBlock({
   routes,
   eyebrow,
   heading,
@@ -29,6 +30,7 @@ export function RouteBlock({
   columns?: 2 | 3;
   className?: string;
 }) {
+  const defaultEyebrow = eyebrow ?? (await getTranslator()).t("catalogue.resources.eyebrow");
   const resolved = columns ?? (routes.length >= 3 ? 3 : 2);
   const lgColumnClass: Record<number, string> = {
     2: "lg:grid-cols-2",
@@ -38,7 +40,7 @@ export function RouteBlock({
   return (
     <div className={cn(className)}>
       <div className="max-w-[640px]">
-        <p className="eyebrow">{eyebrow ?? "Keep exploring"}</p>
+        <p className="eyebrow">{defaultEyebrow}</p>
         <h2 className="mt-4 font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink">
           {heading}
         </h2>

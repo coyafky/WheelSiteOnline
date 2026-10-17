@@ -4,7 +4,7 @@
 - 页面类型：旋压工艺说明 + 真实型号筛选入口
 - 受众：海外经销商、改装采购、车队/OEM 项目人员与个人客户
 - 视口：WFF01–WFF05
-- 状态：**已实现**（2026-10-06，DEC-054）。WFF01–WFF05 已按本规格落地；工艺边界服务端锁定（`?process=` 任一取值均被忽略，生成 URL 不含 `process`）；复用目录卡片/筛选/排序/分页（后两者已加 `basePath` + `lockedProcesses`）；四视口运行时验收 21/21 全过。
+- 状态：**已实现**（2026-10-16，DEC-054、DEC-102）。WFF01–WFF05 已按本规格落地；工艺边界服务端锁定（`?process=` 任一取值均被忽略，生成 URL 不含 `process`）；复用目录卡片/筛选/排序/分页（后两者已加 `basePath` + `lockedProcesses`）；PC 与移动端均每页 24 个型号，移动端 360–639px 使用两列；移动专项生产模式 E2E 通过。
 - ✅ **发布门槛已开**（2026-10-06，用户指令）：`publicationGate = { copyReviewed: true, equipmentImageRights: "approved" }` → 页面 `robots: index,follow` + canonical 自指 + **已进 sitemap**（177 URL）。`src/app/sitemap.ts` 读同一门槛，**门槛若再关闭会自动退出 sitemap**（双向耦合已实测）。筛选页与空结果仍 `noindex,follow`。
 - 公开语言：英文优先
 - 内容来源：航鹏轮毂资料、峰徊综合资料、真实轮毂目录、WP 116
@@ -80,7 +80,7 @@
 
 **Lead**
 
-`Explore wheel models whose production data records flow forming as part of the manufacturing route. Select an actual size and PCD combination before requesting fitment and supply review.`
+`Explore wheel models whose production data records flow forming as part of the manufacturing route. Review an actual size and PCD combination, then ask about flow-formed wheel supply for a specific program.`
 
 **Boundary**
 
@@ -271,7 +271,7 @@ type FlowFormedCatalogueView = {
 
 - WFF01 顺序为文案→CTA→产品图；没有批准产品时不保留空白图片框。
 - WFF02 三卡单列；WFF03 时间线单列，设备图紧随步骤 02。
-- WFF04 筛选进入可访问抽屉，工艺条件以不可移除的标签显示；产品两列或单列由真实卡片可读性决定。
+- WFF04 筛选进入可访问抽屉，工艺条件以不可移除的标签显示；360–639px 产品使用两列，640px 起按卡片最小宽度进入更宽网格。
 - 分页保留当前筛选；浏览器返回后恢复滚动和查询状态。
 - WFF05 已选配置用逐行标签卡，不缩小桌面表格。
 - 200% 放大无横向滚动，交互目标至少 44×44。

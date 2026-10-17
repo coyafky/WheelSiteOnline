@@ -162,11 +162,11 @@ export const wheelDetailFinishes = {
 
 export const wheelDetailFitment = {
   heading: "Confirm the application before production",
-  body: "Matching diameter and PCD does not confirm vehicle fitment. Share the vehicle or application, model year or generation, brake package, suspension changes, tyre plan, load requirement and target market for review.",
+  body: "Matching diameter and PCD does not confirm vehicle fitment. Share the vehicle or application, model year or generation, brake package, suspension changes, tire plan, load requirement and target market for review.",
   checklist: [
     "Vehicle or application and model year",
     "Brake package and suspension changes",
-    "Tyre size and intended use",
+    "Tire size and intended use",
     "Required quantity and destination market",
   ],
 } as const;

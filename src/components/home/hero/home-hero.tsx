@@ -10,6 +10,7 @@ export function HomeHero({ hero, locale }: { hero: HomepageContent["hero"]; loca
   return (
     <section
       id="top"
+      data-module-id="H01"
       aria-labelledby="hero-title"
       className="relative isolate flex min-h-svh items-center overflow-hidden border-b border-border bg-background"
     >

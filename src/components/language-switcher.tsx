@@ -29,12 +29,15 @@ export function LanguageSwitcher({
   locale,
   label,
   tone = "light",
+  availableLocales = LOCALES,
 }: {
   locale: Locale;
   /** Accessible label — supplied by the caller from the dictionary. */
   label: string;
   /** `dark` renders for the ink header; `light` for light surfaces. */
   tone?: "light" | "dark";
+  /** Current page's published language variants. */
+  availableLocales?: readonly Locale[];
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -71,8 +74,8 @@ export function LanguageSwitcher({
           tone === "dark" ? "text-white" : "text-ink"
         }`}
       >
-        {LOCALES.map((code) => (
-          <option key={code} value={code} className="bg-ink text-white">
+        {(!availableLocales.includes(locale) ? [locale, ...availableLocales] : availableLocales).map((code) => (
+          <option key={code} value={code} disabled={!availableLocales.includes(code)} className="bg-ink text-white">
             {LOCALE_LABELS[code]}
           </option>
         ))}

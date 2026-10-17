@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import { isLocale } from "@/lib/i18n/types";
 import {
   INSIGHTS_CACHE_TAG,
   insightRevalidationPaths,
@@ -33,13 +34,15 @@ export async function POST(request: Request) {
   }
   const body = (() => {
     try {
-      return JSON.parse(rawBody) as { type?: unknown; slug?: unknown };
+      return JSON.parse(rawBody) as { type?: unknown; slug?: unknown; locale?: unknown; revision?: unknown };
     } catch {
       return null;
     }
   })() as {
     type?: unknown;
     slug?: unknown;
+    locale?: unknown;
+    revision?: unknown;
   } | null;
   const type = body?.type === "wheels" ? "wheels" : body?.type === "insights" ? "insights" : body?.type === "pages" ? "pages" : null;
   if (!type) {
@@ -47,6 +50,10 @@ export async function POST(request: Request) {
   }
   const rawSlug = typeof body?.slug === "string" ? body.slug : null;
   const slug = type === "pages" ? validSitePageKey(rawSlug) : validInsightPreviewSlug(rawSlug);
+  const locale = type === "pages" && isLocale(body?.locale) ? body.locale : undefined;
+  const revision = type === "pages" && typeof body?.revision === "string"
+    ? body.revision.slice(0, 80)
+    : undefined;
   const tag = type === "wheels" ? WHEEL_PUBLICATION_TAG : type === "insights" ? INSIGHTS_CACHE_TAG : SITE_PAGES_CACHE_TAG;
   const paths = type === "wheels"
     ? wheelRevalidationPaths(slug ?? undefined)
@@ -55,5 +62,5 @@ export async function POST(request: Request) {
     : sitePageRevalidationPaths(slug ?? undefined);
   revalidateTag(tag, { expire: 0 });
   for (const path of paths) revalidatePath(path);
-  return NextResponse.json({ ok: true, type, tag, paths });
+  return NextResponse.json({ ok: true, type, tag, paths, ...(locale ? { locale } : {}), ...(revision ? { revision } : {}) });
 }

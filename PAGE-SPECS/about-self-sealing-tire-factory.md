@@ -8,7 +8,7 @@
 - 来源：洛克项目资料第 14 页、用户提供的“Independent Production”页面、WordPress 本地媒体库
 - 目的：说明自密封轮胎产品线由什么生产环境支撑，同时区分集团品牌表达与实际制造主体
 
-> **2026-10-05 实施更新（DEC-044、DEC-045）**：用户确认相关制造公司属于同一实际控制人体系，公开页采用 `our self-sealing tyre production base`。本文早期禁止品牌层使用 `our factory` 的保守口径已被本更新取代；制造法人、型号、测试、认证和市场文件仍须逐项对应。
+> **2026-10-05 实施更新（DEC-044、DEC-045）**：用户确认相关制造公司属于同一实际控制人体系，公开页采用 `our self-sealing tire production base`。本文早期禁止品牌层使用 `our factory` 的保守口径已被本更新取代；制造法人、型号、测试、认证和市场文件仍须逐项对应。
 
 ## 1. 模块回答的三个问题
 
@@ -45,23 +45,23 @@
 
 **Eyebrow**
 
-`SELF-SEALING TYRE MANUFACTURING`
+`SELF-SEALING TIRE MANUFACTURING`
 
 **Heading**
 
-`A dedicated production environment for self-sealing tyre programs`
+`A dedicated production environment for self-sealing tire programs`
 
 **Lead**
 
-`Our self-sealing tyre production base includes automated equipment, dedicated machinery, material handling and inspection environments presented for this product line.`
+`Our self-sealing tire production base includes automated equipment, dedicated machinery, material handling and inspection environments presented for this product line.`
 
 **Relationship disclosure**
 
-`Fenghuai is your Shenzhen commercial and project interface. The responsible manufacturing entity, available tyre models, process scope and destination-market documents are confirmed for each supply program.`
+`Fenghuai is your Shenzhen commercial and project interface. The responsible manufacturing entity, available tire models, process scope and destination-market documents are confirmed for each supply program.`
 
 **图片说明**
 
-`Automated equipment shown in supplier materials for a self-sealing tyre production environment.`
+`Automated equipment shown in supplier materials for a self-sealing tire production environment.`
 
 这段不使用 `independent production`。如果后续文件证明生产主体确实独立拥有设备，可把“独立生产”写给该主体，仍不能自动归到峰徊名下。
 
@@ -77,7 +77,7 @@
 
 **Intro**
 
-`The images below document equipment and production areas presented by the supplier. Final process flow, operating parameters and inspection points are confirmed against the applicable tyre and control plan.`
+`The images below document equipment and production areas presented by the supplier. Final process flow, operating parameters and inspection points are confirmed against the applicable tire and control plan.`
 
 | 内容组 | 英文标题 | 英文说明 | 图片 |
 |---|---|---|---|
@@ -108,17 +108,17 @@
 | `Manufacturing entity` | 法定主体名称、地址及其与峰徊/品牌方的合作授权 |
 | `Process scope` | 自密封层材料、适用轮胎、涂覆/处理和检查范围的正式说明 |
 | `Equipment and facility` | 图片拍摄地点、当前设备状态、使用授权和与产品线的关系 |
-| `Tyre-model evidence` | 型号、尺寸、测试方法、条件、日期、执行方和结论 |
+| `Tire model evidence` | 型号、尺寸、测试方法、条件、日期、执行方和结论 |
 | `Market documentation` | 证书/报告持有人、型号范围、目标国家、有效期和可公开版本 |
 | `Commercial support` | 可供尺寸、数量、交付地区、安装、检查、售后和质保边界 |
 
 **Intro**
 
-`A production photograph identifies an environment. A purchase decision also needs documents that identify who manufactures the tyre, which models are covered, how the sealing performance is evaluated and which market requirements apply.`
+`A production photograph identifies an environment. A purchase decision also needs documents that identify who manufactures the tire, which models are covered, how the sealing performance is evaluated and which market requirements apply.`
 
 **Primary CTA**
 
-- Label：`Discuss a tyre supply program`
+- Label：`Discuss a tire supply program`
 - Href：`/request-a-quote`
 - Context：`product_line = safety-tires`、`intent = supplier_program`
 
@@ -134,12 +134,12 @@
 | 用途 | WP ID | 当前标题 | 尺寸 | 必填 alt | 焦点/裁切 |
 |---|---:|---|---:|---|---|
 | AT01 主图 / AT02 自动化设备 | 155 | `生产_热熔喷涂线机械臂` | 769×386 | `Robotic equipment on an enclosed production line shown in supplier materials` | 保留机械臂和蓝色线体；2:1，不放大为全屏背景 |
-| AT02 专用设备一 | 159 | `生产_智能生产设备一` | 768×386 | `Dedicated production machinery shown in a self-sealing tyre supplier facility` | 保留中央设备主体；2:1 |
+| AT02 专用设备一 | 159 | `生产_智能生产设备一` | 768×386 | `Dedicated production machinery shown in a self-sealing tire supplier facility` | 保留中央设备主体；2:1 |
 | AT02 专用设备二 | 148 | `生产_智能生产设备二` | 769×386 | `Automated handling equipment in the supplier production environment` | 保留卷材与黄色防护区；2:1 |
-| AT02 产线环境 | 18 | `生产_数智化产线` | 486×365 | `Production-line equipment presented in self-sealing tyre supplier materials` | 原图较小；4:3 小卡，不通栏 |
-| AT02 过程设备 | 16 | `生产_过程检测` | 630×355 | `Tyre-processing equipment shown within the supplier production line` | 保留轮胎/工装主体；16:9 |
+| AT02 产线环境 | 18 | `生产_数智化产线` | 486×365 | `Production-line equipment presented in self-sealing tire supplier materials` | 原图较小；4:3 小卡，不通栏 |
+| AT02 过程设备 | 16 | `生产_过程检测` | 630×355 | `Tire-processing equipment shown within the supplier production line` | 保留轮胎/工装主体；16:9 |
 | AT02 材料处理 | 145 | `生产_胶料挤出` | 545×421 | `Material-processing stage shown in the supplier production set` | 保留黑色材料和压辊；4:3 |
-| AT02 检测环境 | 136 | `生产_检测产线` | 719×421 | `Inspection equipment in the supplier tyre production environment` | 保留白色设备与前景输送区；16:9 |
+| AT02 检测环境 | 136 | `生产_检测产线` | 719×421 | `Inspection equipment in the supplier tire production environment` | 保留白色设备与前景输送区；16:9 |
 
 当前标题可作为内部线索，但 `热熔喷涂`、`过程检测`、`胶料挤出` 等具体工序名必须由供应商确认后才能直接用于公开 caption。确认前使用表中的中性英文描述。
 

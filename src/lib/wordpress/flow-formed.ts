@@ -3,7 +3,11 @@ import "server-only";
 import { flowFormedWheelsPage } from "@/content/flow-formed-wheels";
 import type { FlowFormedWheelsPage, MediaAsset } from "@/content/types";
 import { getLocale } from "@/lib/i18n";
-import { resolveLocalized } from "@/lib/i18n/localized-page";
+import {
+  flowFormedCopyStatus,
+  flowFormedPageFor,
+  type FlowFormedCopyStatus,
+} from "@/lib/i18n/flow-formed-copy";
 
 import { resolveWordpressMediaCollection } from "./media";
 import { getWordpressPageDocument } from "./pages";
@@ -64,33 +68,74 @@ function restoreBoundaryCopy(resolved: MediaAsset, original: MediaAsset): MediaA
 function isFlowFormedWheelsPage(value: unknown): value is FlowFormedWheelsPage {
   if (!value || typeof value !== "object") return false;
   const candidate = value as Record<string, unknown>;
-  return ["slug", "hero", "processDefinition", "manufacturingRoute", "catalogue", "inquiry"]
-    .every((key) => candidate[key] !== undefined);
+  const hero = candidate.hero as Record<string, unknown> | undefined;
+  const heroCta = hero?.primaryCta as Record<string, unknown> | undefined;
+  const heroSecondaryCta = hero?.secondaryCta as Record<string, unknown> | undefined;
+  const featuredLabels = hero?.featuredLabels as Record<string, unknown> | undefined;
+  const process = candidate.processDefinition as Record<string, unknown> | undefined;
+  const route = candidate.manufacturingRoute as Record<string, unknown> | undefined;
+  const equipment = route?.equipment as Record<string, unknown> | undefined;
+  const catalogue = candidate.catalogue as Record<string, unknown> | undefined;
+  const inquiry = candidate.inquiry as Record<string, unknown> | undefined;
+  const inquiryCta = inquiry?.primaryCta as Record<string, unknown> | undefined;
+  const textFields = (record: Record<string, unknown> | undefined, fields: string[]) =>
+    Boolean(record && fields.every((field) => typeof record[field] === "string" && String(record[field]).trim()));
+
+  return Boolean(
+    candidate.slug === "flow-formed" &&
+    Array.isArray(hero?.breadcrumb) && hero.breadcrumb.length === 3 &&
+    textFields(hero, ["breadcrumbLabel", "eyebrow", "heading", "lead", "boundary", "noApprovedModel"]) &&
+    textFields(heroCta, ["label", "href"]) && textFields(heroSecondaryCta, ["label", "href"]) &&
+    textFields(featuredLabels, ["imageAlt", "diameters", "configurations", "process", "viewSpecifications"]) &&
+    textFields(process, ["eyebrow", "heading", "body", "forgedProjectCtaLabel", "evidenceNote"]) &&
+    Array.isArray(process?.cards) && process.cards.length === 3 &&
+    textFields(route, ["eyebrow", "heading", "evidenceBoundary"]) &&
+    Array.isArray(route?.steps) && route.steps.length === 4 &&
+    route.steps.every((step) => textFields(step as Record<string, unknown>, ["step", "title", "body"])) &&
+    textFields(equipment, ["alt", "caption"]) &&
+    textFields(catalogue, ["eyebrow", "heading", "emptyResultHeading", "emptyResultBody", "clearFiltersLabel", "sendSpecificationLabel", "resultSearch", "resultFiltered", "resultAll", "disclosure"]) &&
+    textFields(inquiry, ["eyebrow", "heading", "scopeLabel", "filterSnapshotLabel"]) &&
+    Array.isArray(inquiry?.checklist) && inquiry.checklist.length > 0 &&
+    textFields(inquiryCta, ["label", "href"])
+  );
 }
 
-export async function getFlowFormedWheelsPage(): Promise<FlowFormedWheelsPage> {
+export type FlowFormedPageResolution = {
+  content: FlowFormedWheelsPage;
+  localeStatus: FlowFormedCopyStatus;
+};
+
+export async function getFlowFormedWheelsPage(): Promise<FlowFormedPageResolution> {
   const locale = await getLocale();
   const native = await getWordpressPageDocument<FlowFormedWheelsPage>(
     FLOW_FORMED_PAGE_KEY,
     { locale },
   );
-  // The WordPress body carries the body copy, not the publishing contract.
-  // `seo` and `publicationGate` are re-attached from the local master so the
-  // resolved object still satisfies `FlowFormedWheelsPage` and the route's
-  // gate + metadata logic keep their local owner.
-  const { content: source } = resolveLocalized<FlowFormedWheelsPage>({
-    requested:
-      native && isFlowFormedWheelsPage(native.content)
-        ? {
-            ...native.content,
-            seo: flowFormedWheelsPage.seo,
-            publicationGate: flowFormedWheelsPage.publicationGate,
-          }
-        : null,
-    default: flowFormedWheelsPage,
-    locale,
-    scope: "flow-formed",
-  });
+  const hasApprovedWordPressCopy = Boolean(native && isFlowFormedWheelsPage(native.content));
+  const localPage = flowFormedPageFor(locale);
+  const source = hasApprovedWordPressCopy
+    ? {
+        ...native!.content,
+        seo: {
+          ...localPage.seo,
+          ...(native!.seoTitle && native!.seoTitle !== flowFormedWheelsPage.seo.title
+            ? { title: native!.seoTitle }
+            : {}),
+          ...(native!.seoDescription && native!.seoDescription !== flowFormedWheelsPage.seo.description
+            ? { description: native!.seoDescription }
+            : {}),
+        },
+        publicationGate: flowFormedWheelsPage.publicationGate,
+      }
+    : localPage;
+  const seoApproved = locale === "en" || Boolean(
+    native?.seoTitle &&
+    native.seoDescription &&
+    native.seoTitle !== flowFormedWheelsPage.seo.title &&
+    native.seoDescription !== flowFormedWheelsPage.seo.description,
+  );
+  const localeStatus: FlowFormedCopyStatus =
+    hasApprovedWordPressCopy && seoApproved ? "approved" : flowFormedCopyStatus(locale);
 
   // Read the equipment binding from the resolved `source`, not the local
   // constant — otherwise the WP provenance never reaches the image, and a
@@ -103,7 +148,10 @@ export async function getFlowFormedWheelsPage(): Promise<FlowFormedWheelsPage> {
   // 否则即使 WordPress 返回了已批准的译文，正文仍会渲染英文正本
   // （同 `safety-tires.ts` 的历史 bug）。
   return {
-    ...source,
-    manufacturingRoute: { ...source.manufacturingRoute, equipment },
+    content: {
+      ...source,
+      manufacturingRoute: { ...source.manufacturingRoute, equipment },
+    },
+    localeStatus,
   };
 }

@@ -13,7 +13,7 @@ import {
 import { site } from "@/content/site";
 import { InquiryForm } from "@/components/inquiry-form";
 import { getLocale } from "@/lib/i18n";
-import { localizedPath } from "@/lib/i18n/types";
+import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
 import { contactFormCopyFor, contactLabelsFor } from "@/lib/i18n/conversion-ui-copy";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getContactPageBody } from "@/lib/wordpress/conversion-pages";
@@ -25,8 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: body.seo.title,
     description: body.seo.description,
-    alternates: { canonical: localizedPath("/contact", locale) },
-    robots: { index: locale === "en" && !preview, follow: true },
+    alternates: localizedAlternates("/contact", locale),
+    robots: { index: !preview, follow: true },
   };
 }
 

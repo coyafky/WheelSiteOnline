@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
 
 import { cn } from "@/lib/utils";
 import { buildCatalogueHref, type ProcessKey, type WheelCatalogueInput } from "@/lib/wheels";
@@ -69,7 +72,7 @@ function DisabledPage({ label }: { label: string }) {
   );
 }
 
-export function WheelCataloguePagination({
+export async function WheelCataloguePagination({
   query,
   page,
   totalPages,
@@ -98,22 +101,26 @@ export function WheelCataloguePagination({
 }) {
   if (totalPages <= 1) return null;
 
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
+  const localizedBasePath = localizedPath(basePath ?? "/products/wheels", locale);
+
   const href = (target: number) =>
-    buildCatalogueHref(query, { page: target, path: basePath, lockedProcesses });
+    buildCatalogueHref(query, { page: target, path: localizedBasePath, lockedProcesses });
 
   return (
     <nav
-      aria-label="Catalogue pagination"
+      aria-label={copy.pagination}
       className={cn("mt-10 flex flex-wrap items-center justify-center gap-1.5", className)}
     >
       {page > 1 ? (
         <PageLink
           href={href(page - 1)}
-          label="Previous"
+          label={copy.previous}
           rel="prev"
         />
       ) : (
-        <DisabledPage label="Previous" />
+        <DisabledPage label={copy.previous} />
       )}
 
       {pageWindow(page, totalPages).map((item, index) =>
@@ -136,9 +143,9 @@ export function WheelCataloguePagination({
       )}
 
       {page < totalPages ? (
-        <PageLink href={href(page + 1)} label="Next" rel="next" />
+        <PageLink href={href(page + 1)} label={copy.next} rel="next" />
       ) : (
-        <DisabledPage label="Next" />
+        <DisabledPage label={copy.next} />
       )}
     </nav>
   );

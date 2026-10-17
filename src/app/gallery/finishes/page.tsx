@@ -5,44 +5,27 @@ import { finishNote, finishes } from "@/content/finishes";
 import {
   finishesHero,
   finishesHonesty,
-  finishesPage,
   finishesPathways,
   finishesSampleCta,
-  isFinishesPublishingOpen,
 } from "@/content/finish-guide";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
 
 /**
- * The publishing gate is in metadata, not in the component tree.
- *
- * The eight finish names are still placeholders and no real swatch photograph
- * exists behind them, so `finishesPage.publicationGate` is unresolved and this
- * route declares `robots: { index: false, follow: true }` and publishes **no
- * canonical**. The page itself still renders in full — hero, honesty note,
- * swatch grid and all — because its content is truthful about being
- * illustrative. Clearing the flag in `@/content/finish-guide` is the only edit
- * needed to make it indexable; `sitemap.ts` reads the same gate so the two can
- * never disagree. See DEC-059.
+ * This public reference page is indexable at the owner's direction; its visible
+ * illustrative-content notice remains on the page.
  */
 export async function generateMetadata(): Promise<Metadata> {
-  const gateOpen = isFinishesPublishingOpen(finishesPage.publicationGate);
-
-  const head: Metadata = {
+  const locale = await getLocale();
+  return {
     title: "Finish Gallery — Brushed, Satin, Gloss & Matte Wheel Finishes",
     description:
       "Compare the forged wheel finishes Fenghuai offers — brushed clear, satin gunmetal, gloss black, matte bronze, polished lip and more — with guidance on requesting real samples.",
-    robots: { index: gateOpen, follow: true },
-  };
-
-  // Fail-closed: while a gate flag is unresolved the route publishes no
-  // canonical at all, so nothing points at an unconfirmed page (DEC-050).
-  if (!gateOpen) return head;
-
-  return {
-    ...head,
-    alternates: { canonical: "/gallery/finishes" },
+    alternates: localizedAlternates("/gallery/finishes", locale),
+    robots: { index: true, follow: true },
   };
 }
 

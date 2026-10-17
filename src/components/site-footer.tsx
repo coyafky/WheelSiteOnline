@@ -23,7 +23,7 @@ import { localizedPath } from "@/lib/i18n/types";
  * All chrome text comes from the i18n dictionary; only link labels that exist
  * exclusively in the footer stay inline.
  */
-export function SiteFooter({ locale }: { locale: Locale }) {
+export function SiteFooter({ locale, availableLocales }: { locale: Locale; availableLocales?: readonly Locale[] }) {
   const t = createT(locale);
   const hrefFor = (href: string) => localizedPath(href, locale);
 
@@ -110,6 +110,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             </p>
             <LanguageSwitcher
               locale={locale}
+              availableLocales={availableLocales}
               label={t("a11y.switchLanguage")}
               tone="light"
             />

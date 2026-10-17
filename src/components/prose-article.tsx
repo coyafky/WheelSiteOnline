@@ -207,14 +207,33 @@ export async function ProseArticle({
                     </h2>
 
                     <div className="mt-5 grid gap-4">
-                      {section.body.map((paragraph) => (
-                        <p
-                          key={paragraph}
-                          className="max-w-[720px] text-[0.98rem] leading-relaxed text-steel"
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
+                      {section.body.map((block, blockIndex) =>
+                        typeof block === "string" ? (
+                          <p
+                            key={`${section.heading}-text-${blockIndex}`}
+                            className="max-w-[720px] text-[0.98rem] leading-relaxed text-steel"
+                          >
+                            {block}
+                          </p>
+                        ) : (
+                          <figure key={`${section.heading}-image-${blockIndex}`} className="max-w-[820px]">
+                            <div className="relative aspect-video overflow-hidden rounded-xl bg-soft">
+                              <Image
+                                src={block.media.src}
+                                alt={block.media.alt}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 820px"
+                                className="object-cover"
+                              />
+                            </div>
+                            {block.media.caption ? (
+                              <figcaption className="mt-3 text-sm leading-relaxed text-steel">
+                                {block.media.caption}
+                              </figcaption>
+                            ) : null}
+                          </figure>
+                        ),
+                      )}
                     </div>
                   </div>
                 </article>

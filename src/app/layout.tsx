@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { draftMode, headers } from "next/headers";
 import { Barlow_Condensed, Figtree } from "next/font/google";
+import { notFound } from "next/navigation";
 import { SiteMotion } from "@/components/site-motion";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { getLocale } from "@/lib/i18n";
 import {
-  INDEXABLE_LOCALES,
   localizedPath,
   stripLocalePrefix,
   type Locale,
 } from "@/lib/i18n/types";
-import { siteUrl } from "@/lib/site-url";
+import { getPublicLocalesForPath, getRoutePublicationDecision } from "@/lib/i18n/publication";
+import { siteUrl, siteUrlIsConfigured } from "@/lib/site-url";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -47,27 +48,44 @@ const barlow = Barlow_Condensed({
  */
 const baseMetadata: Metadata = {
   title: {
-    default: "Fenghuai | Aluminum Component Manufacturer",
+    default: "Fenghuai | Automotive Components",
     template: "%s | Fenghuai",
   },
   description:
-    "Fenghuai manufactures aluminium components across four product lines — forged wheels, EV powertrain housings, custom aluminium parts and self-healing safety tires — for dealers, Tier 1 suppliers and OEM programmes.",
+    "Fenghuai coordinates projects across four automotive lines: wheels, EV housings, custom aluminum components and self-sealing tires. Scope and supporting records are confirmed for each project.",
   metadataBase: siteUrl,
 };
 
-/** 只为已经通过正文审核的语言输出 hreflang，避免把未翻译页面伪装成多语言页面。 */
+/** 为当前开放索引的语言输出自 canonical 与 hreflang。 */
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const locale = await getLocale();
   const publicPath = requestHeaders.get("x-fh-public-path") || "/";
   const basePath = stripLocalePrefix(publicPath);
-  if (!INDEXABLE_LOCALES.includes(locale as (typeof INDEXABLE_LOCALES)[number])) {
-    return { ...baseMetadata, alternates: { languages: {} } };
+  if ((await draftMode()).isEnabled || !siteUrlIsConfigured) {
+    return { ...baseMetadata, robots: { index: false, follow: true }, alternates: {} };
+  }
+  const readyLocales = await getPublicLocalesForPath(basePath);
+  if (!readyLocales.includes(locale)) {
+    return {
+      ...baseMetadata,
+      robots: { index: false, follow: true },
+      alternates: { languages: {} },
+    };
   }
   const languages = Object.fromEntries(
-    INDEXABLE_LOCALES.map((locale) => [locale, localizedPath(basePath, locale)]),
+    readyLocales.map((locale) => [locale, localizedPath(basePath, locale)]),
   );
-  return { ...baseMetadata, alternates: { languages } };
+  return {
+    ...baseMetadata,
+    alternates: {
+      canonical: localizedPath(basePath, locale),
+      languages: {
+        ...languages,
+        ...(readyLocales.includes("en") ? { "x-default": localizedPath(basePath, "en") } : {}),
+      },
+    },
+  };
 }
 
 export default async function RootLayout({
@@ -76,6 +94,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  const requestHeaders = await headers();
+  const basePath = stripLocalePrefix(requestHeaders.get("x-fh-public-path") || "/");
+  const decision = await getRoutePublicationDecision(basePath, locale, (await draftMode()).isEnabled);
+  const availableLocales = decision.publicLocales;
+  if (locale !== "en" && decision.status !== "public" && decision.status !== "preview-only") {
+    notFound();
+  }
 
   return (
     <html
@@ -87,11 +112,11 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col">
         <Providers locale={locale}>
           <SiteMotion />
-          <SiteHeader locale={locale} />
+          <SiteHeader locale={locale} availableLocales={availableLocales} />
           <main id="main" className="flex-1">
             {children}
           </main>
-          <SiteFooter locale={locale} />
+          <SiteFooter locale={locale} availableLocales={availableLocales} />
         </Providers>
       </body>
     </html>

@@ -5,7 +5,7 @@ export const homepageContent: HomepageContent = {
     eyebrow: "Four product lines · One project interface",
     heading: "Automotive components backed by specialized manufacturing",
     lead:
-      "Fenghuai integrates wheel, EV housing, custom aluminum and self-sealing tyre manufacturing for overseas buyers—from requirement review and engineering input to production documentation.",
+      "Fenghuai coordinates wheel, EV housing, custom aluminum and self-sealing tire programs for overseas buyers—from requirement review and engineering input to production documentation.",
     disclosure:
       "Manufacturing is carried out across our specialized production bases. The responsible facility, capability, certification and supply scope are confirmed for each project.",
     mediaLabel: "Our wheel manufacturing facility",

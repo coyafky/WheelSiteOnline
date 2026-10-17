@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import type { WheelCatalogueCard } from "@/lib/wheels/types";
 import { wheelCardCopyFor } from "@/lib/i18n/wheel-card-copy";
+import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
 import { localizedPath, type Locale } from "@/lib/i18n/types";
 import { AddWheelToInquiryButton } from "./inquiry-cart-summary";
 
@@ -23,6 +24,7 @@ export function WheelCatalogueCardView({
   locale?: Locale;
 }) {
   const copy = wheelCardCopyFor(locale);
+  const catalogueCopy = wheelCatalogueCopyFor(locale);
   const href = localizedPath(`/products/wheels/${card.slug}`, locale);
   const extraDiameters = card.diametersTotal - card.diameters.length;
   const extraPcds = card.pcdsTotal - card.pcds.length;
@@ -55,7 +57,7 @@ export function WheelCatalogueCardView({
           </p>
           {card.processLabel ? (
             <p className="mt-1.5 text-[0.66rem] font-700 uppercase tracking-[0.16em] text-forge">
-              {card.processLabel}
+              {catalogueCopy.processName(card.processKey)}
             </p>
           ) : (
             <p className="mt-1.5 text-[0.66rem] uppercase tracking-[0.14em] text-muted-foreground">

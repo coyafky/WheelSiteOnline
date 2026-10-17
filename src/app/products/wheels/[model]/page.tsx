@@ -16,7 +16,7 @@ import {
   toBrowserVariant,
 } from "@/components/wheels/spec-format";
 import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
-import { localizedPath, type Locale } from "@/lib/i18n/types";
+import { localizedAlternates, localizedPath, type Locale } from "@/lib/i18n/types";
 import {
   getWheelDetailPage,
   listPublishedWheelSlugs,
@@ -67,16 +67,14 @@ export async function generateMetadata({
   }
 
   return {
-    // A translated page is not yet a publishable locale until its business copy
-    // and source content have been reviewed. Keep non-English routes out of SEO.
-    // §11 verbatim. `absolute` because the root layout would otherwise append the
+    // `absolute` because the root layout would otherwise append the
     // brand a second time.
     title: { absolute: wheelDetailCopyFor(locale).seo.title(detail.model) },
     description: wheelDetailCopyFor(locale).seo.description(detail.model),
     // §11: canonical is the model URL and never carries `variant`, so a shared
     // configuration link cannot be indexed as a separate page.
-    alternates: { canonical: localizedPath(`/products/wheels/${detail.slug}`, locale) },
-    robots: { index: locale === "en", follow: true },
+    alternates: localizedAlternates(`/products/wheels/${detail.slug}`, locale),
+    robots: { index: true, follow: true },
   };
 }
 

@@ -1,38 +1,45 @@
 /**
  * Locale contracts.
  *
- * English is the default because the audience is overseas distributors. The
- * other locales are independently addressable, but remain noindex until their
- * page body, metadata and business review are complete.
+ * English is the default because the audience is overseas distributors.
+ * Registration does not confer publication or indexability.
  */
 
 export const LOCALES = ["en", "zh", "es", "th"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
+export type LocaleConfig = {
+  label: string;
+  intlLocale: string;
+  prefix: string;
+};
+
+/** The single registry for route names and language-aware formatting. */
+export const LOCALE_CONFIG = {
+  en: { label: "English", intlLocale: "en-US", prefix: "" },
+  zh: { label: "中文", intlLocale: "zh-CN", prefix: "/zh" },
+  es: { label: "Español", intlLocale: "es-ES", prefix: "/es" },
+  th: { label: "ไทย", intlLocale: "th-TH", prefix: "/th" },
+} as const satisfies Record<Locale, LocaleConfig>;
+
 export const DEFAULT_LOCALE: Locale = "en";
 
 /** Cookie that remembers the visitor's choice across requests. */
 export const LOCALE_COOKIE = "fh-locale";
 
-/** 中文使用独立公开前缀；英文继续占用既有根 URL，避免破坏外链。 */
-export const LOCALE_PREFIX: Record<Locale, string> = {
-  en: "",
-  zh: "/zh",
-  es: "/es",
-  th: "/th",
-};
+/** Default English routes stay at the root to preserve existing links. */
+export const LOCALE_PREFIX: Record<Locale, string> = Object.fromEntries(
+  Object.entries(LOCALE_CONFIG).map(([locale, config]) => [locale, config.prefix]),
+) as Record<Locale, string>;
 
 /** Names shown in the language dropdown; each is recognizable in its locale. */
-export const LOCALE_LABELS: Record<Locale, string> = {
-  en: "English",
-  zh: "中文",
-  es: "Español",
-  th: "ไทย",
-};
+export const LOCALE_LABELS: Record<Locale, string> = Object.fromEntries(
+  Object.entries(LOCALE_CONFIG).map(([locale, config]) => [locale, config.label]),
+) as Record<Locale, string>;
 
-/** Only reviewed locales may be indexed. English is the current release gate. */
-export const INDEXABLE_LOCALES = ["en"] as const;
+/** Legacy English-only default; route publication lives in publication.ts. */
+export const INDEXABLE_LOCALES: readonly Locale[] = ["en"];
 
 export function isIndexableLocale(locale: Locale): boolean {
   return (INDEXABLE_LOCALES as readonly Locale[]).includes(locale);
@@ -69,6 +76,30 @@ export function localizedPath(pathname: string, locale: Locale): string {
   return base;
 }
 
+/** Build a self-canonical URL and matching language alternates for one route. */
+export function localizedAlternates(pathname: string, locale: Locale, readyLocales: readonly Locale[] = INDEXABLE_LOCALES) {
+  const base = stripLocalePrefix(pathname);
+  if (!readyLocales.includes(locale)) return { languages: {} };
+  const languages = Object.fromEntries(
+    readyLocales.map((language) => [language, localizedPath(base, language)]),
+  );
+  return {
+    canonical: localizedPath(base, locale),
+    languages: {
+      ...languages,
+      ...(readyLocales.includes(DEFAULT_LOCALE) ? { "x-default": localizedPath(base, DEFAULT_LOCALE) } : {}),
+    },
+  };
+}
+
+export function formatLocaleNumber(value: number, locale: Locale, options?: Intl.NumberFormatOptions): string {
+  return new Intl.NumberFormat(LOCALE_CONFIG[locale].intlLocale, options).format(value);
+}
+
+export function formatLocaleDate(value: Date | number, locale: Locale, options?: Intl.DateTimeFormatOptions): string {
+  return new Intl.DateTimeFormat(LOCALE_CONFIG[locale].intlLocale, options).format(value);
+}
+
 /**
  * A dictionary is a flat map of key → string.
  * Keys are dot-namespaced ("nav.requestQuote", "footer.rights").
@@ -82,4 +113,9 @@ export function translate(
   key: string,
 ): string {
   return dict[key] ?? fallback[key] ?? key;
+}
+
+/** Strict lookup for UI that has completed locale coverage. */
+export function translateStrict(dict: Dictionary, key: string): string {
+  return dict[key] ?? key;
 }

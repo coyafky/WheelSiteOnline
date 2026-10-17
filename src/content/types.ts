@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n/types";
+
 /**
  * Shared content contracts.
  *
@@ -163,6 +165,46 @@ export type HomepageContent = {
     primaryAction: CtaLink;
     secondaryAction: CtaLink;
   };
+};
+
+/** Stable homepage PageView contract consumed by the route and SEO layer. */
+export type HomepageProductLineCard = Pick<
+  ProductLine,
+  "slug" | "name" | "subtitle" | "summary" | "highlights" | "hasRender" | "image" | "hoverImage" | "href"
+>;
+
+export type HomepageModuleView =
+  | { type: "home.hero"; id: "H01"; order: number; required: true; content: HomepageContent["hero"] }
+  | {
+      type: "home.product-lines";
+      id: "H02";
+      order: number;
+      required: true;
+      content: HomepageContent["productLines"] & { items: HomepageProductLineCard[] };
+    }
+  | { type: "home.capabilities"; id: "H03"; order: number; required: true; content: HomepageContent["capabilities"] }
+  | { type: "home.delivery"; id: "H04"; order: number; required: true; content: HomepageContent["delivery"] }
+  | { type: "home.closing"; id: "H05"; order: number; required: true; content: HomepageContent["closing"] };
+
+export type HomepagePageView = {
+  pageKey: "home";
+  locale: Locale;
+  revision: string;
+  seo: { title: string; description: string; canonicalPath: string };
+  modules: HomepageModuleView[];
+};
+
+export type HomepagePageResult =
+  | { status: "ready"; page: HomepagePageView }
+  | { status: "missing-locale" | "unpublished" | "withdrawn" | "temporarily-unavailable" };
+
+export type HomepageCmsDocument = {
+  schemaVersion: 1;
+  pageKey: "home";
+  locale: Locale;
+  modules: Array<{ id: string; type: string; order: number; enabled: boolean; data: unknown }>;
+  seo_title?: string;
+  seo_description?: string;
 };
 
 export type AboutWorkshop = {
@@ -774,14 +816,26 @@ export type GuideEntry = {
    * heading plus paragraphs; this is the canonical article, while `detail`
    * stays as the short in-place preview on the hub.
    */
-  sections: GuideSection[];
+  sections: GuideArticleSection[];
   /** One-line takeaway shown as an answer-first standfirst on the article. */
   answer: string;
   /** Whether the copy contains figures that still need engineering sign-off. */
   needsVerification: boolean;
 };
 
-/** A heading + paragraphs block inside a long-form guide article. */
+/** A WordPress media block embedded in a long-form guide article. */
+export type GuideBodyImage = {
+  kind: "image";
+  media: MediaAsset;
+};
+
+/** A heading + body blocks inside a WordPress-backed long-form guide article. */
+export type GuideArticleSection = {
+  heading: string;
+  body: Array<string | GuideBodyImage>;
+};
+
+/** A heading + paragraphs block used by local fitment/reference content. */
 export type GuideSection = {
   heading: string;
   body: string[];
@@ -1418,12 +1472,21 @@ export type FlowFormedWheelsPage = {
     id: "WFF01";
     /** Rendered as a breadcrumb trail; the last entry is the current page. */
     breadcrumb: CtaLink[];
+    breadcrumbLabel: string;
     eyebrow: string;
     heading: string;
     lead: string;
     boundary: string;
     primaryCta: CtaLink;
     secondaryCta: CtaLink;
+    noApprovedModel: string;
+    featuredLabels: {
+      imageAlt: string;
+      diameters: string;
+      configurations: string;
+      process: string;
+      viewSpecifications: string;
+    };
   };
   processDefinition: {
     id: "WFF02";
@@ -1431,6 +1494,7 @@ export type FlowFormedWheelsPage = {
     heading: string;
     body: string;
     cards: FlowFormedProcessBoundaryCard[];
+    forgedProjectCtaLabel: string;
     /** Mandatory evidence sentence — forbids a universal improvement figure. */
     evidenceNote: string;
   };
@@ -1450,6 +1514,12 @@ export type FlowFormedWheelsPage = {
     /** Verbatim empty-result wording; rendered head + body. */
     emptyResultHeading: string;
     emptyResultBody: string;
+    clearFiltersLabel: string;
+    sendSpecificationLabel: string;
+    resultSearch: string;
+    resultFiltered: string;
+    resultAll: string;
+    disclosure: string;
   };
   inquiry: {
     id: "WFF05";
@@ -1459,6 +1529,8 @@ export type FlowFormedWheelsPage = {
     heading: string;
     checklist: string[];
     primaryCta: CtaLink;
+    scopeLabel: string;
+    filterSnapshotLabel: string;
   };
   seo: {
     title: string;

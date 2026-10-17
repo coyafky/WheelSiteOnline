@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getWordpressPageDocument<AboutContent>("about", { locale });
   return {
     title: page?.seoTitle || "About Fenghuai | Automotive Component Manufacturing",
-    description: page?.seoDescription || "Meet Shenzhen Fenghuai Technology and the specialized manufacturing bases supporting wheel, EV aluminum, custom aluminum and self-sealing tyre programs.",
+    description: page?.seoDescription || "Meet Shenzhen Fenghuai Technology and the specialized manufacturing bases supporting wheel, EV aluminum, custom aluminum and self-sealing tire programs.",
   };
 }
 

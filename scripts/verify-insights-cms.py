@@ -42,6 +42,7 @@ try {
       "post_type"=>FH_GUIDE_NATIVE_POST_TYPE,
       "post_title"=>"__FH_NATIVE_POST_VERIFY_" . strtoupper($editor_status) . "__",
       "post_name"=>"fh-guide-verify-" . $editor_status,
+      "post_content"=>"<!-- wp:heading --><h2>Probe heading</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Probe body.</p><!-- /wp:paragraph -->",
       "post_status"=>$wp_status,
     ]);
     if (is_wp_error($id)) throw new Exception($id->get_error_message());
@@ -68,6 +69,14 @@ try {
   do_action("save_post_" . FH_GUIDE_NATIVE_POST_TYPE, $ids[0], get_post($ids[0]));
   $_POST = [];
 
+  $acf_repeater_probe = false;
+  $acf_repeater_available = function_exists("acf_get_field_type") && is_object(acf_get_field_type("repeater"));
+  if ($acf_repeater_available && function_exists("update_field") && function_exists("get_field")) {
+    update_field("fh_detail", [["heading"=>"ACF Quick", "paragraphs"=>[["paragraph"=>"ACF paragraph."]]]], $ids[0]);
+    update_field("fh_sections", [["heading"=>"ACF Detail", "body"=>[["paragraph"=>"ACF body."]]]], $ids[0]);
+    $acf_repeater_probe = true;
+  }
+
   ob_start();
   fh_guide_authoring_render_meta_box(get_post($ids[0]));
   $editor_html = ob_get_clean();
@@ -78,20 +87,41 @@ try {
   $preview = rest_do_request($preview_request);
   $public_data = $public->get_data();
   $preview_data = $preview->get_data();
+  $acf_installed = function_exists("acf_add_local_field_group");
+  $acf_group = function_exists("acf_get_local_field_group") ? acf_get_local_field_group(FH_GUIDE_ACF_GROUP_KEY) : null;
+  $acf_fields = $acf_installed && is_array($acf_group) && function_exists("acf_get_fields") ? acf_get_fields($acf_group) : [];
   $public_slugs = array_column($public_data["items"], "slug");
   $preview_slugs = array_column($preview_data["items"], "slug");
+  $approved_item = null;
+  foreach ($public_data["items"] as $item) {
+    if (($item["slug"] ?? "") === "fh-guide-verify-approved") {
+      $approved_item = $item;
+      break;
+    }
+  }
   echo wp_json_encode([
     "self_check"=>fh_guide_self_check(),
     "public_status"=>$public->get_status(),
     "preview_status"=>$preview->get_status(),
     "source"=>$public_data["source"] ?? null,
     "approved_public"=>in_array("fh-guide-verify-approved", $public_slugs, true),
+    "approved_content_rendered"=>is_array($approved_item["content"] ?? null)
+      && preg_match('/<h2[^>]*>Probe heading<\/h2>/i', (string) ($approved_item["content"]["rendered"] ?? "")) === 1
+      && preg_match('/<p[^>]*>Probe body\.<\/p>/i', (string) ($approved_item["content"]["rendered"] ?? "")) === 1,
     "withdrawn_public"=>in_array("fh-guide-verify-withdrawn", $public_slugs, true),
     "withdrawn_preview"=>in_array("fh-guide-verify-withdrawn", $preview_slugs, true),
     "structured_detail"=>json_decode((string) get_post_meta($ids[0], "fh_detail_json", true), true),
     "structured_sections"=>json_decode((string) get_post_meta($ids[0], "fh_sections_json", true), true),
+    "acf_repeater_probe"=>$acf_repeater_probe,
+    "acf_rest_detail"=>$approved_item["guide"]["detail"] ?? null,
+    "acf_rest_sections"=>$approved_item["guide"]["sections"] ?? null,
     "media_saved"=>$media_id > 0 && absint(get_post_meta($ids[0], "fh_featured_media_id", true)) === $media_id,
     "structured_editor_rendered"=>str_contains($editor_html, "fh-guide-section-blocks") && str_contains($editor_html, "从媒体库选择") && str_contains($editor_html, "fh_translations_json") && str_contains($editor_html, "fh_translation_status_json"),
+    "acf_installed"=>$acf_installed,
+    "acf_repeater_available"=>$acf_repeater_available,
+    "acf_group_registered"=>is_array($acf_group),
+    "acf_group_location"=>is_array($acf_group) ? ($acf_group["location"] ?? []) : [],
+    "acf_field_names"=>is_array($acf_fields) ? array_values(array_filter(array_map(static fn($field) => $field["name"] ?? null, $acf_fields))) : [],
   ], JSON_UNESCAPED_UNICODE);
 } finally {
   foreach ($ids as $id) wp_delete_post($id, true);
@@ -108,18 +138,48 @@ try {
     checks = {
         "文章类型已注册": data["self_check"]["registered"] is True,
         "REST base 正确": data["self_check"]["rest_base"] == "fh-guides",
+        "旧技术文章后台入口已隐藏": data["self_check"].get("legacy_admin_hidden") is True,
+        "旧技术文章不再作为编辑入口": data["self_check"].get("legacy_editable") is False,
+        "旧技术文章使用独立能力组": data["self_check"].get("legacy_capability_type") == "fh_guide",
+        "旧 CPT 原始能力无条件拦截": data["self_check"].get("legacy_primitive_caps_blocked") is True,
+        "原生文章已注册全部 Insights 字段": data["self_check"].get("native_fields_registered") is True,
         "原生文章权威开关已生效": data["self_check"].get("native_authoritative") is True,
         "公开接口来自原生文章": data["source"] == "wordpress-post",
         "公开接口可读": data["public_status"] == 200,
         "授权预览接口可读": data["preview_status"] == 200,
         "已批准文章公开": data["approved_public"] is True,
+        "公开响应包含经过 the_content 过滤的正文": data["approved_content_rendered"] is True,
         "撤回文章不公开": data["withdrawn_public"] is False,
         "撤回文章可预览": data["withdrawn_preview"] is True,
         "结构化短版字段可保存": data["structured_detail"] == [{"heading": "Quick", "paragraphs": ["First paragraph.", "Second paragraph."]}],
         "结构化正文分段可保存": data["structured_sections"] == [{"heading": "Details", "body": ["Structured body."]}],
         "媒体库图片字段可保存": data["media_saved"] is True,
-        "结构化编辑器已替换原始 JSON 界面": data["structured_editor_rendered"] is True,
+        "结构化编辑器或 ACF Repeater 编辑入口可用": data["structured_editor_rendered"] is True,
     }
+    if data.get("acf_installed"):
+        acf_field_names = set(data.get("acf_field_names", []))
+        checks.update({
+            "ACF 本地字段组已注册": data.get("acf_group_registered") is True,
+            "ACF 字段组仅定位到原生 post": data.get("acf_group_location") == [[{"param": "post_type", "operator": "==", "value": "post"}]],
+            "ACF 标量字段覆盖现有 fh_* 契约": {
+                "fh_publication_status", "fh_summary", "fh_category", "fh_reading_time", "fh_answer",
+                "fh_needs_verification", "fh_seo_title", "fh_seo_description", "fh_featured_media_id",
+            }.issubset(acf_field_names),
+            "ACF Repeater 字段或 JSON 结构化编辑回退可用": (
+                data.get("acf_repeater_available") is True
+                and {"fh_detail", "fh_sections"}.issubset(acf_field_names)
+                and data.get("acf_repeater_probe") is True
+                and data.get("acf_rest_detail") == [{"heading": "ACF Quick", "paragraphs": ["ACF paragraph."]}]
+                and data.get("acf_rest_sections") == [{"heading": "ACF Detail", "body": ["ACF body."]}]
+            ) or (
+                data.get("acf_repeater_available") is False
+                and data.get("structured_editor_rendered") is True
+            ),
+        })
+        if not data.get("acf_repeater_available"):
+            print("⏭️ 当前 ACF 版本没有 Repeater 字段类型：保留项目结构化编辑器作为正文分段回退")
+    else:
+        print("⏭️ ACF 未安装，ACF 字段组检查 skipped（继续验证兼容 meta box）")
     for label, passed in checks.items():
         print(f"{'✅' if passed else '❌'} {label}")
     print("✅ 临时文章已清理，权威开关已恢复")
