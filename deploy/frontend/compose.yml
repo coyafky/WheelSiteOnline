@@ -37,15 +37,21 @@ services:
         aliases:
           - fenghuai-frontend
     healthcheck:
+      # Probes /api/health, not /robots.txt. The old probe hit a statically
+      # generated route, so it answered 200 even when the CMS was unreachable
+      # or the enquiry service key was missing — a probe that cannot fail.
+      # /api/health returns 503 when a critical dependency is down.
       test:
         - CMD
         - node
         - -e
-        - fetch('http://127.0.0.1:3000/robots.txt').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
-      interval: 15s
-      timeout: 5s
-      retries: 12
-      start_period: 30s
+        - fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+      interval: 30s
+      timeout: 8s
+      retries: 5
+      # Longer than before: the CMS check has its own 3s timeout, and a cold
+      # start plus a slow first CMS read must not be reported as a failure.
+      start_period: 60s
     security_opt:
       - no-new-privileges:true
     cap_drop:
