@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { getInsightGuideDocument } from "@/lib/wordpress/insights";
@@ -13,13 +14,32 @@ const pagePreviewPaths: Record<string, string> = {
   home: "/",
 };
 
+/**
+ * Constant-time comparison for the preview secret.
+ *
+ * Previously this used `!==`, which short-circuits on the first differing byte
+ * and leaks timing information. The revalidation route already compared with
+ * `timingSafeEqual`; this brings the two in line.
+ */
+function validPreviewSecret(provided: string | null): boolean {
+  const expected = process.env.WP_PREVIEW_SECRET?.trim();
+  if (!expected || !provided) return false;
+  const left = Buffer.from(expected);
+  const right = Buffer.from(provided);
+  return left.length === right.length && timingSafeEqual(left, right);
+}
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const secret = process.env.WP_PREVIEW_SECRET?.trim();
+  // `secret` may arrive either as a query parameter (legacy links and the WP
+  // editor) or as the `x-fh-preview-secret` header, which never reaches the
+  // access log. The header is preferred when both are present.
+  const providedSecret =
+    request.headers.get("x-fh-preview-secret") ?? url.searchParams.get("secret");
   const slug = validInsightPreviewSlug(url.searchParams.get("slug"));
   const pageKey = url.searchParams.get("page")?.trim() ?? "";
   const pagePath = pagePreviewPaths[pageKey];
-  if (!secret || url.searchParams.get("secret") !== secret || (!slug && !pagePath)) {
+  if (!validPreviewSecret(providedSecret) || (!slug && !pagePath)) {
     return new Response("Invalid preview request.", { status: 401 });
   }
 
