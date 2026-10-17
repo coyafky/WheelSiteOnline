@@ -368,17 +368,6 @@ function generateIdempotencyKey(): string {
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export async function markDelivered(
-  id: string,
-  delivered: boolean,
-  error?: string,
-): Promise<void> {
-  const rec = memory.get(id);
-  if (!rec) return;
-  rec.emailDelivered = delivered;
-  rec.emailError = error;
-}
-
 /**
  * Read one record back.
  *
