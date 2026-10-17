@@ -16,6 +16,10 @@ import type {
  * then the card shows a clean branded placeholder with no broken-image flash.
  */
 export const productFamilies: ProductFamily[] = [
+  // NOTE: the three sub-category routes (/products/monoblock, /products/two-piece,
+  // /products/off-road) were never built. These entries point at the real wheel
+  // catalogue so nothing renders a dead link; this array is superseded by
+  // `productLines` and is kept only for type/legacy references.
   {
     slug: "monoblock",
     hasRender: false,
@@ -30,7 +34,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/monoblock-base.jpg",
     hoverImage: "/images/products/monoblock-hover.jpg",
-    href: "/products/monoblock",
+    href: "/products/wheels",
   },
   {
     slug: "two-piece",
@@ -46,7 +50,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/two-piece-base.jpg",
     hoverImage: "/images/products/two-piece-hover.jpg",
-    href: "/products/two-piece",
+    href: "/products/wheels",
   },
   {
     slug: "off-road",
@@ -62,7 +66,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/off-road-base.jpg",
     hoverImage: "/images/products/off-road-hover.jpg",
-    href: "/products/off-road",
+    href: "/products/wheels",
   },
 ];
 

@@ -3,20 +3,35 @@ import { networkInterfaces } from "node:os";
 
 const remotePatterns: NonNullable<
   NonNullable<NextConfig["images"]>["remotePatterns"]
-> = [
-  {
-    protocol: "http",
-    hostname: "localhost",
-    port: "8081",
-    pathname: "/wp-content/uploads/**",
-  },
-  {
-    protocol: "http",
-    hostname: "127.0.0.1",
-    port: "8081",
-    pathname: "/wp-content/uploads/**",
-  },
-];
+> = [];
+
+/**
+ * Loopback media origins are useful when WordPress runs locally (docker on
+ * :8081), but keeping them in a production build lets the image optimizer be
+ * pointed at internal addresses — an SSRF surface. They are therefore only
+ * registered outside production, or when a deployment explicitly opts in via
+ * `ALLOW_LOOPBACK_WP_MEDIA=true` (single-host Docker Compose where WordPress
+ * really does listen on loopback).
+ */
+if (
+  process.env.NODE_ENV !== "production" ||
+  process.env.ALLOW_LOOPBACK_WP_MEDIA === "true"
+) {
+  remotePatterns.push(
+    {
+      protocol: "http",
+      hostname: "localhost",
+      port: "8081",
+      pathname: "/wp-content/uploads/**",
+    },
+    {
+      protocol: "http",
+      hostname: "127.0.0.1",
+      port: "8081",
+      pathname: "/wp-content/uploads/**",
+    },
+  );
+}
 
 let allowLocalWordpressMedia = false;
 
