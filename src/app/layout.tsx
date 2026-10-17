@@ -11,7 +11,14 @@ import {
   type Locale,
 } from "@/lib/i18n/types";
 import { getPublicLocalesForPath, getRoutePublicationDecision } from "@/lib/i18n/publication";
+import {
+  jsonLdGraph,
+  organizationJsonLd,
+  serializeJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/structured-data";
 import { siteUrl, siteUrlIsConfigured } from "@/lib/site-url";
+import { site } from "@/content/site";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -99,6 +106,30 @@ export default async function RootLayout({
   const availableLocales = decision.publicLocales;
 
   /**
+   * Site-level entities. Emitted from the layout because Organization and
+   * WebSite describe the publisher, not the page — every page needs them once.
+   *
+   * Skipped entirely when no site URL is configured: the fallback is
+   * localhost:3000, and publishing that as the Organization's `@id` would teach
+   * search engines a wrong identity that outlives the preview.
+   */
+  const publisher = {
+    name: site.name,
+    description: site.description,
+    contact: {
+      confirmed: site.contact.confirmed,
+      email: site.contact.email,
+      phone: site.contact.phone,
+    },
+  };
+  const siteStructuredData = siteUrlIsConfigured
+    ? jsonLdGraph([
+        organizationJsonLd(siteUrl.toString(), publisher),
+        websiteJsonLd(siteUrl.toString(), availableLocales, publisher),
+      ])
+    : null;
+
+  /**
    * Withheld translations are rejected earlier by `proxy.ts`, which answers a
    * real 404 with an explicit noindex. `notFound()` is not allowed inside the
    * root layout (Next 16), so this component must not try to enforce that here.
@@ -114,6 +145,14 @@ export default async function RootLayout({
       className={`${figtree.variable} ${barlow.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {siteStructuredData ? (
+          <script
+            type="application/ld+json"
+            // Read by crawlers, never executed as script. The serializer escapes
+            // `<`, so CMS content embedded here cannot close the tag early.
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteStructuredData) }}
+          />
+        ) : null}
         <Providers locale={locale}>
           <SiteMotion />
           <SiteHeader locale={locale} availableLocales={availableLocales} />

@@ -16,6 +16,8 @@ import {
   toBrowserVariant,
 } from "@/components/wheels/spec-format";
 import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
+import { breadcrumbJsonLd, jsonLdGraph, serializeJsonLd } from "@/lib/seo/structured-data";
+import { siteUrl } from "@/lib/site-url";
 import { localizedPath, type Locale } from "@/lib/i18n/types";
 import { buildRouteMetadata } from "@/lib/seo/metadata";
 import {
@@ -108,8 +110,20 @@ export default async function WheelModelPage({
       <script
         type="application/ld+json"
         // Only our own resolved catalogue data is serialised — no visitor input
-        // reaches this node.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(detail, locale)) }}
+        // reaches this node. The breadcrumb rides in the same graph so the
+        // Product and its trail share one identity scope.
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(
+            jsonLdGraph([
+              productSchema(detail, locale),
+              breadcrumbJsonLd(siteUrl.toString(), localizedPath(`/products/wheels/${detail.slug}`, locale), [
+                { name: "Home", path: localizedPath("/", locale) },
+                { name: "Wheels", path: localizedPath("/products/wheels", locale) },
+                { name: detail.model, path: localizedPath(`/products/wheels/${detail.slug}`, locale) },
+              ]),
+            ]) ?? productSchema(detail, locale),
+          ),
+        }}
       />
 
       {/* WD01 — identity: one approved image, the real model, recorded process */}
