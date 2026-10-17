@@ -99,6 +99,23 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns,
     dangerouslyAllowLocalIP: allowLocalWordpressMedia,
+    /**
+     * AVIF first, WebP second. Both are served through `Accept` negotiation, so
+     * a browser that cannot decode AVIF still receives WebP — the order only
+     * decides which format wins when both are acceptable.
+     *
+     * AVIF costs more CPU per encode, which is why the optimizer TTL below
+     * matters: encoding happens once and is then reused.
+     */
+    formats: ["image/avif", "image/webp"],
+    /**
+     * Next defaults to 60 seconds, which re-encodes unchanged product photos
+     * every minute. These images are content-addressed uploads that change only
+     * when an editor replaces one, so a week is the right order of magnitude
+     * for the cache while `revalidateTag` still handles real updates
+     * immediately.
+     */
+    minimumCacheTTL: 604800,
   },
   /**
    * The /gallery and /fitment route families were clone-era leftovers and have

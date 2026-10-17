@@ -85,10 +85,41 @@ function fh_wheel_decision_fields(): array
     ];
 }
 
-/** 工艺取值（与生成器 KNOWN_PROCESSES 对齐，不臆造）。 */
+/**
+ * 工艺取值 —— 全站唯一正本。
+ *
+ * 此前这四个值在本文件里写了两遍（此处做下拉项、`fh_wheel_register_taxonomy()`
+ * 里做 term 播种），另有一份中文→英文键的映射在
+ * `src/lib/wheels/types.ts` 的 `SOURCE_PROCESS_TO_KEY`。改动只改一处就会脱节，
+ * 而脱节的后果是静默的：新工艺值在后台可选，却在前台被 `processKeyOf()`
+ * 归为 `not-specified`，页面照常 200，筛选结果悄悄变少。
+ *
+ * 现在 PHP 侧只从这里取；增删工艺请同步
+ * `src/lib/wheels/types.ts` 的 `PROCESS_META` 与 `SOURCE_PROCESS_TO_KEY`
+ * （`npm run contract:check` 会比对两侧）。
+ *
+ * @return array<string,string> 值 => 显示标签（'' 表示未标注）
+ */
 function fh_wheel_process_options(): array
 {
-    return ['' => '— 未标注 —', '旋压' => '旋压', '低压' => '低压', '低压+旋压' => '低压+旋压', '锻造' => '锻造'];
+    $labelled = [
+        '旋压' => '旋压',
+        '低压' => '低压',
+        '低压+旋压' => '低压+旋压',
+        '锻造' => '锻造',
+    ];
+
+    return ['' => '— 未标注 —'] + $labelled;
+}
+
+/**
+ * 可播种为 taxonomy term 的工艺值（不含「未标注」—— 那是缺省而非一个工艺）。
+ *
+ * @return string[]
+ */
+function fh_wheel_process_terms(): array
+{
+    return array_keys(fh_wheel_process_options());
 }
 
 /**
@@ -205,7 +236,8 @@ function fh_wheel_register_taxonomies(): void
                 wp_insert_term($d, FH_WHEEL_TAX_DIAMETER, ['slug' => $d . 'inch']);
             }
         }
-        foreach (['旋压', '低压', '低压+旋压', '锻造'] as $p) {
+        // 从唯一正本取，避免与 fh_wheel_process_options() 各自维护一份。
+        foreach (fh_wheel_process_terms() as $p) {
             if (!term_exists($p, FH_WHEEL_TAX_PROCESS)) {
                 wp_insert_term($p, FH_WHEEL_TAX_PROCESS);
             }

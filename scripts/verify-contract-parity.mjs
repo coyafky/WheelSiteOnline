@@ -19,6 +19,8 @@ const PHP_PAGES = "local-wp/mu-plugins/fenghuai-pages.php";
 const TS_PAGE_VIEW = "src/content/page-view.ts";
 const TS_PRODUCT_LINES = "src/content/product-lines.ts";
 const TS_I18N_TYPES = "src/lib/i18n/types.ts";
+const PHP_WHEELS = "local-wp/mu-plugins/fenghuai-wheels.php";
+const TS_WHEEL_TYPES = "src/lib/wheels/types.ts";
 
 const failures = [];
 const checks = [];
@@ -139,6 +141,43 @@ function compare(key, phpValue, tsValue, label) {
   if (!tsLocales) failures.push(`无法从 ${TS_I18N_TYPES} 解析 LOCALES`);
   if (phpLocales && tsLocales) {
     compare("FH_PAGE_LOCALES", phpLocales, tsLocales, "支持的语言清单");
+  }
+}
+
+// ── 4. 工艺值（WordPress 中文值 → 前端 ProcessKey）────────────────────────────
+{
+  /*
+   * These two lists must stay in step. The failure mode is silent: a process
+   * value added on the WordPress side but missing from SOURCE_PROCESS_TO_KEY is
+   * mapped to `not-specified` by `processKeyOf()`, so the model quietly drops
+   * out of every process filter while its page still renders.
+   */
+  const phpSource = read(PHP_WHEELS);
+  const tsSource = read(TS_WHEEL_TYPES);
+
+  const phpBlock = phpSource.match(
+    /function fh_wheel_process_options\(\): array\s*\{[\s\S]*?\$labelled = \[([\s\S]*?)\];/,
+  );
+  const phpProcesses = phpBlock
+    ? [...phpBlock[1].matchAll(/'([^']+)'\s*=>/g)].map((m) => m[1]).sort()
+    : null;
+
+  const tsBlock = tsSource.match(
+    /const SOURCE_PROCESS_TO_KEY: Record<WheelProcess,[^=]*=\s*\{([\s\S]*?)\};/,
+  );
+  // Object keys here are Chinese identifiers: only the ones containing `+` need
+  // quotes, so a pattern that requires `"` matches exactly one of them.
+  const tsProcesses = tsBlock
+    ? [...tsBlock[1].matchAll(/(?:"([^"]+)"|([^\s",{}:]+))\s*:/g)]
+        .map((m) => m[1] ?? m[2])
+        .filter(Boolean)
+        .sort()
+    : null;
+
+  if (!phpProcesses) failures.push(`无法从 ${PHP_WHEELS} 解析 fh_wheel_process_options() 的 \$labelled`);
+  if (!tsProcesses) failures.push(`无法从 ${TS_WHEEL_TYPES} 解析 SOURCE_PROCESS_TO_KEY`);
+  if (phpProcesses && tsProcesses) {
+    compare("工艺值", phpProcesses, tsProcesses, "WordPress 工艺值 ↔ 前端映射键");
   }
 }
 
