@@ -188,7 +188,7 @@ development → 两条保留；production + 开关 → 两条恢复。
 
 ---
 
-### T-09 修复 root layout 里调用 notFound()（P0，实测发现）
+### T-09 修复 root layout 里调用 notFound()（P0，实测发现）✅ 完成
 
 - **模块**：M05
 - **发现方式**：P0 收尾跑 `e2e/site-contract.spec.ts` 时，15 个用例全过，
@@ -240,7 +240,7 @@ development → 两条保留；production + 开关 → 两条恢复。
 
 ## P1 · 地基
 
-### T-10 CMS 边界加 Zod 校验 + 统一读错误模型
+### T-10 CMS 边界加 Zod 校验 + 统一读错误模型 ✅ 完成
 
 - **模块**：M02
 - **现有问题**：`client.ts` 读路径只返回 `null`，无重试，无 schema 边界
@@ -262,7 +262,7 @@ development → 两条保留；production + 开关 → 两条恢复。
 **剩余**：`wheels` / `insights` / `inquiry-content` / `index.ts` barrel 仍走原
 `wpRead`（共 4 处）。按 YAGNI 暂不铺开，待有实际契约漂移案例再按同一模式处理。
 
-### T-11 PHP⇄TS 契约自动比对
+### T-11 PHP⇄TS 契约自动比对 ✅ 完成
 
 - **模块**：M03
 - **现有问题**：`FH_HOME_MODULES` / `FH_HOME_PRODUCT_LINE_FACTS` 与 TS 侧手抄
@@ -277,7 +277,7 @@ development → 两条保留；production + 开关 → 两条恢复。
 **证伪验证**（避免写出永远通过的脚本）：故意把 `H03` 改成 `capability-typo`
 → exit 1 且精确指出是哪一项；还原 → exit 0。
 
-### T-12 canonical 单点化
+### T-12 canonical 单点化 ✅ 完成
 
 - **模块**：M06
 - **现有问题**：layout 一次 + 20 处页面级覆盖；`/about`、`/insights` 无 canonical
@@ -303,7 +303,7 @@ flow-formed、首页）—— 它们的可索引性由各自业务闸门决定�
 （曾尝试写单测，但该模块依赖 `@/` 别名 + `server-only`，单测加载不了 → 改由
 E2E 覆盖，那才是能观测到结果的层。）
 
-### T-13 缓存失效失败重投
+### T-13 缓存失效失败重投 ✅ 完成
 
 - **模块**：M13
 - **现有问题**：`blocking: false` + 0.5s 超时，失败仅 `error_log`
@@ -324,7 +324,7 @@ E2E 覆盖，那才是能观测到结果的层。）
 4. 指向真实 Next → `send()=true`，队列残留 0 ✅
 5. 端到端投递返回 200，响应体含 `tag: site-pages` 与 5 条失效路径 ✅
 
-### T-14 备份脚本 + 恢复演练
+### T-14 备份脚本 + 恢复演练 ✅ 完成（本地）
 
 - **模块**：M16
 - **现有问题**：仓库内无 backup/dump/restore 脚本；同机备份；无加密
@@ -342,7 +342,7 @@ E2E 覆盖，那才是能观测到结果的层。）
 **未完成（服务器侧，按负责人口径暂不做）**：异地副本、加密、定时任务；
 uploads 层未做恢复演练。
 
-### T-15 告警接线
+### T-15 告警接线 ✅ 完成
 
 - **模块**：M11
 - **现有问题**：`do_action('fh_inquiry_delivery_alert')` **无监听者**
@@ -365,7 +365,7 @@ uploads 层未做恢复演练。
 4. 连续再跑两次 → 仍 1 封（节流生效）✅
 5. 关闭开关 → 0 封 ✅
 
-### T-16 Uptime + 应用级健康检查
+### T-16 Uptime + 应用级健康检查 ✅ 完成
 
 - **模块**：M16
 - **现有问题**：healthcheck 只探 `/robots.txt`；无外部探活
@@ -392,7 +392,7 @@ uploads 层未做恢复演练。
 ⚠️ 诚实记录：宿主机 `next start` 不在 Docker 网络内、解析不了 `fh-wp`，
 「healthy 全绿」是容器网络内等价探测确认的，非端到端。
 
-### T-17 `.env` 启动期校验
+### T-17 `.env` 启动期校验 ✅ 完成
 
 - **模块**：M01
 - **现有问题**：缺变量只在运行时报 503
