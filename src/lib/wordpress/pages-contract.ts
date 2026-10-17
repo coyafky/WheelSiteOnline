@@ -1,11 +1,14 @@
 import type { MediaAsset } from "@/content/types";
 import { LOCALES, localizedPath, type Locale } from "../i18n/types.ts";
 
-export const SITE_PAGES_CACHE_TAG = "site-pages";
+// Declared once in the cache-tag register; see ./cache-tags.ts.
+export { SITE_PAGES_CACHE_TAG } from "./cache-tags.ts";
 
 export type WordpressPageFields = {
   page_key?: string;
   locale?: Locale;
+  /** Durable cross-language identity; stable when a localized slug changes. */
+  translation_group?: string;
   revision?: string;
   schema_version?: number;
   publication_status?: "draft" | "approved" | "withdrawn";

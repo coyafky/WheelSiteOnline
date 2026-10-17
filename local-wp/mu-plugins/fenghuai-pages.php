@@ -577,6 +577,32 @@ function fh_pages_save_meta(int $postId): void
         $identityConflict = $conflicts !== [];
         if ($identityConflict) $status = 'draft';
     }
+
+    /*
+     * A translation group names the one record that represents a language of a
+     * page. Two records claiming the same group AND locale make the group
+     * ambiguous — the cross-language set (hreflang, sitemap, language switcher)
+     * would then have two candidates for one language and pick whichever the
+     * query happened to return first.
+     *
+     * The homepage currently carries exactly this defect: `home` (id 1311) and
+     * `home-en` (id 1461) both describe English. This guard stops new ones; the
+     * existing pair is left alone because deciding which body wins is a content
+     * decision, not a schema one.
+     */
+    $groupConflict = false;
+    if ($translationGroup !== '' && $locale !== '') {
+        $groupConflicts = get_posts([
+            'post_type' => 'page', 'post_status' => 'any', 'posts_per_page' => 1, 'fields' => 'ids',
+            'post__not_in' => [$postId],
+            'meta_query' => [
+                ['key' => FH_PAGE_META_TRANSLATION_GROUP, 'value' => $translationGroup],
+                ['key' => FH_PAGE_META_LOCALE, 'value' => $locale],
+            ],
+        ]);
+        $groupConflict = $groupConflicts !== [];
+        if ($groupConflict) $status = 'draft';
+    }
     $json = json_decode((string) wp_unslash($_POST['fh_content_json'] ?? ''), true);
     $schemaVersion = absint($_POST['fh_page_schema_version'] ?? 0);
     if ($identityConflict) {

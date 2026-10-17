@@ -2,17 +2,13 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { isLocale } from "@/lib/i18n/types";
+import { cacheTagFor } from "@/lib/wordpress/cache-tags";
 import {
-  INSIGHTS_CACHE_TAG,
   insightRevalidationPaths,
   validInsightPreviewSlug,
 } from "@/lib/wordpress/insights-contract";
+import { wheelRevalidationPaths } from "@/lib/wordpress/wheels-contract";
 import {
-  WHEEL_PUBLICATION_TAG,
-  wheelRevalidationPaths,
-} from "@/lib/wordpress/wheels-contract";
-import {
-  SITE_PAGES_CACHE_TAG,
   sitePageRevalidationPaths,
   validSitePageKey,
 } from "@/lib/wordpress/pages-contract";
@@ -54,7 +50,8 @@ export async function POST(request: Request) {
   const revision = type === "pages" && typeof body?.revision === "string"
     ? body.revision.slice(0, 80)
     : undefined;
-  const tag = type === "wheels" ? WHEEL_PUBLICATION_TAG : type === "insights" ? INSIGHTS_CACHE_TAG : SITE_PAGES_CACHE_TAG;
+  // Tag comes from the register, so it can never drift from `type`.
+  const tag = cacheTagFor(type);
   const paths = type === "wheels"
     ? wheelRevalidationPaths(slug ?? undefined)
     : type === "insights"

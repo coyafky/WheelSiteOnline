@@ -24,6 +24,16 @@ import type {
 const pageFieldsSchema = z.object({
   page_key: z.string().optional(),
   locale: z.enum(["en", "zh", "es", "th"]).optional(),
+  /**
+   * Names the page across languages. Every localized record of one page shares
+   * this value, which is what lets a translated URL be resolved even when the
+   * WordPress slug differs per language (`home`, `home-zh`, `home-es`, …).
+   *
+   * The frontend locates variants by page_key today; translation_group is the
+   * durable identity that survives a slug change, so it must reach the client
+   * instead of being stripped by the schema.
+   */
+  translation_group: z.string().optional(),
   revision: z.string().optional(),
   schema_version: z.number().optional(),
   publication_status: z.enum(["draft", "approved", "withdrawn"]).optional(),

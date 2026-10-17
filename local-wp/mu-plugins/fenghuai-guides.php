@@ -253,7 +253,9 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
         return new WP_Error('fh_guide_forbidden', '预览需要文章编辑权限。', ['status' => 401]);
     }
 
-    $useNative = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1';
+    // One resolver decides the source; see fh_guide_authoritative_source().
+    $authoritative = fh_guide_authoritative_source();
+    $useNative = $authoritative['source'] !== 'legacy';
     $query = [
         'post_type' => $useNative ? FH_GUIDE_NATIVE_POST_TYPE : FH_GUIDE_POST_TYPE,
         'post_status' => $preview ? ['publish', 'draft', 'pending', 'future', 'private'] : 'publish',
@@ -284,10 +286,9 @@ function fh_guide_rest_collection(WP_REST_Request $request): WP_REST_Response|WP
 
     return new WP_REST_Response([
         // false 表示 CMS 迁移尚未接管；Next 必须继续使用已审核的本地内容。
-        // 只有内容全部导入并人工核验后，管理员才可把它切为 true。
-        'authoritative' => $useNative
-            ? get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1'
-            : get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1',
+        // 真正的判据是「解析出的来源是否为 native」——legacy 永远不算接管，
+        // 否则 Next 会去读一个后台已经无法编辑的来源（死内容）。
+        'authoritative' => $authoritative['source'] === 'native',
         'items' => $items,
         'source' => $useNative ? 'wordpress-post' : 'legacy-cpt',
     ], 200);
@@ -372,6 +373,120 @@ function fh_guide_save_meta(int $post_id): void
     update_post_meta($post_id, 'fh_needs_verification', isset($_POST['fh_needs_verification']) ? '1' : '0');
 }
 
+/**
+ * Which post type the public REST endpoint reads from.
+ *
+ * `'native'` = WordPress 原生 `post` (the migration target).
+ * `'legacy'` = the old `fh_guide` CPT (rollback only).
+ * `null`     = neither is authoritative; Next.js keeps serving its reviewed
+ *              local snapshot.
+ *
+ * ── Why this is one function and not two option reads ──────────────────────
+ * The endpoint used to pick a post type from the native flag and then report
+ * `authoritative` from that same flag — while the legacy flag was consulted on a
+ * different branch. Nothing stopped both flags from being `1`, and one
+ * combination was actively broken: native=0 with legacy=1 made the site publish
+ * from the legacy CPT, whose editing capability is hard-blocked by
+ * `fh_guide_block_legacy_editing()`. Editors would see a live article they could
+ * not open or fix — dead content.
+ *
+ * Reading both flags in one place makes the states mutually exclusive by
+ * construction, and native always wins so the migration moves forward rather
+ * than being pinned to the rollback source.
+ *
+ * @return array{source: 'native'|'legacy'|null, legacy_flag: bool, native_flag: bool, conflict: bool}
+ */
+function fh_guide_authoritative_source(): array
+{
+    $legacy = get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1';
+    $native = get_option(FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, '0') === '1';
+
+    return [
+        'source' => $native ? 'native' : ($legacy ? 'legacy' : null),
+        'legacy_flag' => $legacy,
+        'native_flag' => $native,
+        // Both on: resolvable, but an operator mistake worth surfacing.
+        'conflict' => $legacy && $native,
+    ];
+}
+
+/**
+ * Keep the two flags from ever both being on.
+ *
+ * Enforced on `pre_update_option_*` rather than only as the settings-screen
+ * sanitize callback. `register_setting()`'s sanitizer runs for form submissions
+ * but NOT for programmatic `update_option()` calls, which is exactly how this
+ * environment reached the broken both-on state — so a guard limited to the form
+ * would not have prevented it.
+ *
+ * Turning one on clears the other. Native wins the tie because it is the
+ * migration target; the endpoint also prefers it, so the two agree.
+ *
+ * Re-entrancy: clearing the other flag goes through `update_option()` again,
+ * which re-enters this filter. A static guard makes the nested call a plain
+ * write so the two cannot ping-pong.
+ *
+ * NOTE: this is best-effort normalisation on write. `update_option()` compares
+ * against its cached old value and can skip this filter (e.g. writing `1` when
+ * the cache already says `1`), so a write-only guard cannot be the sole
+ * defence. `fh_guide_authoritative_source()` is the actual contract and resolves
+ * any residual both-on state to a single source.
+ */
+function fh_guide_enforce_single_source($value, $option)
+{
+    static $enforcing = false;
+
+    $on = $value ? '1' : '0';
+    if ($on === '1' && !$enforcing) {
+        $other = $option === FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE
+            ? FH_GUIDE_OPTION_AUTHORITATIVE
+            : FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE;
+        $enforcing = true;
+        // `false` for autoload: these are read on admin screens only.
+        update_option($other, '0', false);
+        $enforcing = false;
+    }
+    return $on;
+}
+add_filter('pre_update_option_' . FH_GUIDE_OPTION_AUTHORITATIVE, 'fh_guide_enforce_single_source', 10, 2);
+add_filter('pre_update_option_' . FH_GUIDE_NATIVE_OPTION_AUTHORITATIVE, 'fh_guide_enforce_single_source', 10, 2);
+
+/**
+ * Is there a both-on state right now?
+ *
+ * Surfaced on the settings screen and in the self-check so the operator can see
+ * it; the read path already collapses it to native.
+ */
+function fh_guide_source_conflict(): bool
+{
+    return fh_guide_authoritative_source()['conflict'];
+}
+
+/**
+ * Whether the legacy CPT may be selected as the public source.
+ *
+ * Editing on the legacy CPT is hard-blocked, so publishing from it creates
+ * articles nobody can open or correct. It stays available only as long as the
+ * migration still needs a rollback target — i.e. while no native article exists
+ * yet. Once native content is present, the flag is refused and turned off rather
+ * than being allowed to strand live content.
+ */
+function fh_guide_legacy_selectable(): bool
+{
+    $nativeCount = (int) (new WP_Query([
+        'post_type' => FH_GUIDE_NATIVE_POST_TYPE,
+        'post_status' => 'any',
+        'meta_key' => 'fh_publication_status',
+        'fields' => 'ids',
+        'posts_per_page' => 1,
+        'no_found_rows' => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]))->post_count;
+
+    return $nativeCount === 0;
+}
+
 add_action('admin_init', 'fh_guide_register_setting');
 function fh_guide_register_setting(): void
 {
@@ -390,7 +505,16 @@ function fh_guide_register_setting(): void
         'Insights 内容接管',
         static function (): void {
             $enabled = get_option(FH_GUIDE_OPTION_AUTHORITATIVE, '0') === '1';
-            echo '<label><input type="checkbox" name="' . esc_attr(FH_GUIDE_OPTION_AUTHORITATIVE) . '" value="1" ' . checked($enabled, true, false) . '> WordPress 已完整导入并核验文章，可作为权威内容源</label>';
+            $selectable = fh_guide_legacy_selectable();
+            printf(
+                '<label><input type="checkbox" name="%1$s" value="1" %2$s %3$s> 旧 CPT 作为权威内容源（仅迁移回滚期可用）</label>',
+                esc_attr(FH_GUIDE_OPTION_AUTHORITATIVE),
+                checked($enabled, true, false),
+                $selectable ? '' : 'disabled'
+            );
+            if (!$selectable) {
+                echo '<p class="description">原生文章已存在，旧 CPT 编辑入口已封；继续以它为准会产生无法编辑的线上内容。此选项已停用。</p>';
+            }
         },
         'writing'
     );

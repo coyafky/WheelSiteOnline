@@ -5,7 +5,8 @@ import type {
 } from "../wheels/types";
 import { normalizePcds } from "../wheels/normalize.ts";
 
-export const WHEEL_PUBLICATION_TAG = "wheel-publication";
+// Declared once in the cache-tag register; see ./cache-tags.ts.
+export { WHEEL_PUBLICATION_TAG } from "./cache-tags.ts";
 
 export type WordpressWheelVariant = {
   production_code?: unknown;

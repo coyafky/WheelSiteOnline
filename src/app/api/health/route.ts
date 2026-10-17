@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getWpConfig } from "@/lib/wordpress/client";
-import { SITE_PAGES_CACHE_TAG } from "@/lib/wordpress/pages-contract";
+import { SITE_PAGES_CACHE_TAG } from "@/lib/wordpress/cache-tags";
 
 /**
  * Application health check.

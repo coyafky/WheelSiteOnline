@@ -1,6 +1,7 @@
 import type { GuideArticleSection, GuideBodyImage, GuideDetail, GuideEntry, MediaAsset } from "../../content/types";
 
-export const INSIGHTS_CACHE_TAG = "insights-guides";
+// Declared once in the cache-tag register; see ./cache-tags.ts.
+export { INSIGHTS_CACHE_TAG } from "./cache-tags.ts";
 
 export type WordpressGuideFields = {
   publication_status?: "draft" | "approved" | "withdrawn";
