@@ -391,6 +391,17 @@ function InquiryFormContent({
           whatsapp: values.whatsapp || undefined,
           privacyConsent: values.privacyConsent,
           privacyVersion,
+          /*
+           * When the visitor actually gave consent — captured at submit, not at
+           * form mount (`formStartedAt`, which measures dwell time for the
+           * automation guard). The consent record has to point at the moment of
+           * the affirmative action; using the mount time would claim they
+           * agreed before they ever saw the notice.
+           *
+           * Only sent when consent is actually true, so the audit trail never
+           * shows a timestamp without the consent it documents.
+           */
+          consentedAt: values.privacyConsent ? new Date().toISOString() : undefined,
           items: submissionItems,
           context: buildContext(submissionContext),
         }),

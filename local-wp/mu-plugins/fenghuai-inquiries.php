@@ -528,7 +528,57 @@ function fh_inquiry_rest_permission(WP_REST_Request $request)
         );
     }
 
+    /*
+     * Rate limit — the second gate, after the key.
+     *
+     * The Next.js frontend already rate-limits per email/IP, but that guard lives
+     * in the frontend. Anyone holding the service key (or reaching this endpoint
+     * directly, bypassing Next entirely) faced no limit at all, so the database
+     * could be filled with enquiries by a script.
+     *
+     * Keyed on client IP. `REMOTE_ADDR` is used as-is and NOT `X-Forwarded-For`:
+     * that header is caller-controlled, so trusting it would let an attacker pick
+     * a fresh bucket per request and defeat the limit. When WordPress sits behind
+     * a proxy this means every request shares the proxy's bucket — a coarser but
+     * honest limit, which is the right trade for a write endpoint.
+     */
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : 'unknown';
+    if (fh_inquiry_rate_limit_exceeded($ip)) {
+        return new WP_Error(
+            'fh_inquiry_rate_limited',
+            '请求过于频繁，请稍后再试。',
+            ['status' => 429]
+        );
+    }
+
     return true;
+}
+
+/**
+ * Fixed-window rate limit: N accepted enquiries per IP per window.
+ *
+ * Uses a counter in a transient rather than a row scan: the write path must not
+ * pay for a COUNT across the enquiry table on every submission.
+ *
+ * @return bool true when this IP has already used up its allowance.
+ */
+function fh_inquiry_rate_limit_exceeded(string $ip): bool
+{
+    $limit  = (int) apply_filters('fh_inquiry_rate_limit', 5);
+    $window = (int) apply_filters('fh_inquiry_rate_window', 10 * MINUTE_IN_SECONDS);
+    if ($limit <= 0 || $window <= 0) return false;
+
+    // Hash the IP so a raw address is not written into the options table, which
+    // is far more widely readable than the enquiry records themselves.
+    $key = 'fh_rl_' . substr(hash('sha256', $ip), 0, 24);
+    $hits = (int) get_transient($key);
+
+    if ($hits >= $limit) return true;
+
+    // First hit in this window starts the clock; later hits keep the original
+    // expiry so the window stays fixed rather than sliding on every request.
+    set_transient($key, $hits + 1, $window);
+    return false;
 }
 
 /**

@@ -43,6 +43,14 @@ export type InquiryInput = {
   inputsAvailable?: string[];
   /** Optional legacy policy version retained for backwards-compatible payloads. */
   privacyVersion: string;
+  /**
+   * ISO timestamp of the moment the visitor ticked the consent box.
+   *
+   * Optional because older callers never sent it and the WordPress side treats
+   * it as optional. It is the only field that evidences *when* consent was
+   * given; `privacyVersion` alone records what they agreed to, not when.
+   */
+  consentedAt?: string;
   message: string;
   /** 新版轮毂清单；缺省/空数组保持旧单产品载荷兼容。 */
   items?: InquiryItem[];
