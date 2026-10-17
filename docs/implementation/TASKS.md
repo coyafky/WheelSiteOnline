@@ -218,6 +218,24 @@ development → 两条保留；production + 开关 → 两条恢复。
   - `e2e/publication-qualification.spec.ts`、`e2e/site-contract.spec.ts` 全绿
 - **回滚**：git revert
 
+**状态：✅ 完成（2026-10-17，提交 `f92525f`）**
+实际根因有两层，比原记录更深：
+1. `layout.tsx` 渲染函数内调 `notFound()` → Next 16 报错
+2. `getPublicLocalesForPath` 对**任何未知路径**都 `return ["en"]`（fail-open）
+   → `/zh/about` 这类未批准译文被当成已批准英文内容
+
+修法：
+- 新增 `src/lib/i18n/routes.ts` 登记真实路由，`isKnownRoute()` 区分
+  「路径不存在」与「存在但译文未批准」
+- 兜底改为 `isKnownRoute(path) ? ["en"] : []`（fail-closed）
+- `layout.tsx` 移除 `notFound()`；拦截改到 `proxy.ts` 单次 pass 内
+- 新增 `/api/publication` 内部接口（proxy 不能 import 标了 `server-only`
+  的 publication 模块），规则仍单点
+- 未批准译文返回 **404 + 显式 noindex**，维持原契约（不是 200）
+
+实测：`/zh` `/zh/about` `/es/about` `/th/about` → 404 + noindex；`/about` → 200；
+未知路径 → 404；dev 日志 notFound 报错 0 次。
+
 ---
 
 ## P1 · 地基
@@ -233,12 +251,31 @@ development → 两条保留；production + 开关 → 两条恢复。
 - **验收**：畸形响应 → 返回 `{ ok: false, reason: "contract" }` 而非崩溃；断网 → `reason: "network"` 且 8s 内返回
 - **回滚**：保留旧 `wpRead` 直到全部迁移完
 
+**状态：✅ pages 域试点完成（2026-10-17，提交 `32d47f5`）**
+- `read-result.ts`：`WpReadFailureReason`（mock/network/client/server/contract）
+  + `wpReadValidated()`；mock 用 `getWpConfig()` 判定而非猜环境变量
+- `pages-schema.ts`：用 `z.ZodType<...>` 标注，保证解析结果与既有领域类型一致；
+  只约束信封，记录级容忍仍交给 `normalize*`
+- `pages.ts` 三处读取接入（对外行为不变）
+- 测试 6 组（items 非数组、缺 authoritative、未知状态、未知键剥离、非法 locale）
+
+**剩余**：`wheels` / `insights` / `inquiry-content` / `index.ts` barrel 仍走原
+`wpRead`（共 4 处）。按 YAGNI 暂不铺开，待有实际契约漂移案例再按同一模式处理。
+
 ### T-11 PHP⇄TS 契约自动比对
 
 - **模块**：M03
 - **现有问题**：`FH_HOME_MODULES` / `FH_HOME_PRODUCT_LINE_FACTS` 与 TS 侧手抄
 - **目标结果**：`scripts/verify-contract-parity.mjs` 在 CI 中断言一致
 - **验收**：故意改一侧常量 → CI 失败
+
+**状态：✅ 完成（2026-10-17，提交 `172a8a0`）**
+比对三组：`FH_HOME_MODULES`↔`CMS_MODULES`、`FH_HOME_PRODUCT_LINE_FACTS`↔
+`productLines` 的 image/href、`FH_PAGE_LOCALES`↔`LOCALES`。
+以 `npm run contract:check` 接入 `check`，失败即 exit 1 并打印两侧实际值。
+
+**证伪验证**（避免写出永远通过的脚本）：故意把 `H03` 改成 `capability-typo`
+→ exit 1 且精确指出是哪一项；还原 → exit 0。
 
 ### T-12 canonical 单点化
 
@@ -260,6 +297,17 @@ development → 两条保留；production + 开关 → 两条恢复。
 - **现有问题**：仓库内无 backup/dump/restore 脚本；同机备份；无加密
 - **目标结果**：`scripts/backup/` + 异地副本 + 首次演练记录
 - **验收**：新容器导入 dump，`wp option get home` 与线上一致
+
+**状态：✅ 本地部分完成（2026-10-17，提交 `d88b1d0`）**
+`scripts/backup/backup.sh` + `restore.sh` + `docs/runbooks/backup-and-restore.md`。
+**首次真实恢复演练通过**：112MB 归档恢复到独立库 `fh_restore_drill`，
+回读 `wp_posts` 1046 行 / `wp_options` 162 行 / `home` 正确，事后已清理演练库。
+
+踩到两个坑（均已修正）：`MYSQL_ROOT_PASSWORD` ≠`WORDPRESS_DB_PASSWORD`；
+`shasum -c` 必须在归档所在目录执行。
+
+**未完成（服务器侧，按负责人口径暂不做）**：异地副本、加密、定时任务；
+uploads 层未做恢复演练。
 
 ### T-15 告警接线
 
