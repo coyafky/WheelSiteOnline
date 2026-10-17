@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { boltPatterns } from "@/content/bolt-patterns";
 import { flowFormedWheelsPage, isFlowFormedPublishingOpen } from "@/content/flow-formed-wheels";
-import { platformFitments } from "@/content/fitment";
 import { configuredSiteUrl } from "@/lib/site-url";
 import { localizedPath } from "@/lib/i18n/types";
 import { getEnglishInsightSlugs, getPublicLocalesForPath } from "@/lib/i18n/publication";
@@ -34,8 +33,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/dealers/private-label",
     "/contact",
     "/request-a-quote",
-    "/fitment",
-    ...platformFitments.map((item) => `/fitment/${item.slug}`),
     "/insights",
     "/insights/bolt-patterns",
     ...boltPatterns.map((item) => `/insights/bolt-patterns/${item.slug}`),
@@ -72,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 function priorityFor(path: string): number {
   if (path === "/") return 1;
   if (["/products", "/contact", "/request-a-quote"].includes(path)) return 0.9;
-  if (["/products/wheels", "/fitment", "/insights", "/tools/offset-calculator"].includes(path)) return 0.8;
-  if (path.startsWith("/products/") || path.startsWith("/fitment/") || path.startsWith("/insights/")) return 0.7;
+  if (["/products/wheels", "/insights", "/tools/offset-calculator"].includes(path)) return 0.8;
+  if (path.startsWith("/products/") || path.startsWith("/insights/")) return 0.7;
   return 0.6;
 }

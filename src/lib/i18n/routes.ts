@@ -21,10 +21,6 @@ const STATIC_PATHS = [
   "/custom-development",
   "/dealers",
   "/dealers/private-label",
-  "/fitment",
-  "/gallery",
-  "/gallery/finishes",
-  "/gallery/wheels",
   "/insights",
   "/insights/bolt-patterns",
   "/manufacturing",
@@ -50,7 +46,6 @@ const STATIC_PATHS = [
 
 /** Dynamic route families: a single trailing segment under these prefixes. */
 const DYNAMIC_PREFIXES = [
-  "/fitment/",
   "/insights/",
   "/insights/bolt-patterns/",
   "/products/wheels/",

@@ -11,10 +11,6 @@ test("静态页面全部登记为已知路由", () => {
     "/custom-development",
     "/dealers",
     "/dealers/private-label",
-    "/fitment",
-    "/gallery",
-    "/gallery/finishes",
-    "/gallery/wheels",
     "/insights",
     "/insights/bolt-patterns",
     "/manufacturing",
@@ -43,7 +39,6 @@ test("静态页面全部登记为已知路由", () => {
 
 test("动态路由族接受单个尾段", () => {
   assert.equal(isKnownRoute("/products/wheels/wff01"), true);
-  assert.equal(isKnownRoute("/fitment/bmw-m"), true);
   assert.equal(isKnownRoute("/insights/how-to-measure-fitment"), true);
   assert.equal(isKnownRoute("/insights/bolt-patterns/5x112"), true);
   assert.equal(isKnownRoute("/resources/some-slug"), true);

@@ -191,7 +191,6 @@ test("公开内容页统一使用 Astryx 面包屑并标记当前页面", async 
     "/products/wheels",
     "/products/wheels/dm902",
     "/dealers/private-label",
-    "/fitment/bmw-m",
     "/insights/bolt-patterns",
     "/insights/bolt-patterns/5x112",
     "/insights/how-to-measure-fitment",

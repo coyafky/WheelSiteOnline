@@ -130,8 +130,8 @@ export const catalogueRoutes: RouteStep[] = [
     step: "04",
     title: "Agree any finish or process details",
     body: "Finish, process, inspection and delivery details depend on the selected product line and project. Confirm availability and acceptance criteria with the project team.",
-    href: "/gallery/finishes",
-    linkLabel: "See finishes",
+    href: "/custom-development",
+    linkLabel: "Discuss a custom project",
   },
 ];
 
@@ -262,16 +262,11 @@ export function getFamilySpecs(slug: string): FamilySpec[] {
 
 /** Related-resource links shown at the foot of each family page. */
 export const familyResourceLinks: ResourceLink[] = [
-  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
-  // /gallery is archived, and "real platforms … on each build" was a false
-  // claim — those builds never existed.
-  {
-    eyebrow: "Reference",
-    title: "Finish gallery",
-    body: "Compare brushed, satin, gloss and matte options before you commit a finish to the order.",
-    href: "/gallery/finishes",
-    linkLabel: "View finishes",
-  },
+  // The "Vehicle gallery" card was removed 2026-10-06 (DEC-059): its "real
+  // platforms … on each build" claim was false. Following that, the whole
+  // /gallery and /fitment route families were retired as clone-era remnants,
+  // so no card here may point at them.
+
   {
     eyebrow: "Manufacturing",
     title: "How we build them",
@@ -291,15 +286,10 @@ export const catalogueSkuCallout = {
 
 /** Related-resource links shown on the catalogue hub. */
 export const catalogueResourceLinks: ResourceLink[] = [
-  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
-  // /gallery is archived and its fitment references were invented.
-  {
-    eyebrow: "Finishes",
-    title: "Finish reference",
-    body: "Eight finish directions with a note on how to request physical samples.",
-    href: "/gallery/finishes",
-    linkLabel: "Compare finishes",
-  },
+  // The "Vehicle gallery" card was removed 2026-10-06 (DEC-059) because its
+  // fitment references were invented; the /gallery and /fitment routes are now
+  // retired outright, so nothing may link to them.
+
   {
     eyebrow: "Manufacturing",
     title: "Manufacturing process",

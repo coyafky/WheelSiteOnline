@@ -2,7 +2,6 @@ import "server-only";
 
 import { cache } from "react";
 import { getBoltPattern } from "@/content/bolt-patterns";
-import { getPlatform } from "@/content/fitment";
 import { flowFormedWheelsPage, isFlowFormedPublishingOpen } from "@/content/flow-formed-wheels";
 import { getWheelCataloguePage, listPublishedWheelSlugs } from "@/lib/wheels";
 import { isCustomAluminumPageIndexable } from "@/lib/wordpress/custom-aluminum";
@@ -50,10 +49,6 @@ export const getPublicLocalesForPath = cache(async (pathname: string): Promise<r
   if (path.startsWith("/products/wheels/") && path !== "/products/wheels/forged") {
     const slug = path.slice("/products/wheels/".length);
     return (await listPublishedWheelSlugs()).includes(slug) ? ["en"] : [];
-  }
-
-  if (path.startsWith("/fitment/")) {
-    return getPlatform(path.slice("/fitment/".length)) ? ["en"] : [];
   }
 
   if (path.startsWith("/insights/bolt-patterns/")) {

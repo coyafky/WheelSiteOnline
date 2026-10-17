@@ -199,11 +199,5 @@ export const processPathways: ResourceLink[] = [
     href: "/dealers",
     linkLabel: "See the dealer program",
   },
-  {
-    eyebrow: "Reference",
-    title: "Finish gallery",
-    body: "The finish directions stage four is run to, with an honest note on swatches.",
-    href: "/gallery/finishes",
-    linkLabel: "View finishes",
-  },
+
 ];

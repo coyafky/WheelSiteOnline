@@ -8,8 +8,6 @@ export const th: Dictionary = {
   "nav.products.evComponents": "ตัวเรือนระบบส่งกำลัง EV",
   "nav.products.customAluminum": "อะลูมิเนียมสั่งทำ",
   "nav.products.safetyTires": "ยางซีลตัวเอง",
-  "nav.gallery": "แกลเลอรี",
-  "nav.fitment": "ความเข้ากันได้",
   "nav.capabilities": "ความสามารถ",
   "nav.customDevelopment": "พัฒนาตามสั่ง",
   "nav.dealerPrograms": "โครงการตัวแทนจำหน่าย",

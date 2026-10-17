@@ -8,8 +8,6 @@ export const es: Dictionary = {
   "nav.products.evComponents": "Carcasas para vehículos eléctricos",
   "nav.products.customAluminum": "Aluminio a medida",
   "nav.products.safetyTires": "Neumáticos autosellantes",
-  "nav.gallery": "Galería",
-  "nav.fitment": "Compatibilidad",
   "nav.capabilities": "Capacidades",
   "nav.customDevelopment": "Desarrollo a medida",
   "nav.dealerPrograms": "Programas para distribuidores",

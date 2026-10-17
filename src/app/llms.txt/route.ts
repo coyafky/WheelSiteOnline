@@ -1,5 +1,4 @@
 import { boltPatterns } from "@/content/bolt-patterns";
-import { platformFitments } from "@/content/fitment";
 import { guides } from "@/content/resources";
 import { configuredSiteUrl } from "@/lib/site-url";
 import { listPublishedWheelSlugs } from "@/lib/wheels";
@@ -46,9 +45,6 @@ export async function GET(): Promise<Response> {
       ["Custom aluminum components", "/products/custom-aluminum"],
       ["Self-sealing tires", "/products/safety-tires"],
       ["Custom development", "/custom-development"],
-      ["Vehicle fitment overview", "/fitment"],
-      ...platformFitments.map((item) => [item.name, `/fitment/${item.slug}`] as const),
-      ["Finish reference", "/gallery/finishes"],
     ]),
     ...section("Insights and reference guides", [
       ["Insights library", "/insights"],

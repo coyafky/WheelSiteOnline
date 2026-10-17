@@ -15,8 +15,6 @@ export const zh: Dictionary = {
   "nav.products.evComponents": "新能源三电壳体",
   "nav.products.customAluminum": "铝制品定制",
   "nav.products.safetyTires": "自密封轮胎",
-  "nav.gallery": "画廊",
-  "nav.fitment": "车型适配",
   "nav.capabilities": "制造与质量",
   "nav.customDevelopment": "定制开发",
   "nav.dealerPrograms": "经销商项目",

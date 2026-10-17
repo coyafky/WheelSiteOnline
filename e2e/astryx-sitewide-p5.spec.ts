@@ -6,7 +6,7 @@ import { expect, test, type Page } from "@playwright/test";
 const templates = [
   "/", "/about", "/capabilities", "/products", "/contact",
   "/custom-development", "/dealers", "/dealers/private-label",
-  "/fitment", "/fitment/bmw-m", "/gallery/finishes", "/insights",
+  "/insights",
   "/insights/how-to-measure-fitment", "/insights/bolt-patterns",
   "/insights/bolt-patterns/5x112", "/products/wheels",
   "/products/wheels/DM902", "/products/wheels/flow-formed",

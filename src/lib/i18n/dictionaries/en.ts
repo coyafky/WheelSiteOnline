@@ -20,8 +20,6 @@ export const en: Dictionary = {
   "nav.products.evComponents": "EV Powertrain Housings",
   "nav.products.customAluminum": "Custom Aluminum",
   "nav.products.safetyTires": "Self-Sealing Tires",
-  "nav.gallery": "Gallery",
-  "nav.fitment": "Fitment",
   "nav.capabilities": "Capabilities",
   "nav.customDevelopment": "Custom Development",
   "nav.dealerPrograms": "Dealer Programs",

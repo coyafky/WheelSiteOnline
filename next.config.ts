@@ -100,6 +100,23 @@ const nextConfig: NextConfig = {
     remotePatterns,
     dangerouslyAllowLocalIP: allowLocalWordpressMedia,
   },
+  /**
+   * The /gallery and /fitment route families were clone-era leftovers and have
+   * been retired. Their URLs may still be indexed or linked from outside, so
+   * they 308 to the nearest real destination instead of returning 404.
+   *
+   * `/gallery/finishes` had no successor page (its swatch data was placeholder),
+   * so it redirects to the wheel catalogue rather than inventing a target.
+   */
+  async redirects() {
+    return [
+      { source: "/gallery", destination: "/products", permanent: true },
+      { source: "/gallery/wheels", destination: "/products/wheels", permanent: true },
+      { source: "/gallery/finishes", destination: "/products/wheels", permanent: true },
+      { source: "/fitment", destination: "/contact", permanent: true },
+      { source: "/fitment/:platform", destination: "/contact", permanent: true },
+    ];
+  },
   async headers() {
     const appUsesHttps = (() => {
       try {
