@@ -1,0 +1,240 @@
+{
+  "run_id": "run_49640978b2a8",
+  "schema_version": "0.1",
+  "pipeline_version": "0.1",
+  "project_id": "fenghuai-b2b-site",
+  "scope": {
+    "label": "sitewide entity-topic-keyword-map",
+    "product_lines": [
+      "Automotive Wheels",
+      "EV Aluminum Components",
+      "Self-Sealing Tires",
+      "Custom Aluminum Manufacturing"
+    ]
+  },
+  "search_context": {
+    "engine": "Google",
+    "country": "US",
+    "location": "United States (gl=us; exact city UNKNOWN; Google also displays location inferred from IP)",
+    "language": "en-US",
+    "device": "desktop"
+  },
+  "profile": {
+    "version": "NOT_AVAILABLE",
+    "hash": "NOT_AVAILABLE",
+    "overrides": []
+  },
+  "providers": [
+    {
+      "provider_id": "google-search-ui-ego-lite",
+      "name": "Google Search web interface via Ego Lite ego-browser",
+      "status": "PARTIAL",
+      "cost": 0,
+      "limitations": [
+        "Manual browser observations only; not a representative sample of all US users",
+        "hl=en and gl=us do not eliminate IP-based location or personalization",
+        "Search volume, KD, CPC, trend, and rank-tracking metrics are not available from this run"
+      ]
+    },
+    {
+      "provider_id": "search-console",
+      "name": "Google Search Console",
+      "status": "NOT_RUN",
+      "cost": 0,
+      "limitations": [
+        "No authorized connector or account data used in this run"
+      ]
+    },
+    {
+      "provider_id": "paid-seo-data",
+      "name": "Paid SEO/SERP data providers",
+      "status": "NOT_RUN",
+      "cost": 0,
+      "limitations": [
+        "User confirmed no paid arrangement; run budget is zero"
+      ]
+    }
+  ],
+  "cost_policy": {
+    "currency": "USD",
+    "budget": 0,
+    "approval_threshold": 0,
+    "actual_cost": 0
+  },
+  "serp_freshness_days": 30,
+  "clustering_config": {
+    "result_depth": 10,
+    "same_page_min_shared": 3,
+    "same_page_min_rank_weighted": 0.35,
+    "status": "UNAPPROVED_DEFAULTS"
+  },
+  "scoring_config": {
+    "weights": "NOT_AVAILABLE",
+    "status": "NOT_CONFIGURED"
+  },
+  "phase_status": {
+    "contract": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "RUN.md",
+        "evidence/hypothesis-register.md",
+        "sources/ledger.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "US/en-US confirmed by user; Google page shows IP-derived US location"
+      ]
+    },
+    "market_offering": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/business-context.md",
+        "evidence/market-map.md",
+        "entities/entity-records.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "English legal name and product-level supply/manufacturing role need business approval"
+      ]
+    },
+    "buyers_jobs": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/buyer-evidence.md",
+        "analysis/buyer-job-map.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Jobs are task hypotheses, not search demand or conversion shares"
+      ]
+    },
+    "competitors": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/competitor-map.md"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "SERP presence is not validated commercial competition"
+      ]
+    },
+    "query_universe": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/query-universe.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "81 records include tested queries, visible PAA/related phrases and explicitly untested hypotheses"
+      ]
+    },
+    "keyword_intelligence": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/keyword-intelligence.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Volume/KD/CPC/trend/rank not available; zero-cost/no GSC/paid tools"
+      ]
+    },
+    "serp_intent": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/serp-snapshots.jsonl",
+        "analysis/intent-decisions.jsonl",
+        "sources/raw/"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "11 manual single-session SERP snapshots; not representative of the market"
+      ]
+    },
+    "page_ownership": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "evidence/overlap-edges.jsonl",
+        "analysis/clusters.json",
+        "analysis/cluster-quality.json"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Exact URL-level overlap is explicitly unresolved because Google wrapped destinations were not all clicked; no automatic same-page claims"
+      ]
+    },
+    "opportunity": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/opportunities.jsonl",
+        "topics/topic-evaluations.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Qualitative axes shown separately; no unapproved composite score"
+      ]
+    },
+    "buyer_job_map": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/buyer-job-map.jsonl"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "No quantitative journey shares available"
+      ]
+    },
+    "page_map": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/page-map.md",
+        "deliverables/page-map.json"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Existing noindex, fitment and content approval gates preserved"
+      ]
+    },
+    "information_architecture": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/ia-proposal.md"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "Recommendations only; no site changes"
+      ]
+    },
+    "qa_handoff": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/RESEARCH-REPORT.md",
+        "deliverables/RESEARCH-REPORT.html",
+        "deliverables/page-map.md",
+        "deliverables/page-map.json",
+        "deliverables/page-map.html",
+        "deliverables/ia-proposal.md",
+        "deliverables/ia-proposal.html"
+      ],
+      "completed_at": "2026-10-15T23:50:46Z",
+      "limitations": [
+        "URL级 SERP overlap 未实测，已显式留作 UNRESOLVED_URL_LEVEL",
+        "无付费数据与 Search Console 数据"
+      ]
+    }
+  },
+  "created_at": "2026-10-15T23:37:56Z",
+  "completed_at": "2026-10-15T23:50:46Z"
+}

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全站 SEO 关键词与 Topic Map 研究报告</title>
+<style>
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.55; }
+body { max-width: 1120px; margin: 0 auto; padding: 32px 24px 64px; }
+.generated { padding: 12px 16px; border-left: 4px solid #3e6ae1; background: color-mix(in srgb, Canvas 94%, #3e6ae1); }
+h1, h2, h3 { line-height: 1.2; margin-top: 1.7em; }
+code, pre { font-family: ui-monospace, monospace; }
+pre { overflow: auto; padding: 16px; background: color-mix(in srgb, Canvas 92%, CanvasText); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid color-mix(in srgb, CanvasText 24%, transparent); }
+a { color: #3e6ae1; }
+</style>
+</head>
+<body>
+<p class="generated"><strong>Generated view:</strong> regenerate this file from the reviewed Markdown source; do not edit it independently.</p>
+<main>
+<h1>全站 SEO 关键词与 Topic Map 研究报告</h1>
+<ul>
+<li>- <strong>Run</strong>：<code>run_49640978b2a8</code></li>
+<li>- <strong>研究市场</strong>：Google US / 英文 <code>en-US</code> / desktop</li>
+<li>- <strong>数据预算</strong>：USD 0；没有付费工具、Google Search Console 或历史排名数据</li>
+<li>- <strong>实际 Google UI 采集</strong>：11 个手动输入 query；2026-10-15 23:43–23:46 UTC（中国时间 2026-10-16）。Google 页面显示 United States、按访问 IP 推断位置。</li>
+<li>- <strong>研究法</strong>：Entity → Topic → Topic 评估 → Keyword → Cluster → Topic Map。关键词清单以用户任务为主，不按工具导出量排序。</li>
+<li>- <strong>交付状态</strong>：主题地图和查询覆盖供负责人审核；不代表已批准公开文案/页面/索引。</li>
+</ul>
+<h2>执行摘要</h2>
+<p>本轮先用项目正本确定网站实体与四条并列产品线，再收集买家任务、查看页面现状、挑选代表性英文查询观察 Google 页面类型与可见问题。交付覆盖：11 个实测 query、70 条 SERP 问句/相关表达/扩展假设（总 query universe 81 条；实测和未实测严格区分）、16 个主题簇和 URL 所有权建议。</p>
+<p><strong>核心结论</strong>：先修齐全站产品定位骨架和四线主入口，再分批扩展增长主题；不把搜索量当作唯一排序依据。当前 Google 单轮证据支持优先评估私牌 wheels、wheel offset 教育、自密封轮胎机制、按图定制铝件 RFQ 和 EV motor housing 内容模块。<code>OEM wheel supplier</code> 实际 SERP 被替换轮毂零售/二手/本地购买意图稀释；<code>EV inverter housing</code> 则偏逆变器整机和电力电子教育，需暂缓独立页。</p>
+<h2>一、研究合同与证据边界</h2>
+<ul>
+<li>- 市场、语言、搜索引擎：美国 Google 英文 <code>en-US</code>，为用户确认。</li>
+<li>- 免费范围：Ego Lite 手动 Google UI；Search Console 和收费 provider 均未运行。没有搜索量、keyword difficulty、CPC、趋势、排名或流量数值。所有这类指标均为 <code>NOT_AVAILABLE</code> / <code>NOT_RUN</code>，而不是 0。</li>
+<li>- SERP：11 个单次 desktop 快照。Google 页面地址带 <code>hl=en&amp;gl=us</code>，页脚仍显示 IP 推断的 United States；具体城市、登录/个性化与所有美国用户的真实结果无法固定。快照时间接近，不能代表长期排序或市场规模。</li>
+<li>- 结果 URL：保存了完整可读快照、标题与域名。Google redirect link 包装了不少最终 URL，本轮未点击全部结果确认 canonical destination；因此不将域名重叠冒充同 URL 聚类。<code>overlap-edges.jsonl</code> 将这些边留为 <code>UNRESOLVED_URL_LEVEL</code>。</li>
+<li>- 搜索建议/PAA：只证明当时查询页上有可见表达，不证明这些短语的搜索量。LLM/研究员扩词标为 <code>RESEARCH_HYPOTHESIS</code>。</li>
+</ul>
+<h2>二、Entity：我们是谁、有哪些产品</h2>
+<div class="table-wrap"><table><thead><tr><th>实体</th><th>研究建模</th><th>SEO 与公开表述边界</th></tr></thead><tbody>
+<tr><td>网站/项目接口</td><td>面向海外买家提供多产品线信息、项目评估和询盘入口的深圳峰徊海外商业接口（内部研究建模）</td><td>英文法定名待批准；不可将多家供应主体写成峰徊自有工厂或能力。</td></tr>
+<tr><td>Automotive Wheels</td><td>轮毂目录、flow-formed wheel 产品与 custom forged 项目并列</td><td>flow forming 与 forging 是不同工艺；锻造页是定制服务，不是已发布 SKU 目录；不扩大未核验 fitment。</td></tr>
+<tr><td>EV Aluminum Components</td><td>EV motor/electronics housing 项目评估</td><td>页面或供应商资料里的类别不证明工艺、量产、材料、公差、客户、认证或峰徊自有制造。</td></tr>
+<tr><td>Custom Aluminum Manufacturing</td><td>按 2D/3D/样件进入定制评估</td><td>当前页面公开索引门槛未通过；不能扩写未核实 CNC、挤压、压铸、深拉等能力。</td></tr>
+<tr><td>Self-Sealing Tires</td><td>自密封轮胎产品与技术项目</td><td>美国主词用 <code>self-sealing tires</code>；不将 <code>self-healing</code>、run-flat、puncture-proof 或 never-flat 当作同义或承诺。</td></tr>
+</tbody></table></div>
+<h2>三、Topic 与优先路线</h2>
+<h3>产品定位必做型（不受缺少 volume 数据否定）</h3>
+<ol>
+<li>1. 首页：清楚呈现四条线、项目/供货角色、核心产品与 CTA。核验并移除过时的单一锻造轮毂定位与未证实目录数字。</li>
+<li>2. Products 总览：四线平衡入口，统一英文产品命名。</li>
+<li>3. 四线核心页面：wheel catalogue、flow-formed、custom forged、EV components、custom aluminum、self-sealing tire。确认供货主体、型号、工艺、媒体图权和索引/语言批准门槛。</li>
+<li>4. 询盘路径：产品页 CTA 回到现有 quote 页面；只描述真实可提交的资料和下一步，不承诺价格、免费报价或响应时间。</li>
+</ol>
+<h3>增长型候选（逐批次审核）</h3>
+<div class="table-wrap"><table><thead><tr><th>Topic</th><th>观测信号</th><th>当前建议</th></tr></thead><tbody>
+<tr><td>Private-label wheels</td><td>Google 结果中有 Forgestar、HRE、CWS 等私牌计划页面；PAA 也有私牌供应商问题。</td><td>私牌页是强 B2B 候选；但现有英文页面 noindex/审批状态与计划条款要先核实。</td></tr>
+<tr><td>Wheel offset explained / calculator</td><td>Google 显示 AI Overview、技术指南、视频、calculator 相关搜索及数值 PAA。</td><td>用现有工具/技术指南承接；需核对 canonical、公式和工程边界，不能外推车型 fitment。</td></tr>
+<tr><td>Self-sealing mechanism</td><td>“how do … work”出现 AI Overview、技术解释、品牌页、视频和使用限制 PAA。</td><td>与轮胎供应商/产品页分开；优先做经工程审核的解释模块/文章。</td></tr>
+<tr><td>Drawing-led custom aluminum RFQ</td><td>搜索结果有图纸、quote、按单制造、CNC 在线下单等结果；PAA 询问去哪找零件/加工成本。</td><td>优先做按图提交资料的 CTA/表单说明模块；页面 noindex、工艺证据和图纸保密条件未过门前不公开索引。</td></tr>
+<tr><td>EV motor housing</td><td>结果含 motor housing 能力页、EV 铝压铸供应商、产品页和供应商名单。</td><td>先在 EV 入口页明确已核实范围；具体工艺/独立页等主体、产品与证据确认后再决定。</td></tr>
+</tbody></table></div>
+<h3>暂缓或拒绝</h3>
+<ul>
+<li>- <strong>OEM wheel supplier</strong>：单次 SERP 主要混合 OEM replacement wheels 零售、二手/翻新、附近门店与制造商；不是稳定纯 B2B query。除非核实 OEM/OES 供货关系且定向变体 SERP 支持，不做专门页。</li>
+<li>- <strong>EV inverter housing</strong>：结果偏 traction inverter 供应商/整机、功率电子技术、厂商榜单和价格；Google 显示 <code>housing</code> 缺词。暂不建独立 housing 页。</li>
+<li>- <strong>车型 fitment</strong>：当前平台数据 <code>verified:false</code>，审计仍发现可索引/sitemap 收录风险；先关闭索引门槛，工程验证后再研究。</li>
+<li>- <strong>价格、MOQ、交期、认证、客户、产能、性能承诺</strong>：无针对性项目证明，不作为页面 keyword target 或 public claims。</li>
+</ul>
+<h2>四、全站关键词与自然语言搜索句覆盖</h2>
+<p>标记说明：<strong>实测</strong> = 研究员在 Google UI 手动搜索；<strong>PAA/相关搜索观察</strong> = Google 查询页当时可见但没有单独搜索；<strong>待验证</strong> = Topic 导出的关键词假设，不等于需求或已批准文案。下表按产品线与买家任务组织。</p>
+<h3>站点身份 / 产品线发现</h3>
+<ul>
+<li>- 关键词候选：<code>automotive components supplier</code>（待验证；需英文主体审核），<code>OEM automotive components partner</code>（待验证），<code>automotive components products</code>（待验证）。</li>
+<li>- 搜索句：<code>What automotive component product line should I contact for my project?</code>（研究员问题假设，未单独 SERP 验证）。</li>
+<li>- 页面：<code>/</code>、<code>/products</code>、<code>/custom-development</code>；不要构造一个将四线压为单一产品类目的泛词首页。</li>
+</ul>
+<h3>Automotive Wheels</h3>
+<p><strong>工艺与项目</strong></p>
+<ul>
+<li>- 实测：<code>flow formed wheels manufacturer</code>、<code>custom forged wheels manufacturer</code>。</li>
+<li>- PAA/相关表达：<code>Who makes flow-formed wheels?</code>、<code>Are flow-formed wheels any good?</code>、<code>What are the best flow-formed wheels?</code>、<code>Where are flow one wheels made?</code>、<code>flow formed wheels vs forged</code>、<code>How much does it cost to make forged wheels?</code>、<code>Who makes the most affordable forged wheels?</code>、<code>Who makes the best forged truck wheels?</code>、<code>How to make your own forged wheels?</code>。</li>
+<li>- 待验证：<code>flow formed wheels supplier</code>、<code>flow forming wheel process</code>、<code>flow formed vs forged wheels difference</code>、<code>custom forged wheels supplier</code>、<code>forged wheels made to order</code>。</li>
+<li>- URL 所有权：旋压 → <code>/products/wheels/flow-formed</code>；锻造定制 → <code>/products/wheels/forged</code>。不合并。</li>
+</ul>
+<p><strong>OEM / Dealer / Private Label</strong></p>
+<ul>
+<li>- 实测：<code>OEM wheel supplier</code>、<code>private label wheels manufacturer</code>。</li>
+<li>- PAA：<code>Who sells OEM wheels?</code>、<code>What does OEM mean for wheels?</code>、<code>Does anyone buy OEM wheels?</code>、<code>Is OEM Wheel Shop legit?</code>、<code>Where can I find private label manufacturers?</code>、<code>Who is the world’s largest wheel manufacturer?</code>、<code>Who are some reputable custom wheel manufacturers in the USA?</code>、<code>Who makes the rims for NASCAR?</code>。</li>
+<li>- 待验证：<code>private label wheel supplier</code>、<code>private label forged wheels</code>、<code>OEM wheel manufacturer</code>。</li>
+<li>- URL 所有权：私牌页候选 <code>/dealers/private-label</code>；OEM 词先不 target，避免替换轮毂零售意图混淆。</li>
+</ul>
+<p><strong>规格教育/选型</strong></p>
+<ul>
+<li>- 实测：<code>wheel offset explained</code>。</li>
+<li>- PAA：<code>What does +35 offset mean?</code>、<code>What does a +40 offset mean?</code>、<code>Do I want a positive or negative offset?</code>、<code>What does +20 offset mean?</code>。相关：<code>wheel offset calculator</code>、<code>wheel offset chart</code>、<code>wheel offset examples</code>。</li>
+<li>- 待验证：<code>wheel bolt pattern guide</code>、<code>5x114.3 wheels</code>、<code>wheel center bore explained</code>。</li>
+<li>- URL：offset → <code>/tools/offset-calculator</code>；bolt pattern → <code>/resources/bolt-patterns</code> 或 <code>/insights/bolt-patterns</code> 二选一做主责。具体车型适配仍暂缓。</li>
+</ul>
+<h3>EV Aluminum Components</h3>
+<ul>
+<li>- 实测：<code>EV motor housing supplier</code>、<code>electric vehicle inverter housing manufacturer</code>。</li>
+<li>- 可见相关搜索：<code>EV motor housing supplier USA</code>、<code>EV motor housing supplier California</code>、<code>EV inverter manufacturers</code>、<code>Traction inverter in electric vehicle</code>、<code>EV inverter price</code>、<code>EV inverter for home</code>。</li>
+<li>- PAA：<code>Who are some inverter manufacturers in the USA?</code>、<code>Which type of inverter is used in EV?</code>、<code>Who are the top inverter manufacturers in China?</code>、<code>Who are some major manufacturers of electric vehicle components?</code>。</li>
+<li>- 待验证：<code>aluminum EV motor housing manufacturer</code>、<code>EV motor housing die casting supplier</code>、<code>EV inverter housing supplier</code>、<code>traction inverter enclosure supplier</code>、<code>electric vehicle power electronics housing supplier</code>。</li>
+<li>- URL 所有权：已核验类别落到 <code>/products/ev-components</code>；motor housing 可先为模块；inverter housing 等 housing-specific query 和事实复核后再决定是否独立页。</li>
+</ul>
+<h3>Custom Aluminum Manufacturing</h3>
+<ul>
+<li>- 实测：<code>custom aluminum components supplier</code>、<code>custom aluminum parts from drawing supplier</code>。</li>
+<li>- PAA：<code>Where can I find custom aluminum parts?</code>、<code>How much does it cost to CNC machine aluminum?</code>、<code>Where can I find machined parts online?</code>、<code>Where can I buy aluminum blanks?</code>。</li>
+<li>- 相关/待验证：<code>Custom aluminum parts from drawing supplier USA</code>、<code>custom aluminum components manufacturer</code>、<code>custom aluminum parts RFQ</code>、<code>aluminum parts made to drawing</code>、<code>custom aluminum parts quote</code>、<code>what information should I send for a custom aluminum parts quote</code>。</li>
+<li>- URL 所有权：<code>/products/custom-aluminum</code> 是结构候选但当前 noindex。按图/RFQ 先补在页面或 <code>/custom-development</code> 的真实 CTA 模块，不复制建立相似 URL；未证实工艺不可列为能力。</li>
+</ul>
+<h3>Self-Sealing Tires</h3>
+<ul>
+<li>- 实测：<code>self sealing tire manufacturer</code>、<code>how do self sealing tires work</code>。</li>
+<li>- PAA：<code>Who makes self-sealing tires?</code>、<code>Do self-sealing tires really work?</code>、<code>What kind of tires have built-in sealant?</code>、<code>Does Michelin make a self-sealing tire?</code>、<code>How long can you drive on self-sealing tires?</code>、<code>How much do self-sealing tires typically cost?</code>、<code>What are the downsides of using tire sealant?</code>。</li>
+<li>- 相关/待验证：<code>self-sealing tire supplier</code>、<code>self-sealing tire technology</code>、<code>self-sealing tires vs run flat</code>、<code>self-sealing tire repair</code>、<code>self-sealing tyres technology</code>（仅英式变体）。</li>
+<li>- URL 所有权：供应商/产品 → <code>/products/safety-tires</code>；机制与限制 → 经审核的文章/模块。<code>self-healing</code> 不作为产品主词；不承诺 puncture-proof/never-flat。</li>
+</ul>
+<h3>全站 RFQ</h3>
+<ul>
+<li>- 待验证自然语言句：<code>What information should I send for an OEM automotive component inquiry?</code>、<code>Can a supplier review my aluminum drawing?</code>、<code>How do I request a quote for custom forged wheels?</code></li>
+<li>- URL：CTA 回 <code>/request-a-quote</code>；表单隐私、图纸收件能力和所需字段按真实产品流程核准。</li>
+</ul>
+<h2>五、关键词簇与页面 ownership</h2>
+<div class="table-wrap"><table><thead><tr><th>Cluster</th><th>页面 / 处置</th><th>不要合并到</th><th>置信说明</th></tr></thead><tbody>
+<tr><td>Wheel catalogue / verified specs</td><td><code>/products/wheels</code></td><td>vehicle fitment / price listing</td><td>产品结构必需；本轮规格 SERP 未采样。</td></tr>
+<tr><td>Flow formed</td><td><code>/products/wheels/flow-formed</code></td><td>forged</td><td>SERP 有独立工艺和品牌产品混合；精确页面重叠尚未测定。</td></tr>
+<tr><td>Custom forged</td><td><code>/products/wheels/forged</code></td><td>flow formed / inventory</td><td>搜索结果聚焦按单定制与厂商识别；项目事实仍受限。</td></tr>
+<tr><td>OEM wheel supplier</td><td>暂缓/排除 replacement 意图</td><td>private label</td><td>SERP 有零售、used、repair 和 B2B 供应混合。</td></tr>
+<tr><td>Private label wheels</td><td><code>/dealers/private-label</code> 待页面批准</td><td>通用 dealer 或零售定制</td><td>SERP 有明确 B2B 程序页，但本项目商业条款待核实。</td></tr>
+<tr><td>Wheel offset</td><td><code>/tools/offset-calculator</code> 与教育说明</td><td>工艺页/车型 fitment</td><td>强信息型 SERP；canonical、公式与风险提示先核验。</td></tr>
+<tr><td>EV motor housing</td><td><code>/products/ev-components</code> 模块；独立 URL 候选</td><td>inverter whole-unit</td><td>SERP 支持供应商发现任务，不能推导峰徊产线。</td></tr>
+<tr><td>EV inverter housing</td><td>暂缓独立 URL</td><td>EV inverter unit suppliers</td><td>单轮 SERP 偏整机/教育，housing 意图不稳定。</td></tr>
+<tr><td>Custom aluminum components</td><td><code>/products/custom-aluminum</code>（noindex）</td><td>任何具体工艺页</td><td>搜索快照较稀疏且词形不完全匹配；索引门槛未通过。</td></tr>
+<tr><td>Drawing-led RFQ</td><td>定制页询盘模块</td><td>CNC/深拉/在线零件下单</td><td>是最清楚的 project-intake 任务，但工艺与表单证明未齐。</td></tr>
+<tr><td>Self-sealing product</td><td><code>/products/safety-tires</code></td><td>mechanism guide / run-flat</td><td>品牌技术与供应识别混合；供应角色应核实。</td></tr>
+<tr><td>Self-sealing mechanism</td><td>文章或产品页解释模块</td><td>supplier page</td><td>信息型任务明确；所有技术阈值需审核。</td></tr>
+<tr><td>Fitment / unverified claims</td><td>禁止 target</td><td>—</td><td>当前一方审计和发布证据门槛直接阻断。</td></tr>
+</tbody></table></div>
+<p>本 run 的机器层未做同页 URL-overlap 自动聚类：因 Google 包装链接，精确目标页未逐条点击验证。语义簇是按主题、任务与页面类型提出的候选；页面 ownership 需在下一轮用已解析的结果 URL、相似 query 的 SERP 和负责人审核确认。</p>
+<h2>六、Topic Map 路线及复查触发器</h2>
+<ol>
+<li>1. <strong>先定位必做骨架</strong>：首页/产品总览/四线核心产品页/询盘页，把产品身份、能力、场景、证据和 CTA 对齐。</li>
+<li>2. <strong>修复索引和术语风险</strong>：fitment 未核验页的 noindex/sitemap；统一 self-sealing 术语；确认 private-label/custom-aluminum 英文页面审批和索引状态；检查 offset 工具 canonical。</li>
+<li>3. <strong>低成本增强已有页</strong>：经审核的轮毂工艺/规格说明、自密封机制边界、按图 RFQ 输入说明。</li>
+<li>4. <strong>按证据分批试增长页</strong>：私牌、offset guide、EV motor housing 模块、drawing-RFQ 模块。每个候选先解决产品证据和页面 owner。</li>
+<li>5. <strong>用 Search Console 复盘</strong>：用户授权后纳入 query/page impressions、clicks、CTR；与 Google SERP 页面意图并读，不以 impressions 单指标定优先级。</li>
+</ol>
+<p>触发重跑：供货主体/产品类别改变、页面 noindex/批准状态改变、新增真实型号/图权资料、Google SERP 结果型态改变、取得 GSC 数据、市场语言改变。改市场须建新的独立 run。</p>
+<h2>七、未决事项与下一负责人决策</h2>
+<ul>
+<li>- 批准网站英文名、供应链主体关系和各产品线可公开 manufacturer/supplier/OEM 表述。</li>
+<li>- 确认所有当前存在的 noindex/英文审批状态是否维持，并先处理 fitment 错误索引风险。</li>
+<li>- 决定 Private Label 是否为真实、可承接并有批准条款的合作计划。</li>
+<li>- 确认 EV housing 类别、工艺和具体生产主体；特别确认 inverter housing 是否真实在售/可承接。</li>
+<li>- 确认 Custom Aluminum 发布索引门槛、供应范围、询盘表单是否收图及图纸保密流程。</li>
+<li>- 本轮没有付费需求数据；若必须按量级排序，需新增已授权的数据来源或等待 GSC 实际数据。</li>
+</ul>
+<h2>附件与来源</h2>
+<ul>
+<li>- 原始 Google UI 快照：<code>sources/raw/google-serp-001</code> 至 <code>google-serp-011</code>。</li>
+<li>- 轮毂/轮胎 SERP 人工审阅：<code>analysis/agent-review-wheels-tires.md</code>。</li>
+<li>- EV/Custom Aluminum SERP 人工审阅：<code>analysis/agent-review-ev-custom.md</code>。</li>
+<li>- 页面库存：<code>deliverables/page-map.md</code>；信息架构：<code>deliverables/ia-proposal.md</code>。</li>
+<li>- 完整 query universe、source ledger、topic scorecard、opportunity vectors、intent decisions、SERP snapshots 和 buyer-job map 均随本 run 一并保存。</li>
+</ul>
+</main>
+</body>
+</html>

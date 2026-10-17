@@ -1,0 +1,447 @@
+QUERY: custom forged wheels manufacturer
+CAPTURED_AT: 2026-10-15T23:43:25.118Z
+URL: https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnvOU6uoFbwgzif7ixG0y-Zyu0Knxg%3A1792107796522&ei=FGXRarydH8m80PEP9KPsiQI&uact=5&oq=custom+forged+wheels+manufacturer&gs_lp=Egxnd3Mtd2l6LXNlcnAiIWN1c3RvbSBmb3JnZWQgd2hlZWxzIG1hbnVmYWN0dXJlckgAUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQCYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "custom forged wheels manufacturer - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "custom forged wheels manufacturer - Google Search"]
+root
+  link [ref=437]
+    text "Skip to main content"
+  anchor [ref=438, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=439, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=440, loc=css:textarea[name="q"]]
+          text "custom forged wheels manufacturer"
+        container
+          button "Clear" [ref=441]
+            svg_root
+          container
+            button "Search by voice" [ref=442, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=443, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=444, loc=role:button[name="Settings"]]
+      button "Share" [ref=445, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=446, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=447, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dcustom%2Bforged%2Bwheels%2Bmanufacturer%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnvOU6uoFbwgzif7ixG0y-Zyu0Knxg%253A1792107796522%26ei%3DFGXRarydH8m80PEP9KPsiQI%26uact%3D5%26oq%3Dcustom%2Bforged%2Bwheels%2Bmanufacturer%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiIWN1c3RvbSBmb3JnZWQgd2hlZWxzIG1hbnVmYWN0dXJlckgAUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQCYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=448]
+      list
+        listitem
+          anchor [ref=449, url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ2J8OegQIFRAD]
+            text "AI Mode"
+        listitem
+          link [ref=450]
+            text "All"
+        listitem
+          anchor [ref=451, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=custom+forged+wheels+manufacturer&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=452, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=custom+forged+wheels+manufacturer&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQtKgLegQIGxAB]
+            text "Images"
+        listitem
+          anchor [ref=453, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=custom+forged+wheels+manufacturer&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQs6gLegQIGRAB]
+            text "Short videos"
+        listitem
+          anchor [ref=454, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=custom+forged+wheels+manufacturer&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQtKgLegQIGBAB]
+            text "Videos"
+        listitem
+          anchor [ref=455, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=custom+forged+wheels+manufacturer&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQs6gLegQIFxAB]
+            text "Forums"
+        listitem
+          button [ref=456]
+            container "More filters"
+              text "More"
+              svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        container
+          heading
+            image "Results for"
+              svg_root
+            text "United States"
+          container
+            text " ∙"
+            button [ref=457, url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnvOU6uoFbwgzif7ixG0y-Zyu0Knxg%3A1792107796522&ei=FGXRarydH8m80PEP9KPsiQI&uact=5&oq=custom+forged+wheels+manufacturer&gs_lp=Egxnd3Mtd2l6LXNlcnAiIWN1c3RvbSBmb3JnZWQgd2hlZWxzIG1hbnVmYWN0dXJlckgAUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQCYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp#]
+              text "Choose area"
+          button "How location is used" [ref=458, loc=css:a[aria-label="How location is used"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnvOU6uoFbwgzif7ixG0y-Zyu0Knxg%3A1792107796522&ei=FGXRarydH8m80PEP9KPsiQI&uact=5&oq=custom+forged+wheels+manufacturer&gs_lp=Egxnd3Mtd2l6LXNlcnAiIWN1c3RvbSBmb3JnZWQgd2hlZWxzIG1hbnVmYWN0dXJlckgAUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQCYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp#]
+            svg_root
+        container
+          heading
+            text "Thinking"
+          progressindicator "Generating"
+      main
+        heading
+          text "Web results"
+        anchor [ref=459, url=https://www.google.com/goto?url=CAESVQHrOzAVZCdplUWe5miq0pCZzScCUtt5BpiylGqk8ff7eNOmDOjsg289jWtKFkCx4__L3ec-x4LMSerAITxpMY8doQiVv_PNhaIIZW6NPIkPEJxokn8]
+          heading
+            text "Forgeline Motorsports | American-Made Custom Forged Wheels"
+          image
+          text "Forgeline Motorsports"
+          text "https://www.forgeline.com"
+        button "About this result" [ref=460]
+          svg_root
+        text "Forgeline Motorsports"
+        text "designs and builds custom forged wheels"
+        text "in the USA — monoblock, 3-piece, beadlock, and carbon-forged, made to order."
+        list_item
+          anchor [ref=461, url=https://www.google.com/goto?url=CAESawHrOzAVz-X-ij2A9oGXt3vFwwn8RhnX6of0UJhObc7v3MJ3LYcVzDNRCgP2lDXJmVQXzH_37gY8LjefQJrm0aS5-8-n_2gFn5Sr5FTrdo7FbldRRv-6MbMvR3C2HO-qwBOckLQN9iqVtf4I]
+            text "Shop Custom Wheels"
+        list_item
+          anchor [ref=462, url=https://www.google.com/goto?url=CAESZAHrOzAVE9B4WjXB_HpLVb5jH_YwI4JO5Cyh0zSE7syxP4ATqgA67CVTbelkJ-qLsbVGN7FDAvfyOo6-d009FGPGmDI8caOWazQdTvgqYjrEiGbHk2ZBUSM18zRiQnTOZ24mq0Y]
+            text "Custom Wheels"
+        list_item
+          anchor [ref=463, url=https://www.google.com/goto?url=CAESbgHrOzAVCWBcyiyuJKrEbvl349EnY5GUDLYVJYxqqKw4Wf7bm7_7kEfaUBGKfBJydki6Obda1cFzcP4ut0jBTjPvDpzElRwhBT3WQCtNebsgA5L04rQwrf9VqGSOYr3vXDDY_Io-4Go2iKSGgYjC]
+            text "Shop Wheels"
+        list_item
+          anchor [ref=464, url=https://www.google.com/goto?url=CAESjgEB6zswFdV4BfSvblQ6dA6V8WGYM9SfQi140dU9iNvt_Yw4avKXZWefKG8tG5BH4DAYdn5TWIDpvcQ9SKhnK-g7KXN1ybHMJ5EhlDDmGt2N2LUVtSKlNRn7GqTFZl0D6LkJNfJhwGOLcaJpdL8KlTAo6f2CS3pNbG-g3d8yFTtA9V1-3cFZvjoZKrwCi68T]
+            text "Account"
+        anchor [ref=465, url=https://www.google.com/goto?url=CAESUAHrOzAVLL5nvjUGdRQ75pZpOxmAstbA01C25MT1wNxsqAnAd5Gn7kTSCiHVipotYdTSpyYcItJktHjjkGH9H1skG3FsukXbeSNpFclB-BSi]
+          heading
+            text "Forgiato | Custom Forged Wheels Handcrafted in Los Angeles"
+          image
+          text "Forgiato"
+          text "https://forgiato.com"
+        button "About this result" [ref=466]
+          svg_root
+        text "Forgiato has been handcrafting the world's most iconic custom wheels"
+        text "in Los Angeles since 2002. Every wheel is built from aerospace-grade aluminum and finished"
+        text "People also ask"
+        button [ref=467]
+          text "How much does it cost to make forged wheels?"
+          svg_root
+        button [ref=468]
+          text "Who makes the most affordable forged wheels?"
+          svg_root
+        button [ref=469]
+          text "Who makes the best forged truck wheels?"
+          svg_root
+        button [ref=470]
+          text "How to make your own forged wheels?"
+          svg_root
+        heading
+          text "Web results"
+        anchor [ref=471, url=https://www.google.com/goto?url=CAESVQHrOzAVQxYDvSc6007ORbwvbgVnz3BbyUS71BAFlphKuTgdYWJVbEgwYhPXljvEILSV8wNnYxDkLhe7i3hpU_hZ5IBuLH09xtuEgntWwGItIfq801M]
+          heading
+            text "The World's Best Custom Forged Wheels for Motorsport ..."
+          image
+          text "HRE Wheels"
+          text "https://www.hrewheels.com"
+        button "About this result" [ref=472]
+          svg_root
+        text "Utilizing our proprietary one-piece forged barrel, FMR"
+        text "®, we've created the finest 2-Piece FMR® wheels in the world by increasing strength and reducing weight."
+        anchor [ref=473, url=https://www.google.com/goto?url=CAESwQEB6zswFRQ9B6esxuu2hy-GTwN1RL4u7LeAjmce_7P16Bk2cCMQ0WAMZ8LmHHOaw4yoRoiOYX3bogn9BQ7P2eARspV7WFghsb5Wcwl265lIGq0B3y95f_sMYWZ_Kd9YgUULRexWt0vwdJPNN4JbP75ahY7_X29Rz8WE7buMozLhoUyCWbPyxRYU72XjXWFb8MKcugjaJ7lOj0PuxiyOTztGTzoNDwSvrKP1uGp9UmRlN2lgyMdtGMkLPmosCxrUwhs5]
+          text "Read more"
+        anchor [ref=474, url=https://www.google.com/goto?url=CAESVQHrOzAVaatYUdg5X5txrw_RZL1m0nPw-Yb057mrb0DtTn6ndOtuBAovBUk_EK_4BIYlPg9tXaTtk6J_q2jT8nEgCxaHK6aBdECjgWAZbiKOhuhR9Cw]
+          heading
+            text "CCW Complete Custom Wheels"
+          image
+          text "CCW Complete Custom Wheels"
+          text "https://ccwheel.com"
+          text "› wheels"
+        button "About this result" [ref=475]
+          svg_root
+        text "Complete Custom Wheel (CCW) wheels are manufactured completely in the USA and"
+        text "custom-built to your exact specifications"
+        text "from high-quality forged aluminum,"
+        text "$1,325 to $1,435"
+        anchor [ref=476, url=https://www.google.com/goto?url=CAESUwHrOzAVqD-jFABrPb7egW4GF2ka0AuDogE9q2Naq7y0TqKONM60N4E8pR1hnUZ2FSYXWvBtq65djWQsG6_8qyD1D_VixuVKRtH6Wxa64NcxsU4B]
+          heading
+            text "BC Forged North America - BC Forged NA"
+          image
+          text "BC Forged NA"
+          text "https://bcforged-na.com"
+        button "About this result" [ref=477]
+          svg_root
+        text "1-386-872-3544"
+        text "| sales@bcforged-na.com. One piece forged aluminum wheels custom built per order in 5 Weeks or less! Manufacturer Contact Us © 2026"
+        heading
+          text "Local Results"
+        text "Places"
+        heading
+          text "Map"
+        anchor "Map" [ref=478, loc=css:a[aria-label="Map"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=local&lsack=HGXRapj-G5Sb0PEP6PqWsQo&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQtgN6BAhtEAM]
+          image
+        table
+          table_row
+            table_cell
+              button [ref=479]
+                text "Corleone Forged"
+                text "4.1"
+                image "Rated 4.1 out of 5,"
+                text "(61)"
+                text "· Manufacturer"
+                text "Fort Worth, TX · (800) 737-6143"
+                text "Closed"
+                text "· Opens 8 AM Fri"
+                table
+                  table_row
+                    table_cell
+                      svg_root
+                    table_cell
+                      text ""Great quality"
+                      text "wheels"
+                      text "did me right 🤘🤘🤝""
+            anchor [ref=480, url=https://www.google.com/goto?url=CAESVwHrOzAVDu8uSCquKV_TS_ghsTitcFgmtoua54AlJ_hZ1Qm_R2J_tpkvvzJYQd7fgnQbQETjliz_iMqlm52y5YEPlegf6rmijnN9gxG_TJTDlqQG_2UvJg]
+              svg_root
+              text "Website"
+            anchor [ref=481, url=https://www.google.com/maps/dir//Corleone+Forged,+3604+Mansfield+Hwy,+Fort+Worth,+TX+76119/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x864e6ffa231983df:0xbc808630a386a9e1?sa=X&ved=1t:57443&hl=en&gl=us&ictx=111]
+              svg_root
+              text "Directions"
+        table
+          table_row
+            table_cell
+              button [ref=482]
+                text "KG1 Forged Wheels"
+                text "4.4"
+                image "Rated 4.4 out of 5,"
+                text "(27)"
+                text "· Auto parts manufacturer"
+                text "Grapevine, TX · (888) 541-3743"
+                text "Closed"
+                text "· Opens 8 AM Fri"
+                table
+                  table_row
+                    table_cell
+                      svg_root
+                    table_cell
+                      text "Their website mentions"
+                      text "forged custom wheels"
+            anchor [ref=483, url=https://www.google.com/goto?url=CAESTQHrOzAVZ3NzUO7_We1be2xEBcATHV2QMemcLwyYLTbrpy3bl2wfxEN0a6lY3bRJlCswVuqBMRRj-FE9_7cjx4L1Q_cyzbAwXxYEnjHt]
+              svg_root
+              text "Website"
+            anchor [ref=484, url=https://www.google.com/maps/dir//KG1+Forged+Wheels,+4155+Patriot+Dr+%23200,+Grapevine,+TX+76051/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x88d9b1869f269205:0x327c694f861df99b?sa=X&ved=1t:57443&hl=en&gl=us&ictx=111]
+              svg_root
+              text "Directions"
+        table
+          table_row
+            table_cell
+              button [ref=485]
+                text "Variant Alloy Wheels"
+                text "4.9"
+                image "Rated 4.9 out of 5,"
+                text "(132)"
+                text "· Manufacturer"
+                text "Chandler, AZ · (602) 777-7747"
+                text "Closes soon"
+                text "· 5 PM"
+                table
+                  table_row
+                    table_cell
+                      svg_root
+                    table_cell
+                      text ""Beautifully"
+                      text "made wheels"
+                      text "and a fantastic overall experience with Variant.""
+            anchor [ref=486, url=https://www.google.com/goto?url=CAESVQHrOzAVTksDsNQ5jefPJcZALHsI2zFSl47G6kU_2drlpNFVVFkx3hAC44FUUSSn-XQj5MeudqNo9ryoFdwFFMCxjZjrtm1aqHej1xwA9l5X_pys26o]
+              svg_root
+              text "Website"
+            anchor [ref=487, url=https://www.google.com/maps/dir//Variant+Alloy+Wheels,+7201+W+Oakland+St+%232,+Chandler,+AZ+85226/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x872ba957d1a11baf:0x6ec52869bf3363b6?sa=X&ved=1t:57443&hl=en&gl=us&ictx=111]
+              svg_root
+              text "Directions"
+        heading
+          anchor [ref=488, url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&udm=local&lsack=HGXRapj-G5Sb0PEP6PqWsQo&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQjGp6BAhsEAE]
+            container
+              text "More places"
+              svg_root
+        heading
+          text "Web results"
+        anchor [ref=489, url=https://www.google.com/goto?url=CAESVQHrOzAVYEZ6oWIdkjr-bLum9GUrK1wjGLmA2btIYjj2-XDr31ef6oH8XzpqWzkO2MX8X--rM4QvNt7-Zv4NJcpCxCvf0oIJMf7044dcHdyBBlHVFpw]
+          heading
+            text "Brixton Forged™ wheels - A wheel company from Los Angeles"
+          image
+          text "Brixton Forged™ wheels"
+          text "https://brixtonforged.com"
+        button "About this result" [ref=490]
+          svg_root
+        text "Jul 21, 2026"
+        text "—"
+        text "Brixton Forged™ LLC"
+        text "is a premium designer of lightweight aerospace grade aluminum forged wheels"
+        text ". Headquartered in Los Angeles, California."
+        anchor [ref=491, url=https://www.google.com/goto?url=CAEStwEB6zswFf-Pl0Q8YKVCJ_Tw07L0keiTQR3Ze5DE1sFs97o-u2TwWJD_hEr2sJD7PBvJK7MbzpH6YcEK0PI82mkRN6qjHBESjsGGYs0yf114VJryQZ-QSF3Ochar6IlNTcAiHtma7U4fPoxq9EZ1S7hA_A5GWj2VMIvg7Lt9hgygqvxWB8W_rAGFhpM2Uj_i2cu2IcgZdq0lizhMaiWQqnBuMr3a9h8GM6MnRWHoq2oAUxbEf7OICyQ]
+          text "Read more"
+        list_item
+          anchor [ref=492, url=https://www.google.com/goto?url=CAESYAHrOzAVBqWtdflboXgz0vLpkV__wyqwZ_JJFnGA0myfUgEVjq925XkcoTsyZGAfBIuf5CNPzJiHMRFKVS-e6y6nZqTH_0Z6AZDp4pVrLMbklCNc_cF56t3DJTANmtGC8Q]
+            text "Wheel Collection"
+        list_item
+          anchor [ref=493, url=https://www.google.com/goto?url=CAESiAEB6zswFd_Wel-1E2wne8wPP9mKTStyY9iud3bCYKS79JPFZQg8fDbHI3eZDs5aBrUVOc6hymnh_ZxJuN0L61JY_3zYSgvwoaoUPpNMdlDN8FKbwXaP3vq-TBv1tnqhixj1Tos2tQvsOk9VujFskgQYnzHHamQ4qoVuE3krhfq8kUkLyQMJ2EwI]
+            text "Forged Inventory"
+        list_item
+          anchor [ref=494, url=https://www.google.com/goto?url=CAESbwHrOzAVKo6nVHotc6k5e86MlcBnon5w_7-rAU2W7J7O8ta7B1JAm7XNlsSYtVthe6QFsU_PwZ2eQYob6sVzOPyK3OQPl_uLAcT3_fu3_8T3asssbaQ4Yps1zcjO5V3nrcUe6he3p6oD6oo_aqSCiA]
+            text "Photo Gallery (Wheels)"
+        list_item
+          anchor [ref=495, url=https://www.google.com/goto?url=CAEScwHrOzAVyKeRb4wdrjZwg9aXSTtnzLn2Z2Tt-t23FK4Dl347V9s4lRugD_n5xS8g6FYP2jxQL04ve80HuN-OAxPKg7ujFHXrxau6_UAcMpHT8ni4hn_w7JdMJ1rWL09yqQG9q81bREasFCQIVMBvnOTv_O8]
+            text "Carbon"
+        anchor [ref=496, url=https://www.google.com/goto?url=CAESWwHrOzAVY5sI4AzTW0pmJ9bYI4A4EB0rlThsgHBz8A9lkEXgvZw528wV8jlU5ieVdMh7PQ0bPCSl1mKrNmvXAVRf1wyfyWaHJ8Tt4KPpKJPkLmisltfppEOZ4NA]
+          heading
+            text "Vossen Wheels, Forged Monoblock, Multi-piece and ..."
+          image
+          text "Vossen Wheels"
+          text "https://vossenwheels.com"
+          text "› wheels"
+        button "About this result" [ref=497]
+          svg_root
+        text "Vossen Wheels, Forged Monoblock, Multi-piece and Hybrid Forged Wheels"
+        text ", established in 2006 and designed in Miami, Florida. all standard and custom finishes of ..."
+        text "$525 to $1,049"
+        anchor [ref=498, url=https://www.google.com/goto?url=CAESVAHrOzAVzOStmzz8FCVIT9Pfxv5W2HQabMMUPZh7yzsIcc4o0fQVvalbW2E8rDJ7UC3InIe4tsWXouSHkNrIwgIZdT7oJ50gpf7klSIsCPfYT2fssA]
+          heading
+            text "Savini Wheels, Custom Forged Wheels Built to Order in ..."
+          svg_root
+          text "Savini Wheels"
+          text "https://saviniwheels.com"
+        button "About this result" [ref=499]
+          svg_root
+        text "Custom forged wheels built to order"
+        text ". Any design, any forging, any car. Designed in Los Angeles, The Gold Standard since 2003."
+        anchor [ref=500, url=https://www.google.com/goto?url=CAESUQHrOzAVdk8-1vLo6mJ0ykygFjHVn4t0Fza6Cs5OtccwDEHvOjDIieUPK1A-JNRpNWE9gquczduyV8bSWB1yMDrvvviPzl1lsfvGmyML2xvwIg]
+          heading
+            text "HOME - KG1 FORGED WHEELS"
+          image
+          text "kg1 forged wheels"
+          text "https://kg1forged.com"
+        button "About this result" [ref=501]
+          svg_root
+        text "KG1 Forged is a manufacturer of TRUE forged custom wheels"
+        text ".Each of our wheels is made of 6061-T6 Aerospace Grade forged aluminum. Our state of the art ..."
+        anchor [ref=502, url=https://www.google.com/goto?url=CAESpAEB6zswFZeqkqHGRNMKku8SlgXBFgHbLSQLHiSEgh6DG2VgSm370e12O9IYiNQ02YMaZzgaOsIFkzgMJkEFcumla3jbo1oPEAHfH4W4EpFcDCIVTVf34_Kea9aaWx2dejeJoa0naJsidYaKZB-QDCVM43NVdVBsp5O0PJ4U0WA8qJ1dHnlhvQN7hS-yNymBhBVoLx5HGHk0tZthBO6tCxeWiDQ7Pg]
+          text "Read more"
+        list_item
+          anchor [ref=503, url=https://www.google.com/goto?url=CAESbQHrOzAV-siu4vMxxOUwN4IvIsOuAiY11vYvoeU2WKrUikMt3Skci-y65HE8O6z2xL2dCkDWswF2X2yGG0wLp26J0efbvJmy8mUqYZIkR9HzxGpTYQ-JGmqnVpXM1vHhF0XRPZ9NVVKWvDLvlKQ]
+            text "Wheel Collection"
+        list_item
+          anchor [ref=504, url=https://www.google.com/goto?url=CAESYQHrOzAVBaS91ZDmfFJubeX8Qalt-JgidZJnvHmRGF5025vw_9YaJmxo_VlChjrhxnRMQZdSzOkKSY88kXM2-C_bRctX8cM4of9GsBpHonh3q-iDY3JXZgyp4fFwBr7aRXs]
+            text "Precision Forgings"
+        list_item
+          anchor [ref=505, url=https://www.google.com/goto?url=CAESVgHrOzAVz5cKudk6NduekUuHeycXMDFCKSsLnK0yvVByuWsftDT4X-kOF-ZELh3-bL_emGCoTD0pQp6k7y29cM_BXbDoQrdDcqSTG-RiFP1fNVftAmEa]
+            text "Catalog"
+        list_item
+          anchor [ref=506, url=https://www.google.com/goto?url=CAESZAHrOzAVY5ku9ZqPVs1Qzcm0NVnkeLZjXGME5eT7hJVPcL_2AO4mugIA3Jd9doAn7IEPJJ18R2KvgOTYVGL34fsW6R1PxUwYJ5fIUc3zrBJi3wRlI5_MxZahEhxK9xsbDmVC75c]
+            text "Gallery"
+        anchor [ref=507, url=https://www.google.com/goto?url=CAESkAEB6zswFUEfV7gNhY5qhBOaJPwJrM0XFh3cpc-tWYqTaYI-i3NqH5J1VwbsDy7_7P7zWkkurBoR7FheY3xaN4bQwCodof0o93zfefJ4pAJnvWa-fZe4TODGTjTf-Zal7r2K8xAaQv0CqXOHzjIrriTil7WlExPFiah7QqzPJOWaHL4lE-40bCP8GLqMEIcw-_0]
+          heading
+            text "Forza Performance Group: Custom Made Forged Aluminum ..."
+          image
+          text "Forza Performance Group"
+          text "https://forzaaa.com"
+        button "About this result" [ref=508]
+          svg_root
+        text "Forza Performance Group manufactures premium custom forged wheels"
+        text "— monoblock, 2-piece and 3-piece — alongside body kits, exhaust systems and big brake kits for ..."
+        anchor [ref=509, url=https://www.google.com/goto?url=CAES8AEB6zswFczJyhBqz0k7QyVhtUWkVJ4pPiNXcgygpVyTBvcO7XIwJCozUbUxJU4JQ4AtBq5qERAWGLd6kCd0Gh41o5OUFAe8EbiAyk1Eu3e2SIhXFVDAkgvMsTOYRHtLwODvbVS7Sa-J81tJikA5f9x6xnrH63jWZOUSuEBZLAhb5I8Xbhez5zoykXyRSzLVcRhvrLzheEaNw1umUP1wvlm_mTDgmy5FpmlZH9PMompTDa7ZPJB5qPZpzF75A_o4-TJ93bbERVS4zT6BM9mX-aWwPt4XRf9UWPf9U9jbodPwRGfn3SH3VynClcDrE2QI9Kc]
+          text "Read more"
+        text "14-day returns"
+        region "Ads"
+          text "Sponsored Result"
+          anchor [ref=510, url=https://www.google.com/goto?url=CAESZQHrOzAVlUkLEmX5w7OJv5MkTwhs08PMMRg7zOKjYTLhszdZNfOS1dckt9vA5rD2tHLiuZHBG7_yKR9rBCHHrMhFx6jB2M-OT34Loy5Gvz6SFXxK9olFOdaH3HfvCJ7wqUiD4nUc]
+            text "Forged Custom Rim Manufacturer - Car Rim Manufacturers..."
+            image
+            text "dhwheel.com"
+            text "https://www.dhwheel.com"
+          button "Why this ad?" [ref=511, loc=role:button[name="Why this ad?"]]
+            svg_root
+          text "High quality forged wheel rim supplier, design, logo customize according to your request. RimPower forged wheels are produced for different cars, affordable price & sold worldwide. View Forged Wheels...."
+          button [ref=512]
+            container
+              text "Hide sponsored result"
+              svg_root
+        text "People also search for"
+        anchor [ref=513, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Custom+forged+wheels+manufacturer+usa&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhQEAE]
+          container
+            text "Custom forged wheels manufacturer"
+            text "usa"
+          svg_root
+        anchor [ref=514, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Forged+wheels+brands&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhREAE]
+          container
+            text "Forged wheels"
+            text "brands"
+          svg_root
+        anchor [ref=515, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Custom+forged+wheels+manufacturer+reviews&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhVEAE]
+          container
+            text "Custom forged wheels manufacturer"
+            text "reviews"
+          svg_root
+        anchor [ref=516, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Custom+wheel+manufacturers+USA&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhWEAE]
+          container
+            text "Custom"
+            text "wheel manufacturers USA"
+          svg_root
+        anchor [ref=517, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Best+custom+wheel+manufacturers&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhXEAE]
+          container
+            text "Best"
+            text "custom"
+            text "wheel manufacturers"
+          svg_root
+        anchor [ref=518, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Best+forged+wheel+brands+for+trucks&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhYEAE]
+          container
+            text "Best"
+            text "forged"
+            text "wheel brands for trucks"
+          svg_root
+        anchor [ref=519, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Custom+Forged+dually+wheels&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhTEAE]
+          container
+            text "Custom Forged"
+            text "dually"
+            text "wheels"
+          svg_root
+        anchor [ref=520, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&q=Custom+made+rims+near+me&sa=X&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ1QJ6BAhUEAE]
+          container
+            text "Custom"
+            text "made rims near me"
+          svg_root
+        navigation
+          heading
+            text "Page Navigation"
+          table
+            table_row
+              table_cell
+              table_cell
+                text "1"
+              table_cell
+                anchor "Page 2" [ref=521, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=10&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAE]
+                  text "2"
+              table_cell
+                anchor "Page 3" [ref=522, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=20&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAG]
+                  text "3"
+              table_cell
+                anchor "Page 4" [ref=523, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=30&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAI]
+                  text "4"
+              table_cell
+                anchor "Page 5" [ref=524, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=40&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAK]
+                  text "5"
+              table_cell
+                anchor "Page 6" [ref=525, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=50&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAM]
+                  text "6"
+              table_cell
+                anchor "Page 7" [ref=526, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=60&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAO]
+                  text "7"
+              table_cell
+                anchor "Page 8" [ref=527, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=70&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAQ]
+                  text "8"
+              table_cell
+                anchor "Page 9" [ref=528, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=80&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAS]
+                  text "9"
+              table_cell
+                anchor "Page 10" [ref=529, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=90&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8tMDegQIRxAU]
+                  text "10"
+              heading
+                anchor [ref=530, url=https://www.google.com/search?q=custom+forged+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv4VqePFVQ1pNjBnvKwjoGYfKzKuQ:1792107804465&ei=HGXRapj-G5Sb0PEP6PqWsQo&start=10&sa=N&sstk=AS6-VmIjLOTIFUXJ4ELiHJ-2v0kIJrcUyKW0t8hA9lGaFC2-7uJperhflKU7Z-jm54sR57udhomr-ArKrJVU4KOgvNOjgCX8eVzR3Q&ved=2ahUKEwiY_NXomb2XAxWUDTQIHWi9JaYQ8NMDegQIRxAW]
+                  text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+

@@ -1,0 +1,118 @@
+QUERY: custom aluminum components supplier
+CAPTURED_AT: 2026-10-15T23:43:30.902Z
+URL: https://www.google.com/search?q=custom+aluminum+components+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw%3A1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&uact=5&oq=custom+aluminum+components+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiI2N1c3RvbSBhbHVtaW51bSBjb21wb25lbnRzIHN1cHBsaWVySLkBUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQD4AQGYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "custom aluminum components supplier - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "custom aluminum components supplier - Google Search"]
+root
+  link [ref=815]
+    text "Skip to main content"
+  anchor [ref=816, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=817, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQPHoECAYQBA]
+        svg_root
+      container
+        anchor [ref=818, loc=href:/webhp?hl=en&ictx=0&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQpYkNegQIBhAG, url=https://www.google.com/webhp?hl=en&ictx=0&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQpYkNegQIBhAG]
+        container
+          comboboxgrouping "Search" [ref=819, loc=css:textarea[name="q"]]
+            text "custom aluminum components supplier"
+          container
+            button "Clear" [ref=820]
+              svg_root
+            container
+              button "Search by voice" [ref=821, loc=role:button[name="Search by voice"]]
+                svg_root
+              button "Search by image" [ref=822, loc=role:button[name="Search by image"]]
+                svg_root
+    container
+      button "Settings" [ref=823, loc=role:button[name="Settings"]]
+      button "Share" [ref=824, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=825, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=826, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dcustom%2Baluminum%2Bcomponents%2Bsupplier%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnsNCuhH61DHZpca75eujNJ3nbcCEw%253A1792107808825%26ei%3DIGXRaqPyMfig0PEP9riUgAo%26uact%3D5%26oq%3Dcustom%2Baluminum%2Bcomponents%2Bsupplier%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiI2N1c3RvbSBhbHVtaW51bSBjb21wb25lbnRzIHN1cHBsaWVySLkBUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQD4AQGYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=827]
+      list
+        listitem
+          anchor [ref=828, url=https://www.google.com/search?q=custom+aluminum+components+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQ2J8OegQIFRAD]
+            text "AI Mode"
+        listitem
+          link [ref=829]
+            text "All"
+        listitem
+          anchor [ref=830, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&q=custom+aluminum+components+supplier&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=831, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&q=custom+aluminum+components+supplier&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQtKgLegQIGhAB]
+            text "Images"
+        listitem
+          anchor [ref=832, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&q=custom+aluminum+components+supplier&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQs6gLegQIGBAB]
+            text "Short videos"
+        listitem
+          anchor [ref=833, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&q=custom+aluminum+components+supplier&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQtKgLegQIGRAB]
+            text "Videos"
+        listitem
+          anchor [ref=834, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&q=custom+aluminum+components+supplier&tbm=nws&source=lnms&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2cWq8_uMKmJ1HlImTFIfxtlo1Zx2UsgRO1NaevssEWPSXx5oiBTm8dvnmBdcwa33XRWabSjGXp4ET2NLFE-zl9uFnnvdNCkE7_kMq5aOdrnqdXd3teVac4HVoCjk9qT6Tdg5Nkw&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQ0pQJegQIFxAB]
+            text "News"
+        listitem
+          button [ref=835]
+            container "More filters"
+              text "More"
+              svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        container
+          heading
+            image "Results for"
+              svg_root
+            text "United States"
+          container
+            text " ∙"
+            button [ref=836, url=https://www.google.com/search?q=custom+aluminum+components+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw%3A1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&uact=5&oq=custom+aluminum+components+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiI2N1c3RvbSBhbHVtaW51bSBjb21wb25lbnRzIHN1cHBsaWVySLkBUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQD4AQGYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp#]
+              text "Choose area"
+          button "How location is used" [ref=837, loc=css:a[aria-label="How location is used"], url=https://www.google.com/search?q=custom+aluminum+components+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw%3A1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&uact=5&oq=custom+aluminum+components+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiI2N1c3RvbSBhbHVtaW51bSBjb21wb25lbnRzIHN1cHBsaWVySLkBUABYAHAAeAGQAQCYAQCgAQCqAQCwAQC4AQPIAQD4AQGYAgCgAgCYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwCgBwCyBwC4BwDCBwDIBwCACAE&sclient=gws-wiz-serp#]
+            svg_root
+        container
+          heading
+            text "Thinking"
+          progressindicator "Generating"
+      main
+        heading
+          text "Web results"
+        anchor [ref=838, url=https://www.google.com/goto?url=CAESUwHrOzAVIl02fMzoaOPsMPpXb_FKBN8sXVKB5iJAhuORmHFI9AxWx2L0xvwJFpc0u6sMs-UZ24_o75JPanBWiCJ-XXXPXbEOmOmf6r5wHVR8bOBv]
+          heading
+            text "Tri-State Aluminum: Custom Aluminum Extrusions ..."
+          image
+          text "Tri-State Aluminum"
+          text "https://tri-stateal.com"
+        button "About this result" [ref=839]
+          svg_root
+        text "At Tri-State Aluminum, we specialize in producing"
+        text "custom 6000 series aluminum extrusions"
+        text "tailored to the specific needs of our customers. Contact us today!"
+        anchor [ref=840, url=https://www.google.com/goto?url=CAESWwHrOzAVcX5EYKNhWgAqG_l6_nVjgzSvKMXCB9B7oweikxM9vtyjqE0TUpHcMZMVARsjrIgKkiQF61M03AkmyKuhSPhbTm0Lyf2Z_EZxRQZ3thd6pfuBpUQ6fSQ]
+          heading
+            text "Custom Aluminum Products"
+          image
+          text "Custom Aluminum Products"
+          text "https://www.custom-aluminum.com"
+        button "About this result" [ref=841]
+          svg_root
+        text "Our Capabilities ·"
+        text "Extrusion"
+        text "· Fabrication · Precision Machining · Anodizing · Welding · Bending · Assembly · Inventory."
+        anchor [ref=842, url=https://www.google.com/goto?url=CAES9QEB6zswFbDvEMOpyUvTwU3zxC8eTn3rnk06f6ThAzwGq9Kn65e0vuWolJ4pAzBu5xfEWKfjADDCE-uojStFjmybNfPwp-nVgPp3IQHHZQSEFijagbIhibbdS-w-B8d3dxD4oHuJ7o5MluUXaBW7oup3viruh0WUkUmrWxT_uV41vnoyC799mxCbfQAlkv0dTe5hyQJI8QWohZYkkM-pY4hvEX9cdxwl9GrTKy6jJPuVytPbj2CeKGr-XlxPMtocOKaSzDNG4ShzItlVDqiaIzw8JRUV41bP-UYmHUasrr-qnwfXsDF5rzTJo3Q5qMQSPiLE1RteDw]
+          text "Read more"
+        text "Missing:"
+        text "components"
+        text "‎| Show results with:"
+        anchor [ref=843, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ:1792107810535&q=custom+aluminum+%22components%22+supplier&sa=X&ved=2ahUKEwigrMjrmb2XAxUPFDQIHfDHFrUQ5t4CegQIIRAB]
+          text "components"
+

@@ -1,0 +1,474 @@
+{
+  "schema_version": "0.1",
+  "clustering_method": "Manual task, entity, page-type and intent review; no automatic same-page overlap threshold used because exact clicked destination URLs were not captured.",
+  "clusters": [
+    {
+      "cluster_id": "clu_wheel_catalogue",
+      "title": "轮毂目录与真实规格导航",
+      "entity_id": "ent_wheels",
+      "ownership_state": "EXISTING_PAGE",
+      "proposed_url": "/products/wheels",
+      "primary_queries": [
+        "wheel catalogue",
+        "alloy wheels",
+        "5x114.3 wheels",
+        "wheel center bore explained"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "boundary_review": "UNOBSERVED_IN_THIS_SERP_SAMPLE",
+      "notes": "只按实际获批发布型号、规格字段和图像内容承接；5x114.3 等词目前仅假设。",
+      "serp_snapshot_ids": [],
+      "source_ids": [
+        "src_spec_wheels",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_flow_formed",
+      "title": "Flow-formed wheel 产品与工艺",
+      "entity_id": "ent_wheels",
+      "ownership_state": "EXISTING_PAGE",
+      "proposed_url": "/products/wheels/flow-formed",
+      "primary_queries": [
+        "flow formed wheels manufacturer",
+        "flow formed wheels supplier",
+        "flow forming wheel process",
+        "flow formed vs forged wheels"
+      ],
+      "buyer_job_ids": [
+        "job_understand_technology",
+        "job_identify_supplier"
+      ],
+      "boundary_review": "MANUAL_TASK_CLUSTER; URL_OVERLAP_UNRESOLVED",
+      "notes": "产品/工艺页；PAA/related 真实出现但 SERP 有强零售/品牌混合，工艺能力和型号要核验。",
+      "serp_snapshot_ids": [
+        "serp_001"
+      ],
+      "source_ids": [
+        "src_spec_flow",
+        "src_serp_001"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_custom_forged",
+      "title": "Custom forged wheels 定制项目",
+      "entity_id": "ent_wheels",
+      "ownership_state": "EXISTING_PAGE",
+      "proposed_url": "/products/wheels/forged",
+      "primary_queries": [
+        "custom forged wheels manufacturer",
+        "custom forged wheels supplier",
+        "forged wheel manufacturer",
+        "forged wheels made to order"
+      ],
+      "buyer_job_ids": [
+        "job_start_project",
+        "job_identify_supplier"
+      ],
+      "boundary_review": "MANUAL_TASK_CLUSTER; URL_OVERLAP_UNRESOLVED",
+      "notes": "定制方案而非现货目录；美国SERP有品牌页、当地 pack 和价格元素，必须区分服务能力与本地实体。",
+      "serp_snapshot_ids": [
+        "serp_002"
+      ],
+      "source_ids": [
+        "src_spec_forged",
+        "src_serp_002"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_oem_replacement",
+      "title": "OEM replacement wheel 零售/替换意图",
+      "entity_id": "ent_wheels",
+      "ownership_state": "DO_NOT_TARGET",
+      "proposed_url": "/products/wheels",
+      "primary_queries": [
+        "OEM wheel supplier",
+        "OEM wheel suppliers near me",
+        "replacement OEM wheels"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "boundary_review": "INTENT_MIXED_DO_NOT_MERGE_WITH_B2B_OEM",
+      "notes": "SERP 以替换/二手/零售/当地购买混合，且 OEM B2B 含义歧义；除非项目确认原厂供货资格，否则排除采购承接。",
+      "serp_snapshot_ids": [
+        "serp_003"
+      ],
+      "source_ids": [
+        "src_serp_003",
+        "src_project"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_private_label",
+      "title": "Private-label wheels 合作项目",
+      "entity_id": "ent_wheels",
+      "ownership_state": "DEFER",
+      "proposed_url": "/dealers/private-label",
+      "primary_queries": [
+        "private label wheels manufacturer",
+        "private label wheel supplier",
+        "private label forged wheels"
+      ],
+      "buyer_job_ids": [
+        "job_assess_supply_program"
+      ],
+      "boundary_review": "B2B_PAGE_TYPE_SIGNAL; PUBLISH_GATE_OPEN",
+      "notes": "SERP 中有明确私牌项目页；英文页 noindex/内容审批、供货计划及条款核实后重评，不承诺 MOQ/交期。",
+      "serp_snapshot_ids": [
+        "serp_010"
+      ],
+      "source_ids": [
+        "src_serp_010",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_offset_education",
+      "title": "Wheel offset 教育与工具",
+      "entity_id": "ent_wheels",
+      "ownership_state": "SUPPORTING_ASSET",
+      "proposed_url": "/tools/offset-calculator",
+      "primary_queries": [
+        "wheel offset explained",
+        "wheel offset calculator",
+        "wheel offset chart",
+        "What does +35 offset mean?"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec",
+        "job_understand_technology"
+      ],
+      "boundary_review": "INFORMATIONAL SERP; EXACT TOOL URL/CANONICAL CHECK",
+      "notes": "信息型技术指南/工具；连接目录但不输出车型安全适配判断。",
+      "serp_snapshot_ids": [
+        "serp_011"
+      ],
+      "source_ids": [
+        "src_serp_011",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_bolt_pattern",
+      "title": "Bolt pattern / PCD 指南",
+      "entity_id": "ent_wheels",
+      "ownership_state": "DEFER",
+      "proposed_url": "/resources/bolt-patterns",
+      "primary_queries": [
+        "wheel bolt pattern guide",
+        "5x114.3 wheels"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "boundary_review": "NOT_LIVE_SERP_VALIDATED",
+      "notes": "项目已有规格主题；当前 run 未采样 Google SERP，需核验真实 pattern 数据并检查与目录筛选页重复。",
+      "serp_snapshot_ids": [],
+      "source_ids": [
+        "src_spec_wheels",
+        "src_jev",
+        "src_hist_four_line"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_ev_motor_housing",
+      "title": "EV motor housing 供应评估",
+      "entity_id": "ent_ev_aluminum",
+      "ownership_state": "NEW_PAGE_CANDIDATE",
+      "proposed_url": "/products/ev-components",
+      "primary_queries": [
+        "EV motor housing supplier",
+        "aluminum EV motor housing manufacturer",
+        "electric motor housing aluminum supplier"
+      ],
+      "buyer_job_ids": [
+        "job_evaluate_ev_project",
+        "job_identify_supplier"
+      ],
+      "boundary_review": "SERP_PRODUCT_CAPABILITY_SIGNAL; BUSINESS_GATE_REQUIRED",
+      "notes": "先由 EV 页面模块承接；独立页依赖类别、供货主体、工艺、图权与公开证据确认。",
+      "serp_snapshot_ids": [
+        "serp_004"
+      ],
+      "source_ids": [
+        "src_spec_ev",
+        "src_serp_004"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_ev_inverter_housing",
+      "title": "EV inverter housing",
+      "entity_id": "ent_ev_aluminum",
+      "ownership_state": "DEFER",
+      "proposed_url": "/products/ev-components",
+      "primary_queries": [
+        "electric vehicle inverter housing manufacturer",
+        "EV inverter housing supplier",
+        "traction inverter enclosure supplier"
+      ],
+      "buyer_job_ids": [
+        "job_evaluate_ev_project"
+      ],
+      "boundary_review": "INTENT_DRIFT; NO_STANDALONE_PAGE_YET",
+      "notes": "本轮主要结果混入整机 traction inverter 和技术教育；需要 enclosure/housing 用词补查和产品事实确认。",
+      "serp_snapshot_ids": [
+        "serp_005"
+      ],
+      "source_ids": [
+        "src_spec_ev",
+        "src_serp_005"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_custom_aluminum",
+      "title": "Custom aluminum components 项目入口",
+      "entity_id": "ent_custom_aluminum",
+      "ownership_state": "EXISTING_PAGE_BUT_NOINDEX",
+      "proposed_url": "/products/custom-aluminum",
+      "primary_queries": [
+        "custom aluminum components supplier",
+        "custom aluminum components manufacturer",
+        "custom aluminium parts manufacturer"
+      ],
+      "buyer_job_ids": [
+        "job_start_drawing_project"
+      ],
+      "boundary_review": "PARTIAL_SERP; INDEX_GATE_BLOCKS_PUBLIC_GROWTH",
+      "notes": "结构上有页面归属，实际 noindex/公开门槛未通过；SERP 快照006结果稀疏且提示 missing components。",
+      "serp_snapshot_ids": [
+        "serp_006"
+      ],
+      "source_ids": [
+        "src_spec_custom",
+        "src_serp_006"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_drawing_rfQ",
+      "title": "Drawing-led custom aluminum RFQ",
+      "entity_id": "ent_custom_aluminum",
+      "ownership_state": "SECTION",
+      "proposed_url": "/products/custom-aluminum#request-project-review",
+      "primary_queries": [
+        "custom aluminum parts from drawing supplier",
+        "aluminum parts made to drawing",
+        "custom aluminum parts RFQ",
+        "custom aluminum parts quote"
+      ],
+      "buyer_job_ids": [
+        "job_start_drawing_project",
+        "job_prepare_rfq"
+      ],
+      "boundary_review": "MIXED_SUPPLIER_AND_ONLINE_ORDER_RESULTS",
+      "notes": "将按图、3D、样件输入和工程评估放在定制入口/表单模块；PAA/相关词证据支持真实询盘任务；独立 URL 需先验证流程和保密收件条件。",
+      "serp_snapshot_ids": [
+        "serp_007"
+      ],
+      "source_ids": [
+        "src_spec_custom",
+        "src_spec_quote",
+        "src_serp_007"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_tire_product",
+      "title": "Self-sealing tire 产品与供应商",
+      "entity_id": "ent_self_sealing_tires",
+      "ownership_state": "EXISTING_PAGE",
+      "proposed_url": "/products/safety-tires",
+      "primary_queries": [
+        "self sealing tire manufacturer",
+        "self-sealing tire supplier",
+        "self-sealing tire brands"
+      ],
+      "buyer_job_ids": [
+        "job_identify_supplier",
+        "job_select_product"
+      ],
+      "boundary_review": "BRAND_TECHNOLOGY_MIX; ROLE_PROOF_REQUIRED",
+      "notes": "产品页以 self-sealing tires 作为美国主词；Manufacturer 角色和供应主体必须有证据。",
+      "serp_snapshot_ids": [
+        "serp_008"
+      ],
+      "source_ids": [
+        "src_spec_tires",
+        "src_serp_008"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_tire_mechanism",
+      "title": "Self-sealing 机制与适用边界",
+      "entity_id": "ent_self_sealing_tires",
+      "ownership_state": "NEW_PAGE_CANDIDATE",
+      "proposed_url": "/resources/self-sealing-tire-technology",
+      "primary_queries": [
+        "how do self sealing tires work",
+        "self-sealing tire technology",
+        "self-sealing tires vs run flat",
+        "How long can you drive on self-sealing tires?"
+      ],
+      "buyer_job_ids": [
+        "job_understand_technology",
+        "job_understand_limits"
+      ],
+      "boundary_review": "INFORMATIONAL SERP WITH PAA; TECHNICAL_REVIEW_REQUIRED",
+      "notes": "独立技术解释页候选，与产品/供应商页互链；所有穿刺类型、维修和继续驾驶边界需工程审核。",
+      "serp_snapshot_ids": [
+        "serp_009"
+      ],
+      "source_ids": [
+        "src_spec_tires",
+        "src_serp_009"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_cross_line_rfq",
+      "title": "跨产品线询盘资料说明",
+      "entity_id": "ent_site_fenghuai",
+      "ownership_state": "SECTION",
+      "proposed_url": "/request-a-quote",
+      "primary_queries": [
+        "what information should I send for an OEM automotive component inquiry",
+        "custom aluminum parts quote"
+      ],
+      "buyer_job_ids": [
+        "job_prepare_rfq"
+      ],
+      "boundary_review": "PROJECT_TASK_SUPPORTED; NATURAL_QUERY_UNTESTED",
+      "notes": "询盘辅助说明而非独立增长页；只列已有表单可接收的信息，不承诺报价速度/价格/MOQ。",
+      "serp_snapshot_ids": [],
+      "source_ids": [
+        "src_spec_quote",
+        "src_project"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_vehicle_fitment",
+      "title": "未核验车型适配词",
+      "entity_id": "ent_wheels",
+      "ownership_state": "DO_NOT_TARGET",
+      "proposed_url": "/fitment",
+      "primary_queries": [
+        "BMW M wheel fitment",
+        "vehicle-specific wheel fitment"
+      ],
+      "buyer_job_ids": [
+        "job_confirm_vehicle_fitment"
+      ],
+      "boundary_review": "P0 INDEX/FACT GATE",
+      "notes": "verified=false 且仍有索引/sitemap 风险；先修索引和数据门槛，不做 SEO 扩词。",
+      "serp_snapshot_ids": [],
+      "source_ids": [
+        "src_jev",
+        "src_spec_wheels"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    },
+    {
+      "cluster_id": "clu_unverified_commercial_claims",
+      "title": "未核验价格/MOQ/交期/认证/客户/性能词",
+      "entity_id": "ent_site_fenghuai",
+      "ownership_state": "DO_NOT_TARGET",
+      "proposed_url": "NONE",
+      "primary_queries": [
+        "wheel price list",
+        "minimum order quantity wheels",
+        "aluminum supplier certifications",
+        "self-sealing puncture-proof tires"
+      ],
+      "buyer_job_ids": [
+        "job_validate_supplier"
+      ],
+      "boundary_review": "PROOF_REQUIRED",
+      "notes": "不以竞争者结果为项目公开承诺；拿到经审核的一手证据后按具体产品重开。",
+      "serp_snapshot_ids": [],
+      "source_ids": [
+        "src_project",
+        "src_jev",
+        "src_spec_quote"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Business fit and task structure reviewed; no paid demand metrics, and some exact URL overlap remains unresolved."
+      }
+    }
+  ]
+}

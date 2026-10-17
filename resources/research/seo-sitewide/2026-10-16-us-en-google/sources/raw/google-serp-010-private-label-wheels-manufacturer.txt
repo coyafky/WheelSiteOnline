@@ -1,0 +1,327 @@
+QUERY: private label wheels manufacturer
+CAPTURED_AT: 2026-10-15T23:43:36.482Z
+URL: https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A%3A1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&uact=5&oq=private+label+wheels+manufacturer&gs_lp=Egxnd3Mtd2l6LXNlcnAiIXByaXZhdGUgbGFiZWwgd2hlZWxzIG1hbnVmYWN0dXJlckjcAVAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "private label wheels manufacturer - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "private label wheels manufacturer - Google Search"]
+root
+  link [ref=1139]
+    text "Skip to main content"
+  anchor [ref=1140, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=1141, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=1142, loc=css:textarea[name="q"]]
+          text "private label wheels manufacturer"
+        container
+          button "Clear" [ref=1143]
+            svg_root
+          container
+            button "Search by voice" [ref=1144, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=1145, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=1146, loc=role:button[name="Settings"]]
+        svg_root
+      button "Share" [ref=1147, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=1148, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=1149, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dprivate%2Blabel%2Bwheels%2Bmanufacturer%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A%253A1792107814620%26ei%3DJmXRaqW4JdSx0PEPuJqtmQs%26uact%3D5%26oq%3Dprivate%2Blabel%2Bwheels%2Bmanufacturer%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiIXByaXZhdGUgbGFiZWwgd2hlZWxzIG1hbnVmYWN0dXJlckjcAVAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=1150]
+      list
+        listitem
+          anchor [ref=1151, url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ2J8OegQIFBAD]
+            text "AI Mode"
+        listitem
+          link [ref=1152]
+            text "All"
+        listitem
+          anchor [ref=1153, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=private+label+wheels+manufacturer&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=1154, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=private+label+wheels+manufacturer&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQtKgLegQIGRAB]
+            text "Images"
+        listitem
+          anchor [ref=1155, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=private+label+wheels+manufacturer&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQs6gLegQIFxAB]
+            text "Short videos"
+        listitem
+          anchor [ref=1156, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=private+label+wheels+manufacturer&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQtKgLegQIFhAB]
+            text "Videos"
+        listitem
+          anchor [ref=1157, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmSm18uaHUIcIw77cYBDAp2S_EK0zZU1C-EyNUuO0jdFxMWTDmnTbhx04BCo-R2s6WfT35tNodP6qzXOGh_fW6NCDT9tLNlUKh3Tm2o-a-0KF6ku03wH8cbTY1Sqfv416zl__cXmLXYaeRLpf0i91XhAxW5aQ&q=private+label+wheels+manufacturer&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQs6gLegQIGBAB]
+            text "Forums"
+        listitem
+          button [ref=1158]
+            container "More filters"
+              text "More"
+              svg_root
+      button [ref=1159]
+        text "Tools"
+        svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        heading
+          text "Thinking"
+        progressindicator "Generating"
+      main
+        container
+          container
+            heading
+              text "Web results"
+            anchor [ref=1160, url=https://www.google.com/goto?url=CAESqgEB6zswFQtD_P4xhlEw3AOVY8qybJkldWl6pvhfOG9skn11qfP8u0aYfmtFk3YU9Gv_cScqIkryXK-yKeRPusALMfqSYNaMnYlD5HRTBu60CH6FdlEQYgAeWZ3zB9O-MnYYJS2JmwBxzZfDwoPSuyEh-k8I8-H5aw-_bt7tz4eBJc_Qnavb4pSxI1gZguibF5ocUyJrXAlGdhd820cY8J5fW1hvW4HGZDx7YA]
+              heading
+                text "Wheels"
+              image
+              text "Private Label Mfg"
+              text "https://privatelabelmfg.com"
+              text "› Wheels"
+            button "About this result" [ref=1161]
+              svg_root
+            text "Discover"
+            text "premium Wheels designed by car enthusiasts for peak performance"
+            text ". Tested on shop vehicles for quality and durability. Shop now!"
+            text "30-day returns"
+          container
+            anchor [ref=1162, url=https://www.google.com/goto?url=CAESqwEB6zswFbTY9qJ4rHGTMkLQIuuMGyIY17MFW7SujmpTW5YkplcC_G_oUGZnoZuU392UBhoAZx-I9qLzO6Fai3gSA_c_apAJhR5uOLFZVw8aQ6GS3h6L4_Lwt8xOQw9oRhR-nqpXpvETlczpysZWX3B4fAw-uMoyOgdIwBpYUS7kZ1kXIl48ops_7y97sW_7PnUFkG6z1ODwxEkryRHWJvW_cMC6geI5ddIChME]
+              heading
+                text "Private Label"
+              image
+              text "Forgestar"
+              text "https://www.forgestar.com"
+              text "› Contact Us"
+            button "About this result" [ref=1163]
+              svg_root
+            text "Forgestar's"
+            text "private label"
+            text "program delivers high-performance"
+            text "wheels"
+            text "to the automotive aftermarket and OEM industries in specialized sizing specifications."
+          container
+            anchor [ref=1164, url=https://www.google.com/goto?url=CAESbAHrOzAVaaYUYyaIALKWknzZv6VqC9hQ74Pb03JPA_JljEuXhNHyfOf3r4z2yK_8y__0z5fWcTk2FHHCFfBxUADacovPV_n1JU3rAtkAUYSeAg1hNyDaVl3ML5fZ_zOR8Ix0_VQrd0pbMtX6og]
+              heading
+                text "Private Label"
+              image
+              text "HRE Wheels"
+              text "https://www.hrewheels.com"
+              text "› corporate › private-label"
+            button "About this result" [ref=1165]
+              svg_root
+            text "Private Label Meet All Your Custom Wheel ・"
+            text "brings more than 40 years of expertise in wheel design, engineering, and manufacturing"
+            text "・ 760 598 1960 +1 844 HRE  ..."
+          container
+            anchor [ref=1166, url=https://www.google.com/goto?url=CAESXwHrOzAVBv7OlqjHW8in7JxNdc_9GgVT86xHGRW52WkqIMbVi9R420gcQUD_JVhXidGMQfahUguUuFDjrz49u65dk-VhTMRm_r4JVQ8vsyCATTlac0Z_D9EMBZicvT3P]
+              heading
+                text "About CWS"
+              image
+              text "Custom Wheel Solutions"
+              text "https://www.cwswheels.com"
+              text "› about-cws"
+            button "About this result" [ref=1167]
+              svg_root
+            text "CWS is a private-label manufacturer of wheels"
+            text "for both the OEM and aftermarket segments of the automotive industry, as well as specialty markets."
+          container
+            text "People also ask"
+            button [ref=1168]
+              text "Where can I find private label manufacturers?"
+              svg_root
+            button [ref=1169]
+              text "Who is the world's largest wheel manufacturer?"
+              svg_root
+            button [ref=1170]
+              text "Who are some reputable custom wheel manufacturers in the USA?"
+              svg_root
+            button [ref=1171]
+              text "Who makes the rims for NASCAR?"
+              svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=1172, url=https://www.google.com/goto?url=CAESbAHrOzAV4cqXYD7uEYTT2KxjO8k_NG6nKZEVcKaXHDJbeXxvxUD5VlXAJryY0DrWNOTPPOnZX_lDAAmny0RePMy7vB2UbgOcN8PR37E7gbhdulztCpGdIKB67f_Mft1bjI96BiCgnwcgFY3R4w]
+              heading
+                text "Private Label Wheels: Forged, From 4 pcs"
+              image
+              text "flexiforged"
+              text "https://flexiforgewheel.com"
+              text "› private-label-wheels"
+            button "About this result" [ref=1173]
+              svg_root
+            text "Private label wheels are"
+            text "custom forged wheels built under your brand"
+            text "— your logo engraved, your caps, your market — by a supplier whose job is to disappear."
+            anchor [ref=1174, url=https://www.google.com/goto?url=CAESvQEB6zswFQmGrQjNbnzuNh8CHi8STU6EvHmM_hLwW-zhYwDfSSP5jcN59E9gnNFakZX4mARL3ysRaJpS1yd33ZbR5fFXuXx6BIlk-17W_X5k6rZnVHT782BJ_VzQnsV0Tk5fnMer6fF-WBg6kF5VtLQeD453N1f-msolkiNfcDsKz5nEOeW7NTU4HsQy2b6QFY43XhT7Z77D12-RDfLd3WHRNvMOG3bqWJptNL5bc_4MQtPjnXwZLkEnzDdaqjg]
+              text "Read more"
+          container
+            anchor [ref=1175, url=https://www.google.com/goto?url=CAESlgEB6zswFfJk7Gd3pruzo1unfNUHGJHdrNbCimvpBWl20l9epnU2Wsjz63W5JPX6tzGwXBPKQajnRP5a4IanNg8IKEZ2INPY_cmRweJcBayZyyT1oUdRaqYO8fdK3e-ux8JXXZRAGrHVJsz0yJ_vVXmaL31ZvxakO_5fIObySNiFNsSGMDXFK8iqkI7ZmZ-HSYt1S0NhbcE]
+              heading
+                text "I'm 24, have a company where I design and make wheels ..."
+              image
+              text "Reddit · r/IAmA"
+              text "50+ comments · 13 years ago"
+            button "About this result" [ref=1176]
+              svg_root
+            text "Like the title says, I make wheels for all kinds of cars, but mostly exotics is what I tailor to. It is a high end line of wheels. The idea started when ..."
+            container
+              anchor [ref=1177, url=https://www.google.com/goto?url=CAESmwEB6zswFVCy5aBWDSdNq2PGfZlkDaC5FL8oOW1HMLNNbFMdW6ZdbU5zBRuAJaYkUntDp1H0TH8zV3IGrwu4hnVdPyDA4yH0e9SQ2HqWWLOmjWaWnTMADGgZQ6TzD9ogzoZBe6CqW3sY8ZR0GCIUuF1cj7p_Z7EbfchzW9dpjbjOSwO3rO16FxafBVCElpOyXery9jPoQAsUzC0pnQ]
+                text "55 answers"
+              text "·"
+              text "Top answer: "
+              text "Can we see said rims?"
+          container
+            anchor [ref=1178, url=https://www.google.com/goto?url=CAESpwEB6zswFV0hCgXeE6YVi9XPjxpngHB8a8qmPPqGdH3RBw3dDvaRYDaT6Ki0TTICEeJSvTH5MffK_rIWVEcSLM7tTTp54F-YGyYbYPsIZ5uJ-YuRG-L9EWYRDU_Ev6zAByarJdl9XH-FkabYsGmMHi9N0Tf5r0efc-T5mbnMafOdZVLRHlhgOMWguI4s_7aJSJ5rT9PhFZr46oBwoKDToY1tQe4H6fMP9g]
+              heading
+                text "Private Label"
+              image
+              text "Euroteck Racing LLC."
+              text "https://www.euroteckracing.com"
+              text "› privatelabel"
+            button "About this result" [ref=1179]
+              svg_root
+            text "Euroteck Racing manufactures over 300 unique carbon fiber exterior parts"
+            text "and accessories , builds, tests and produces production parts … call 1-866-950-7779"
+          container
+            anchor [ref=1180, url=https://www.google.com/goto?url=CAESpAEB6zswFe1cOi_M0p-LPqBDJbb-wus4raAXZmAobMvtncUrtKq98twXluw9WHGLeR_fCB8i1c-3vxWJliXCleq5TWHEaBvvcV9hv5fCu_WslDohXEwkPfagU9sF24sgoWLoQNtkoLKBDsrYbNKr36wXmGiRUQ9vhTw4tkd6DviDYZBfpKO2xgmis7Zsa889wf86e0TW4uh6zHgu8X6KShv4Ax1HEQ]
+              heading
+                text "Private Label Forged Wheels: From 3D Design to Branded ..."
+              svg_root
+              text "wheelman-auto.com"
+              text "https://www.wheelman-auto.com"
+              text "› news › detail › Privat..."
+            button "About this result" [ref=1181]
+              svg_root
+            text "Aug 13, 2026"
+            text "—"
+            text "Wheelman Auto Parts Co., Ltd"
+            text ". is a premier private label manufacturer specializing in high-end OEM/OES and aftermarket wheel solutions. Built ..."
+          container
+            anchor [ref=1182, url=https://www.google.com/goto?url=CAESYwHrOzAVEHKAKXbBnN9U9CFIGluB0XLAQHuancFVLv58WzBxbAeoTj8Ory4E86jmVT1qvw6MaiSun7VSyA4rBdiJe4MG_bwpVYcnxwbYI3ohWEdR6gehk9hal0D3tXe3yx0A_Q]
+              heading
+                text "Private Label Products"
+              image
+              text "rtwwheels"
+              text "https://www.rtwwheels.com"
+              text "› private-label"
+            button "About this result" [ref=1183]
+              svg_root
+            text "RTW Wheels"
+            text "offers high-quality replica wheels engineered to match the look, fit, and finish of popular factory rims at a more affordable price. Every wheel is ..."
+            anchor [ref=1184, url=https://www.google.com/goto?url=CAESxAEB6zswFTSuC1958nSzPksl8C_wf11jNZmCzT2k8CxeGN_FZNlB89RYb6uN-g53q2vUJdnQaMCW9GHItPSUWE9zehlmVFj8GsyClMGs8XiB6gDT4ptqrPF0-y8cMUHwjZY47XHVNVvDyfMAFfLJv8WgP8pUI5SJ4j8gRyoRl73wi7nKeCLjmUklCwHRkmcGwndKmFMGPypP4XBCu4-1pjGnJHdRq_pkT-yPgHP9uWO3rrugXjirThL9Jvtf8B4FiLhpB17h]
+              text "Read more"
+            text "30-day returns"
+            text "Missing:"
+            text "manufacturer"
+            text "‎| Show results with:"
+            anchor [ref=1185, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=private+label+wheels+%22manufacturer%22&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ5t4CegQISRAB]
+              text "manufacturer"
+        container
+          container
+            text "People also search for"
+            anchor [ref=1186, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+label+wheels+manufacturer+usa&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgkEAE]
+              container
+                text "Private label wheels manufacturer"
+                text "usa"
+              svg_root
+            anchor [ref=1187, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+label+wheels+manufacturer+california&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAg1EAE]
+              container
+                text "Private label wheels manufacturer"
+                text "california"
+              svg_root
+            anchor [ref=1188, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Custom+steel+wheels+manufacturers&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAg0EAE]
+              container
+                text "Custom steel"
+                text "wheels"
+                text "manufacturers"
+              svg_root
+            anchor [ref=1189, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+Label+mfg+reviews&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgyEAE]
+              container
+                text "Private Label"
+                text "mfg reviews"
+              svg_root
+            anchor [ref=1190, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+label+motors&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgwEAE]
+              container
+                text "Private label"
+                text "motors"
+              svg_root
+            anchor [ref=1191, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+label+built+trucks&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgtEAE]
+              container
+                text "Private label"
+                text "built trucks"
+              svg_root
+            anchor [ref=1192, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Private+label+car+accessories&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgnEAE]
+              container
+                text "Private label"
+                text "car accessories"
+              svg_root
+            anchor [ref=1193, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&q=Custom+wheel+Solutions+LLC&sa=X&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ1QJ6BAgmEAE]
+              text "Custom wheel Solutions LLC"
+              svg_root
+          navigation
+            heading
+              text "Page Navigation"
+            table
+              table_row
+                table_cell
+                table_cell
+                  text "1"
+                table_cell
+                  anchor "Page 2" [ref=1194, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=10&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAE]
+                    text "2"
+                table_cell
+                  anchor "Page 3" [ref=1195, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=20&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAG]
+                    text "3"
+                table_cell
+                  anchor "Page 4" [ref=1196, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=30&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAI]
+                    text "4"
+                table_cell
+                  anchor "Page 5" [ref=1197, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=40&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAK]
+                    text "5"
+                table_cell
+                  anchor "Page 6" [ref=1198, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=50&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAM]
+                    text "6"
+                table_cell
+                  anchor "Page 7" [ref=1199, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=60&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAO]
+                    text "7"
+                table_cell
+                  anchor "Page 8" [ref=1200, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=70&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAQ]
+                    text "8"
+                table_cell
+                  anchor "Page 9" [ref=1201, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=80&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAS]
+                    text "9"
+                table_cell
+                  anchor "Page 10" [ref=1202, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=90&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8tMDegQITBAU]
+                    text "10"
+                heading
+                  anchor [ref=1203, url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA:1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&start=10&sa=N&sstk=AS6-VmIV9-kD-SyfrVubtCi9-0zqXYj_ODjyHM8RLkEp4dMptEIlOd3xtcGIWiRCTscB04QQ-nfJU_s_34aVKI5Efte9iWg-xCBx0w&ved=2ahUKEwixz5rumb2XAxW0IzQIHdGaCTUQ8NMDegQITBAW]
+                    text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+      button [ref=1204, url=https://www.google.com/search?q=private+label+wheels+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A%3A1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&uact=5&oq=private+label+wheels+manufacturer&gs_lp=Egxnd3Mtd2l6LXNlcnAiIXByaXZhdGUgbGFiZWwgd2hlZWxzIG1hbnVmYWN0dXJlckjcAVAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-serp#]
+        text "United States"
+        text " - "
+        text "From your IP address"
+      text " - "
+      button [ref=1205]
+        text "Update location"
+      container
+        anchor [ref=1206, loc=href:https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1, url=https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1]
+          text "Help"
+        button [ref=1207]
+          text "Send feedback"
+        anchor [ref=1208, loc=href:https://policies.google.com/privacy?hl=en&fg=1, url=https://policies.google.com/privacy?hl=en&fg=1]
+          text "Privacy"
+        anchor [ref=1209, loc=href:https://policies.google.com/terms?hl=en&fg=1, url=https://policies.google.com/terms?hl=en&fg=1]
+          text "Terms"
+

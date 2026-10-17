@@ -1,0 +1,734 @@
+{
+  "schema_version": "0.1",
+  "run_id": "run_49640978b2a8",
+  "search_context": {
+    "engine": "Google",
+    "country": "US",
+    "language": "en-US",
+    "device": "desktop"
+  },
+  "pages": [
+    {
+      "page_id": "page_home",
+      "url": "/",
+      "title": "首页/站点身份",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_site_fenghuai"
+      ],
+      "buyer_job_ids": [
+        "job_identify_product_line"
+      ],
+      "primary_topic": "首页身份和四条并列产品线",
+      "primary_queries": [
+        "首页身份和四条并列产品线"
+      ],
+      "secondary_queries": [
+        "automotive components supplier",
+        "OEM automotive components partner"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "供应链/法人英文身份审核，四线平衡呈现"
+      ],
+      "recommended_next_step": "建议更新页面定位/CTA，不创建新URL",
+      "source_ids": [
+        "src_project",
+        "src_spec_home"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_products",
+      "url": "/products",
+      "title": "产品总览",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_site_fenghuai"
+      ],
+      "buyer_job_ids": [
+        "job_identify_product_line"
+      ],
+      "primary_topic": "wheels / EV components / custom aluminum / self-sealing tires",
+      "primary_queries": [
+        "wheels / EV components / custom aluminum / self-sealing tires"
+      ],
+      "secondary_queries": [
+        "automotive components products"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "四线产品实体、命名与公开内容审核"
+      ],
+      "recommended_next_step": "统一词形与产品简介，不将线合并",
+      "source_ids": [
+        "src_page_index",
+        "src_project"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_wheels",
+      "url": "/products/wheels",
+      "title": "轮毂目录",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "primary_topic": "alloy wheel catalogue；wheel specifications",
+      "primary_queries": [
+        "alloy wheel catalogue",
+        "wheel specifications"
+      ],
+      "secondary_queries": [
+        "wheel catalogue",
+        "alloy wheels",
+        "bolt pattern / offset (only verified fields)"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "型号发布资格、图权、规格审核；无车型 fitment 外推"
+      ],
+      "recommended_next_step": "目录成为 wheel browsing 主责URL",
+      "source_ids": [
+        "src_spec_wheels",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_flow",
+      "url": "/products/wheels/flow-formed",
+      "title": "旋压轮毂",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_understand_technology"
+      ],
+      "primary_topic": "flow-formed wheels",
+      "primary_queries": [
+        "flow-formed wheels"
+      ],
+      "secondary_queries": [
+        "flow formed wheels manufacturer",
+        "flow forming process",
+        "flow vs forged"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "批准型号、工艺描述、图片图权"
+      ],
+      "recommended_next_step": "保留旋压与锻造分离",
+      "source_ids": [
+        "src_spec_flow",
+        "src_serp_001"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_forged",
+      "url": "/products/wheels/forged",
+      "title": "锻造定制",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_start_project"
+      ],
+      "primary_topic": "custom forged wheels",
+      "primary_queries": [
+        "custom forged wheels"
+      ],
+      "secondary_queries": [
+        "custom forged wheels manufacturer",
+        "forged wheel supplier"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "真实供货/制造关系、工艺和可提供范围"
+      ],
+      "recommended_next_step": "明确不是现货 SKU 目录",
+      "source_ids": [
+        "src_spec_forged",
+        "src_serp_002"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_oem",
+      "url": "/custom-development",
+      "title": "OEM/OES 项目路径",
+      "ownership_state": "SECTION",
+      "priority_class": "DEFER",
+      "page_type": "SECTION_OR_CANDIDATE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_identify_supplier"
+      ],
+      "primary_topic": "OEM wheel supplier",
+      "primary_queries": [
+        "OEM wheel supplier"
+      ],
+      "secondary_queries": [
+        "OEM wheel supplier",
+        "OEM wheel manufacturer"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "实际 OEM/OES 供应链资格及页面意图复采"
+      ],
+      "recommended_next_step": "不瞄准 OEM replacement retail intent",
+      "source_ids": [
+        "src_serp_003",
+        "src_project"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_private_label",
+      "url": "/dealers/private-label",
+      "title": "轮毂私牌合作",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "GROWTH_CANDIDATE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_assess_supply_program"
+      ],
+      "primary_topic": "private label wheels program",
+      "primary_queries": [
+        "private label wheels program"
+      ],
+      "secondary_queries": [
+        "private label wheels manufacturer",
+        "private label wheel supplier"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "英文内容批准、实际产品/交付计划/条款、noindex核验"
+      ],
+      "recommended_next_step": "先解除内容审批门槛，不承诺MOQ/交期",
+      "source_ids": [
+        "src_serp_010",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_offset",
+      "url": "/tools/offset-calculator",
+      "title": "Offset 计算工具/解释",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "GROWTH_CANDIDATE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "primary_topic": "wheel offset calculator",
+      "primary_queries": [
+        "wheel offset calculator"
+      ],
+      "secondary_queries": [
+        "wheel offset explained",
+        "wheel offset chart"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "EDUCATION",
+      "proof_requirements": [
+        "公式/单位、结果文案、canonical、车型建议边界"
+      ],
+      "recommended_next_step": "工具与解释任务归一URL",
+      "source_ids": [
+        "src_serp_011",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_bolt",
+      "url": "/resources/bolt-patterns",
+      "title": "Bolt pattern 资源",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "DEFER",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_select_by_spec"
+      ],
+      "primary_topic": "wheel bolt pattern guide",
+      "primary_queries": [
+        "wheel bolt pattern guide"
+      ],
+      "secondary_queries": [
+        "wheel bolt pattern",
+        "5x114.3 wheels"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "EDUCATION",
+      "proof_requirements": [
+        "Google SERP复采、pattern数据审核、与 /insights/bolt-patterns 去重"
+      ],
+      "recommended_next_step": "指定一个资源主责URL",
+      "source_ids": [
+        "src_spec_wheels",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_ev",
+      "url": "/products/ev-components",
+      "title": "EV housing 项目评估",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_ev_aluminum"
+      ],
+      "buyer_job_ids": [
+        "job_evaluate_ev_project"
+      ],
+      "primary_topic": "EV motor housing supplier",
+      "primary_queries": [
+        "EV motor housing supplier"
+      ],
+      "secondary_queries": [
+        "EV motor housing supplier",
+        "aluminum EV motor housing"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "产品/工艺/制造主体/工程图权确认"
+      ],
+      "recommended_next_step": "先一页承接；更细分URL另评",
+      "source_ids": [
+        "src_spec_ev",
+        "src_serp_004"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_ev_inverter",
+      "url": "/products/ev-components",
+      "title": "Inverter housing 模块",
+      "ownership_state": "SECTION",
+      "priority_class": "DEFER",
+      "page_type": "SECTION_OR_CANDIDATE",
+      "product_lines": [
+        "ent_ev_aluminum"
+      ],
+      "buyer_job_ids": [
+        "job_evaluate_ev_project"
+      ],
+      "primary_topic": "electric vehicle inverter housing manufacturer",
+      "primary_queries": [
+        "electric vehicle inverter housing manufacturer"
+      ],
+      "secondary_queries": [
+        "EV inverter housing supplier",
+        "traction inverter enclosure"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "housing-specific SERP及真实产品清单、供应链证据"
+      ],
+      "recommended_next_step": "不承接 traction inverter 整机/电路设计意图",
+      "source_ids": [
+        "src_spec_ev",
+        "src_serp_005"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_custom",
+      "url": "/products/custom-aluminum",
+      "title": "Custom aluminum 定制线",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE_BUT_NOINDEX",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_custom_aluminum"
+      ],
+      "buyer_job_ids": [
+        "job_start_drawing_project"
+      ],
+      "primary_topic": "custom aluminum components supplier",
+      "primary_queries": [
+        "custom aluminum components supplier"
+      ],
+      "secondary_queries": [
+        "custom aluminum components",
+        "custom aluminium parts"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "目前 noindex；需确认产品范围、供货主体和每项工艺"
+      ],
+      "recommended_next_step": "有结构必要性但不等于当前可发布/索引",
+      "source_ids": [
+        "src_spec_custom",
+        "src_serp_006"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_drawing",
+      "url": "/products/custom-aluminum#request-project-review",
+      "title": "Drawing/RFQ 内容模块",
+      "ownership_state": "SECTION",
+      "priority_class": "GROWTH_CANDIDATE",
+      "page_type": "SECTION_OR_CANDIDATE",
+      "product_lines": [
+        "ent_custom_aluminum"
+      ],
+      "buyer_job_ids": [
+        "job_prepare_rfq"
+      ],
+      "primary_topic": "custom aluminum parts from drawing supplier",
+      "primary_queries": [
+        "custom aluminum parts from drawing supplier"
+      ],
+      "secondary_queries": [
+        "aluminum parts made to drawing",
+        "custom aluminum parts RFQ",
+        "custom aluminum parts quote"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "表单真实字段、图纸保密/上传流程、工程审核"
+      ],
+      "recommended_next_step": "优先补转化模块，不急于新增 URL",
+      "source_ids": [
+        "src_spec_custom",
+        "src_spec_quote",
+        "src_serp_007"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_tire",
+      "url": "/products/safety-tires",
+      "title": "自密封轮胎产品页",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_self_sealing_tires"
+      ],
+      "buyer_job_ids": [
+        "job_identify_supplier"
+      ],
+      "primary_topic": "self-sealing tire manufacturer",
+      "primary_queries": [
+        "self-sealing tire manufacturer"
+      ],
+      "secondary_queries": [
+        "self-sealing tires",
+        "self-sealing tire supplier"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "统一 self-sealing 词形，供应商关系/具体型号/性能边界审核"
+      ],
+      "recommended_next_step": "移除 self-healing 作为主产品词",
+      "source_ids": [
+        "src_spec_tires",
+        "src_serp_008"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_tire_guide",
+      "url": "/resources/self-sealing-tire-technology",
+      "title": "自密封机制说明",
+      "ownership_state": "NEW_PAGE_CANDIDATE",
+      "priority_class": "GROWTH_CANDIDATE",
+      "page_type": "SECTION_OR_CANDIDATE",
+      "product_lines": [
+        "ent_self_sealing_tires"
+      ],
+      "buyer_job_ids": [
+        "job_understand_technology"
+      ],
+      "primary_topic": "how do self sealing tires work",
+      "primary_queries": [
+        "how do self sealing tires work"
+      ],
+      "secondary_queries": [
+        "self-sealing tire technology",
+        "self-sealing vs run flat"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "EDUCATION",
+      "proof_requirements": [
+        "工程审核工作机制、可封堵范围、维修提示和适用性"
+      ],
+      "recommended_next_step": "经审核后再决定文章还是产品页内模块",
+      "source_ids": [
+        "src_spec_tires",
+        "src_serp_009"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_quote",
+      "url": "/request-a-quote",
+      "title": "项目询盘",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_site_fenghuai"
+      ],
+      "buyer_job_ids": [
+        "job_prepare_rfq"
+      ],
+      "primary_topic": "request quote custom aluminum parts",
+      "primary_queries": [
+        "request quote custom aluminum parts"
+      ],
+      "secondary_queries": [
+        "what information should I send for an OEM automotive component inquiry"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "生产隐私/邮件/UAT与表单字段审核，不承诺答复速度"
+      ],
+      "recommended_next_step": "各产品页 CTA 回流此处",
+      "source_ids": [
+        "src_spec_quote",
+        "src_project"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_fitment",
+      "url": "/fitment/[platform]",
+      "title": "车型适配",
+      "ownership_state": "EXISTING_PAGE",
+      "priority_class": "DO_NOT_TARGET",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_wheels"
+      ],
+      "buyer_job_ids": [
+        "job_confirm_vehicle_fitment"
+      ],
+      "primary_topic": "vehicle-specific wheel fitment",
+      "primary_queries": [
+        "vehicle-specific wheel fitment"
+      ],
+      "secondary_queries": [
+        "BMW M wheel fitment (blocked)"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "当前 verified=false；先 noindex 并移出 sitemap，后由工程确认"
+      ],
+      "recommended_next_step": "不做 topic/keyword 页面化",
+      "source_ids": [
+        "src_jev",
+        "src_spec_wheels"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    },
+    {
+      "page_id": "page_manufacturing",
+      "url": "/capabilities 与 /manufacturing",
+      "title": "能力/制造入口",
+      "ownership_state": "REVIEW_EXISTING",
+      "priority_class": "MUST_HAVE",
+      "page_type": "PRODUCT_OR_SERVICE",
+      "product_lines": [
+        "ent_site_fenghuai"
+      ],
+      "buyer_job_ids": [
+        "job_validate_supplier"
+      ],
+      "primary_topic": "automotive components manufacturing capabilities",
+      "primary_queries": [
+        "automotive components manufacturing capabilities"
+      ],
+      "secondary_queries": [
+        "manufacturer / factory / die casting (claim gated)"
+      ],
+      "internal_links": [
+        "/products",
+        "/request-a-quote"
+      ],
+      "cta_class": "PRODUCT_INQUIRY",
+      "proof_requirements": [
+        "逐工艺、主体与证据审核；避免两个 URL 抢同一 manufacturing intent"
+      ],
+      "recommended_next_step": "复核两页面主题边界，不按关键词扩写能力",
+      "source_ids": [
+        "src_page_index",
+        "src_project",
+        "src_jev"
+      ],
+      "claim_type": "RECOMMENDATION",
+      "confidence": {
+        "level": "MEDIUM",
+        "reason": "Page inventory and SERP intent were reviewed; page publishing and supply evidence gates still apply."
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "quality_checks": [
+    {
+      "check": "every recommended cluster maps to one entity and buyer job",
+      "status": "PASS",
+      "details": "All included recommendations name an entity and buyer job."
+    },
+    {
+      "check": "same-page assignment supported by exact SERP URL overlap",
+      "status": "UNRESOLVED",
+      "details": "Google UI snapshots retained exact query URL, result labels and domains, but Google wrapped result URLs and not every destination was clicked. No automatic URL-overlap clustering was used."
+    },
+    {
+      "check": "four parallel product lines represented",
+      "status": "PASS",
+      "details": "All four lines have independent clusters and decision states."
+    },
+    {
+      "check": "unverified claims excluded",
+      "status": "PASS",
+      "details": "Fitment, price, MOQ, lead time, certifications, customer proof and unconfirmed manufacturing claims remain parked."
+    },
+    {
+      "check": "search volume/KD/CPC source present",
+      "status": "NOT_AVAILABLE",
+      "details": "No paid provider or Search Console data used; all metrics explicitly missing."
+    }
+  ],
+  "manual_review_queue": [
+    "Re-capture paired queries with canonical clicked result URLs before finalizing page ownership where two queries may share a page.",
+    "Verify product-line supply entity and public claim boundaries with business owner.",
+    "Resolve all English noindex/approval gates before publishing content."
+  ]
+}

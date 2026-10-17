@@ -1,0 +1,79 @@
+{
+  "draftMeta": {
+    "pageKey": "home",
+    "locale": "es",
+    "sourceLocale": "en",
+    "translationStatus": "machine-draft",
+    "publicationStatus": "unapproved",
+    "indexing": "noindex",
+    "reviewNote": "Borrador generado por máquina a partir del contenido inglés aprobado. Requiere revisión lingüística, comercial y de evidencia antes de publicarse o indexarse."
+  },
+  "seo": {
+    "title": "Fenghuai | Ruedas, carcasas para vehículos eléctricos, aluminio a medida y neumáticos autosellantes",
+    "description": "Explora las cuatro líneas de productos automotrices de Fenghuai, sus capacidades de fabricación, el proceso de proyectos y el punto de contacto para programas B2B globales."
+  },
+  "content": {
+    "hero": {
+      "eyebrow": "Cuatro líneas de productos · Un punto de contacto",
+      "heading": "Componentes automotrices respaldados por fabricación especializada",
+      "lead": "Fenghuai coordina programas de ruedas, carcasas para vehículos eléctricos, componentes de aluminio a medida y neumáticos autosellantes para compradores internacionales, desde la revisión de requisitos y el análisis de ingeniería hasta la documentación de producción.",
+      "disclosure": "La fabricación se realiza en nuestras bases de producción especializadas. Para cada proyecto se confirman la instalación responsable, las capacidades, las certificaciones y el alcance del suministro.",
+      "mediaLabel": "Nuestra planta de fabricación de ruedas",
+      "media": {"wordpressId": 114, "src": "/images/home/factory.webp", "alt": "Vista aérea de la planta de fabricación de ruedas de Fenghuai", "caption": "Base de fabricación de ruedas de Fenghuai", "hasRender": true, "approvalStatus": "approved", "sourceRef": "WP 114"},
+      "primaryAction": {"label": "Explorar líneas de productos", "href": "#product-lines"},
+      "secondaryAction": {"label": "Solicitar una revisión del proyecto", "href": "/request-a-quote?from=home"}
+    },
+    "productLines": {
+      "eyebrow": "Líneas de productos",
+      "heading": "Cuatro líneas de productos, cada una con su propia ruta de ingeniería",
+      "intro": "Seleccione la línea que corresponda a la pieza o al requisito de suministro. Los datos del producto, la ruta de fabricación y las pruebas de validación se revisan dentro de esa línea, en lugar de tratarse como un proceso universal.",
+      "actionLabels": {"wheels": "Explorar ruedas", "ev-components": "Revisar categorías de carcasas EV", "custom-aluminum": "Empiece con sus datos", "safety-tires": "Revisar neumáticos autosellantes"},
+      "items": [
+        {"slug": "wheels", "name": "Ruedas", "subtitle": "Modelos registrados · Flow forming · Forjadas a medida", "summary": "Consulta especificaciones de ruedas aprobadas, revisa rutas registradas de flow forming o inicia un programa de ruedas forjadas a medida.", "highlights": [], "hasRender": true, "image": "/images/cards/card-wheels.webp", "href": "/products/wheels"},
+        {"slug": "ev-components", "name": "Carcasas de aluminio para EV", "subtitle": "Motor · Controlador · Inversor", "summary": "Evaluación de ingeniería para proyectos de carcasas de motor refrigeradas por agua, motores de fundición a presión y carcasas de controladores o inversores.", "highlights": [], "hasRender": true, "image": "/images/cards/card-ev.webp", "href": "/products/ev-components"},
+        {"slug": "custom-aluminum", "name": "Desarrollo de aluminio a medida", "subtitle": "Plano 2D · Datos 3D · Muestra física", "summary": "Inicia una evaluación basada en un plano o una muestra para un componente de aluminio fuera de las categorías definidas de ruedas y carcasas EV.", "highlights": [], "hasRender": true, "image": "/images/cards/card-aluminum.webp", "href": "/products/custom-aluminum"},
+        {"slug": "safety-tires", "name": "Neumáticos autosellantes", "subtitle": "Tecnología · Pruebas · Revisión de suministro", "summary": "Revisa el concepto autosellante, las condiciones de prueba documentadas y la información necesaria para analizar un programa de neumáticos aplicable.", "highlights": [], "hasRender": true, "image": "/images/cards/card-tires.webp", "href": "/products/safety-tires"}
+      ]
+    },
+    "capabilities": {
+      "eyebrow": "Fabricación e ingeniería",
+      "heading": "La capacidad debe tener un alcance y una evidencia claros",
+      "items": [
+        {"id": "01", "title": "Revisión de ingeniería", "body": "Los planos, datos 3D, muestras y requisitos de aplicación se revisan antes de confirmar una ruta.", "appliesTo": ["Todas las líneas de proyecto"], "evidenceStatus": "supplier-stated"},
+        {"id": "02", "title": "Rutas de fundición y conformado", "body": "La fundición por gravedad, la fundición a baja presión, el flow forming, la fundición a presión y la forja son opciones de ruta en líneas de productos definidas.", "appliesTo": ["Ruedas", "Carcasas EV", "Aluminio a medida"], "evidenceStatus": "supplier-stated"},
+        {"id": "03", "title": "Mecanizado de precisión", "body": "Los taladros, caras, interfaces y referencias críticas se mecanizan e inspeccionan según el plano aprobado.", "appliesTo": ["Ruedas", "Carcasas EV", "Aluminio a medida"], "evidenceStatus": "supplier-stated"},
+        {"id": "04", "title": "Procesos específicos del producto", "body": "La unión, el recubrimiento, el tratamiento térmico o la aplicación de una capa de sellado se incluyen solo cuando la ruta de producto aprobada lo requiere.", "appliesTo": ["Depende de la ruta"], "evidenceStatus": "supplier-stated"},
+        {"id": "05", "title": "Inspección y validación", "body": "Las dimensiones, el equilibrado, los límites de estanqueidad y las condiciones de fatiga o punción se planifican para el producto y el mercado aplicables.", "appliesTo": ["Depende del producto y del mercado"], "evidenceStatus": "supplier-stated"},
+        {"id": "06", "title": "Evidencia documentada", "body": "Los certificados, informes de pruebas y registros de inspección se comprueban para la entidad legal, el alcance, el producto y la validez.", "appliesTo": ["Evidencia de proyecto aprobada"], "evidenceStatus": "verified"}
+      ],
+      "action": {"label": "Ver fabricación y calidad", "href": "/capabilities"}
+    },
+    "delivery": {
+      "eyebrow": "Del requisito al suministro aprobado",
+      "heading": "Un punto de contacto, rutas de fabricación específicas para cada producto",
+      "lead": "Fenghuai coordina un único punto de contacto comercial y de proyecto en Shenzhen a través de nuestras bases de fabricación especializadas. Estas bases comparten el mismo control efectivo y, en conjunto, abarcan las etapas de materiales, utillaje, fundición y mecanizado de precisión. Para la línea de productos seleccionada se confirman la instalación responsable, la ruta de proceso, el plan de validación y el conjunto de documentos.",
+      "stages": [
+        {"id": "01", "title": "Definir el requisito", "body": "Empiece con una variante de rueda registrada, un plano, datos 3D, una muestra o un requisito de suministro de neumáticos."},
+        {"id": "02", "title": "Confirmar la ruta responsable", "body": "Identifique la entidad de fabricación, el alcance del proceso, el responsable de ingeniería y las pruebas necesarias para el proyecto."},
+        {"id": "03", "title": "Seleccionar o desarrollar el producto", "body": "Revise una especificación existente o avance con el utillaje, las pruebas y el trabajo de primera pieza cuando sea necesario desarrollar el producto."},
+        {"id": "04", "title": "Inspeccionar y aprobar", "body": "Evalúe las características acordadas y las pruebas de validación aplicables antes de liberar la base de suministro."},
+        {"id": "05", "title": "Suministrar con registros", "body": "Confirme la repetibilidad, la trazabilidad, el embalaje y los documentos necesarios para el pedido o lote aprobado."}
+      ],
+      "evidence": [
+        {"id": "wheel-manufacturing", "label": "Nuestra base de fabricación de ruedas", "body": "Los equipos de conformado y producción de ruedas respaldan la ruta seleccionada para el programa de ruedas aprobado.", "media": {"wordpressId": 61, "src": "/images/about/casting-process.webp", "alt": "Línea de producción de fundición de ruedas dentro de una planta de fabricación de Fenghuai", "caption": "Base de fabricación de ruedas de Fenghuai", "hasRender": true, "approvalStatus": "approved", "sourceRef": "WP 61 / WP 116"}},
+        {"id": "aluminum-production", "label": "Nuestra base de componentes de aluminio", "body": "Los recursos de mecanizado y producción de carcasas se asignan a la ruta aprobada de componentes de aluminio.", "media": {"wordpressId": 78, "src": "/images/about/machining-workshop.webp", "alt": "Taller de mecanizado de componentes de aluminio dentro de una planta de fabricación de Fenghuai", "caption": "Base de fabricación de componentes de aluminio de Fenghuai", "hasRender": true, "approvalStatus": "approved", "sourceRef": "WP 78 / WP 38"}},
+        {"id": "tire-production", "label": "Nuestra base de producción de neumáticos autosellantes", "body": "Una línea dedicada de recubrimiento hot melt respalda los programas aprobados de neumáticos autosellantes y su ruta de proceso documentada.", "media": {"wordpressId": 155, "src": "/images/safety-tires/automated-production-line.webp", "alt": "Línea robotizada de recubrimiento hot melt dentro de una planta de fabricación de neumáticos autosellantes de Fenghuai", "caption": "Base de producción de neumáticos autosellantes de Fenghuai", "hasRender": true, "approvalStatus": "approved", "sourceRef": "WP 155"}}
+      ],
+      "action": {"label": "Cómo se desarrollan los proyectos", "href": "/custom-development"}
+    },
+    "closing": {
+      "eyebrow": "Empiece con la información disponible",
+      "heading": "Envíenos un modelo, un plano o el requisito que necesita resolver",
+      "body": "Indique la línea de productos, el mercado de destino y la información disponible. Usaremos la referencia de la consulta para continuar la revisión de la especificación y las pruebas.",
+      "inputLabel": "Datos iniciales sugeridos",
+      "inputPrompts": ["Modelo registrado o especificación completa de la rueda", "Plano 2D, datos 3D o muestra física autorizada", "Aplicación, cantidad, mercado y documentos necesarios"],
+      "primaryAction": {"label": "Solicitar una revisión del proyecto", "href": "/request-a-quote?from=home"},
+      "secondaryAction": {"label": "Explorar todas las líneas de productos", "href": "/products"}
+    }
+  }
+}

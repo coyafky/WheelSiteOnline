@@ -1,0 +1,113 @@
+{
+  "snapshot_id": "serp_012",
+  "query_id": "qry_61831dcfd843",
+  "query": "flow formed wheels supplier",
+  "engine": "Google",
+  "country": "US",
+  "language": "en-US",
+  "device": "desktop",
+  "observed_at": "2026-10-16T08:44:13Z",
+  "location": "United States shown; inferred from IP; exact city unknown",
+  "retrieval_method": "Ego Lite manual UI; researcher entered query; captured visible result titles, snippets and PAA/related-search modules",
+  "url": "https://www.google.com/search?q=flow+formed+wheels+supplier&hl=en&gl=us",
+  "results": [
+    {
+      "rank": 1,
+      "title": "Flow Formed",
+      "visible_entity": "Konig Wheels",
+      "domain": "konigwheels.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 2,
+      "title": "Flow Formed Technology - Wheels",
+      "visible_entity": "TSW Alloy Wheels",
+      "domain": "tsw.com",
+      "page_type": "CAPABILITY_ARTICLE"
+    },
+    {
+      "rank": 3,
+      "title": "Flow Formed - Wheels",
+      "visible_entity": "WELD Racing Wheels",
+      "domain": "weldwheels.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 4,
+      "title": "Flow Formed - RRW Relations Race Wheels",
+      "visible_entity": "Relations Race Wheels",
+      "domain": "relationsracewheels.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 5,
+      "title": "Forgestar: Flow Formed Monoblock Wheels",
+      "visible_entity": "Forgestar",
+      "domain": "forgestar.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 6,
+      "title": "Flow Formed Series",
+      "visible_entity": "Forgeline Motorsports",
+      "domain": "forgeline.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 7,
+      "title": "Flow Formed",
+      "visible_entity": "Black Rhino Wheels",
+      "domain": "blackrhinowheels.com",
+      "page_type": "PRODUCT_CATEGORY"
+    },
+    {
+      "rank": 8,
+      "title": "How different are flow formed wheels in terms of quality?",
+      "visible_entity": "Reddit r/askcarguys",
+      "domain": "reddit.com",
+      "page_type": "FORUM"
+    },
+    {
+      "rank": 9,
+      "title": "10 Best Flow-Formed Wheel Brands Worth Checking Out",
+      "visible_entity": "Discounted Wheel Warehouse",
+      "domain": "discountedwheelwarehouse.com",
+      "page_type": "COMPARISON"
+    }
+  ],
+  "features": {
+    "shopping": "OBSERVED",
+    "paa": [
+      "Who makes flow-formed wheels?",
+      "Are flow-formed wheels any good?",
+      "What are the best flow-formed wheels?",
+      "What is better, forged or flow-formed wheels?"
+    ],
+    "related_searches": [
+      "Flow formed wheels supplier usa",
+      "Flow formed wheels brands",
+      "Best flow formed wheels supplier",
+      "Flow form wheels",
+      "Flow Form wheels vs Forged",
+      "Flow Formed wheels 5x112",
+      "Apex flow formed wheels",
+      "Flow formed wheels konig"
+    ],
+    "ai_overview": "NOT_AVAILABLE_IN_CAPTURE",
+    "local_pack": "NOT_OBSERVED"
+  },
+  "limitations": [
+    "Single US desktop sample; IP-derived location; no city/account personalization control.",
+    "Google wrapped result links were not resolved to canonical target URLs.",
+    "Shopping modules and consumer product pages were prominent despite supplier modifier.",
+    "No volume, KD, CPC, trend, rank tracking or demand estimate."
+  ],
+  "claim_type": "FACT",
+  "confidence": {
+    "level": "MEDIUM",
+    "reason": "Visible result mix is direct UI evidence, but one personalized sample and target URLs not resolved."
+  },
+  "source_ids": [
+    "src_serp_followup_001"
+  ]
+}

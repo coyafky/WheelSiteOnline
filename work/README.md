@@ -22,6 +22,8 @@ work/queued/ → work/active/ → work/completed/
 
 ## 当前队列快照
 
-目录名不自动证明任务状态。队列中当前有两项尚未开工：Plan A 等待用户确认三项范围问题；首发产品与图片核验等待型号清单及业务/工程资料。开始前先确认阻塞已解除，并更新对应任务文件。已完成的盘点归入 `completed/`，被后续方案替代的计划移入 `archive/superseded-work-plans/`。具体项目优先级与阻断见根 [`STATUS.md`](../STATUS.md)。
+目录名不自动证明任务状态。队列还包含商业化整改、多语言、询盘隐私、产品内容核验和部署平台样机等任务；各任务文件说明启动条件，项目优先级与当前阻断以根 [`STATUS.md`](../STATUS.md) 为准。部署平台样机和手册任务见 [2026-10-14 部署任务](queued/2026-10-14-deployment-platform-spike-and-guide.md)，需在本地与预发布样机完成后才形成正式平台决定和生产操作手册。已完成的盘点归入 `completed/`，被后续方案替代的计划移入 `archive/superseded-work-plans/`。
 
 当前执行入口：[`STATUS.md`](../STATUS.md)。项目文档导航：[`DOCUMENTATION.md`](../DOCUMENTATION.md)。任务目录只是生命周期记录，不是项目事实、设计规则或架构契约的第二份正本。
+
+新加入队列的 SEO 编辑工作流适配任务：[SEO Machine 能力模块适配](queued/2026-10-16-seo-machine-module-adaptation.md)。其启动需等当前 Fitment 索引门槛 P0 与内容/多语言验收优先项推进后，再按只读审计开始。

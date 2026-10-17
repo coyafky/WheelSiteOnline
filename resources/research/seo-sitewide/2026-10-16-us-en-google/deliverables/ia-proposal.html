@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全站 Topic Map 信息架构建议</title>
+<style>
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.55; }
+body { max-width: 1120px; margin: 0 auto; padding: 32px 24px 64px; }
+.generated { padding: 12px 16px; border-left: 4px solid #3e6ae1; background: color-mix(in srgb, Canvas 94%, #3e6ae1); }
+h1, h2, h3 { line-height: 1.2; margin-top: 1.7em; }
+code, pre { font-family: ui-monospace, monospace; }
+pre { overflow: auto; padding: 16px; background: color-mix(in srgb, Canvas 92%, CanvasText); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid color-mix(in srgb, CanvasText 24%, transparent); }
+a { color: #3e6ae1; }
+</style>
+</head>
+<body>
+<p class="generated"><strong>Generated view:</strong> regenerate this file from the reviewed Markdown source; do not edit it independently.</p>
+<main>
+<h1>全站 Topic Map 信息架构建议</h1>
+<h2>建议原则</h2>
+<ul>
+<li>- 首页与 <code>/products</code> 清楚讲明峰徊海外项目接口与四条并列产品线；不把全站收束成 forged wheels 或 aluminum components。</li>
+<li>- 每条线保留自己的核心入口；Wheel catalog、flow-formed、custom forged、EV housings、custom aluminum、self-sealing tires 彼此按真实供货关系链接。</li>
+<li>- SEO 增长内容通过已有产品页、资源文章或工具支持核心询盘；Topic Map 是路线图，不等于要一次性建设全部新 URL。</li>
+<li>- 把真实业务证明、索引批准、媒体图权和内容审核作为发布 gate。</li>
+</ul>
+<h2>主题树（建议层级）</h2>
+<pre><code>首页：Fenghuai 海外汽车零部件项目入口（品牌英文身份待批准）
+├── Products
+│   ├── Automotive Wheels
+│   │   ├── Wheel Catalogue → verified SKU/spec only
+│   │   ├── Flow-Formed Wheels → process/product page
+│   │   ├── Custom Forged Wheels → development/inquiry (not inventory)
+│   │   └── Dealer / Private Label → defer until program and EN page approved
+│   ├── EV Aluminum Components
+│   │   ├── Motor Housing → module now; standalone candidate after evidence gate
+│   │   └── Inverter/Controller Housing → defer until housing-specific intent + entity proof
+│   ├── Custom Aluminum Manufacturing → noindex until business/publication gate
+│   │   └── Drawing / 3D / Sample RFQ → conversion module, no unsupported process list
+│   └── Self-Sealing Tires
+│       ├── Product / Supplier Page
+│       └── Mechanism &amp; Limits → reviewed supporting article or module
+├── Resources / Tools
+│   ├── Wheel Offset Calculator + reviewed explanation
+│   └── Bolt Pattern Guide (choose one canonical home; dedupe Insights route)
+└── Request a Quote → project-specific inputs and reviewed intake boundary</code></pre>
+<h2>先后建议（不做综合加权分）</h2>
+<ol>
+<li>1. <strong>先保证定位与结构</strong>：首页、产品总览和每线核心页的产品身份、核心能力、买家场景、证据和 CTA。即使当前没有 volume 数据也不能以此跳过。</li>
+<li>2. <strong>处理阻断项</strong>：Fitment 全部 <code>verified:false</code> 仍可索引/sitemap；先修索引门槛。更新英文 <code>self-sealing</code> 术语，并核对轮毂页面、工具 canonical 与 <code>/capabilities</code> / <code>/manufacturing</code> 主题重叠。</li>
+<li>3. <strong>先做低新增成本内容</strong>：在现有页面补足已验证的规格解释、按图/项目输入、轮胎机制边界；建立私牌和经销页面的批准条件。</li>
+<li>4. <strong>增长候选分批试做</strong>：private label wheels、wheel offset guide、self-sealing mechanism、drawing-led RFQ 模块、EV motor housing 内容模块。均先过业务事实与页面审核；EV inverter housing、generic OEM wheel supplier 暂缓。</li>
+<li>5. <strong>数据允许时再复评</strong>：获得 GSC 授权后，用真实 impressions/query/page 数据更新地图；如采用其他市场、API 或 provider，建立独立 run 并明确预算授权。</li>
+</ol>
+<h2>导航和链接</h2>
+<ul>
+<li>- 四条线在主导航/产品总览保持并列。首页的通用询盘入口与四线页的产品化 CTA 均可去 <code>/request-a-quote</code>，但 CTA 文案按页面任务。</li>
+<li>- 轮毂目录链接到 offset/PCD 指南只用于教育/规格，不能声称具体 fitment 通过。</li>
+<li>- 自密封机制文章回链产品页；供应商识别页不可承担通用轮胎维修建议。</li>
+<li>- 按图 RFQ 说明回链定制铝件和询盘页；提交图纸的隐私与上传能力未审核前不得承诺安全上传。</li>
+<li>- 定制开发作为跨线流程入口，不与各产品线工艺页争同一 query。</li>
+</ul>
+</main>
+</body>
+</html>
