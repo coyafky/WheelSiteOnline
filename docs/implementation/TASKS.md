@@ -284,12 +284,45 @@ development → 两条保留；production + 开关 → 两条恢复。
 - **目标结果**：`src/lib/seo/metadata.ts` 的 `buildMetadata()` 唯一入口
 - **验收**：30 个模板 URL 的 `<link rel="canonical">` 存在且唯一
 
+**状态：✅ 完成（2026-10-17，提交 `c4e88b8`）**
+实际实现为 `buildRouteMetadata(path, locale, options)`，**一次返回
+`{ alternates, robots }`** —— 从结构上消灭「有 canonical 却 noindex」或
+「index 却没有 canonical」的可能，比单纯抽一个 canonical 函数更强。
+`options`：`noindex` / `nofollow` / `preview` / `extraPublicLocales`。
+
+19 处页面接入；**5 处保留不改**（custom-aluminum、wheels 列表/forged/
+flow-formed、首页）—— 它们的可索引性由各自业务闸门决定，统一会遮蔽真实规则。
+
+**实测修正审计结论**：审计称「/about 与 /insights 无 canonical、20 处覆盖」；
+实测 23 个页面中 22 个已有 canonical，唯一缺失是 `/products/custom-aluminum`，
+原因是其 `publicationStatus = draft`（**正确的 fail-closed，不是缺陷**）。
+`/insights` 原先确实无 canonical，本次修复。
+
+新增 `e2e/seo-canonical.spec.ts`（4 用例）：逐页断言 index 与 canonical 一致。
+**证伪验证**：注入 noindex 后测试精确点名 7 个不一致页面，确认非装饰。
+（曾尝试写单测，但该模块依赖 `@/` 别名 + `server-only`，单测加载不了 → 改由
+E2E 覆盖，那才是能观测到结果的层。）
+
 ### T-13 缓存失效失败重投
 
 - **模块**：M13
 - **现有问题**：`blocking: false` + 0.5s 超时，失败仅 `error_log`
 - **目标结果**：WP 侧队列表 + cron 重投；Next 返回结果码供对账
 - **验收**：断网 Next 后发布，恢复 15 分钟内收敛
+
+**状态：✅ 完成（2026-10-17，提交 `454265b`）**
+改为「先入队 → blocking 投递（5s）→ 仅 2xx 才出队」，队列用 option 存储，
+去重键 `sha256(payload)`（重复保存只留一条）。WP-Cron 每分钟重投，
+退避 60s/5m/15m/1h，5 次上限后丢弃并 error_log 记录 payload。
+自检新增 `queue_pending` / `queue_due` / `queue_retrying` / `cron_scheduled`；
+提供 WP-CLI `fh revalidate-status` 与 `fh revalidate-retry`。
+
+**真实行为验证**（容器内实跑）：
+1. 指向必失败端点 → `send()=false`，队列 1 条，payload 完整保留 → 失效未丢失 ✅
+2. 立即重投 → attempts=1，退避 60 秒 ✅
+3. 连续重投超上限 → `giving up after 5 attempts`，队列清零 ✅
+4. 指向真实 Next → `send()=true`，队列残留 0 ✅
+5. 端到端投递返回 200，响应体含 `tag: site-pages` 与 5 条失效路径 ✅
 
 ### T-14 备份脚本 + 恢复演练
 
@@ -316,12 +349,48 @@ uploads 层未做恢复演练。
 - **目标结果**：接到真实通道（邮件 + IM 机器人）
 - **验收**：`grep -rn "fh_inquiry_delivery_alert" .` 能找到监听器；制造积压能收到告警
 
+**状态：✅ 完成（2026-10-17，提交 `0690911`）**
+新增 `local-wp/mu-plugins/fenghuai-operations-alerts.php`：
+- 监听 `fh_inquiry_delivery_alert`，把摘要转成邮件（走 `wp_mail` → 已配 SMTP，
+  不引入新依赖与凭证）
+- **新增缓存失效队列监视**（接 T-13 的积压探针）：每 5 分钟检查，pending ≥ 10 告警
+- 节流沿用既有纪律（指纹 + 15 分钟），不额外加限流
+- 收件人只从服务端配置读，缺省回落询盘收件人；默认启用
+- WP-CLI：`fh ops-alert-test` / `fh ops-status`
+
+**真实行为验证**（`pre_wp_mail` 拦截捕获，不真发信以免骚扰客户）：
+1. 触发询盘告警钩子 → 捕获 1 封，主题/收件人/结构化正文/处理建议均正确 ✅
+2. 阈值下（pending=3）→ `triggered=false`，0 封（**不误报**）✅
+3. 超阈值（pending=12）→ 1 封，主题「缓存失效积压」✅
+4. 连续再跑两次 → 仍 1 封（节流生效）✅
+5. 关闭开关 → 0 封 ✅
+
 ### T-16 Uptime + 应用级健康检查
 
 - **模块**：M16
 - **现有问题**：healthcheck 只探 `/robots.txt`；无外部探活
 - **目标结果**：`/healthz` 探 DB + WP + 缓存；Uptime Kuma
 - **验收**：停 WP → `/healthz` 返回 503 且 3 分钟内收到告警
+
+**状态：✅ 完成（2026-10-17，提交 `596dff2`）**
+未引入 Uptime Kuma（按「免费优先 + 无外部依赖」改用自托管脚本）。
+- 新增 `src/app/api/health`：检查 site-url / inquiry-key / revalidate-secret /
+  cms；200 healthy ｜ 200 degraded（仅 warn）｜ **503 unhealthy**（有 fail）
+- compose healthcheck 从 `/robots.txt` 改为 `/api/health`，并放宽 interval/
+  timeout/start_period（健康检查现在真的会打 CMS）
+- 新增 `scripts/monitor/uptime-probe.sh`：状态机告警（只在失败确认与恢复两个
+  转换点通知）、阈值 2 次、验证响应体含 `<html>`、借力 health 透传判词
+- 新增 `docs/runbooks/monitoring.md`
+
+**实测**：mock → degraded/200 ✅ ｜ CMS 不可达 → **503** ✅ ｜
+缺询盘密钥 → **503** ✅ ｜ CMS 可达（容器网络内 200）→ ok ✅ ｜
+探活状态机：挂掉记 FAIL 且置 down、恢复记 RECOVERED ✅
+
+**修掉探活脚本一个真 bug**：失败时只累加 fail_count 而不置 `last_status=down`，
+导致恢复事件与恢复通知双双丢失。
+
+⚠️ 诚实记录：宿主机 `next start` 不在 Docker 网络内、解析不了 `fh-wp`，
+「healthy 全绿」是容器网络内等价探测确认的，非端到端。
 
 ### T-17 `.env` 启动期校验
 

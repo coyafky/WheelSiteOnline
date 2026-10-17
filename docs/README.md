@@ -102,8 +102,9 @@ docs/
 | 基线提交 | ✅ 215 处未提交改动已分批落库（`dffc7bf`…`35a262c`） |
 | **P0 止血** | ✅ **8 项全部完成**（`502c1aa`…`18d704e`），`npm run check` 全绿 ｜ 69 tests ｜ E2E 15/15 |
 | P0 遗留 | ⚠️ T-04 的 nginx `log_format` 需在服务器手工加并 `nginx -t` |
-| **P1 已完成** | ✅ T-09（未批准译文 404）｜ T-10（Zod 边界，pages 试点）｜ T-11（契约比对进 check）｜ T-14（备份+恢复演练，本地） |
-| P1 待办 | T-12 canonical 单点 ｜ T-13 失效重投 ｜ T-15 告警接线 ｜ T-16 uptime ｜ T-17 env 校验 ｜ T-18 entityId ｜ T-19 双开关 ｜ T-20 标签集中 |
+| **P1 已完成** | ✅ T-09（未批准译文 404）｜ T-10（Zod 边界，pages 试点）｜ T-11（契约比对进 check）｜ T-12（canonical 单点）｜ T-13（失效重投）｜ T-14（备份+恢复演练，本地）｜ T-15（告警接线）｜ T-16（health + uptime） |
+| P1 待办 | T-17 env 启动期校验 ｜ T-18 跨语言 entityId ｜ T-19 legacy/native 双开关 ｜ T-20 缓存标签集中 |
+| 运维手册 | ✅ [`docs/runbooks/backup-and-restore.md`](runbooks/backup-and-restore.md) ｜ [`docs/runbooks/monitoring.md`](runbooks/monitoring.md) |
 | 未做（服务器侧） | 异地备份、加密、备份定时任务 —— 按负责人口径暂缓 |
 | 已知预存问题 | ⚠️ `e2e/publication-qualification.spec.ts:37` 的 RSC 用例在基线上也失败（Next 会把 `?_rsc=<x>` 改写为自身 hash 并 307，测试用了固定值） |
 
