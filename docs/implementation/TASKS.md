@@ -10,7 +10,7 @@
 
 ## P0 · 止血
 
-### T-01 裁决 sitemap 与 e2e 矛盾
+### T-01 裁决 sitemap 与 e2e 矛盾 ✅ 完成
 
 - **模块**：M06
 - **现有问题**：`sitemap.ts:37` 含 `/thank-you`、`:40` 含 `/gallery/finishes`；`e2e/site-contract.spec.ts:29-30` 断言 `not.toContain`。必有一方错。
@@ -33,7 +33,7 @@ e2e 与代码恢复一致。`npm run check` 全绿。
 
 ---
 
-### T-02 修复 `localizedAlternates` 默认值
+### T-02 修复 `localizedAlternates` 默认值 ✅ 完成
 
 - **模块**：M05
 - **现有问题**：`types.ts:80-93` 第三参默认 `INDEXABLE_LOCALES = ["en"]`；20 处调用中 19 处不传 → hreflang 被默认值清空
@@ -59,7 +59,7 @@ e2e 与代码恢复一致。`npm run check` 全绿。
 
 ---
 
-### T-03 处理已上线的 PLACEHOLDER FAQ
+### T-03 处理已上线的 PLACEHOLDER FAQ ✅ 完成
 
 - **模块**：M07
 - **现有问题**：`src/content/faq.ts:3-8` 是 PLACEHOLDER（注释：「answers must be confirmed… lead time, MOQ, warranty length and shipping incoterms are commitments」），但已渲染在 `/dealers` 与 `/products`
@@ -82,7 +82,7 @@ e2e 与代码恢复一致。`npm run check` 全绿。
 
 ---
 
-### T-04 预览密钥移出 URL + 常量时间比较
+### T-04 预览密钥移出 URL + 常量时间比较 ✅ 完成
 
 - **模块**：M14
 - **现有问题**：`src/app/api/preview/route.ts:22` 用 URL query 传 secret，且用 `!==` 比较
@@ -108,7 +108,7 @@ e2e 与代码恢复一致。`npm run check` 全绿。
 
 ---
 
-### T-05 `needsVerification` 默认改为 true
+### T-05 `needsVerification` 默认改为 true ✅ 完成
 
 - **模块**：M07
 - **现有问题**：`fenghuai-insights-authoring.php:100` `'default_value' => 0`
@@ -127,7 +127,7 @@ mu-plugin `default_value` 0 → 1；`insights-contract.ts` 判定改为 `!== fal
 
 ---
 
-### T-06 14 处硬编码 `robots: index: true` 改为走发布资格
+### T-06 14 处硬编码 `robots: index: true` 改为走发布资格 ✅ 完成
 
 - **模块**：M06
 - **现有问题**：实测 **14 处** `robots: { index: true, follow: true }` 硬编码，全部绕过 `preview` 判断：
@@ -148,7 +148,7 @@ mu-plugin `default_value` 0 → 1；`insights-contract.ts` 判定改为 `!== fal
 
 ---
 
-### T-07 修 `products.ts` 死链
+### T-07 修 `products.ts` 死链 ✅ 完成
 
 - **模块**：M08
 - **现有问题**：`src/content/products.ts:33/49/65` 的 href 指向 `/products/monoblock`、`/products/two-piece`、`/products/off-road`，三个路由不存在
@@ -167,7 +167,7 @@ mu-plugin `default_value` 0 → 1；`insights-contract.ts` 判定改为 `!== fal
 
 ---
 
-### T-08 生产 remotePatterns 剥离 localhost
+### T-08 生产 remotePatterns 剥离 localhost ✅ 完成
 
 - **模块**：M12
 - **现有问题**：`next.config.ts:4-18` 写死 `localhost:8081`，配合 `dangerouslyAllowLocalIP`

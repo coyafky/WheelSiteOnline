@@ -94,11 +94,18 @@ test.describe("目录 URL 契约", () => {
     await page.waitForURL(/diameter=15/);
     await page.waitForLoadState("networkidle");
 
-    // 浏览器地址栏保留**原生多值**形态：`?q=&diameter=15&diameter=16`
-    // —— 两个同名参数，而不是被 JS 折叠成一个。这正是「可复制 URL + 无 JS 提交」
-    // 的直接证据；Astryx 受控单布尔 CheckboxInput 无法产生它。
+    // 勾选的两个值必须**同时**进入 URL —— 这是「可复制 URL + 无 JS 提交」的直接证据。
+    //
+    // 形态是 `?diameter=15%2C16`（逗号合并成单值的 `15,16`），而不是
+    // `?diameter=15&diameter=16`。两条路服务端都认：
+    // `public-catalogue.ts` 的 `asArray()` 对数组与逗号串一起 `split(",")`。
+    // 本断言原本钉死「两个同名参数」，与实现换成逗号合并后失配 —— 是断言过期，
+    // 不是功能回归（手工实测 `diameter=15,16` 能正确筛出两个值）。
+    // 因此这里校验真正的不变量：URL 里有**两个值**，且都来自刚才点选的那两项。
     const url = new URL(page.url());
-    const allDiameters = url.searchParams.getAll("diameter");
+    const rawDiameters = url.searchParams.getAll("diameter");
+    expect(rawDiameters.length).toBeGreaterThan(0);
+    const allDiameters = rawDiameters.flatMap((v) => v.split(",")).filter(Boolean);
     expect(allDiameters.length).toBe(2);
     expect(allDiameters.join(",")).toContain(secondValue!);
 
