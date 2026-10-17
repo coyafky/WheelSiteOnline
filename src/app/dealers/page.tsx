@@ -10,7 +10,6 @@ import {
   dealerShipping,
   dealerTraceability,
 } from "@/content/dealer-programs";
-import { faqs } from "@/content/faq";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
 
@@ -279,42 +278,9 @@ export default function DealersPage() {
         </div>
       </section>
 
-      {/* G. FAQ -------------------------------------------------------------- */}
-      <section
-        aria-labelledby="dealer-faq-title"
-        data-reveal
-        className="border-b border-border bg-white py-20 lg:py-28"
-      >
-        <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-          <div>
-            <p className="eyebrow">Questions</p>
-            <h2
-              id="dealer-faq-title"
-              className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
-            >
-              Asked before the first order
-            </h2>
-            <p className="mt-5 max-w-[420px] text-[1.02rem] leading-relaxed text-steel">
-              MOQ, lead time, fitment, private label, testing and freight — the
-              six answers dealers want before they commit. Anything not covered
-              here, ask us directly.
-            </p>
-          </div>
-
-          <div data-reveal-group className="divide-y divide-border border-y border-border">
-            {faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h3 className="font-display text-[1.1rem] font-700 uppercase leading-snug tracking-[0.01em] text-ink">
-                  {faq.question}
-                </h3>
-                <p className="mt-3 text-[0.96rem] leading-relaxed text-steel">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* G. FAQ — withdrawn until MOQ, lead time, warranty length and shipping
+          incoterms are confirmed. These are commercial commitments; the previous
+          copy was placeholder text and must not ship as fact. */}
 
       {/* H. Pathways --------------------------------------------------------- */}
       <section

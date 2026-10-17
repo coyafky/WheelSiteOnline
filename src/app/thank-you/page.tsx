@@ -16,7 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Confirmation that your forged wheel inquiry reached Fenghuai, and what happens next.",
-    robots: { index: true, follow: true },
+    // Confirmation page: only meaningful right after a submission, never public
+    // content. Keep it out of search results and out of the sitemap entirely.
+    robots: { index: false, follow: false },
     alternates: localizedAlternates("/thank-you", locale),
   };
 }

@@ -37,7 +37,7 @@ export default async function ProductsPage() {
   const { t } = await getTranslator();
   const content = await getProductLinesContent();
   const productLines = content.lines;
-  const { intro, guidance, skuCallout, routes, fitmentSupport, resourceLinks, faqs } =
+  const { intro, guidance, skuCallout, routes, fitmentSupport, resourceLinks } =
     content.catalogue;
   return (
     <>
@@ -276,40 +276,9 @@ export default async function ProductsPage() {
         </div>
       </section>
 
-      {/* F. FAQ ------------------------------------------------------------ */}
-      <section
-        aria-labelledby="faq-title"
-        data-reveal
-        className="border-b border-border bg-white py-20 lg:py-28"
-      >
-        <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-          <div>
-            <p className="eyebrow">{t("catalogue.faq.eyebrow")}</p>
-            <h2
-              id="faq-title"
-              className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
-            >
-              {t("catalogue.faq.heading")}
-            </h2>
-            <p className="mt-5 max-w-[420px] text-[1.02rem] leading-relaxed text-steel">
-              {t("catalogue.faq.lede")}
-            </p>
-          </div>
-
-          <div data-reveal-group className="divide-y divide-border border-y border-border">
-            {faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h3 className="font-display text-[1.1rem] font-700 uppercase leading-snug tracking-[0.01em] text-ink">
-                  {faq.question}
-                </h3>
-                <p className="mt-3 text-[0.96rem] leading-relaxed text-steel">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* F. FAQ — withdrawn until MOQ, lead time, warranty length and shipping
+          incoterms are confirmed. These are commercial commitments; the previous
+          copy was placeholder text and must not ship as fact. */}
 
       <DealerCta />
     </>

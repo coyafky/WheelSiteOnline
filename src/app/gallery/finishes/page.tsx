@@ -25,7 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Compare the forged wheel finishes Fenghuai offers — brushed clear, satin gunmetal, gloss black, matte bronze, polished lip and more — with guidance on requesting real samples.",
     alternates: localizedAlternates("/gallery/finishes", locale),
-    robots: { index: true, follow: true },
+    // Excluded from the sitemap by decision: this surface is a swatch reference
+    // rather than an indexable landing page.
+    robots: { index: false, follow: true },
   };
 }
 
