@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode, headers } from "next/headers";
 import { Barlow_Condensed, Figtree } from "next/font/google";
-import { notFound } from "next/navigation";
 import { SiteMotion } from "@/components/site-motion";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -98,10 +97,15 @@ export default async function RootLayout({
   const basePath = stripLocalePrefix(requestHeaders.get("x-fh-public-path") || "/");
   const decision = await getRoutePublicationDecision(basePath, locale, (await draftMode()).isEnabled);
   const availableLocales = decision.publicLocales;
-  if (locale !== "en" && decision.status !== "public" && decision.status !== "preview-only") {
-    notFound();
-  }
 
+  /**
+   * Withheld translations are rejected earlier by `proxy.ts`, which answers a
+   * real 404 with an explicit noindex. `notFound()` is not allowed inside the
+   * root layout (Next 16), so this component must not try to enforce that here.
+   *
+   * A route that does not exist at all is a different case: it is left to Next's
+   * not-found surface.
+   */
   return (
     <html
       lang={htmlLanguage(locale)}

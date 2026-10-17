@@ -10,6 +10,7 @@ import { getHomepagePublicLocales } from "@/lib/wordpress/homepage";
 import { getHomepagePageView } from "@/lib/wordpress/homepage";
 import { getInsightGuideDocuments } from "@/lib/wordpress/insights";
 import { localizedAlternates, stripLocalePrefix, type Locale } from "./types";
+import { isKnownRoute } from "./routes";
 
 export type RoutePublicationDecision = {
   path: string;
@@ -63,9 +64,11 @@ export const getPublicLocalesForPath = cache(async (pathname: string): Promise<r
     return (await getEnglishInsightSlugs()).has(path.slice("/insights/".length)) ? ["en"] : [];
   }
 
-  // The remaining page families still use their existing English publication
-  // contracts. Their translated bodies are not independently approved yet.
-  return ["en"];
+  // Fail closed: an unregistered path has no publication contract at all, so it
+  // must never be treated as approved English content. Previously this returned
+  // ["en"] for every unknown path, which made withheld translations reachable
+  // with a 200 (see T-09).
+  return isKnownRoute(path) ? ["en"] : [];
 });
 
 /**
@@ -96,6 +99,13 @@ export const getRoutePublicationDecision = cache(async (
 ): Promise<RoutePublicationDecision> => {
   const path = stripLocalePrefix(pathname);
   const publicLocales = await getPublicLocalesForPath(path);
+
+  // No route exists here: this is a genuine 404, not a withheld translation.
+  if (!isKnownRoute(path)) {
+    return { path, locale, status: "closed", reason: "unknown-route", revision: null,
+      approvalSource: null, publicLocales };
+  }
+
   if (path === "/") {
     const result = await getHomepagePageView({ locale, preview });
     if (preview && result.status === "ready") {

@@ -4,11 +4,54 @@ import {
   isLocale,
   LOCALE_COOKIE,
   localeFromPathname,
+  stripLocalePrefix,
   type Locale,
 } from "@/lib/i18n/types";
 import { siteUrlIsConfigured } from "@/lib/site-url";
 
-export function proxy(request: NextRequest) {
+/**
+ * Ask the app whether one locale of a path may be served publicly.
+ *
+ * Proxy cannot import the publication module directly: it is marked
+ * `server-only` and pulls in the WordPress adapters. A same-origin request to an
+ * internal route keeps the rules in one place instead of duplicating them.
+ *
+ * Fails closed — any error means "not approved", so an unreviewed translation
+ * is never exposed.
+ */
+async function isLocaleWithheld(origin: string, path: string, locale: Locale): Promise<boolean> {
+  try {
+    const response = await fetch(
+      `${origin}/api/publication?path=${encodeURIComponent(path)}&locale=${locale}`,
+      { headers: { "x-fh-internal": "proxy" }, cache: "no-store" },
+    );
+    if (!response.ok) return true;
+    const body = (await response.json()) as { publicLocales?: unknown };
+    if (!Array.isArray(body.publicLocales)) return true;
+    return !(body.publicLocales as string[]).includes(locale);
+  } catch {
+    return true;
+  }
+}
+
+/**
+ * A withheld translation answers 404 with an explicit noindex, matching the
+ * published contract (status + header + meta agree).
+ */
+function withheldResponse(locale: Locale): NextResponse {
+  const html = `<!doctype html><html lang="${languageTag(locale)}"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Not found</title></head><body><h1>404</h1></body></html>`;
+  return new NextResponse(html, {
+    status: 404,
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "content-language": languageTag(locale),
+      "x-robots-tag": "noindex",
+      "cache-control": "no-store",
+    },
+  });
+}
+
+export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
   const routedPathLocale = localeFromPathname(url.pathname);
   const isLocalized = routedPathLocale !== DEFAULT_LOCALE;
@@ -33,6 +76,13 @@ export function proxy(request: NextRequest) {
 
   let response: NextResponse;
   if (isLocalized) {
+    // Decide before rewriting: Next 16 does not re-enter Proxy for the internal
+    // unprefixed pass, so the withheld check has to happen here, once.
+    const publicPath = stripLocalePrefix(request.nextUrl.pathname);
+    if (await isLocaleWithheld(request.nextUrl.origin, publicPath, routedPathLocale)) {
+      return withheldResponse(routedPathLocale);
+    }
+
     url.pathname = request.nextUrl.pathname === `/${routedPathLocale}`
       ? "/"
       : request.nextUrl.pathname.slice(`/${routedPathLocale}`.length);
