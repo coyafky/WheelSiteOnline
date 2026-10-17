@@ -504,17 +504,28 @@ breadcrumbJsonLd / jsonLdGraph / serializeJsonLd）。站点级实体从根布�
 修复前同场景是无声的（switch 落空 → undefined → 不渲染）。
 ⚠️ 该日志走 **stderr**，第一次用 stdout grep 误判为「证伪失败」。
 
-### T-30 非首页页面补 schemaVersion
+### T-30 非首页页面补 schemaVersion ✅ 完成
 
 - **模块**：M04 ｜ **依赖**：T-10
 - **验收**：`grep -rn "schemaVersion" src local-wp/mu-plugins` 覆盖全部内容域
+
+**实现**：wheels 与 insights 补齐版本字段（此前只有 pages 有）。
+- PHP：`FH_WHEEL_SCHEMA_VERSION` / `FH_GUIDE_SCHEMA_VERSION`，注册时 `default` 指向常量
+  → 老记录读出即当前版本，不误杀
+- 前端：`hasReadableShape()` 在机器闸门上拦住「版本高于本构建」的记录，
+  缺失视为可读（向后兼容）
+- 6 项测试 + 证伪（去掉大小比较 → 立刻失败）
+
+⚠️ **过程记录**：字段最初加在 `WheelPublicationRecord`，而守卫的参数类型是
+`WheelModel`（`content/types.ts:1146`）→ 本地 tsc 未覆盖该路径时通过，
+`docker build` 才暴露 TS2339。已移到正确类型。
 
 ### T-31 图集链路接通
 
 - **模块**：M08
 - **验收**：任一上架型号返回 ≥2 张图
 
-### T-32 AVIF + `minimumCacheTTL`
+### T-32 AVIF + `minimumCacheTTL` ✅ 完成
 
 - **模块**：M12
 - **验收**：`curl -H 'Accept: image/avif' /_next/image?...` 返回 `image/avif`
@@ -541,22 +552,43 @@ axe 扫描 + 260 次 Tab。原配置 `fullyParallel: false` + CI `workers: 1` �
 - dev server 并行：536 秒（**并行无提速** —— 用例是 CPU 密集，dev 渲染是单点瓶颈）
 - **生产构建并行：266 秒** → 故 CI 用 `PLAYWRIGHT_PRODUCTION=1`
 
-### T-34 CD + 镜像 tag 改 git SHA
+### T-34 CD + 镜像 tag 改 git SHA ✅ 完成
 
 - **模块**：M15 ｜ **依赖**：T-33
 - **验收**：`docker image inspect` 能反查 commit；部署有校验脚本
 
-### T-35 Insight 分类上 taxonomy + 分页
+**实现**：`deploy/frontend/tag.sh`（IMAGE_TAG=12 位 sha，脏树加 `-dirty`；
+`--verify <image>` 校验 revision 与 HEAD 一致）+ Dockerfile OCI 标签 +
+compose build args。原 tag 是硬编码日期 `:2026-10-09`。
+
+**实测**：`docker image inspect` →
+`revision=f77660159daefedc47ba968cb1759eb577135160`（= HEAD），`--verify` 输出 OK。
+
+⚠️ 脏树必须加 `-dirty`：脏构建若冒充干净 commit，「哪个 commit 在跑」会得到
+自信的错误答案。
+
+### T-35 Insight 分类上 taxonomy + 分页 ⚠️ 部分完成（分页已做，taxonomy 待内容策略）
 
 - **模块**：M09 ｜ **依赖**：T-19
 - **验收**：`wp term list insight_category` 有内容；`/insights?page=2` 可用；解除 100 条截断
+
+**分页已完成**：`per_page`（1–100，默认 100）/ `page` 成为 REST 参数，
+响应新增 `total` / `total_pages` / `page` / `per_page`。
+原 `posts_per_page=100` + `no_found_rows=true` 是静默天花板 —— 第 101 篇永远到不了
+前端，且响应无总数，无法分辨「完整」与「被截断」。
+改用一次 `WP_Query` 同时取本页与总数（`get_posts` 会丢弃 `found_posts`）。
+
+**实测**：9 篇、`per_page=3` → `total_pages=3`，page1/page2 的 slug 无重叠。
+
+⏳ **taxonomy 部分未做**：当前仅 8 篇、离上限极远，属预防性改造；
+分类体系需先有内容策略（哪些分类、谁维护），不适合现在拍板。
 
 ### T-36 询盘同意采集 + WP 侧限流
 
 - **模块**：M10
 - **验收**：提交记录带 `consentedAt` + 隐私版本号；绕过 Next 直打 WP 也受限
 
-### T-37 产品分类统一
+### T-37 产品分类统一 ✅ 完成
 
 - **模块**：M08 ｜ **依赖**：T-07
 - **验收**：只剩一套分类定义
