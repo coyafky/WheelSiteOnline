@@ -399,26 +399,59 @@ uploads 层未做恢复演练。
 - **目标结果**：启动即校验，缺必需变量直接失败并打印清单
 - **验收**：删掉 `NEXT_PUBLIC_APP_URL` → 启动报错并点名
 
-### T-18 跨语言 entityId
+### T-18 跨语言 entityId ✅ 完成（提交 `ea8df39`）
 
 - **模块**：M05
 - **现有问题**：`fh_translation_group` 存在但前端未消费；无稳定 entityId
 - **目标结果**：hreflang / 切换器 / sitemap 用 entityId 聚合
 - **验收**：某语言用不同 slug 时切换仍正确
 
-### T-19 修 legacy/native 双开关死内容风险
+**实现**：`src/lib/wordpress/translation-group.ts`（identityOf / groupByTranslation /
+localesForGroup）；前端 schema 与类型补上 `translation_group`（此前被 schema 剥掉）；
+WP 侧加 group+locale 唯一性守卫；补全 18 条缺失的 group。
+
+**实测档案**：只有 `home` 是真多语言（其余页面仅英文）。`home` 四语言 slug 各不相同
+（`home` / `home-en` / `home-zh` / `home-es` / `home-th`），聚合为同一组 →
+**验收点 PASS**。同时精确报出 `home::en` 重复（ID 1311 与 1461）——不擅自合并，
+归属是内容决策不是结构决策。
+
+### T-19 修 legacy/native 双开关死内容风险 ✅ 完成（提交 `ea8df39`）
 
 - **模块**：M09
 - **现有问题**：`fh_guides_authoritative=1` 而 native=0 时前台读 legacy、后台改不了
 - **目标结果**：开关语义互斥并有校验
 - **验收**：`wp option get` 两开关不能同时为 1；迁移完成后关闭 legacy 分支
 
-### T-20 缓存标签集中登记
+**实测：该缺陷在本环境真实存在** —— 修复前两个开关**都是 1**。
+
+**实现**：`fh_guide_authoritative_source()` 单一解析器，四态全收敛到一个来源，
+native 恒优先；端点 `authoritative` 改为「来源 === native」（legacy 永不算接管，
+否则会发布一个后台已封锁编辑的来源 = 死内容）；旧 CPT 在原生文章已存在时不可选。
+
+**四态穷举实测**（绕过写守卫直接改底层存储）：
+| legacy | native | source | conflict |
+|---|---|---|---|
+| 1 | 1 | native | true |
+| 1 | 0 | legacy | false |
+| 0 | 1 | native | false |
+| 0 | 0 | null | false |
+→ 全部符合预期；`authoritative` 只在 native 时为 true；`legacy_selectable()=false`。
+
+⚠️ **诚实记录**：写侧 `pre_update_option_*` 守卫是 best-effort —— 实测
+`update_option()` 在缓存值未变时会短路、不触发 filter。**真正的契约由读取侧
+解析器保证**，守卫只负责让正常路径不留下脏状态。
+
+### T-20 缓存标签集中登记 ✅ 完成（提交 `ea8df39`）
 
 - **模块**：M13
 - **现有问题**：3 处散落常量
 - **目标结果**：`src/lib/wordpress/cache-tags.ts` 单一导出
 - **验收**：无其他文件重复定义标签字符串
+
+**实现**：`src/lib/wordpress/cache-tags.ts` 单一登记表（3 标签 +
+REVALIDATION_TYPES + CACHE_TAGS 映射）；三个 contract 改为从它再导出；
+revalidate 路由改用 `cacheTagFor(type)` 取代嵌套三元。
+新增 6 项测试，其中「标签字面量钉死」是有意的：改一个不同步另一个就会留下陈旧页面。
 
 ---
 
