@@ -468,21 +468,41 @@ revalidate 路由改用 `cacheTagFor(type)` 取代嵌套三元。
 - **模块**：M07 ｜ **依赖**：T-03
 - **验收**：`curl -s /dealers | grep -c FAQPage` ≥ 1；三处重复渲染统一到 `FaqAccordion`
 
-### T-27 补 Organization / WebSite / BreadcrumbList
+### T-27 补 Organization / WebSite / BreadcrumbList ✅ 完成
 
 - **模块**：M06 ｜ **依赖**：T-12
 - **验收**：`/` 与 `/about` 各至少 1 个 `application/ld+json` 且含 Organization
+
+**实现**：`src/lib/seo/structured-data.ts`（organizationJsonLd / websiteJsonLd /
+breadcrumbJsonLd / jsonLdGraph / serializeJsonLd）。站点级实体从根布局输出，
+型号页把 BreadcrumbList 并入原 Product graph（用 @id 互引）。
+
+🔴 **证据纪律**：`site.contact.confirmed` 为 false，电话/邮箱是占位 ——
+只在其为真时才输出 contactPoint，否则等于向搜索引擎提交一个假号码。
+实测泄漏检查：「000 0000」/「telephone」/「contactPoint」全部 0 处。
+
+实测：`/` 与 `/about` 各 1 个 ld+json 且含 Organization ✅；
+型号页两层 graph，面包屑 Home → Wheels → A015，末项按约定无 item ✅
 
 ### T-28 llms.txt 事实层
 
 - **模块**：M07 ｜ **依赖**：T-25
 - **验收**：`curl -s /llms.txt | grep -cE "Founded|MOQ|ISO|capacity"` ≥ 3
 
-### T-29 模块注册表替换 switch
+### T-29 模块注册表替换 switch ✅ 完成
 
 - **模块**：M04
 - **内容**：`const MODULE_REGISTRY: Record<ModuleType, Component>`；未知类型降级渲染
 - **验收**：加第 6 个模块只改注册表一处；未知 type 不静默消失
+
+**实现**：`src/components/home/home-module-registry.tsx`，键取自
+`HomepageModuleView["type"]`（拼写错误编译期即报）。未知类型走 `UnknownModule`：
+开发环境渲染可见红框，生产环境 `console.error` 一次后不渲染（首页不放错误框给访客）。
+
+**证伪验证**：注入 `home.brand-new-thing` → 生产构建输出
+`[home] unregistered module type "home.brand-new-thing" (id: H99) — nothing rendered`。
+修复前同场景是无声的（switch 落空 → undefined → 不渲染）。
+⚠️ 该日志走 **stderr**，第一次用 stdout grep 误判为「证伪失败」。
 
 ### T-30 非首页页面补 schemaVersion
 
@@ -499,10 +519,27 @@ revalidate 路由改用 `cacheTagFor(type)` 取代嵌套三元。
 - **模块**：M12
 - **验收**：`curl -H 'Accept: image/avif' /_next/image?...` 返回 `image/avif`
 
-### T-33 E2E 进 CI
+### T-33 E2E 进 CI ✅ 完成
 
 - **模块**：M15/M18
 - **验收**：`grep -c playwright .github/workflows/verify.yml` ≥ 1；同时去掉重复的 `npm test`
+
+**实现**：`verify.yml` 拆成两个 job —— `verify`（含契约/单测/lint/typecheck/build）
+＋ `e2e`（`needs: verify`，独立 45 分钟超时，失败上传报告与录像）。已删除重复的
+`npm test` 步骤（`npm run check` 内部已含）。
+
+**为什么必须同时改 playwright 配置**：163 条用例，每条循环 4 视口 × 4 语言 +
+axe 扫描 + 260 次 Tab。原配置 `fullyParallel: false` + CI `workers: 1` → 串行要数小时，
+任何 CI 都会超时 —— 这才是它一直没接进来的真实原因。
+- `fullyParallel: true`（已核实无共享可变状态、无 `describe.serial`、
+  唯一的 submit 是筛选表单或断言不引用询盘端点）
+- CI `workers: 2`（2 vCPU 上过度并发反而更慢）
+- 全局 `timeout: 180_000`（单条重用例可能合法地需要数分钟）
+
+**实测提速**：同一文件 `/astryx-sitewide-p5`（28 条）
+- dev server 串行：500 秒只跑到 27/28
+- dev server 并行：536 秒（**并行无提速** —— 用例是 CPU 密集，dev 渲染是单点瓶颈）
+- **生产构建并行：266 秒** → 故 CI 用 `PLAYWRIGHT_PRODUCTION=1`
 
 ### T-34 CD + 镜像 tag 改 git SHA
 
@@ -524,11 +561,21 @@ revalidate 路由改用 `cacheTagFor(type)` 取代嵌套三元。
 - **模块**：M08 ｜ **依赖**：T-07
 - **验收**：只剩一套分类定义
 
-### T-38 孤儿与死代码清理
+### T-38 孤儿与死代码清理 ✅ 完成
 
 - **模块**：M01/M04
 - **清单**：`ui/button.tsx`、`home-hero.tsx.retired`、`WheelStripSection`、`homepage-hero.ts`、`process.ts`、`capabilities.ts`、`wordpress/index.ts` barrel、`inquiry/mailer.ts`、`markDelivered()`、`@stylexjs/stylex`
 - **验收**：`grep` 各零引用项为 0；`npm run check` 全绿
+
+**逐项 grep 确认零引用后删除**（未凭清单硬删）：
+`ui/button.tsx`｜`home-hero.tsx.retired`｜`wheel-strip-section.tsx`（仅自身定义）｜
+`content/process.ts`（9 个导出全零引用；manufacturing 页现为纯重定向）｜
+`content/capabilities.ts`｜`content/homepage-hero.ts`｜`lib/wordpress/index.ts`（barrel）｜
+`markDelivered()` + barrel 转导出（只写进程内存而权威记录在 WP，接上也留不下痕迹）｜
+`@stylexjs/stylex` 依赖（0 处导入）。
+
+⚠️ 保留判断：`capabilities` 出现在 5 个页面，但那是**路由名**不是 content 导出；
+按 `from "@/content/capabilities"` 专项核对确认无导入后才删。
 
 ---
 

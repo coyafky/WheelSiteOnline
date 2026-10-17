@@ -10,10 +10,27 @@ const useLiveWpReadOnly = process.env.PLAYWRIGHT_LIVE_WP === "1";
 
 export default defineConfig({
   testDir: "./e2e",
-  fullyParallel: false,
+  /**
+   * 163 tests, each looping 4 viewports × 4 locales with an axe scan and a
+   * 260-step keyboard walk. Run serially that is hours — long past any realistic
+   * CI timeout, which is why the suite was never wired in.
+   *
+   * Parallel is safe here: no spec shares mutable state, no `describe.serial`,
+   * and the only `submit` interactions drive a filter form or assert that the
+   * enquiry endpoint is *not* referenced. Each worker drives its own browser
+   * context against one read-only server.
+   */
+  fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  /**
+   * Local default stays adaptive. CI pins a concrete number: a 2-vCPU runner
+   * leaves no headroom for the axe scans, and oversubscribing makes the suite
+   * slower than running it serially.
+   */
+  workers: process.env.CI ? 2 : undefined,
+  /** One heavy test may legitimately need several minutes; keep the ceiling explicit. */
+  timeout: 180_000,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL,

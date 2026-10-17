@@ -22,9 +22,50 @@ jobs:
           cache: npm
       - name: 安装锁定依赖
         run: npm ci
-      - name: 单元与契约测试
-        run: npm test
-      - name: 代码与构建门禁
+      # `npm run check` already runs `npm test`, `lint`, `typecheck` and the
+      # production build. A separate `npm test` step used to sit above it, which
+      # ran the whole unit suite twice for no extra signal.
+      - name: 代码与构建门禁（含单元与契约测试）
         run: npm run check
       - name: 生产依赖漏洞门禁
         run: npm run audit:prod
+
+  e2e:
+    # Separate job so a browser failure is distinguishable from a code failure
+    # in the checks list, and so the slower suite can have its own timeout.
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: verify
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: 安装锁定依赖
+        run: npm ci
+      - name: 安装 Chromium（只装用到的那个）
+        run: npx playwright install --with-deps chromium
+      # The suite is 163 tests, each looping 4 viewports × 4 locales with an axe
+      # scan and a 260-step keyboard walk. Against a dev server one file alone
+      # took ~9 minutes; against the production build it takes ~4.5. `check`
+      # already built once in the job above, but jobs do not share a workspace,
+      # so this build is required rather than duplicated work.
+      - name: 生产构建（E2E 跑在构建产物上）
+        run: npm run build
+      - name: 端到端测试
+        run: npm run test:e2e
+        env:
+          PLAYWRIGHT_PRODUCTION: "1"
+          CI: "true"
+      - name: 失败时上传报告与录像
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
