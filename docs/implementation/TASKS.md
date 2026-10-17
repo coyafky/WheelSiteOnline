@@ -633,7 +633,7 @@ compose build args。原 tag 是硬编码日期 `:2026-10-09`。
 
 ## P3 · 治理
 
-### T-40 pre-commit hook
+### T-40 pre-commit hook ✅ 完成
 
 - **模块**：M17
 - **内容**：提交前检查密钥模式、禁止无授权 commit、lint 变更文件
