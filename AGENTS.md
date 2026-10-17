@@ -3,7 +3,7 @@
 本文件是本仓库中所有 agent 的操作契约，适用于 Alma、Claude Code、Codex、
 Cursor、OpenCode，以及任何读到它的人。动手之前先读完本文件。
 
-**项目记录一律用中文书写。** `PROJECT.md`、`STATUS.md`、`DECISIONS.md`、
+**项目记录一律用中文书写。** `docs/architecture/TARGET_ARCHITECTURE.md`、`docs/implementation/TASKS.md`、`docs/adr/`、
 本文件，以及所有项目级文档，均使用中文。
 
 ---
@@ -13,7 +13,7 @@ Cursor、OpenCode，以及任何读到它的人。动手之前先读完本文件
 丰怀的 B2B 锻造轮毂厂商网站，形态是「静态优先的 Next.js 前端 + 无头
 WordPress 内容后端」。
 
-完整的背景、目标、范围与约束在 `PROJECT.md` 里，**不要在这里重复**。
+完整的背景、目标、范围与约束在 `docs/architecture/TARGET_ARCHITECTURE.md` 里，**不要在这里重复**。
 先去读那份文件。
 
 ## 2. 规则优先级
@@ -32,7 +32,7 @@ WordPress 内容后端」。
 
 本文件以下的任何文件**只能追加约束，不能放宽约束**。
 
-仓库级项目事实各自只有一个正本。开始文档或架构工作前先查 `DOCUMENTATION.md`，找到对应正本后更新它；只有主题长期有效且现有正本确实无法承载时才新建文档，并同步文档地图。不得在 README、PROJECT、STATUS、DESIGN、ARCHITECTURE 或任务记录中复制另一份“最新版”。
+仓库级项目事实各自只有一个正本。开始文档或架构工作前先查 `docs/README.md`，找到对应正本后更新它；只有主题长期有效且现有正本确实无法承载时才新建文档，并同步文档地图。不得在 README、PROJECT、STATUS、DESIGN、ARCHITECTURE 或任务记录中复制另一份“最新版”。
 
 ## 3. Session 开始 —— 渐进式加载上下文
 
@@ -41,24 +41,24 @@ WordPress 内容后端」。
 | 顺序 | 文件 | 为什么 |
 |---|---|---|
 | 1 | `AGENTS.md`（本文件） | 规则 |
-| 2 | `PROJECT.md` | 项目是什么、不是什么 |
-| 3 | `STATUS.md` | 现在做到哪了 |
-| 4 | `ARCHITECTURE.md` 与 `ARCHITECTURE/README.md` | 模块怎么切、数据从哪来、如何阅读架构 |
+| 2 | `docs/architecture/TARGET_ARCHITECTURE.md` | 项目是什么、不是什么 |
+| 3 | `docs/implementation/TASKS.md` | 现在做到哪了 |
+| 4 | `docs/audit/CURRENT_ARCHITECTURE.md` 与 `ARCHITECTURE/README.md` | 模块怎么切、数据从哪来、如何阅读架构 |
 | 5 | `PAGE-SPECS/`、领域规则或具体任务 | 只读本次改动相关部分 |
 | 6 | 任务引用到的 `DEC-xxx` 条目 | 仅在需要理解既有取舍时打开 |
 
-**职责分工**：`ARCHITECTURE.md` 说「是什么形状」，`DECISIONS.md` 说「为什么
-是这个形状」，`STATUS.md` 说「现在到哪了」。改架构要同时改前两者。
+**职责分工**：`docs/audit/CURRENT_ARCHITECTURE.md` 说「是什么形状」，`docs/adr/` 说「为什么
+是这个形状」，`docs/implementation/TASKS.md` 说「现在到哪了」。改架构要同时改前两者。
 
 **不要一进项目就扫全仓库。** 那是上下文成本上的错误，不是勤勉。如果按上述
-链路找不到需要的东西，写进 `STATUS.md` 的「未决问题」，而不是把整个项目读一遍。
+链路找不到需要的东西，写进 `docs/implementation/TASKS.md` 的「未决问题」，而不是把整个项目读一遍。
 
 ## 4. Session 结束 —— 收尾清单
 
 完成有意义的工作后，按本次实际改动检查下列项目。不适用的跳过；小而局部的改动不为了填清单而造新文档。
 
-1. `STATUS.md` —— 「当前重点 / 进行中 / 下一步」是否还符合实际情况？
-2. `DECISIONS.md` —— 你是否做了将来会有人问「当初为什么」的决定？
+1. `docs/implementation/TASKS.md` —— 「当前重点 / 进行中 / 下一步」是否还符合实际情况？
+2. `docs/adr/` —— 你是否做了将来会有人问「当初为什么」的决定？
 3. `work/active/` → `work/completed/` —— 这个任务真的完成了吗？
 4. `work/queued/` —— 这次工作是否产生了下一个任务？写下来。
 5. `outputs/` —— 有没有可交付、可审核的成果？放对位置了吗？
@@ -72,16 +72,21 @@ WordPress 内容后端」。
 ```
 WordpressWheelSIte/
 ├── AGENTS.md            ← 本文件
-├── PROJECT.md           ← 项目为什么存在（稳定）
-├── STATUS.md            ← 项目现在在哪（易变）
-├── DECISIONS.md         ← 为什么当初这样做
-├── ARCHITECTURE.md      ← ★ 模块架构总纲（是什么形状）
-├── ARCHITECTURE/        ← 架构阅读导航；系统架构正本在根 ARCHITECTURE.md
-│   └── README.md
-├── PAGE-SPECS/          ← 页面施工规格
-├── DESIGN.md            ← 当前界面设计正本
 ├── CLAUDE.md            ← Claude Code 目录与流程入口
-├── DOCUMENTATION.md     ← 唯一文档地图
+├── README.md            ← 项目入口与文档导航
+│
+├── docs/                ← ★ 唯一文档树（入口 docs/README.md）
+│   ├── README.md            ← 文档地图（唯一的导航入口）
+│   ├── audit/               ← 从代码还原的现状与差距（只写"是什么"）
+│   │   ├── CURRENT_ARCHITECTURE.md
+│   │   └── GAP_ANALYSIS.md
+│   ├── architecture/        ← 目标架构与专项设计（只写"应该是什么"）
+│   ├── implementation/      ← 路线 / 任务 / 验收
+│   ├── adr/                 ← 架构决策记录
+│   ├── research/            ← 调研输入（证据，不是规则）
+│   └── runbooks/            ← 运维手册
+│
+├── PAGE-SPECS/          ← 页面施工规格
 │
 ├── assets/              ← 只读产品数据、图片与语料
 ├── SKILLS/              ← 项目技能库；按 SKILLS/README.md 选择
@@ -121,10 +126,10 @@ docs/             调研、方案、设计参考
 | 待评审的设计稿 | `outputs/` |
 | 真实产品数据 / 图片 / 语料 | `assets/`（**只读**，不得就地改） |
 | 开发技能（本项目专用） | `SKILLS/` |
-| 上新模块 / 改模块边界 | **先改 `ARCHITECTURE.md`，再动手** |
+| 上新模块 / 改模块边界 | **先改 `docs/audit/CURRENT_ARCHITECTURE.md`，再动手** |
 | 给人读的审计报告 | `outputs/`（若用于记录仓库本身则放 `docs/`） |
 | 关于**系统结构**的决定 | `docs/adr/` —— 架构级 |
-| 关于**我们怎么干活**的决定 | `DECISIONS.md` —— 流程级 |
+| 关于**我们怎么干活**的决定 | `docs/adr/` —— 流程级 |
 | 有人答应要做的任务 | `work/queued/` |
 | 你此刻正在做的任务 | `work/active/` |
 | 昨天被放弃的旧方案 | `archive/` |
@@ -137,22 +142,22 @@ docs/             调研、方案、设计参考
 
 ### 7.0 发布资格
 
-产品和内容只有在真实资料、图权/主体确认与所需规格审核完成后才能公开；无图、未确认内容不进入公开页面、筛选或 sitemap。具体业务边界以 `PROJECT.md` 和对应 Page SPEC 为准，不在本文件维护会过期的数量副本。
+产品和内容只有在真实资料、图权/主体确认与所需规格审核完成后才能公开；无图、未确认内容不进入公开页面、筛选或 sitemap。具体业务边界以 `docs/architecture/TARGET_ARCHITECTURE.md` 和对应 Page SPEC 为准，不在本文件维护会过期的数量副本。
 
 ### 7.1 内容接缝是契约
 
-展示层只消费稳定的类型化内容，不读取 WordPress 原始响应；更换数据源不能要求重写组件。类型定义在 `src/content/types.ts`；影响持久接口/业务取舍时记录决定。数据流正本见 `ARCHITECTURE.md`。
+展示层只消费稳定的类型化内容，不读取 WordPress 原始响应；更换数据源不能要求重写组件。类型定义在 `src/content/types.ts`；影响持久接口/业务取舍时记录决定。数据流正本见 `docs/audit/CURRENT_ARCHITECTURE.md`。
 
 ### 7.2 证据纪律 —— 未经确认的内容不上线
 
 - 字符串 `PLACEHOLDER` 标记了尚未溯源的表述。**绝不要为了让构建通过而删掉
   标记。** 要么解决这个主张，要么删掉这个主张。
-- Fitment 只能公开已核实的适配字段；法律文案需专业审核。对应事实和页面门槛分别以 `PROJECT.md` 与 Page SPEC 为准。
+- Fitment 只能公开已核实的适配字段；法律文案需专业审核。对应事实和页面门槛分别以 `docs/architecture/TARGET_ARCHITECTURE.md` 与 Page SPEC 为准。
 - 数字未知时，正确做法是留可见占位或诚实省略 —— **绝不是编一个看起来合理的值。**
 
 ### 7.3 用设计令牌，不用 hex 值
 
-颜色令牌定义在 `src/app/globals.css`；组件只用项目语义 token，不写裸 hex。当前视觉规则以 `DESIGN.md` 为准。
+颜色令牌定义在 `src/app/globals.css`；组件只用项目语义 token，不写裸 hex。当前视觉规则以 `src/theme/` 为准。
 
 ### 7.4 动效是声明式的
 
@@ -220,7 +225,7 @@ IntersectionObserver。** 两个效果都必须保持挂在 JS 添加的 `motion
 1. 验收信号按风险选择：文档只做链接/引用和补丁检查；小范围代码改动运行相关检查；公共接缝、跨模块集成、路由/构建或发布切片再运行完整 lint、typecheck、build 与对应业务验证。
 2. 内容接缝性质（§7.1）依然成立。
 3. 没有引入新的 `PLACEHOLDER`，也没有发布未确认的规格。
-4. `STATUS.md` 与任务文件反映实际状态；若形成持久取舍，记录在对应决策正本。
+4. `docs/implementation/TASKS.md` 与任务文件反映实际状态；若形成持久取舍，记录在对应决策正本。
 
 纯文档整理不运行无关应用测试；检查文档链接、引用目标、重复正本和归档关系，并运行 `git diff --check`。
 
