@@ -11,7 +11,7 @@ import {
 import { getEvHousingPage } from "@/lib/wordpress/ev-components";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 /**
  * `/products/ev-components` — EV01–EV06.
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Review supplier-supported aluminum housing categories for EV motor and controller projects, then submit drawing, cooling, sealing and volume requirements for engineering assessment.",
-    alternates: localizedAlternates("/products/ev-components", locale),
+    alternates: await localizedRouteMetadata("/products/ev-components", locale),
     robots: { index: true, follow: true },
   };
 }

@@ -9,7 +9,7 @@ import { isCustomAluminumPageIndexable } from "@/lib/wordpress/custom-aluminum";
 import { getHomepagePublicLocales } from "@/lib/wordpress/homepage";
 import { getHomepagePageView } from "@/lib/wordpress/homepage";
 import { getInsightGuideDocuments } from "@/lib/wordpress/insights";
-import { stripLocalePrefix, type Locale } from "./types";
+import { localizedAlternates, stripLocalePrefix, type Locale } from "./types";
 
 export type RoutePublicationDecision = {
   path: string;
@@ -68,7 +68,27 @@ export const getPublicLocalesForPath = cache(async (pathname: string): Promise<r
   return ["en"];
 });
 
-/** A route's single public decision, including why a locale is closed. */
+/**
+ * Canonical + hreflang for a route, derived from the SAME publication decision
+ * that gates rendering and the sitemap.
+ *
+ * Every page-level `generateMetadata` should build `alternates` through this
+ * helper instead of calling `localizedAlternates` with a hand-picked locale
+ * list: the hreflang set and the set of publicly reachable URLs then cannot
+ * drift apart.
+ */
+export async function localizedRouteMetadata(
+  pathname: string,
+  locale: Locale,
+  options?: { extraPublicLocales?: readonly Locale[] },
+) {
+  const approved = await getPublicLocalesForPath(stripLocalePrefix(pathname));
+  const merged = options?.extraPublicLocales?.length
+    ? [...new Set([...approved, ...options.extraPublicLocales])]
+    : approved;
+  return localizedAlternates(pathname, locale, merged);
+}
+
 export const getRoutePublicationDecision = cache(async (
   pathname: string,
   locale: Locale,

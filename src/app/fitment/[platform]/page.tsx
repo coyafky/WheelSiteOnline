@@ -13,7 +13,8 @@ import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
+import { localizedPath } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 type PlatformPageProps = {
   params: Promise<{ platform: string }>;
@@ -38,7 +39,7 @@ export async function generateMetadata({
   return {
     title: `${platform.name} Forged Wheels — Fitment & Design`,
     description: `${platform.heroLine}. Starting size references, design directions and engineering notes for ${platform.name} models — final specifications confirmed per order.`,
-    alternates: localizedAlternates(`/fitment/${platform.slug}`, locale),
+    alternates: await localizedRouteMetadata(`/fitment/${platform.slug}`, locale),
     robots: { index: true, follow: true },
   };
 }

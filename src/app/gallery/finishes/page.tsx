@@ -11,7 +11,7 @@ import {
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 import { cn } from "@/lib/utils";
 
 /**
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Finish Gallery — Brushed, Satin, Gloss & Matte Wheel Finishes",
     description:
       "Compare the forged wheel finishes Fenghuai offers — brushed clear, satin gunmetal, gloss black, matte bronze, polished lip and more — with guidance on requesting real samples.",
-    alternates: localizedAlternates("/gallery/finishes", locale),
+    alternates: await localizedRouteMetadata("/gallery/finishes", locale),
     // Excluded from the sitemap by decision: this surface is a swatch reference
     // rather than an indexable landing page.
     robots: { index: false, follow: true },

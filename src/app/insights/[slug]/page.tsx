@@ -6,7 +6,7 @@ import { ProseArticle } from "@/components/prose-article";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PreviewBanner } from "@/components/preview-banner";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 import {
   getInsightGuideDocument,
   getInsightGuideDocuments,
@@ -36,7 +36,7 @@ export async function generateMetadata({
   return {
     title: document.seoTitle,
     description: document.seoDescription,
-    alternates: localizedAlternates(`/insights/${slug}`, locale),
+    alternates: await localizedRouteMetadata(`/insights/${slug}`, locale),
     robots: { index: !preview, follow: true },
   };
 }

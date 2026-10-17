@@ -5,7 +5,7 @@ import { fitmentPageCopy, platformFitments } from "@/content/fitment";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Vehicle Fitment — Forged Wheels by Platform",
     description:
       "Fitment landing pages for BMW M, Mercedes-AMG and Audi RS. Starting size references, design directions and engineering notes — final specifications confirmed per order.",
-    alternates: localizedAlternates("/fitment", locale),
+    alternates: await localizedRouteMetadata("/fitment", locale),
     robots: { index: true, follow: true },
   };
 }

@@ -27,7 +27,7 @@ import {
 import { automotiveScenes } from "@/content/automotive-scenes";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale, isIndexableLocale, translatorFor } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 import { localizedPath } from "@/lib/i18n/types";
 import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
 
@@ -101,7 +101,7 @@ export async function generateMetadata({
     // `absolute`：根 layout 的 `%s | Fenghuai` 模板会再追加一次品牌。
     title: { absolute: paged && !noindex ? copy.seoPageTitle(requestedPage) : copy.seoTitle },
     description: copy.seoDescription,
-    alternates: localizedAlternates(canonical, locale),
+    alternates: await localizedRouteMetadata(canonical, locale),
     robots: { index: indexable, follow: true },
   };
 }

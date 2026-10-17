@@ -11,6 +11,7 @@ import {
   localeFromPathname,
   localizedPath,
   localizedAlternates,
+  type Locale,
   stripLocalePrefix,
   formatLocaleDate,
   formatLocaleNumber,
@@ -24,10 +25,11 @@ test("所有已开放语言的字典键集合完全一致", () => {
   assert.deepEqual(LOCALES, ["en", "zh", "es", "th"]);
 });
 
-test("页面 alternates 只列入已批准的语言", () => {
+test("页面 alternates 只列入已批准的语言（语言集合必须显式传入）", () => {
   assert.deepEqual(INDEXABLE_LOCALES, ["en"]);
-  assert.deepEqual(localizedAlternates("/about", "zh"), { languages: {} });
-  assert.deepEqual(localizedAlternates("/about", "en"), {
+  // A closed locale advertises nothing, even when it is the current locale.
+  assert.deepEqual(localizedAlternates("/about", "zh", ["en"]), { languages: {} });
+  assert.deepEqual(localizedAlternates("/about", "en", ["en"]), {
     canonical: "/about",
     languages: { en: "/about", "x-default": "/about" },
   });
@@ -39,6 +41,32 @@ test("页面 alternates 只列入已批准的语言", () => {
     canonical: "/zh",
     languages: { zh: "/zh" },
   });
+});
+
+test("hreflang 集合与发布门槛同源：批准某语言后 alternates 不丢语言", () => {
+  // Regression guard for the defect fixed on 2026-10-17: `readyLocales` used to
+  // default to ["en"], so approving a translation made the URL reachable and
+  // sitemapped while its hreflang set stayed empty. The signature is now
+  // required, which makes that drift impossible to write; this test pins the
+  // behaviour that approving a locale actually surfaces it in `languages`.
+  const approved: readonly Locale[] = ["en", "zh"];
+  const result = localizedAlternates("/products/wheels", "zh", approved);
+  const languages: Record<string, string> = result.languages;
+
+  assert.equal(result.canonical, "/zh/products/wheels");
+  assert.deepEqual(Object.keys(languages).sort(), ["en", "x-default", "zh"]);
+  assert.equal(languages.zh, "/zh/products/wheels");
+  assert.equal(languages.en, "/products/wheels");
+  assert.equal(languages["x-default"], "/products/wheels");
+
+  // Every locale named in the approved set must appear as an alternate; this is
+  // what the sitemap expands and what search engines read.
+  for (const locale of approved) {
+    assert.ok(
+      Object.hasOwn(result.languages, locale),
+      `approved locale ${locale} missing from hreflang set`,
+    );
+  }
 });
 
 test("语言 URL 使用独立前缀且切回英文时保留路径", () => {

@@ -76,8 +76,17 @@ export function localizedPath(pathname: string, locale: Locale): string {
   return base;
 }
 
-/** Build a self-canonical URL and matching language alternates for one route. */
-export function localizedAlternates(pathname: string, locale: Locale, readyLocales: readonly Locale[] = INDEXABLE_LOCALES) {
+/**
+ * Build a self-canonical URL and matching language alternates for one route.
+ *
+ * `readyLocales` is deliberately REQUIRED. It used to default to
+ * `INDEXABLE_LOCALES` (`["en"]`), which silently emptied the hreflang set for
+ * any route once a translation was approved: the page stayed reachable, its
+ * sitemap entry appeared, but it advertised no alternates. Publication
+ * qualification must feed this directly — see `getPublicLocalesForPath` and the
+ * `localizedRouteMetadata` helper below.
+ */
+export function localizedAlternates(pathname: string, locale: Locale, readyLocales: readonly Locale[]) {
   const base = stripLocalePrefix(pathname);
   if (!readyLocales.includes(locale)) return { languages: {} };
   const languages = Object.fromEntries(

@@ -13,7 +13,7 @@ import {
 import { getCustomAluminumPage, isCustomAluminumPageIndexable } from "@/lib/wordpress/custom-aluminum";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 /** `/products/custom-aluminum` — public engineering assessment page. */
 
@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Start a drawing-led aluminum component assessment with 2D drawings, 3D data or a physical sample, covering DFM, tooling, first article and supplier-supported production.",
-    ...(indexable ? { alternates: localizedAlternates("/products/custom-aluminum", locale) } : {}),
+    ...(indexable ? { alternates: await localizedRouteMetadata("/products/custom-aluminum", locale) } : {}),
     robots: { index: indexable, follow: true },
   };
 }

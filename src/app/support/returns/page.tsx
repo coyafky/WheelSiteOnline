@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Return & Refund Policy",
     description:
       "How Fenghuai handles returns for made-to-order aluminum components — defect, error, cancellation and restocking terms.",
-    alternates: localizedAlternates("/support/returns", locale),
+    alternates: await localizedRouteMetadata("/support/returns", locale),
     robots: { index: true, follow: true },
   };
 }

@@ -9,7 +9,7 @@ import {
 } from "@/components/forged-wheel/forged-wheel-page";
 import { getForgedWheelCustomizationPage } from "@/lib/wordpress/forged-wheel";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Custom Forged Wheels | Engineering & Manufacturing Support | Fenghuai",
     description:
       "Discuss a custom forged wheel program with Fenghuai, from application and material review through forging, CNC machining, finish and inspection.",
-    alternates: localizedAlternates("/products/wheels/forged", locale),
+    alternates: await localizedRouteMetadata("/products/wheels/forged", locale),
   };
 }
 

@@ -12,7 +12,8 @@ import {
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
+import { localizedPath } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 type PatternPageProps = {
   params: Promise<{ pattern: string }>;
@@ -37,7 +38,7 @@ export async function generateMetadata({
   return {
     title: `${entry.pattern} Bolt Pattern — ${entry.label}`,
     description: entry.intro,
-    alternates: localizedAlternates(`/insights/bolt-patterns/${entry.slug}`, locale),
+    alternates: await localizedRouteMetadata(`/insights/bolt-patterns/${entry.slug}`, locale),
     robots: { index: true, follow: true },
   };
 }

@@ -13,7 +13,8 @@ import {
 import { site } from "@/content/site";
 import { InquiryForm } from "@/components/inquiry-form";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
+import { localizedPath } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 import { contactFormCopyFor, contactLabelsFor } from "@/lib/i18n/conversion-ui-copy";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getContactPageBody } from "@/lib/wordpress/conversion-pages";
@@ -25,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: body.seo.title,
     description: body.seo.description,
-    alternates: localizedAlternates("/contact", locale),
+    alternates: await localizedRouteMetadata("/contact", locale),
     robots: { index: !preview, follow: true },
   };
 }

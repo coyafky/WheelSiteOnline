@@ -22,7 +22,8 @@ import {
 } from "@/lib/wheels";
 import { getFlowFormedWheelsPage } from "@/lib/wordpress/flow-formed";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates, localizedPath } from "@/lib/i18n/types";
+import { localizedPath } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 /**
  * `/products/wheels/flow-formed` — WFF01–WFF05 (PAGE-SPECS/flow-formed-wheels.md).
@@ -111,7 +112,7 @@ export async function generateMetadata({
     ...head,
     ...(publicationOpen
       ? {
-          alternates: localizedAlternates(
+          alternates: await localizedRouteMetadata(
             noindex || requestedPage === 1 ? seo.canonical : `${seo.canonical}?page=${requestedPage}`,
             locale,
           ),

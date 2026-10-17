@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
 import { getLocale } from "@/lib/i18n";
-import { localizedAlternates } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Warranty Policy",
     description:
       "Fenghuai's manufacturing warranty for aluminum components — coverage, exclusions, claim process and remedies.",
-    alternates: localizedAlternates("/support/warranty", locale),
+    alternates: await localizedRouteMetadata("/support/warranty", locale),
     robots: { index: true, follow: true },
   };
 }
