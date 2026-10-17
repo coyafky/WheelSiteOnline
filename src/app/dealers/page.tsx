@@ -12,18 +12,16 @@ import {
 } from "@/content/dealer-programs";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PageHero } from "@/components/sections/page-hero";
-import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 import { getLocale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  const extraPublicLocales = await getPublicLocalesForPath("/dealers");
   return {
     title: "Dealer Supply Programme — Supply Without Stock",
     description:
       "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
-    alternates: await localizedRouteMetadata("/dealers", locale, { extraPublicLocales }),
-    robots: { index: extraPublicLocales.includes(locale), follow: true },
+    ...(await buildRouteMetadata("/dealers", locale)),
   };
 }
 

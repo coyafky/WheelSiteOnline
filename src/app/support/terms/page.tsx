@@ -2,18 +2,15 @@ import type { Metadata } from "next";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
 import { getLocale } from "@/lib/i18n";
-import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  // Rendering, sitemap and hreflang all read one publication decision
-  const extraPublicLocales = await getPublicLocalesForPath(`/support/terms`);
   return {
     title: "Terms of Service",
     description:
       "The terms on which Fenghuai quotes, manufactures and supplies to dealers, distributors and OEM programmes.",
-    alternates: await localizedRouteMetadata("/support/terms", locale, { extraPublicLocales }),
-    robots: { index: extraPublicLocales.includes(locale), follow: true },
+    ...(await buildRouteMetadata("/support/terms", locale)),
   };
 }
 

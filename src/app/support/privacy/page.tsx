@@ -6,7 +6,7 @@ import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 import { getLocale } from "@/lib/i18n";
-import { localizedRouteMetadata } from "@/lib/i18n/publication";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { isEnabled: preview } = await draftMode();
@@ -17,8 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       page?.seoDescription ||
       "Privacy policy template for enquiry data, consent and customer rights.",
-    alternates: await localizedRouteMetadata("/support/privacy", locale),
-    robots: { index: !preview, follow: true },
+    ...(await buildRouteMetadata("/support/privacy", locale, { preview })),
   };
 }
 

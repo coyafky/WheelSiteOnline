@@ -6,7 +6,7 @@ import { verifyInquiryReceipt } from "@/lib/inquiry/receipt";
 import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
 import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 import { getLocale } from "@/lib/i18n";
-import { localizedRouteMetadata } from "@/lib/i18n/publication";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -18,8 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "Confirmation that your forged wheel inquiry reached Fenghuai, and what happens next.",
     // Confirmation page: only meaningful right after a submission, never public
     // content. Keep it out of search results and out of the sitemap entirely.
-    robots: { index: false, follow: false },
-    alternates: await localizedRouteMetadata("/thank-you", locale),
+    ...(await buildRouteMetadata("/thank-you", locale, { noindex: true, nofollow: true })),
   };
 }
 

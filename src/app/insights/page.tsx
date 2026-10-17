@@ -15,15 +15,17 @@ import { GuidesAccordion } from "@/components/guides-accordion";
 import { DealerCta } from "@/components/sections/dealer-cta";
 import { PreviewBanner } from "@/components/preview-banner";
 import { getLocale } from "@/lib/i18n";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 import { getInsightGuideDocuments } from "@/lib/wordpress/insights";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const { isEnabled: preview } = await draftMode();
   return {
     title: "Forged Wheel Insights — Fitment, Construction & Import Guides",
     description:
       "Reference guides for dealers and wheel shops: measuring fitment, offset and backspacing, choosing a construction, finish options and importing wheels.",
-    robots: { index: !preview, follow: true },
+    ...(await buildRouteMetadata("/insights", locale, { preview })),
   };
 }
 

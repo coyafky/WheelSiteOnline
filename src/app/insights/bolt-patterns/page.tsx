@@ -14,17 +14,15 @@ import { PageHero } from "@/components/sections/page-hero";
 import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
 import { getLocale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/i18n/types";
-import { getPublicLocalesForPath, localizedRouteMetadata } from "@/lib/i18n/publication";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  const extraPublicLocales = await getPublicLocalesForPath("/insights/bolt-patterns");
   return {
     title: "Bolt Pattern Guides — 5x112, 5x114.3, 5x120",
     description:
       "What the two numbers in a bolt pattern mean, how to measure the pattern yourself, and why a vehicle list is a starting point rather than a fitment authority.",
-    alternates: await localizedRouteMetadata("/insights/bolt-patterns", locale, { extraPublicLocales }),
-    robots: { index: extraPublicLocales.includes(locale), follow: true },
+    ...(await buildRouteMetadata("/insights/bolt-patterns", locale)),
   };
 }
 
