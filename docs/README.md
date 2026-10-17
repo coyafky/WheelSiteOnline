@@ -99,8 +99,10 @@ docs/
 | 审计 | ✅ M01–M18 全量完成，含文件级证据 |
 | 差距分析 | ✅ 8 个 High 风险模块已识别 |
 | 目标架构 | ✅ 定稿（含与 V3.0 的偏离说明） |
-| 任务分解 | ✅ 48 个 Task，分 P0–P3 |
-| 代码改造 | ⬜ 未开始（等待 P0 授权） |
+| 基线提交 | ✅ 215 处未提交改动已分批落库（`dffc7bf`…`35a262c`） |
+| **P0 止血** | ✅ **8 项全部完成**（`502c1aa`…`18d704e`），`npm run check` 全绿 ｜ 69 tests ｜ E2E 15/15 |
+| P0 遗留 | ⚠️ T-04 的 nginx `log_format` 需在服务器手工加并 `nginx -t` |
+| 新发现 | ⚠️ T-09：root layout 里调用 `notFound()`（Next 16 不允许），属预存缺陷 |
 
 **下一步**：从 [`implementation/TASKS.md`](implementation/TASKS.md) 的 P0 组开始。
 P0 里有两项需要人工决策（T-01 sitemap 业务意图、T-03 FAQ 真实口径），其余可自主执行。

@@ -26,6 +26,11 @@
 - **验收**：`curl -s /sitemap.xml | grep -c "/thank-you"` 与 e2e 断言同向
 - **回滚**：单文件改动，git revert
 
+**状态：✅ 完成（2026-10-17，提交 `502c1aa`）**
+负责人裁定：两页都不进 sitemap。`sitemap.ts` 移除 `/gallery/finishes`；`/thank-you`
+改为 `robots: noindex, nofollow`，`/gallery/finishes` 改为 `noindex, follow`；
+e2e 与代码恢复一致。`npm run check` 全绿。
+
 ---
 
 ### T-02 修复 `localizedAlternates` 默认值
@@ -43,8 +48,14 @@
   4. 加 E2E：抓 sitemap 全 URL，断言页面 hreflang 集合 == sitemap 同路径语言集合
 - **验收**：
   - `grep -rn "localizedAlternates(" src/app | grep -v -c "getPublicLocalesForPath"` → 0
-  - `node scripts/verify-hreflang-parity.mjs` 通过
+  - `node scripts/verify-hreflang-parity.mjs` 通过（**脚本尚未创建，属 P1 待办**）
 - **回滚**：git revert
+
+**状态：✅ 完成（2026-10-17，提交 `38b0e0a`）**
+`readyLocales` 改为必填；新增 `publication.localizedRouteMetadata()`，内部取
+`getPublicLocalesForPath()` 与渲染/sitemap/切换器同源；19 处 `generateMetadata`
+全部改写（首页原本就显式传参，保持不变）。`tests/i18n-routing.test.mts` 新增
+回归用例。`npm run check` 全绿（69 tests）。
 
 ---
 
@@ -64,6 +75,11 @@
 - **验收**：`grep -c PLACEHOLDER src/content/faq.ts` = 0，且页面渲染的 FAQ 答案都经负责人签字
 - **回滚**：git revert
 
+**状态：✅ 完成（2026-10-17，提交 `502c1aa`）**
+负责人裁定：先下线。`src/content/faq.ts` 清空为 `[]`（保留类型与结构，两条消费链
+不破），移除 `/dealers` 与 `/products` 的 FAQ 段落及其导入。PLACEHOLDER 注释改写为
+撤回原因与恢复条件。`npm run check` 全绿。
+
 ---
 
 ### T-04 预览密钥移出 URL + 常量时间比较
@@ -82,6 +98,14 @@
 - **验收**：`grep -c "secret=" /var/log/nginx/*access.log` = 0；预览进出仍可用
 - **回滚**：恢复旧 route.ts（保留旧 secret 环境变量一段时间）
 
+**状态：⚠️ 部分完成（2026-10-17，提交 `9ae335a`）**
+已完成：常量时间比较（`timingSafeEqual`）；支持 `x-fh-preview-secret` 头
+（不进访问日志），`?secret=` 保留兼容；nginx `access_log` 改用 `fenghuai_noquery`
+格式，不再记录 query。
+**未完成**：① `log_format` 只能声明在 http 作用域，需手工加入
+`/etc/nginx/nginx.conf`；② 本机无 nginx，`nginx -t` 未验证，上线前必须先跑；
+③ 彻底去掉 URL 传参需改 WP 预览链接生成方式，属破坏性变更，待单独排期。
+
 ---
 
 ### T-05 `needsVerification` 默认改为 true
@@ -95,6 +119,11 @@
 - **步骤**：改默认值 → 迁移已有内容（已核验的可回填为 false）→ 加单测
 - **验收**：新建一篇 Insight 默认渲染警告条；已有已核验内容不受影响
 - **回滚**：改回默认值
+
+**状态：✅ 完成（2026-10-17，提交 `d24fa24`）**
+mu-plugin `default_value` 0 → 1；`insights-contract.ts` 判定改为 `!== false`
+（字段缺失/畸形时保持警告，只有显式 false 才清除）——原实现缺失会被判成 false，
+等于默认放行。`npm run check` 全绿。
 
 ---
 
@@ -110,6 +139,13 @@
 - **验收**：preview 模式下这两页输出 `noindex`
 - **回滚**：git revert
 
+**状态：✅ 完成（2026-10-17，提交 `d24fa24`）**
+**实测为 12 处**（GAP_ANALYSIS 原记 14 处属计算错误——`thank-you` 与
+`gallery/finishes` 已在 T-01 处理）。9 处改为
+`robots: { index: extraPublicLocales.includes(locale) }` 并让 alternates 用同一
+集合；3 个静态页由 `export const metadata` 改为 `generateMetadata` 接入发布门槛。
+复查 `grep 'robots: { index: true' src/app` 为 0。`npm run check` 全绿。
+
 ---
 
 ### T-07 修 `products.ts` 死链
@@ -123,6 +159,12 @@
 - **验收**：`grep -rn "productFamilies" src` 只剩有意保留的引用；无 404 链接
 - **回滚**：git revert
 
+**状态：✅ 完成（最小范围，2026-10-17，提交 `18d704e`）**
+三个 href 统一改为 `/products/wheels`（真实目录），并在定义处注明该数组已被
+`productLines` 取代。**未删除数组本体**：它仍被 `types.ts` 的文档/注释引用，
+整族删除（`getFamilySpecs`/`getFamilyAnswer`/`familyDetailChapters`/
+`familyResourceLinks` 等）属重构，合并到 T-37 分类统一时处理。
+
 ---
 
 ### T-08 生产 remotePatterns 剥离 localhost
@@ -135,6 +177,45 @@
 - **风险**：Medium（配错会导致图片全部 404）
 - **步骤**：按 `WP_API_URL` 主机名条件化；本地开发仍保留；加构建后断言
 - **验收**：`grep -o "8081" .next/server/**/*.js | wc -l` = 0
+- **回滚**：git revert
+
+**状态：✅ 完成（2026-10-17，提交 `18d704e`）**
+回环 `remotePatterns` 改为仅在非生产注册，或 `ALLOW_LOOPBACK_WP_MEDIA=true`。
+三档实测：production → `remotePatterns: []` / `dangerouslyAllowLocalIP: false`；
+development → 两条保留；production + 开关 → 两条恢复。
+⚠️ 注意：`.next/server` 里仍有 6 处 `localhost:8081`，经核实是
+`wheel-publication.json` 的 `meta.source` **数据**，与图片配置无关。
+
+---
+
+### T-09 修复 root layout 里调用 notFound()（P0，实测发现）
+
+- **模块**：M05
+- **发现方式**：P0 收尾跑 `e2e/site-contract.spec.ts` 时，15 个用例全过，
+  但 WebServer 日志出现 `Uncaught Error: notFound() is not allowed to use in root layout`
+- **来源**：`e83bd97`（原有业务改动的提交），不是 P0 新引入
+- **现有问题**：`src/app/layout.tsx` 渲染函数内直接 `notFound()`：
+  ```ts
+  if (locale !== "en" && decision.status !== "public" && decision.status !== "preview-only") {
+    notFound();
+  }
+  ```
+  Next 16 不允许在 root layout 里调用 `notFound()`。当前 e2e 之所以还过，
+  是因为断言依赖 Next 的兜底行为，而这个兜底**没有任何保证**（与
+  GAP_ANALYSIS M05「未收录语言的 404 依赖未验证行为」是同一个问题）
+- **目标结果**：非公开 locale 的 404 由**明确可控的机制**产生，且响应带
+  `noindex`
+- **修改范围**：`src/app/layout.tsx`、可能的 `src/app/not-found.tsx`、
+  `src/proxy.ts`
+- **方案（择一，需先验证）**：
+  1. 在 `proxy.ts` 里对非公开 locale 直接返回 404（不用进 RSC）
+  2. 或由各页面族自己判定并 `notFound()`（layout 只负责 html/body）
+- **风险**：Medium（会改变多语言 404 的产生路径，必须回归全部 i18n e2e）
+- **验收**：
+  - E2E 期间 WebServer 日志**零** `notFound() is not allowed`
+  - `curl -sI /zh/<未批准路径>` 返回 404
+  - 该 404 页面含 `name="robots" content="noindex"`（当前未验证）
+  - `e2e/publication-qualification.spec.ts`、`e2e/site-contract.spec.ts` 全绿
 - **回滚**：git revert
 
 ---
