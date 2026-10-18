@@ -19,7 +19,6 @@ import {
 } from "@/lib/seo/structured-data";
 import { siteUrl, siteUrlIsConfigured } from "@/lib/site-url";
 import { site } from "@/content/site";
-import { Providers } from "./providers";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -153,14 +152,18 @@ export default async function RootLayout({
             dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteStructuredData) }}
           />
         ) : null}
-        <Providers locale={locale}>
-          <SiteMotion />
-          <SiteHeader locale={locale} availableLocales={availableLocales} />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter locale={locale} availableLocales={availableLocales} />
-        </Providers>
+        {/* No <Providers> here on purpose.
+            Astryx is scoped to the sub-trees that render its components, via a
+            segment layout per sub-tree. Mounting it at the root charged every
+            route — including the homepage and /about, which render no Astryx
+            component at all — for ~39 KB gzip of JS. See
+            src/components/astryx-scope.tsx. */}
+        <SiteMotion />
+        <SiteHeader locale={locale} availableLocales={availableLocales} />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <SiteFooter locale={locale} availableLocales={availableLocales} />
       </body>
     </html>
   );
