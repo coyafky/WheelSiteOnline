@@ -35,7 +35,7 @@ export function HeroMedia({ media }: { media: MediaAsset }) {
             alt={media.alt}
             fill
             preload
-            sizes="100vw"
+            sizes="(min-width: 1024px) 40vw, 100vw"
             className="object-cover object-center opacity-65"
             onError={() => setFailed(true)}
           />

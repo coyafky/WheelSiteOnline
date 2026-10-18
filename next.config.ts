@@ -108,6 +108,15 @@ const nextConfig: NextConfig = {
      * matters: encoding happens once and is then reused.
      */
     formats: ["image/avif", "image/webp"],
+
+    /**
+     * Next 默认 deviceSizes 末尾是 3840，但站内所有源图最宽只有 2560
+     * （hero `factory.webp` = 2560x1463）。提供 3840 档只会让浏览器把一个
+     * 不存在的分辨率重新放大 1.5 倍再传一遍 —— 纯浪费字节。
+     *
+     * 去掉 3840 后，任何 `sizes` 写法失误最多取到 2048，不会再有硬放大。
+     */
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     /**
      * Next defaults to 60 seconds, which re-encodes unchanged product photos
      * every minute. These images are content-addressed uploads that change only
