@@ -5,7 +5,6 @@ export {
   get,
   InquiryPersistenceError,
   list,
-  markDelivered,
   save,
 } from "./store";
 export type { EmailStatus, SaveOptions, SavedInquiry } from "./store";

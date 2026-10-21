@@ -1,10 +1,10 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
 import {
   localizedPath,
   LOCALE_COOKIE,
+  LOCALE_LABELS,
   LOCALES,
   type Locale,
 } from "@/lib/i18n/types";
@@ -25,25 +25,22 @@ function persistLocale(next: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
 }
 
-const LABELS: Record<Locale, string> = {
-  en: "EN",
-  zh: "中文",
-};
-
 export function LanguageSwitcher({
   locale,
   label,
   tone = "light",
+  availableLocales = LOCALES,
 }: {
   locale: Locale;
   /** Accessible label — supplied by the caller from the dictionary. */
   label: string;
   /** `dark` renders for the ink header; `light` for light surfaces. */
   tone?: "light" | "dark";
+  /** Current page's published language variants. */
+  availableLocales?: readonly Locale[];
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [pending, startTransition] = useTransition();
 
   function pick(next: Locale) {
     if (next === locale) return;
@@ -56,42 +53,33 @@ export function LanguageSwitcher({
     // transition and would otherwise leave assistive technology on the old
     // language even though the URL and visible chrome had changed.
     // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-    startTransition(() => window.location.assign(href));
+    window.location.assign(href);
   }
 
-  const inactive =
-    tone === "dark"
-      ? "text-white/52 hover:text-white"
-      : "text-steel hover:text-ink";
-  const active = tone === "dark" ? "text-forge-bright" : "text-forge";
-
   return (
-    <div
-      role="group"
-      aria-label={label}
-      className={`inline-flex flex-nowrap items-center whitespace-nowrap font-display text-[0.7rem] font-700 uppercase tracking-[0.12em] ${
-        pending ? "opacity-60" : ""
+    <label
+      className={`inline-flex items-center gap-2 whitespace-nowrap font-display text-[0.7rem] font-700 uppercase tracking-[0.12em] ${
+        ""
       }`}
     >
-      {LOCALES.map((code, index) => (
-        <span key={code} className="inline-flex items-center">
-          {index > 0 ? (
-            <span className={tone === "dark" ? "px-2 text-white/18" : "px-2 text-ink/18"} aria-hidden="true">
-              /
-            </span>
-          ) : null}
-          <button
-            type="button"
-            onClick={() => pick(code)}
-            aria-current={code === locale ? "true" : undefined}
-            className={`whitespace-nowrap py-2 transition-colors ${
-              code === locale ? active : inactive
-            }`}
-          >
-            {LABELS[code]}
-          </button>
-        </span>
-      ))}
-    </div>
+      <span className={tone === "dark" ? "sr-only" : "sr-only"}>{label}</span>
+      <span aria-hidden="true" className={tone === "dark" ? "text-white/50" : "text-steel"}>
+        {locale.toUpperCase()}
+      </span>
+      <select
+        value={locale}
+        aria-label={label}
+        onChange={(event) => pick(event.target.value as Locale)}
+        className={`max-w-[8.5rem] cursor-pointer appearance-none bg-transparent py-2 pr-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge ${
+          tone === "dark" ? "text-white" : "text-ink"
+        }`}
+      >
+        {(!availableLocales.includes(locale) ? [locale, ...availableLocales] : availableLocales).map((code) => (
+          <option key={code} value={code} disabled={!availableLocales.includes(code)} className="bg-ink text-white">
+            {LOCALE_LABELS[code]}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

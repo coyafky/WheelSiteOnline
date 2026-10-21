@@ -87,11 +87,23 @@ export const wheelDetailEnquiry = {
   /** Small label above the echo, so the customer can confirm what is attached. */
   selectedLabel: "Selected configuration",
   cta: "Request this configuration",
+  addToListLabel: "Add to total enquiry",
+  addedToListLabel: "Added to total enquiry",
+  addToListHelp: "Keep this configuration in your enquiry list while you compare other wheels.",
+  directHelp: "Send an enquiry for only this wheel without changing your saved enquiry list.",
+  modelCta: "Request this wheel model",
+  dialogTitle: "Request this configuration",
+  dialogModelTitle: "Request this wheel model",
+  dialogSelectedSubtitle: (summary: string) => `This enquiry will include only ${summary}.`,
+  dialogModelSubtitle: (model: string) =>
+    `This enquiry will include model ${model}; the configuration can be confirmed during follow-up.`,
+  configurationQuantityLabel: "Quantity for this configuration",
+  configurationQuantityHelp:
+    "Enter the expected quantity for this configuration. Enquiries do not have a business quantity limit.",
   /**
-   * No-JS fallback (§12). The embedded form submits through JavaScript, so the
-   * same enquiry page — carrying this model, and this configuration when one is
-   * selected — stays reachable as a plain link. It is a fallback, not a second
-   * call to action, and it never asks the customer to re-explain the model (§2.1).
+   * No-JS fallback (§12). The direct dialog requires JavaScript, so the full
+   * enquiry page — carrying this model and the selected configuration — remains
+   * reachable as a plain link without asking the customer to re-explain it.
    */
   fallbackNote: "Form not working, or JavaScript turned off?",
   fallbackLabel: "Open the full enquiry page with this model",
@@ -150,11 +162,11 @@ export const wheelDetailFinishes = {
 
 export const wheelDetailFitment = {
   heading: "Confirm the application before production",
-  body: "Matching diameter and PCD does not confirm vehicle fitment. Share the vehicle or application, model year or generation, brake package, suspension changes, tyre plan, load requirement and target market for review.",
+  body: "Matching diameter and PCD does not confirm vehicle fitment. Share the vehicle or application, model year or generation, brake package, suspension changes, tire plan, load requirement and target market for review.",
   checklist: [
     "Vehicle or application and model year",
     "Brake package and suspension changes",
-    "Tyre size and intended use",
+    "Tire size and intended use",
     "Required quantity and destination market",
   ],
 } as const;

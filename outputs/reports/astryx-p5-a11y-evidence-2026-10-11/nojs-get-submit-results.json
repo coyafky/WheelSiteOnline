@@ -1,0 +1,99 @@
+{
+ "generatedAt": "2026-10-11T09:23:51.886Z",
+ "jsEnabled": false,
+ "before": {
+  "url": "http://127.0.0.1:3210/zh/products/wheels",
+  "results": 26,
+  "forms": [
+   {
+    "i": 0,
+    "method": "get",
+    "action": "/products/wheels",
+    "visible": false,
+    "namedControls": 39,
+    "q": {
+     "visible": false,
+     "type": "search"
+    }
+   },
+   {
+    "i": 1,
+    "method": "get",
+    "action": "/products/wheels",
+    "visible": true,
+    "namedControls": 39,
+    "q": {
+     "visible": true,
+     "type": "search"
+    }
+   },
+   {
+    "i": 2,
+    "method": "get",
+    "action": "/products/wheels",
+    "visible": true,
+    "namedControls": 1,
+    "q": null
+   }
+  ]
+ },
+ "submitPlan": {
+  "found": true,
+  "formAction": "/products/wheels",
+  "method": "get",
+  "placeholder": "e.g. HP12"
+ },
+ "afterEnterSubmit": {
+  "url": "http://127.0.0.1:3210/zh/products/wheels?q=dx",
+  "results": 17,
+  "qStillFilled": "dx",
+  "bodyLen": 4035
+ },
+ "afterButtonSubmit": {
+  "url": "http://127.0.0.1:3210/zh/products/wheels?q=",
+  "results": 26,
+  "hasForm": true
+ },
+ "filtered": {
+  "/products/wheels?q=dx": {
+   "url": "http://127.0.0.1:3210/zh/products/wheels?q=dx",
+   "results": 17,
+   "checked": [],
+   "selectedSort": "model-asc",
+   "qValue": "dx",
+   "bodyLen": 4035
+  },
+  "/products/wheels?sort=model-asc": {
+   "url": "http://127.0.0.1:3210/zh/products/wheels?sort=model-asc",
+   "results": 26,
+   "checked": [],
+   "selectedSort": "model-asc",
+   "qValue": "",
+   "bodyLen": 5432
+  },
+  "/products/wheels?pcd=5x120": {
+   "url": "http://127.0.0.1:3210/zh/products/wheels?pcd=5x120",
+   "results": 20,
+   "checked": [
+    "pcd=5x120",
+    "pcd=5x120"
+   ],
+   "selectedSort": "model-asc",
+   "qValue": "",
+   "bodyLen": 4766
+  }
+ },
+ "localeHop": {
+  "finalUrl": "http://127.0.0.1:3210/zh/products/wheels",
+  "hops": [
+   {
+    "status": 307,
+    "url": "http://127.0.0.1:3210/products/wheels"
+   },
+   {
+    "status": 200,
+    "url": "http://127.0.0.1:3210/zh/products/wheels"
+   }
+  ]
+ }
+}

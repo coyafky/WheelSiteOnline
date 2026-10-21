@@ -1,35 +1,27 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowRight } from "lucide-react";
 import type { HomepageContent } from "@/content/types";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
+import { HeroMedia } from "./hero-media";
 
-export function HomeHero({ hero }: { hero: HomepageContent["hero"] }) {
+export function HomeHero({ hero, locale }: { hero: HomepageContent["hero"]; locale: Locale }) {
   const showMedia = hero.media.hasRender && hero.media.approvalStatus === "approved";
 
   return (
     <section
       id="top"
+      data-module-id="H01"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-svh items-center overflow-hidden bg-hero"
+      className="relative isolate flex min-h-svh items-center overflow-hidden border-b border-border bg-background"
     >
-      <div className="absolute inset-0 -z-20 bg-hero" aria-hidden="true" />
+      <div className="absolute inset-0 -z-20 bg-background" aria-hidden="true" />
 
       {showMedia ? (
-        <div className="absolute inset-0 -z-10" data-parallax-media>
-          <Image
-            src={hero.media.src}
-            alt={hero.media.alt}
-            fill
-            preload
-            sizes="100vw"
-            className="object-cover object-center opacity-55"
-          />
-          <div className="absolute inset-0 bg-linear-to-r from-hero via-hero/85 to-hero/35" />
-          <div className="absolute inset-0 bg-linear-to-t from-hero via-transparent to-hero/25" />
-        </div>
+        <HeroMedia media={hero.media} />
       ) : (
         <div
-          className="fh-industrial-grid absolute inset-0 -z-10 overflow-hidden"
+          data-hero-media-fallback
+          className="fh-industrial-grid-light absolute inset-0 -z-10 overflow-hidden"
           aria-hidden="true"
           data-parallax-media
         >
@@ -47,27 +39,27 @@ export function HomeHero({ hero }: { hero: HomepageContent["hero"] }) {
 
           <h1
             id="hero-title"
-            className="mt-5 max-w-[760px] font-display text-[clamp(3rem,6.5vw,5.8rem)] font-800 uppercase leading-[0.9] tracking-[-0.025em] text-white"
+          className="mt-5 max-w-[760px] font-display text-[clamp(3rem,6.5vw,5.8rem)] font-800 uppercase leading-[0.9] tracking-[-0.025em] text-ink"
           >
             {hero.heading}
           </h1>
 
-          <p className="mt-7 max-w-[690px] text-[clamp(1rem,1.5vw,1.16rem)] leading-relaxed text-white/78">
+          <p className="mt-7 max-w-[690px] text-[clamp(1rem,1.5vw,1.16rem)] leading-relaxed text-steel">
             {hero.lead}
           </p>
 
           <div className="mt-7 flex max-w-[680px] gap-4 border-l-2 border-forge pl-5">
-            <p className="text-sm leading-relaxed text-white/58">{hero.disclosure}</p>
+            <p className="text-sm leading-relaxed text-steel">{hero.disclosure}</p>
           </div>
 
           <div className="mt-9 flex flex-wrap gap-4">
-            <Link href={hero.primaryAction.href} className="btn-pill-solid">
+            <Link href={localizedPath(hero.primaryAction.href, locale)} className="btn-pill-solid btn-pill-brand">
               {hero.primaryAction.label}
               <ArrowDownRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
-              href={hero.secondaryAction.href}
-              className="btn-pill-outline !text-white"
+              href={localizedPath(hero.secondaryAction.href, locale)}
+              className="btn-pill-outline btn-pill-brand !text-ink"
             >
               {hero.secondaryAction.label}
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -76,7 +68,7 @@ export function HomeHero({ hero }: { hero: HomepageContent["hero"] }) {
         </div>
 
         {showMedia ? (
-          <p className="absolute bottom-7 right-6 hidden max-w-[320px] text-right font-display text-xs font-600 uppercase tracking-[0.12em] text-white/55 lg:block">
+          <p className="absolute bottom-7 right-6 hidden max-w-[320px] text-right font-display text-xs font-600 uppercase tracking-[0.12em] text-ink/70 lg:block">
             {hero.mediaLabel}
           </p>
         ) : null}

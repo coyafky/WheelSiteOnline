@@ -71,7 +71,7 @@ export function WheelFactory({ section }: { section: AboutContent["wheelFactory"
                 <div className="p-6">
                   <h4 className="text-2xl font-semibold tracking-[-0.025em] text-ink">{item.title}</h4>
                   <p className="mt-3 text-sm leading-6 text-steel">{item.body}</p>
-                  <p className="mt-6 border-t border-muted pt-4 text-xs leading-5 text-steel/80">{item.media.caption}</p>
+                  <p className="mt-6 border-t border-muted pt-4 text-xs leading-5 text-steel">{item.media.caption}</p>
                 </div>
               </article>
             ))}
@@ -83,7 +83,7 @@ export function WheelFactory({ section }: { section: AboutContent["wheelFactory"
         <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-20">
           <div data-reveal>
             <p className="eyebrow">{section.capabilitiesEyebrow}</p>
-            <h3 className="mt-5 font-display text-4xl font-700 uppercase leading-[0.96] tracking-[-0.03em] sm:text-5xl">
+            <h3 className="mt-5 font-display text-4xl font-700 uppercase leading-[0.96] tracking-[-0.03em] text-white sm:text-5xl">
               {section.capabilitiesHeading}
             </h3>
             <p className="mt-6 max-w-xl text-base leading-7 text-white/62">{section.capabilitiesIntro}</p>

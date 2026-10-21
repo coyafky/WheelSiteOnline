@@ -3,11 +3,11 @@
 - 路由：`/products/safety-tires`
 - 页面类型：自密封轮胎产品线能力与询盘页；没有核准型号数据时不建立 SKU 目录
 - 视口：T01–T06，共 6 个核心问题视口
-- 状态：已实现；T01–T06、17 张 WordPress 媒体、8 mm 结构化证据与双端视觉验收完成（2026-10-05）
+- 状态：页面已实现；T01–T06、8 mm 结构化证据与双端视觉验收曾完成（2026-10-05）。2026-10-16 已修复证据模块在 360/390px 的响应式裁切，并通过移动专项边界检查。T03 三张机制 WebP 已替换为无文字解释性图示，开发/生产模式在 1440/390/360px 均通过；本地 WordPress live 权威内容尚待 Docker 恢复后同步复验，不能因本地替换而关闭 P0。详见[交付报告](../outputs/reports/self-sealing-mechanism-asset-replacement-2026-10-16.md)。
 - 公开语言：英文优先
 - 来源：峰徊画册第 16–21 页、洛克项目资料第 7–12/21 页、用户提供的四张页面图、WordPress 本地媒体库
 - 主要受众：个人车主、车队、轮胎渠道商与地区合作方
-- 公开术语：英文统一使用 `self-sealing tyre`；`self-healing` 只作为来源资料中的材料描述，不用来暗示轮胎能够修复所有损伤
+- 公开术语：目标市场为 Google US / en-US，英文统一使用 `self-sealing tire(s)`；`self-healing` 只作为来源资料中的材料描述，不用来暗示轮胎能够修复所有损伤
 
 ## 1. 页面目标与视口顺序
 
@@ -20,7 +20,7 @@
 | T03 | 钉子刺入和拔出时发生什么 | 刺入并包裹 → 帮助限制漏气 → 拔出后闭合穿刺通道 | 三张连续机理图 | 查看验证条件 |
 | T04 | “可接受 8 mm”准确指什么 | 8 mm 是供应商资料所述的内部测试钉直径，不是对任意损伤的保证 | 钉高测量 + 碾压钉板测试 | 询问适用型号和报告 |
 | T05 | 研发、生产和质量如何核验 | 研发场景、测试条件、生产追溯和型号文件必须对应 | 研发三图；生产图核准后显示 | 请求目标市场资料 |
-| T06 | 哪些情况适用、怎样咨询 | 胎面测试区域与未覆盖损伤分开；个人与渠道使用不同询盘字段 | 边界表 + 双入口询盘 | `Ask about self-sealing tyres` |
+| T06 | 哪些情况适用、怎样咨询 | 胎面测试区域与未覆盖损伤分开；个人与渠道使用不同询盘字段 | 边界表 + 双入口询盘 | `Ask about self-sealing tires` |
 
 T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8 mm；T05–T06 补齐采购所需的证据和转化闭环。
 
@@ -79,13 +79,13 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 | 场景 | 英文标题 | 英文说明 |
 |---|---|---|
 | 01 | `Air loss after a tread puncture` | `A penetrating object can create an air-loss path and force the driver to respond before continuing the journey.` |
-| 02 | `Changing a tyre at the roadside` | `The driver may not have the tools, experience or safe working space required for a roadside wheel change.` |
-| 03 | `Repair or replacement` | `Workshop time and the condition of the tyre determine whether inspection, repair or replacement is required.` |
+| 02 | `Changing a tire at the roadside` | `The driver may not have the tools, experience or safe working space required for a roadside wheel change.` |
+| 03 | `Repair or replacement` | `Workshop time and the condition of the tire determine whether inspection, repair or replacement is required.` |
 | 04 | `Towing and delay` | `Waiting for roadside assistance adds cost and interrupts personal, commercial or fleet travel.` |
 
 **Boundary note**
 
-`Self-sealing technology is intended to reduce the immediate interruption caused by an applicable tread puncture. It does not prevent every form of tyre damage.`
+`Self-sealing technology is intended to reduce the immediate interruption caused by an applicable tread puncture. It does not prevent every form of tire damage.`
 
 本视口不使用事故图，不显示死亡人数或事故比例。
 
@@ -93,7 +93,7 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Eyebrow**
 
-`SELF-SEALING TYRE TECHNOLOGY`
+`SELF-SEALING TIRE TECHNOLOGY`
 
 **Heading**
 
@@ -101,11 +101,11 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Lead**
 
-`A polymer-composite sealing layer is applied to the tyre inner liner. When an object penetrates the tread, the material surrounds it and helps limit air loss. After the object is removed, the material closes the puncture channel.`
+`A polymer-composite sealing layer is applied to the tire inner liner. When an object penetrates the tread, the material surrounds it and helps limit air loss. After the object is removed, the material closes the puncture channel.`
 
 **Definition note**
 
-`Self-sealing describes the behaviour of the internal sealing layer. It does not mean that the tyre is immune to damage or that professional inspection is unnecessary.`
+`Self-sealing describes the behavior of the internal sealing layer. It does not mean that the tire is immune to damage or that professional inspection is unnecessary.`
 
 **Primary in-page action**
 
@@ -120,13 +120,13 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Heading**
 
-`The material closes around the puncture channel`
+`How self-sealing tires work: the material closes around the puncture channel`
 
 | 步骤 | 英文标题 | 英文说明 | 图片 |
 |---|---|---|---|
 | 01 | `Object enters the tread area` | `The object passes through the tread and into the sealing layer on the inner liner.` | WP 149 |
 | 02 | `The material surrounds the object` | `The sealing material closes around the penetrating object and helps limit the air path while it remains in place.` | WP 131 |
-| 03 | `The channel closes after removal` | `When the object is removed, the material recovers over the channel. The tyre still requires inspection to confirm its condition.` | WP 139 |
+| 03 | `The channel closes after removal` | `When the object is removed, the material recovers over the channel. The tire still requires inspection to confirm its condition.` | WP 139 |
 
 **Boundary note**
 
@@ -144,11 +144,11 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Approved draft copy**
 
-`Supplier materials state that the self-sealing system has been evaluated with an 8 mm-diameter test spike through the tread area. The result applies to the tested tyre, puncture location and test conditions. Ask for the documentation applicable to the tyre model and destination market.`
+`Supplier materials state that the self-sealing system has been evaluated with an 8 mm-diameter test spike through the tread area. The result applies to the tested tire, puncture location and test conditions. Ask for the documentation applicable to the tire model and destination market.`
 
 **Inspection note**
 
-`After a puncture, check tyre pressure and have the tyre inspected by a qualified professional. Do not treat the 8 mm figure as permission to continue driving with visible damage, abnormal pressure, vibration or a sidewall injury.`
+`After a puncture, check tire pressure and have the tire inspected by a qualified professional. Do not treat the 8 mm figure as permission to continue driving with visible damage, abnormal pressure, vibration or a sidewall injury.`
 
 **Evidence state**
 
@@ -175,18 +175,18 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Heading**
 
-`The evidence must match the tyre model and market`
+`The evidence must match the tire model and market`
 
 | 证据层 | 英文标题 | 英文说明 | 页面素材 |
 |---|---|---|---|
 | 研发场景 | `Material development` | `Supplier materials show a dedicated development and laboratory environment. Research partners and ownership of results are published only after documentary confirmation.` | WP 146/140/147 |
-| 测试条件 | `Puncture validation` | `The test setup records the object, puncture zone, tyre condition, pressure, procedure and acceptance result for the identified tyre.` | WP 156/125/135 |
-| 生产过程 | `Controlled application` | `Production imagery may illustrate coating and inspection stages after the responsible factory and process have been confirmed.` | WP 155/136，审核后显示 |
-| 型号文件 | `Model and market documentation` | `A report or certificate must identify the holder, tyre, method, result, validity and intended market before it is used as a sales claim.` | 使用可读正式文件，不用模糊缩略图 |
+| 测试条件 | `Puncture validation` | `The test setup records the object, puncture zone, tire condition, pressure, procedure and acceptance result for the identified tire.` | WP 156/125/135 |
+| 生产过程 | `Controlled application` | `Supplier-provided production-base imagery illustrates coating equipment used in the self-sealing tire program; process approval remains tied to the responsible entity and tire program.` | WP 155：`Supplier-provided coating equipment scene; not proof of ownership or a specific production result.`；按图权与主体审核显示 |
+| 型号文件 | `Model and market documentation` | `A report or certificate must identify the holder, tire, method, result, validity and intended market before it is used as a sales claim.` | 使用可读正式文件，不用模糊缩略图 |
 
 **Boundary note**
 
-`A laboratory or production photograph demonstrates an environment, not a test result. Product claims are supported by documents that identify the tested tyre and conditions.`
+`A laboratory or production photograph demonstrates an environment, not a test result. Product claims are supported by documents that identify the tested tire and conditions.`
 
 **Secondary CTA**
 
@@ -201,7 +201,7 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Heading**
 
-`Confirm the tyre, puncture condition and local support`
+`Confirm the tire, puncture condition and local support`
 
 | 可以咨询确认 | 不能由本页保证 |
 |---|---|
@@ -214,9 +214,9 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 **个人客户输入**
 
 - `Country or region`
-- `Vehicle and current tyre size`
+- `Vehicle and current tire size`
 - `Driving use and expected replacement timing`
-- `Photo of the tyre sidewall marking, if available`
+- `Photo of the tire sidewall marking, if available`
 
 **渠道/车队输入**
 
@@ -228,7 +228,7 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 **Primary CTA**
 
-- Label：`Ask about self-sealing tyres`
+- Label：`Ask about self-sealing tires`
 - Href：`/request-a-quote`
 - Context：`product_line = safety-tires`、`intent = product_inquiry`
 
@@ -241,15 +241,15 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 ## 4. WordPress 媒体映射
 
-以下图片已按 WordPress 实际像素检查。17 张候选媒体的 `alt_text` 和 caption 当前均为空，发布前必须补齐来源、权利和批准状态。
+以下 WordPress 图片已按实际像素检查；仍由 WordPress 提供的候选媒体需在发布前补齐来源、权利和批准状态。T03 的三张机制图已改为本地生成的解释性 WebP，不再引用下表中的旧 WordPress 媒体。
 
 ### 4.1 T01 道路痛点
 
 | WP ID | 当前标题 | 尺寸 | 用途 | 必填 alt |
 |---:|---|---:|---|---|
-| 151 | `痛点_扎钉轮胎特写` | 992×491 | 扎钉与漏气路径 | `Nail embedded in the tread of a tyre` |
-| 122 | `痛点_司机蹲地换胎` | 918×491 | 路边换胎 | `Driver attempting to change a tyre at the roadside` |
-| 137 | `痛点_车间师傅抱轮胎` | 992×491 | 维修或更换 | `Workshop technician carrying a replacement tyre` |
+| 151 | `痛点_扎钉轮胎特写` | 992×491 | 扎钉与漏气路径 | `Nail embedded in the tread of a tire` |
+| 122 | `痛点_司机蹲地换胎` | 918×491 | 路边换胎 | `Driver attempting to change a tire at the roadside` |
+| 137 | `痛点_车间师傅抱轮胎` | 992×491 | 维修或更换 | `Workshop technician carrying a replacement tire` |
 | 130 | `痛点_道路救援拖车` | 918×491 | 道路救援和拖车 | `Roadside recovery truck transporting a vehicle` |
 
 不使用 ID 119/124/133/134/138/158/161 的事故、翻滚或爆炸图片。
@@ -258,11 +258,11 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 | WP ID | 当前标题 | 尺寸 | 用途 | 必填 alt |
 |---:|---|---:|---|---|
-| 153 | `品牌_轮胎行驶特写` | 2158×772 | T02 宽幅主图 | `Close view of a tyre in normal road use` |
-| 144 | `产品_扎钉轮胎特写` | 595×1228 | T02 产品补充图；不可作桌面通栏 | `Tyre tread shown with a puncturing object` |
-| 149 | `原理_扎入钢钉示意` | 769×386 | T03 刺入 | `Illustration of an object penetrating the tread and sealing layer` |
-| 131 | `原理_记忆胶填充中` | 768×386 | T03 包裹 | `Sealing material surrounding a penetrating object` |
-| 139 | `原理_密封完成不漏气` | 769×386 | T03 闭合 | `Sealing material closing over the puncture channel after removal` |
+| 153 | `品牌_轮胎行驶特写` | 2158×772 | T02 宽幅主图 | `Close view of a tire in normal road use` |
+| 144 | `产品_扎钉轮胎特写` | 595×1228 | T02 产品补充图；不可作桌面通栏 | `Tire tread shown with a puncturing object` |
+| — | 本地生成 `mechanism-entry.webp` | 1774×887 | T03 刺入 | `Explanatory cutaway showing an object entering the tire tread and sealing layer` |
+| — | 本地生成 `mechanism-surround.webp` | 1774×887 | T03 包裹 | `Explanatory cutaway showing sealing material surrounding a penetrating object` |
+| — | 本地生成 `mechanism-close.webp` | 1774×887 | T03 闭合 | `Explanatory cutaway showing the sealing layer closing the channel after object removal` |
 
 图片内已有 `LOAKE` 或产品口号时，必须先完成品牌公开授权；不能仅靠裁切隐藏来源。
 
@@ -270,9 +270,9 @@ T01–T04 对应用户提出的三个重点：道路痛点、自密封机理、8
 
 | WP ID | 当前标题 | 尺寸 | 用途 | 必填 alt |
 |---:|---|---:|---|---|
-| 156 | `测试_钢钉高度测量` | 769×421 | 测试钉/测量场景 | `Measurement of a puncture-test spike used in an internal tyre evaluation` |
-| 135 | `测试_轮胎碾压钉板一` | 768×421 | 碾压钉板过程 | `Tyre approaching a controlled puncture-test board` |
-| 125 | `测试_轮胎碾压钢钉二` | 769×421 | 碾压测试后续 | `Tyre passing over puncture-test spikes during an internal evaluation` |
+| 156 | `测试_钢钉高度测量` | 769×421 | 测试钉/测量场景 | `Measurement of a puncture-test spike used in an internal tire evaluation` |
+| 135 | `测试_轮胎碾压钉板一` | 768×421 | 碾压钉板过程 | `Tire approaching a controlled puncture-test board` |
+| 125 | `测试_轮胎碾压钢钉二` | 769×421 | 碾压测试后续 | `Tire passing over puncture-test spikes during an internal evaluation` |
 
 alt 不写“8 mm”除非该张图中尺寸量具清晰可读并已由测试记录确认；8 mm 数字由结构化测试字段提供，不靠图片文件名推断。
 
@@ -283,8 +283,8 @@ alt 不写“8 mm”除非该张图中尺寸量具清晰可读并已由测试记
 | 146 | `研发_总部大楼` | 769×421 | 研发机构外景 | `Exterior of the supplier research facility shown in project materials` |
 | 140 | `研发_实验室团队` | 768×421 | 实验室团队 | `Laboratory team working with material-processing equipment` |
 | 147 | `研发_洁净实验室` | 769×421 | 实验室环境 | `Controlled laboratory environment shown in supplier materials` |
-| 155 | `生产_热熔喷涂线机械臂` | 769×386 | 涂覆生产候选 | `Automated equipment on a tyre coating line` |
-| 136 | `生产_检测产线` | 719×421 | 生产检测候选 | `Inspection equipment on a tyre production line` |
+| 155 | `生产_热熔喷涂线机械臂` | 769×386 | 涂覆生产候选 | `Automated equipment on a tire coating line` |
+| 136 | `生产_检测产线` | 719×421 | 生产检测候选 | `Inspection equipment on a tire production line` |
 
 研发合作单位、工厂主体和图片图权没有批准前，T05 可用“供应商资料展示”口径，不写峰徊自研、自有实验室或自有工厂。
 
@@ -398,19 +398,19 @@ type SelfSealingTirePage = {
 
 **建议 title**
 
-`Self-Sealing Tyres | Puncture Response & Test Conditions | Fenghuai`
+`Self-Sealing Tires | Puncture Response & Test Conditions | Fenghuai`
 
 **建议 description**
 
-`Learn how an inner-liner sealing layer responds to an applicable tread puncture, what the supplier-stated 8 mm test condition means, and which tyre and market documents to confirm.`
+`Learn how an inner-liner sealing layer responds to an applicable tread puncture, what the supplier-stated 8 mm test condition means, and which tire and market documents to confirm.`
 
 **建议 H1**
 
-`Self-sealing tyres for applicable tread punctures`
+`Self-sealing tires for applicable tread punctures`
 
-- 英式拼写使用 `tyre`，与目标英文内容保持一致；代码字段和 URL 保持现有 `safety-tires`。
-- 核心术语使用 `self-sealing tyre`、`sealing layer`、`tread puncture`、`puncture-test spike`。
-- 不用 `puncture-proof`、`bulletproof tyre`、`never flat`、`automatic permanent repair`。
+- 使用美国英语拼写 `tire`，与 Google US/en-US 目标市场一致；代码字段和 URL 保持现有 `safety-tires`。
+- 核心术语使用 `self-sealing tire`、`sealing layer`、`tread puncture`、`puncture-test spike`。
+- 不用 `puncture-proof`、`bulletproof tire`、`never flat`、`automatic permanent repair`。
 - 没有真实型号、价格和库存时，不输出 Product/Offer schema；使用 WebPage 或 Service 语义。
 - 不创建 `8mm self healing tire for [car brand]` 一类车型适配 SEO 页。
 - canonical、OG 和 sitemap 使用正确的 `NEXT_PUBLIC_APP_URL` 构建值。
@@ -438,7 +438,7 @@ type SelfSealingTirePage = {
 - [x] 未核对 GB/T 38510-2020 具体条款前，不发布“国标规定 3 mm”或“高于国标”。
 - [x] 不出现 0.05 s、温度、噪声、耐磨、湿地等级、伤亡比例、保险和质保等未核准数字。
 - [x] 页面明确区分胎面适用测试区域与胎侧、胎肩、撞击或结构损伤。
-- [x] 17 张公开候选媒体均有准确 alt、caption、来源、图权和批准状态。
+- [ ] 仍由 WordPress 提供的候选媒体均有准确 alt、caption、来源、图权和批准状态；T03 三张本地生成解释性 WebP 已具备对应元数据，但 live 权威同步仍待复验。
 - [x] 带 LOAKE 标识的图片按用户确认的媒体库可用范围公开，原有标识未抹除。
 - [x] 个人与渠道询盘进入同一后端，保留 `product_line = safety-tires` 和客户类型。
 - [x] 桌面 1440×900、1280×800 与移动 390×844、360×800 截图通过。

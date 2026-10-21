@@ -1,0 +1,989 @@
+{
+ "generatedAt": "2026-10-11T09:26:05.499Z",
+ "source": "outputs/reports/astryx-p5-a11y-evidence-2026-10-11/axe-results.json",
+ "measurements": [
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/contact",
+   "viewport": "1440x900",
+   "selector": ".rounded-xl.p-7.bg-ink > .\\!text-forge.eyebrow",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"eyebrow !text-forge\">Before you send</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Before you send",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 12.16,
+     "fontWeight": 600,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "div.rounded-xl.border=rgb(41, 38, 33)",
+      "section.border-b.border-border=rgb(244, 241, 235)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/insights",
+   "viewport": "320x568",
+   "selector": ".\\!text-forge-bright",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"eyebrow !text-forge-bright\">Insights</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Insights",
+     "color": "rgb(199, 124, 69)",
+     "colorHex": "#c77c45",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 3.14,
+     "required": 4.5,
+     "passes": false,
+     "fontSizePx": 12.16,
+     "fontWeight": 600,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.relative.isolate=rgb(48, 42, 36)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 1
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/insights",
+   "viewport": "1440x900",
+   "selector": ".\\!text-forge-bright",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"eyebrow !text-forge-bright\">Insights</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Insights",
+     "color": "rgb(199, 124, 69)",
+     "colorHex": "#c77c45",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 3.14,
+     "required": 4.5,
+     "passes": false,
+     "fontSizePx": 12.16,
+     "fontWeight": 600,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.relative.isolate=rgb(48, 42, 36)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 1
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".mt-1.tracking-\\[0\\.14em\\].text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-forge\">Flow Formed</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Flow Formed",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".hover\\:text-white",
+   "axeSummary": "",
+   "axeHtml": "<a class=\"group mt-5 inline-flex min-h-11 items-center gap-1.5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hov",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "View specifications→",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 11.52,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(1) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">01</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "01",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(2) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">02</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "02",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(4) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">03</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "03",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(5) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">04</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "04",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".mt-1.tracking-\\[0\\.14em\\].text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-forge\">Flow Formed</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Flow Formed",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".hover\\:text-white",
+   "axeSummary": "",
+   "axeHtml": "<a class=\"group mt-5 inline-flex min-h-11 items-center gap-1.5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hov",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "View specifications→",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 11.52,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": "#wff03 > .container-fh > .max-w-\\[820px\\][data-reveal=\"true\"] > .gap-4.flex.items-center > .text-\\[0\\.64rem\\].tracking-\\[0\\.18em\\].font-mono",
+   "axeSummary": "",
+   "axeHtml": "<span class=\"font-mono text-[0.64rem] font-bold tracking-[0.18em] text-forge\">WFF03</span>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "WFF03",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.24,
+     "fontWeight": 700,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".container-fh > .max-w-\\[820px\\][data-reveal=\"true\"] > .gap-4.flex.items-center > .\\!text-forge.eyebrow",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"eyebrow !text-forge\">MANUFACTURING ROUTE</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "MANUFACTURING ROUTE",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 12.16,
+     "fontWeight": 600,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(1) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">01</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "01",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(2) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">02</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "02",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(4) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">03</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "03",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(5) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">04</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "04",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.05fr\\)_minmax\\(0\\,0\\.65fr\\)\\] > div:nth-child(1) > .max-w-\\[820px\\][data-reveal=\"true\"] > .gap-4.flex.items-center > .text-\\[0\\.64rem\\].tracking-\\[0\\.18em\\].font-mono",
+   "axeSummary": "",
+   "axeHtml": "<span class=\"font-mono text-[0.64rem] font-bold tracking-[0.18em] text-forge\">WFF05</span>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "WFF05",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.24,
+     "fontWeight": 700,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "320x568",
+   "selector": ".lg\\:grid-cols-\\[minmax\\(0\\,1\\.05fr\\)_minmax\\(0\\,0\\.65fr\\)\\] > div:nth-child(1) > .max-w-\\[820px\\][data-reveal=\"true\"] > .gap-4.flex.items-center > .\\!text-forge.eyebrow",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"eyebrow !text-forge\">FITMENT AND SUPPLY REVIEW</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "FITMENT AND SUPPLY REVIEW",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 12.16,
+     "fontWeight": 600,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".mt-1.tracking-\\[0\\.14em\\].text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-forge\">Flow Formed</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Flow Formed",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".hover\\:text-white",
+   "axeSummary": "",
+   "axeHtml": "<a class=\"group mt-5 inline-flex min-h-11 items-center gap-1.5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hov",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "View specifications→",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 11.52,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(1) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">01</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "01",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(2) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">02</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "02",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(4) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">03</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "03",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(5) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">04</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "04",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".mt-1.tracking-\\[0\\.14em\\].text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"mt-1 text-[0.68rem] uppercase tracking-[0.14em] text-forge\">Flow Formed</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "Flow Formed",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".hover\\:text-white",
+   "axeSummary": "",
+   "axeHtml": "<a class=\"group mt-5 inline-flex min-h-11 items-center gap-1.5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hov",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "View specifications→",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 11.52,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "figure.border.border-white/16=rgb(48, 42, 36)",
+      "section.relative.isolate=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(1) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">01</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "01",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(2) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">02</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "02",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(4) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">03</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "03",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "color-contrast",
+   "impact": "serious",
+   "route": "/products/wheels/flow-formed",
+   "viewport": "1440x900",
+   "selector": ".pt-6.lg\\:col-start-1.border-white\\/12:nth-child(5) > .tracking-\\[0\\.18em\\].font-mono.text-\\[0\\.68rem\\]",
+   "axeSummary": "",
+   "axeHtml": "<p class=\"font-mono text-[0.68rem] font-700 tracking-[0.18em] text-forge\">04</p>",
+   "matchCount": 1,
+   "matches": [
+    {
+     "index": 0,
+     "text": "04",
+     "color": "rgb(155, 75, 29)",
+     "colorHex": "#9b4b1d",
+     "effectiveBg": "#fbfaf7",
+     "ratio": 5.89,
+     "required": 4.5,
+     "passes": true,
+     "fontSizePx": 10.88,
+     "fontWeight": 400,
+     "isLargeText": false,
+     "visible": true,
+     "layers": [
+      "section.scroll-mt-[96px].bg-ink=rgb(41, 38, 33)",
+      "body.flex.min-h-full=rgb(251, 250, 247)"
+     ]
+    }
+   ],
+   "failingCount": 0
+  },
+  {
+   "rule": "scrollable-region-focusable",
+   "impact": "serious",
+   "route": "/tools/offset-calculator",
+   "viewport": "320x568",
+   "selector": "pre",
+   "axeSummary": "",
+   "axeHtml": "<pre class=\"max-w-full overflow-x-auto rounded-xl border border-border bg-ink p-6 font-mono text-[0.8rem] leading-relaxed text-white/85\">",
+   "matchCount": 0,
+   "matches": [],
+   "failingCount": 0,
+   "error": "page.evaluate: TypeError: Cannot read properties of null (reading 'r')"
+  }
+ ]
+}

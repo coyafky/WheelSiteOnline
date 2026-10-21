@@ -56,6 +56,11 @@ const FH_INQUIRY_CAP_DELIVERY = 'manage_fh_inquiry_delivery';
 const FH_INQUIRY_CAP_VERSION = '1';
 const FH_INQUIRY_CAP_VERSION_OPTION = 'fh_inquiry_cap_version';
 
+/** 邮件提供商事件回调与积压告警。 */
+const FH_INQUIRY_ALERT_HOOK = 'fh_inquiry_delivery_alert_tick';
+const FH_INQUIRY_ALERT_INTERVAL = 'fh_inquiry_every_5_minutes';
+const FH_INQUIRY_WEBHOOK_MAX_AGE = 300;
+
 /** 数据保留清理：默认关闭；只有明确配置天数后才允许执行。 */
 const FH_INQUIRY_RETENTION_HOOK = 'fh_inquiry_retention_tick';
 const FH_INQUIRY_RETENTION_BATCH = 100;
@@ -168,6 +173,12 @@ function fh_inquiry_context_fields(): array
     ];
 }
 
+/** 不可变多产品清单快照（由 Next 服务端复核后写入）。 */
+function fh_inquiry_item_snapshot_fields(): array
+{
+    return ['inquiry_items_json' => '轮毂询价清单（JSON 快照）'];
+}
+
 /**
  * 业务状态字段（后台可改）。
  *
@@ -208,6 +219,7 @@ function fh_inquiry_all_meta_keys(): array
     return array_merge(
         array_keys(fh_inquiry_input_fields()),
         array_keys(fh_inquiry_context_fields()),
+        array_keys(fh_inquiry_item_snapshot_fields()),
         array_keys(fh_inquiry_business_fields()),
         array_keys(fh_inquiry_email_fields()),
         array_keys(fh_inquiry_compliance_fields()),
@@ -438,6 +450,9 @@ function fh_inquiry_register_meta(): void
     foreach (array_keys(fh_inquiry_context_fields()) as $key) {
         $register($key, $key === 'variant_pending' ? '0' : '');
     }
+    foreach (array_keys(fh_inquiry_item_snapshot_fields()) as $key) {
+        $register($key, '');
+    }
 
     // 业务状态：后台可改，取值必须落在白名单内。非法值一律回落到 new。
     $register('business_status', 'new', static function ($value): string {
@@ -474,6 +489,13 @@ function fh_inquiry_register_rest(): void
         // 字段级校验在回调里做（要产出与 Next 侧一致的 fieldErrors 形状）。
         'args'                => [],
     ]);
+
+    register_rest_route(FH_INQUIRY_REST_NAMESPACE, '/email-events', [
+        'methods'             => 'POST',
+        'callback'            => 'fh_inquiry_rest_email_event',
+        'permission_callback' => 'fh_inquiry_email_event_permission',
+        'args'                => [],
+    ]);
 }
 
 /**
@@ -506,7 +528,311 @@ function fh_inquiry_rest_permission(WP_REST_Request $request)
         );
     }
 
+    /*
+     * Rate limit — the second gate, after the key.
+     *
+     * The Next.js frontend already rate-limits per email/IP, but that guard lives
+     * in the frontend. Anyone holding the service key (or reaching this endpoint
+     * directly, bypassing Next entirely) faced no limit at all, so the database
+     * could be filled with enquiries by a script.
+     *
+     * Keyed on client IP. `REMOTE_ADDR` is used as-is and NOT `X-Forwarded-For`:
+     * that header is caller-controlled, so trusting it would let an attacker pick
+     * a fresh bucket per request and defeat the limit. When WordPress sits behind
+     * a proxy this means every request shares the proxy's bucket — a coarser but
+     * honest limit, which is the right trade for a write endpoint.
+     */
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : 'unknown';
+    if (fh_inquiry_rate_limit_exceeded($ip)) {
+        return new WP_Error(
+            'fh_inquiry_rate_limited',
+            '请求过于频繁，请稍后再试。',
+            ['status' => 429]
+        );
+    }
+
     return true;
+}
+
+/**
+ * Fixed-window rate limit: N accepted enquiries per IP per window.
+ *
+ * Uses a counter in a transient rather than a row scan: the write path must not
+ * pay for a COUNT across the enquiry table on every submission.
+ *
+ * @return bool true when this IP has already used up its allowance.
+ */
+function fh_inquiry_rate_limit_exceeded(string $ip): bool
+{
+    /*
+     * Non-production environments are exempt.
+     *
+     * The limit exists to stop an external script filling the database. Local
+     * development and CI need to submit many enquiries on purpose, and a limit
+     * that blocks the project's own acceptance path is a limit that gets
+     * disabled in practice.
+     *
+     * Detection is by WordPress's own `wp_get_environment_type()` rather than by
+     * source IP. An IP allowlist would be wrong here: WordPress sits behind
+     * Docker/proxy layers, so a request from `localhost` on the host arrives
+     * with the gateway address (`192.168.65.1` on Docker Desktop, measured) —
+     * not `127.0.0.1`. The environment type is the fact we actually mean.
+     *
+     * Measured impact before the exemption: `scripts/verify-inquiry-backend.py`
+     * made ~80 submissions from localhost and returned 67 pass / 12 fail, every
+     * failure an unexpected 429.
+     */
+    if (function_exists('wp_get_environment_type') && wp_get_environment_type() !== 'production') {
+        return false;
+    }
+
+    /*
+     * Defaults to 60 per 10 minutes per IP — deliberately generous.
+     *
+     * This is the *second* rate limiter: src/lib/inquiry/guard.ts already counts
+     * in the Next process. Two independent limits means whichever is smaller
+     * wins, so raising only one of them changes nothing. Keep the two in step:
+     * change this constant and INQUIRY_RATE_LIMIT_IP together.
+     *
+     * 20 was too tight for a shared egress IP: a trade-show booth or one office
+     * NAT puts every visitor behind a single address, and the ~80 submissions
+     * made by scripts/verify-inquiry-backend.py from one host already tripped
+     * it 12 times (see the exemption note above).
+     *
+     * Overridable per environment via the FH_INQUIRY_RATE_LIMIT constant or the
+     * fh_inquiry_rate_limit filter, so tuning does not need a code change.
+     * A non-positive value disables the check (existing behaviour, unchanged).
+     */
+    $limit  = (int) apply_filters(
+        'fh_inquiry_rate_limit',
+        (int) fh_inquiry_config('FH_INQUIRY_RATE_LIMIT', 'fh_inquiry_rate_limit', '60')
+    );
+    $window = (int) apply_filters('fh_inquiry_rate_window', 10 * MINUTE_IN_SECONDS);
+    if ($limit <= 0 || $window <= 0) return false;
+
+    // Hash the IP so a raw address is not written into the options table, which
+    // is far more widely readable than the enquiry records themselves.
+    $key = 'fh_rl_' . substr(hash('sha256', $ip), 0, 24);
+    $hits = (int) get_transient($key);
+
+    if ($hits >= $limit) return true;
+
+    // First hit in this window starts the clock; later hits keep the original
+    // expiry so the window stays fixed rather than sliding on every request.
+    set_transient($key, $hits + 1, $window);
+    return false;
+}
+
+/**
+ * 邮件事件回调鉴权。
+ *
+ * 提供商适配层把原始请求体和 Unix 时间戳签名为
+ * sha256=HMAC_SHA256(timestamp + "." + body, FH_INQUIRY_WEBHOOK_SECRET)。
+ * 不接受查询参数密钥；过期请求直接拒绝，避免回放旧事件。
+ */
+function fh_inquiry_email_event_permission(WP_REST_Request $request)
+{
+    $secret = fh_inquiry_webhook_secret();
+    if ($secret === '') {
+        return new WP_Error(
+            'fh_inquiry_webhook_not_configured',
+            '邮件事件密钥未配置，回调端点已停用。',
+            ['status' => 503]
+        );
+    }
+
+    $timestamp = trim((string) $request->get_header('X-FH-Webhook-Timestamp'));
+    $signature = trim((string) $request->get_header('X-FH-Webhook-Signature'));
+    if ($timestamp === '' || !ctype_digit($timestamp) || $signature === '') {
+        return new WP_Error('fh_inquiry_webhook_forbidden', '邮件事件签名无效。', ['status' => 401]);
+    }
+
+    if (abs(time() - (int) $timestamp) > FH_INQUIRY_WEBHOOK_MAX_AGE) {
+        return new WP_Error('fh_inquiry_webhook_expired', '邮件事件签名已过期。', ['status' => 401]);
+    }
+
+    $expected = 'sha256=' . hash_hmac(
+        'sha256',
+        $timestamp . '.' . $request->get_body(),
+        $secret
+    );
+    $provided = preg_split('/[\s,]+/', $signature, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    foreach ($provided as $candidate) {
+        if (hash_equals($expected, $candidate)) {
+            return true;
+        }
+    }
+
+    return new WP_Error('fh_inquiry_webhook_forbidden', '邮件事件签名无效。', ['status' => 401]);
+}
+
+/**
+ * 将提供商邮件事件类型映射为内部投影状态。
+ *
+ * 只处理终态事件；accepted 仍由发送器/worker 写入，不能由外部回调伪造。
+ */
+function fh_inquiry_email_event_status(string $eventType): ?string
+{
+    return [
+        'email.delivered' => 'delivered',
+        'email.bounced'   => 'bounced',
+        'email.failed'    => 'failed',
+    ][$eventType] ?? null;
+}
+
+/**
+ * 从提供商事件中提取最小化字段，避免把收件人和客户正文落入事件表。
+ *
+ * @return array{eventId:string,eventType:string,messageId:string,reason:string,occurredAt:string}
+ */
+function fh_inquiry_normalize_email_event(array $body): array
+{
+    $data = isset($body['data']) && is_array($body['data']) ? $body['data'] : [];
+    $eventId = isset($body['id']) ? sanitize_text_field((string) $body['id']) : '';
+    // 事件类型包含点号（如 email.delivered），不能使用 sanitize_key（会剥掉点号）。
+    $eventType = isset($body['type']) ? sanitize_text_field((string) $body['type']) : '';
+    $messageId = '';
+    foreach (['email_id', 'provider_message_id', 'message_id'] as $key) {
+        if (isset($body[$key]) && is_scalar($body[$key])) {
+            $messageId = sanitize_text_field((string) $body[$key]);
+            break;
+        }
+        if (isset($data[$key]) && is_scalar($data[$key])) {
+            $messageId = sanitize_text_field((string) $data[$key]);
+            break;
+        }
+    }
+    $reason = '';
+    foreach (['reason', 'error', 'message'] as $key) {
+        if (isset($body[$key]) && is_scalar($body[$key])) {
+            $reason = sanitize_text_field((string) $body[$key]);
+            break;
+        }
+        if (isset($data[$key]) && is_scalar($data[$key])) {
+            $reason = sanitize_text_field((string) $data[$key]);
+            break;
+        }
+    }
+    $occurredRaw = '';
+    foreach (['created_at', 'occurred_at', 'timestamp'] as $key) {
+        if (isset($body[$key]) && is_scalar($body[$key])) {
+            $occurredRaw = (string) $body[$key];
+            break;
+        }
+        if (isset($data[$key]) && is_scalar($data[$key])) {
+            $occurredRaw = (string) $data[$key];
+            break;
+        }
+    }
+    $occurredAt = strtotime($occurredRaw);
+
+    return [
+        'eventId'    => substr($eventId, 0, 191),
+        'eventType'  => substr($eventType, 0, 32),
+        'messageId'  => substr($messageId, 0, 191),
+        'reason'     => substr($reason, 0, 500),
+        'occurredAt' => $occurredAt ? gmdate('Y-m-d H:i:s', $occurredAt) : gmdate('Y-m-d H:i:s'),
+    ];
+}
+
+/**
+ * 接收邮件提供商的 delivered/bounced/failed 回调。
+ *
+ * 事件先以 provider_event_id + event_type 去重落库，再更新询盘邮件状态投影。
+ * 未匹配到本地 outbox 的事件仍返回 202，便于提供商停止重试，同时保留审计线索。
+ */
+function fh_inquiry_rest_email_event(WP_REST_Request $request)
+{
+    global $wpdb;
+
+    $body = $request->get_json_params();
+    if (!is_array($body)) {
+        return new WP_REST_Response(['ok' => false, 'error' => '事件 JSON 无效。'], 422);
+    }
+
+    $event = fh_inquiry_normalize_email_event($body);
+    $status = fh_inquiry_email_event_status($event['eventType']);
+    if ($event['eventId'] === '' || $event['messageId'] === '' || $status === null) {
+        return new WP_REST_Response(['ok' => false, 'error' => '事件 id、类型或消息 id 无效。'], 422);
+    }
+
+    $outboxTable = fh_inquiry_outbox_table();
+    $eventTable = fh_inquiry_event_table();
+    $outbox = $wpdb->get_row($wpdb->prepare(
+        "SELECT * FROM {$outboxTable} WHERE provider_message_id = %s ORDER BY id DESC LIMIT 1",
+        $event['messageId']
+    ), ARRAY_A);
+    $outboxId = $outbox ? (int) $outbox['id'] : 0;
+    $minimalPayload = wp_json_encode([
+        'id'        => $event['eventId'],
+        'type'      => $event['eventType'],
+        'emailId'   => $event['messageId'],
+        'occurredAt'=> $event['occurredAt'],
+        'reason'    => $event['reason'],
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    $inserted = $wpdb->query($wpdb->prepare(
+        "INSERT IGNORE INTO {$eventTable}
+            (outbox_id, provider_event_id, event_type, payload, occurred_at, created_at)
+         VALUES (%d, %s, %s, %s, %s, %s)",
+        $outboxId,
+        $event['eventId'],
+        $event['eventType'],
+        $minimalPayload ?: '{}',
+        $event['occurredAt'],
+        gmdate('Y-m-d H:i:s')
+    ));
+    if ($inserted === false) {
+        return new WP_REST_Response(['ok' => false, 'error' => '邮件事件写入失败。'], 500);
+    }
+
+    $replayed = $inserted === 0;
+    if (!$outbox) {
+        return new WP_REST_Response([
+            'ok'       => true,
+            'eventId'  => $event['eventId'],
+            'eventType'=> $event['eventType'],
+            'status'   => $status,
+            'matched'  => false,
+            'replayed' => $replayed,
+        ], 202);
+    }
+
+    $postId = (int) $outbox['inquiry_id'];
+    $current = (string) get_post_meta($postId, 'email_status', true);
+    // delivered 不能覆盖已确认的 bounced/failed；退信/失败可以覆盖 delivered。
+    $shouldProject = !($status === 'delivered' && in_array($current, ['bounced', 'failed'], true));
+    if (!$replayed && $shouldProject) {
+        update_post_meta($postId, 'email_status', $status);
+        update_post_meta(
+            $postId,
+            'email_error',
+            in_array($status, ['bounced', 'failed'], true)
+                ? ('provider event ' . $event['eventType'])
+                : ''
+        );
+        $wpdb->update(
+            $outboxTable,
+            [
+                'status'          => $status,
+                'last_error'      => in_array($status, ['bounced', 'failed'], true) ? ('provider event ' . $event['eventType']) : null,
+                'next_attempt_at' => null,
+                'lease_owner'     => null,
+                'lease_expires_at' => null,
+                'updated_at'      => gmdate('Y-m-d H:i:s'),
+            ],
+            ['id' => $outboxId]
+        );
+    }
+
+    return new WP_REST_Response([
+        'ok'       => true,
+        'eventId'  => $event['eventId'],
+        'eventType'=> $event['eventType'],
+        'status'   => $status,
+        'matched'  => true,
+        'replayed' => $replayed,
+    ], 200);
 }
 
 /**
@@ -572,8 +898,10 @@ function fh_inquiry_validate_payload(array $body): array
     }
 
     // ── 合规 ───────────────────────────────────────────────────────────────
-    $privacyVersion = $text('privacyVersion', 40, true);
-    $consentedAt    = $text('consentedAt', 40, true);
+    // The enquiry path does not require a consent checkbox or version. Keep
+    // both fields optional for older callers and preserve empty audit values.
+    $privacyVersion = $text('privacyVersion', 40, false);
+    $consentedAt    = $text('consentedAt', 40, false);
     if ($consentedAt !== '' && strtotime($consentedAt) === false) {
         $errors['consentedAt'] = '同意时间必须是可解析的时间戳。';
     }
@@ -592,6 +920,47 @@ function fh_inquiry_validate_payload(array $body): array
                 if ($item !== '') {
                     $inputs[] = mb_substr($item, 0, 60);
                 }
+            }
+        }
+    }
+
+    // ── 多款轮毂清单（Next 已按公开目录复核；WP 仍做形状、数量和重复保护） ──
+    $items = [];
+    if (array_key_exists('items', $body)) {
+        if (!is_array($body['items'])) {
+            $errors['items'] = '轮毂清单必须是数组。';
+        } elseif (count($body['items']) > 20) {
+            $errors['items'] = '一次最多询价 20 款轮毂。';
+        } else {
+            $seenItems = [];
+            foreach ($body['items'] as $index => $item) {
+                if (!is_array($item)) {
+                    $errors['items.' . $index] = '轮毂清单项格式不正确。';
+                    continue;
+                }
+                $model = isset($item['model']) && is_string($item['model']) ? trim($item['model']) : '';
+                $code = isset($item['productionCode']) && is_string($item['productionCode']) ? trim($item['productionCode']) : '';
+                $quantity = isset($item['quantity']) && is_int($item['quantity']) ? $item['quantity'] : 0;
+                if ($model === '' || mb_strlen($model) > 60 || $code === '' || mb_strlen($code) > 120) {
+                    $errors['items.' . $index] = '轮毂型号或生产代码无效。';
+                    continue;
+                }
+                if ($quantity < 1) {
+                    $errors['items.' . $index . '.quantity'] = '每款轮毂数量必须是正整数。';
+                    continue;
+                }
+                $itemKey = strtolower($model . '::' . $code);
+                if (isset($seenItems[$itemKey])) {
+                    $errors['items.' . $index] = '轮毂清单中不能重复同一生产代码。';
+                    continue;
+                }
+                $seenItems[$itemKey] = true;
+                $items[] = [
+                    'model' => $model,
+                    'productionCode' => $code,
+                    'quantity' => $quantity,
+                    'spec' => isset($item['spec']) && is_array($item['spec']) ? $item['spec'] : [],
+                ];
             }
         }
     }
@@ -640,6 +1009,7 @@ function fh_inquiry_validate_payload(array $body): array
             'context_product_line_raw' => $rawLine !== '' ? $rawLine : $productLine,
             'context_intent'           => $ctxStr('intent', 60),
             'variant_pending'          => !empty($ctx['variantPending']) ? '1' : '0',
+            'inquiry_items_json'       => (string) wp_json_encode($items, JSON_UNESCAPED_UNICODE),
         ],
         'idempotencyKey' => $key,
     ];
@@ -915,6 +1285,23 @@ function fh_inquiry_config(string $constant, string $option, string $default = '
     return $default;
 }
 
+/**
+ * 邮件事件回调密钥。
+ *
+ * 密钥只允许来自服务器环境/常量或受控的 WordPress option；不接受请求参数。
+ * filter 仅用于本地合成事件测试，不改变生产默认值。
+ */
+function fh_inquiry_webhook_secret(): string
+{
+    $env = getenv('FH_INQUIRY_WEBHOOK_SECRET');
+    $value = fh_inquiry_config(
+        'FH_INQUIRY_WEBHOOK_SECRET',
+        'fh_inquiry_webhook_secret',
+        is_string($env) ? $env : ''
+    );
+    return (string) apply_filters('fh_inquiry_webhook_secret', $value);
+}
+
 function fh_inquiry_mail_from(): string
 {
     return fh_inquiry_config('FH_INQUIRY_MAIL_FROM', 'fh_inquiry_mail_from', 'inquiry@fenghuai.com');
@@ -967,6 +1354,32 @@ function fh_inquiry_render_email(int $postId): array
         $specLines[] = $key . ': ' . $value;
     }
 
+    $items = [];
+    $itemsRaw = $meta('inquiry_items_json');
+    if ($itemsRaw !== '') {
+        $decodedItems = json_decode($itemsRaw, true);
+        if (is_array($decodedItems)) {
+            $items = array_values(array_filter($decodedItems, static fn($item): bool => is_array($item)));
+        }
+    }
+    $itemLines = [];
+    foreach ($items as $index => $item) {
+        $itemSpec = [];
+        if (isset($item['spec']) && is_array($item['spec'])) {
+            foreach ($item['spec'] as $key => $value) {
+                if (is_scalar($value)) $itemSpec[] = $key . ': ' . $value;
+            }
+        }
+        $itemLines[] = sprintf(
+            '%d. %s / %s / quantity: %s%s',
+            $index + 1,
+            $dash((string) ($item['model'] ?? '')),
+            $dash((string) ($item['productionCode'] ?? '')),
+            $dash((string) ($item['quantity'] ?? '')),
+            $itemSpec ? ' / ' . implode(', ', $itemSpec) : ''
+        );
+    }
+
     $lines = [
         'INQUIRY ' . $title,
         'Received: ' . $receivedAt,
@@ -987,6 +1400,10 @@ function fh_inquiry_render_email(int $postId): array
         'Code:     ' . $dash($meta('context_production_code')),
         'Quantity: ' . $dash($meta('quantity')),
         'Inputs:   ' . $dash($meta('inputs_available')),
+        '',
+        'REQUESTED WHEEL LIST',
+        '---------------------',
+        $itemLines ? implode("\n", $itemLines) : '—',
         '',
         'MESSAGE',
         '-------',
@@ -1053,6 +1470,19 @@ function fh_inquiry_render_email(int $postId): array
     $configurationRows .= $renderRows([
         'Configuration pending' => $meta('variant_pending') === '1' ? 'Yes' : 'No',
     ]);
+    if ($items) {
+        $itemRows = [];
+        foreach ($items as $index => $item) {
+            $label = sprintf('%d. %s / %s', $index + 1, (string) ($item['model'] ?? '—'), (string) ($item['productionCode'] ?? '—'));
+            $itemRows[$label] = 'Quantity: ' . (string) ($item['quantity'] ?? '—');
+            if (isset($item['spec']) && is_array($item['spec'])) {
+                foreach ($item['spec'] as $key => $value) {
+                    if (is_scalar($value)) $itemRows['  ' . $key] = (string) $value;
+                }
+            }
+        }
+        $configurationRows = $renderRows(['Requested wheel list' => '']) . $renderRows($itemRows) . $configurationRows;
+    }
     $originRows = $renderRows([
         'Source page' => $dash($meta('context_source_page')),
         'Intent'      => $dash($meta('context_intent')),
@@ -1079,7 +1509,7 @@ function fh_inquiry_render_email(int $postId): array
         . nl2br(esc_html($dash($meta('message'))), false)
         . '</div></td></tr>'
         . $section('Submitted configuration', $configurationRows)
-        . $section('Source & consent', $originRows)
+        . $section('Source', $originRows)
         . '<tr><td style="padding:0 24px 24px;color:#667085;font-size:12px;line-height:1.5">'
         . 'This notification is a copy. WordPress is the system of record for this inquiry.'
         . '</td></tr></table></td></tr></table></body></html>';
@@ -1658,6 +2088,28 @@ function fh_inquiry_render_context_box(WP_Post $post): void
             esc_html($value !== '' ? $value : '—')
         );
     }
+    $itemsRaw = (string) get_post_meta($post->ID, 'inquiry_items_json', true);
+    $items = $itemsRaw !== '' ? json_decode($itemsRaw, true) : [];
+    if (!is_array($items) || count($items) === 0) {
+        $items = [];
+    }
+    echo '<tr><th style="width:170px">轮毂询价清单</th><td>';
+    if (!$items) {
+        echo '—';
+    } else {
+        echo '<ol style="margin:0;padding-left:20px">';
+        foreach ($items as $item) {
+            if (!is_array($item)) continue;
+            $label = trim((string) ($item['model'] ?? '') . ' / ' . (string) ($item['productionCode'] ?? ''));
+            $quantity = (string) ($item['quantity'] ?? '—');
+            $spec = isset($item['spec']) && is_array($item['spec'])
+                ? implode(' · ', array_map(static fn($key, $value): string => $key . ': ' . (string) $value, array_keys($item['spec']), $item['spec']))
+                : '';
+            printf('<li><strong>%s</strong> × %s%s</li>', esc_html($label), esc_html($quantity), $spec !== '' ? ' <span style="color:#646970">(' . esc_html($spec) . ')</span>' : '');
+        }
+        echo '</ol>';
+    }
+    echo '</td></tr>';
     echo '</tbody></table>';
 }
 
@@ -1885,12 +2337,118 @@ add_filter('cron_schedules', 'fh_inquiry_cron_intervals');
  */
 function fh_inquiry_schedule_dispatch(): void
 {
-    if (wp_next_scheduled(FH_INQUIRY_DISPATCH_HOOK)) {
-        return;
+    if (!wp_next_scheduled(FH_INQUIRY_DISPATCH_HOOK)) {
+        wp_schedule_event(time(), FH_INQUIRY_DISPATCH_INTERVAL, FH_INQUIRY_DISPATCH_HOOK);
     }
-    wp_schedule_event(time(), FH_INQUIRY_DISPATCH_INTERVAL, FH_INQUIRY_DISPATCH_HOOK);
+    if (!wp_next_scheduled(FH_INQUIRY_ALERT_HOOK)) {
+        wp_schedule_event(time() + 60, FH_INQUIRY_ALERT_INTERVAL, FH_INQUIRY_ALERT_HOOK);
+    }
 }
 add_action('init', 'fh_inquiry_schedule_dispatch');
+
+/**
+ * 返回发件箱积压的最小化摘要。
+ *
+ * 只返回计数和时间，不读取或记录客户邮箱、电话和正文。due 只统计仍可重试的
+ * pending/failed；达到上限且无下次时间的记录单独计入 abandoned。
+ *
+ * @return array{due:int,abandoned:int,expiredLeases:int,oldestDueAt:?string,checkedAt:string}
+ */
+function fh_inquiry_delivery_alert_summary(): array
+{
+    global $wpdb;
+
+    $table = fh_inquiry_outbox_table();
+    $now = gmdate('Y-m-d H:i:s');
+    $max = FH_INQUIRY_DISPATCH_MAX_ATTEMPTS;
+    $due = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$table}
+         WHERE status IN ('pending','failed')
+           AND attempts < %d
+           AND (next_attempt_at IS NULL OR next_attempt_at <= %s)",
+        $max,
+        $now
+    ));
+    $abandoned = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$table}
+         WHERE status = 'failed' AND attempts >= %d AND next_attempt_at IS NULL",
+        $max
+    ));
+    $expiredLeases = (int) $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$table}
+         WHERE lease_owner IS NOT NULL AND lease_expires_at IS NOT NULL AND lease_expires_at <= %s",
+        $now
+    ));
+    $oldest = $wpdb->get_var($wpdb->prepare(
+        "SELECT MIN(created_at) FROM {$table}
+         WHERE status IN ('pending','failed')
+           AND attempts < %d
+           AND (next_attempt_at IS NULL OR next_attempt_at <= %s)",
+        $max,
+        $now
+    ));
+
+    return [
+        'due'           => $due,
+        'abandoned'     => $abandoned,
+        'expiredLeases' => $expiredLeases,
+        'oldestDueAt'   => $oldest ? (string) $oldest : null,
+        'checkedAt'     => $now,
+    ];
+}
+
+/** 读取积压告警阈值；默认 1，避免失败记录静默堆积。 */
+function fh_inquiry_delivery_alert_threshold(): int
+{
+    $raw = defined('FH_INQUIRY_ALERT_BACKLOG_THRESHOLD')
+        ? constant('FH_INQUIRY_ALERT_BACKLOG_THRESHOLD')
+        : getenv('FH_INQUIRY_ALERT_BACKLOG_THRESHOLD');
+    $threshold = is_numeric($raw) ? (int) $raw : 1;
+    return max(1, (int) apply_filters('fh_inquiry_delivery_alert_threshold', $threshold));
+}
+
+/**
+ * 运行积压监控并触发告警动作。
+ *
+ * 日志只含计数与时间；相同指纹 15 分钟内不重复写日志，外部系统可监听
+ * `fh_inquiry_delivery_alert` 发送通知（企业微信、监控平台等）。
+ *
+ * @return array<string,int|string|bool|null>
+ */
+function fh_inquiry_run_alert_monitor(): array
+{
+    $summary = fh_inquiry_delivery_alert_summary();
+    $triggered = $summary['due'] >= fh_inquiry_delivery_alert_threshold() || $summary['abandoned'] > 0;
+    $summary['triggered'] = $triggered;
+    update_option('fh_inquiry_last_alert_summary', wp_json_encode($summary, JSON_UNESCAPED_UNICODE), false);
+
+    if (!$triggered) {
+        return $summary;
+    }
+
+    $fingerprint = hash('sha256', wp_json_encode([
+        $summary['due'],
+        $summary['abandoned'],
+        $summary['expiredLeases'],
+    ]));
+    $previous = (string) get_option('fh_inquiry_last_alert_fingerprint', '');
+    $lastAt = (int) get_option('fh_inquiry_last_alert_at', 0);
+    if ($fingerprint !== $previous || time() - $lastAt >= 15 * MINUTE_IN_SECONDS) {
+        error_log(sprintf(
+            '[fh-inquiry-alert] due=%d abandoned=%d expired_leases=%d checked_at=%s',
+            $summary['due'],
+            $summary['abandoned'],
+            $summary['expiredLeases'],
+            $summary['checkedAt']
+        ));
+        update_option('fh_inquiry_last_alert_fingerprint', $fingerprint, false);
+        update_option('fh_inquiry_last_alert_at', time(), false);
+        do_action('fh_inquiry_delivery_alert', $summary);
+    }
+
+    return $summary;
+}
+add_action(FH_INQUIRY_ALERT_HOOK, 'fh_inquiry_run_alert_monitor');
 
 /**
  * 领一批待派发的 outbox 行。
@@ -2291,6 +2849,12 @@ function fh_inquiry_render_outbox_panel(): void
         echo '<strong>自动派发未注册</strong>';
     }
     echo '</p>';
+
+    $alert = fh_inquiry_delivery_alert_summary();
+    echo '<p>积压监控：待处理 ' . esc_html((string) $alert['due'])
+        . '，已放弃 ' . esc_html((string) $alert['abandoned'])
+        . '，过期租约 ' . esc_html((string) $alert['expiredLeases'])
+        . '（检查于 ' . esc_html((string) $alert['checkedAt']) . ' UTC）</p>';
 
     echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
     echo '<input type="hidden" name="action" value="fh_inquiry_manual_dispatch" />';

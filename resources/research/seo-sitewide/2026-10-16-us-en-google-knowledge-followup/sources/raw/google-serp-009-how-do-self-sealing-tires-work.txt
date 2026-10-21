@@ -1,0 +1,726 @@
+QUERY: how do self sealing tires work
+CAPTURED_AT: 2026-10-15T23:43:35.018Z
+URL: https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu0X3kijyTN5VhFMDwSB0JwZ3YBUw%3A1792107813494&ei=JWXRasXeHfKc0PEPtsKS0QI&uact=5&oq=how+do+self+sealing+tires+work&gs_lp=Egxnd3Mtd2l6LXNlcnAiHmhvdyBkbyBzZWxmIHNlYWxpbmcgdGlyZXMgd29ya0itAlAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "how do self sealing tires work - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "how do self sealing tires work - Google Search"]
+root
+  link [ref=1003]
+    text "Skip to main content"
+  anchor [ref=1004, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=1005, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=1006, loc=css:textarea[name="q"]]
+          text "how do self sealing tires work"
+        container
+          button "Clear" [ref=1007]
+            svg_root
+          container
+            button "Search by voice" [ref=1008, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=1009, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=1010, loc=role:button[name="Settings"]]
+        svg_root
+      button "Share" [ref=1011]
+        svg_root
+      container
+        button "Google apps" [ref=1012, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=1013, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dhow%2Bdo%2Bself%2Bsealing%2Btires%2Bwork%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnu0X3kijyTN5VhFMDwSB0JwZ3YBUw%253A1792107813494%26ei%3DJWXRasXeHfKc0PEPtsKS0QI%26uact%3D5%26oq%3Dhow%2Bdo%2Bself%2Bsealing%2Btires%2Bwork%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiHmhvdyBkbyBzZWxmIHNlYWxpbmcgdGlyZXMgd29ya0itAlAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=1014]
+      list
+        listitem
+          anchor [ref=1015, url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ2J8OegQIFhAD]
+            text "AI Mode"
+        listitem
+          link [ref=1016]
+            text "All"
+        listitem
+          anchor [ref=1017, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&q=how+do+self+sealing+tires+work&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQs6gLegQIHBAB]
+            text "Short videos"
+        listitem
+          anchor [ref=1018, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&q=how+do+self+sealing+tires+work&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQtKgLegQIGhAB]
+            text "Videos"
+        listitem
+          anchor [ref=1019, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&q=how+do+self+sealing+tires+work&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQtKgLegQIGxAB]
+            text "Images"
+        listitem
+          anchor [ref=1020, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&q=how+do+self+sealing+tires+work&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQs6gLegQIGRAB]
+            text "Forums"
+        listitem
+          anchor [ref=1021, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqu7ocb7U6ah0xpkIrGMK4LpKPoHZrc4HVz9uOAATjT2whS8aQNdsb1nn47m_ZQdHB9gC5QFbkMU5k-hNOkzSdtH4CZUBbfeXR09jNyERwWUhT_5NH3huoI5pAHOXdwF_iOVUkFiI7uC5ZQAcY75JAGb_d8LQz1IOzeAWrXUQch5pGvTnF-hejMajxsknjtWRY5PQKA&q=how+do+self+sealing+tires+work&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          button [ref=1022]
+            container "More filters"
+              text "More"
+              svg_root
+      button [ref=1023]
+        text "Tools"
+        svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        container
+          container
+            svg_root
+            heading
+              text "AI Overview"
+          container
+            container
+              container
+                text "Self-sealing tires"
+                text "automatically plug small punctures in the tread using a sticky, viscous layer of sealant material built into the inner liner of the tire"
+                text "."
+                container
+                  anchor "RNR Tire Express" [ref=1024, url=https://www.google.com/goto?url=CAESiQEB6zswFf33ac1DWMkUVZ8TR2XFLv4UH8odia85_6zk9ybtvS6481DTSvFPc-F6MSyKypqbmVGO8BPd_Kc9ii3Opxt1s77My8jpTcIF3qjRoW1q1Q83u7XApaTRY8ZlJuUX9hfinbIT-v3-4MN4_BjpYGC871ZzrbmpKeg4Q68pp5qXopQLxfrQOQ]
+                  button "RNR Tire Express (+1) - Related results" [ref=1025]
+                    container
+                      image
+                      container
+                        text "RNR Tire Express"
+                        text " +1"
+                    svg_root
+              heading
+                text "How the Process Works"
+              unordered_list
+                list_item
+                  container
+                    text "The Sealant Layer:"
+                    text "A specialized, permanently tacky rubber or gel compound is lined along the inside of the tire directly beneath the tread area."
+                  container
+                    anchor "Michelin Tires" [ref=1026, url=https://www.google.com/goto?url=CAESnAEB6zswFUD6htb_igCMgMl2wNESf-G_eDElx-6pQSrt9flq7eyuDwH9r7u0CS2fswT7FHCJDqti0I2vE9ydcnQw2KECvP3WAJGBuEgxEnypd7WklYyZ3Dy5FmtElzAPfYuiCMKe2H_-UdxrBt7Nnrj7JcrhpLLHVgdTnNh8XNM5AbekSsDcopRShgVQchJ9MC3WLGBKuDpgiAt1Atk]
+                    button "Michelin Tires (+2) - Related results" [ref=1027, loc=css:button[aria-label="Michelin Tires (+2) - Related results"]]
+                      container
+                        image
+                        container
+                          text "Michelin Tires"
+                          text " +2"
+                      svg_root
+                list_item
+                  container
+                    text "The Puncture:"
+                    text "When a sharp object like a nail or screw pierces through the rubber and structural belts, the internal air pressure of the tire forces the soft sealant material directly into the fresh opening."
+                  container
+                    anchor "Capital One" [ref=1028, url=https://www.google.com/goto?url=CAESkwEB6zswFairlfW4UsS-r3U9M3BcTe_XGYYEObGG-VK5_nDKJpnuo1divrThtteaKwhK8l0tLz8mfPx7qYC95zz4zeiYpbqeOPIA37yx8XeQMo5T0bOLKouU64uqEyFElgpLFffPxT0lkxWE9yfYg2Mi_vvqZM5VXosBWTF0Zo-BOqKQUtfoZnQ7gkS9hCoQQGBIQ48]
+                    button "Capital One - Related results" [ref=1029, loc=css:button[aria-label="Capital One - Related results"]]
+                      container
+                        image
+                        text "Capital One"
+                      svg_root
+                list_item
+                  container
+                    text "The Seal:"
+                    text "The sealant wraps tightly around the foreign object to block air leakage immediately. If the object later falls out, the sealant pulls together to close and plug the hole from the inside."
+                  container
+                    anchor "WheelSetGo" [ref=1030, loc=css:a[aria-label="WheelSetGo"], url=https://www.google.com/goto?url=CAESpQEB6zswFWXt5BOmur1aLImBathpqv3EJhi1PMNYO9c1i2HKAxpnr1rbWWPqik3XbsvR5eKwtsFj_ceAcWfHYvcDzImbauj9RTDfFotSaEAybPVlfrDWTFtHKr44r5JAa34_BmoA_WmVtgyZiBO2AdSLGqxPA_H_zNla9A1nLEAGNS4zCLKeqO-EQn8EJjHV83V9JhE1iABZAdDBmbz6KyqcShFoMnQ]
+                    button "WheelSetGo (+2) - Related results" [ref=1031, loc=css:button[aria-label="WheelSetGo (+2) - Related results"]]
+                      container
+                        image
+                        container
+                          text "WheelSetGo"
+                          text " +2"
+                      svg_root
+                list_item
+                  container
+                    text "Continued Driving:"
+                    text "This action maintains tire pressure and allows you to keep driving without an immediate roadside flat."
+                  container
+                    anchor "RNR Tire Express" [ref=1032, url=https://www.google.com/goto?url=CAESiQEB6zswFf33ac1DWMkUVZ8TR2XFLv4UH8odia85_6zk9ybtvS6481DTSvFPc-F6MSyKypqbmVGO8BPd_Kc9ii3Opxt1s77My8jpTcIF3qjRoW1q1Q83u7XApaTRY8ZlJuUX9hfinbIT-v3-4MN4_BjpYGC871ZzrbmpKeg4Q68pp5qXopQLxfrQOQ]
+                    button "RNR Tire Express (+1) - Related results" [ref=1033]
+                      container
+                        image
+                        container
+                          text "RNR Tire Express"
+                          text " +1"
+                      svg_root
+              heading
+                text "Key Limits and Facts"
+              unordered_list
+                list_item
+                  container
+                    text "Size Cap:"
+                    text "Most self-sealing technology (such as"
+                    anchor [ref=1034, url=https://www.google.com/goto?url=CAESnAEB6zswFUD6htb_igCMgMl2wNESf-G_eDElx-6pQSrt9flq7eyuDwH9r7u0CS2fswT7FHCJDqti0I2vE9ydcnQw2KECvP3WAJGBuEgxEnypd7WklYyZ3Dy5FmtElzAPfYuiCMKe2H_-UdxrBt7Nnrj7JcrhpLLHVgdTnNh8XNM5AbekSsDcopRShgVQchJ9MC3WLGBKuDpgiAt1Atk]
+                      text "Michelin SelfSeal"
+                    text "or"
+                    anchor [ref=1035, url=https://www.google.com/goto?url=CAESfgHrOzAVa9Delo6kzOR6KkMpVqNq9jC0hkR92F_YqBalkPlhwqrvfpVN7JMhCwXriAnFaJ1eOH7Cwky_-_o_6qaF6-8Z5hL8Q8fQjYSvz7mkD9FifBOjrzlv9NacDsaW8pq6eONyV3tn_5gHu1jtuOejemLfdJrsb-bZtce-yg]
+                      text "Pirelli Seal Inside"
+                    text ") is designed to handle minor punctures up to"
+                    text "1/4 inch (6 mm)"
+                    text "in diameter."
+                  container
+                    anchor "Michelin Tires" [ref=1036, url=https://www.google.com/goto?url=CAESnAEB6zswFUD6htb_igCMgMl2wNESf-G_eDElx-6pQSrt9flq7eyuDwH9r7u0CS2fswT7FHCJDqti0I2vE9ydcnQw2KECvP3WAJGBuEgxEnypd7WklYyZ3Dy5FmtElzAPfYuiCMKe2H_-UdxrBt7Nnrj7JcrhpLLHVgdTnNh8XNM5AbekSsDcopRShgVQchJ9MC3WLGBKuDpgiAt1Atk]
+                    button "Michelin Tires (+1) - Related results" [ref=1037, loc=css:button[aria-label="Michelin Tires (+1) - Related results"]]
+                      container
+                        image
+                        container
+                          text "Michelin Tires"
+                          text " +1"
+                      svg_root
+                list_item
+                  container
+                    text "Tread Only:"
+                    text "The sealant layer only covers the flat tread area, meaning it"
+                    text "cannot"
+                    text "repair sidewall cuts or major structural damage."
+                  container
+                    anchor "Capital One" [ref=1038, url=https://www.google.com/goto?url=CAESkwEB6zswFairlfW4UsS-r3U9M3BcTe_XGYYEObGG-VK5_nDKJpnuo1divrThtteaKwhK8l0tLz8mfPx7qYC95zz4zeiYpbqeOPIA37yx8XeQMo5T0bOLKouU64uqEyFElgpLFffPxT0lkxWE9yfYg2Mi_vvqZM5VXosBWTF0Zo-BOqKQUtfoZnQ7gkS9hCoQQGBIQ48]
+                    button "Capital One (+1) - Related results" [ref=1039, loc=css:button[aria-label="Capital One (+1) - Related results"]]
+                      container
+                        image
+                        container
+                          text "Capital One"
+                          text " +1"
+                      svg_root
+                list_item
+                  container
+                    text "Not a Permanent Fix:"
+                    text "Even though the tire does not go flat, the temporary seal is meant to get you to a service center. Industry guidelines note that the tire should still be properly inspected and patched or replaced by ..."
+                  container
+                    anchor "YouTube · TECH Tire Repairs" [ref=1040, loc=css:a[aria-label="YouTube · TECH Tire Repairs"], url=https://www.google.com/goto?url=CAESaAHrOzAVav8S2ToNbaH1tW3gqbVS5xkHP4SCqOoyN0EpVJ8QD8oTiEGYAvJ-s-VT4zfLpJ3iaKdC8xU54PzAOGBH531DKk-nsVmh0BBcvjqs-VsykUrGtBSk1G8KbhDlQkcUbiMN4HZ4]
+                    button "YouTube · TECH Tire Repairs (+2) - Related results" [ref=1041, loc=css:button[aria-label="YouTube · TECH Tire Repairs (+2) - Related results"]]
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          container
+                            text "·"
+                            text "TECH Tire Repairs"
+                          text " +2"
+                      svg_root
+              container
+                text "Here is a short video explaining how self-sealing tire technology works and seals punctures in real time:"
+                container
+                  button "Self Sealing Tyre by MindNuggets on YouTube. Play on Google. - 0:28" [ref=1042]
+                    image
+                    image
+                    image "Play"
+                      svg_root
+                    text "0:28"
+                    svg_root
+                    video [ref=1043]
+                  container
+                    anchor "Self Sealing Tyre 61K views · 7 months agoYouTube · MindNuggets" [ref=1044, url=https://www.google.com/goto?url=CAESawHrOzAV88Y1WUOikZFUwXlWwuXDyuvERaOLlBFMMBZu-jFMqQcg-bKsbGc83XzEE__7YrfklleSZUUIIaUKSlM3At1u_yIx6USg4ENO70vkCbZ4IumzuTaiYYjJ0xFnFsflLw9IsLbFl1kL]
+                    container
+                      text "Self Sealing Tyre"
+                      container
+                        container
+                          container
+                            text "61K views"
+                            text " · 7 months ago"
+                          container
+                            image
+                            text "YouTube · MindNuggets"
+                        button "About this result" [ref=1045]
+                          svg_root
+              text "Are you dealing with a slow leak right now, or are you trying to decide if self-sealing tires are worth buying for your vehicle?"
+            container
+              unordered_list
+                list_item
+                  container
+                    anchor "Exploring the Science Behind Self-Sealing Tires. Opens in new tab." [ref=1046, loc=css:a[aria-label="Exploring the Science Behind Self-Sealing Tires. Opens in new tab."], url=https://www.google.com/goto?url=CAESiQEB6zswFf33ac1DWMkUVZ8TR2XFLv4UH8odia85_6zk9ybtvS6481DTSvFPc-F6MSyKypqbmVGO8BPd_Kc9ii3Opxt1s77My8jpTcIF3qjRoW1q1Q83u7XApaTRY8ZlJuUX9hfinbIT-v3-4MN4_BjpYGC871ZzrbmpKeg4Q68pp5qXopQLxfrQOQ]
+                    container
+                      container
+                        image
+                        text "RNR Tire Express"
+                        button "About this result" [ref=1047]
+                          svg_root
+                      container
+                        container
+                          text "Exploring the Science Behind Self-Sealing Tires"
+                          text "1. What Are Self-Sealing Tires? Self-sealing tires automatically repair small punctures, preventing air loss and keeping you movin..."
+                        image
+                list_item
+                  container
+                    anchor "Self-Sealing Tire Repair According to Tire Industry Guidelines, Video, watch on YouTube" [ref=1048, url=https://www.google.com/goto?url=CAESaAHrOzAVav8S2ToNbaH1tW3gqbVS5xkHP4SCqOoyN0EpVJ8QD8oTiEGYAvJ-s-VT4zfLpJ3iaKdC8xU54PzAOGBH531DKk-nsVmh0BBcvjqs-VsykUrGtBSk1G8KbhDlQkcUbiMN4HZ4]
+                    container
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          text "·"
+                          text "TECH Tire Repairs"
+                        button "About this result" [ref=1049]
+                          svg_root
+                      container
+                        container
+                          text "Self-Sealing Tire Repair According to Tire Industry Guidelines"
+                          text "Self-Sealing Tire Repair According to Tire Industry Guidelines - See the Process & Required Steps course in this course we will di..."
+                        button "Self-Sealing Tire Repair According to Tire Industry Guidelines by TECH Tire Repairs on YouTube. Play on Google. - Segment Duration: 10 min - Starts at: 0:11 - Total Duration: 10:37" [ref=1050]
+                          image
+                          container
+                            svg_root
+                            text "10m"
+                          svg_root
+                list_item
+                  anchor "Michelin SelfSeal Technology. Opens in new tab." [ref=1051, loc=css:a[aria-label="Michelin SelfSeal Technology. Opens in new tab."], url=https://www.google.com/goto?url=CAESnAEB6zswFUD6htb_igCMgMl2wNESf-G_eDElx-6pQSrt9flq7eyuDwH9r7u0CS2fswT7FHCJDqti0I2vE9ydcnQw2KECvP3WAJGBuEgxEnypd7WklYyZ3Dy5FmtElzAPfYuiCMKe2H_-UdxrBt7Nnrj7JcrhpLLHVgdTnNh8XNM5AbekSsDcopRShgVQchJ9MC3WLGBKuDpgiAt1Atk]
+                  container
+                    container
+                      image
+                      text "Michelin Tires"
+                      button "About this result" [ref=1052]
+                        svg_root
+                    container
+                      container
+                        text "Michelin SelfSeal Technology"
+                        text "MICHELIN Selfseal Technology is optimized for the objects most likely to leave you stranded roadside (like nails and screws) by se..."
+                      image
+              button "Show all related results" [ref=1053]
+                text "Show all"
+          container
+            container
+              status
+              button "Copy text" [ref=1054, loc=css:button[aria-label="Copy text"]]
+                svg_root
+            button "Share" [ref=1055, loc=css:button[aria-label="Share"]]
+              svg_root
+            container
+              button "Good response" [ref=1056, loc=css:button[aria-label="Good response"]]
+                svg_root
+              button "Bad response" [ref=1057, loc=css:button[aria-label="Bad response"]]
+                svg_root
+            button "More options for this response" [ref=1058]
+              svg_root
+        button "Show more AI Overview" [ref=1059, loc=role:button[name="Show more AI Overview"]]
+          text "Show more"
+          svg_root
+      main
+        container
+          container
+            heading
+              text "Web results"
+            anchor [ref=1060, url=https://www.google.com/goto?url=CAESjAEB6zswFbM845aWZ-58KH98IXWtraKkabYiKnvUGYTfTptKCWt6lVfIA7zpOsNGmTJCoTMQnBsGAfV82WUBxZ03RLSLVvD6Yh6OnXcKIZeasLNGHqsubYL_HGpIXz-ZGhzgODrHmE1OP1BadS0aJE8plWhQUnwfCAi-lvG-dCy0ZWQaa2cbnXC5MYVkuQ]
+              heading
+                text "Exploring the Science Behind Self-Sealing Tires"
+              image
+              text "RNR Tire Express"
+              text "https://rnrtires.com"
+              text "› tips-guides › exploring-the-scienc..."
+            button "About this result" [ref=1061]
+              svg_root
+            text "Mar 27, 2025"
+            text "—"
+            text "Self-sealing tires automatically repair small punctures"
+            text ", preventing air loss and keeping you moving without interruption. At the core of this ..."
+            anchor [ref=1062, url=https://www.google.com/goto?url=CAES5gEB6zswFTEMkIvayJrkSsSFBJcpa1-y2o8Oqyx0xhDH6_UfT3SHiScxzeXaj7O2zTyrXrKJRVwi4X8A7U-Wzf5w1CeXLT6gAZg51MpIv5C9GK0Pvewi4N5KBdjPD_UR_TwhXmriEFTGouNtca4Cm6-HjENz5LVwk7CVhNsfKcs7i38JINdkVYRUadBsUDeDxTNxtzJ_-ACUzoZLSic4A51njr1U73deFhLTzmSBQ1NVkfhMHQwKwPexXYHgdMpoReXqzJcadKqS3YK32UhdOlmMlksrXKl9lN7s1i6lXwqxaQ-GO0el1Q]
+              text "Read more"
+          container
+            text "People also ask"
+            button [ref=1063]
+              text "How long can you drive on self-sealing tires?"
+              svg_root
+            button [ref=1064]
+              text "Do self-sealing tires really work?"
+              svg_root
+            button [ref=1065]
+              text "How much do self-sealing tires typically cost?"
+              svg_root
+            button [ref=1066]
+              text "What are the downsides of using tire sealant?"
+              svg_root
+          container
+            text "Videos"
+            button "About this result" [ref=1067]
+              svg_root
+            container
+              container
+                anchor [ref=1068, url=https://www.google.com/goto?url=CAESYwHrOzAVuebLijHN64-8S6-Ng4Xy4fJaB-SOc5cDywZtTLcFhE1isgdjkqcmxbgg9S9Q4UyZQZ12KSmz1NO7fN07YWFwXf3Av5y1NRhwuz2hT3u4guiXcuHroJj1GLsX2NLf-w]
+                  text "Self-Sealing Tire Repair According to Tire Industry Guidelines"
+                  text "YouTube"
+                  text "·"
+                  text "TECH Tire Repairs"
+                  text "Aug 23, 2023"
+                text "YouTube"
+                text "·"
+                text "TECH Tire Repairs"
+                button "About this result" [ref=1069]
+                  svg_root
+                button "Self-Sealing Tire Repair According to Tire Industry Guidelines by TECH Tire Repairs on YouTube. Play on Google. 10:37" [ref=1070]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        container
+                          text "10:37"
+                          svg_root
+                button "Self-sealing tires have a sealant layer that fills punctures, but a proper repair still requires dismounting the tire for inspection." [ref=1071]
+                  text "Self"
+                  text "-"
+                  text "sealing tires"
+                  text "have a"
+                  text "sealant"
+                  text "layer that fills punctures, but a proper repair still requires dismounting the"
+                  text "tire"
+                  text "for inspection."
+              container
+                anchor [ref=1072, url=https://www.google.com/goto?url=CAESlgEB6zswFZ3qh4U62l-iIf8rPqfmPrbrhDHNMJl9UutR_Ql56NK3BgsOohXyd896jdAFyimhGlPd1qpaf5kiLpBAJ50NJzpslyq3lgTBfxvl8_aTW8X5d2RxArG6GEUFYfI_fKWtaFSwfvC0RIlHTEQ2Bc4ZOgs5RMPvtLZrK-p7pAN_e6fTuJh_16GsYx0TjZSKJZVMrYc]
+                  text "How Self-Sealing Tires Actually Work | DeMilked"
+                  text "Facebook"
+                  text "·"
+                  text "DeMilked"
+                  text "Jan 3, 2026"
+                text "Facebook"
+                text "·"
+                text "DeMilked"
+                button "About this result" [ref=1073]
+                  svg_root
+                anchor "How Self-Sealing Tires Actually Work | DeMilked by DeMilked on Facebook. Play on Facebook. 0:11" [ref=1074, url=https://www.google.com/goto?url=CAESlgEB6zswFZ3qh4U62l-iIf8rPqfmPrbrhDHNMJl9UutR_Ql56NK3BgsOohXyd896jdAFyimhGlPd1qpaf5kiLpBAJ50NJzpslyq3lgTBfxvl8_aTW8X5d2RxArG6GEUFYfI_fKWtaFSwfvC0RIlHTEQ2Bc4ZOgs5RMPvtLZrK-p7pAN_e6fTuJh_16GsYx0TjZSKJZVMrYc]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        text "0:11"
+              container
+                anchor [ref=1075, url=https://www.google.com/goto?url=CAESYgHrOzAVKp9xxJETcCFA-z8-smIorBBqoBTqQgoufiFoPv8N2NGLZfIkLA0nDp7Sps9gXiOnXllzwW3pl0Fdxkii_MwZDtMfweKIyMxYqgbfPkGc8NRm49cV3xxRNXrJLABm]
+                  text "How Self Healing Tyres Work?"
+                  text "YouTube"
+                  text "·"
+                  text "Curious Skull"
+                  text "Oct 11, 2025"
+                text "YouTube"
+                text "·"
+                text "Curious Skull"
+                button "About this result" [ref=1076]
+                  svg_root
+                button "How Self Healing Tyres Work? by Curious Skull on YouTube. Play on Google. 0:22" [ref=1077]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        container
+                          text "0:22"
+                          svg_root
+                button "China's self-sealing tires use an elastic polymer gel layer that instantly flows into punctures, sealing them within seconds without losing air." [ref=1078]
+                  text "China's"
+                  text "self"
+                  text "-"
+                  text "sealing tires"
+                  text "use an elastic polymer gel layer that instantly flows into punctures,"
+                  text "sealing"
+                  text "them within seconds without losing air."
+            anchor "View all videos" [ref=1079, loc=css:a[aria-label="View all videos"], url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&udm=vids&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=how+do+self+sealing+tires+work&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8ccDKAJ6BAhHEAU]
+              container
+                text "View all"
+                svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=1080, url=https://www.google.com/goto?url=CAESnwEB6zswFSfUW_5YxSPLWnxXSI1U8tt_Qg5vtdR6GL0MxuNPC_-u_z9VIkeFMX9lnWfoRW9dQgCCv5LONzh5A13Z3FKl9BbbI17HeYLqVNHdJfxxOz0UWyr0olVX11bBqfqJMqEccUyX-WkVPHYLuvhCcD9_Zpd-xrHrJM6jR_YDOqufhCjju7OSDaiA1y6oWv1P41Gm3yxI62oBKd9wg14]
+              heading
+                text "Michelin SelfSeal Technology"
+              image
+              text "Michelin Tires"
+              text "https://www.michelinman.com"
+              text "› auto › why-michelin"
+            button "About this result" [ref=1081]
+              svg_root
+            text "MICHELIN"
+            text "®"
+            text "Selfseal"
+            text "®"
+            text "technology"
+            text "uses sealant permanently installed inside the tire"
+            text "to surround the object and fill the hole, preventing air leakage and ..."
+            anchor [ref=1082, url=https://www.google.com/goto?url=CAESkQIB6zswFZqGh2jm4Pgs2yUwlnHxqS7CVqATQqjotVRfguMviwXORolAh9177cIczWH4rryAHGmxnYPwEFgWIl9Rn4E3WPNFFDMmgAzjpxd9BfwdY0idXVQXXX5TtXixNFYrwrFu-HdXMRXZObgLCK3UHGKr4eQSDSbMiH9aCs1vuSaqzALKGf53Vj6y3iGKQygrzZoWS-Z8Ao85DaL9OW2mrgv5Td8SOMwMCN7XoFX_Wxva63RF1JFdMTWs8h_IuX3Zf0TNvjhoLgtVYpk1dpgfDVC29jYBCtJcTkhiQsYKmP3WqRaqitJH9PJE5rsilhFdYBa_Zi_ZXd4EXWbIitp_g6ldJtS280D_jo5q24uYWOc]
+              text "Read more"
+          container
+            anchor [ref=1083, url=https://www.google.com/goto?url=CAESkwEB6zswFX15nmxrX6WFDFbW8BXdjbho8c5ejHSeMT7rI-94UKYSrscXVrUKoj-SR4GjL1DbJEfSS85OZbgsMLDl1371DxDQA4h8eRCeymPNK6CYEqaGBg7n_X4DBwa6UGEEiVRIO2VJ7AFNSnh4qjkOxHhSLZMgYcrz7idDWtrECTEwNXO6IKJ4LH5BNR0ZwrHq8bs]
+              heading
+                text "Guess I'm going to find out how well the self-sealing tires ..."
+              image
+              text "Reddit · r/BoltEV"
+              text "10+ comments · 4 years ago"
+            button "About this result" [ref=1084]
+              svg_root
+            text "Their "secret" is the makeup of the rope plug (cotton cord impregnated with uncured butyl and silicon rubber) and how they use it to tie a knot ..."
+            anchor [ref=1085, url=https://www.google.com/goto?url=CAES4gEB6zswFeFqZ7IrGL3xLtIIDvR10bNU4Wf6jOgymam9GY3uWtieN3dJpkEwxviAxi6q9OJpMCumdb6q7FdIcJI_GEG1CSYIaI8PmAGCXv-b6SlmqI_2RDeOeqOzraZUr4XHmbLdtjpJBZ8UmuCL6dWbKIC8j8A-X2FgwRJoOXqqo2Xf_6dJAUIERemL9_EebUAg1djjHOyqYooz_u_2JsEti6erBp7dixUb4kpuUOhODNZf0OZdFUsNKHhpYOIGH9KjdlwJQ8ph-fQ8-uDFtsKmE36lWCyOstCq6Wn_4WIJVt7g]
+              text "Read more"
+            container
+              anchor [ref=1086, url=https://www.google.com/goto?url=CAESjgEB6zswFT10Qf_I-79qaS8Ym4HmZOm-1aOlDew1WoeHGyF3qW2NBc-6Rp7vGKrBV9eE7IJYY4_LYGs9LUCR7KMzkbF1XUu-TqTlQ2_wDdaabwNyTL5MrkXDxe0Li2JLQeNvSmJIhyzMXfPflbGoM2xgwF9p2Hj625s7XuaRifLbe-3uYXd_KJFn-otfwNPd]
+                text "Experience with the"
+                text "self"
+                text "-"
+                text "sealing tires"
+                text ": r/BoltEV - Reddit"
+              text "21 posts"
+              text "Mar 29, 2020"
+              anchor [ref=1087, url=https://www.google.com/goto?url=CAESlAEB6zswFSv9HiZiHhmA4kiP13B028gJ2KPCJlt6CKqVRdITP70ChhfePqgNr6VqLrUo7MVPDONuCVyosWZAqOK7IiUWFimxSWALP-V37mkCSQfpwmzxFLDJdSF1LxaXk7Li82vXUQOz6YildrZgC0KkRXmcvHnvX2cFTSz0-ugksLpLhzD3G96_dxW8jXaGfr-nRNDC]
+                text "Got a flat on my Michelin ""
+                text "self sealing"
+                text """
+                text "tire"
+                text ". : r/BoltEV ..."
+              text "29 posts"
+              text "Oct 3, 2022"
+              table
+                table_row
+                  table_cell
+                    anchor [ref=1088, url=https://www.google.com/search?q=how+do+self+sealing+tires+work+site:www.reddit.com&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQrQIoAnoECDUQAw]
+                      text "More results from www.reddit.com"
+          container
+            anchor [ref=1089, url=https://www.google.com/goto?url=CAESlgEB6zswFYgA3s6fiiQGak48wawnZx_HBTJjHuJDZNwqEVAUQLq-oMzOuedmTus5_YYhGlxzdFEfiza1hyugppk57laEIfCykhv7l7ki464iDXQfu2_Kkh-cx0VhS2uLHgehmpRwJGeQJMZzNaJikeR0I4owmCqcuybEGmVpdBhT7_j_Qjgh-7WyT4ZcNUcYFxlv2CkoliI]
+              heading
+                text "What Are Self-Sealing Tires?"
+              image
+              text "Capital One"
+              text "https://www.capitalone.com"
+              text "› ... › Finding the Right Car"
+            button "About this result" [ref=1090]
+              svg_root
+            text "Feb 2, 2024"
+            text "—"
+            text "Self"
+            text "-"
+            text "sealing tires"
+            text "are designed with special materials to flow into and plug small punctures in the"
+            text "tire"
+            text ", in effect creating an instant repair ..."
+            anchor [ref=1091, url=https://www.google.com/goto?url=CAES9AEB6zswFTKNVKVhD39qP7HQQA1EZPKt1xmXr2jjyJmWkJuylr9D-CfBbVBQFrWAP4VIPWXajUyM2ONmoDuLXiVwYKHS0ES1HSf8xHj94QKISYHYgn1Hlk_kLPt34BiRrL4A64V1lxJlm6vRVUT3m2CvsPLkjdDeOJHcZu2dU0VZyVYIbznBC5_oyNkUXQpAWlDfYVQ4h-93NMmYexCFRIY6U1xOp88vJCrYJkQCdjlvddNzg1_lVtpBoiYYDPYiE3hgbabD5lJIYsQqfHM_eGd1vvxVo0ouyRzT7-VEPFzx0t7ZPfnQPRZ0XOV4iL0n-UANQjFf]
+              text "Read more"
+          container
+            anchor [ref=1092, url=https://www.google.com/goto?url=CAESigEB6zswFaaTvpWlPQximgGycLeAhCLnK7IM7TkLaQpCdtt_1Li3eI2Dg9wdSXb_ClhIgJDWMlBe2lN-hdl_SQOn0l1M-Y2U-vkwfCbnxAcGJoQ47HTAn1OLCgRveOE_tQvc5033Y34D1jijfSRfIG0_6fPipkbdtIZBX3D25UydivQyMhCR2tqddeU]
+              heading
+                text "Self-Sealing Tires: What You Need to Know"
+              image
+              text "Hooper's Tire Outlet"
+              text "https://www.hooperstireoutlet.com"
+              text "› blog › self-sealing-ti..."
+            button "About this result" [ref=1093]
+              svg_root
+            text "Feb 26, 2024"
+            text "—"
+            text "A self-sealing tire has a thick, The lining is sticky, which allows the tire to"
+            text "immediately seal any puncture"
+            text "in the tire tread that's 5 mm or ..."
+          container
+            text "Short videos"
+            container [ref=1094]
+              listitem
+                button "How Self Healing Tyres Work? by Curious Skull on YouTube. Play on Google. 0:22" [ref=1095]
+                  image
+                  container
+                    container
+                      svg_root
+                      text "0:22"
+                    svg_root
+                anchor [ref=1096, url=https://www.google.com/goto?url=CAESYgHrOzAVKp9xxJETcCFA-z8-smIorBBqoBTqQgoufiFoPv8N2NGLZfIkLA0nDp7Sps9gXiOnXllzwW3pl0Fdxkii_MwZDtMfweKIyMxYqgbfPkGc8NRm49cV3xxRNXrJLABm]
+                  text "How Self Healing Tyres Work?"
+                  image
+                  container
+                    text "YouTube"
+                    text "·"
+                    text "Curious Skull"
+                button "About this result" [ref=1097]
+                  svg_root
+              listitem
+                anchor "How Self-Sealing Tires Actually Work | DeMilked by DeMilked on Facebook. Play on Facebook. 0:11" [ref=1098, url=https://www.google.com/goto?url=CAESlgEB6zswFZ3qh4U62l-iIf8rPqfmPrbrhDHNMJl9UutR_Ql56NK3BgsOohXyd896jdAFyimhGlPd1qpaf5kiLpBAJ50NJzpslyq3lgTBfxvl8_aTW8X5d2RxArG6GEUFYfI_fKWtaFSwfvC0RIlHTEQ2Bc4ZOgs5RMPvtLZrK-p7pAN_e6fTuJh_16GsYx0TjZSKJZVMrYc]
+                  image
+                  container
+                    svg_root
+                    text "0:11"
+                anchor [ref=1099, url=https://www.google.com/goto?url=CAESlgEB6zswFZ3qh4U62l-iIf8rPqfmPrbrhDHNMJl9UutR_Ql56NK3BgsOohXyd896jdAFyimhGlPd1qpaf5kiLpBAJ50NJzpslyq3lgTBfxvl8_aTW8X5d2RxArG6GEUFYfI_fKWtaFSwfvC0RIlHTEQ2Bc4ZOgs5RMPvtLZrK-p7pAN_e6fTuJh_16GsYx0TjZSKJZVMrYc]
+                  text "How Self-Sealing Tires Actually Work | DeMilked"
+                  image
+                  container
+                    text "Facebook"
+                    text "·"
+                    text "DeMilked"
+                button "About this result" [ref=1100]
+                  svg_root
+              listitem
+                button "Self Sealing Tires by Tech & Science on YouTube. Play on Google. 0:21" [ref=1101, loc=role:button[name="Self Sealing Tires by Tech & Science on YouTube. Play on Google. 0:21"]]
+                  image
+                  container
+                    container
+                      svg_root
+                      text "0:21"
+                    svg_root
+                anchor [ref=1102, url=https://www.google.com/goto?url=CAESYgHrOzAV3EfcuvxBnJdLzSjlzWSTc-57kVa8KZfurJKRXpVkHG0eqtnk-WlvhpyN3_n8VFUhoIfC7Oc4i9sXxqFUY9Vl3A7wBOyK057vo3pWnEwgzKSDzsIz338LvJDSyaxo]
+                  text "Self Sealing Tires"
+                  image
+                  container
+                    text "YouTube"
+                    text "·"
+                    text "Tech & Science"
+                button "About this result" [ref=1103]
+                  svg_root
+              listitem
+                anchor "Understanding Self-Sealing Tire Technology by smart.tiresolutions on TikTok. Play on TikTok. 0:07" [ref=1104, url=https://www.google.com/goto?url=CAESfQHrOzAVgQPLx902VEnWCm7Z7OVQBx3Ox86rzR6YYlXZO486PLNhzm1OaNS3XZGXglsTlQ8hLiIvsC09nfncroLoWRpSjXTbseNKKGQ2rChRsJefeADp6LOmUirqhttUABV9EkNWJnnKP11NsRbu0mfbuz_Uoljb7Uunt4Uz]
+                  image
+                  container
+                    svg_root
+                    text "0:07"
+                anchor [ref=1105, url=https://www.google.com/goto?url=CAESfQHrOzAVgQPLx902VEnWCm7Z7OVQBx3Ox86rzR6YYlXZO486PLNhzm1OaNS3XZGXglsTlQ8hLiIvsC09nfncroLoWRpSjXTbseNKKGQ2rChRsJefeADp6LOmUirqhttUABV9EkNWJnnKP11NsRbu0mfbuz_Uoljb7Uunt4Uz]
+                  text "Understanding Self-Sealing Tire Technology"
+                  image
+                  container
+                    text "TikTok"
+                    text "·"
+                    text "smart.tiresolutions"
+                button "About this result" [ref=1106]
+                  svg_root
+              listitem
+              listitem
+              listitem
+              listitem
+              listitem
+              listitem
+            button "Next" [ref=1107]
+              svg_root
+            anchor [ref=1108, url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&udm=39&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ3egMegQIVBAS]
+              container
+                text "More short videos"
+                svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=1109, url=https://www.google.com/goto?url=CAES6gEB6zswFez5svR6nxAT4t-cgmV2YrtGa9KSRKO5HS4XWO0q__wyqx9HnLIGS9QbZppcrT0DnaaX6DDfls3pakyQHKEEXjyaby8-u68xI5UeQp3zViwKwXz5_WABakRVKJrC9BngNj50_cUeXq993YKZtBwDxP_D91w-_HXF3yYf4fjrpcHVCVeRdIkRZwxvhLVP997nNdFpkXnysmSdP6yvC-saPZBIlffTlNe4gM-ozPWLXSZKRJYkwJVX31tXO9Ex5-OG6zGSZmoajcOjNHTWH-dbX-XmbuST_74bAZq8eCMJoe4RE2oobK0]
+              heading
+                text "The Future of Self-Healing Tires: Are Flat Tires Becoming a ..."
+              image
+              text "WheelSetGo"
+              text "https://www.wheelsetgo.com"
+              text "› WHEELSETGO BLOG"
+            button "About this result" [ref=1110]
+              svg_root
+            text "Feb 26, 2025"
+            text "—"
+            text "How"
+            text "Self"
+            text "-"
+            text "Sealing Tires Work"
+            text ". When a nail or screw punctures the"
+            text "tire"
+            text ", the sealant surrounds the object and prevents air from escaping. If the ..."
+            anchor [ref=1111, url=https://www.google.com/goto?url=CAESvQIB6zswFZM2OBjV046MPnESfIsx_xj33Sl1xA5v02-v9ie_Kp1SLRQw7Fuze9pwrtt9tGyjUKe7Mfer9AoaFWmcYr-57mTxNXuNNVCSbmHG_UpZa101yPzjcARjs3oXV9LNaF_xYZssDXZ2afZ4hJZRcmpnofuy3j76SlV8HD_Wp_DuzumU2K6iINdgDutzSSSUdI9-DnweXQUTnPAVhc8X5O8d2m-V1Vn666lNWG9jJvXgjMsEDiKuClxnb45ejBPsi0KzKvN48g6OGZHku72YzUR2R5RVPye5RIfqh9ot3r2DHz4z2Dw129kya_76jD3kH2BsF3_rxFlSyd5Fo_A9av3U6ckji1ocuEi1SKj6p_PoHF62Fch9LNknzrzR2zp48P6kAOHFXOHx8gAc8CkAVYParOuiNnsiG8Kwdg]
+              text "Read more"
+          container
+            anchor [ref=1112, url=https://www.google.com/goto?url=CAESgQEB6zswFZ6T-dbFn8K1ldxDQ1OGCMxykpkxeo4TY2GA8aZf7DnrNZwrLjT0lEZnOYu269ojDSck7NXyfT0MoRdCMbn1Qf6SShDVtYWutLNEhdEd6neGBroUcWQko2KK9EVKfwwjiEc6kuD1gaeLoysT0gpEWAkLjgvpJj7ICZWYg6Q]
+              heading
+                text "Seal Inside anti-puncture tires"
+              image
+              text "Pirelli"
+              text "https://www.pirelli.com"
+              text "› tires › car › tech-and-knowledge"
+            button "About this result" [ref=1113]
+              svg_root
+            text "The material tightly blocks every possible air leakage"
+            text "in the event of a puncture that passes through the tire, with or without an external object still present ..."
+            anchor [ref=1114, url=https://www.google.com/goto?url=CAESrwEB6zswFdM1rWhOTbJKJuUTWGofOJYpWAPpCvI50uoG6MUyuAuoqSfX0uYpO_eJe9aSnzKfCCbKX0yJ1geMIgKfVGtwoUANIoAndZpYiH53xPvnTIiO3Ph4qdRgH6hdKWXVuFKAnJL0mWVjMTt-iWWcrRVj41hDM7B1pL-nfx_PgKKpugHrWduBgz4DGBX6g4nIHQJBz6lchJfgvOMuas5mN6dsuLn-PiABwHdLCieD]
+              text "Read more"
+        container
+          container
+            text "People also search for"
+            anchor [ref=1115, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=How+do+self+sealing+tires+work+on+a+car&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAgrEAE]
+              container
+                text "How do self sealing tires work"
+                text "on a car"
+              svg_root
+            anchor [ref=1116, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Self-sealing+tires+vs+run+flat&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAg4EAE]
+              container
+                text "Self-sealing"
+                text "tires"
+                text "vs run flat"
+              svg_root
+            anchor [ref=1117, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Michelin+self+sealing+tires&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAg3EAE]
+              container
+                text "Michelin"
+                text "self sealing tires"
+              svg_root
+            anchor [ref=1118, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Self-sealing+tires+for+Sale&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAg2EAE]
+              container
+                text "Self-sealing"
+                text "tires"
+                text "for Sale"
+              svg_root
+            anchor [ref=1119, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Self-sealing+tire+brands&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAg0EAE]
+              text "Self-sealing tire brands"
+              svg_root
+            anchor [ref=1120, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Self+sealing+tires+price&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAgzEAE]
+              container
+                text "Self sealing tires"
+                text "price"
+              svg_root
+            anchor [ref=1121, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Self+sealing+tire+repair&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAgtEAE]
+              container
+                text "Self sealing"
+                text "tire repair"
+              svg_root
+            anchor [ref=1122, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&q=Michelin+self+sealing+tires+price&sa=X&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ1QJ6BAgsEAE]
+              container
+                text "Michelin"
+                text "self sealing tires"
+                text "price"
+              svg_root
+          navigation
+            heading
+              text "Page Navigation"
+            table
+              table_row
+                table_cell
+                table_cell
+                  text "1"
+                table_cell
+                  anchor "Page 2" [ref=1123, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=10&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAE]
+                    text "2"
+                table_cell
+                  anchor "Page 3" [ref=1124, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=20&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAG]
+                    text "3"
+                table_cell
+                  anchor "Page 4" [ref=1125, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=30&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAI]
+                    text "4"
+                table_cell
+                  anchor "Page 5" [ref=1126, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=40&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAK]
+                    text "5"
+                table_cell
+                  anchor "Page 6" [ref=1127, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=50&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAM]
+                    text "6"
+                table_cell
+                  anchor "Page 7" [ref=1128, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=60&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAO]
+                    text "7"
+                table_cell
+                  anchor "Page 8" [ref=1129, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=70&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAQ]
+                    text "8"
+                table_cell
+                  anchor "Page 9" [ref=1130, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=80&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAS]
+                    text "9"
+                table_cell
+                  anchor "Page 10" [ref=1131, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=90&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8tMDegQIShAU]
+                    text "10"
+                heading
+                  anchor [ref=1132, url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnv0pIEBRh-E3elzj13fLAGYNjHa6A:1792107814620&ei=JmXRaqW4JdSx0PEPuJqtmQs&start=10&sa=N&sstk=AS6-VmKZeHEnFOyryFDtKwA3xw5ED17fc5VDZOsx1iJch0nwJtmOiAx2DT-6hGa1iAXTG_Tip7TS1IIkSdQwO3EoZZDTLzkejLJYCw&ved=2ahUKEwil48Htmb2XAxXUGDQIHThNK7MQ8NMDegQIShAW]
+                    text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+      button [ref=1133, url=https://www.google.com/search?q=how+do+self+sealing+tires+work&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu0X3kijyTN5VhFMDwSB0JwZ3YBUw%3A1792107813494&ei=JWXRasXeHfKc0PEPtsKS0QI&uact=5&oq=how+do+self+sealing+tires+work&gs_lp=Egxnd3Mtd2l6LXNlcnAiHmhvdyBkbyBzZWxmIHNlYWxpbmcgdGlyZXMgd29ya0itAlAAWABwAHgBkAEAmAEAoAEAqgEAsAEAuAEDyAEA-AEBmAIAoAIAmAMA4gMEGAAgXeIDBBgAIF7iAwQYACBf4gMEGAAgYOIDBBgAIGHiAwQYACBikgcAoAcAsgcAuAcAwgcAyAcAgAgB&sclient=gws-wiz-serp#]
+        text "United States"
+        text " - "
+        text "From your IP address"
+      text " - "
+      button [ref=1134]
+        text "Update location"
+      container
+        anchor [ref=1135, loc=href:https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1, url=https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1]
+          text "Help"
+        button [ref=1136]
+          text "Send feedback"
+        anchor [ref=1137, loc=href:https://policies.google.com/privacy?hl=en&fg=1, url=https://policies.google.com/privacy?hl=en&fg=1]
+          text "Privacy"
+        anchor [ref=1138, loc=href:https://policies.google.com/terms?hl=en&fg=1, url=https://policies.google.com/terms?hl=en&fg=1]
+          text "Terms"
+

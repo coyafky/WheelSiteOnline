@@ -1,0 +1,244 @@
+{
+ "generatedAt": "2026-10-11T09:18:16.301Z",
+ "route": "/products/wheels/dx035",
+ "method": "keyboard-only, mark trigger then Enter",
+ "openedState": {
+  "anyDialogPresent": true,
+  "nativeOpen": true,
+  "activeTag": "h2",
+  "activeId": "_R_b9qqnpfiv5tnb_",
+  "activeText": "Request this wheel model",
+  "activeIsBody": false,
+  "activeIsHtml": false,
+  "activeIsTrigger": false,
+  "activeOutsideDialog": false,
+  "dialogFocusableCount": 12,
+  "dialogFocusables": [
+   "button:",
+   "input#_R_5d67ar9qqnpfiv5tnb_:",
+   "input#_R_9d67ar9qqnpfiv5tnb_:",
+   "button#_R_a7ar9qqnpfiv5tnb_:Wheels",
+   "textarea#_R_i7ar9qqnpfiv5tnb_:",
+   "input#_R_m7ar9qqnpfiv5tnb_:",
+   "input#_R_2eddq7ar9qqnpfiv5tnb_:",
+   "input#_R_2eldq7ar9qqnpfiv5tnb_:",
+   "input#_R_2etdq7ar9qqnpfiv5tnb_:",
+   "input#_R_2f5dq7ar9qqnpfiv5tnb_:",
+   "input#_R_2fddq7ar9qqnpfiv5tnb_:",
+   "button:Continue"
+  ]
+ },
+ "forward": [
+  {
+   "i": 1,
+   "tag": "button",
+   "id": null,
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 2,
+   "tag": "input",
+   "id": "_R_5d67ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 3,
+   "tag": "button",
+   "id": "_R_a7ar9qqnpfiv5tnb_",
+   "text": "Wheels",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 4,
+   "tag": "textarea",
+   "id": "_R_i7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 5,
+   "tag": "input",
+   "id": "_R_m7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 6,
+   "tag": "input",
+   "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 7,
+   "tag": "input",
+   "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 8,
+   "tag": "input",
+   "id": "_R_2etdq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 9,
+   "tag": "input",
+   "id": "_R_2f5dq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 10,
+   "tag": "input",
+   "id": "_R_2fddq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 11,
+   "tag": "button",
+   "id": null,
+   "text": "Continue",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 12,
+   "tag": "body",
+   "id": null,
+   "text": "FHFenghuai制造产品中心全部产品线轮毂新能源三电壳体铝制品定制安全轮胎制",
+   "inDialog": false,
+   "isBody": true
+  },
+  {
+   "i": 13,
+   "tag": "button",
+   "id": null,
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 14,
+   "tag": "input",
+   "id": "_R_5d67ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 15,
+   "tag": "button",
+   "id": "_R_a7ar9qqnpfiv5tnb_",
+   "text": "Wheels",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 16,
+   "tag": "textarea",
+   "id": "_R_i7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 17,
+   "tag": "input",
+   "id": "_R_m7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 18,
+   "tag": "input",
+   "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 19,
+   "tag": "input",
+   "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 20,
+   "tag": "input",
+   "id": "_R_2etdq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  }
+ ],
+ "lastControlForwardTab": {
+  "afterTab": 12,
+  "landedOn": "document.body"
+ },
+ "shiftTabFromBody": [
+  {
+   "i": 1,
+   "tag": "input",
+   "id": "_R_2eldq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 2,
+   "tag": "input",
+   "id": "_R_2eddq7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 3,
+   "tag": "input",
+   "id": "_R_m7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  },
+  {
+   "i": 4,
+   "tag": "textarea",
+   "id": "_R_i7ar9qqnpfiv5tnb_",
+   "text": "",
+   "inDialog": true,
+   "isBody": false
+  }
+ ],
+ "shiftTabReturnsIntoDialog": true,
+ "reachedBehindDialog": [],
+ "reachedBehindDialogCount": 0,
+ "clickBehindBlocked": {
+  "headerControl": "a FHFenghuai制造",
+  "topElementThere": "dialog.astryx-dialog standard x1k57tk5 x1vidyx5 x1t137rt x1jhp3zv x",
+  "blocked": true
+ },
+ "escapeFromBodyResting": {
+  "dialogClosed": true,
+  "focusReturnedToTrigger": true,
+  "active": "button#null"
+ }
+}

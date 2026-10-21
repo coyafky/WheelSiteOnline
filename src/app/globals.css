@@ -1,3 +1,8 @@
+@layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
+
+@import "@astryxdesign/core/reset.css";
+@import "@astryxdesign/core/astryx.css";
+@import "../theme/fenghuai-neutral/site-theme.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -7,10 +12,10 @@
 /* ---------------------------------------------------------------------------
    Fenghuai design tokens
    ---------------------------------------------------------------------------
-   Palette direction: warm graphite/steel base with a forge-amber accent.
-   Deliberately distinct from the reference site's slate+red scheme.
+   Palette direction: near-white and warm mineral surfaces with a restrained
+   copper action color. Astryx Neutral and project components share these roles.
    Fonts are declared in layout.tsx via next/font (Barlow Condensed display,
-   Inter text) so there is no webfont round-trip through a CDN.
+   Figtree text) so there is no webfont round-trip through a CDN.
 --------------------------------------------------------------------------- */
 
 @theme inline {
@@ -64,31 +69,25 @@
 }
 
 :root {
-  /* Brand palette */
-  --fh-ink: #0b0f16;
-  /**
-   * Hero base — a step DEEPER than ink.
-   *
-   * Hero photography needs a darker plate than the ink used by page-body
-   * sections, otherwise a photographic background reads washed-out. This value
-   * existed in the codebase since the first hero (as a raw `#05070b` hex in
-   * home-hero.tsx / gallery-band.tsx) but was never tokenised. Promoting it
-   * gives the design system an honest name for a real requirement instead of
-   * an exception nobody recorded. See DESIGN.md §6.
-   */
-  --fh-hero: #05070a;
-  --fh-graphite: #151a23;
-  --fh-panel: #1f2733;
-  --fh-steel: #5d6a7d;
-  --fh-muted: #dfe3ea;
-  --fh-soft: #f5f7fa;
-  --fh-forge: #aa5208;
-  --fh-forge-bright: #f2a65a;
-  --fh-forge-deep: #8a4406;
-  --fh-forge-soft: #fdf3e7;
+  /* Warm-light Fenghuai roles. All component utilities resolve here. */
+  --fh-background: #fbfaf7;
+  --fh-ink: #292621;
+  --fh-hero: #302a24;
+  --fh-graphite: #3b352e;
+  --fh-panel: #49423a;
+  --fh-steel: #625c54;
+  --fh-muted: #ded8ce;
+  --fh-soft: #f4f1eb;
+  --fh-forge: #9b4b1d;
+  /* Dark-surface accent. Also clear WCAG 1.4.3 on a translucent card over
+     --fh-ink (#302e29 effective): #cb8150 was only 4.38:1 there; #d18a59
+     reaches 4.84:1 while preserving the warm copper hue. */
+  --fh-forge-bright: #d18a59;
+  --fh-forge-deep: #763412;
+  --fh-forge-soft: #f3e8db;
 
   /* shadcn surface mapping */
-  --background: #ffffff;
+  --background: var(--fh-background);
   --foreground: var(--fh-ink);
   --card: #ffffff;
   --card-foreground: var(--fh-ink);
@@ -106,7 +105,7 @@
   --border: var(--fh-muted);
   --input: var(--fh-muted);
   --ring: var(--fh-forge);
-  --radius: 6px;
+  --radius: 10px;
 
   /* Motion system — mirrored from the reference blueprint so the feel matches
      while the values stay ours to tune. */
@@ -131,11 +130,11 @@
   --secondary-foreground: #f2f4f8;
   --muted: var(--fh-panel);
   --muted-foreground: #97a3b6;
-  --accent: #e07c14;
+  --accent: var(--fh-forge-bright);
   --accent-foreground: var(--fh-ink);
   --border: rgb(255 255 255 / 0.12);
   --input: rgb(255 255 255 / 0.16);
-  --ring: #e07c14;
+  --ring: var(--fh-forge-bright);
 }
 
 @layer base {
@@ -180,6 +179,32 @@
 @utility container-fh-wide {
   width: min(calc(100% - 32px), var(--container-fh-wide));
   margin-inline: auto;
+}
+
+/* Mobile catalogue filter: the server-rendered <details> remains an inline
+   GET form until the client enhancement is ready. Only the enhanced open state
+   becomes a modal drawer, so JS failure never strands the filter form. */
+@media (max-width: 1023px) {
+  [data-catalogue-mobile-filter][data-js-ready="true"][open]
+    > [data-mobile-filter-backdrop] {
+    display: block;
+  }
+
+  [data-catalogue-mobile-filter][data-js-ready="true"][open]
+    > [data-mobile-filter-panel] {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 50;
+    max-height: min(82vh, 680px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--fh-muted);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+    background: var(--fh-background);
+    box-shadow: 0 -18px 50px color-mix(in srgb, var(--fh-ink) 20%, transparent);
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -305,8 +330,38 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  /* --fh-forge (#9b4b1d) is a LIGHT-surface accent: measured 2.45:1 on the
+     dark bands, a WCAG 1.4.3 failure. `.eyebrow` has 188 call sites on both
+     surfaces, so the accent follows the surface instead of being baked in.
+     Dark-surface call sites use .text-forge-bright instead of .text-forge. */
   color: var(--fh-forge);
 }
+
+/* ---------------------------------------------------------------------------
+   Accent-role flip on dark surfaces
+   ---------------------------------------------------------------------------
+   Two accent tokens exist because the copper has to clear WCAG 1.4.3 against
+   two very different backgrounds:
+     --fh-forge        #9b4b1d  → LIGHT surfaces (6.33:1 on #fbfaf7)
+     --fh-forge-bright #cb8150  → DARK  surfaces (4.88:1 on #292621)
+   Using the light token on a dark band measures 2.31–2.45:1 — a failure the
+   contrast sweep found on nine routes.
+
+   Rather than rewrite ~40 utility strings (and 188 .eyebrow call sites) by
+   hand, the accent role is re-pointed from the surfaces that are known dark.
+   This is deliberately scoped to the specific surface classes — it is NOT the
+   blanket `section#top { … }` override the design handoff rejected, and it
+   does not touch text, borders or images, only the accent colour token.
+--------------------------------------------------------------------------- */
+.bg-ink .text-forge,
+.bg-hero .text-forge,
+.bg-panel .text-forge,
+.bg-ink .eyebrow,
+.bg-hero .eyebrow,
+.bg-panel .eyebrow {
+  color: var(--fh-forge-bright);
+}
+
 
 @utility btn-pill {
   display: inline-flex;
@@ -322,11 +377,11 @@
   min-height: 48px;
   padding-inline: 26px;
   border-radius: 999px;
-  font-family: var(--font-display);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  font-family: var(--font-text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   transition:
     background 180ms ease,
     color 180ms ease,
@@ -347,6 +402,15 @@
   background: transparent;
   border: 2px solid currentColor;
   color: currentColor;
+}
+
+/** 首页 Hero 的主品牌行动保留原展示字形；普通表单与导航按钮继续使用正文样式。 */
+@utility btn-pill-brand {
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
 }
 
 /* Attention nudge for the persistent quote button */
@@ -394,6 +458,14 @@
       transparent 53% 100%
     );
   background-size: 48px 48px, 48px 48px, 360px 360px;
+}
+
+.fh-industrial-grid-light {
+  background-color: var(--fh-background);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--fh-forge) 11%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--fh-forge) 11%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 @keyframes fh-nudge {

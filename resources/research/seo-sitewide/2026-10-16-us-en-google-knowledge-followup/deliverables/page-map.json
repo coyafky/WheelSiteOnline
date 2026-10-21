@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1",
+  "mapping_status": "PROVISIONAL_NO_LIVE_SITEMAP",
+  "target_domain": "fenghuaitech.com (future deployment domain)",
+  "pages": [
+    {
+      "page_id": "custom_aluminum",
+      "role": "EXISTING_CANDIDATE",
+      "candidate_path": "/products/custom-aluminum",
+      "live_sitemap_verified": false,
+      "primary_intent": "按图/样件寻找定制铝件供应商并启动 RFQ",
+      "gate": "核实支持字段、上传与隐私流程；不承诺未确认的保密、工艺、MOQ、报价时限"
+    },
+    {
+      "page_id": "private_label",
+      "role": "DEFERRED_CANDIDATE",
+      "candidate_path": "/dealers/private-label",
+      "live_sitemap_verified": false,
+      "primary_intent": "评估私牌轮毂合作",
+      "gate": "商业模式、产品范围和可公开条款签核前不开放"
+    },
+    {
+      "page_id": "flow_formed",
+      "role": "EXISTING_CANDIDATE",
+      "candidate_path": "/products/wheels/flow-formed",
+      "live_sitemap_verified": false,
+      "primary_intent": "了解产品/工艺并寻找供货方",
+      "gate": "核实供应角色、型号和工艺；不作未经证实的性能对比"
+    },
+    {
+      "page_id": "ev_components",
+      "role": "EXISTING_CANDIDATE",
+      "candidate_path": "/products/ev-components",
+      "live_sitemap_verified": false,
+      "primary_intent": "评估 EV 铝件供应",
+      "gate": "motor housing 需具体产品确认；不为 inverter/control-box 单独建页"
+    },
+    {
+      "page_id": "self_sealing_product",
+      "role": "EXISTING_CANDIDATE",
+      "candidate_path": "/products/safety-tires",
+      "live_sitemap_verified": false,
+      "primary_intent": "寻找自密封轮胎产品/供应信息",
+      "gate": "核实企业角色与产品规格"
+    },
+    {
+      "page_id": "self_sealing_technology",
+      "role": "NEW_CONTENT_CANDIDATE",
+      "candidate_path": "/resources/self-sealing-tire-technology",
+      "live_sitemap_verified": false,
+      "primary_intent": "理解机制和限制",
+      "gate": "工程审核；第三方参数不可移植"
+    },
+    {
+      "page_id": "wheel_offset",
+      "role": "SUPPORTING_TOOL_CANDIDATE",
+      "candidate_path": "/tools/offset-calculator",
+      "live_sitemap_verified": false,
+      "primary_intent": "学习/计算 offset",
+      "gate": "校验公式；不输出车辆适配保证"
+    },
+    {
+      "page_id": "vehicle_fitment",
+      "role": "EXCLUDED",
+      "candidate_path": null,
+      "live_sitemap_verified": false,
+      "primary_intent": "车型适配查询",
+      "gate": "遵循最新项目事实门槛，不做扩词"
+    }
+  ]
+}

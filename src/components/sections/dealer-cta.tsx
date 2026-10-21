@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/content/site";
+import { getTranslator } from "@/lib/i18n";
 
 /**
  * Closing conversion band used at the foot of most pages.
@@ -21,35 +22,36 @@ import { site } from "@/content/site";
  * are only the fallback.
  *
  * ── `variant="closing"` (2026-10-02) ────────────────────────────────────────
- * `FloatingQuote` is a fixed pill anchored 22px from the bottom-right corner.
- * On a short closing band the pill lands *on top of* this section's own
- * button, and two identical "Request a quote" controls overlap — it reads as a
- * rendering fault, not as a call to action.
+ * The closing action sits under the copy on short final sections. The former
+ * floating quote pill was removed site-wide on 2026-10-11; this layout remains
+ * useful for a clear single conversion action at the end of a page.
  *
- * The homepage is the worst case: the band is the last element on the page, so
- * the pill never gets a chance to scroll clear of it. `variant="closing"` moves
- * this section's action to the left column, out of the pill's corner, and keeps
- * it as the page's primary CTA rather than hiding either control.
+ * ── Localised defaults (2026-10-11) ─────────────────────────────────────────
+ * The eyebrow, title, body and button label were hardcoded English, so this
+ * band stayed English on every localized page. They now resolve through the
+ * dictionary. `title`/`body` remain real overrides — a page that knows its own
+ * offer still wins over the dictionary defaults.
  *
- * Suppressing the pill instead was the obvious alternative and was rejected:
- * the pill is the persistent entry point on *every other* page, and page
- * position — not page identity — is what makes it collide here.
+ * This component is async so it can read the request locale. Every call site is
+ * a server component; do not import it from a client component (the translator
+ * pulls in `next/headers`).
  */
 
-export function DealerCta({
-  title = "Tell us what the part has to do",
-  body = "Send a drawing, a sample or a target specification. We will come back with a process route, a tooling position and pricing.",
+export async function DealerCta({
+  title,
+  body,
   variant = "default",
 }: {
   title?: string;
   body?: string;
   /**
-   * `"closing"` keeps the action out of the bottom-right corner so it does not
-   * sit underneath `FloatingQuote`. Use it on any page where this band is the
-   * final section.
+   * `"closing"` places the final action under the copy in a single column.
    */
   variant?: "default" | "closing";
 }) {
+  const { t } = await getTranslator();
+  const resolvedTitle = title ?? t("cta.dealerTitle");
+  const resolvedBody = body ?? t("cta.dealerBody");
   const closing = variant === "closing";
 
   return (
@@ -66,22 +68,22 @@ export function DealerCta({
         }
       >
         <div className={closing ? "max-w-[720px]" : undefined}>
-          <p className="eyebrow">Enquiries</p>
+          <p className="eyebrow">{t("cta.enquiriesEyebrow")}</p>
           <h2
             id="dealer-cta-title"
             className="mt-4 max-w-[640px] font-display text-[clamp(1.9rem,4.2vw,3rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
           >
-            {title}
+            {resolvedTitle}
           </h2>
           <p className="mt-5 max-w-[560px] text-[1.02rem] leading-relaxed text-steel">
-            {body}
+            {resolvedBody}
           </p>
 
           {closing ? (
             // Inline with the copy, not in the pill's corner.
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
               <Link href="/contact" className="btn-pill-solid">
-                Request a quote
+                {t("cta.requestQuote")}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               {site.contact.confirmed ? (
@@ -99,7 +101,7 @@ export function DealerCta({
         {closing ? null : (
           <div className="flex flex-col gap-3 lg:items-end">
             <Link href="/contact" className="btn-pill-solid">
-              Request a quote
+              {t("cta.requestQuote")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             {site.contact.confirmed ? (

@@ -1,14 +1,17 @@
 import Link from "next/link";
 
 import type { HomepageContent } from "@/content/types";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
 
 export function HomeClosing({
   closing,
+  locale,
 }: {
   closing: HomepageContent["closing"];
+  locale: Locale;
 }) {
   return (
-    <section className="bg-forge-soft py-20 sm:py-24 lg:py-28">
+    <section data-module-id="H05" className="bg-forge-soft py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div
           className="grid gap-12 border-t border-forge/30 pt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-20 lg:pt-14"
@@ -45,13 +48,13 @@ export function HomeClosing({
 
             <div className="mt-8 flex flex-col gap-3 pr-14 sm:flex-row sm:items-center sm:pr-0">
               <Link
-                href={closing.primaryAction.href}
+                href={localizedPath(closing.primaryAction.href, locale)}
                 className="inline-flex min-h-12 items-center justify-center bg-forge px-6 text-sm font-semibold text-white transition hover:bg-forge-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forge"
               >
                 {closing.primaryAction.label}
               </Link>
               <Link
-                href={closing.secondaryAction.href}
+                href={localizedPath(closing.secondaryAction.href, locale)}
                 className="inline-flex min-h-12 items-center justify-center border border-ink/20 px-6 text-sm font-semibold text-ink transition hover:border-ink hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
               >
                 {closing.secondaryAction.label}

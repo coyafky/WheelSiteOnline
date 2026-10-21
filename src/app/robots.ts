@@ -5,10 +5,10 @@ import { configuredSiteUrl } from "@/lib/site-url";
  * Robots policy.
  *
  * Allows the whole public site and points crawlers at the generated sitemap.
- * There is no admin, staging or search surface to disallow today — if one is
- * added later, list it here rather than leaving it crawlable by default.
+ * API endpoints are not crawlable content. HTML pages that must stay out of
+ * search use their own `noindex` metadata so crawlers can read that directive.
  *
- * `site.url` is a PLACEHOLDER production domain; confirm before launch.
+ * An unset site URL fails closed; configure the production origin at build time.
  */
 export default function robots(): MetadataRoute.Robots {
   if (!configuredSiteUrl) {
@@ -21,9 +21,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: "/api/",
       },
     ],
     sitemap: `${base}/sitemap.xml`,
-    host: base,
   };
 }

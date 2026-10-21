@@ -67,6 +67,8 @@ local-wp/local-credentials.txt
 # local-wp/.env 被 docker compose 自动读取，里面有询盘服务密钥 —— 绝不进 git。
 # 该文件的模板是 local-wp/.env.example（这个要提交）。
 local-wp/.env
+# Gmail 阶段的本地 SMTP 覆盖文件含应用专用密码，绝不进入 Git。
+local-wp/.env.gmail
 
 # ⚠️ mu-plugin 的**源**在 local-wp/mu-plugins/（进 git），不在上面被忽略的
 #    wp-data/ 里。它是数据库 schema 的唯一所有者（CPT 注册、meta 声明、

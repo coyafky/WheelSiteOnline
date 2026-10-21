@@ -57,6 +57,16 @@ export const customAluminumAssessmentHref = assessmentHref(
   "unspecified",
 );
 
+/**
+ * The route is indexable only after both its content and business boundary are
+ * approved. Keep this predicate shared by page metadata and the sitemap.
+ */
+export function isCustomAluminumIndexable(
+  page: Pick<CustomAluminumPage, "publicationStatus" | "boundary">,
+): boolean {
+  return page.publicationStatus === "approved" && page.boundary.declinedConfirmed;
+}
+
 const EV_HOUSING_HREF = "/products/ev-components";
 
 export const customAluminumPage: CustomAluminumPage = {

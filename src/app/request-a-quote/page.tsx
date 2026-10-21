@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Link from "next/link";
-import {
-  quoteContextBarCopy,
-  quoteDataNotice,
-  quoteFormHeading,
-  requestQuoteFormCopy,
-  requestQuoteHero,
-} from "@/content/request-a-quote";
 import { PageHero } from "@/components/sections/page-hero";
 import { InquiryForm } from "@/components/inquiry-form";
+import { PreviewBanner } from "@/components/preview-banner";
 import { QuoteContextBar } from "@/components/quote-context-bar";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getTranslator, getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
+import { quoteContextCopyFor, quoteFormCopyFor, quoteSpecLabelsFor } from "@/lib/i18n/conversion-ui-copy";
 import { buildInquiryContext, hasContext } from "@/lib/inquiry-context";
+import { getInquiryContent } from "@/lib/wordpress/inquiry-content";
+import { getQuotePageBody } from "@/lib/wordpress/conversion-pages";
 
-export const metadata: Metadata = {
-  title: "Request a Quote",
-  description:
-    "Send a project enquiry for wheels, EV components, custom aluminium parts or safety tires. Approved product context carries over from model pages.",
-  alternates: { canonical: "/request-a-quote" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled: preview } = await draftMode();
+  const locale = await getLocale();
+  const body = await getQuotePageBody({ locale, preview });
+  return {
+    title: body.seo.title,
+    description: body.seo.description,
+    ...(await buildRouteMetadata("/request-a-quote", locale, { preview })),
+  };
+}
 
 /**
  * `/request-a-quote` — the focused mode of `/contact`.
@@ -41,23 +47,42 @@ export default async function RequestAQuotePage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const { isEnabled: preview } = await draftMode();
+  const { locale, t } = await getTranslator();
+  const body = await getQuotePageBody({ preview, locale });
+  const inquiry = await getInquiryContent({ preview, locale });
   const params = await searchParams;
   const context = buildInquiryContext(params, "/request-a-quote");
 
   return (
     <>
+      <PreviewBanner enabled={preview} exitHref="/request-a-quote" />
       {/* ① Hero ------------------------------------------------------------ */}
       <PageHero
         id="top"
         titleId="quote-title"
-        eyebrow={requestQuoteHero.eyebrow}
-        heading={requestQuoteHero.heading}
-        lede={requestQuoteHero.lede}
+        eyebrow={body.hero.eyebrow}
+        heading={body.hero.heading}
+        lede={body.hero.lede}
+        breadcrumb={
+          <SiteBreadcrumbs
+            label={t("breadcrumb.label")}
+            tone="light"
+            items={[
+              { label: t("breadcrumb.home"), href: localizedPath("/", locale) },
+              { label: t("cta.requestQuote") },
+            ]}
+          />
+        }
       />
 
       {/* ② Carry-over ------------------------------------------------------ */}
       {hasContext(context) ? (
-        <QuoteContextBar context={context} copy={quoteContextBarCopy} />
+        <QuoteContextBar
+          context={context}
+          copy={{ ...quoteContextCopyFor(locale), changeHref: localizedPath("/products", locale) }}
+          specLabels={quoteSpecLabelsFor(locale)}
+        />
       ) : null}
 
       {/* ③ Form ------------------------------------------------------------ */}
@@ -71,14 +96,20 @@ export default async function RequestAQuotePage({
               id="quote-form-title"
               className="font-display text-[clamp(1.6rem,3.6vw,2.2rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              {quoteFormHeading.title}
+              {body.formHeading.title}
             </h2>
             <p className="mt-3 max-w-[560px] text-[0.98rem] leading-relaxed text-steel">
-              {quoteFormHeading.body}
+              {body.formHeading.body}
             </p>
 
             <div className="mt-8">
-              <InquiryForm copy={requestQuoteFormCopy} />
+              <InquiryForm
+                locale={locale}
+                copy={quoteFormCopyFor(locale)}
+                ui={inquiry.formUi}
+                preparation={inquiry.preparation}
+                privacyVersion={inquiry.privacyVersion}
+              />
             </div>
           </div>
         </div>
@@ -92,18 +123,18 @@ export default async function RequestAQuotePage({
       >
         <div className="container-fh">
           <div className="max-w-[640px]">
-            <p className="eyebrow">{quoteDataNotice.eyebrow}</p>
+            <p className="eyebrow">{body.dataNotice.eyebrow}</p>
             <h2 id="quote-notice-title" className="sr-only">
-              {quoteDataNotice.eyebrow}
+              {body.dataNotice.eyebrow}
             </h2>
             <p className="mt-4 text-[0.94rem] leading-relaxed text-steel">
-              {quoteDataNotice.body}
+              {body.dataNotice.body}
             </p>
             <Link
-              href={quoteDataNotice.footHref}
+              href={localizedPath(body.dataNotice.footHref, locale)}
               className="mt-4 inline-block text-[0.86rem] text-steel underline decoration-border underline-offset-4 transition-colors hover:text-forge"
             >
-              {quoteDataNotice.footLabel}
+              {body.dataNotice.footLabel}
             </Link>
           </div>
         </div>

@@ -1,27 +1,28 @@
 import type { Metadata } from "next";
-import { getLegalDocument } from "@/content/legal";
+import { getLegalDocumentContent } from "@/lib/wordpress/legal";
 import { LegalDocumentPage } from "@/components/legal-document";
+import { getLocale } from "@/lib/i18n";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description:
-    "The terms on which Fenghuai quotes, manufactures and supplies to dealers, distributors and OEM programmes.",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Terms of Service",
+    description:
+      "The terms on which Fenghuai quotes, manufactures and supplies to dealers, distributors and OEM programmes.",
+    ...(await buildRouteMetadata("/support/terms", locale)),
+  };
+}
 
 /**
- * Thin route: the document body lives in `@/content/legal` and the shared
- * renderer handles structure, the draft-pending-legal-review notice and
- * cross-navigation. Nothing is duplicated across the five support routes.
+ * Thin route: the document body is read from Headless WordPress (page key
+ * `legal-<slug>`) through `@/lib/wordpress/legal`, which falls back to the
+ * checked-in English constant. The shared renderer handles structure, the
+ * draft-pending-legal-review notice and cross-navigation. Nothing is
+ * duplicated across the five support routes.
  */
-export default function Page() {
-  const doc = getLegalDocument("terms");
-
-  // The slug is a literal, so this cannot be undefined at runtime; the guard
-  // exists so the type narrows without a non-null assertion.
-  if (!doc) {
-    throw new Error("Missing legal document: terms");
-  }
+export default async function Page() {
+  const doc = await getLegalDocumentContent("terms");
 
   return <LegalDocumentPage doc={doc} />;
 }

@@ -84,7 +84,11 @@ export function SelfSealingHero({ content }: { content: SelfSealingTirePage }) {
       <div className="container-fh grid min-h-[760px] items-end gap-14 pb-18 pt-[132px] lg:grid-cols-[minmax(0,1fr)_330px] lg:pb-24 lg:pt-[168px]">
         <div data-reveal>
           <p className="eyebrow">{content.hero.eyebrow}</p>
-          <h1 id="safety-tires-title" className="mt-5 max-w-[940px] font-display text-[clamp(3.1rem,7.5vw,7rem)] font-800 uppercase leading-[0.86] tracking-[-0.04em]">
+          {/* The colour is stated on the <h1> itself, not inherited from the
+              section: the generated theme sets heading ink by landmark
+              (`site-theme.css:11-14`), so an inherited `text-white` never
+              reached this heading (measured #292621 on #302a24 — 1.06:1). */}
+          <h1 id="safety-tires-title" className="mt-5 max-w-[940px] font-display text-[clamp(3.1rem,7.5vw,7rem)] font-800 uppercase leading-[0.86] tracking-[-0.04em] text-white">
             {content.hero.heading}
           </h1>
           <p className="mt-8 max-w-[760px] text-base leading-7 text-white/72 sm:text-lg sm:leading-8">{content.hero.lead}</p>
@@ -156,11 +160,11 @@ export function TyreDefinition({ section }: { section: SelfSealingTirePage["defi
         <div className="mt-12 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(260px,0.45fr)]" data-reveal-group>
           {roadUse?.media ? (
             <article className="min-w-0 overflow-hidden bg-ink text-white">
-              <div className="relative aspect-[2.45/1] min-h-[280px] overflow-hidden bg-panel">
+              <div className="relative aspect-[1.35/1] overflow-hidden bg-panel sm:aspect-[1.65/1] lg:aspect-[2.45/1] lg:min-h-[280px]">
                 <MediaVisual media={roadUse.media} sizes="(min-width: 1024px) 75vw, 100vw" />
                 <div className="absolute inset-0 bg-linear-to-t from-hero/88 via-hero/10 to-transparent" aria-hidden="true" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                  <h3 className="text-2xl font-semibold tracking-[-0.025em]">{roadUse.title}</h3>
+                  <h3 className="text-2xl font-semibold tracking-[-0.025em] text-white">{roadUse.title}</h3>
                   <p className="mt-3 max-w-xl text-sm leading-6 text-white/68">{roadUse.body}</p>
                 </div>
               </div>
@@ -230,15 +234,15 @@ export function PunctureValidation({ section }: { section: SelfSealingTirePage["
           <div>
             <ViewportHeading section={section} titleId="t04-title" dark />
             <div className="mt-8 flex items-end gap-4 border-y border-white/12 py-7" data-reveal>
-              <span className="font-display text-[clamp(5rem,13vw,9rem)] font-800 leading-[0.72] tracking-[-0.055em] text-forge">{section.evidence.objectDiameterMm}</span>
+              <span className="font-display text-[clamp(5rem,13vw,9rem)] font-800 leading-[0.72] tracking-[-0.055em] text-forge-bright">{section.evidence.objectDiameterMm}</span>
               <div className="pb-1">
-                <p className="font-display text-3xl font-700 uppercase leading-none">mm</p>
+                <p className="font-display text-3xl font-700 uppercase leading-none text-white">mm</p>
                 <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/48">{section.evidence.objectType} · {section.evidence.punctureZone} area</p>
               </div>
             </div>
             <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-white/62" data-reveal>
-              <CircleAlert className="mt-1 size-4 shrink-0 text-forge" aria-hidden="true" />
-              <p>{section.inspectionNote}</p>
+              <CircleAlert className="mt-1 size-4 shrink-0 text-forge-bright" aria-hidden="true" />
+              <p className="text-white/70">{section.inspectionNote}</p>
             </div>
             <div className="mt-8"><BoundaryNote text={section.boundaryNote} dark /></div>
             <Link href={section.primaryAction.href} className="btn-pill-solid mt-9">
@@ -256,7 +260,7 @@ export function PunctureValidation({ section }: { section: SelfSealingTirePage["
                   </div>
                 ) : null}
                 <div className="p-5 sm:p-6">
-                  <h3 className="text-xl font-semibold tracking-[-0.02em]">{item.title}</h3>
+                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/56">{item.body}</p>
                 </div>
               </article>
@@ -280,7 +284,13 @@ export function ProductEvidence({ section }: { section: SelfSealingTirePage["evi
           {research.map((item, index) => (
             <article key={item.id} className={`min-w-0 overflow-hidden border border-muted bg-white ${index === 0 ? "lg:row-span-2" : ""}`}>
               {item.media ? (
-                <div className={`relative overflow-hidden bg-panel ${index === 0 ? "aspect-[4/3] h-full min-h-[420px]" : "aspect-[2.3/1]"}`}>
+                <div
+                  className={`relative overflow-hidden bg-panel ${
+                    index === 0
+                      ? "aspect-[1.15/1] sm:aspect-[1.4/1] lg:aspect-[4/3] lg:h-full lg:min-h-[420px]"
+                      : "aspect-[1.35/1] sm:aspect-[2.3/1]"
+                  }`}
+                >
                   <MediaVisual media={item.media} sizes={index === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 50vw, 100vw"} />
                   <div className="absolute inset-0 bg-linear-to-t from-hero/90 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
@@ -305,7 +315,7 @@ export function ProductEvidence({ section }: { section: SelfSealingTirePage["evi
                 {item.note ? <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.15em] text-forge">{item.note}</p> : null}
                 <h3 className="mt-3 text-2xl font-semibold tracking-[-0.025em] text-ink">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-steel">{item.body}</p>
-                <p className="mt-5 border-t border-muted pt-4 text-xs leading-5 text-steel/80">{item.media?.caption}</p>
+                <p className="mt-5 border-t border-muted pt-4 text-xs leading-5 text-steel">{item.media?.caption}</p>
               </div>
             </article>
           ))}

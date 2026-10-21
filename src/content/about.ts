@@ -5,7 +5,7 @@ export const aboutContent: AboutContent = {
     eyebrow: "About Fenghuai",
     heading: "One Shenzhen project interface. Specialized manufacturing behind every line.",
     lead:
-      "Shenzhen Fenghuai Technology coordinates overseas automotive component programs across wheels, EV aluminum housings, custom aluminum parts and self-sealing tyres.",
+      "Shenzhen Fenghuai Technology coordinates overseas automotive component programs across wheels, EV aluminum housings, custom aluminum parts and self-sealing tires.",
     companyName: "Shenzhen Fenghuai Technology Co., Ltd.",
     location: "Shenzhen · China",
     primaryAction: { label: "Discuss a project", href: "/request-a-quote?from=about" },
@@ -157,17 +157,17 @@ export const aboutContent: AboutContent = {
   tireFactory: {
     anchor: "tire-manufacturing",
     status: "approved",
-    eyebrow: "Self-sealing tyre manufacturing",
-    heading: "A dedicated production environment for self-sealing tyre programs",
+    eyebrow: "Self-sealing tire manufacturing",
+    heading: "A dedicated production environment for self-sealing tire programs",
     lead:
-      "Our self-sealing tyre production base includes automated equipment, dedicated machinery, material handling and inspection environments presented for this product line.",
+      "Our self-sealing tire production base includes automated equipment, dedicated machinery, material handling and inspection environments presented for this product line.",
     relationshipDisclosure:
-      "Fenghuai coordinates the supply program in Shenzhen. The responsible manufacturing entity, available tyre models, process scope and destination-market documents are confirmed for each enquiry.",
+      "Fenghuai coordinates the supply program in Shenzhen. The responsible manufacturing entity, available tire models, process scope and destination-market documents are confirmed for each enquiry.",
     heroMedia: {
       wordpressId: 155,
       src: "/images/safety-tires/automated-production-line.webp",
-      alt: "Robotic equipment on an enclosed self-sealing tyre production line",
-      caption: "Automated equipment in the self-sealing tyre production base",
+      alt: "Robotic equipment on an enclosed self-sealing tire production line",
+      caption: "Automated equipment in the self-sealing tire production base",
       hasRender: true,
       approvalStatus: "approved",
       sourceRef: "WP 155 · Loake project profile p.14",
@@ -175,7 +175,7 @@ export const aboutContent: AboutContent = {
     productionEyebrow: "Inside the production environment",
     productionHeading: "Visible equipment across application, handling and inspection",
     productionIntro:
-      "The images document equipment and working areas supplied for this product line. Final process flow, operating parameters and inspection points are confirmed against the applicable tyre and control plan.",
+      "The images document equipment and working areas supplied for this product line. Final process flow, operating parameters and inspection points are confirmed against the applicable tire and control plan.",
     boundaryNote:
       "Production images show equipment and working environments. They do not replace a process specification, inspection record or product test report.",
     productionGroups: [
@@ -188,7 +188,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 155,
             src: "/images/safety-tires/automated-production-line.webp",
-            alt: "Robotic equipment on an enclosed self-sealing tyre production line",
+            alt: "Robotic equipment on an enclosed self-sealing tire production line",
             caption: "Automated production equipment",
             hasRender: true,
             approvalStatus: "approved",
@@ -205,7 +205,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 159,
             src: "/images/safety-tires/dedicated-machinery.webp",
-            alt: "Dedicated production machinery in the self-sealing tyre manufacturing base",
+            alt: "Dedicated production machinery in the self-sealing tire manufacturing base",
             caption: "Dedicated production machinery",
             hasRender: true,
             approvalStatus: "approved",
@@ -214,7 +214,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 148,
             src: "/images/safety-tires/automated-handling.webp",
-            alt: "Automated handling equipment in the self-sealing tyre production environment",
+            alt: "Automated handling equipment in the self-sealing tire production environment",
             caption: "Automated handling equipment",
             hasRender: true,
             approvalStatus: "approved",
@@ -231,7 +231,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 18,
             src: "/images/safety-tires/digital-production-line.webp",
-            alt: "Production-line equipment in the self-sealing tyre manufacturing base",
+            alt: "Production-line equipment in the self-sealing tire manufacturing base",
             caption: "Production-line equipment",
             hasRender: true,
             approvalStatus: "approved",
@@ -240,8 +240,8 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 16,
             src: "/images/safety-tires/process-equipment.webp",
-            alt: "Tyre-processing equipment within the production line",
-            caption: "Tyre-processing equipment",
+            alt: "Tire-processing equipment within the production line",
+            caption: "Tire-processing equipment",
             hasRender: true,
             approvalStatus: "approved",
             sourceRef: "WP 16 · Loake project profile p.14",
@@ -257,7 +257,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 145,
             src: "/images/safety-tires/material-processing.webp",
-            alt: "Material-processing equipment in the self-sealing tyre production base",
+            alt: "Material-processing equipment in the self-sealing tire production base",
             caption: "Material-processing equipment",
             hasRender: true,
             approvalStatus: "approved",
@@ -274,7 +274,7 @@ export const aboutContent: AboutContent = {
           {
             wordpressId: 136,
             src: "/images/safety-tires/inspection-line.webp",
-            alt: "Inspection equipment in the self-sealing tyre production environment",
+            alt: "Inspection equipment in the self-sealing tire production environment",
             caption: "Inspection equipment in the production environment",
             hasRender: true,
             approvalStatus: "approved",
@@ -286,17 +286,17 @@ export const aboutContent: AboutContent = {
     evidenceEyebrow: "Verify the responsible manufacturer",
     evidenceHeading: "The entity, process and product documents must match",
     evidenceIntro:
-      "A production photograph identifies an environment. A purchase decision also needs documents identifying who manufactures the tyre, which models are covered and how each claim is evaluated.",
+      "A production photograph identifies an environment. A purchase decision also needs documents identifying who manufactures the tire, which models are covered and how each claim is evaluated.",
     evidenceChecklist: [
       { label: "Manufacturing entity", requirement: "Legal name, location and commercial authorization" },
-      { label: "Process scope", requirement: "Applicable tyre, sealing material, processing and inspection scope" },
+      { label: "Process scope", requirement: "Applicable tire, sealing material, processing and inspection scope" },
       { label: "Equipment and facility", requirement: "Current equipment status, location and relationship to the product line" },
-      { label: "Tyre-model evidence", requirement: "Model, size, method, conditions, date, test party and result" },
+      { label: "Tire model evidence", requirement: "Model, size, method, conditions, date, test party and result" },
       { label: "Market documentation", requirement: "Holder, model scope, destination market, validity and publishable copy" },
       { label: "Commercial support", requirement: "Available sizes, quantity, region, inspection, warranty and service boundary" },
     ],
     primaryAction: {
-      label: "Discuss a tyre supply program",
+      label: "Discuss a tire supply program",
       href: "/request-a-quote?product_line=safety-tires&intent=supplier_program&from=about",
     },
     secondaryAction: { label: "See self-sealing technology", href: "/products/safety-tires" },

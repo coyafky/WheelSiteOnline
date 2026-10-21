@@ -1,0 +1,1790 @@
+[
+  {
+    "route": "/about",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "One Shenzhen project interface. Specialized manufacturing be"
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 41.6,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "About Fenghuai"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 41.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/about-320.png"
+  },
+  {
+    "route": "/capabilities",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Engineering decisions first. Process evidence at every gate."
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 41.6,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "Wheel manufacturing and quality"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 41.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/capabilities-320.png"
+  },
+  {
+    "route": "/products/ev-components",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Aluminum housings for EV motor and controller projects"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 33.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai provides a Shenzhen-based project interface for supplier-supp"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "age?url=%2Fimages%2Fev-components%2Fbatch-housings-in-production.webp&w=640&q=75",
+        "alt": "Batch of machined aluminum housings staged in a production area",
+        "w": 320,
+        "h": 426
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 33.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_ev-components-320.png"
+  },
+  {
+    "route": "/products/custom-aluminum",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Start with a drawing, 3D model or physical sample"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 33.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates drawing-led aluminum component projects through e"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 33.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_custom-aluminum-320.png"
+  },
+  {
+    "route": "/products/safety-tires",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Self-sealing tyres for applicable tread punctures"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 49.6,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Understand how the inner sealing layer responds, what the supplier-sta"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "200/_next/image?url=%2Fimages%2Fgenerated%2Fsafety-suv-rain-hero.webp&w=640&q=75",
+        "alt": "",
+        "w": 320,
+        "h": 180
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 49.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_safety-tires-320.png"
+  },
+  {
+    "route": "/products/wheels/flow-formed",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Browse flow-formed wheels by recorded production specificati"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 31.2,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Explore wheel models whose production data records flow forming as par"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "tp://127.0.0.1:3200/_next/image?url=%2Fimages%2Fwheels%2F18-a015.webp&w=640&q=75",
+        "alt": "Fenghuai wheel model A015, front view",
+        "w": 75,
+        "h": 74
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 31.2,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_flow-formed-320.png"
+  },
+  {
+    "route": "/products/wheels/forged",
+    "vp": 320,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "A forged wheel program built around an approved specificatio"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 48,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates custom forged wheel programs with the responsible"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "1:3200/_next/image?url=%2Fimages%2Fcapabilities%2Fwheel-3d-model.webp&w=640&q=75",
+        "alt": "Forged aluminum wheel design example for a custom program",
+        "w": 299,
+        "h": 159
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 48,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_forged-320.png"
+  },
+  {
+    "route": "/about",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "One Shenzhen project interface. Specialized manufacturing be"
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 41.6,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "About Fenghuai"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 41.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/about-390.png"
+  },
+  {
+    "route": "/capabilities",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Engineering decisions first. Process evidence at every gate."
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 41.6,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "Wheel manufacturing and quality"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 41.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/capabilities-390.png"
+  },
+  {
+    "route": "/products/ev-components",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Aluminum housings for EV motor and controller projects"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 33.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai provides a Shenzhen-based project interface for supplier-supp"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "age?url=%2Fimages%2Fev-components%2Fbatch-housings-in-production.webp&w=828&q=75",
+        "alt": "Batch of machined aluminum housings staged in a production area",
+        "w": 390,
+        "h": 520
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 33.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_ev-components-390.png"
+  },
+  {
+    "route": "/products/custom-aluminum",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Start with a drawing, 3D model or physical sample"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 33.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates drawing-led aluminum component projects through e"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 33.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_custom-aluminum-390.png"
+  },
+  {
+    "route": "/products/safety-tires",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Self-sealing tyres for applicable tread punctures"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 49.6,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Understand how the inner sealing layer responds, what the supplier-sta"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "200/_next/image?url=%2Fimages%2Fgenerated%2Fsafety-suv-rain-hero.webp&w=828&q=75",
+        "alt": "",
+        "w": 390,
+        "h": 219
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 49.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_safety-tires-390.png"
+  },
+  {
+    "route": "/products/wheels/flow-formed",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Browse flow-formed wheels by recorded production specificati"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 31.2,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Explore wheel models whose production data records flow forming as par"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "tp://127.0.0.1:3200/_next/image?url=%2Fimages%2Fwheels%2F18-a015.webp&w=828&q=75",
+        "alt": "Fenghuai wheel model A015, front view",
+        "w": 70,
+        "h": 69
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 31.2,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_flow-formed-390.png"
+  },
+  {
+    "route": "/products/wheels/forged",
+    "vp": 390,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "A forged wheel program built around an approved specificatio"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 48,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates custom forged wheel programs with the responsible"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "1:3200/_next/image?url=%2Fimages%2Fcapabilities%2Fwheel-3d-model.webp&w=828&q=75",
+        "alt": "Forged aluminum wheel design example for a custom program",
+        "w": 281,
+        "h": 150
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 48,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_forged-390.png"
+  },
+  {
+    "route": "/about",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "One Shenzhen project interface. Specialized manufacturing be"
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 58.368,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "About Fenghuai"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 58.4,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/about-768.png"
+  },
+  {
+    "route": "/capabilities",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Engineering decisions first. Process evidence at every gate."
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 58.368,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "Wheel manufacturing and quality"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 58.4,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/capabilities-768.png"
+  },
+  {
+    "route": "/products/ev-components",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Aluminum housings for EV motor and controller projects"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 46.08,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16.8,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai provides a Shenzhen-based project interface for supplier-supp"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "age?url=%2Fimages%2Fev-components%2Fbatch-housings-in-production.webp&w=828&q=75",
+        "alt": "Batch of machined aluminum housings staged in a production area",
+        "w": 768,
+        "h": 1024
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 46.1,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_ev-components-768.png"
+  },
+  {
+    "route": "/products/custom-aluminum",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Start with a drawing, 3D model or physical sample"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 49.152,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16.8,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates drawing-led aluminum component projects through e"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 49.2,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_custom-aluminum-768.png"
+  },
+  {
+    "route": "/products/safety-tires",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Self-sealing tyres for applicable tread punctures"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 57.6,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 18,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Understand how the inner sealing layer responds, what the supplier-sta"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "200/_next/image?url=%2Fimages%2Fgenerated%2Fsafety-suv-rain-hero.webp&w=828&q=75",
+        "alt": "",
+        "w": 768,
+        "h": 432
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 57.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_safety-tires-768.png"
+  },
+  {
+    "route": "/products/wheels/flow-formed",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Browse flow-formed wheels by recorded production specificati"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 41.472,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Explore wheel models whose production data records flow forming as par"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "tp://127.0.0.1:3200/_next/image?url=%2Fimages%2Fwheels%2F18-a015.webp&w=828&q=75",
+        "alt": "Fenghuai wheel model A015, front view",
+        "w": 139,
+        "h": 137
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 41.5,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_flow-formed-768.png"
+  },
+  {
+    "route": "/products/wheels/forged",
+    "vp": 768,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "A forged wheel program built around an approved specificatio"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 55.296,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 18,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates custom forged wheel programs with the responsible"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "1:3200/_next/image?url=%2Fimages%2Fcapabilities%2Fwheel-3d-model.webp&w=828&q=75",
+        "alt": "Forged aluminum wheel design example for a custom program",
+        "w": 554,
+        "h": 295
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 55.3,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_forged-768.png"
+  },
+  {
+    "route": "/about",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "One Shenzhen project interface. Specialized manufacturing be"
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 86.4,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "About Fenghuai"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 86.4,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/about-1440.png"
+  },
+  {
+    "route": "/capabilities",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden border-b border-border bg-background text-ink is-revealed",
+      "bg": "rgb(251, 250, 247)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Engineering decisions first. Process evidence at every gate."
+    },
+    "h1": {
+      "color": "rgb(41, 38, 33)",
+      "size": 86.4,
+      "weight": 400,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "rgb(155, 75, 29)",
+      "size": 12.16,
+      "weight": 600,
+      "bg": {
+        "r": 251,
+        "g": 250,
+        "b": 247,
+        "a": 1
+      },
+      "text": "Wheel manufacturing and quality"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#292621",
+        "bg": "#fbfaf7",
+        "ratio": 14.44,
+        "large": true,
+        "size": 86.4,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": {
+        "fg": "#9b4b1d",
+        "bg": "#fbfaf7",
+        "ratio": 5.89,
+        "large": false,
+        "size": 12.2,
+        "weight": 600,
+        "aa": true
+      }
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/capabilities-1440.png"
+  },
+  {
+    "route": "/products/ev-components",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Aluminum housings for EV motor and controller projects"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 70.4,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16.8,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai provides a Shenzhen-based project interface for supplier-supp"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "age?url=%2Fimages%2Fev-components%2Fbatch-housings-in-production.webp&w=640&q=75",
+        "alt": "Batch of machined aluminum housings staged in a production area",
+        "w": 576,
+        "h": 767
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 70.4,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_ev-components-1440.png"
+  },
+  {
+    "route": "/products/custom-aluminum",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Start with a drawing, 3D model or physical sample"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 73.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 16.8,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates drawing-led aluminum component projects through e"
+    },
+    "heroImgs": [],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 73.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_custom-aluminum-1440.png"
+  },
+  {
+    "route": "/products/safety-tires",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Self-sealing tyres for applicable tread punctures"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 108,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 18,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Understand how the inner sealing layer responds, what the supplier-sta"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "00/_next/image?url=%2Fimages%2Fgenerated%2Fsafety-suv-rain-hero.webp&w=1920&q=75",
+        "alt": "",
+        "w": 1254,
+        "h": 705
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 108,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_safety-tires-1440.png"
+  },
+  {
+    "route": "/products/wheels/flow-formed",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-ink text-white",
+      "bg": "rgb(41, 38, 33)",
+      "hasGrid": false
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "Browse flow-formed wheels by recorded production specificati"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 57.6,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 15.68,
+      "weight": 400,
+      "bg": {
+        "r": 41,
+        "g": 38,
+        "b": 33,
+        "a": 1
+      },
+      "text": "Explore wheel models whose production data records flow forming as par"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "tp://127.0.0.1:3200/_next/image?url=%2Fimages%2Fwheels%2F18-a015.webp&w=750&q=75",
+        "alt": "Fenghuai wheel model A015, front view",
+        "w": 129,
+        "h": 127
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#292621",
+        "ratio": 15.07,
+        "large": true,
+        "size": 57.6,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_flow-formed-1440.png"
+  },
+  {
+    "route": "/products/wheels/forged",
+    "vp": 1440,
+    "status": 200,
+    "theme": "neutral",
+    "hero": {
+      "tag": "SECTION",
+      "id": "top",
+      "cls": "relative isolate overflow-hidden bg-hero text-white",
+      "bg": "rgb(48, 42, 36)",
+      "hasGrid": true
+    },
+    "heading": {
+      "tag": "H1",
+      "text": "A forged wheel program built around an approved specificatio"
+    },
+    "h1": {
+      "color": "rgb(255, 255, 255)",
+      "size": 103.68,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "painted": []
+    },
+    "lead": {
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "size": 18,
+      "weight": 400,
+      "bg": {
+        "r": 48,
+        "g": 42,
+        "b": 36,
+        "a": 1
+      },
+      "text": "Fenghuai coordinates custom forged wheel programs with the responsible"
+    },
+    "heroImgs": [
+      {
+        "tag": "IMG",
+        "src": "1:3200/_next/image?url=%2Fimages%2Fcapabilities%2Fwheel-3d-model.webp&w=828&q=75",
+        "alt": "Forged aluminum wheel design example for a custom program",
+        "w": 572,
+        "h": 305
+      }
+    ],
+    "contrast": {
+      "h1": {
+        "fg": "#ffffff",
+        "bg": "#302a24",
+        "ratio": 14.17,
+        "large": true,
+        "size": 103.7,
+        "weight": 400,
+        "aa": true
+      },
+      "lead": null
+    },
+    "overflow": 0,
+    "errors": [],
+    "shot": "outputs/reports/astryx-p1-evidence-2026-10-11/after/products_wheels_forged-1440.png"
+  }
+]

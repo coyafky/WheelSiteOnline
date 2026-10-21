@@ -1,0 +1,653 @@
+QUERY: wheel offset explained
+CAPTURED_AT: 2026-10-15T23:43:38.409Z
+URL: https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA%3A1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&uact=5&oq=wheel+offset+explained&gs_lp=Egxnd3Mtd2l6LXNlcnAiFndoZWVsIG9mZnNldCBleHBsYWluZWRIgwFQAFgAcAB4AZABAJgBAKABAKoBALABALgBA8gBAPgBAZgCAKACAJgDAOIDBBgAIF3iAwQYACBe4gMEGAAgX-IDBBgAIGDiAwQYACBh4gMEGAAgYpIHAKAHALIHALgHAMIHAMgHAIAIAQ&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "wheel offset explained - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "wheel offset explained - Google Search"]
+root
+  link [ref=1210]
+    text "Skip to main content"
+  anchor [ref=1211, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=1212, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=1213, loc=css:textarea[name="q"]]
+          text "wheel offset explained"
+        container
+          button "Clear" [ref=1214]
+            svg_root
+          container
+            button "Search by voice" [ref=1215, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=1216, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=1217, loc=role:button[name="Settings"]]
+        svg_root
+      button "Share" [ref=1218]
+        svg_root
+      container
+        button "Google apps" [ref=1219, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=1220, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dwheel%2Boffset%2Bexplained%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnu4_DiNQeESjMXruOs7eFSMb3KexA%253A1792107816075%26ei%3DKGXRarGbBLTH0PEP0bWmqAM%26uact%3D5%26oq%3Dwheel%2Boffset%2Bexplained%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiFndoZWVsIG9mZnNldCBleHBsYWluZWRIgwFQAFgAcAB4AZABAJgBAKABAKoBALABALgBA8gBAPgBAZgCAKACAJgDAOIDBBgAIF3iAwQYACBe4gMEGAAgX-IDBBgAIGDiAwQYACBh4gMEGAAgYpIHAKAHALIHALgHAMIHAMgHAIAIAQ%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=1221]
+      list
+        listitem
+          anchor [ref=1222, url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ2J8OegQIFxAD]
+            text "AI Mode"
+        listitem
+          link [ref=1223]
+            text "All"
+        listitem
+          anchor [ref=1224, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&q=wheel+offset+explained&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQtKgLegQIGBAB]
+            text "Images"
+        listitem
+          anchor [ref=1225, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&q=wheel+offset+explained&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQtKgLegQIHRAB]
+            text "Videos"
+        listitem
+          anchor [ref=1226, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&q=wheel+offset+explained&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQs6gLegQIHBAB]
+            text "Short videos"
+        listitem
+          anchor [ref=1227, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&q=wheel+offset+explained&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=1228, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UcbyNc1IAMReVybHU31OS8M5qeXFW8IBZ126ecPotulaq0AZwVhlWTQoE_uQ-EZUBE0ylfQe5fVUYCmUWNGKwNwYhzEhL_RnIw13VXxrr1pKH76JjQrd0XZKyadp4TxNY5KVAeNGacgdFWjBHQ8bDtHZ3aKxQ&q=wheel+offset+explained&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQs6gLegQIGhAB]
+            text "Forums"
+        listitem
+          button [ref=1229]
+            container "More filters"
+              text "More"
+              svg_root
+      button [ref=1230]
+        text "Tools"
+        svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        container
+          container
+            svg_root
+            heading
+              text "AI Overview"
+          container
+            container
+              container
+                text "Wheel offset is"
+                text "the distance in millimeters between the hub mounting surface (the flat pad that bolts to your car) and the imaginary center line of the wheel"
+                text "."
+                container
+                  anchor "Fitment Industries" [ref=1231, loc=css:a[aria-label="Fitment Industries"], url=https://www.google.com/goto?url=CAESegHrOzAVI6ULVhLW4BG6RJwn8UYCamWGuhaKyUNn1u-Sp9FToLIw-IY-A6qPL3ghEBjt8RygYDD59AeSoSa6l0_qwPLjRr8aLshh1xqxaTdn2uZF0uNFvHq1t7BoYpQ2eGfrEFn4CVXmIVeU9Q8gEea80loa2SOecxPk]
+                  button "Fitment Industries (+1) - Related results" [ref=1232, loc=css:button[aria-label="Fitment Industries (+1) - Related results"]]
+                    container
+                      image
+                      container
+                        text "Fitment Industries"
+                        text " +1"
+                    svg_root
+              container
+                text "It is usually marked with"
+                text "ET"
+                text "(from the German word"
+                text "Einpresstiefe"
+                text ", meaning "insertion depth") followed by a number."
+                container
+                  anchor "YouTube · KONIG WHEELS USA" [ref=1233, loc=css:a[aria-label="YouTube · KONIG WHEELS USA"], url=https://www.google.com/goto?url=CAESZwHrOzAV5JPbY5lp5wgcFtGvP3CX2uPRFToAwWM7lm-xSeY1WcXhK6e2fBUvMilT9HI1QzUPWZ7UGHDQ_QdaRNoZ7qRwJBP0LTXMhP1NvmdnLx5un9esEVjYmrQ8KN898uCpK9RmHDo]
+                  button "YouTube · KONIG WHEELS USA (+1) - Related results" [ref=1234, loc=css:button[aria-label="YouTube · KONIG WHEELS USA (+1) - Related results"]]
+                    container
+                      image
+                      container
+                        text "YouTube"
+                        container
+                          text "·"
+                          text "KONIG WHEELS USA"
+                        text " +1"
+                    svg_root
+              heading
+                text "The Three Types of Offset"
+              unordered_list
+                list_item
+                  text "Zero Offset (0 mm):"
+                  text "The hub mounting surface sits right on the center line of the wheel. The wheel aligns evenly with the vehicle body."
+                list_item
+                  text "Positive Offset (+ mm):"
+                  text "The hub mounting surface moves toward the street-facing side (front half) of the wheel. This pulls the wheel inward toward the brakes and suspension. Most factory cars, front-wheel-drive vehicles, and..."
+                  text "."
+                list_item
+                  container
+                    text "Negative Offset (- mm):"
+                    text "The hub mounting surface moves toward the back side (brake side) of the wheel. This pushes the wheel and tire outward away from the car, creating a "deep dish" look or a wide stance. This is common on..."
+                  container
+                    anchor "YouTube · Dr.Deathwobble" [ref=1235, loc=css:a[aria-label="YouTube · Dr.Deathwobble"], url=https://www.google.com/goto?url=CAESaAHrOzAVflm2gd_Waj73o0f-2yo2Kl8qArvw4O9LpYe7eL0Y9stqEfNvQiTgnsX7pDwJQL_GIarMz1ZyvsqMCoCuw8K8VZCqn2UP4oBVNPUD8qidnV9wf8qycQe_kq6oOJB3puwOUaU4]
+                    button "YouTube · Dr.Deathwobble (+4) - Related results" [ref=1236, loc=css:button[aria-label="YouTube · Dr.Deathwobble (+4) - Related results"]]
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          container
+                            text "·"
+                            text "Dr.Deathwobble"
+                          text " +4"
+                      svg_root
+              heading
+                text "How Offset Affects Your Car"
+              unordered_list
+                list_item
+                  text "Suspension & Brake Clearance:"
+                  text "Running an offset that is too high (too much positive) can cause the inside of the tire or rim to rub against your suspension arms or brake calipers. Running an offset that is too low (too much negati..."
+                list_item
+                  text "Handling & Wear:"
+                  text "Changing your factory offset alters your vehicle's track width and puts extra stress on wheel bearings and suspension components."
+                list_item
+                  container
+                    text "Aesthetics:"
+                    text "Positive offset "tucks" the wheel in, zero offset sits neutral, and negative offset makes the wheel "poke" out past the fender."
+                  container
+                    anchor "YouTube · 4WD 24-7" [ref=1237, loc=css:a[aria-label="YouTube · 4WD 24-7"], url=https://www.google.com/goto?url=CAESYgHrOzAVOBb6H1JU2kB--kmEGl0dmEspXyBczBY8v4sL-pYaDWHUyhhMwLI1uwiubtInQi51mQ4bbON7auOPsiiCsq7c84093wXx452kGOEBykyee0bCtr1Jo2CEFHNch_He]
+                    button "YouTube · 4WD 24-7 (+6) - Related results" [ref=1238, loc=css:button[aria-label="YouTube · 4WD 24-7 (+6) - Related results"]]
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          container
+                            text "·"
+                            text "4WD 24-7"
+                          text " +6"
+                      svg_root
+              container
+                text "If you are shopping for new rims, tell me your"
+                text "year, make, and model"
+                text "(or your current wheel size and ET number) and I can help you figure out what offset range will fit your car safely."
+            container
+              unordered_list
+                list_item
+                  container
+                    anchor "Wheel Offset Explained In 30 Seconds, Video, watch on YouTube" [ref=1239, loc=css:a[aria-label="Wheel Offset Explained In 30 Seconds, Video, watch on YouTube"], url=https://www.google.com/goto?url=CAESYgHrOzAVOBb6H1JU2kB--kmEGl0dmEspXyBczBY8v4sL-pYaDWHUyhhMwLI1uwiubtInQi51mQ4bbON7auOPsiiCsq7c84093wXx452kGOEBykyee0bCtr1Jo2CEFHNch_He]
+                    container
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          text "·"
+                          text "4WD 24-7"
+                        button "About this result" [ref=1240]
+                          svg_root
+                      container
+                        container
+                          text "Wheel Offset Explained In 30 Seconds"
+                          text "Wheel Offset Explained In 30 Seconds what is wheel offset. and what does it mean for your four-wheel. drive a positive offset will..."
+                        anchor "Wheel Offset Explained In 30 Seconds by 4WD 24-7 on YouTube - 0:51" [ref=1241, loc=css:a[aria-label="Wheel Offset Explained In 30 Seconds by 4WD 24-7 on YouTube - 0:51"], url=https://www.google.com/goto?url=CAESYgHrOzAVOBb6H1JU2kB--kmEGl0dmEspXyBczBY8v4sL-pYaDWHUyhhMwLI1uwiubtInQi51mQ4bbON7auOPsiiCsq7c84093wXx452kGOEBykyee0bCtr1Jo2CEFHNch_He]
+                          image
+                          container
+                            svg_root
+                            text "0:51"
+                list_item
+                  container
+                    anchor "What is Wheel Offset? (Quick & Easy Explanation), Video, watch on YouTube" [ref=1242, loc=css:a[aria-label="What is Wheel Offset? (Quick & Easy Explanation), Video, watch on YouTube"], url=https://www.google.com/goto?url=CAESZwHrOzAV5JPbY5lp5wgcFtGvP3CX2uPRFToAwWM7lm-xSeY1WcXhK6e2fBUvMilT9HI1QzUPWZ7UGHDQ_QdaRNoZ7qRwJBP0LTXMhP1NvmdnLx5un9esEVjYmrQ8KN898uCpK9RmHDo]
+                    container
+                      container
+                        image
+                        container
+                          text "YouTube"
+                          text "·"
+                          text "KONIG WHEELS USA"
+                        button "About this result" [ref=1243]
+                          svg_root
+                      container
+                        container
+                          text "What is Wheel Offset? (Quick & Easy Explanation)"
+                          text "What is Wheel Offset? (Quick & Easy Explanation) okay so what is wheel offset. so you found your way here because you're probably ..."
+                        button "What is Wheel Offset? (Quick & Easy Explanation) by KONIG WHEELS USA on YouTube. Play on Google. - Segment Duration: 3 min - Starts at: 0:04 - Total Duration: 3:27" [ref=1244]
+                          image
+                          container
+                            svg_root
+                            text "3m"
+                          svg_root
+                list_item
+                  anchor "Wheel Offset Explained, Video, watch on YouTube" [ref=1245, loc=css:a[aria-label="Wheel Offset Explained, Video, watch on YouTube"], url=https://www.google.com/goto?url=CAESaAHrOzAVflm2gd_Waj73o0f-2yo2Kl8qArvw4O9LpYe7eL0Y9stqEfNvQiTgnsX7pDwJQL_GIarMz1ZyvsqMCoCuw8K8VZCqn2UP4oBVNPUD8qidnV9wf8qycQe_kq6oOJB3puwOUaU4]
+                  container
+                    container
+                      image
+                      container
+                        text "YouTube"
+                        text "·"
+                        text "Dr.Deathwobble"
+                      button "About this result" [ref=1246]
+                        svg_root
+                    container
+                      container
+                        text "Wheel Offset Explained"
+                        text "Wheel Offset Explained and 9 in across so your second number is always going to be your across. the next main number we're going t..."
+                      button "Wheel Offset Explained by Dr.Deathwobble on YouTube. Play on Google. - Segment Duration: 2 min - Starts at: 1:15 - Total Duration: 4:09" [ref=1247]
+                        image
+                        container
+                          svg_root
+                          text "2m"
+                        svg_root
+              button "Show all related results" [ref=1248]
+                text "Show all"
+          container
+            container
+              status
+              button "Copy text" [ref=1249, loc=css:button[aria-label="Copy text"]]
+                svg_root
+            button "Share" [ref=1250, loc=css:button[aria-label="Share"]]
+              svg_root
+            container
+              button "Good response" [ref=1251, loc=css:button[aria-label="Good response"]]
+                svg_root
+              button "Bad response" [ref=1252, loc=css:button[aria-label="Bad response"]]
+                svg_root
+            button "More options for this response" [ref=1253]
+              svg_root
+        button "Show more AI Overview" [ref=1254, loc=role:button[name="Show more AI Overview"]]
+          text "Show more"
+          svg_root
+      main
+        container
+          container
+            heading
+              text "Web results"
+            anchor [ref=1255, url=https://www.google.com/goto?url=CAESfQHrOzAVF_V6zDhRm1hqg8UI1hCe-QdAwHEg_8v3-kH1NASEJncPG5jtbR211G4QSBFj7r7hXNiH-vhukimF7FUzLb95fJaCYoYEjCdcbKUEnfOUqxZfIn3sgtCbEmEZmWA5bofuNjj8gYSLxP9r8jntrNkucYOlelqitywL]
+              heading
+                text "What is Wheel Offset?"
+              image
+              text "Les Schwab Tires"
+              text "https://www.lesschwab.com"
+              text "› Article › Wheels"
+            button "About this result" [ref=1256]
+              svg_root
+            text "Dec 20, 2022"
+            text "—"
+            text "Wheel Offset and Backspacing Explained ... Offset refers to"
+            text "how your car's or truck's wheels and tires are mounted and sit in the wheel wells"
+            text "."
+            anchor [ref=1257, url=https://www.google.com/goto?url=CAES-QEB6zswFXXO8Z17Gbx4MOPkUi_zTGllS9w5hGqmAdJ5fxT48m4LVXodOLJD-rg0F_BgVkQZOHh21cqGGrSpcJihxCNvZ6X0CnWVZtsRmIo10uqYaqFAUQsvoNqnCORT1yP2O1EwdptL2ZhWBVq4GZ7NeJ_n1d5Gc12YcGWK-MMovuODWI2RJvrgb9F9q99e3-xxsnKn1nriEm7KMNLj4cYxIaNvWktRd9eIFzKxcaFkF1_B1AQjCLN2MFgDlYKs5mQOaZwBX626yyL4HmiivBSP_9dqwYB61ijh29PYSVa2KtP2d78v-dxluFgi5HPP5W-EKFqPriya82U]
+              text "Read more"
+          container
+            text "People also ask"
+            button [ref=1258]
+              text "What does +35 offset mean?"
+              svg_root
+            button [ref=1259]
+              text "What does a +40 offset mean?"
+              svg_root
+            button [ref=1260]
+              text "Do I want a positive or negative offset?"
+              svg_root
+            button [ref=1261]
+              text "What does +20 offset mean?"
+              svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=1262, url=https://www.google.com/goto?url=CAESsQEB6zswFVP6lG4_Z9TTNzj9F0bwy9DBmR-OPJKZuT_8_zgQukM1z9iMaEAN64oEbv2iU5VRSb5OASWJIjxG4e797vwuk2TK411WDYkuAjwgahqgEyE7Q4xhfHA-XbzdISZVJqRIX1Ud4Ij3t6piaC2uKTImnJ-dcMjOUBSR3V0a7gkUYDEmOV_yZOrcLBqBTmMlZWrvf6pXS306LUQP8HZ0SGn9fiNliDujajLry2zSPqg]
+              heading
+                text "What is Wheel Offset?"
+              image
+              text "Method Race Wheels"
+              text "https://www.methodracewheels.com"
+              text "› pages › what-is-of..."
+            button "About this result" [ref=1263]
+              svg_root
+            text "A"
+            text "wheel's offset"
+            text "refers to the distance between the"
+            text "wheel's"
+            text "mounting surface and the centerline of the"
+            text "wheel"
+            text ". It affects the"
+            text "wheel's"
+            text "positioning in relation ..."
+            anchor [ref=1264, url=https://www.google.com/goto?url=CAEShQIB6zswFbKWW3MVIB197JzLVKmTQYEBvE3famXuck0WUkjwfc_Tx8lJ92n9V_Kxz_Hz-e1aKRPLtEeYYVc9iLoiiAxDfhnLAoz_uVFR0LmVrlOCLzfYIQW_Hrwpaka1oJB1RceD3LYI3AnNqdbqy85HnKtCcxy48l0kU_F61emyJUKXRCPI9gh5S4P9OoiyoitXwTEmEprqw4xVzoEZNlo_VX3eJ4ieM71BQqPfD6Jgk8BMJ0QWnV98Uvml3EBk47-pLwEHYC_xDCVNyllPxK-KKuucIT91ZVo4DCt5J4HrSQMjFom5zgxbG0XtSPytuq-oRw1quls314u5TFWroB-9MjYTBF8]
+              text "Read more"
+          container
+            text "Images"
+            container
+              anchor "Wheel Offset Explained | Understanding Wheel Backspacing And ... CNC Wheels" [ref=1265, url=https://www.google.com/goto?url=CAESqQEB6zswFSzEWWazhd1CZ6Zn4YFp1HBi1YRJtwXLnfJ9Oo3B8E443Szit0qk50h8Zy164WXYyPrk-SJAis2xVDxwl8bTubbC3lT2FewecGGI4AGGV-BYMjbO85cqZM3wN76kGLJFf3Ish4y2t45e7ivO2h0P804okVkwusBno6vFTqPdpTLJ1m5E1kd87B-Ek8BX8aV_oAPDoouA4CAuMaadxiguTx6CsyJ6]
+              button [ref=1266]
+                image
+              container
+                text "Wheel Offset Explained | Understanding Wheel Backspacing And ..."
+                container
+                  image
+                  text "CNC Wheels"
+                button "About this result" [ref=1267]
+                  svg_root
+            container
+              anchor "What is Wheel Offset? – Method Race Wheels Method Race Wheels" [ref=1268, url=https://www.google.com/goto?url=CAESrgEB6zswFb9wGaAepMQ3D4Y23yRAf1Ovq8OlUa46p-yA8xTAzv2rR1AetR66_KYJK3F0BrfApNIp31xSsYO-C4CdRFBVlCfb3mZf1tL0gg_PUtmGFF0J-scuMaAnYIzlEpJXMyhJmDaR6l9nl464wPbM3raz-xJNwuE1eysbNbEd9w1vSv4MGDzzQX7qn6MfGqmJxqX5-vVW9VmiAPyFtEx_zIreHLp_9O_baCFG35Q]
+              button [ref=1269]
+                image
+              container
+                text "What is Wheel Offset? – Method Race Wheels"
+                container
+                  image
+                  text "Method Race Wheels"
+                button "About this result" [ref=1270]
+                  svg_root
+            container
+              anchor "Wheel offset negative vs positive - which is it? : r ... Reddit" [ref=1271, url=https://www.google.com/goto?url=CAESngEB6zswFX5btXlL5AWmZBGpW6-BEelZaI7tCKHi51ryQexVpDscSK45kKAZtPWIsT1zQfa4Zm7HNrRNny-gN7EmmcPGTRLASYYDYyx5ALlAq5e_7KjQ1e9BqMg3PwPzaBsT7Li6tQGXwVMiSZ4seRgRfr_SKJOOaLnbFr_A9Sh34eP4V__wSY89DhHySGroqxyEWzaUGrOOVzldWT5GLA]
+              button [ref=1272]
+                image
+              container
+                text "Wheel offset negative vs positive - which is it? : r ..."
+                container
+                  image
+                  text "Reddit"
+                button "About this result" [ref=1273]
+                  svg_root
+            button [ref=1274]
+              container
+                text "Show more images"
+                svg_root
+          container
+            text "Videos"
+            button "About this result" [ref=1275]
+              svg_root
+            container
+              container
+                anchor [ref=1276, url=https://www.google.com/goto?url=CAESYwHrOzAVgmU4zvQnpxUIvb6lrpaynpaFXqmUFuz4QBavCChwPiv_NjNXkQG47ULquqg0WNUOCjKs0GZ60UpL5Hi10RPePq8lp64kpBgBrMGHBPcotiBq3AWNWVJMvYQNOsDrCg]
+                  text "What is Wheel Offset? (Quick & Easy Explanation)"
+                  text "YouTube"
+                  text "·"
+                  text "KONIG WHEELS USA"
+                  text "Mar 31, 2023"
+                text "YouTube"
+                text "·"
+                text "KONIG WHEELS USA"
+                button "About this result" [ref=1277]
+                  svg_root
+                button "What is Wheel Offset? (Quick & Easy Explanation) by KONIG WHEELS USA on YouTube. Play on Google. 3:27" [ref=1278]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        container
+                          text "3:27"
+                          svg_root
+                button [ref=1279]
+                  text "11 key moments in this video"
+                  svg_root
+              container
+                anchor [ref=1280, url=https://www.google.com/goto?url=CAESYgHrOzAVIobAnFSSgoZQ6MNfUgzsmPBmbsOUmhZNMEvEv4rNODn_yFhU668Qk0CxioJsxHYH37IpfOTGBh8pBFnL0EwKBaXxt5TN5Zm_GoNxkG7PoaW7xBkqE84cEmQzk5Y1]
+                  text "Wheel Offset Explained In 30 Seconds"
+                  text "YouTube"
+                  text "·"
+                  text "4WD 24-7"
+                  text "Jun 22, 2026"
+                text "YouTube"
+                text "·"
+                text "4WD 24-7"
+                button "About this result" [ref=1281]
+                  svg_root
+                anchor "Wheel Offset Explained In 30 Seconds by 4WD 24-7 on YouTube. Play on YouTube. 0:51" [ref=1282, url=https://www.google.com/goto?url=CAESYgHrOzAVIobAnFSSgoZQ6MNfUgzsmPBmbsOUmhZNMEvEv4rNODn_yFhU668Qk0CxioJsxHYH37IpfOTGBh8pBFnL0EwKBaXxt5TN5Zm_GoNxkG7PoaW7xBkqE84cEmQzk5Y1]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        text "0:51"
+                anchor "Wheel offset determines how far in or out your wheel sits. Positive offset means flatter wheels further in, negative offset means dished wheels further out." [ref=1283, url=https://www.google.com/goto?url=CAESYgHrOzAVIobAnFSSgoZQ6MNfUgzsmPBmbsOUmhZNMEvEv4rNODn_yFhU668Qk0CxioJsxHYH37IpfOTGBh8pBFnL0EwKBaXxt5TN5Zm_GoNxkG7PoaW7xBkqE84cEmQzk5Y1]
+                  text "Wheel offset"
+                  text "determines how far in or out your"
+                  text "wheel"
+                  text "sits. Positive"
+                  text "offset"
+                  text "means flatter"
+                  text "wheels"
+                  text "further in, negative"
+                  text "offset"
+                  text "means dished"
+                  text "wheels"
+                  text "further out."
+              container
+                anchor [ref=1284, url=https://www.google.com/goto?url=CAESYwHrOzAVXxeSv8uMaxlU6a_di_Y0lXWShjyBegeQHFJc2my7ZPXXQRCS33XcBgwkMX-Nmb52SbvXOD63fg2hc4qlACIZDgUfiYyKKExmLz2S_ClvOvPfJmpCe0wGS9I-uqyHnQ]
+                  text "What is Wheel Offset?"
+                  text "YouTube"
+                  text "·"
+                  text "KONIG WHEELS USA"
+                  text "Jul 3, 2019"
+                text "YouTube"
+                text "·"
+                text "KONIG WHEELS USA"
+                button "About this result" [ref=1285]
+                  svg_root
+                button "What is Wheel Offset? by KONIG WHEELS USA on YouTube. Play on Google. 3:01" [ref=1286, loc=role:button[name="What is Wheel Offset? by KONIG WHEELS USA on YouTube. Play on Google. 3:01"]]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        container
+                          text "3:01"
+                          svg_root
+                button "Wheel offset is the distance the mounting pad is offset from the centerline. Lower offset pushes the wheel out 10mm more." [ref=1287]
+                  text "Wheel offset"
+                  text "is the distance the mounting pad is"
+                  text "offset"
+                  text "from the centerline. Lower"
+                  text "offset"
+                  text "pushes the"
+                  text "wheel"
+                  text "out 10mm more."
+            anchor "View all videos" [ref=1288, loc=css:a[aria-label="View all videos"], url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&udm=vids&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=wheel+offset+explained&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8ccDKAJ6BAhJEAU]
+              container
+                text "View all"
+                svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=1289, url=https://www.google.com/goto?url=CAESuAEB6zswFQu_lqFkmsrPsczziGc7f61OI3TjwjjAlsp3kbiVZDCbKfikW2Yuf6b8Vn0bGf9nxFBKCKnlEM2bAp3Oxm0n3M5qK0vOY0AcPoSyoWVWhbN04hTjPY0L7dHzoaJh2w9Ppm65IGDi7HOZ6a5cBZcaGLI66uWb9y3ooUTZBt3zvV87elSVt2KjLXTGzP5FxQN7QJeM7S-CrTw7md3VZpnf13BaQF6Add3Uyoy-EoB52L3cBRQt]
+              heading
+                text "What Is Wheel Offset?"
+              image
+              text "Tire Rack"
+              text "https://www.tirerack.com"
+              text "› ... › Wheels"
+            button "About this result" [ref=1290]
+              svg_root
+            text "The"
+            text "offset"
+            text "of a"
+            text "wheel"
+            text "is the distance from its hub mounting surface to the centerline of the"
+            text "wheel"
+            text ". The"
+            text "offset"
+            text "can be one of three types (measured in ..."
+            anchor [ref=1291, url=https://www.google.com/goto?url=CAESjAIB6zswFZ8wZsHPj7laS1fGp95zfdYbu0lAsptKR6uo8a7K_DpuPIihdrmIP_W9E4DHbhrNL6YQsjeoIHxVmAwx5_OZSusWSdvpY7SCnRK-KmnkdzEZjKXqaR49PHjFGjw5oYa_sQg7hwRdooDq7-8XQD4CTJOCe2XWM3kMgfa7jdMfMsLaj_FDiy83M4sOvcES5_1z1CzyBIqBClLIruX9kp3Q4oaGUaZ8lmBINbi4E7AKYZ9hbNFNc2MLSoDL-QaRgvGjO2uxjToKcvzRk9acL2XyXHCCyQ_UlVe41Mki7G9-awgowvFWTVZ_YNPeDf7qWX7oIoktlrSYjGSSTc05qj7hjSu3-pjKCDJL]
+              text "Read more"
+          container
+            anchor [ref=1292, url=https://www.google.com/goto?url=CAESmwEB6zswFaumn9UY-UAfznmje7L-pFNcSycrcNgCRgPR4cqDVa3uvksB8fHxLNKnsIrEPgBQp9dww5knRg1mGw_nW2-GmHkH7OeSpvSxgfqgyWZpmJ4GPSfh_2f6EvsGB0D0AccXyiNv6a7yvOukoV53sktOxyHHU3Un292p7uGUcCe9HYFUqFOjyZtl-JoZLTvw4rqpA-3lf9eoMw]
+              heading
+                text "Could someone hold my hand and help me understand ..."
+              image
+              text "Reddit · r/cars"
+              text "10+ comments · 4 years ago"
+            button "About this result" [ref=1293]
+              svg_root
+            text "I have a 96 Chevy 2500 that has fender flares on and I would like a even fitment. The tires need to come out about a inch so to wheel offset +/- terms ..."
+            container
+              anchor [ref=1294, url=https://www.google.com/goto?url=CAESoAEB6zswFSr7vtnGXVzNGNBBRQK9ApuwfxQ9IThJGM5r2zBss2FGAz9XTzUHRubiyDLxWj7Ant3R7IfcyglQAWiqw4q5eukvkyYsEvkCBuTuRwiALGPs9TckGKvrJPaInySk1bAPGX0FPQ8ZsowyVt-IoY7yz6ZDQOeJOBzxU6SzvCDErynhqtZQzxHzB6W7Cb3J2TtkZqK56Bg6Zp3E-uZ1]
+                text "15 answers"
+              text "·"
+              text "Top answer: "
+              text "Your search terms. Your truck Offset Explained Not applicable to your RWD truck, but offset ..."
+            container
+              anchor [ref=1295, url=https://www.google.com/goto?url=CAESpAEB6zswFQT3P4CyNk0PX-0XfzjkxQfQ9gn-wmDuGpaWKF5fhQi053tEahpwkQHb0YfuIs9686q8zUu0wcGe4k25drdKMCBiSekl5PANpptc5OGdt1xjXAN1n6wlKeP2s5UJkJ33CTWWF5o1izXW3uqBeoG8LS3beQSYJ6JLAQpB3Ym723Z_AlYyIiH94T1AEahaJFeR-p_TLaLnV4w-gEdo7fHHVQ]
+                text "What is"
+                text "wheel offset"
+                text "and what does it have to do with ..."
+              text "4 answers"
+              text "Aug 8, 2025"
+              anchor [ref=1296, url=https://www.google.com/goto?url=CAESmgEB6zswFVV7rJc34c3WPQQA05ijCRfFQKfv_yu_eIMCMrHgqYQViLTk0h2kFVo6VoPZKxACY948Y4sv3fSmNGbubVOLz92IMhgch2EUWcqtVzIzrHj7ZwlYIuEvzBehM9l2JpjsMcgCSKaAEabPGeR8szmpvJdYcNSDy2jUrftV1DxUWfUMBZ49RDVkFlEbv0sbOjWehsWprI_O]
+                text "can someone"
+                text "explain wheel offset"
+                text "to me like I'm an idiot?"
+              text "4 answers"
+              text "Feb 21, 2023"
+              table
+                table_row
+                  table_cell
+                    anchor [ref=1297, url=https://www.google.com/search?q=wheel+offset+explained+site:www.reddit.com&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQrQIoAnoECD4QAw]
+                      text "More results from www.reddit.com"
+          container
+            anchor [ref=1298, url=https://www.google.com/goto?url=CAEStgEB6zswFfw-9dM1bBu2jJsMG-lg9ZvgMYZDpF6EngoUOwMo9ZU09GVsjdmCWGGOyXesxC63k58F275l8kPKAZ390upFhIRPky76mAnRzxf6OLcabpeApME38gL2I3E7W2eXKMjweHuZVDfnAOVjbBqq-_P8fNRggqFqupdV9OJ-0DdZFCqfeYNiJ04omJ6xbU9GSSDS1q3kaLQCu1fQuwQynYvWd3kbH-MbKppatqwOuBgS6OUddQ]
+              heading
+                text "MSA Wheels Offsets Explained"
+              image
+              text "MSA Wheels"
+              text "https://www.msawheels.com"
+              text "› news › msa-wheel-offsets..."
+            button "About this result" [ref=1299]
+              svg_root
+            text "Sep 16, 2020"
+            text "—"
+            text "The"
+            text "offset"
+            text "of a"
+            text "wheel"
+            text "is the distance from its hub mounting surface to the centerline of the"
+            text "wheel"
+            text ". The whole point of an"
+            text "offset"
+            text "is for the end ..."
+            anchor [ref=1300, url=https://www.google.com/goto?url=CAES-AEB6zswFcD1RxnhlE7krnwHpF8-m9NcDJlE6AYaYaKQNR30VigEJwZjoTnsRc95vFkV56KMkBSjs5jSho4IktvIpmd2fN-wcYO9vzQBEiMGEfmwCl7SAJRxZJ-il-wemIoYY8CGMauCcNcR2ovnof9XwcNISbBM-7TxMH9afTql2bFRaOBOPy1bhaesWfHbAdrRPt8SkSGT7tYybMOnf6Ba3MpNBOCjvdn_U010kvpTNY3ONPlAYv5fqeuFBsqOR4MblRduahwWmLf7Xvbe28S9BhRlr6CTN8fN_NwkKStjYOfMSJQSt7Ry_ZqMLE9GwMlrJ3QSpuwMUw]
+              text "Read more"
+          container
+            anchor [ref=1301, url=https://www.google.com/goto?url=CAESgAEB6zswFauhgWViQrfz0hxpOnbwlIBb2y2LH7sfOTbnw96QUK62WBOnajEyG9lTqjsDoCo37kgXurDpoPpdNf186jxFKE0629ILkmbgRoK5Vg05gP16EV355g7gYebggbI9AD1qkQ1UYIQdZmWL1VCyqB0DF7ejQYYEgwMwYdDPzQ]
+              heading
+                text "Wheel offset explained in plain English (yup pictures too)"
+              image
+              text "shopdap.com"
+              text "https://www.shopdap.com"
+              text "› Articles"
+            button "About this result" [ref=1302]
+              svg_root
+            text "Wheel Offset:"
+            text "The distance between the center line and hub mounting surface of a wheel"
+            text ". So lets break that down. Lets start with the center line of the wheel."
+          container
+            anchor [ref=1303, url=https://www.google.com/goto?url=CAESjgEB6zswFVjLXPRl99XcvLZZlQTOIIv0AamSUjByOU3RqwqeScuZ_iFyZFYaAGlFjcitpOL4Kv0vSDg-xAKdtu371UorvBf2B5dtnZVUMul5AkgzVmwuyoQZyrr-aK1b2mP9VaHwQCTYTRmnV2DPI0xoNR6dFyNJ5Z16r8iz-CKvdEi1AOmLxsuJROe5JO7i]
+              heading
+                text "Wheel Offset Explained and How to Measure"
+              image
+              text "FORGELITE® Wheels"
+              text "https://www.forgelitewheels.com"
+              text "› blog-posts › whats-..."
+            button "About this result" [ref=1304]
+              svg_root
+            text "- Positive offset:"
+            text "the mounting surface is in between the front face of the wheel and its center line"
+            text ". - negative offset: the mounting surface is in ..."
+            anchor [ref=1305, url=https://www.google.com/goto?url=CAES4wEB6zswFfhLIJM8Ir6Ph-WSbg2s_5t80PbI0DHXs6Wh4C0oMXJv37gEeN6j7J10E-D38e2yhRz98NYcdRnifVAcalPis7Oh3EJyLh9Rf1qx8kkDzduQWspq87ltN8nrzc8d444qh7FzRFCveuDIs1GqPICJuyXjugQ76Y2GeQDsT7tHRhDpWUl0hvHX78QO-quRb02dnuyMwNzcVOMFhmBSMnp0odeU5Ym45JJNUoqDjkfgzo6jWTJoq_ganrEAW85TXVeM9jcGxyrRV7KVTceBtiR8d7LSewMqp31nH5y9OnvZqQ]
+              text "Read more"
+        container
+          container
+            text "People also search for"
+            anchor [ref=1306, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Negative+offset+wheels&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAgrEAE]
+              container
+                text "Negative"
+                text "offset"
+                text "wheels"
+              svg_root
+            anchor [ref=1307, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+explained+reddit&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAg4EAE]
+              container
+                text "Wheel offset explained"
+                text "reddit"
+              svg_root
+            anchor [ref=1308, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+explained+for+dummies&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAg3EAE]
+              container
+                text "Wheel offset explained"
+                text "for dummies"
+              svg_root
+            anchor [ref=1309, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+calculator&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAg1EAE]
+              container
+                text "Wheel offset"
+                text "calculator"
+              svg_root
+            anchor [ref=1310, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+chart&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAg0EAE]
+              container
+                text "Wheel offset"
+                text "chart"
+              svg_root
+            anchor [ref=1311, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+negative+or+positive&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAgzEAE]
+              container
+                text "Wheel offset"
+                text "negative or positive"
+              svg_root
+            anchor [ref=1312, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+calculator+visualizer&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAgtEAE]
+              container
+                text "Wheel offset"
+                text "calculator visualizer"
+              svg_root
+            anchor [ref=1313, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&q=Wheel+offset+examples&sa=X&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ1QJ6BAgsEAE]
+              container
+                text "Wheel offset"
+                text "examples"
+              svg_root
+          navigation
+            heading
+              text "Page Navigation"
+            table
+              table_row
+                table_cell
+                table_cell
+                  text "1"
+                table_cell
+                  anchor "Page 2" [ref=1314, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=10&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAE]
+                    text "2"
+                table_cell
+                  anchor "Page 3" [ref=1315, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=20&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAG]
+                    text "3"
+                table_cell
+                  anchor "Page 4" [ref=1316, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=30&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAI]
+                    text "4"
+                table_cell
+                  anchor "Page 5" [ref=1317, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=40&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAK]
+                    text "5"
+                table_cell
+                  anchor "Page 6" [ref=1318, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=50&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAM]
+                    text "6"
+                table_cell
+                  anchor "Page 7" [ref=1319, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=60&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAO]
+                    text "7"
+                table_cell
+                  anchor "Page 8" [ref=1320, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=70&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAQ]
+                    text "8"
+                table_cell
+                  anchor "Page 9" [ref=1321, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=80&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAS]
+                    text "9"
+                table_cell
+                  anchor "Page 10" [ref=1322, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=90&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8tMDegQIShAU]
+                    text "10"
+                heading
+                  anchor [ref=1323, url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnuTBd-JmTsK3RQOJkqwJDLwus5owg:1792107818024&ei=KmXRaoeHAbGe0PEPtpD14QI&start=10&sa=N&sstk=AS6-VmK7X-LaWb-efpEK1hPmPbLuV0sxGVCtwYR-cmBIrFHCcC0IT7QuNbzQtfK0MuFmH6Mi_k1p_3BpJjSn9a3Z3sOiVqWYvzKAOA&ved=2ahUKEwiHxJHvmb2XAxUxDzQIHTZIPSwQ8NMDegQIShAW]
+                    text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+      button [ref=1324, url=https://www.google.com/search?q=wheel+offset+explained&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnu4_DiNQeESjMXruOs7eFSMb3KexA%3A1792107816075&ei=KGXRarGbBLTH0PEP0bWmqAM&uact=5&oq=wheel+offset+explained&gs_lp=Egxnd3Mtd2l6LXNlcnAiFndoZWVsIG9mZnNldCBleHBsYWluZWRIgwFQAFgAcAB4AZABAJgBAKABAKoBALABALgBA8gBAPgBAZgCAKACAJgDAOIDBBgAIF3iAwQYACBe4gMEGAAgX-IDBBgAIGDiAwQYACBh4gMEGAAgYpIHAKAHALIHALgHAMIHAMgHAIAIAQ&sclient=gws-wiz-serp#]
+        text "United States"
+        text " - "
+        text "From your IP address"
+      text " - "
+      button [ref=1325]
+        text "Update location"
+      container
+        anchor [ref=1326, loc=href:https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1, url=https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1]
+          text "Help"
+        button [ref=1327]
+          text "Send feedback"
+        anchor [ref=1328, loc=href:https://policies.google.com/privacy?hl=en&fg=1, url=https://policies.google.com/privacy?hl=en&fg=1]
+          text "Privacy"
+        anchor [ref=1329, loc=href:https://policies.google.com/terms?hl=en&fg=1, url=https://policies.google.com/terms?hl=en&fg=1]
+          text "Terms"
+

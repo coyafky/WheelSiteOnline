@@ -10,15 +10,20 @@ import {
   dealerShipping,
   dealerTraceability,
 } from "@/content/dealer-programs";
-import { faqs } from "@/content/faq";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
+import { getLocale } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Dealer Supply Programme — Supply Without Stock",
-  description:
-    "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Dealer Supply Programme — Supply Without Stock",
+    description:
+      "Fenghuai supplies dealers and distributors without a mandatory stock commitment — programme options, onboarding steps, freight and traceability across our four product lines.",
+    ...(await buildRouteMetadata("/dealers", locale)),
+  };
+}
 
 /**
  * Dealer supply programme hub.
@@ -30,48 +35,25 @@ export const metadata: Metadata = {
 export default function DealersPage() {
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. */}
+      <PageHero
         id="top"
-        aria-labelledby="dealers-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="dealers-title"
+        tone="dark"
+        eyebrow={dealerHero.eyebrow}
+        heading={dealerHero.heading}
+        lede={dealerHero.lede}
+        supporting={dealerHero.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_100%_at_86%_0%,rgba(194,101,10,0.28)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{dealerHero.eyebrow}</p>
-          <h1
-            id="dealers-title"
-            className="mt-5 max-w-[1000px] font-display text-[clamp(2.4rem,6.8vw,4.9rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
-          >
-            {dealerHero.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {dealerHero.lede}
-          </p>
-          <p className="mt-4 max-w-[660px] text-sm leading-relaxed text-white/55">
-            {dealerHero.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="btn-pill-solid">
-              Start a dealer enquiry
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/dealers/private-label" className="btn-pill-outline !text-white">
-              Private label programme
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="/contact" className="btn-pill-solid">
+          Start a dealer enquiry
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/dealers/private-label" className="btn-pill-outline !text-white">
+          Private label programme
+        </Link>
+      </PageHero>
 
       {/* B. The dealer model ----------------------------------------------- */}
       <section
@@ -301,42 +283,9 @@ export default function DealersPage() {
         </div>
       </section>
 
-      {/* G. FAQ -------------------------------------------------------------- */}
-      <section
-        aria-labelledby="dealer-faq-title"
-        data-reveal
-        className="border-b border-border bg-white py-20 lg:py-28"
-      >
-        <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-          <div>
-            <p className="eyebrow">Questions</p>
-            <h2
-              id="dealer-faq-title"
-              className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
-            >
-              Asked before the first order
-            </h2>
-            <p className="mt-5 max-w-[420px] text-[1.02rem] leading-relaxed text-steel">
-              MOQ, lead time, fitment, private label, testing and freight — the
-              six answers dealers want before they commit. Anything not covered
-              here, ask us directly.
-            </p>
-          </div>
-
-          <div data-reveal-group className="divide-y divide-border border-y border-border">
-            {faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h3 className="font-display text-[1.1rem] font-700 uppercase leading-snug tracking-[0.01em] text-ink">
-                  {faq.question}
-                </h3>
-                <p className="mt-3 text-[0.96rem] leading-relaxed text-steel">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* G. FAQ — withdrawn until MOQ, lead time, warranty length and shipping
+          incoterms are confirmed. These are commercial commitments; the previous
+          copy was placeholder text and must not ship as fact. */}
 
       {/* H. Pathways --------------------------------------------------------- */}
       <section

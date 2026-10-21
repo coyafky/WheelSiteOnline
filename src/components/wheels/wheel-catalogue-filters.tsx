@@ -1,7 +1,15 @@
 import Link from "next/link";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Field } from "@astryxdesign/core/Field";
+import { Theme } from "@astryxdesign/core/theme";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { wheelCatalogueCopyFor, type WheelCatalogueCopy } from "@/lib/i18n/wheel-catalogue-copy";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
 
 import { cn } from "@/lib/utils";
 import { PcdSearchGroup } from "./pcd-search-group";
+import { MobileWheelFilterDrawer } from "./mobile-wheel-filter-drawer";
 import { WheelFilterOption } from "./wheel-filter-option";
 import {
   SORT_KEYS,
@@ -42,18 +50,9 @@ const CATALOGUE_PATH = "/products/wheels";
  * 走 `processLabelEn`（与型号详情表的工艺标签同一映射），未记录工艺在锁定集合里
  * 不会出现，但仍给它一个明确的文案而不是原始 key。
  */
-function processLabelFor(key: ProcessKey): string {
-  if (key === "not-specified") return "Not specified in source data";
-  return processLabelEn(key) ?? key;
+function processLabelFor(key: ProcessKey, copy: WheelCatalogueCopy): string {
+  return copy.processName(key) || processLabelEn(key) || key;
 }
-
-/** §5.3 的四种排序；文案逐字取自规格表。 */
-const SORT_LABELS: Record<CatalogueSort, string> = {
-  "model-asc": "Model A–Z",
-  "diameter-asc": "Diameter: low to high",
-  "diameter-desc": "Diameter: high to low",
-  "variants-desc": "Most recorded configurations",
-};
 
 type CatalogueFilterProps = {
   facets: CatalogueFacets;
@@ -83,6 +82,25 @@ type CatalogueFilterProps = {
   /** 结果 URL 的基础路径。默认轮毂总目录。 */
   basePath?: string;
 };
+
+/**
+ * 筛选操作说明使用 Astryx 信息 Banner：它是持续性的状态说明，不是错误告警。
+ * Theme 只包围组件表面，避免 Neutral 令牌改写目录自己的布局和品牌颜色。
+ */
+function FilterInstructionBanner({ copy }: { copy: WheelCatalogueCopy }) {
+  return (
+    <Theme theme={neutralTheme} mode="light">
+      <Banner
+        status="info"
+        title={copy.filterInstructionTitle}
+        description={copy.filterInstructionBody}
+        container="card"
+        collapsible={false}
+        className="mt-3"
+      />
+    </Theme>
+  );
+}
 
 /* ---------------------------------------------------------------------------
  * URL 快照
@@ -120,6 +138,7 @@ function CheckboxGroup({
   idPrefix,
   collapseAfter = 0,
   columns = 1,
+  copy,
 }: {
   legend: string;
   name: string;
@@ -139,6 +158,7 @@ function CheckboxGroup({
   collapseAfter?: number;
   /** 列表列数。仅对短标签用（`15"` / `8.5"`）—— 长的（工艺名）必须单列。 */
   columns?: 1 | 2 | 3;
+  copy: WheelCatalogueCopy;
 }) {
   const selectedSet = new Set((selected ?? []).map(String));
   // 只数「真实存在于本组」的已选值 —— 否则别的轴的残留会算进来。
@@ -179,13 +199,18 @@ function CheckboxGroup({
 
   return (
     <fieldset className="mt-6 border-t border-border pt-5">
-      <legend className="eyebrow !text-ink">
+      <legend className="eyebrow flex items-center gap-2 !text-ink">
+        {/* 品牌色小标记：给分组标题一个视觉锚点，替代原来裸露的分隔线观感 */}
+        <span
+          aria-hidden="true"
+          className="inline-block h-[3px] w-4 shrink-0 rounded-full bg-forge"
+        />
         {legend}
         {/* 「已选 N」既是反馈也是隐含提示 —— 能同时选中两个，就说明这是多选。
             也让用户在勾选项滚出视野后仍知道当前选了什么。 */}
         {selectedCount > 0 ? (
-          <span className="ml-2 font-600 text-forge normal-case tracking-normal">
-            · {selectedCount} selected
+          <span className="rounded-full bg-forge-soft px-2 py-0.5 text-[0.68rem] font-600 normal-case tracking-normal text-forge-deep">
+            {copy.filterSelected(selectedCount)}
           </span>
         ) : null}
       </legend>
@@ -204,16 +229,16 @@ function CheckboxGroup({
 
       {rare.length > 0 ? (
         /* 原生 details —— 无 JS 可展开，与移动抽屉同一套机制。 */
-        <details className="group mt-2">
-          <summary className="flex min-h-8 cursor-pointer list-none items-center gap-1.5 text-[0.75rem] font-600 text-forge marker:content-none transition-colors hover:text-forge-deep">
+        <details className="group/rare mt-2">
+          <summary className="flex min-h-8 cursor-pointer list-none items-center gap-1.5 rounded-md px-1.5 text-[0.75rem] font-600 text-forge marker:content-none transition-colors duration-150 hover:bg-forge-soft hover:text-forge-deep">
             <span
               aria-hidden="true"
-              className="flex size-4 shrink-0 items-center justify-center rounded-full border border-forge/50 font-display text-[0.8rem] font-700 leading-none transition-transform duration-200 group-open:rotate-45"
+              className="flex size-4 shrink-0 items-center justify-center rounded-full bg-forge-soft font-display text-[0.75rem] font-700 leading-none text-forge transition-transform duration-200 group-open/rare:rotate-90"
             >
-              +
+              ›
             </span>
-            <span className="group-open:hidden">Show {rare.length} more</span>
-            <span className="hidden group-open:inline">Show fewer</span>
+            <span className="group-open/rare:hidden">{copy.filterShowMore(rare.length)}</span>
+            <span className="hidden group-open/rare:inline">{copy.filterShowFewer}</span>
           </summary>
           <div
             className={cn(
@@ -238,7 +263,8 @@ function FilterFields({
   basePath = CATALOGUE_PATH,
   idPrefix,
   total,
-}: CatalogueFilterProps & { idPrefix: string }) {
+  copy,
+}: CatalogueFilterProps & { idPrefix: string; copy: WheelCatalogueCopy }) {
   return (
     /*
      * 两段式结构：**筛选区滚动，主行动常驻**。
@@ -267,57 +293,43 @@ function FilterFields({
       */}
       <div className="shrink-0">
         <div className="flex items-baseline justify-between gap-3">
-          <p className="eyebrow !text-ink">Filter by specification</p>
+          <p className="eyebrow !text-ink">{copy.filterTitle}</p>
           <p className="text-[0.7rem] tabular-nums text-muted-foreground">
-            {isFiltered ? `${total} match` : `${total} available`}
+            {isFiltered ? copy.filterMatchCount(total) : copy.filterAvailableCount(total)}
           </p>
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-          <button type="submit" className="inline-flex min-h-11 items-center bg-ink px-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white transition-colors hover:bg-forge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
-            View {total} {total === 1 ? "model" : "models"}
+          <button type="submit" className="inline-flex min-h-11 items-center rounded-md bg-ink px-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white shadow-sm transition-all duration-150 ease-out hover:bg-forge hover:shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
+            {copy.filterApply}
           </button>
           <Link
             href={basePath}
             className="font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-forge-deep"
           >
-            Clear filters
+            {copy.filterClear}
           </Link>
         </div>
 
-        {/*
-          ══ 「多选」必须明说（2026-10-06 用户要求）══════════════════════════════
-
-          轮毂筛选本质是多选（同类 OR、跨轴 AND），但用户对筛选栏的默认预期是
-          单选。不提示的话，最常见的两种误解是：
-            · 「点 18 寸会不会把 19 寸排除掉？」
-            · 「再点一个是「换」还是「加」？」
-          两种都会让人不敢多点，或者点完看到一堆结果不知所以。
-
-          写成一个**左边框注记**而不是一行灰色小字：小字在这个位置会被当成
-          免责声明直接跳过，而它其实是操作说明。左边框 + 稍深一点的墨色，
-          既能被看到，又不占一整块盒子的高度。
-        */}
-        <p className="mt-3 text-[0.72rem] leading-relaxed text-steel">
-          Select one or more values in each group. Values in the same group add together.
-        </p>
+        <FilterInstructionBanner copy={copy} />
       </div>
 
       {/* 筛选区：独立滚动，不与上面的主行动抢位置 */}
       <div className="mt-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:border-t lg:border-border lg:pt-1">
       <div className="mt-5">
-        <label htmlFor={`${idPrefix}-q`} className="eyebrow !text-ink">
-          Model search
-        </label>
-        <input
-          id={`${idPrefix}-q`}
-          type="search"
-          name="q"
-          defaultValue={query.q ?? ""}
-          placeholder="e.g. HP12"
-          autoComplete="off"
-          className="mt-3 w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
-        />
+        <Theme theme={neutralTheme} mode="light">
+          <Field label={copy.filterSearch} inputID={`${idPrefix}-q`}>
+            <input
+              id={`${idPrefix}-q`}
+              type="search"
+              name="q"
+              defaultValue={query.q ?? ""}
+              placeholder={copy.filterSearchPlaceholder}
+              autoComplete="off"
+              className="w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
+            />
+          </Field>
+        </Theme>
       </div>
 
       {/*
@@ -350,33 +362,36 @@ function FilterFields({
 
       {/* ① 孔距 —— 门禁。16 个值，买家通常只关心 1–3 个 → 带搜索。 */}
       <PcdSearchGroup
-        legend="Bolt pattern (PCD)"
+        legend={copy.filterPcd}
         name="pcd"
         options={facets.pcds}
         selected={query.pcds}
         idPrefix={idPrefix}
         columns={2}
+        copy={copy.pcdUi}
       />
 
       {/* ② 直径 —— 最直观、最常用，6 个值不需要折叠或搜索。 */}
       <CheckboxGroup
-        legend="Diameter"
+        legend={copy.filterDiameter}
         name="diameter"
         options={facets.diameters}
         selected={query.diameters}
         idPrefix={idPrefix}
         columns={3}
+        copy={copy}
       />
 
       {/* ③ 宽度 —— 11 个值，其中 4 个合计只覆盖 7 个型号 → 长尾收起。 */}
       <CheckboxGroup
-        legend="Width"
+        legend={copy.filterWidth}
         name="width"
         options={facets.widths}
         selected={query.widths}
         idPrefix={idPrefix}
         collapseAfter={5}
         columns={2}
+        copy={copy}
       />
 
       {/* ④ 工艺 —— 偏好，不是约束，所以最后。 */}
@@ -387,29 +402,32 @@ function FilterFields({
          * 在界面上无从解释，且看起来像是筛选还没加载完。
          */
         <div className="mt-6 border-t border-border pt-5">
-          <p className="eyebrow !text-ink">Recorded process</p>
+          <p className="eyebrow !text-ink">{copy.filterProcess}</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {lockedProcesses.map((key) => (
               <li
                 key={key}
                 className="inline-flex min-h-8 items-center rounded-full border border-forge/45 bg-forge-soft px-3 text-[0.75rem] text-ink"
               >
-                {processLabelFor(key)}
+                {processLabelFor(key, copy)}
               </li>
             ))}
           </ul>
           <p className="mt-2 text-[0.72rem] leading-relaxed text-muted-foreground">
-            This page only shows models whose production record states one of the
-            processes above. The process filter cannot be widened from the URL.
+            {copy.filterLockedProcessNote(lockedProcesses.map((key) => processLabelFor(key, copy)).join(", "))}
           </p>
         </div>
       ) : (
         <CheckboxGroup
-          legend="Recorded process"
+          legend={copy.filterProcess}
           name="process"
-          options={facets.processes}
+          options={facets.processes.map((option) => ({
+            ...option,
+            label: copy.processName(String(option.value)),
+          }))}
           selected={query.processes}
           idPrefix={idPrefix}
+        copy={copy}
         />
       )}
 
@@ -424,8 +442,11 @@ function FilterFields({
  * 排序**不在这里**：结果数与排序在同一个上下文（§9），由 `WheelCatalogueSort`
  * 渲染在结果标题旁。筛选表单用一个隐藏域把当前排序带过去，改筛选不会把排序冲掉。
  */
-export function WheelCatalogueFilters(props: CatalogueFilterProps) {
+export async function WheelCatalogueFilters(props: CatalogueFilterProps) {
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
   const { query, lockedProcesses = [], basePath = CATALOGUE_PATH } = props;
+  const localizedBasePath = localizedPath(basePath, locale);
   const appliedCount =
     (query.q ? 1 : 0) +
     (query.diameters?.length ?? 0) +
@@ -437,48 +458,46 @@ export function WheelCatalogueFilters(props: CatalogueFilterProps) {
 
   return (
     <>
-      {/* 移动：原生 details 抽屉，无 JS 可展开（§10 末条） */}
-      <details
-        data-catalogue-mobile-filter
-        className="group border border-border bg-white lg:hidden"
+      {/* 移动：原生 details 作为无 JS 基线，JS 可用时增强为可访问抽屉。 */}
+      <MobileWheelFilterDrawer
+        summaryLabel={copy.mobileFilter}
+        summaryAriaLabel={copy.mobileFilterAria(appliedCount)}
+        summaryMeta={appliedCount > 0 ? copy.mobileApplied(appliedCount) : copy.mobileAllModels}
+        dialogTitle={copy.filterTitle}
+        closeLabel={copy.filterClose}
       >
-        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 marker:content-none">
-          <span className="font-display text-[0.78rem] font-700 uppercase tracking-[0.14em] text-ink">
-            Filters
-          </span>
-          <span className="text-[0.75rem] text-muted-foreground">
-            {appliedCount > 0 ? `${appliedCount} applied` : "All models"}
-          </span>
-          <span
-            aria-hidden="true"
-            className="flex size-5 shrink-0 items-center justify-center font-display text-[1rem] font-700 leading-none text-forge transition-transform duration-200 ease-out group-open:rotate-45"
-          >
-            +
-          </span>
-        </summary>
-        <div className="border-t border-border px-4 pb-5 pt-5">
-          <form method="get" action={basePath} aria-label="Filter the wheel catalogue">
+        <div>
+          <form method="get" action={localizedBasePath} aria-label={copy.filterFormAria}>
             {sortPairs.map(([name, value]) => (
               <input key={name} type="hidden" name={name} value={value} />
             ))}
-            <FilterFields {...props} idPrefix="mobile" />
+            <FilterFields {...props} basePath={localizedBasePath} copy={copy} idPrefix="mobile" />
+            <div className="mt-6 border-t border-border pt-5">
+              <button
+                data-mobile-filter-apply="bottom"
+                type="submit"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-md bg-ink px-5 font-display text-[0.75rem] font-700 uppercase tracking-[0.12em] text-white shadow-sm transition-all duration-150 ease-out hover:bg-forge hover:shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge"
+              >
+                {copy.filterApply}
+              </button>
+            </div>
           </form>
         </div>
-      </details>
+      </MobileWheelFilterDrawer>
 
       {/* 桌面：左栏常驻（sticky 由页面容器提供）；表单本身是 flex 列，
           好让「筛选区滚动 + 主行动常驻」成立。 */}
-      <aside aria-label="Catalogue filters" className="hidden lg:block">
+      <aside aria-label={copy.filtersAria} className="hidden lg:block">
         <form
           method="get"
-          action={basePath}
-          aria-label="Filter the wheel catalogue"
+          action={localizedBasePath}
+          aria-label={copy.filterFormAria}
           className="lg:flex lg:max-h-[calc(100vh-7rem)] lg:flex-col"
         >
           {sortPairs.map(([name, value]) => (
             <input key={name} type="hidden" name={name} value={value} />
           ))}
-          <FilterFields {...props} idPrefix="desktop" />
+          <FilterFields {...props} basePath={localizedBasePath} copy={copy} idPrefix="desktop" />
         </form>
       </aside>
     </>
@@ -502,6 +521,7 @@ function labelFor(
 function buildChips(
   facets: CatalogueFacets,
   query: WheelCatalogueInput,
+  copy: WheelCatalogueCopy,
   lockedProcesses: readonly ProcessKey[] = [],
   basePath = CATALOGUE_PATH,
 ): Chip[] {
@@ -515,7 +535,7 @@ function buildChips(
   if (query.q) {
     chips.push({
       key: "q",
-      label: `Search “${query.q}”`,
+      label: copy.searchChip(query.q),
       href: href({ ...query, q: undefined }, { page: 1 }),
     });
   }
@@ -523,7 +543,7 @@ function buildChips(
   for (const d of query.diameters ?? []) {
     chips.push({
       key: `diameter-${d}`,
-      label: `Diameter ${labelFor(facets.diameters, String(d), `${d}"`)}`,
+      label: copy.diameterChip(labelFor(facets.diameters, String(d), `${d}"`)),
       href: href(
         { ...query, diameters: (query.diameters ?? []).filter((x) => x !== d) },
         { page: 1 },
@@ -534,7 +554,7 @@ function buildChips(
   for (const w of query.widths ?? []) {
     chips.push({
       key: `width-${w}`,
-      label: `Width ${labelFor(facets.widths, String(w), `${w}"`)}`,
+      label: copy.widthChip(labelFor(facets.widths, String(w), `${w}"`)),
       href: href(
         { ...query, widths: (query.widths ?? []).filter((x) => x !== w) },
         { page: 1 },
@@ -545,7 +565,7 @@ function buildChips(
   for (const p of query.pcds ?? []) {
     chips.push({
       key: `pcd-${p}`,
-      label: `PCD ${labelFor(facets.pcds, p, p.replace(/x/g, "×"))}`,
+      label: copy.pcdChip(labelFor(facets.pcds, p, p.replace(/x/g, "×"))),
       href: href(
         { ...query, pcds: (query.pcds ?? []).filter((x) => x !== p) },
         { page: 1 },
@@ -558,7 +578,7 @@ function buildChips(
     for (const key of query.processes ?? []) {
       chips.push({
         key: `process-${key}`,
-        label: `Process ${labelFor(facets.processes, key, key)}`,
+        label: copy.processChip(copy.processName(key)),
         href: href(
           { ...query, processes: (query.processes ?? []).filter((x) => x !== key) },
           { page: 1 },
@@ -570,7 +590,7 @@ function buildChips(
   return chips;
 }
 
-export function WheelCatalogueAppliedChips({
+export async function WheelCatalogueAppliedChips({
   facets,
   query,
   lockedProcesses = [],
@@ -585,12 +605,15 @@ export function WheelCatalogueAppliedChips({
   basePath?: string;
   className?: string;
 }) {
-  const chips = buildChips(facets, query, lockedProcesses, basePath);
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
+  const localizedBasePath = localizedPath(basePath, locale);
+  const chips = buildChips(facets, query, copy, lockedProcesses, localizedBasePath);
   if (chips.length === 0) return null;
 
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
-      <span className="sr-only">Applied filters</span>
+      <span className="sr-only">{copy.appliedFilters}</span>
       {chips.map((chip) => (
         <Link
           key={chip.key}
@@ -601,14 +624,14 @@ export function WheelCatalogueAppliedChips({
           <span aria-hidden="true" className="text-muted-foreground">
             ×
           </span>
-          <span className="sr-only">Remove filter</span>
+          <span className="sr-only">{copy.removeFilter}</span>
         </Link>
       ))}
       <Link
-        href={basePath}
+        href={localizedBasePath}
         className="inline-flex min-h-8 items-center px-2 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-forge-deep"
       >
-        Clear all
+        {copy.clearAll}
       </Link>
     </div>
   );
@@ -618,7 +641,7 @@ export function WheelCatalogueAppliedChips({
  * 排序（原生 select + 显式提交按钮 —— 无 JS 也能排序）
  * ------------------------------------------------------------------------- */
 
-export function WheelCatalogueSort({
+export async function WheelCatalogueSort({
   query,
   lockedProcesses = [],
   basePath = CATALOGUE_PATH,
@@ -629,12 +652,21 @@ export function WheelCatalogueSort({
   /** 结果 URL 的基础路径。默认轮毂总目录。 */
   basePath?: string;
 }) {
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
+  const localizedBasePath = localizedPath(basePath, locale);
+  const sortLabels: Record<CatalogueSort, string> = {
+    "model-asc": copy.sortModel,
+    "diameter-asc": copy.sortDiameterAsc,
+    "diameter-desc": copy.sortDiameterDesc,
+    "variants-desc": copy.sortVariants,
+  };
   return (
     <form
       method="get"
-      action={basePath}
-      className="flex items-center gap-2"
-      aria-label="Sort the wheel catalogue"
+      action={localizedBasePath}
+      className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:w-auto"
+      aria-label={copy.sortAria}
     >
       {snapshotPairs(query, lockedProcesses).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
@@ -643,17 +675,17 @@ export function WheelCatalogueSort({
         htmlFor="catalogue-sort"
         className="font-display text-[0.72rem] font-600 uppercase tracking-[0.12em] text-muted-foreground"
       >
-        Sort
+        {copy.sortLabel}
       </label>
       <select
         id="catalogue-sort"
         name="sort"
         defaultValue={query.sort ?? "model-asc"}
-        className="min-h-11 border border-border bg-white px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
+        className="min-h-11 w-full min-w-0 border border-border bg-white px-3 text-[0.82rem] text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
       >
         {SORT_KEYS.map((key) => (
           <option key={key} value={key}>
-            {SORT_LABELS[key]}
+            {sortLabels[key]}
           </option>
         ))}
       </select>
@@ -661,7 +693,7 @@ export function WheelCatalogueSort({
         type="submit"
         className="min-h-11 bg-ink px-4 font-display text-[0.72rem] font-700 uppercase tracking-[0.12em] text-white transition-colors hover:bg-forge focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
       >
-        Apply
+        {copy.sortApply}
       </button>
     </form>
   );

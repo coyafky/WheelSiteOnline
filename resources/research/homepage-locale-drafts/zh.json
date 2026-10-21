@@ -1,0 +1,261 @@
+{
+  "draftMeta": {
+    "pageKey": "home",
+    "locale": "zh",
+    "sourceLocale": "en",
+    "translationStatus": "machine-draft",
+    "publicationStatus": "unapproved",
+    "indexing": "noindex",
+    "reviewNote": "依据已批准英文首页和现有中文参考稿整理；发布前仍需语言、商务与证据人工审核。"
+  },
+  "seo": {
+    "title": "丰怀 | 轮毂、电驱壳体、定制铝制品与自密封轮胎",
+    "description": "了解丰怀的四条汽车产品线、对应制造路线与项目对接方式，并提交轮毂、电驱壳体、定制铝制品或自密封轮胎需求。"
+  },
+  "content": {
+    "hero": {
+      "eyebrow": "四条产品线 · 一个项目接口",
+      "heading": "以专业制造能力支撑的汽车部件",
+      "lead": "丰怀面向海外采购方协调轮毂、电驱壳体、定制铝制品与自密封轮胎项目，从需求评审和工程对接到生产文件确认。",
+      "disclosure": "制造在各专业生产基地完成。每一个项目都会确认对应的责任工厂、能力范围、认证情况与供货范围。",
+      "mediaLabel": "我们的轮毂制造工厂",
+      "media": {
+        "wordpressId": 114,
+        "src": "/images/home/factory.webp",
+        "alt": "丰怀轮毂制造基地鸟瞰图",
+        "caption": "丰怀轮毂制造基地",
+        "hasRender": true,
+        "approvalStatus": "approved",
+        "sourceRef": "WP 114"
+      },
+      "primaryAction": {
+        "label": "浏览产品线",
+        "href": "#product-lines"
+      },
+      "secondaryAction": {
+        "label": "申请项目评估",
+        "href": "/request-a-quote?from=home"
+      }
+    },
+    "productLines": {
+      "eyebrow": "产品线",
+      "heading": "四条产品线，各自拥有独立的工程路线",
+      "intro": "请选择与零件或供货需求匹配的产品线。产品数据、制造路线与验证证据都在该产品线内评估，而不会当作一套通用流程处理。",
+      "actionLabels": {
+        "wheels": "浏览轮毂",
+        "ev-components": "查看电驱壳体分类",
+        "custom-aluminum": "从您已有的资料开始",
+        "safety-tires": "查看自密封轮胎"
+      },
+      "items": [
+        {
+          "slug": "wheels",
+          "name": "轮毂",
+          "subtitle": "已记录型号 · 旋压成形 · 定制锻造",
+          "summary": "浏览已批准的轮毂规格，查看已记录的旋压成形路线，或启动定制锻造轮毂项目。",
+          "highlights": [],
+          "hasRender": true,
+          "image": "/images/cards/card-wheels.webp",
+          "href": "/products/wheels"
+        },
+        {
+          "slug": "ev-components",
+          "name": "电驱铝制壳体",
+          "subtitle": "电机 · 控制器 · 逆变器",
+          "summary": "为水冷电机、压铸电机，以及控制器或逆变器壳体项目提供工程评估。",
+          "highlights": [],
+          "hasRender": true,
+          "image": "/images/cards/card-ev.webp",
+          "href": "/products/ev-components"
+        },
+        {
+          "slug": "custom-aluminum",
+          "name": "定制铝制品开发",
+          "subtitle": "2D 图纸 · 3D 数据 · 实物样件",
+          "summary": "针对定义的轮毂和电驱壳体类别之外的铝制部件，从图纸或样件评估开始。",
+          "highlights": [],
+          "hasRender": true,
+          "image": "/images/cards/card-aluminum.webp",
+          "href": "/products/custom-aluminum"
+        },
+        {
+          "slug": "safety-tires",
+          "name": "自密封轮胎",
+          "subtitle": "技术 · 测试 · 供货评估",
+          "summary": "查看自密封概念、已有记录的测试条件，以及讨论适用轮胎项目所需的信息。",
+          "highlights": [],
+          "hasRender": true,
+          "image": "/images/cards/card-tires.webp",
+          "href": "/products/safety-tires"
+        }
+      ]
+    },
+    "capabilities": {
+      "eyebrow": "制造与工程",
+      "heading": "制造能力需要明确适用范围与证据",
+      "items": [
+        {
+          "id": "01",
+          "title": "工程评审",
+          "body": "在确认路线之前，我们会先审阅图纸、3D 数据、样件与应用需求。",
+          "appliesTo": [
+            "全部项目线"
+          ],
+          "evidenceStatus": "supplier-stated"
+        },
+        {
+          "id": "02",
+          "title": "铸造与成形路线",
+          "body": "重力铸造、低压铸造、旋压成形、压铸与锻造，是各已定义产品线可选的工艺路线。",
+          "appliesTo": [
+            "轮毂",
+            "电驱壳体",
+            "定制铝制品"
+          ],
+          "evidenceStatus": "supplier-stated"
+        },
+        {
+          "id": "03",
+          "title": "精密加工",
+          "body": "关键孔位、端面、配合面与基准按已批准图纸进行加工与检验。",
+          "appliesTo": [
+            "轮毂",
+            "电驱壳体",
+            "定制铝制品"
+          ],
+          "evidenceStatus": "supplier-stated"
+        },
+        {
+          "id": "04",
+          "title": "按产品区分的工序",
+          "body": "连接、涂覆、热处理或密封层施加，仅在已批准的产品路线有要求时纳入。",
+          "appliesTo": [
+            "按路线而定"
+          ],
+          "evidenceStatus": "supplier-stated"
+        },
+        {
+          "id": "05",
+          "title": "检验与验证",
+          "body": "根据适用产品与目标市场，规划尺寸、平衡、密封边界、疲劳或穿刺等验证条件。",
+          "appliesTo": [
+            "按产品与市场而定"
+          ],
+          "evidenceStatus": "supplier-stated"
+        },
+        {
+          "id": "06",
+          "title": "可核验的文件记录",
+          "body": "对证书、检测报告与检验记录，按其法人主体、范围、产品与有效期逐项核查。",
+          "appliesTo": [
+            "已批准项目证据"
+          ],
+          "evidenceStatus": "verified"
+        }
+      ],
+      "action": {
+        "label": "查看制造与质量",
+        "href": "/capabilities"
+      }
+    },
+    "delivery": {
+      "eyebrow": "从需求到批准供货",
+      "heading": "一个项目接口，按产品定制的制造路线",
+      "lead": "丰怀在深圳统一承接商务与项目接口，协调各专业生产基地。这些基地同属一个实际控制人体系，共同覆盖材料、模具、铸造与精密加工环节。针对所选产品线，我们会确认责任工厂、工序路线、验证方案与文件清单。",
+      "stages": [
+        {
+          "id": "01",
+          "title": "确认需求",
+          "body": "从已记录的轮毂变体、图纸、3D 数据、实物样件或轮胎供货需求出发。"
+        },
+        {
+          "id": "02",
+          "title": "确认责任路线",
+          "body": "明确制造主体、工序范围、工程负责人以及项目所需的证据。"
+        },
+        {
+          "id": "03",
+          "title": "选定或开发产品",
+          "body": "审阅现有规格；若需要开发，则依次推进模具、试制与首件工作。"
+        },
+        {
+          "id": "04",
+          "title": "检验与批准",
+          "body": "在放行供货基准之前，评估约定的特性指标与适用的验证证据。"
+        },
+        {
+          "id": "05",
+          "title": "带记录供货",
+          "body": "确认重复性、可追溯性、包装方式，以及已批准订单或批次所需的文件。"
+        }
+      ],
+      "evidence": [
+        {
+          "id": "wheel-manufacturing",
+          "label": "我们的轮毂生产基地",
+          "body": "轮毂成形与生产设备为已批准轮毂项目所选定的路线提供支撑。",
+          "media": {
+            "wordpressId": 61,
+            "src": "/images/about/casting-process.webp",
+            "alt": "丰怀制造基地内的轮毂铸造产线",
+            "caption": "丰怀轮毂制造基地",
+            "hasRender": true,
+            "approvalStatus": "approved",
+            "sourceRef": "WP 61 / WP 116"
+          }
+        },
+        {
+          "id": "aluminum-production",
+          "label": "我们的铝制部件生产基地",
+          "body": "机加工与壳体生产资源按已批准的铝制部件路线配置。",
+          "media": {
+            "wordpressId": 78,
+            "src": "/images/about/machining-workshop.webp",
+            "alt": "丰怀制造基地内的铝制部件加工车间",
+            "caption": "丰怀铝制部件制造基地",
+            "hasRender": true,
+            "approvalStatus": "approved",
+            "sourceRef": "WP 78 / WP 38"
+          }
+        },
+        {
+          "id": "tire-production",
+          "label": "我们的自密封轮胎生产基地",
+          "body": "专用热熔涂覆产线为已批准的自密封轮胎项目及其有记录的工序路线提供支撑。",
+          "media": {
+            "wordpressId": 155,
+            "src": "/images/safety-tires/automated-production-line.webp",
+            "alt": "丰怀自密封轮胎生产基地内的机器人热熔涂覆产线",
+            "caption": "丰怀自密封轮胎生产基地",
+            "hasRender": true,
+            "approvalStatus": "approved",
+            "sourceRef": "WP 155"
+          }
+        }
+      ],
+      "action": {
+        "label": "项目如何推进",
+        "href": "/custom-development"
+      }
+    },
+    "closing": {
+      "eyebrow": "从您现有的资料开始",
+      "heading": "把型号、图纸或需要解决的问题发给我们",
+      "body": "请告知产品线、目标市场以及目前已具备的资料。我们会用询盘编号继续推进规格与证据的核对。",
+      "inputLabel": "建议的起始资料",
+      "inputPrompts": [
+        "已记录的型号或完整的轮毂规格",
+        "2D 图纸、3D 数据或经授权的实物样件",
+        "应用场景、数量、市场与所需文件"
+      ],
+      "primaryAction": {
+        "label": "申请项目评估",
+        "href": "/request-a-quote?from=home"
+      },
+      "secondaryAction": {
+        "label": "浏览全部产品线",
+        "href": "/products"
+      }
+    }
+  }
+}

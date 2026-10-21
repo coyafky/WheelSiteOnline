@@ -1,0 +1,343 @@
+QUERY: electric vehicle inverter housing manufacturer
+CAPTURED_AT: 2026-10-15T23:43:29.320Z
+URL: https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA%3A1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI
+RESULTS_READY: true
+
+[p1 "electric vehicle inverter housing manufacturer - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "electric vehicle inverter housing manufacturer - Google Search"]
+root
+  link [ref=741]
+    text "Skip to main content"
+  anchor [ref=742, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=743, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=744, loc=css:textarea[name="q"]]
+          text "electric vehicle inverter housing manufacturer"
+        container
+          button "Clear" [ref=745]
+            svg_root
+          container
+            button "Search by voice" [ref=746, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=747, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=748, loc=role:button[name="Settings"]]
+        svg_root
+      button "Share" [ref=749, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=750, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=751, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Delectric%2Bvehicle%2Binverter%2Bhousing%2Bmanufacturer%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA%253A1792107807907%26ei%3DH2XRatP7NrCa0PEP1ey1mAI&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=752]
+      list
+        listitem
+          anchor [ref=753, url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ2J8OegQIFBAD]
+            text "AI Mode"
+        listitem
+          link [ref=754]
+            text "All"
+        listitem
+          anchor [ref=755, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&q=electric+vehicle+inverter+housing+manufacturer&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQtKgLegQIGxAB]
+            text "Images"
+        listitem
+          anchor [ref=756, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&q=electric+vehicle+inverter+housing+manufacturer&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=757, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&q=electric+vehicle+inverter+housing+manufacturer&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQs6gLegQIGBAB]
+            text "Short videos"
+        listitem
+          anchor [ref=758, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&q=electric+vehicle+inverter+housing+manufacturer&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQtKgLegQIFxAB]
+            text "Videos"
+        listitem
+          anchor [ref=759, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=electric+vehicle+inverter+housing+manufacturer&tbm=nws&source=lnms&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832SMIiTl3t-JZ4hGJOxPbHYRzcy6GgySVUpZky6o6nTl3OG98qpkeeTCM9JzouvaRJUa2eRuUWrmVKZaYAjAscHx5x_IqyjRL7o_6MMbOPqFHKYX90b9MrCa21zkq9NVorvrTqMxI9RbUjRyfOZ0qHpmr0KZ0jMqPX_Q7Zs12r41UsqMrug&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ0pQJegQIFhAB]
+            text "News"
+        listitem
+          button [ref=760]
+            container "More filters"
+              text "More"
+              svg_root
+      button [ref=761]
+        text "Tools"
+        svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        heading
+          text "Thinking"
+        progressindicator "Generating"
+      main
+        container
+          container
+            heading
+              text "Web results"
+            anchor [ref=762, url=https://www.google.com/goto?url=CAESlAEB6zswFRXnLbOWTTKn4qRq2urouDKpJyA-4nznirprleJs8qgIt_Ns8Ui7c4AjwUfKyC7kjZpdp_7y3rB4Sz93uSWu1JQuaWdTh5O43x2b87bv6wAKArI5-iXYnVb9nJEQbUn8BMGaspbjjs3S0i8_wzQuksrR3h7KrCu1o4mQFzSZbNaAU8uffiyjRFaDu98TdvZ9]
+              heading
+                text "Electric traction inverter (HEV/EV) - Automotive"
+              image
+              text "Danfoss"
+              text "https://www.danfoss.com"
+              text "› industries › automotive › dsp"
+            button "About this result" [ref=763]
+              svg_root
+            text "Semikron Danfoss is a"
+            text "globally active manufacturer"
+            text "of customized IGBT power modules, MOSFET power modules, SiC modules and power stacks."
+          container
+            anchor [ref=764, url=https://www.google.com/goto?url=CAESlgEB6zswFWb6ItHqfDSCjQCzvLBwuhUU-nqIhHZ-mwqtsDQTNNf4RBODMMtQsZ6UgBelVLw3q0ZfhQisgWSWw4rgZ275jf0XRoh_MpiU9ZQ80SLiiluzswpYZwbwmQrElta2bkcyP778hUHZuv3Gquw3rDhQatwmJ_HneMBj78iGak9bTE-2yqXA4R1P8XfOTzR4ZdW38KU]
+              heading
+                text "Top 25 Inverter manufacturers for electric vehicles based in ..."
+              image
+              text "RevenueBase"
+              text "https://revenuebase.ai"
+              text "› companies › united-states"
+            button "About this result" [ref=765]
+              svg_root
+            text "Sep 17, 2026"
+            text "—"
+            text "RevenueBase identified"
+            text "122 inverter manufacturers"
+            text "for electric vehicles headquartered in the United States as of September 2026, matched on each ..."
+            anchor [ref=766, url=https://www.google.com/goto?url=CAESgAIB6zswFdhPCK-VwfzxTs4T76X1bb14fIbGosC1gl92zU724YVQ7NZSRiBwL28G_8QJ9yqFtff7Tgrlqtv02z-PtFh1XNIgpvZI1yXMTK-geVqMYHmuLSrqw-yYZKyH3yLcw3g5rp43F4cTX50fvTXY_QaU8R6KZQ5GtA0MGP83NFgSLPGP6RCEwPzXbQKCKh7C5bue5JqcuRnf3UVXI1JnIcT369eUF35mjOKhvFV-FjiWPed9ob2tY2AN7mgJ74RleLd2AShCqNfLDIEIlDh9UPzbVU2KnFqZ8w4GPXuX7hyYXwpcOgNQW_aEwvQknG2P5eNUmGmGUZTae_BsTY02]
+              text "Read more"
+          container
+            text "People also ask"
+            button [ref=767]
+              text "Who are some inverter manufacturers in the USA?"
+              svg_root
+            button [ref=768]
+              text "Which type of inverter is used in EV?"
+              svg_root
+            button [ref=769]
+              text "Who are the top inverter manufacturers in China?"
+              svg_root
+            button [ref=770]
+              text "Who are some major manufacturers of electric vehicle components?"
+              svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=771, url=https://www.google.com/goto?url=CAESdAHrOzAVdh_DS8N54B5W6dUMfE3qqfgTR4EyQdhlMSc6xZmjD_KtO0EJKdANwGt1z4ZtKdgWipQ6hNnwgvh5LgC7W9xg9kyXxpTIxWESpbE_VlktM8ntGRq8c2WryLlOpFtq-dLKn7YWVeVdj-9dJSa1ZI4U]
+              heading
+                text "Power Electronics"
+              image
+              text "BorgWarner"
+              text "https://www.borgwarner.com"
+              text "› technologies › power-el..."
+            button "About this result" [ref=772]
+              svg_root
+            text "Power Electronics."
+            text "BorgWarner"
+            text "is a leading supplier of advanced electrification technologies for Electric and Hybrid vehicles."
+            anchor [ref=773, url=https://www.google.com/goto?url=CAESugEB6zswFZMVRNXeeSuQ8GtSyntRbDNsrXGZnhTeC4upj_xo1rK-q_3im0tbLNcCu8rDk35pUvqPFLgpTkLUcVJC1YLmUoX01K0LeDKoU_uI-_SXWvUgqYr9SCKhlzpSpNx1i3Nj5qZsJofZFtH0kvoCUeHJ38Q27dWHt0T94ghrD7SOiIkJE7Rmgtn0tNM8vjrOngZC27bZ9SyR8lM7LqUk63VeXF76JflP9qojtKefqfaCzXSGcM0iTjQ]
+              text "Read more"
+            list_item
+              anchor [ref=774, url=https://www.google.com/goto?url=CAESfAHrOzAVctSv09ElAQoKwR7cgf59-_JtUnMGZRbzBMalNVAVkBIRTkAUk8-9r03azSw6-AjOIBnILS49yGzttsUCJ4pU7Nb8OL0TT2Tvpg8UH-K0IWPH4cXgRQ1efarky1eEt3pgjRh2zl_LXI0vrxBlOWNSDmXpt_vRU6c]
+                text "800-Volt Silicon Carbide Inverter"
+            list_item
+              anchor [ref=775, url=https://www.google.com/goto?url=CAESeAHrOzAVuA_K2I89KBrLOc4UoE7vBEEFKvh7bh46u4s6S6d3kec_qFgXC-ITaQQsrlTQHLRfMeBJD9ddfVgPWfFaOrStFP2wjlsKmpNQaPiwEEBGh99QIT0MqFnYs3KeV2ONAoggCIUojKgFB85Gw8fP6ivGwtY4IA]
+                text "High-Voltage Multi Level High..."
+            list_item
+              anchor [ref=776, url=https://www.google.com/goto?url=CAESgQEB6zswFaBY0aAH0CsWa_PzLNayDPJ9ql-hPtKPwKguGDIhbH3x7Ogs9dqltEwCstWLkRf6MpHHBAckyeOCcf__eh0T8f7iu5RVSShcexI4inOeRS9Ij3V0EPbf96jKVNjp9hRwV6fuzhhexNpAQ2gEDMNrJVlOgwPG8dXoe-aGJ-Q]
+                text "Dual Inverters"
+          container
+            anchor [ref=777, url=https://www.google.com/goto?url=CAESsAEB6zswFd6-LacqoqiCqSzK6jqK77mMDdCC8yiDKX65kE8-XYlx322tbYSBQQunFXhSW9W_W5a0BGnSQ3MlPYm324TZwF734L35-gBAPCMvDrqvs0WoDoD4_XOgm75vJtilATcVbDvBc1e9bleYsd3rqen3DvZoiyNLBZ0WQWRTT_4pw-BxlNB7fONssQPvXhdvGuuhs7lyfPuZYFqD_HNxz2ox4wj-il-RfoiHf62jNg]
+              heading
+                text "Innovative lightweight motor-inverter housing"
+              image
+              text "Electric & Hybrid Vehicle Technology International"
+              text "https://www.electrichybridvehicletechnology.com"
+              text "› inn..."
+            button "About this result" [ref=778]
+              svg_root
+            text "Mar 17, 2025"
+            text "—"
+            text "Continental Engineering Services UK (CES"
+            text ") are a leading automotive design consultancy and engineering services provider for electric motors, ..."
+          container
+            anchor [ref=779, url=https://www.google.com/goto?url=CAESbQHrOzAV1ntPTIai7qKsOmdYpfpgcwuBcw4XE6m-LZ1aKh1BaZbvLHPqiWAdgZbMczUDEfokmdYglrDsFboMIITUExPAUsP86ANysw2CZXx5fCAANP6kwjsuYaCqZcKXbenQwKe-j9YuKwpo4vs]
+              heading
+                text "Electric Vehicle (EV) Traction Inverter"
+              image
+              text "NXP"
+              text "https://www.nxp.com"
+              text "› ... › Electrification and Powertrain"
+            button "About this result" [ref=780]
+              svg_root
+            text "NXP EV traction inverter"
+            text "for safe and powerful electric vehicle propulsion. fully assembled PIM with power module and housing, Vepco is pleased to offer ..."
+          container
+            anchor [ref=781, url=https://www.google.com/goto?url=CAESZgHrOzAVW1iy5TlcIHkY2WPofE0QKwSWavrZHBfSMa8AG7z892D_9M8lLgZmGgk5e1g-nXSBz5ysNKuqhrxY3ddGPcl0sE22WWLQr6_jrhcbk1W0Or4iBZyh1iQ-8Vq4KYAq-CuK2Q]
+              heading
+                text "EV Inverter Manufacturer"
+              image
+              text "cmvte"
+              text "https://cmvte.com"
+              text "› ev-inverter-manufacturer"
+            button "About this result" [ref=782]
+              svg_root
+            text "Jun 14, 2026"
+            text "—"
+            text "Looking for a reliable"
+            text "EV inverter manufacturer"
+            text "? CMVTE specializes in high-efficiency traction"
+            text "inverters"
+            text "for"
+            text "electric vehicles"
+            text "."
+            anchor [ref=783, url=https://www.google.com/goto?url=CAESwwEB6zswFVAjy20aN7DEKp_7KwARCt7rcQgjJYBghNf50qmpctjxckauNCHjG4fng_egzZpDTNm4fHImBNIHxSRIoVWs3PBWPkDdf9QJRyuXgrzHM9kRwnIsMq9YoZsiNJSzFfSCRJg42hJ7LJhoIiFgP14Y3p4qq2kZi1LgI8E0ESgEvyONNHu5VjGXWqBk4BCzySL95SCvLGAx1dLVND3WAXBy0cENX5AfpAPEtbqHpo9FBrfNFepZ7GILOds1U2VYpP4]
+              text "Read more"
+          container
+            anchor [ref=784, url=https://www.google.com/goto?url=CAEShgEB6zswFS8PdOoInXngSksW3mm72JG0yYgZexnBM3YqVUM33hTy2PJrWkr_dO6qQ5Jy2bb8DSLVtd6jfRbC6zjNQjEXDe0mVVqwNx3JC82HA4hnFcHYJwGqivrTHDqvvpJ68iSGHhjGiVUa9zxApp1h-rQWYVzD1du2wiQ7xhtRwvRd-QvbMQ]
+              heading
+                text "High-voltage traction inverter"
+              image
+              text "Eaton"
+              text "https://www.eaton.com"
+              text "› en-us › catalog › emobility › hi..."
+            button "About this result" [ref=785]
+              svg_root
+            text "Eaton's power dense and efficient inverters for electric vehicles"
+            text "(EVs). Eaton is an intelligent power management company"
+          container
+            anchor [ref=786, url=https://www.google.com/goto?url=CAES4wEB6zswFaSzbGKUczQBXNzJTW4vDhbr3pd4wETKSFLplEDkUpl6ITiJ9zgiljaq7ym6Fz6fongd3Z8hC7P-KcoerJKZjq1D39-Lq0xGEWNS2UXXtK2Wav8f63wLd9fl1tFWPGCX__Dm4u2118W2mmDaoNxv4x7kSOD3oTRPK5pqBgf_ggsR1rDJi9RfucIroKx1yidBxDk-i2kYPgdCEotJVu_60K5wPuflPyTkL-QhYIZ-AT0PWzrTFhub2CzsR573VF3LELj09DFxyxLyaBq-8a1Pr3biQDjQsoCqZ463sAUpcw]
+              heading
+                text "Top 10 Electric Vehicle Power Inverter Companies ..."
+              image
+              text "Research and Markets"
+              text "https://www.researchandmarkets.com"
+              text "› articles › key-co..."
+            button "About this result" [ref=787]
+              svg_root
+            text "Robert Bosch GmbH"
+            text "is a pioneer in power electronics, delivering highly integrated inverter solutions for electric vehicles."
+            text "Missing:"
+            text "housing"
+            text "‎| Show results with:"
+            anchor [ref=788, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=electric+vehicle+inverter+%22housing%22+manufacturer&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ5t4CegQIQhAB]
+              text "housing"
+          container
+            anchor [ref=789, url=https://www.google.com/goto?url=CAESbgHrOzAVujTa52E6Q5BZWxX4raHFF-qrHFM_oQIpUaSoNB8hGppwlFdxjuosV-lwvvw9qa3uGAeN13VxbH5WTt44sr0NY_JJmw0vrc1Jpt9PZuGuD8bDeuKxpNFHnEWjs1j0fngF7-b4IIWlKeUt]
+              heading
+                text "Electric Vehicle Components - Robotic Assembly"
+              image
+              text "Kinemetrix"
+              text "https://kinemetrix.com"
+              text "› Solutions"
+            button "About this result" [ref=790]
+              svg_root
+            text "Automated assembly of high complexity electric vehicle components"
+            text "like traction inverters and motors, and electronic control modules."
+        container
+          container
+            text "People also search for"
+            anchor [ref=791, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=Electric+vehicle+inverter+housing+manufacturer+usa&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAgkEAE]
+              container
+                text "Electric vehicle inverter housing manufacturer"
+                text "usa"
+              svg_root
+            anchor [ref=792, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=EV+inverter+manufacturers&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAg5EAE]
+              container
+                text "EV"
+                text "inverter"
+                text "manufacturers"
+              svg_root
+            anchor [ref=793, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=Electric+vehicle+inverter+Design+PDF&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAg0EAE]
+              container
+                text "Electric vehicle inverter"
+                text "Design PDF"
+              svg_root
+            anchor [ref=794, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=EV+Inverter+price&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAgyEAE]
+              container
+                text "EV"
+                text "Inverter"
+                text "price"
+              svg_root
+            anchor [ref=795, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=Traction+inverter+in+electric+vehicle&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAgwEAE]
+              container
+                text "Traction"
+                text "inverter"
+                text "in"
+                text "electric vehicle"
+              svg_root
+            anchor [ref=796, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=EV+inverter+for+home&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAgvEAE]
+              container
+                text "EV"
+                text "inverter"
+                text "for home"
+              svg_root
+            anchor [ref=797, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=Types+of+inverters+used+in+electric+vehicles&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAgmEAE]
+              container
+                text "Types of inverters used in"
+                text "electric"
+                text "vehicles"
+              svg_root
+            anchor [ref=798, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&q=BorgWarner+PowerDrive+Systems&sa=X&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ1QJ6BAglEAE]
+              text "BorgWarner PowerDrive Systems"
+              svg_root
+          navigation
+            heading
+              text "Page Navigation"
+            table
+              table_row
+                table_cell
+                table_cell
+                  text "1"
+                table_cell
+                  anchor "Page 2" [ref=799, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=10&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAE]
+                    text "2"
+                table_cell
+                  anchor "Page 3" [ref=800, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=20&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAG]
+                    text "3"
+                table_cell
+                  anchor "Page 4" [ref=801, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=30&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAI]
+                    text "4"
+                table_cell
+                  anchor "Page 5" [ref=802, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=40&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAK]
+                    text "5"
+                table_cell
+                  anchor "Page 6" [ref=803, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=50&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAM]
+                    text "6"
+                table_cell
+                  anchor "Page 7" [ref=804, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=60&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAO]
+                    text "7"
+                table_cell
+                  anchor "Page 8" [ref=805, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=70&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAQ]
+                    text "8"
+                table_cell
+                  anchor "Page 9" [ref=806, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=80&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAS]
+                    text "9"
+                table_cell
+                  anchor "Page 10" [ref=807, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=90&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8tMDegQISBAU]
+                    text "10"
+                heading
+                  anchor [ref=808, url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsNCuhH61DHZpca75eujNJ3nbcCEw:1792107808825&ei=IGXRaqPyMfig0PEP9riUgAo&start=10&sa=N&sstk=AS6-VmJReWtE0z1OQAKjGAo-ZDGv9ihvnyQfpNl7RLcLsMnhKsTGK6hLJVePBE4qaUmXKMjiOeQcFuxkil0ZXMWAmeEaMeeRHrAa6g&ved=2ahUKEwijguDqmb2XAxV4EDQIHXYcBaAQ8NMDegQISBAW]
+                    text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+      button [ref=809, url=https://www.google.com/search?q=electric+vehicle+inverter+housing+manufacturer&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA%3A1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI#]
+        text "United States"
+        text " - "
+        text "From your IP address"
+      text " - "
+      button [ref=810]
+        text "Update location"
+      container
+        anchor [ref=811, loc=href:https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1, url=https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1]
+          text "Help"
+        button [ref=812]
+          text "Send feedback"
+        anchor [ref=813, loc=href:https://policies.google.com/privacy?hl=en&fg=1, url=https://policies.google.com/privacy?hl=en&fg=1]
+          text "Privacy"
+        anchor [ref=814, loc=href:https://policies.google.com/terms?hl=en&fg=1, url=https://policies.google.com/terms?hl=en&fg=1]
+          text "Terms"
+

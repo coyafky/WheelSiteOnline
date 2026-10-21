@@ -2,14 +2,11 @@ import { NextResponse } from "next/server";
 import {
   assignOwner,
   InquiryPersistenceError,
-  isMockMode,
-  markDelivered,
   save,
-  send,
   validate,
 } from "@/lib/inquiry";
-import { bindWheelEnquiry } from "@/lib/wheels/inquiry-binding";
-import { automationTrap, originAllowed, rateLimit } from "@/lib/inquiry/guard";
+import { bindWheelEnquiry, bindWheelEnquiryItems } from "@/lib/wheels/inquiry-binding";
+import { automationTrap, originAllowed, rateLimit, refundRateLimit } from "@/lib/inquiry/guard";
 import { issueInquiryReceipt } from "@/lib/inquiry/receipt";
 
 /**
@@ -20,9 +17,8 @@ import { issueInquiryReceipt } from "@/lib/inquiry/receipt";
  * and DEC-055 §5:
  *   1. validate
  *   2. re-resolve the wheel context (bindWheelEnquiry)
- *   3. persist            ← the record is durable here, via WordPress
- *   4. send mail          ← failure here never loses the lead
- *   5. report honestly
+ *   3. persist + enqueue  ← the record is durable here, via WordPress
+ *   4. report durability and mail status separately
  *
  * Since DEC-055 the write goes to WordPress (`POST /fh/v1/inquiries`), which
  * owns the CPT, the idempotency-key table and the outbox. The **mail step also
@@ -83,15 +79,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: trapError }, { status: 422 });
   }
 
-  const privacyVersion = process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim();
-  if (!privacyVersion) {
-    return NextResponse.json(
-      { ok: false, error: "The enquiry form is not enabled." },
-      { status: 503 },
-    );
-  }
-
-  const parsed = validate(body, privacyVersion);
+  const parsed = validate(body);
   if (!parsed.ok) {
     return NextResponse.json(
       { ok: false, error: "Validation failed.", fieldErrors: parsed.fieldErrors },
@@ -119,22 +107,48 @@ export async function POST(request: Request) {
   //      is still a real lead, and §7 explicitly allows a model-only enquiry
   //      (`variant_pending`). What it never does is carry the client's
   //      specification into the record: the snapshot is cleared instead.
+  const itemBinding = await bindWheelEnquiryItems(parsed.input.items, parsed.input.productLine);
+  if (!itemBinding.ok) {
+    return NextResponse.json(
+      { ok: false, error: "One or more selected wheels are no longer available.", fieldErrors: itemBinding.fieldErrors },
+      { status: 422 },
+    );
+  }
+
+  const input = itemBinding.items.length > 0
+    ? { ...parsed.input, items: itemBinding.items }
+    : parsed.input;
   const binding = await bindWheelEnquiry(parsed.context);
-  const context = binding.applied
+  const context = itemBinding.items.length > 0
+    ? { ...parsed.context, model: undefined, productionCode: undefined, selectedSpec: undefined, variantPending: false }
+    : binding.applied
     ? { ...parsed.context, ...binding.context }
     : parsed.context;
 
   // 2 · Persist first — this is the non-negotiable ordering.
   let saved;
   try {
-    saved = await save(parsed.input, context, {
+    saved = await save(input, context, {
       idempotencyKey: readIdempotencyKey(body),
     });
   } catch (error) {
     return persistenceFailureResponse(error);
   }
 
-  saved.assignedTo = assignOwner(parsed.input, context);
+  // 2b · 幂等重放退还它刚才消耗的额度。
+  //
+  //      重放不是一次新的提交意图 —— 数据库里没新增任何东西，返回的还是同一个
+  //      询盘号。让重放消耗额度，等于把「网络抖动重试」记成用户行为：一次点击
+  //      的重试风暴会把真实买家自己封掉（实测同一幂等键并发 15 次 → 9 个 429，
+  //      而用户意图只有 1 次）。
+  //
+  //      放在 save 之后是因为**只有 save 才知道这是不是重放**；放在返回之前，
+  //      所以它只覆盖真的重放了的那一次请求。
+  if (saved.replayed) {
+    refundRateLimit(request, parsed.input.email);
+  }
+
+  saved.assignedTo = assignOwner(input, context);
 
   // 3a · The CMS wrote it. It also queued (and attempted) the sales mail inside
   //      the same commit, so there is nothing to send here and `emailStatus` is
@@ -155,23 +169,18 @@ export async function POST(request: Request) {
     );
   }
 
-  // 3b · Development fallback: no CMS configured, so the record is only in this
-  //      process's memory. Deliver locally (console mock or Resend) and label
-  //      `persisted: false` so the caller cannot mistake it for durability.
-  const outcome = await send(saved);
-  await markDelivered(saved.id, outcome.delivered, outcome.error);
-
+  // 3b · A process-memory projection is never a submitted customer enquiry.
+  //      Database durability is the minimum success criterion in every
+  //      environment, including local development. Keep the form data in the
+  //      browser by returning a failure instead of issuing a receipt, clearing
+  //      the cart or attempting an unrelated fallback mail channel.
   return NextResponse.json(
     {
-      ok: true,
-      id: saved.id,
-      receiptToken: null,
+      ok: false,
+      error: "The inquiry could not be saved. Please try again.",
       persisted: false,
-      emailStatus: outcome.delivered ? "accepted" : isMockMode() ? "pending" : "failed",
-      delivered: outcome.delivered,
-      mock: isMockMode(),
     },
-    { status: 201 },
+    { status: 503 },
   );
 }
 

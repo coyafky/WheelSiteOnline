@@ -5,14 +5,11 @@ import { ArrowRight, Check } from "lucide-react";
 import {
   WHEEL_DETAIL_CONFIGURATION_ANCHOR,
   WHEEL_DETAIL_ID,
-  wheelDetailBreadcrumb,
-  wheelDetailFinishes,
-  wheelDetailFitment,
-  wheelDetailIdentity,
-  wheelDetailRelated,
-  wheelDetailSeo,
 } from "@/content/wheel-detail";
 import type { PublicWheelVariant, WheelCatalogueCard } from "@/lib/wheels";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
+import { wheelDetailCopyFor } from "@/lib/i18n/wheel-detail-copy";
 
 import { WheelCatalogueCardView } from "./wheel-catalogue-card";
 
@@ -40,12 +37,15 @@ export function WheelDetailHero({
   model,
   primaryImage,
   processLabel,
+  locale,
 }: {
   model: string;
   primaryImage: string;
   /** Approved process label; `undefined` means the source record has none. */
   processLabel?: string;
+  locale: Locale;
 }) {
+  const { breadcrumb, identity, seo } = wheelDetailCopyFor(locale);
   return (
     <section
       aria-labelledby={`${WHEEL_DETAIL_ID}-title`}
@@ -53,32 +53,27 @@ export function WheelDetailHero({
       className="border-b border-border bg-card pb-14 pt-[112px] lg:pb-16 lg:pt-[136px]"
     >
       <div className="container-fh">
-        <nav aria-label="Breadcrumb" className="eyebrow flex flex-wrap items-center gap-x-2">
-          <Link
-            href={wheelDetailBreadcrumb.rootHref}
-            className="transition-colors hover:text-forge"
-          >
-            {wheelDetailBreadcrumb.rootLabel}
-          </Link>
-          <span aria-hidden="true">/</span>
-          <Link
-            href={wheelDetailBreadcrumb.sectionHref}
-            className="transition-colors hover:text-forge"
-          >
-            {wheelDetailBreadcrumb.sectionLabel}
-          </Link>
-          <span aria-hidden="true">/</span>
-          <span className="text-ink" aria-current="page">
-            {model}
-          </span>
-        </nav>
+        <SiteBreadcrumbs
+          label={locale === "zh" ? "面包屑导航" : locale === "es" ? "Ruta de navegación" : locale === "th" ? "เส้นทางนำทาง" : "Breadcrumb"}
+          items={[
+            {
+              label: breadcrumb.rootLabel,
+              href: localizedPath(breadcrumb.rootHref, locale),
+            },
+            {
+              label: breadcrumb.sectionLabel,
+              href: localizedPath(breadcrumb.sectionHref, locale),
+            },
+            { label: model },
+          ]}
+        />
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-14">
           <figure data-reveal>
             <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-border bg-hero">
               <Image
                 src={primaryImage}
-                alt={wheelDetailSeo.imageAlt(model)}
+                alt={seo.imageAlt(model)}
                 fill
                 // One image, declared sizes, WebP from the asset layer: the
                 // largest thing on the page must not be re-fetched per breakpoint.
@@ -90,7 +85,7 @@ export function WheelDetailHero({
           </figure>
 
           <div data-reveal className="lg:pt-2">
-            <p className="eyebrow !text-forge">{wheelDetailIdentity.eyebrow}</p>
+            <p className="eyebrow !text-forge">{identity.eyebrow}</p>
             <h1
               id={`${WHEEL_DETAIL_ID}-title`}
               className="mt-4 font-display text-[clamp(2.2rem,6.4vw,3.8rem)] font-800 uppercase leading-[0.94] tracking-[-0.02em] text-ink"
@@ -107,16 +102,16 @@ export function WheelDetailHero({
               }
             >
               {processLabel
-                ? wheelDetailIdentity.processRecorded(processLabel)
-                : wheelDetailIdentity.processMissing}
+                ? identity.processRecorded(processLabel)
+                : identity.processMissing}
             </p>
 
             <p className="mt-6 max-w-[560px] text-[1.02rem] leading-relaxed text-ink/80">
-              {wheelDetailIdentity.intro(model)}
+              {identity.intro(model)}
             </p>
 
             <p className="mt-6 max-w-[560px] border-l-2 border-forge pl-4 text-[0.86rem] leading-relaxed text-steel">
-              {wheelDetailIdentity.boundary}
+              {identity.boundary}
             </p>
 
             {/* The configuration entry point — §5 asks for it in the first
@@ -125,7 +120,7 @@ export function WheelDetailHero({
               href={`#${WHEEL_DETAIL_CONFIGURATION_ANCHOR}`}
               className="btn-pill-solid mt-8"
             >
-              {wheelDetailIdentity.selectAnchor}
+              {identity.selectAnchor}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
@@ -172,10 +167,13 @@ export function publicFinishNames(variants: PublicWheelVariant[]): string[] {
 export function WheelFinishSection({
   model,
   variants,
+  locale,
 }: {
   model: string;
   variants: PublicWheelVariant[];
+  locale: Locale;
 }) {
+  const { finishes } = wheelDetailCopyFor(locale);
   const names = publicFinishNames(variants);
   // No approved name → the whole WD04 block is absent. The finish that is
   // recorded on each variant is still visible as part of its configuration row.
@@ -193,10 +191,10 @@ export function WheelFinishSection({
           id={`${WHEEL_DETAIL_ID}-finishes-title`}
           className="max-w-[720px] font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
         >
-          {wheelDetailFinishes.heading(model)}
+          {finishes.heading(model)}
         </h2>
         <p className="mt-4 max-w-[780px] text-[0.98rem] leading-relaxed text-steel">
-          {wheelDetailFinishes.body}
+          {finishes.body}
         </p>
 
         {/* Text cards only (§8): a colour swatch generated from a name would be
@@ -224,7 +222,8 @@ export function WheelFinishSection({
  * No model is ever declared to fit a vehicle, and none of
  * "universal fitment" / "guaranteed fit" / "direct replacement" appears here.
  */
-export function WheelFitmentSection() {
+export function WheelFitmentSection({ locale }: { locale: Locale }) {
+  const { fitment } = wheelDetailCopyFor(locale);
   return (
     <section
       id={`${WHEEL_DETAIL_ID}-fitment`}
@@ -238,15 +237,15 @@ export function WheelFitmentSection() {
             id={`${WHEEL_DETAIL_ID}-fitment-title`}
             className="max-w-[560px] font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
           >
-            {wheelDetailFitment.heading}
+            {fitment.heading}
           </h2>
           <p className="mt-5 max-w-[560px] text-[1rem] leading-relaxed text-steel">
-            {wheelDetailFitment.body}
+            {fitment.body}
           </p>
         </div>
 
         <ul className="grid content-start gap-4 self-start rounded-xl border border-border bg-soft p-7">
-          {wheelDetailFitment.checklist.map((item) => (
+          {fitment.checklist.map((item) => (
             <li key={item} className="flex items-start gap-3.5">
               <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-forge/12 text-forge">
                 <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
@@ -270,8 +269,9 @@ export function WheelFitmentSection() {
  * not re-rank, relax the publication gate to fill three slots, use `styleName`
  * or hand-pick "similar" models. Fewer than three is a correct answer.
  */
-export function WheelRelatedModels({ related }: { related: WheelCatalogueCard[] }) {
+export function WheelRelatedModels({ related, locale }: { related: WheelCatalogueCard[]; locale: Locale }) {
   if (related.length === 0) return null;
+  const { related: relatedCopy } = wheelDetailCopyFor(locale);
 
   return (
     <section
@@ -285,18 +285,17 @@ export function WheelRelatedModels({ related }: { related: WheelCatalogueCard[] 
           id={`${WHEEL_DETAIL_ID}-related-title`}
           className="max-w-[640px] font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
         >
-          {wheelDetailRelated.heading}
+          {relatedCopy.heading}
         </h2>
 
         <div className="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {/* No `priority`: only the WD01 primary image is allowed to compete
               with the LCP element (spec §12). */}
           {related.map((card) => (
-            <WheelCatalogueCardView key={card.slug} card={card} />
+            <WheelCatalogueCardView key={card.slug} card={card} locale={locale} />
           ))}
         </div>
       </div>
     </section>
   );
 }
-

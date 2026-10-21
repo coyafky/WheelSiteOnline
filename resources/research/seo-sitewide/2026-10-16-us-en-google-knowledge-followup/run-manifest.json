@@ -1,0 +1,195 @@
+{
+  "run_id": "run_96deb74dab44",
+  "schema_version": "0.1",
+  "pipeline_version": "0.1",
+  "project_id": "fenghuai-b2b-site",
+  "scope": {
+    "label": "知识库辅助关键词显性/隐性意图与 Topic Map 复核",
+    "product_lines": [
+      "Automotive Wheels",
+      "EV Aluminum Components",
+      "Self-Sealing Tires",
+      "Custom Aluminum Manufacturing"
+    ]
+  },
+  "search_context": {
+    "engine": "Google",
+    "country": "US",
+    "location": "UNKNOWN",
+    "language": "en-US",
+    "device": "desktop"
+  },
+  "profile": {
+    "version": "NOT_AVAILABLE",
+    "hash": "NOT_AVAILABLE",
+    "overrides": []
+  },
+  "providers": [
+    "Google UI manual SERP (12 snapshots across two runs)",
+    "manual web search for page-type corroboration",
+    "project knowledge base and page specifications"
+  ],
+  "cost_policy": {
+    "currency": "USD",
+    "budget": "0 USD paid tools",
+    "approval_threshold": "NO PAID SPEND AUTHORIZED",
+    "actual_cost": 0
+  },
+  "serp_freshness_days": 30,
+  "clustering_config": {
+    "result_depth": 10,
+    "same_page_min_shared": 3,
+    "same_page_min_rank_weighted": 0.35,
+    "status": "UNAPPROVED_DEFAULTS"
+  },
+  "scoring_config": {
+    "weights": "NOT_AVAILABLE",
+    "status": "NOT_CONFIGURED"
+  },
+  "phase_status": {
+    "contract": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "market_offering": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "buyers_jobs": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "competitors": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "query_universe": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "keyword_intelligence": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "serp_intent": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/intent-decisions.jsonl",
+        "evidence/serp-snapshots.jsonl"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "page_ownership": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/clusters.json"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "opportunity": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/opportunities.jsonl"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "buyer_job_map": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "analysis/buyer-job-map.jsonl"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "fenghuaitech.com 尚未部署；没有实时 sitemap URL LIST，页面路径映射为暂定。",
+        "没有搜索量、KD、CPC、排名或 GSC 数据；不做量化需求估算。"
+      ]
+    },
+    "page_map": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/page-map.json",
+        "deliverables/page-map.md"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "Future domain is not deployed; no live sitemap URL list. Page paths are provisional candidates."
+      ]
+    },
+    "information_architecture": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/ia-proposal.md"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "Future domain is not deployed; validate proposed ownership against live sitemap and canonicals."
+      ]
+    },
+    "qa_handoff": {
+      "status": "COMPLETE",
+      "input_hashes": {},
+      "outputs": [
+        "deliverables/RESEARCH-REPORT.md"
+      ],
+      "completed_at": null,
+      "limitations": [
+        "Live URL reconciliation and demand metrics are unavailable until deployment/data access."
+      ]
+    }
+  },
+  "created_at": "2026-10-16T08:44:40Z"
+}

@@ -15,7 +15,7 @@ export const toolsHubCopy = {
   heading: "Wheel Tools",
   lede: "Working tools for the questions that come up between a dealer and a factory. Each one does a real calculation and shows the formula it used, so you can check the arithmetic rather than trust it.",
   supporting:
-    "More tools are coming — a backspacing converter, a load-rating reference and a tyre-diameter comparison. Ask us if there is one you need now.",
+    "More tools are coming — a backspacing converter, a load-rating reference and a tire-diameter comparison. Ask us if there is one you need now.",
 } as const;
 
 /** The one tool that exists today. The hub lists from this array. */
@@ -84,8 +84,8 @@ export const offsetCalculatorCopy = {
   whatEyebrow: "The basics",
   whatHeading: "What wheel offset actually is",
   whatBody: [
-    "Offset — written as ET on the wheel, from the German Einpresstiefe — is the distance in millimetres from the wheel's mounting face to its centreline. It describes where the wheel sits on the hub, not how wide it is.",
-    "Positive offset means the mounting face sits outboard of the centreline: the wheel tucks further under the arch, with more of its width inboard. Negative offset means the mounting face sits inboard of the centreline: the wheel sits further out, with more of its width outboard. Zero offset puts the mounting face exactly on the centreline.",
+    "Offset — written as ET on the wheel, from the German Einpresstiefe — is the distance in millimetres from the wheel's mounting face to its centerline. It describes where the wheel sits on the hub, not how wide it is.",
+    "Positive offset means the mounting face sits outboard of the centerline: the wheel tucks further under the arch, with more of its width inboard. Negative offset means the mounting face sits inboard of the centerline: the wheel sits further out, with more of its width outboard. Zero offset puts the mounting face exactly on the centerline.",
     "The consequence people miss is that offset and width interact. Fitting a wider wheel at the same offset moves both edges outward — and the inboard edge is the one that fouls the strut, the control arm or the brake caliper. That is why this calculator reports the inboard change as well as the outer poke.",
   ],
 
@@ -156,17 +156,17 @@ export const offsetCalculatorCopy = {
     {
       name: "Positive offset",
       range: "Most common on modern cars",
-      body: "The mounting face is outboard of the centreline, so most of the wheel's width sits inboard. Modern front-wheel-drive and most all-wheel-drive cars use relatively high positive offsets because it keeps the scrub radius small and the steering axis inside the tyre contact patch.",
+      body: "The mounting face is outboard of the centerline, so most of the wheel's width sits inboard. Modern front-wheel-drive and most all-wheel-drive cars use relatively high positive offsets because it keeps the scrub radius small and the steering axis inside the tire contact patch.",
     },
     {
       name: "Zero offset",
       range: "Common on older rear-drive cars",
-      body: "The mounting face sits on the centreline, splitting the width evenly either side. It is characteristic of older rear-drive platforms and of wheels designed for a deep-lip look where the lip is a genuine part of the geometry rather than styling.",
+      body: "The mounting face sits on the centerline, splitting the width evenly either side. It is characteristic of older rear-drive platforms and of wheels designed for a deep-lip look where the lip is a genuine part of the geometry rather than styling.",
     },
     {
       name: "Negative offset",
       range: "Deep-dish and off-road",
-      body: "The mounting face is inboard of the centreline, pushing the wheel outboard. It produces the deep-dish appearance and is common on lifted trucks and off-road builds. On a road car it increases the load on the hub and wheel bearings and changes steering feel, so it should be a deliberate decision, not an accident of the wheel you bought.",
+      body: "The mounting face is inboard of the centerline, pushing the wheel outboard. It produces the deep-dish appearance and is common on lifted trucks and off-road builds. On a road car it increases the load on the hub and wheel bearings and changes steering feel, so it should be a deliberate decision, not an accident of the wheel you bought.",
     },
   ],
 

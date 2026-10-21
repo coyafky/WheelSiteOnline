@@ -1,0 +1,37 @@
+[
+ {
+  "check": "FAQ full text (no JS)",
+  "value": 9130
+ },
+ {
+  "check": "catalogue GET form (no JS)",
+  "value": {
+   "forms": [
+    {
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": 39
+    },
+    {
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": 39
+    },
+    {
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": 1
+    }
+   ],
+   "checkboxes": 76
+  }
+ },
+ {
+  "check": "legal outline + body (no JS)",
+  "value": {
+   "outlineAnchors": 7,
+   "bodyChars": 6472,
+   "revealsHidden": 0
+  }
+ }
+]

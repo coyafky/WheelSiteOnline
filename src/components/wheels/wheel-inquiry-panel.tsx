@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 
-import { InquiryForm } from "@/components/inquiry-form";
 import {
-  finishNamePending,
-  wheelDetailEnquiry as copy,
   wheelDetailEnquiryContext,
-  wheelDetailFormCopy,
 } from "@/content/wheel-detail";
+import { localizedPath, type Locale } from "@/lib/i18n/types";
+import { wheelEnquiryCopyFor, wheelFinishPendingFor } from "@/lib/i18n/wheel-enquiry-copy";
 
 import {
   centreBoreValue,
@@ -17,22 +15,20 @@ import {
   sizeLabel,
   type WheelVariantSpec,
 } from "./spec-format";
+import { AddWheelToInquiryButton } from "./inquiry-cart-summary";
+import { DirectWheelInquiryDialog } from "./direct-wheel-inquiry-dialog";
 
 /**
- * WD03 — the enquiry, embedded in the model page (spec §7).
+ * WD03 — two explicit enquiry intents on the model page (spec §7).
  *
- * ── Why it renders the shared form instead of its own ───────────────────────
- * §7 requires one validation path, one `/api/inquiries` contract, one consent
- * line and one error handling. This block therefore *embeds* `<InquiryForm>`; it
- * restates none of it and adds no second Email/WhatsApp route.
+ * "Add to total enquiry" persists the selected configuration for a later
+ * multi-item request. "Request this configuration" opens the shared form in an
+ * Astryx dialog and submits only this model/configuration.
  *
  * ── What is carried, and what is not trusted ───────────────────────────────
- * The form captures its context from the URL query at submit time. The parent
- * `WheelDetailInteractive` keeps `model`, `code`/`variant`, `product_line` and
- * `intent` in that query, so the enquiry arrives already pointing at
- * `model + productionCode`. Everything the client sends is a *hint*: the route
- * re-resolves the pair against the public catalogue and stores that snapshot — a
- * visitor editing the URL cannot manufacture a configuration (spec §7).
+ * Direct mode receives its context explicitly. Everything the client sends is
+ * still a hint: the route re-resolves `model + productionCode` against the
+ * public catalogue before storing the snapshot.
  *
  * ── No selection is a real state, not a blocked one ────────────────────────
  * Submitting without choosing is allowed and recorded as `variant_pending`, so
@@ -42,12 +38,21 @@ export function WheelInquiryPanel({
   model,
   selectedVariant,
   headingId,
+  locale,
+  privacyVersion,
+  privacyLinkLabel,
+  privacyLinkHref,
 }: {
   model: string;
   /** `null` when the visitor has not chosen a configuration yet. */
   selectedVariant: WheelVariantSpec | null;
   headingId: string;
+  locale: Locale;
+  privacyVersion: string;
+  privacyLinkLabel: string;
+  privacyLinkHref: string;
 }) {
+  const copy = wheelEnquiryCopyFor(locale);
   // §12: the same enquiry, reachable without JavaScript. Carries the model and —
   // when one is selected — the production code, so nothing has to be
   // re-explained on arrival (§2.1).
@@ -57,7 +62,7 @@ export function WheelInquiryPanel({
     intent: wheelDetailEnquiryContext.intent,
   });
   if (selectedVariant) fallbackParams.set("code", selectedVariant.productionCode);
-  const fallbackHref = `/request-a-quote?${fallbackParams.toString()}`;
+  const fallbackHref = `${localizedPath("/request-a-quote", locale)}?${fallbackParams.toString()}`;
 
   const summary = selectedVariant
     ? copy.selectedSummary({
@@ -67,7 +72,7 @@ export function WheelInquiryPanel({
         pcd: pcdLabel(selectedVariant),
         offset: offsetValue(selectedVariant),
         centreBore: centreBoreValue(selectedVariant),
-        finish: finishNamePending,
+        finish: wheelFinishPendingFor(locale),
       })
     : null;
 
@@ -105,8 +110,47 @@ export function WheelInquiryPanel({
           )}
         </div>
 
-        <div className="mt-8">
-          <InquiryForm copy={wheelDetailFormCopy} />
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          {selectedVariant ? (
+            <div className="rounded-xl border border-border bg-white p-5">
+              <p className="text-sm leading-relaxed text-steel">{copy.addToListHelp}</p>
+              <div className="mt-4">
+                <AddWheelToInquiryButton
+                  locale={locale}
+                  item={{
+                    model,
+                    slug: model.toLowerCase(),
+                    productionCode: selectedVariant.productionCode,
+                    size: selectedVariant.size,
+                    pcd: selectedVariant.pcd,
+                    offset: selectedVariant.offset,
+                    centerBore: selectedVariant.centerBore,
+                  }}
+                  label={copy.addToListLabel}
+                  addedLabel={copy.addedToListLabel}
+                />
+              </div>
+            </div>
+          ) : null}
+          <div
+            className={selectedVariant
+              ? "rounded-xl border border-forge/35 bg-forge-soft p-5"
+              : "rounded-xl border border-forge/35 bg-forge-soft p-5 md:col-span-2"}
+          >
+            <p className="text-sm leading-relaxed text-steel">{copy.directHelp}</p>
+            <div className="mt-4">
+              <DirectWheelInquiryDialog
+                key={selectedVariant?.productionCode ?? model}
+                model={model}
+                productionCode={selectedVariant?.productionCode}
+                selectedSummary={summary ?? undefined}
+                locale={locale}
+                privacyVersion={privacyVersion}
+                privacyLinkLabel={privacyLinkLabel}
+                privacyLinkHref={privacyLinkHref}
+              />
+            </div>
+          </div>
         </div>
 
         <p className="mt-5 text-[0.8rem] leading-relaxed text-steel">

@@ -1,4 +1,10 @@
 import Link from "next/link";
+import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { Theme } from "@astryxdesign/core/theme";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
 
 import { cn } from "@/lib/utils";
 import type { CatalogueFacets, WheelCatalogueInput } from "@/lib/wheels";
@@ -22,7 +28,7 @@ const CATALOGUE_PATH = "/products/wheels";
 const QUOTE_PATH = "/request-a-quote";
 
 /** 目录筛选快照 → 询盘 URL（§4 W03 Context）。 */
-function reviewHref(query: WheelCatalogueInput, intent?: string): string {
+function reviewHref(query: WheelCatalogueInput, path: string, intent?: string): string {
   const sp = new URLSearchParams();
   sp.set("product_line", "wheels");
   if (intent) sp.set("intent", intent);
@@ -31,11 +37,11 @@ function reviewHref(query: WheelCatalogueInput, intent?: string): string {
   if (query.widths?.length) sp.set("width", query.widths.join(","));
   if (query.pcds?.length) sp.set("pcd", query.pcds.join(","));
   if (query.processes?.length) sp.set("process", query.processes.join(","));
-  return `${QUOTE_PATH}?${sp.toString()}`;
+  return `${path}?${sp.toString()}`;
 }
 
 /** 无匹配时的原位空状态：保留筛选摘要 + 一键清除 + 带快照询盘。 */
-export function WheelCatalogueEmptyState({
+export async function WheelCatalogueEmptyState({
   query,
   facets,
   className,
@@ -44,34 +50,33 @@ export function WheelCatalogueEmptyState({
   facets: CatalogueFacets;
   className?: string;
 }) {
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
   return (
     <section
-      aria-labelledby="wheel-catalogue-empty-title"
+      aria-label={copy.emptyAria}
       className={cn("rounded-lg border border-border bg-card p-6 lg:p-8", className)}
     >
-      <h2
-        id="wheel-catalogue-empty-title"
-        className="font-display text-[clamp(1.3rem,2.8vw,1.75rem)] font-800 uppercase leading-tight tracking-[-0.01em] text-ink"
-      >
-        No published model matches all selected specifications
-      </h2>
-      <p className="mt-4 max-w-[680px] text-[0.95rem] leading-relaxed text-steel">
-        Try removing one filter, check that the selected size and PCD belong to the same
-        required configuration, or send the project details for an engineering review.
-      </p>
+      <Theme theme={neutralTheme} mode="light">
+        <EmptyState
+          title={copy.emptyTitle}
+          description={copy.emptyBody}
+          headingLevel={2}
+        />
+      </Theme>
 
       {/* 筛选摘要：可逐项移除（§9 W03「保留当前筛选摘要」） */}
       <WheelCatalogueAppliedChips facets={facets} query={query} className="mt-5" />
 
       <div className="mt-7 flex flex-wrap items-center gap-4">
-        <Link href={CATALOGUE_PATH} className="btn-pill-solid !text-white">
-          Clear filters
+        <Link href={localizedPath(CATALOGUE_PATH, locale)} className="btn-pill-solid !text-white">
+          {copy.filterClear}
         </Link>
         <Link
-          href={reviewHref(query, "catalogue_no_match")}
+          href={reviewHref(query, localizedPath(QUOTE_PATH, locale), "catalogue_no_match")}
           className="btn-pill-outline !text-ink"
         >
-          Request a wheel review
+          {copy.requestReview}
         </Link>
       </div>
     </section>
@@ -79,13 +84,15 @@ export function WheelCatalogueEmptyState({
 }
 
 /** 有结果时的目录末尾询盘块：紧凑，不复述目录。 */
-export function WheelCatalogueEnd({
+export async function WheelCatalogueEnd({
   query,
   className,
 }: {
   query: WheelCatalogueInput;
   className?: string;
 }) {
+  const locale = await getLocale();
+  const copy = wheelCatalogueCopyFor(locale);
   return (
     <section
       aria-labelledby="wheel-catalogue-end-title"
@@ -95,16 +102,14 @@ export function WheelCatalogueEnd({
         id="wheel-catalogue-end-title"
         className="font-display text-[clamp(1.3rem,2.8vw,1.75rem)] font-800 uppercase leading-tight tracking-[-0.01em] text-white"
       >
-        Need a specification that is not listed?
+        {copy.endTitle}
       </h2>
       <p className="mt-4 max-w-[720px] text-[0.95rem] leading-relaxed text-white/70">
-        Share the vehicle or application, target size, PCD, offset, centre bore, quantity
-        and finish. The team will confirm whether an existing variant or a custom program
-        is the appropriate route.
+        {copy.endBody}
       </p>
       <div className="mt-6">
-        <Link href={reviewHref(query)} className="btn-pill-solid !text-white">
-          Request a wheel review
+        <Link href={reviewHref(query, localizedPath(QUOTE_PATH, locale))} className="btn-pill-solid !text-white">
+          {copy.requestReview}
         </Link>
       </div>
     </section>

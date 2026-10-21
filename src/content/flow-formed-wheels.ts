@@ -18,15 +18,10 @@
  *    the evidence boundary, not decoration.
  *
  * ── THE PUBLISHING GATE ─────────────────────────────────────────────────────
- * `publicationGate` is checked in `page.tsx` metadata and nowhere else. Both
- * flags are false/pending today, so the route renders in full but declares
- * `robots: { index: false, follow: true }` and publishes no canonical URL —
- * the same fail-closed pattern as `/products/custom-aluminum` (DEC-050). §7
- * requires exactly this while the process wording is unreviewed or the WP 116
- * image rights are unapproved, and it keeps the page out of the sitemap.
- *
- * Flipping a flag is the *only* edit needed to make the page indexable; there
- * is no second switch to remember.
+ * `publicationGate` is checked by page metadata and `src/app/sitemap.ts`. Both
+ * flags are currently approved, so the base route is indexable and included in
+ * the sitemap. If either gate closes, metadata removes its canonical and the
+ * sitemap removes the route; filtered result states remain noindex.
  */
 
 import type { FlowFormedWheelsPage } from "./types";
@@ -43,13 +38,22 @@ export const flowFormedWheelsPage: FlowFormedWheelsPage = {
       // Last entry is the current page: a label, not a link (§3 WFF01).
       { label: "Flow Formed", href: "/products/wheels/flow-formed" },
     ],
+    breadcrumbLabel: "Breadcrumb",
     eyebrow: "FLOW-FORMED WHEELS",
     heading: "Browse flow-formed wheels by recorded production specification",
-    lead: "Explore wheel models whose production data records flow forming as part of the manufacturing route. Select an actual size and PCD combination before requesting fitment and supply review.",
+    lead: "Explore wheel models whose production data records flow forming as part of the manufacturing route. Review an actual size and PCD combination, then ask about flow-formed wheel supply for a specific program.",
     boundary:
       "A recorded process and catalogue specification are the starting point. Vehicle fitment, brake clearance, load requirements, finish availability and destination-market documents are confirmed before an order is accepted.",
     primaryCta: { label: "Browse recorded models", href: "#flow-formed-models" },
     secondaryCta: { label: "Ask about a wheel requirement", href: "#flow-formed-inquiry" },
+    noApprovedModel: "No approved flow-formed model is published on this route yet. The route explanation above is unchanged by that.",
+    featuredLabels: {
+      imageAlt: "Fenghuai wheel model {model}, front view",
+      diameters: "Recorded diameters",
+      configurations: "Recorded configurations",
+      process: "Recorded process",
+      viewSpecifications: "View specifications",
+    },
   },
 
   /* ── WFF02 · process boundary ──────────────────────────────────────────── */
@@ -79,6 +83,7 @@ export const flowFormedWheelsPage: FlowFormedWheelsPage = {
         href: "/products/wheels/forged",
       },
     ],
+    forgedProjectCtaLabel: "Discuss a forged wheel program",
     evidenceNote:
       "Weight and performance depend on the approved design, material, process parameters and validation results. This page does not apply a universal improvement percentage.",
   },
@@ -145,6 +150,12 @@ export const flowFormedWheelsPage: FlowFormedWheelsPage = {
     emptyResultHeading: "No approved model matches these filters.",
     emptyResultBody:
       "Clear the size and PCD filters, or send the required specification for review.",
+    clearFiltersLabel: "Clear the size and PCD filters",
+    sendSpecificationLabel: "Send the required specification",
+    resultSearch: "{count} models found for “{query}”",
+    resultFiltered: "{count} models match the selected production specifications",
+    resultAll: "{count} approved wheel models",
+    disclosure: "Specifications shown in the catalogue are production records, not a vehicle-fitment guarantee.",
   },
 
   /* ── WFF05 · fitment and supply review ─────────────────────────────────── */
@@ -176,6 +187,8 @@ export const flowFormedWheelsPage: FlowFormedWheelsPage = {
       label: "Request a flow-formed wheel review",
       href: "/request-a-quote?product_line=wheels&wheel_route=flow-formed&intent=product_inquiry&from=flow-formed",
     },
+    scopeLabel: "Recorded process scope",
+    filterSnapshotLabel: "Filter snapshot carried into the enquiry",
   },
 
   /* ── §7 · SEO ──────────────────────────────────────────────────────────── */

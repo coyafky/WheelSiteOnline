@@ -1,0 +1,8 @@
+route,target_expected,status,location
+/gallery,/fitment,308,/fitment
+/gallery/wheels,/products/wheels,308,/products/wheels
+/manufacturing,/capabilities,308,/capabilities
+/resources,/insights,308,/insights
+/resources/[slug],/insights/[slug],308,/insights/bolt-patterns
+/resources/bolt-patterns,/insights/bolt-patterns,308,/insights/bolt-patterns
+/resources/bolt-patterns/[pattern],/insights/bolt-patterns/[pattern],307,/insights/bolt-patterns/5x120

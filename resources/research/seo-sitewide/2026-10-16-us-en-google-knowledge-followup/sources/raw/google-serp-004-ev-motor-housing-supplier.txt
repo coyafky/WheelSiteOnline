@@ -1,0 +1,258 @@
+QUERY: EV motor housing supplier
+CAPTURED_AT: 2026-10-15T23:43:28.254Z
+URL: https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnvZa89DqQe3at3fIoyL906naQ2Yyg%3A1792107806107&ei=HmXRas-NBois0PEP1ai4sQE&uact=5&oq=EV+motor+housing+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiGUVWIG1vdG9yIGhvdXNpbmcgc3VwcGxpZXJIoAFQAFgAcAB4AZABAJgBAKABAKoBALABALgBA8gBAPgBAZgCAKACAJgDAOIDBBgAIF3iAwQYACBe4gMEGAAgX-IDBBgAIGDiAwQYACBh4gMEGAAgYpIHAKAHALIHALgHAMIHAMgHAIAIAQ&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "EV motor housing supplier - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "EV motor housing supplier - Google Search"]
+root
+  link [ref=684]
+    text "Skip to main content"
+  anchor [ref=685, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=686, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQPHoECAYQBA]
+        svg_root
+      container
+        anchor [ref=687, loc=href:/webhp?hl=en&ictx=0&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQpYkNegQIBhAG, url=https://www.google.com/webhp?hl=en&ictx=0&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQpYkNegQIBhAG]
+        container
+          comboboxgrouping "Search" [ref=688, loc=css:textarea[name="q"]]
+            text "EV motor housing supplier"
+          container
+            button "Clear" [ref=689]
+              svg_root
+            container
+              button "Search by voice" [ref=690, loc=role:button[name="Search by voice"]]
+                svg_root
+              button "Search by image" [ref=691, loc=role:button[name="Search by image"]]
+                svg_root
+    container
+      button "Settings" [ref=692, loc=role:button[name="Settings"]]
+      button "Share" [ref=693, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=694, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=695, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3DEV%2Bmotor%2Bhousing%2Bsupplier%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQnvZa89DqQe3at3fIoyL906naQ2Yyg%253A1792107806107%26ei%3DHmXRas-NBois0PEP1ai4sQE%26uact%3D5%26oq%3DEV%2Bmotor%2Bhousing%2Bsupplier%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiGUVWIG1vdG9yIGhvdXNpbmcgc3VwcGxpZXJIoAFQAFgAcAB4AZABAJgBAKABAKoBALABALgBA8gBAPgBAZgCAKACAJgDAOIDBBgAIF3iAwQYACBe4gMEGAAgX-IDBBgAIGDiAwQYACBh4gMEGAAgYpIHAKAHALIHALgHAMIHAMgHAIAIAQ%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=696]
+      list
+        listitem
+          anchor [ref=697, url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ2J8OegQIFBAD]
+            text "AI Mode"
+        listitem
+          link [ref=698]
+            text "All"
+        listitem
+          anchor [ref=699, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&q=EV+motor+housing+supplier&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=700, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&q=EV+motor+housing+supplier&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQtKgLegQIGxAB]
+            text "Images"
+        listitem
+          anchor [ref=701, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&q=EV+motor+housing+supplier&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQtKgLegQIGRAB]
+            text "Videos"
+        listitem
+          anchor [ref=702, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&q=EV+motor+housing+supplier&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQs6gLegQIGBAB]
+            text "Short videos"
+        listitem
+          anchor [ref=703, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=EV+motor+housing+supplier&tbm=nws&source=lnms&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcA8ltRxGSueAm4xbJB7-U9dUVXdUUUBKez4bad6LuBL0vMB19lFszB4gP8QG4a5HAYCwNbaWDeHUMg3aZg1dFyqz3j9lf_iAcutKfO6uVLnbDXIGC-9hzfE9LW_FBZRSpMh8bXw&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ0pQJegQIFxAB]
+            text "News"
+        listitem
+          button [ref=704]
+            container "More filters"
+              text "More"
+              svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        heading
+          text "Thinking"
+        progressindicator "Generating"
+      main
+        heading
+          text "Web results"
+        anchor [ref=705, url=https://www.google.com/goto?url=CAES9wEB6zswFe5yKHu_J6du4YBZSTakQwG19hpuZQZZLMlLFFvYpRXpxBS9vSCRNW30j1_Hxwef1Xh8mFX4E4EgTlGybchZnY6Bml0kLc0CMfSfYykL74ocfUaCzHQLrDdX4wp0oEFdUrps3oY39IIojnWU4PGf0dGe3zz523l4LaULwY8kYtWy41zy_oUd7T6-9klguWRVOmk04hMT9LZTTpfgtAvlwNSJxG2q8vDelGPnS6kWq8QNeRkLg57PNB4MFVnWdoPZwu3aLO15ktr4X2fffk3vucnn0TSu89B2l31HWONBanQYPY33DJG1koG1aj8H44KhMdKy]
+          heading
+            text "Motor Housing"
+          image
+          text "Shinhwa Auto USA"
+          text "https://www.shinhwa-auto.com"
+          text "› motor-housing"
+        button "About this result" [ref=706]
+          svg_root
+        text "Shinhwa Auto"
+        text "contributes to customer success in the crucial field of motor housing for the EV era with innovative technology and the highest level of quality."
+        anchor [ref=707, url=https://www.google.com/goto?url=CAESzwIB6zswFRCo8T3E1oUmyxJyhhi8CWFEmUMx51jf6eyjPpIsc8EeYd-bdCkR68zU0inwFI4a8Ni9wuQWm7YZRTL6fcFPTuShp2xDdVIx8zW0Fb5t-NLz4DGSRuplMUnqo1FScuwj52cOkA5Xm-1nN-lFWYpbCFAiwNQtz0LqM1OSfJJsHi0QwEUDoU1E-pQmQjAkcsznrIaeDf1hlm8xntEVmDbyWkQeoRnerYthioSGyW3Magycu8g8eiSdVaQC0p6xfLMzhzSIfXANFPBYVLjYb537T4s1GkZXe8VfT52oWV9z9jSBqQ7pRQNCmN_QsK2uAPFbxgCaagZQO1eGstGlQXx9BRrOPxgVW90ox8kbpGhaAbRY29Ey9z90XU6VJwQWaZqJG_Swbr9MWrRAYJ6pIpZxGPWiZBC2KRH0M7HWTRtPqpsfJv9Z0CC29WyJ7g]
+          text "Read more"
+        text "Missing:"
+        text "supplier"
+        text "‎| Show results with:"
+        anchor [ref=708, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=EV+motor+housing+%22supplier%22&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ5t4CegQIIBAB]
+          text "supplier"
+        anchor [ref=709, url=https://www.google.com/goto?url=CAESaAHrOzAVIXJBmvKLmdfi2XUSg5kvpTTy1ovQuYZzKTpp0PvjeKj4nUhEZvIJAraExBEHa9-_0LQKbQWZTMLs9EBU8RRuTrK6RFsN84uH4-y6WMH2xFoxMa0HkvAsclQ-eG6OGJq0Yh9a]
+          heading
+            text "Motor Housing"
+          image
+          text "Amsted Automotive"
+          text "https://amstedauto.com"
+          text "› product › motor-housing"
+        button "About this result" [ref=710]
+          svg_root
+        text "Our Motor Housings/Stator Core Housings are"
+        text "designed to deliver exceptional precision and performance"
+        text "in advanced motor applications."
+        anchor [ref=711, url=https://www.google.com/goto?url=CAES1AEB6zswFQqNe70WSWIUH45-MR587cCaTIMv5nGBAyMYHlXhDZmot91HwCvAi7vuSqDBcbleSodT4a8aiz1oFSzP-C65V4UfrYDPIJCqA5Wl5UC-LDSCxK66lcmvaVhcQTXFBZ1OnH5CU-8Q2Z4PQmWg_06udGZEkq8iOZWliI5g5ntCRC0NbyXHnZphNF_OwNciphTcKjB1VL4O0emuWmTjIucf70e29z5y2l7w86au4KoNL4Z5hNq5pz10GR2q1G2Gm750Pgcm347wXc3mcOqKVWBHVw]
+          text "Read more"
+        anchor [ref=712, url=https://www.google.com/goto?url=CAEScQHrOzAVOm4v-vPvbRePk8_EamMSKPZToHBDPocagW6cGJ8PKm4PiL1DepBzK8DgiNRx1IUPaOd5ke9Q2nk0Fr7QQThqs8M00p0vLq2d2O89ZQu-vmcuMNaVLjbCbuD-EYzF9mlB7B692DWkKK3uCtcc]
+          heading
+            text "Aluminum Die Casting EV Motor & Battery Housing ..."
+          image
+          text "ex-diecasting.com.tw"
+          text "https://www.ex-diecasting.com.tw"
+          text "› automotive-motorcy..."
+        button "About this result" [ref=713]
+          svg_root
+        text "EX Die Casting manufactures"
+        text "custom die-cast EV motor housings"
+        text ", aluminum gearbox housings, and aluminum battery enclosures for automotive and motorcycle ..."
+        anchor [ref=714, url=https://www.google.com/goto?url=CAESjgEB6zswFa0_Yzh6R-B-axjBwVRtzgwXM_H-n49ipy_3vs9EqrwFNwKa_J5oDaxn7qzfXEPA0D0xDXl-G07x_EBby2fdMCSFfoJh4YJnRlmYw9l2zfA2X8cXv5a3fR1cWwtxAeVtawQ8p3I1X1xlw6jHjt-aFuNgkb9EbzmfneQSKHPJfUV5i8OQ9Q1mnQQZ]
+          heading
+            text "Top 10 Contract Manufacturers for EV Components in USA"
+          image
+          text "Marcus Hi-Tech Engineering"
+          text "https://marcusmanufacturing.com"
+          text "› feeds › blog › contr..."
+        button "About this result" [ref=715]
+          svg_root
+        text "Jul 17, 2026"
+        text "—"
+        text "Discover the"
+        text "top 10 contract manufacturers for EV components in the USA"
+        text ". Compare capabilities, specializations, and find the right partner ..."
+        anchor [ref=716, url=https://www.google.com/goto?url=CAESuQEB6zswFWzaI90ju5wa_jPdBnP7a49h1-tAi3fzUzFM4Z7OORnML5HTx4C6lyMLj-rVam-Z_RoastvpXW0vV0MKJz1pgE4Vo7bOoKaWVXDIBXsVmsH4NzeuzFp1Kp0NEM_ZzN0YmB7k1r7T_aMDP4l7owWl7gERXAAo8TEcec6KlSz8Q8Z3uc2IsJMjqUtVDRpsufeegHGdtspXJMxU1kDZ0x1zaa1Cmn7IJY1OrzLXXztKZMIQwLP1xw]
+          heading
+            text "EMP Die Casting - EV Motor Housing Manufacturer"
+          image
+          text "LinkedIn · EMP Die Casting"
+          text "10+ reactions · 3 months ago"
+        button "About this result" [ref=717]
+          svg_root
+        text "At EMP Casting, we deliver all these capabilities with 30+ years of expertise in precision aluminum die casting for the"
+        text "EV"
+        text "industry."
+        anchor [ref=718, url=https://www.google.com/goto?url=CAEShgEB6zswFX0pdv8YVPTUygLZGzFsez9r3K-QEKhzev3YcD6ywvcKFNz5JXH6AooAJB7y0OJ-0Mfuolc-gJGAej24vySIYxVxk51VzYtrnqXNGJqDLI5j2Y_waHjRPOx6LDwmafMeb96_6455mWFK8ufpf9GMgDIvvUB8tGphQXVSm7rDGwJVrg]
+          heading
+            text "Die-Cast Aluminum Electric Motor Housing Suppliers"
+          image
+          text "alumcasting.com"
+          text "https://alumcasting.com"
+          text "› die-cast-aluminum-electric-mot..."
+        button "About this result" [ref=719]
+          svg_root
+        text "Skip trading brokers. A 20-year tooling veteran breaks down the micro-mechanics of selecting"
+        text "die cast aluminum electric motor housing suppliers"
+        text "."
+        anchor [ref=720, url=https://www.google.com/goto?url=CAEShwEB6zswFZAiAgz-N943_fji5V0H6t29ggQyspRk4Cv1RRR3JbHbiDr21gkQvUfkoJY1uo7LPAKkUok4c2frk5kmhd1K98LpRum53jpvKza-aTceQeEtZfKR0_h6PVDH9WxlqD3-uZfkRq7TTF63Jrg-F8vSDrspHQ7nBbzOTz82ovCbuezvif8]
+          heading
+            text "Aluminum Alloy Air-cooled Extruded Electric Motor ..."
+          image
+          text "LORI Heat Sink"
+          text "https://www.lorithermal.com"
+          text "› aluminum-alloy-air-cool..."
+        button "About this result" [ref=721]
+          svg_root
+        text "LORI is a motor housing manufacturers"
+        text "can provide high-quality air cooling motor housing,motor shell, motor enclosure, which is high metal strength, light ..."
+        anchor [ref=722, url=https://www.google.com/goto?url=CAES1QEB6zswFV4mFC1Z9HuJQFmNDcn-dwHt1gASizAPaKxCQOhjoVdQ9PU6UlQLP94Q0BCCmqf35DalWtna6VMEVUzCwiupezDkYN91U0QTcUQOgl5oqdQyu7uULIoHC37816M_OdXjxQBuyyIlj89LM8Gf4KNzBRQZSUg7CfjSJFkevYt8p6iKNvnmZG2OmkjjCV_nprjJi-dB4cxCjcYXawQLVZQhUEOW6DNHPaPmx8FJm16xmD7I8u5_dOsllUw9VRzbjjCcQNuRKghmkBHadA83AY9cbh4]
+          text "Read more"
+        anchor [ref=723, url=https://www.google.com/goto?url=CAESjQEB6zswFcYccZX0CL1vIIgcJcZ2KFc8YjsNYpGWXBg2wdO9Na-6M8JdDhZX2CzazP6OGV2WDjMJl6MIFk7Gk2pJLF6c_AoWUQq1FmSW2o6BkD7eMzLYpwMCNIjlM0F9_DgU4Q8thgwz_p7oFI_oDVYVxcQjOC7wtBq6Jg6zf0OhlM9BLB7l7QAlRrBRzGY]
+          heading
+            text "Aluminum Die Casting for Electric Motor Housings in EV Industry"
+          image
+          text "tjmy-machinery.com"
+          text "https://tjmy-machinery.com"
+          text "› product › lightweight-alu..."
+        button "About this result" [ref=724]
+          svg_root
+        text "Lightweight aluminum die-cast motor housings for EVs"
+        text ". Current price is: $2.60. Contact us today for a consultation and custom quotation!"
+        text "$2.60"
+        text " · "
+        text "Free delivery"
+        anchor [ref=725, url=https://www.google.com/goto?url=CAESaQHrOzAVQyDf_a-oK-0Aqe22syj3f04xzQ-oSEJ7GaMmg_HWGdItgosu2qe3gVUgEcplIhNMvtYuVAd-UbdxUKOg5Wb3PurwJVoO-MneihOzcqHxhM7dVvgpE39fBV7yaccXfG9AW2Pzmg]
+          heading
+            text "Motor Housing - Fenda"
+          image
+          text "fendadiecasting.com"
+          text "https://www.fendadiecasting.com"
+          text "› motor-housing"
+        button "About this result" [ref=726]
+          svg_root
+        text "Looking for a reliable"
+        text "Motor Housing manufacturer or supplier in China"
+        text "? Our high-quality products are built to last. Contact us today!"
+        text "Missing:"
+        text "supplier"
+        text "‎| Show results with:"
+        anchor [ref=727, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=EV+motor+housing+%22supplier%22&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ5t4CegQIRRAB]
+          text "supplier"
+        text "People also search for"
+        anchor [ref=728, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=Ev+motor+housing+supplier+usa&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ1QJ6BAglEAE]
+          container
+            text "Ev motor housing supplier"
+            text "usa"
+          svg_root
+        anchor [ref=729, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=Ev+motor+housing+supplier+california&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ1QJ6BAgnEAE]
+          container
+            text "Ev motor housing supplier"
+            text "california"
+          svg_root
+        anchor [ref=730, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&q=Amsted+Automotive&sa=X&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ1QJ6BAgmEAE]
+          text "Amsted Automotive"
+          svg_root
+        navigation
+          heading
+            text "Page Navigation"
+          table
+            table_row
+              table_cell
+              table_cell
+                text "1"
+              table_cell
+                anchor "Page 2" [ref=731, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=10&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAE]
+                  text "2"
+              table_cell
+                anchor "Page 3" [ref=732, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=20&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAG]
+                  text "3"
+              table_cell
+                anchor "Page 4" [ref=733, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=30&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAI]
+                  text "4"
+              table_cell
+                anchor "Page 5" [ref=734, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=40&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAK]
+                  text "5"
+              table_cell
+                anchor "Page 6" [ref=735, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=50&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAM]
+                  text "6"
+              table_cell
+                anchor "Page 7" [ref=736, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=60&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAO]
+                  text "7"
+              table_cell
+                anchor "Page 8" [ref=737, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=70&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAQ]
+                  text "8"
+              table_cell
+                anchor "Page 9" [ref=738, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=80&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAS]
+                  text "9"
+              table_cell
+                anchor "Page 10" [ref=739, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=90&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8tMDegQIIxAU]
+                  text "10"
+              heading
+                anchor [ref=740, url=https://www.google.com/search?q=EV+motor+housing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsPz3g8FX5QkVCwkKUNTs4ZAUoyAA:1792107807907&ei=H2XRatP7NrCa0PEP1ey1mAI&start=10&sa=N&sstk=AS6-VmIhQEwI2gYkFW6ttOKv8nnZUxM_VTqURl1rm-Wc4YBNJe2hxcW1BCss6GPhu2rO45g1kZHa2Qo0yxwkQmb9Zto8YfZoWqWAvw&ved=2ahUKEwiTh6jqmb2XAxUwDTQIHVV2DSMQ8NMDegQIIxAW]
+                  text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+

@@ -16,6 +16,10 @@ import type {
  * then the card shows a clean branded placeholder with no broken-image flash.
  */
 export const productFamilies: ProductFamily[] = [
+  // NOTE: the three sub-category routes (/products/monoblock, /products/two-piece,
+  // /products/off-road) were never built. These entries point at the real wheel
+  // catalogue so nothing renders a dead link; this array is superseded by
+  // `productLines` and is kept only for type/legacy references.
   {
     slug: "monoblock",
     hasRender: false,
@@ -30,7 +34,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/monoblock-base.jpg",
     hoverImage: "/images/products/monoblock-hover.jpg",
-    href: "/products/monoblock",
+    href: "/products/wheels",
   },
   {
     slug: "two-piece",
@@ -46,7 +50,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/two-piece-base.jpg",
     hoverImage: "/images/products/two-piece-hover.jpg",
-    href: "/products/two-piece",
+    href: "/products/wheels",
   },
   {
     slug: "off-road",
@@ -62,7 +66,7 @@ export const productFamilies: ProductFamily[] = [
     ],
     image: "/images/products/off-road-base.jpg",
     hoverImage: "/images/products/off-road-hover.jpg",
-    href: "/products/off-road",
+    href: "/products/wheels",
   },
 ];
 
@@ -87,59 +91,59 @@ export function getProductFamily(slug: string): ProductFamily | undefined {
  * below it stops making sense.
  */
 export const catalogueIntro = {
-  eyebrow: "What we manufacture",
+  eyebrow: "Product lines",
   heading: "Four product lines",
-  lede: "Wheels, EV powertrain components, custom aluminum parts and self-healing tires — engineered and manufactured across four parallel lines.",
+  lede: "Wheels, EV aluminum housings, custom aluminum components and self-sealing tires, presented across four parallel product lines.",
   supporting:
-    "Not a wheel shop with side projects: each line has its own engineering and process route, and all four share the same facility, tooling discipline and documentation trail.",
+    "Each line follows its own engineering and process route. The responsible supplier, facility and supporting records are confirmed for each project.",
 } as const;
 
 export const catalogueGuidance = {
   eyebrow: "Getting started",
-  heading: "How to specify your order",
-  lede: "You do not need to arrive with a finished drawing. Send us the vehicle and the look you are after — we turn it into a buildable specification.",
+  heading: "Choose the right route for your project",
+  lede: "Start with the product line and the information you have. Each project route explains what can be reviewed and which details still need confirmation.",
 } as const;
 
 export const catalogueRoutes: RouteStep[] = [
   {
     step: "01",
-    title: "Tell us the vehicle",
-    body: "Make, model, trim and any brake or suspension changes. This sets the clearance envelope before any styling decisions.",
-    href: "/contact",
-    linkLabel: "Send vehicle details",
+    title: "Choose a product line",
+    body: "Select wheels, EV aluminum housings, custom aluminum components or self-sealing tires to reach the relevant project information.",
+    href: "/products",
+    linkLabel: "Review product lines",
   },
   {
     step: "02",
-    title: "Choose a construction",
-    body: "Monoblock for the lightest result, two-piece for deep lips and wide fitments, off-road for load-rated truck and SUV builds.",
-    href: "/products",
-    linkLabel: "Compare families",
+    title: "Share the available inputs",
+    body: "Provide the drawing, model, sample or vehicle details that apply to the project. Missing information remains open for review.",
+    href: "/request-a-quote",
+    linkLabel: "Start a project inquiry",
   },
   {
     step: "03",
-    title: "Set the fitment",
-    body: "Diameter, width, offset, PCD and centre bore. We check each against clearance and load rating and flag anything that will not fit.",
-    href: "/insights",
-    linkLabel: "Fitment resources",
+    title: "Confirm the project requirements",
+    body: "Product-specific requirements, validation evidence and supply scope are reviewed against the information provided; a page listing is not a fitment or feasibility approval.",
+    href: "/contact",
+    linkLabel: "Contact the project team",
   },
   {
     step: "04",
-    title: "Pick a finish",
-    body: "Brushed, polished, satin, matte or gloss. Choose from the finish reference or send a sample and we will match it.",
-    href: "/gallery/finishes",
-    linkLabel: "See finishes",
+    title: "Agree any finish or process details",
+    body: "Finish, process, inspection and delivery details depend on the selected product line and project. Confirm availability and acceptance criteria with the project team.",
+    href: "/custom-development",
+    linkLabel: "Discuss a custom project",
   },
 ];
 
 export const catalogueFitmentSupport = {
   eyebrow: "Fitment support",
-  heading: "Fitment engineering comes with the order",
-  lede: "Fitment is where custom forged orders go wrong. We review it before production so the wheel you receive clears the brakes, sits where you wanted, and carries the right load rating.",
+  heading: "Wheel fitment requires project review",
+  lede: "Recorded wheel dimensions help define a review, but they do not confirm vehicle fitment. Brake clearance, interfaces and load requirements must be checked for the selected variant and application.",
   points: [
-    "Brake and caliper clearance checked against your model data",
-    "Offset and width reviewed for the stance you are targeting",
-    "Load rating confirmed for truck, SUV and heavy-duty applications",
-    "Written specification returned for approval before material is cut",
+    "Vehicle, trim and modification details to review",
+    "Brake and caliper clearance requirements",
+    "Selected diameter, width, offset, PCD and center bore",
+    "Application load requirements and supporting evidence",
   ],
 } as const;
 
@@ -258,16 +262,11 @@ export function getFamilySpecs(slug: string): FamilySpec[] {
 
 /** Related-resource links shown at the foot of each family page. */
 export const familyResourceLinks: ResourceLink[] = [
-  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
-  // /gallery is archived, and "real platforms … on each build" was a false
-  // claim — those builds never existed.
-  {
-    eyebrow: "Reference",
-    title: "Finish gallery",
-    body: "Compare brushed, satin, gloss and matte options before you commit a finish to the order.",
-    href: "/gallery/finishes",
-    linkLabel: "View finishes",
-  },
+  // The "Vehicle gallery" card was removed 2026-10-06 (DEC-059): its "real
+  // platforms … on each build" claim was false. Following that, the whole
+  // /gallery and /fitment route families were retired as clone-era remnants,
+  // so no card here may point at them.
+
   {
     eyebrow: "Manufacturing",
     title: "How we build them",
@@ -287,15 +286,10 @@ export const catalogueSkuCallout = {
 
 /** Related-resource links shown on the catalogue hub. */
 export const catalogueResourceLinks: ResourceLink[] = [
-  // The "Vehicle gallery → /gallery" card was removed 2026-10-06 (DEC-059):
-  // /gallery is archived and its fitment references were invented.
-  {
-    eyebrow: "Finishes",
-    title: "Finish reference",
-    body: "Eight finish directions with a note on how to request physical samples.",
-    href: "/gallery/finishes",
-    linkLabel: "Compare finishes",
-  },
+  // The "Vehicle gallery" card was removed 2026-10-06 (DEC-059) because its
+  // fitment references were invented; the /gallery and /fitment routes are now
+  // retired outright, so nothing may link to them.
+
   {
     eyebrow: "Manufacturing",
     title: "Manufacturing process",

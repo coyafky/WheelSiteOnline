@@ -1,0 +1,63 @@
+{
+ "route": "/fitment/bmw-m",
+ "viewport": "320x568",
+ "attempts": [
+  {
+   "status": 200,
+   "passes": 43,
+   "violations": [
+    {
+     "id": "region",
+     "impact": "moderate",
+     "help": "All page content should be contained by landmarks",
+     "nodes": [
+      {
+       "target": [
+        ".bottom-\\[calc\\(78px\\+env\\(safe-area-inset-bottom\\)\\)\\]"
+       ],
+       "html": "<a data-floating-quote=\"true\" data-floating-quote-...=\"true\" aria-label=\"获取报价\" aria-hidden=\"false\" class=\"fixed bottom-[calc(7...\" href=\"/zh/request-a-quote\">"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "status": 200,
+   "passes": 43,
+   "violations": [
+    {
+     "id": "region",
+     "impact": "moderate",
+     "help": "All page content should be contained by landmarks",
+     "nodes": [
+      {
+       "target": [
+        ".bottom-\\[calc\\(78px\\+env\\(safe-area-inset-bottom\\)\\)\\]"
+       ],
+       "html": "<a data-floating-quote=\"true\" data-floating-quote-...=\"true\" aria-label=\"获取报价\" aria-hidden=\"false\" class=\"fixed bottom-[calc(7...\" href=\"/zh/request-a-quote\">"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "status": 200,
+   "passes": 43,
+   "violations": [
+    {
+     "id": "region",
+     "impact": "moderate",
+     "help": "All page content should be contained by landmarks",
+     "nodes": [
+      {
+       "target": [
+        ".bottom-\\[calc\\(78px\\+env\\(safe-area-inset-bottom\\)\\)\\]"
+       ],
+       "html": "<a data-floating-quote=\"true\" data-floating-quote-...=\"true\" aria-label=\"获取报价\" aria-hidden=\"false\" class=\"fixed bottom-[calc(7...\" href=\"/zh/request-a-quote\">"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

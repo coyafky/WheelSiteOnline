@@ -409,6 +409,10 @@ if ($mode === 'presentation') {
         'context_spec_json'        => wp_json_encode(['size' => '18x8.5', 'pcd' => '5x112']),
         'context_source_page'      => 'https://example.com/products/wheels/probe',
         'context_intent'           => 'wheel_model_quote',
+        'inquiry_items_json'       => wp_json_encode([
+            ['model' => 'FH-001', 'productionCode' => 'FH001-001', 'quantity' => 4, 'spec' => ['size' => '18*8.5', 'pcd' => '5x112']],
+            ['model' => 'FH-002', 'productionCode' => 'FH002-001', 'quantity' => 2, 'spec' => ['size' => '19*9', 'pcd' => '5x114.3']],
+        ], JSON_UNESCAPED_UNICODE),
         'variant_pending'          => '0',
     ];
     foreach ($meta as $key => $value) {
@@ -427,6 +431,10 @@ if ($mode === 'presentation') {
     fh_inquiry_render_message_box(get_post($postId));
     $detailHtml = (string) ob_get_clean();
 
+    ob_start();
+    fh_inquiry_render_context_box(get_post($postId));
+    $contextHtml = (string) ob_get_clean();
+
     echo wp_json_encode([
         'post_id'      => (int) $postId,
         'post_type'    => (string) get_post_type($postId),
@@ -437,6 +445,7 @@ if ($mode === 'presentation') {
         'html'         => (string) ($rendered['html'] ?? ''),
         'list_html'    => $listHtml,
         'detail_html'  => $detailHtml,
+        'context_html' => $contextHtml,
     ]), "\n";
     exit(0);
 }
@@ -463,7 +472,7 @@ def run_probe(mode: str, env: dict[str, str] | None = None) -> dict:
 
 
 def cleanup() -> str:
-    """删掉本轮（以及历史遗留）的测试数据，返回清理摘要。
+    """只删本脚本创建的测试数据，返回清理摘要。
 
     ⚠️ 这段 PHP 走 `php -r`，所以**不能带 `<?php` 标签**。
     """
@@ -474,60 +483,84 @@ $keyTable    = fh_inquiry_key_table();
 $outboxTable = fh_inquiry_outbox_table();
 $eventTable  = fh_inquiry_event_table();
 
-// 1) 删掉**全部** fh_inquiry 记录（wp_delete_post 会连 postmeta 一起删）
-//
-// 为什么可以全删而不是只删本脚本造的：
-//   · 本脚本只在**本地实验场**跑（走 `docker exec fh-wp`），不可能指向生产；
-//   · 该库的询盘端点（/fh/v1/inquiries）是这个库里**唯一**的询盘写入者。
-//   所以库里任何一条 fh_inquiry 都是测试数据 —— 全清之后
-//   「剩余 0 条」才是一条有意义的断言。
-//
-// ⚠️ 2026-10-06 修：原先只按测试邮箱 'vfytest@example.com' 筛，
-//    导致人工探针（email 为 NULL 的 INQ-ADMINPROBE-* 之类）漏网，
-//    收尾断言报 posts_left=1。按邮箱筛对「别人造的探针」天然无能为力。
-$allIds = get_posts([
-    'post_type'      => 'fh_inquiry',
-    'post_status'    => 'any',
-    'posts_per_page' => -1,
-    'fields'         => 'ids',
-]);
-foreach ($allIds as $id) {
-    wp_delete_post((int) $id, true);
-}
-$deletedPosts = count($allIds);
+// 1) 只定位本脚本明确创建的记录。即使本地库里已经有人工验收或真实客户询盘，
+//    清理也不能把它们当成测试夹具。直接创建的两个探针用固定标题识别；经 REST
+//    创建的用专用测试邮箱识别。
+$testIds = array_map('intval', $wpdb->get_col(
+    "SELECT DISTINCT p.ID
+       FROM {$wpdb->posts} p
+       LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+      WHERE p.post_type = 'fh_inquiry'
+        AND (
+          (pm.meta_key = 'email' AND pm.meta_value IN ('vfytest@example.com', 'presentation@example.com'))
+          OR p.post_title IN ('INQ-WORKER-PROBE', 'INQ-PRESENTATION-PROBE')
+        )"
+));
 
-// 2) 键表：按测试前缀删（含未关联成功、inquiry_id=0 的残留行）
+$testOutboxIds = [];
+if ($testIds) {
+    $idList = implode(',', $testIds);
+    $testOutboxIds = array_map('intval', $wpdb->get_col(
+        "SELECT id FROM {$outboxTable} WHERE inquiry_id IN ({$idList})"
+    ));
+}
+
+// 2) 先删测试记录关联的事件、发件箱和幂等键，再删 CPT。
+$deletedEvents = 0;
+if ($testOutboxIds) {
+    $outboxIdList = implode(',', $testOutboxIds);
+    $deletedEvents = (int) $wpdb->query(
+        "DELETE FROM {$eventTable} WHERE outbox_id IN ({$outboxIdList})"
+    );
+}
+
+$deletedOutbox = 0;
+if ($testIds) {
+    $idList = implode(',', $testIds);
+    $deletedOutbox = (int) $wpdb->query(
+        "DELETE FROM {$outboxTable} WHERE inquiry_id IN ({$idList})"
+    );
+}
+
 $deletedKeys = (int) $wpdb->query($wpdb->prepare(
     "DELETE FROM {$keyTable} WHERE idempotency_key LIKE %s", 'vfytest%'
 ));
 
-// 3) 键表兜底：删掉指向已不存在询盘的孤儿行（含「服务端补发键」那种无前缀的行）
-$deletedOrphanKeys = (int) $wpdb->query(
-    "DELETE FROM {$keyTable} WHERE inquiry_id NOT IN (SELECT ID FROM {$wpdb->posts})"
-);
+foreach ($testIds as $id) {
+    wp_delete_post((int) $id, true);
+}
+$deletedPosts = count($testIds);
 
-// 4) 发件箱 / 事件表：删掉指向已不存在询盘的孤儿行
-$deletedOutbox = (int) $wpdb->query(
-    "DELETE FROM {$outboxTable} WHERE inquiry_id NOT IN (SELECT ID FROM {$wpdb->posts})"
+// 3) 收尾断言只统计本脚本的夹具，不要求客户数据表整体归零。
+$testPostsLeft = (int) $wpdb->get_var(
+    "SELECT COUNT(DISTINCT p.ID)
+       FROM {$wpdb->posts} p
+       LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+      WHERE p.post_type = 'fh_inquiry'
+        AND (
+          (pm.meta_key = 'email' AND pm.meta_value IN ('vfytest@example.com', 'presentation@example.com'))
+          OR p.post_title IN ('INQ-WORKER-PROBE', 'INQ-PRESENTATION-PROBE')
+        )"
 );
-$deletedEvents = (int) $wpdb->query(
-    "DELETE FROM {$eventTable} WHERE outbox_id NOT IN (SELECT id FROM {$outboxTable})"
-);
-
-// 5) 让本轮/下轮的询盘号都从当天 0001 开始（自增序号会跨运行累积，不清就没法复现）
-$resetKey = $wpdb->query("ALTER TABLE {$keyTable} AUTO_INCREMENT=1");
-$resetOutbox = $wpdb->query("ALTER TABLE {$outboxTable} AUTO_INCREMENT=1");
+$testKeysLeft = (int) $wpdb->get_var($wpdb->prepare(
+    "SELECT COUNT(*) FROM {$keyTable} WHERE idempotency_key LIKE %s", 'vfytest%'
+));
+$testOutboxLeft = 0;
+if ($testIds) {
+    $idList = implode(',', $testIds);
+    $testOutboxLeft = (int) $wpdb->get_var(
+        "SELECT COUNT(*) FROM {$outboxTable} WHERE inquiry_id IN ({$idList})"
+    );
+}
 
 echo wp_json_encode([
     'posts_deleted'  => $deletedPosts,
     'keys_deleted'   => $deletedKeys,
-    'orphan_keys_deleted' => $deletedOrphanKeys,
     'outbox_deleted' => $deletedOutbox,
     'events_deleted' => $deletedEvents,
-    'autoinc_reset'  => ($resetKey !== false && $resetOutbox !== false),
-    'posts_left'     => (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type='fh_inquiry'"),
-    'keys_left'      => (int) $wpdb->get_var("SELECT COUNT(*) FROM {$keyTable}"),
-    'outbox_left'    => (int) $wpdb->get_var("SELECT COUNT(*) FROM {$outboxTable}"),
+    'posts_left'     => $testPostsLeft,
+    'keys_left'      => $testKeysLeft,
+    'outbox_left'    => $testOutboxLeft,
 ]);
 """
     out = docker_php(php)
@@ -785,6 +818,36 @@ def main() -> int:
         record(len(outbox_rows) == 1, "库里只有 1 条 outbox 行（重放没有新增）",
                f"实得 {len(outbox_rows)} 条 {outbox_rows}")
 
+        # ── 多款轮毂清单：旧载荷不迁移，新载荷保存不可变 JSON 快照 ─────────
+        multi_key = idem("multi-item")
+        multi_body = payload(
+            multi_key,
+            items=[
+                {"model": "FH-001", "productionCode": "FH001-001", "quantity": 5_000,
+                 "spec": {"size": "18x8.5", "pcd": "5x112"}},
+                {"model": "FH-002", "productionCode": "FH002-001", "quantity": 2,
+                 "spec": {"size": "19x9", "pcd": "5x114.3"}},
+            ],
+        )
+        multi_code, multi_text = http("POST", REST_URL, multi_body, {"X-FH-Service-Key": service_key})
+        multi = json.loads(multi_text) if multi_text else {}
+        multi_title = multi.get("id", "")
+        multi_meta = sql_scalar(
+            f"SELECT meta_value FROM wp_postmeta pm INNER JOIN wp_posts p ON p.ID=pm.post_id "
+            f"WHERE p.post_title='{multi_title}' AND pm.meta_key='inquiry_items_json'"
+        )
+        try:
+            multi_items = json.loads(multi_meta)
+        except (TypeError, json.JSONDecodeError):
+            multi_items = []
+        record(
+            multi_code == 201
+            and [item.get("quantity") for item in multi_items] == [5_000, 2]
+            and [item.get("productionCode") for item in multi_items] == ["FH001-001", "FH002-001"],
+            "多款轮毂请求接受 5,000 件并保存逐项不可变快照",
+            f"HTTP {multi_code} items={multi_meta}",
+        )
+
         # ── 5 校验 ──────────────────────────────────────────────────────────
         print("\n[5] 服务端校验（422 且库里无残留）")
         before_counts = sql_scalar(f"SELECT COUNT(*) FROM {KEY_TABLE}") + "/" + sql_scalar(
@@ -797,7 +860,6 @@ def main() -> int:
             ("非法 productLine", payload(idem("badline"), productLine="spaceships"), "productLine"),
             ("非法 idempotencyKey", payload("short", ), "idempotencyKey"),
             ("非法 customerType", payload(idem("badtype"), customerType="robot"), "customerType"),
-            ("缺少合规字段", payload(idem("noconsent"), privacyVersion="", consentedAt=""), "privacyVersion"),
         ]
         for label, body, want_field in cases:
             code, text = http("POST", REST_URL, body, {"X-FH-Service-Key": service_key})
@@ -946,11 +1008,20 @@ def main() -> int:
         )
 
         guards = worker["guard_ids"]
-        expected_claimed = sorted([guards["dueId"], guards["expiredId"]])
+        claimed = worker["claimed_first"]
+        # 断言真正的不变量，而不是「领取集合恰好等于本轮两条」。
+        #
+        # 后者隐含假设「库里没有别的到期行」，只在全新库成立：实测在留有历史
+        # outbox 行（如 10-12 的 failed 行）时会多领到几条，把「worker 规则正确」
+        # 误判成失败。规则本身是：该领的必须领，不该领的必须不领。
+        must_claim = [guards["dueId"], guards["expiredId"]]
+        must_not_claim = [guards["futureId"], guards["leasedId"], guards["maxedId"]]
+        missing = [i for i in must_claim if i not in claimed]
+        overclaimed = [i for i in must_not_claim if i in claimed]
         record(
-            worker["claimed_first"] == expected_claimed,
+            not missing and not overclaimed,
             "只领取已到期且无有效租约的记录；过期租约可回收",
-            f"实得 {worker['claimed_first']}，期望 {expected_claimed}",
+            f"实得 {claimed}；漏领 {missing}（该领未领）｜越领 {overclaimed}（不该领却领了）",
         )
         record(
             worker["claimed_second"] == 0,
@@ -1007,6 +1078,7 @@ def main() -> int:
         edit_url = presentation["edit_url"]
         list_html = presentation["list_html"]
         detail_html = presentation["detail_html"]
+        context_html = presentation["context_html"]
         list_body = list_html.split("<tbody>", 1)[-1].split("</tbody>", 1)[0]
         email_hrefs = [html_lib.unescape(value) for value in re.findall(r'href="([^"]+)"', email_html)]
 
@@ -1025,11 +1097,14 @@ def main() -> int:
             edit_url,
         )
         record(
+            # 分区名随 4360b01「取消询盘同意门槛」由 `Source & consent` 改为
+            # `Source`（同意不再是收集项，邮件里自然也没有同意分区）。断言原先
+            # 未同步，已过期。
             '<meta charset="UTF-8">' in email_html
             and all(section in email_html for section in (
-                "Contact", "Inquiry details", "Submitted configuration", "Source &amp; consent"
+                "Contact", "Inquiry details", "Submitted configuration", "Source"
             )),
-            "HTML 邮件声明 UTF-8，并按联系人、需求、规格快照、来源与同意分区",
+            "HTML 邮件声明 UTF-8，并按联系人、需求、规格快照、来源分区",
         )
         record(
             edit_url in email_hrefs
@@ -1044,11 +1119,17 @@ def main() -> int:
             "邮件和后台详情都会转义客户输入",
         )
         record(
+            all(token in email_html and token in context_html for token in ("FH-001", "FH-002", "FH001-001", "FH002-001")),
+            "HTML 邮件与 WordPress 详情都显示逐项轮毂清单",
+        )
+        record(
             email_text.count("\n") >= 12
             and "CONTACT" in email_text
             and "INQUIRY DETAILS" in email_text
+            and "FH-001" in email_text
+            and "FH-002" in email_text
             and "WORDPRESS RECORD" in email_text,
-            "纯文本备用正文保留分区与换行",
+            "纯文本备用正文保留分区、逐项清单与换行",
             f"换行 {email_text.count(chr(10))} 个",
         )
 
@@ -1058,7 +1139,9 @@ def main() -> int:
             list_body.find("企业 / 贸易商"),
             list_body.find("轮毂"),
             list_body.find("MODEL-TOKEN"),
-            list_body.find("新询盘"),
+            # “新询盘”同时出现在状态筛选器和表格单元格；取表格中最后一次出现，
+            # 避免把筛选器位置误判为列顺序。
+            list_body.rfind("新询盘"),
         ]
         record(
             all(pos >= 0 for pos in list_positions)

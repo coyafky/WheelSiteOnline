@@ -22,6 +22,7 @@ import "server-only";
 
 import { resolvePublishedWheelSelection } from "./public-catalogue";
 import type { ResolvedWheelSelection } from "./types";
+import type { InquiryItem } from "@/lib/inquiry/types";
 
 /** 轮毂询盘相关的上下文字段（`InquiryContext` 的子集）。 */
 export type WheelEnquiryHints = {
@@ -44,6 +45,10 @@ export type WheelEnquiryBinding = {
   applied: boolean;
 };
 
+export type WheelItemsBinding =
+  | { ok: true; items: InquiryItem[] }
+  | { ok: false; fieldErrors: Record<string, string> };
+
 /** 提交的规格快照键 —— 与 `?size=&pcd=&et=&cb=&finish=` 契约一致。 */
 export function specSnapshotOf(variant: ResolvedWheelSelection["variant"]): Record<string, string> {
   const spec: Record<string, string> = { size: variant.size };
@@ -52,6 +57,50 @@ export function specSnapshotOf(variant: ResolvedWheelSelection["variant"]): Reco
   if (variant.centerBore !== null) spec.cb = String(variant.centerBore);
   if (variant.finish) spec.finish = variant.finish;
   return spec;
+}
+
+/**
+ * 复核一次提交里的多款轮毂。清单模式是严格的：任何一项未发布、型号不匹配或
+ * productionCode 不存在都会拒绝整次提交，避免销售收到半真半假的清单。
+ */
+export async function bindWheelEnquiryItems(
+  items: InquiryItem[] | undefined,
+  productLine: string,
+): Promise<WheelItemsBinding> {
+  if (!items || items.length === 0) return { ok: true, items: [] };
+  if (productLine !== "wheels") {
+    return { ok: false, fieldErrors: { items: "Wheel items require the wheels product line." } };
+  }
+
+  const resolved: InquiryItem[] = [];
+  const seen = new Set<string>();
+  for (const [index, item] of items.entries()) {
+    const selection = await resolvePublishedWheelSelection({
+      slug: item.model,
+      productionCode: item.productionCode,
+    });
+    if (!selection) {
+      return {
+        ok: false,
+        fieldErrors: { [`items.${index}`]: "One selected wheel is no longer available." },
+      };
+    }
+    const key = `${selection.model.toLowerCase()}::${selection.variant.productionCode.toLowerCase()}`;
+    if (seen.has(key)) {
+      return {
+        ok: false,
+        fieldErrors: { [`items.${index}`]: "The same wheel configuration can only appear once." },
+      };
+    }
+    seen.add(key);
+    resolved.push({
+      model: selection.model,
+      productionCode: selection.variant.productionCode,
+      quantity: item.quantity,
+      spec: specSnapshotOf(selection.variant),
+    });
+  }
+  return { ok: true, items: resolved };
 }
 
 /**

@@ -5,7 +5,6 @@ import { ArrowDownRight, ArrowRight, Check } from "lucide-react";
 
 import {
   FLOW_FORMED_PROCESSES,
-  processLabelEn,
   type WheelCatalogueCard,
   type WheelCatalogueInput,
   type WheelCataloguePageView,
@@ -16,6 +15,10 @@ import type {
   FlowFormedWheelsPage,
   MediaAsset,
 } from "@/content/types";
+import { SiteBreadcrumbs, type SiteBreadcrumbItem } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { formatLocaleNumber, localizedPath } from "@/lib/i18n/types";
+import { wheelCatalogueCopyFor } from "@/lib/i18n/wheel-catalogue-copy";
 
 import { WheelCatalogueCardView } from "./wheel-catalogue-card";
 import { WheelCataloguePagination } from "./wheel-catalogue-pagination";
@@ -82,17 +85,26 @@ export function hasUserFilters(query: WheelCatalogueInput): boolean {
 }
 
 /** §4 WFF04: the result count. Only approved models are ever counted. */
-function resultSummary(view: WheelCataloguePageView): string {
-  const search = view.normalizedQuery.q;
-  if (search) return `${view.total} models found for “${search}”`;
-  if (hasUserFilters(view.normalizedQuery)) {
-    return `${view.total} models match the selected production specifications`;
-  }
-  return `${view.total} approved wheel models`;
+function fillCopy(template: string, values: Record<string, string>): string {
+  return Object.entries(values).reduce(
+    (text, [key, value]) => text.replaceAll(`{${key}}`, value),
+    template,
+  );
 }
 
-/** The recorded process scope, from the single label mapping point. */
-const SCOPE_LABEL = FLOW_FORMED_PROCESSES.map((key) => processLabelEn(key) ?? key).join(" · ");
+function resultSummary(
+  view: WheelCataloguePageView,
+  section: FlowFormedWheelsPage["catalogue"],
+  locale: Awaited<ReturnType<typeof getLocale>>,
+): string {
+  const count = formatLocaleNumber(view.total, locale);
+  const search = view.normalizedQuery.q;
+  if (search) return fillCopy(section.resultSearch, { count, query: search });
+  if (hasUserFilters(view.normalizedQuery)) {
+    return fillCopy(section.resultFiltered, { count });
+  }
+  return fillCopy(section.resultAll, { count });
+}
 
 /**
  * Carry the live filter snapshot onto the enquiry URL (§3 WFF05: the context
@@ -136,7 +148,7 @@ function SectionHeading({
           {id.toUpperCase()}
         </span>
         <span className={`h-px w-10 ${dark ? "bg-white/18" : "bg-ink/16"}`} aria-hidden="true" />
-        <p className={`eyebrow ${dark ? "!text-forge" : ""}`}>{eyebrow}</p>
+        <p className={`eyebrow ${dark ? "!text-forge-bright" : ""}`}>{eyebrow}</p>
       </div>
       <h2
         id={`${id.toLowerCase()}-title`}
@@ -179,7 +191,15 @@ function EquipmentVisual({ media }: { media: MediaAsset }) {
  * WFF01 — hero, plus one approved model
  * ------------------------------------------------------------------------- */
 
-function FeaturedModel({ card }: { card: WheelCatalogueCard }) {
+function FeaturedModel({
+  card,
+  labels,
+  locale,
+}: {
+  card: WheelCatalogueCard;
+  labels: FlowFormedWheelsPage["hero"]["featuredLabels"];
+  locale: Awaited<ReturnType<typeof getLocale>>;
+}) {
   const extraDiameters = card.diametersTotal - card.diameters.length;
 
   return (
@@ -188,7 +208,7 @@ function FeaturedModel({ card }: { card: WheelCatalogueCard }) {
       <div className="relative aspect-square w-full">
         <Image
           src={card.primaryImage}
-          alt={`Fenghuai wheel model ${card.model}, front view`}
+          alt={labels.imageAlt.replace("{model}", card.model)}
           fill
           sizes="(min-width: 1024px) 45vw, 100vw"
           className="object-contain"
@@ -211,7 +231,7 @@ function FeaturedModel({ card }: { card: WheelCatalogueCard }) {
             weight figure, no vehicle hint and no third-party style name (§3). */}
         <dl className="mt-4 grid gap-2 text-[0.78rem]">
           <div className="flex items-baseline justify-between gap-3">
-            <dt className="text-white/50">Recorded diameters</dt>
+            <dt className="text-white/50">{labels.diameters}</dt>
             <dd className="text-right text-white/85">
               {card.diameters.length
                 ? card.diameters.map((d) => `${d}"`).join(" · ")
@@ -222,20 +242,20 @@ function FeaturedModel({ card }: { card: WheelCatalogueCard }) {
             </dd>
           </div>
           <div className="flex items-baseline justify-between gap-3">
-            <dt className="text-white/50">Recorded configurations</dt>
+            <dt className="text-white/50">{labels.configurations}</dt>
             <dd className="text-right text-white/85">{card.approvedVariantCount}</dd>
           </div>
           <div className="flex items-baseline justify-between gap-3">
-            <dt className="text-white/50">Recorded process</dt>
+            <dt className="text-white/50">{labels.process}</dt>
             <dd className="text-right text-white/85">{card.processLabel ?? "—"}</dd>
           </div>
         </dl>
 
         <Link
-          href={`${CATALOGUE_PATH}/${card.slug}`}
+          href={localizedPath(`${CATALOGUE_PATH}/${card.slug}`, locale)}
           className="group mt-5 inline-flex min-h-11 items-center gap-1.5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors hover:text-white"
         >
-          View specifications
+          {labels.viewSpecifications}
           <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
             →
           </span>
@@ -252,7 +272,7 @@ function FeaturedModel({ card }: { card: WheelCatalogueCard }) {
  * catalogue candidate, and §6 forbids leaving a blank picture box on mobile, so
  * this panel is a process graphic and is desktop-only.
  */
-function NoApprovedModel() {
+function NoApprovedModel({ message }: { message: string }) {
   return (
     <div
       data-reveal
@@ -262,8 +282,7 @@ function NoApprovedModel() {
         <div className="fh-industrial-grid absolute inset-0 opacity-80" aria-hidden="true" />
       </div>
       <p className="mt-5 text-sm leading-6 text-white/60">
-        No approved flow-formed model is published on this route yet. The route
-        explanation above is unchanged by that.
+        {message}
       </p>
     </div>
   );
@@ -272,10 +291,16 @@ function NoApprovedModel() {
 export function FlowFormedHero({
   content,
   featured,
+  breadcrumbItems,
+  breadcrumbLabel,
+  locale,
 }: {
   content: FlowFormedWheelsPage;
   /** First approved flow-formed model, or `null` when none is published. */
   featured: WheelCatalogueCard | null;
+  breadcrumbItems?: SiteBreadcrumbItem[];
+  breadcrumbLabel: string;
+  locale: Awaited<ReturnType<typeof getLocale>>;
 }) {
   const { hero } = content;
 
@@ -300,34 +325,20 @@ export function FlowFormedHero({
           pill past the viewport on a narrow phone. */}
       <div className="container-fh grid grid-cols-1 gap-10 pb-16 pt-[124px] lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-start lg:gap-16 lg:pb-20 lg:pt-[156px]">
         <div data-reveal>
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            {hero.breadcrumb.map((crumb, index) => {
-              const last = index === hero.breadcrumb.length - 1;
-              return (
-                <Fragment key={crumb.label}>
-                  {index > 0 ? (
-                    <span aria-hidden="true" className="px-2">
-                      /
-                    </span>
-                  ) : null}
-                  {last ? (
-                    <span className="!text-forge" aria-current="page">
-                      {crumb.label}
-                    </span>
-                  ) : (
-                    <Link href={crumb.href} className="transition-colors hover:!text-forge">
-                      {crumb.label}
-                    </Link>
-                  )}
-                </Fragment>
-              );
-            })}
-          </nav>
+          <SiteBreadcrumbs
+            label={breadcrumbLabel}
+            tone="dark"
+            items={breadcrumbItems ?? hero.breadcrumb.map((crumb) => ({ label: crumb.label, href: crumb.href }))}
+          />
 
           <p className="eyebrow mt-6">{hero.eyebrow}</p>
+          {/* The colour is stated on the <h1> itself, not inherited from the
+              section: the generated theme sets heading ink by landmark
+              (`site-theme.css:11-14`), so an inherited `text-white` never
+              reached this heading (measured #292621 on #292621 — 1.00:1). */}
           <h1
             id="wff01-title"
-            className="mt-4 max-w-[680px] font-display text-[clamp(1.95rem,5.4vw,3.6rem)] font-800 uppercase leading-[0.92] tracking-[-0.035em]"
+            className="mt-4 max-w-[680px] font-display text-[clamp(1.95rem,5.4vw,3.6rem)] font-800 uppercase leading-[0.92] tracking-[-0.035em] text-white"
           >
             {hero.heading}
           </h1>
@@ -350,7 +361,11 @@ export function FlowFormedHero({
           </div>
         </div>
 
-        {featured ? <FeaturedModel card={featured} /> : <NoApprovedModel />}
+        {featured ? (
+          <FeaturedModel card={featured} labels={hero.featuredLabels} locale={locale} />
+        ) : (
+          <NoApprovedModel message={hero.noApprovedModel} />
+        )}
       </div>
     </section>
   );
@@ -371,11 +386,12 @@ function BoundaryCardBody({ card }: { card: FlowFormedProcessBoundaryCard }) {
   );
 }
 
-export function FlowFormedProcessDefinition({
+export async function FlowFormedProcessDefinition({
   section,
 }: {
   section: FlowFormedWheelsPage["processDefinition"];
 }) {
+  const locale = await getLocale();
   return (
     <section
       id="wff02"
@@ -399,12 +415,12 @@ export function FlowFormedProcessDefinition({
               // becoming a fourth product card (§3 WFF02).
               <li key={card.id} className="border border-forge/45 bg-forge-soft">
                 <Link
-                  href={card.href}
+                  href={localizedPath(card.href, locale)}
                   className="group flex h-full flex-col p-6 transition-colors hover:border-forge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge"
                 >
                   <BoundaryCardBody card={card} />
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.13em] text-forge transition-colors group-hover:text-forge-deep">
-                    Discuss a forged wheel program
+                    {section.forgedProjectCtaLabel}
                     <ArrowRight
                       className="size-3.5 transition-transform group-hover:translate-x-0.5"
                       aria-hidden="true"
@@ -508,12 +524,17 @@ function EmptyResult({
   section,
   inquiryCta,
   view,
+  locale,
 }: {
   section: FlowFormedWheelsPage["catalogue"];
   inquiryCta: CtaLink;
   view: WheelCataloguePageView;
+  locale: Awaited<ReturnType<typeof getLocale>>;
 }) {
   const query = view.normalizedQuery;
+  const inquiryPath = inquiryCta.href.split("?")[0] ?? inquiryCta.href;
+  const inquiryQuery = inquiryCta.href.split("?")[1];
+  const localizedInquiryHref = `${localizedPath(inquiryPath, locale)}${inquiryQuery ? `?${inquiryQuery}` : ""}`;
 
   return (
     <section
@@ -539,18 +560,18 @@ function EmptyResult({
       />
 
       <div className="mt-7 flex flex-wrap items-center gap-4">
-        <Link href={BASE_PATH} className="btn-pill-solid !text-white">
-          Clear the size and PCD filters
+        <Link href={localizedPath(BASE_PATH, locale)} className="btn-pill-solid !text-white">
+          {section.clearFiltersLabel}
         </Link>
-        <Link href={withFilterSnapshot(inquiryCta.href, query)} className="btn-pill-outline !text-ink">
-          Send the required specification
+        <Link href={withFilterSnapshot(localizedInquiryHref, query)} className="btn-pill-outline !text-ink">
+          {section.sendSpecificationLabel}
         </Link>
       </div>
     </section>
   );
 }
 
-export function FlowFormedCatalogue({
+export async function FlowFormedCatalogue({
   section,
   inquiryCta,
   view,
@@ -560,8 +581,9 @@ export function FlowFormedCatalogue({
   /** The locked-catalogue page view. `view.total === 0` is a valid empty state. */
   view: WheelCataloguePageView;
 }) {
+  const locale = await getLocale();
   const query = view.normalizedQuery;
-  const summary = resultSummary(view);
+  const summary = resultSummary(view, section, locale);
 
   return (
     <section
@@ -593,7 +615,7 @@ export function FlowFormedCatalogue({
 
           <div className="mt-6 lg:mt-0">
             {view.total === 0 ? (
-              <EmptyResult section={section} inquiryCta={inquiryCta} view={view} />
+              <EmptyResult section={section} inquiryCta={inquiryCta} view={view} locale={locale} />
             ) : (
               <>
                 <div className="flex flex-wrap items-center justify-between gap-4">
@@ -616,12 +638,11 @@ export function FlowFormedCatalogue({
                 />
 
                 <p className="mt-4 text-[0.75rem] leading-relaxed text-muted-foreground">
-                  Specifications shown in the catalogue are production records, not a
-                  vehicle-fitment guarantee.
+                  {section.disclosure}
                 </p>
 
                 {/* Same grid, same card and same 24-per-page rule as the catalogue (§4). */}
-                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] sm:gap-5">
+                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] sm:gap-5">
                   {view.cards.map((card, index) => (
                     <WheelCatalogueCardView key={card.slug} card={card} priority={index < 4} />
                   ))}
@@ -653,14 +674,20 @@ export function FlowFormedCatalogue({
  * WFF05 — fitment and supply review
  * ------------------------------------------------------------------------- */
 
-export function FlowFormedInquiry({
+export async function FlowFormedInquiry({
   section,
   view,
 }: {
   section: FlowFormedWheelsPage["inquiry"];
   view: WheelCataloguePageView;
 }) {
+  const locale = await getLocale();
   const hasFilters = hasUserFilters(view.normalizedQuery);
+  const catalogueCopy = wheelCatalogueCopyFor(locale);
+  const scopeLabel = FLOW_FORMED_PROCESSES.map((key) => catalogueCopy.processName(key)).join(" · ");
+  const inquiryPath = section.primaryCta.href.split("?")[0] ?? section.primaryCta.href;
+  const inquiryQuery = section.primaryCta.href.split("?")[1];
+  const localizedInquiryHref = `${localizedPath(inquiryPath, locale)}${inquiryQuery ? `?${inquiryQuery}` : ""}`;
 
   return (
     <section
@@ -694,14 +721,14 @@ export function FlowFormedInquiry({
         <div className="lg:pt-20">
           <div className="border border-white/14 bg-white/[0.035] p-6">
             <p className="font-display text-[0.64rem] font-700 uppercase tracking-[0.14em] text-white/50">
-              Recorded process scope
+              {section.scopeLabel}
             </p>
-            <p className="mt-2 text-[0.82rem] leading-6 text-white/72">{SCOPE_LABEL}</p>
+            <p className="mt-2 text-[0.82rem] leading-6 text-white/72">{scopeLabel}</p>
 
             {hasFilters ? (
               <>
                 <p className="mt-5 border-t border-white/12 pt-5 font-display text-[0.64rem] font-700 uppercase tracking-[0.14em] text-white/50">
-                  Filter snapshot carried into the enquiry
+                  {section.filterSnapshotLabel}
                 </p>
                 <WheelCatalogueAppliedChips
                   facets={view.facets}
@@ -718,7 +745,7 @@ export function FlowFormedInquiry({
                 instead of forcing horizontal scroll. The wording is §3 verbatim;
                 only the box changes. */}
             <Link
-              href={withFilterSnapshot(section.primaryCta.href, view.normalizedQuery)}
+              href={withFilterSnapshot(localizedInquiryHref, view.normalizedQuery)}
               className="btn-pill-solid mt-6 !whitespace-normal text-center"
             >
               {section.primaryCta.label}

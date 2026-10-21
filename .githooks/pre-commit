@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+#
+# Pre-commit guard — T-40
+#
+# Catches three things before they reach a commit:
+#   1. Secrets (API keys, tokens, private keys) in the staged diff
+#   2. Debug leftovers (stray console.log / debugger) in source
+#   3. `.env` files accidentally staged
+#
+# Why a hand-rolled hook instead of husky + lint-staged: this repo has no Node
+# dependency chain that must run on commit, and a shell script has no install
+# step, no version drift, and works identically on a fresh clone via
+# `git config core.hooksPath .githooks`.
+#
+# Design notes:
+#   - Fails closed on secrets, but only for *added* lines — a secret already in
+#     history must not block every future commit.
+#   - Scans file names as well as content: `.env.production` leaking in by name
+#     is the most common accident.
+#   - Keeps the patterns narrow enough to avoid false positives on ordinary
+#     words like "task-" or "mask-". A noisy hook gets bypassed with --no-verify,
+#     which is worse than no hook.
+#
+# Bypass (use deliberately, never habitually): git commit --no-verify
+
+set -uo pipefail
+
+red=$'\033[31m'; yellow=$'\033[33m'; dim=$'\033[2m'; reset=$'\033[0m'
+fail() { printf '%s✗ pre-commit 拦截：%s%s\n' "$red" "$1" "$reset" >&2; }
+
+# ── 0. Fast path: nothing staged ────────────────────────────────────────────
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  exit 0
+fi
+if git diff --cached --quiet 2>/dev/null; then
+  exit 0
+fi
+
+problems=0
+
+# ── 1. Staged file names ────────────────────────────────────────────────────
+# A staged .env is always a mistake; the repo ignores them but `git add -f`
+# and generated files still slip through.
+blocked_names=$(git diff --cached --name-only --diff-filter=ACMR \
+  | grep -E '(^|/)\.env($|\.)' \
+  | grep -vE '\.env\.(example|template)$' || true)
+if [ -n "$blocked_names" ]; then
+  fail "暂存了环境变量文件"
+  printf '%s\n' "$blocked_names" | sed "s/^/    ${yellow}/;s/$/${reset}/" >&2
+  printf '  ${dim}只有 .env.example / .env.template 可以提交${reset}\n' >&2
+  problems=1
+fi
+
+# Private key material by filename.
+blocked_keys=$(git diff --cached --name-only --diff-filter=ACMR \
+  | grep -E '\.(pem|p12|pfx|key|keystore|jks)$' || true)
+if [ -n "$blocked_keys" ]; then
+  fail "暂存了密钥文件"
+  printf '%s\n' "$blocked_keys" | sed "s/^/    ${yellow}/;s/$/${reset}/" >&2
+  problems=1
+fi
+
+# ── 2. Added lines ──────────────────────────────────────────────────────────
+# Only '+'-prefixed lines: an existing secret in history is a separate problem
+# and blocking on it would make every commit fail until history is rewritten.
+#
+# This file itself is excluded, and that is not a loophole: a detector
+# necessarily contains the patterns it detects, so without this the guard could
+# never commit its own definition — observed while writing it (the hook blocked
+# its own regex).
+#
+# Deliberately NOT excluding tests/: a test file is where a real token most
+# often gets pasted by accident. Test fixtures here are written so they do not
+# match (see tests/pre-commit-guard.test.mts, which asserts that), so there is
+# no need to exempt them.
+added=$(git diff --cached -U0 --diff-filter=ACMR \
+  -- . ':(exclude).githooks/pre-commit' \
+  | grep -E '^\+' | grep -vE '^\+\+\+' || true)
+
+check_pattern() {
+  local label="$1" pattern="$2" hint="$3"
+  local hits
+  # `-e` is required: private-key patterns start with a dash and would otherwise
+  # be parsed as grep options.
+  hits=$(printf '%s\n' "$added" | grep -nE -e "$pattern" || true)
+  if [ -n "$hits" ]; then
+    fail "$label"
+    printf '%s\n' "$hits" | sed "s/^/    ${yellow}/;s/$/${reset}/" | cut -c1-160 >&2
+    printf '  %s\n' "$hint" >&2
+    problems=1
+  fi
+}
+
+# OpenAI / DeepSeek style: sk- followed by 20+ token chars.
+check_pattern "疑似 API Key（sk- 前缀）" \
+  '(^|[^A-Za-z0-9])sk-[A-Za-z0-9_-]{20,}' \
+  "确认是真实密钥请立即轮换；占位请写成 <your-key> 或从环境变量读取"
+
+# Anthropic.
+check_pattern "疑似 Anthropic Key" \
+  '(^|[^A-Za-z0-9])sk-ant-[A-Za-z0-9_-]{20,}' \
+  "同上：真实密钥需轮换，不要把密钥写进代码"
+
+# GitHub tokens: ghp_/gho_/ghu_/ghs_/ghr_ + 36 chars.
+check_pattern "疑似 GitHub Token" \
+  '(^|[^A-Za-z0-9])gh[pousr]_[A-Za-z0-9]{36,}' \
+  "改用环境变量或 GitHub Secrets"
+
+# AWS access key id.
+check_pattern "疑似 AWS Access Key" \
+  '(^|[^A-Za-z0-9])AKIA[0-9A-Z]{16}($|[^A-Za-z0-9])' \
+  "改用 IAM role 或环境变量"
+
+# Private key blocks.
+check_pattern "内联私钥" \
+  '-----BEGIN ([A-Z]+ )?PRIVATE KEY-----' \
+  "私钥绝不能进仓库；走挂载或密钥管理"
+
+# Slack token.
+check_pattern "疑似 Slack Token" \
+  '(^|[^A-Za-z0-9])xox[baprs]-[A-Za-z0-9-]{10,}' \
+  "改用环境变量"
+
+# ── 3. Debug leftovers in source ────────────────────────────────────────────
+# Scoped to source dirs so scripts/tests may still use console.log deliberately.
+debug_added=$(git diff --cached -U0 --diff-filter=ACMR -- 'src/**' 'app/**' \
+  | grep -E '^\+' | grep -vE '^\+\+\+' || true)
+if [ -n "$debug_added" ]; then
+  hits=$(printf '%s\n' "$debug_added" | grep -nE -e '^\+[^/]*\bdebugger\b' || true)
+  if [ -n "$hits" ]; then
+    fail "残留 debugger 语句"
+    printf '%s\n' "$hits" | sed "s/^/    ${yellow}/;s/$/${reset}/" >&2
+    problems=1
+  fi
+fi
+
+# ── Result ──────────────────────────────────────────────────────────────────
+if [ "$problems" -ne 0 ]; then
+  printf '\n%s若确属误报%s，用 %sgit commit --no-verify%s 跳过；' \
+    "$dim" "$reset" "$yellow" "$reset" >&2
+  printf '但先确认那真的是误报。\n' >&2
+  exit 1
+fi
+
+exit 0

@@ -1,4 +1,9 @@
-# MASTER：Spec-Driven Develop 跨会话索引
+# MASTER：2026-10-15 Spec-Driven Develop 治理快照
+
+> 本文件保留合并前 `main` 分支在 2026-10-15 的流程迁移记录。下方分支、任务、
+> Phase 与发布判断均为当时快照；当前任务状态和文档归属以
+> [`docs/implementation/TASKS.md`](../implementation/TASKS.md) 与
+> [`docs/README.md`](../README.md) 为准。
 
 - **更新日期**：2026-10-15
 - **流程模式**：`GITHUB_FULL`

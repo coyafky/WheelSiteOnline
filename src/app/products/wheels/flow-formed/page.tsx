@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { flowFormedWheelsPage, isFlowFormedPublishingOpen } from "@/content/flow-formed-wheels";
+import { notFound, redirect } from "next/navigation";
 
 import {
   FlowFormedCatalogue,
@@ -10,18 +11,19 @@ import {
   hasUserFilters,
 } from "@/components/wheels/flow-formed-page";
 import {
-  flowFormedWheelsPage,
-  isFlowFormedPublishingOpen,
-} from "@/content/flow-formed-wheels";
-import {
   FLOW_FORMED_PROCESSES,
+  buildCatalogueHref,
   getWheelCataloguePage,
+  hasEmptySearchParam,
   isPageOutOfRange,
   parseCatalogueSearchParams,
   type WheelCatalogueInput,
   type WheelCataloguePageView,
 } from "@/lib/wheels";
 import { getFlowFormedWheelsPage } from "@/lib/wordpress/flow-formed";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { localizedRouteMetadata } from "@/lib/i18n/publication";
 
 /**
  * `/products/wheels/flow-formed` — WFF01–WFF05 (PAGE-SPECS/flow-formed-wheels.md).
@@ -49,20 +51,16 @@ import { getFlowFormedWheelsPage } from "@/lib/wordpress/flow-formed";
  * least one approved variant) is the catalogue's own, so a model that appears on
  * this page always has a working detail route.
  *
- * ── THE PUBLISHING GATE IS IN METADATA, NOT IN THE CSS ─────────────────────
- * `publicationGate` is false/pending today (process wording unreviewed, WP 116
- * rights pending), so this route declares `robots: { index: false, follow: true }`
- * and publishes **no canonical URL**. §7 requires that while either is
- * unconfirmed, and it is why the route is absent from `sitemap.ts`. The page
- * itself still renders in full — content, model grid and all. Clearing both
- * flags in `@/content/flow-formed-wheels` is the only edit needed to make it
- * indexable; nothing here has to be un-commented or removed.
+ * This public content route is indexable at the owner's direction. Its catalogue
+ * filters still use noindex canonicals to avoid indexing query combinations.
  */
 
 type FlowFormedPageProps = {
   /** Next 16: `searchParams` is a Promise, and it must be awaited. */
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
+
+const BASE_PATH = "/products/wheels/flow-formed";
 
 /**
  * URL query → the catalogue query this route actually runs.
@@ -83,36 +81,43 @@ function lockedQuery(parsed: WheelCatalogueInput): WheelCatalogueInput {
 export async function generateMetadata({
   searchParams,
 }: FlowFormedPageProps): Promise<Metadata> {
+  const locale = await getLocale();
+  const localizedPage = await getFlowFormedWheelsPage();
+  const { content } = localizedPage;
   const parsed = parseCatalogueSearchParams(await searchParams);
   const view = await getWheelCataloguePage(lockedQuery(parsed));
 
-  const { seo, publicationGate } = flowFormedWheelsPage;
-  const gateOpen = isFlowFormedPublishingOpen(publicationGate);
+  const { seo } = content;
 
   const requestedPage = parsed.page ?? 1;
-  // A filtered result set, an empty result set and an unreviewed page are all
-  // `noindex, follow`; only the untouched, approved, populated page may be
-  // indexed (§7, and the catalogue's own rules for paged / filtered URLs).
-  const noindex = !gateOpen || hasUserFilters(view.normalizedQuery) || view.total === 0;
+  // Filtered result combinations remain out of search; the public catalogue
+  // page itself is indexable in every configured locale.
+  const publicationOpen = isFlowFormedPublishingOpen(flowFormedWheelsPage.publicationGate) && view.total > 0;
+  const noindex = hasUserFilters(view.normalizedQuery) || !publicationOpen;
 
   // `absolute`: the root layout's `%s | Fenghuai` template would otherwise
   // append the brand a second time. Title and description are §7 verbatim.
   const head: Metadata = {
     title: { absolute: seo.title },
     description: seo.description,
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      type: "website",
+    },
     robots: { index: !noindex, follow: true },
   };
 
-  // Fail-closed: while a gate flag is unresolved the route publishes no canonical
-  // at all, so nothing points at an unreviewed page (DEC-050 pattern).
-  if (!gateOpen) return head;
-
   return {
     ...head,
-    alternates: {
-      canonical:
-        noindex || requestedPage === 1 ? seo.canonical : `${seo.canonical}?page=${requestedPage}`,
-    },
+    ...(publicationOpen
+      ? {
+          alternates: await localizedRouteMetadata(
+            noindex || requestedPage === 1 ? seo.canonical : `${seo.canonical}?page=${requestedPage}`,
+            locale,
+          ),
+        }
+      : {}),
   };
 }
 
@@ -161,15 +166,29 @@ function collectionSchema(
  * ------------------------------------------------------------------------- */
 
 export default async function FlowFormedWheelsRoute({ searchParams }: FlowFormedPageProps) {
-  const parsed = parseCatalogueSearchParams(await searchParams);
-  const view = await getWheelCataloguePage(lockedQuery(parsed));
+  const locale = await getLocale();
+  const params = await searchParams;
+  const parsed = parseCatalogueSearchParams(params);
+  const locked = lockedQuery(parsed);
+  if (hasEmptySearchParam(params)) {
+    redirect(
+      localizedPath(
+        buildCatalogueHref(locked, {
+          path: BASE_PATH,
+          lockedProcesses: FLOW_FORMED_PROCESSES,
+        }),
+        locale,
+      ),
+    );
+  }
+  const view = await getWheelCataloguePage(locked);
 
   // An out-of-range page is a real 404 rather than a silent slide to the last
   // page (§9, catalogue §5.2). A *valid* filter with no matches is not: it
   // returns 200 with the §3 WFF04 empty state.
   if (isPageOutOfRange(view, parsed.page ?? 1)) notFound();
 
-  const content = await getFlowFormedWheelsPage();
+  const { content } = await getFlowFormedWheelsPage();
 
   // WFF01 shows one approved model — the first by stable model code, read from
   // the unfiltered locked set so the hero never changes while a visitor filters,
@@ -185,7 +204,19 @@ export default async function FlowFormedWheelsRoute({ searchParams }: FlowFormed
   return (
     <>
       {/* WFF01 — what this page is, the boundary it works inside, one model */}
-      <FlowFormedHero content={content} featured={featured} />
+      <FlowFormedHero
+        content={content}
+        featured={featured}
+        breadcrumbLabel={content.hero.breadcrumbLabel}
+        locale={locale}
+        breadcrumbItems={content.hero.breadcrumb.map((crumb, index) => ({
+          label: crumb.label,
+          href:
+            index === content.hero.breadcrumb.length - 1
+              ? undefined
+              : localizedPath(crumb.href, locale),
+        }))}
+      />
 
       {/* WFF02 — rim-section forming vs. a forged wheel, with the forging fork */}
       <FlowFormedProcessDefinition section={content.processDefinition} />
@@ -214,7 +245,7 @@ export default async function FlowFormedWheelsRoute({ searchParams }: FlowFormed
                 view,
                 content.catalogue.heading,
                 content.seo.description,
-                content.seo.canonical,
+                localizedPath(content.seo.canonical, locale),
               ),
             ),
           }}

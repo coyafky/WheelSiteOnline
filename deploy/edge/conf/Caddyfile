@@ -1,0 +1,35 @@
+# 临时公开阶段：网站可访问，待内容审核完成后再开放搜索收录。
+fenghuaitech.store {
+    header X-Robots-Tag "noindex, nofollow"
+
+    route {
+        @robots path /robots.txt
+        root @robots /etc/caddy
+        file_server @robots
+
+        @sitemap path /sitemap.xml
+        respond @sitemap "Not found" 404
+
+        reverse_proxy fenghuai-frontend:3000 {
+            # 不让访客伪造用于询盘限流的代理来源头。
+            header_up -CF-Connecting-IP
+            header_up -X-Real-IP
+        }
+    }
+}
+
+www.fenghuaitech.store {
+    redir https://fenghuaitech.store{uri} permanent
+}
+
+cms.fenghuaitech.store {
+    header X-Robots-Tag "noindex, nofollow"
+
+    @xmlrpc path /xmlrpc.php
+    respond @xmlrpc "Forbidden" 403
+
+    reverse_proxy wordpress:80 {
+        header_up -CF-Connecting-IP
+        header_up -X-Real-IP
+    }
+}

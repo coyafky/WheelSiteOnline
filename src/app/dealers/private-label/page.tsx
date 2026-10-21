@@ -13,13 +13,21 @@ import {
   privateLabelPathways,
 } from "@/content/private-label";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Private Label Forged Wheels — Manufacture Under Your Own Brand",
-  description:
-    "Fenghuai manufactures private label forged wheels under your brand — custom centre caps, engraving, packaging and documentation, with confidentiality and design exclusivity available on request.",
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Private Label Forged Wheels — Manufacture Under Your Own Brand",
+    description:
+      "Fenghuai manufactures private label forged wheels under your brand — custom centre caps, engraving, packaging and documentation, with confidentiality and design exclusivity available on request.",
+    ...(await buildRouteMetadata("/dealers/private-label", locale)),
+  };
+}
 
 /**
  * Private label programme.
@@ -33,61 +41,41 @@ export const metadata: Metadata = {
  * tooling) are PLACEHOLDER in `@/content/private-label` and are written as
  * questions to be answered, not as promises.
  */
-export default function PrivateLabelPage() {
+export default async function PrivateLabelPage() {
+  const locale = await getLocale();
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. The breadcrumb slot keeps the rail
+          above the eyebrow; `PageHero` adds the same mt-6 eyebrow spacing the
+          local copy used. */}
+      <PageHero
         id="top"
-        aria-labelledby="private-label-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="private-label-title"
+        tone="dark"
+        breadcrumb={
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Dealer Programs", href: localizedPath("/dealers", locale) },
+              { label: "Private Label" },
+            ]}
+          />
+        }
+        eyebrow={privateLabelHero.eyebrow}
+        heading={privateLabelHero.heading}
+        lede={privateLabelHero.lede}
+        supporting={privateLabelHero.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_16%_0%,rgba(194,101,10,0.28)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/dealers" className="transition-colors hover:!text-forge">
-              Dealer Programs
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">Private Label</span>
-          </nav>
-
-          <p className="eyebrow mt-6 !text-forge">{privateLabelHero.eyebrow}</p>
-          <h1
-            id="private-label-title"
-            className="mt-5 max-w-[1000px] font-display text-[clamp(2.4rem,6.8vw,4.9rem)] font-800 uppercase leading-[0.92] tracking-[-0.02em] text-white"
-          >
-            {privateLabelHero.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {privateLabelHero.lede}
-          </p>
-          <p className="mt-4 max-w-[660px] text-sm leading-relaxed text-white/55">
-            {privateLabelHero.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="btn-pill-solid">
-              Discuss a private label line
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/dealers" className="btn-pill-outline !text-white">
-              Back to dealer programs
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="/contact" className="btn-pill-solid">
+          Discuss a private label line
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/dealers" className="btn-pill-outline !text-white">
+          Back to dealer programs
+        </Link>
+      </PageHero>
 
       {/* B. The offer -------------------------------------------------------- */}
       <section

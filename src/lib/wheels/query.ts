@@ -15,7 +15,7 @@
  * 工艺是**型号级**条件（`approved_process`），不参与 variant 交集。
  */
 
-import { normalizePcds } from "./normalize";
+import { normalizePcds } from "./normalize.ts";
 import {
   PROCESS_META,
   processLabelEn,
@@ -24,7 +24,7 @@ import {
   type FacetOption,
   type PublicWheelModel,
   type ProcessKey,
-} from "./types";
+} from "./types.ts";
 
 export const PAGE_SIZE = 24;
 
@@ -257,6 +257,15 @@ export function toCatalogueCard(model: PublicWheelModel) {
     pcdsTotal: model.pcds.length,
     approvedVariantCount: model.approvedVariantCount,
     approvedFinishCount: model.approvedFinishCount,
+    defaultVariant: model.variants[0]
+      ? {
+          productionCode: model.variants[0].productionCode,
+          size: model.variants[0].size,
+          pcd: model.variants[0].pcd,
+          offset: model.variants[0].offset,
+          centerBore: model.variants[0].centerBore,
+        }
+      : null,
   };
 }
 

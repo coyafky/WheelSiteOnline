@@ -1,11 +1,28 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check, CircleAlert } from "lucide-react";
-import { inquiryFormUi, inquiryPreparation } from "@/content/inquiry-form";
+import { Check } from "lucide-react";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Button } from "@astryxdesign/core/Button";
+import { CheckboxList, CheckboxListItem } from "@astryxdesign/core/CheckboxList";
+import { FormLayout } from "@astryxdesign/core/FormLayout";
+import { RadioList, RadioListItem } from "@astryxdesign/core/RadioList";
+import { Selector } from "@astryxdesign/core/Selector";
+import { TextArea } from "@astryxdesign/core/TextArea";
+import { TextInput } from "@astryxdesign/core/TextInput";
+import { Theme } from "@astryxdesign/core/theme";
+import { neutralTheme } from "@/theme/fenghuai-neutral/neutral";
+import {
+  inquiryFormUi,
+  inquiryPreparation,
+  type InquiryFormUi,
+  type InquiryPreparation,
+} from "@/content/inquiry-form";
 import { productLines } from "@/content/product-lines";
+import type { Locale } from "@/lib/i18n/types";
+import { translate } from "@/lib/i18n/types";
+import { DICTIONARIES } from "@/lib/i18n/dictionaries";
 import type {
   InquiryContext,
   InquiryCustomerType,
@@ -17,6 +34,8 @@ import {
   zodFieldErrors,
 } from "@/lib/inquiry/schema";
 import { cn } from "@/lib/utils";
+import { clearInquiryCart, useInquiryCart } from "@/lib/wheels/inquiry-cart";
+import { InquiryCartSummary } from "@/components/wheels/inquiry-cart-summary";
 
 type FormValues = {
   customerType: InquiryCustomerType | "";
@@ -29,7 +48,6 @@ type FormValues = {
   country: string;
   company: string;
   whatsapp: string;
-  privacyConsent: boolean;
   website: string;
 };
 
@@ -51,9 +69,44 @@ type FormCopy = {
   optional?: string;
 };
 
+type InquiryFormProps = {
+  copy: FormCopy;
+  locale?: Locale;
+  ui?: InquiryFormUi;
+  preparation?: InquiryPreparation;
+  privacyVersion?: string;
+  onSuccess?: () => void;
+} & (
+  | {
+      mode?: "cart";
+    }
+  | {
+      mode: "direct";
+      context: InquiryContext;
+      item?: {
+        model: string;
+        productionCode: string;
+        quantity: number;
+      };
+    }
+);
+
+type InquirySubmissionItem = {
+  model: string;
+  productionCode: string;
+  quantity: number;
+};
+
+type InquiryFormContentProps = Omit<InquiryFormProps, "mode"> & {
+  mode: "cart" | "direct";
+  submissionItems: InquirySubmissionItem[];
+  submissionContext?: InquiryContext;
+};
+
 type SubmitSuccess = {
   ok: true;
   id: string;
+  persisted: true;
   delivered: boolean;
   receiptToken?: string | null;
 };
@@ -74,12 +127,10 @@ const EMPTY: FormValues = {
   country: "",
   company: "",
   whatsapp: "",
-  privacyConsent: false,
   website: "",
 };
 
 const PRODUCT_LINE_IDS = new Set(productLines.map((line) => line.slug));
-const PRIVACY_VERSION = process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim() ?? "";
 
 const SERVER_TO_FORM_FIELD: Partial<Record<string, FormKey>> = {
   customerType: "customerType",
@@ -91,8 +142,50 @@ const SERVER_TO_FORM_FIELD: Partial<Record<string, FormKey>> = {
   country: "country",
   company: "company",
   whatsapp: "whatsapp",
-  privacyConsent: "privacyConsent",
 };
+
+function localizeErrors(errors: Record<string, string>, ui: InquiryFormUi): FormErrors {
+  return Object.fromEntries(
+    Object.entries(errors).map(([field, message]) => [
+      field,
+      ui.validationMessages[field as keyof InquiryFormUi["validationMessages"]] ?? message,
+    ]),
+  ) as FormErrors;
+}
+
+/**
+ * Localize the field errors the API returns.
+ *
+ * The two layers share one Zod contract, so for the fields where the server is
+ * merely repeating the shape check the client already ran, a localized copy of
+ * the message exists in `ui.validationMessages` and we prefer it.
+ *
+ * But the server can reject a value the client accepted, for reasons the client
+ * cannot know — a deliverable-looking address that cannot receive replies, a
+ * value that conflicted with a record on submit. Those messages carry
+ * information the generic copy does not, so overwriting them destroys the only
+ * explanation the visitor gets. The generic copy is therefore a *fallback*, not
+ * an override: it is used only when the server's message is not itself
+ * field-specific.
+ *
+ * This previously overrode unconditionally, which silently replaced every
+ * server reason with the generic one (regression caught by the E2E assertion
+ * "422 字段错误聚焦服务端指出的第一个字段").
+ */
+function localizeServerErrors(errors: Record<string, string>, ui: InquiryFormUi): FormErrors {
+  const generic: ReadonlySet<string> = new Set<string>(Object.values(ui.validationMessages));
+  return Object.fromEntries(
+    Object.entries(errors).map(([field, message]) => {
+      // A server message that is NOT just the client's own wording carries extra
+      // meaning — keep it verbatim.
+      if (message && !generic.has(message)) return [field, message];
+      return [
+        field,
+        ui.validationMessages[field as keyof InquiryFormUi["validationMessages"]] ?? message,
+      ];
+    }),
+  ) as FormErrors;
+}
 
 function createIdempotencyKey(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -101,7 +194,7 @@ function createIdempotencyKey(): string {
   return `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`.padEnd(32, "0");
 }
 
-function buildContext(): InquiryContext {
+function buildContext(override?: InquiryContext): InquiryContext {
   if (typeof window === "undefined") return {};
   const params = new URLSearchParams(window.location.search);
   const first = (key: string) => params.get(key)?.trim() || undefined;
@@ -117,7 +210,7 @@ function buildContext(): InquiryContext {
     const value = first(param);
     if (value) selectedSpec[key] = value;
   }
-  return {
+  const urlContext: InquiryContext = {
     pageUrl: window.location.href,
     pageType: first("pageType"),
     model: first("model"),
@@ -130,13 +223,62 @@ function buildContext(): InquiryContext {
     intent: first("intent"),
     selectedSpec: Object.keys(selectedSpec).length > 0 ? selectedSpec : undefined,
   };
+  return {
+    ...urlContext,
+    ...override,
+    pageUrl: window.location.href,
+  };
 }
 
-export function InquiryForm({
+export function InquiryForm(props: InquiryFormProps) {
+  if (props.mode === "direct") {
+    const { context, item, ...sharedProps } = props;
+    return (
+      <Theme theme={neutralTheme} mode="light">
+        <InquiryFormContent
+          {...sharedProps}
+          mode="direct"
+          submissionItems={item ? [item] : []}
+          submissionContext={context}
+        />
+      </Theme>
+    );
+  }
+
+  return (
+    <Theme theme={neutralTheme} mode="light">
+      <CartInquiryFormContent {...props} />
+    </Theme>
+  );
+}
+
+function CartInquiryFormContent(props: Omit<InquiryFormProps, "mode">) {
+  const cartItems = useInquiryCart();
+  const submissionItems = cartItems.map(({ model, productionCode, quantity }) => ({
+    model,
+    productionCode,
+    quantity,
+  }));
+  return (
+    <InquiryFormContent
+      {...props}
+      mode="cart"
+      submissionItems={submissionItems}
+    />
+  );
+}
+
+function InquiryFormContent({
   copy,
-}: {
-  copy: FormCopy;
-}) {
+  locale = "en",
+  ui = inquiryFormUi,
+  preparation: preparationCopy = inquiryPreparation,
+  privacyVersion: configuredPrivacyVersion,
+  mode,
+  submissionItems,
+  submissionContext,
+  onSuccess,
+}: InquiryFormContentProps) {
   const router = useRouter();
   const baseId = useId();
   const [step, setStep] = useState<1 | 2>(1);
@@ -148,9 +290,16 @@ export function InquiryForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [idempotencyKey, setIdempotencyKey] = useState(createIdempotencyKey);
   const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+  // Keep the version for backward-compatible payloads and old direct callers;
+  // an empty version no longer disables the business enquiry form.
+  const privacyVersion = configuredPrivacyVersion === undefined
+    ? process.env.NEXT_PUBLIC_INQUIRY_PRIVACY_VERSION?.trim() || ""
+    : configuredPrivacyVersion.trim();
 
   useEffect(() => {
-    const candidate = new URLSearchParams(window.location.search).get("product_line")?.trim();
+    const candidate =
+      submissionContext?.productLine?.trim() ||
+      new URLSearchParams(window.location.search).get("product_line")?.trim();
     if (!candidate || !PRODUCT_LINE_IDS.has(candidate)) return;
     const timer = window.setTimeout(() => {
       setValues((current) => ({
@@ -159,26 +308,9 @@ export function InquiryForm({
       }));
     }, 0);
     return () => window.clearTimeout(timer);
-  }, []);
-
-  if (!PRIVACY_VERSION) {
-    return (
-      <div
-        role="status"
-        className="rounded-xl border border-forge/35 bg-forge-soft p-7 lg:p-9"
-      >
-        <h3 className="font-display text-xl font-800 uppercase text-ink">
-          {inquiryFormUi.formUnavailableTitle}
-        </h3>
-        <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-steel">
-          {inquiryFormUi.formUnavailableBody}
-        </p>
-      </div>
-    );
-  }
+  }, [submissionContext?.productLine]);
 
   const fieldId = (name: FormKey) => `${baseId}-${name}`;
-  const errorId = (name: FormKey) => `${baseId}-${name}-error`;
   const set = <K extends FormKey>(name: K, value: FormValues[K]) => {
     setValues((current) => ({ ...current, [name]: value }));
     if (errors[name]) {
@@ -191,23 +323,24 @@ export function InquiryForm({
     if (first) {
       requestAnimationFrame(() => {
         const field = document.getElementById(fieldId(first));
-        if (first === "customerType") {
-          field?.querySelector<HTMLInputElement>("input")?.focus();
-          return;
-        }
-        field?.focus();
+        const target = field?.matches("input, textarea, button, select")
+          ? field
+          : field?.querySelector<HTMLElement>(
+              "input:not([type='hidden']), textarea, button, select, [tabindex]:not([tabindex='-1'])",
+            );
+        (target as HTMLElement | null)?.focus();
       });
     }
   };
 
   const validateStepOne = (): FormErrors => {
     const result = inquiryStepOneSchema.safeParse(values);
-    return result.success ? {} : (zodFieldErrors(result.error) as FormErrors);
+    return result.success ? {} : localizeErrors(zodFieldErrors(result.error), ui);
   };
 
   const validateStepTwo = (): FormErrors => {
     const result = inquiryStepTwoSchema.safeParse(values);
-    return result.success ? {} : (zodFieldErrors(result.error) as FormErrors);
+    return result.success ? {} : localizeErrors(zodFieldErrors(result.error), ui);
   };
 
   const continueToContact = () => {
@@ -250,9 +383,9 @@ export function InquiryForm({
           country: values.country.toUpperCase(),
           company: values.company || undefined,
           whatsapp: values.whatsapp || undefined,
-          privacyConsent: values.privacyConsent,
-          privacyVersion: PRIVACY_VERSION,
-          context: buildContext(),
+          privacyVersion,
+          items: submissionItems,
+          context: buildContext(submissionContext),
         }),
       });
     } catch {
@@ -268,10 +401,16 @@ export function InquiryForm({
       // 由下面的通用失败状态处理。
     }
 
-    if ((response.status === 200 || response.status === 201) && body?.ok) {
+    if (
+      (response.status === 200 || response.status === 201) &&
+      body?.ok &&
+      body.persisted === true
+    ) {
+      if (mode === "cart") clearInquiryCart();
       setReceipt(body);
       setStatus("success");
-      if (body.receiptToken) {
+      onSuccess?.();
+      if (mode === "cart" && body.receiptToken) {
         router.push(
           `/thank-you?id=${encodeURIComponent(body.id)}&receipt=${encodeURIComponent(body.receiptToken)}`,
         );
@@ -285,16 +424,20 @@ export function InquiryForm({
         const key = SERVER_TO_FORM_FIELD[serverKey];
         if (key) mapped[key] = message;
       }
-      setErrors(mapped);
+      const localized = localizeServerErrors(
+        Object.fromEntries(Object.entries(mapped) as [FormKey, string][]) as Record<string, string>,
+        ui,
+      );
+      setErrors(localized);
       setStatus("idle");
-      if (Object.keys(mapped).length > 0) focusFirstError(mapped);
+      if (Object.keys(localized).length > 0) focusFirstError(localized);
       else setSubmitError(body.error);
       return;
     }
 
     setStatus("idle");
     setSubmitError(
-      response.status === 429 ? inquiryFormUi.rateLimited : copy.networkErrorBody,
+      response.status === 429 ? ui.rateLimited : copy.networkErrorBody,
     );
   };
 
@@ -317,7 +460,7 @@ export function InquiryForm({
         {receipt ? (
           <p className="mt-5 inline-flex gap-2.5 rounded-lg border border-forge/35 bg-white/60 px-4 py-3">
             <span className="font-display text-xs font-700 uppercase tracking-wider text-steel">
-              {inquiryFormUi.referenceLabel}
+              {ui.referenceLabel}
             </span>
             <span className="font-mono font-semibold text-forge-deep">{receipt.id}</span>
           </p>
@@ -325,63 +468,68 @@ export function InquiryForm({
         {receipt && !receipt.delivered ? (
           <p className="mt-4 text-sm text-forge-deep">{copy.pendingDeliveryNote}</p>
         ) : null}
-        <button
-          type="button"
-          onClick={() => {
-            setValues(EMPTY);
-            setStep(1);
-            setErrors({});
-            setAttempted(false);
-            setReceipt(null);
-            setStatus("idle");
-            setIdempotencyKey(createIdempotencyKey());
-            setFormStartedAt(Date.now());
-          }}
-          className="btn-pill-outline mt-8 text-ink"
-        >
-          {copy.resetLabel}
-        </button>
+        <div className="mt-8">
+          <Button
+            label={copy.resetLabel}
+            variant="secondary"
+            onClick={() => {
+              setValues(EMPTY);
+              setStep(1);
+              setErrors({});
+              setAttempted(false);
+              setReceipt(null);
+              setStatus("idle");
+              setIdempotencyKey(createIdempotencyKey());
+              setFormStartedAt(Date.now());
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   const errorKeys = Object.keys(errors) as FormKey[];
   const preparation = values.productLine
-    ? inquiryPreparation.byProductLine[values.productLine]
-    : inquiryPreparation.generic;
+    ? preparationCopy.byProductLine[values.productLine]
+    : preparationCopy.generic;
 
   return (
     <form
       noValidate
       onSubmit={handleSubmit}
-      aria-label={inquiryFormUi.ariaLabel}
-      className="rounded-xl border border-border bg-white p-6 lg:p-8"
+      aria-label={ui.ariaLabel}
+      className={cn(
+        "rounded-xl border border-border bg-white p-6 lg:p-8",
+        mode === "direct" && "rounded-none border-0 p-0 lg:p-0",
+      )}
     >
+      {mode === "cart" ? <InquiryCartSummary locale={locale} /> : null}
       <ol
-        aria-label={inquiryFormUi.progressLabel}
-        className="grid grid-cols-[1fr_auto_1fr] items-center gap-3"
+        aria-label={ui.progressLabel}
+        className="grid grid-cols-2 items-start gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-3"
       >
         <li className="min-w-0">
           {step === 2 ? (
             <button
               type="button"
+              disabled={status === "submitting"}
               onClick={() => {
                 setStep(1);
                 setErrors({});
                 setAttempted(false);
               }}
-              className="group flex items-center gap-3 text-left"
-              aria-label={inquiryFormUi.editProjectLabel}
+              className="group flex items-center gap-3 text-left disabled:cursor-not-allowed disabled:opacity-60"
+              aria-label={ui.editProjectLabel}
             >
               <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-forge text-white">
                 <Check className="size-4" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-[0.68rem] font-700 uppercase tracking-[0.14em] text-forge">
-                  {inquiryFormUi.completedLabel}
+                <span className="block whitespace-nowrap text-[0.62rem] font-700 uppercase tracking-[0.08em] text-forge sm:text-[0.68rem] sm:tracking-[0.14em]">
+                  {ui.completedLabel}
                 </span>
-                <span className="block truncate text-sm font-semibold text-ink group-hover:text-forge">
-                  {inquiryFormUi.projectStepLabel}
+                <span className="block text-xs font-semibold text-ink group-hover:text-forge sm:text-sm">
+                  {ui.projectStepLabel}
                 </span>
               </span>
             </button>
@@ -391,17 +539,17 @@ export function InquiryForm({
                 1
               </span>
               <span>
-                <span className="block text-[0.68rem] font-700 uppercase tracking-[0.14em] text-forge">
-                  {inquiryFormUi.stepOne}
+                <span className="block whitespace-nowrap text-[0.62rem] font-700 uppercase tracking-[0.08em] text-forge sm:text-[0.68rem] sm:tracking-[0.14em]">
+                  {ui.stepOne}
                 </span>
-                <span className="block truncate text-sm font-semibold text-ink">
-                  {inquiryFormUi.projectStepLabel}
+                <span className="block text-xs font-semibold text-ink sm:text-sm">
+                  {ui.projectStepLabel}
                 </span>
               </span>
             </div>
           )}
         </li>
-        <span className="h-px w-8 bg-border sm:w-16" aria-hidden="true" />
+        <span className="hidden h-px w-8 bg-border sm:block sm:w-16" aria-hidden="true" />
         <li className="min-w-0">
           <div className="flex items-center justify-end gap-3" aria-current={step === 2 ? "step" : undefined}>
             <span
@@ -415,14 +563,14 @@ export function InquiryForm({
             <span className="min-w-0">
               <span
                 className={cn(
-                  "block text-[0.68rem] font-700 uppercase tracking-[0.14em]",
+                  "block whitespace-nowrap text-[0.62rem] font-700 uppercase tracking-[0.08em] sm:text-[0.68rem] sm:tracking-[0.14em]",
                   step === 2 ? "text-forge" : "text-steel",
                 )}
               >
-                {inquiryFormUi.stepTwo}
+                {ui.stepTwo}
               </span>
-              <span className="block truncate text-sm font-semibold text-ink">
-                {inquiryFormUi.contactStepLabel}
+              <span className="block text-xs font-semibold text-ink sm:text-sm">
+                {ui.contactStepLabel}
               </span>
             </span>
           </div>
@@ -433,61 +581,61 @@ export function InquiryForm({
         tabIndex={-1}
         className="mt-3 font-display text-2xl font-800 uppercase text-ink outline-none"
       >
-        {step === 1 ? inquiryFormUi.stepOneTitle : inquiryFormUi.stepTwoTitle}
+        {step === 1 ? ui.stepOneTitle : ui.stepTwoTitle}
       </h3>
       <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-steel">
-        {step === 1 ? inquiryFormUi.stepOneDescription : inquiryFormUi.stepTwoDescription}
+        {step === 1 ? ui.stepOneDescription : ui.stepTwoDescription}
       </p>
       <p className="mt-3 text-xs text-steel">
         <span className="text-forge" aria-hidden="true">*</span>{" "}
-        {copy.requiredNote ?? inquiryFormUi.requiredNote}
+        {copy.requiredNote ?? ui.requiredNote}
       </p>
 
       {submitError ? (
-        <div
-          role="alert"
-          className="mt-5 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
-        >
-          <p className="flex items-center gap-2 font-display text-xs font-700 uppercase text-destructive">
-            <CircleAlert className="size-4" aria-hidden="true" />
-            {copy.networkErrorTitle}
-          </p>
-          <p className="mt-2 text-sm text-ink/80">{submitError}</p>
+        <div className="mt-5">
+          <Banner
+            status="error"
+            title={copy.networkErrorTitle}
+            description={submitError}
+            container="card"
+          />
         </div>
       ) : null}
 
       {attempted && errorKeys.length > 0 ? (
-        <div
-          role="alert"
-          className="mt-5 rounded-lg border border-destructive/40 bg-destructive/5 px-5 py-4"
-        >
-          <p className="font-display text-xs font-700 uppercase text-destructive">
-            {copy.errorSummaryTitle}
-          </p>
-          <p className="mt-2 text-sm text-ink/80">{copy.errorSummaryBody}</p>
+        <div className="mt-5">
+          <Banner
+            status="error"
+            title={copy.errorSummaryTitle}
+            description={copy.errorSummaryBody}
+            container="card"
+          />
         </div>
       ) : null}
 
       {step === 1 ? (
-        <div className="mt-6 grid gap-5">
+        <div className="mt-6">
+          <FormLayout direction="vertical">
           <RadioGroup
             id={fieldId("customerType")}
-            label={inquiryFormUi.customerTypeLabel}
+            label={ui.customerTypeLabel}
             value={values.customerType}
-            options={inquiryFormUi.customerTypes}
+            options={ui.customerTypes}
             error={errors.customerType}
             onChange={(value) => set("customerType", value as InquiryCustomerType)}
           />
           <SelectField
+            locale={locale}
             id={fieldId("productLine")}
-            label={inquiryFormUi.productLineLabel}
+            label={ui.productLineLabel}
             value={values.productLine}
             error={errors.productLine}
+            ui={ui}
             onChange={(value) => set("productLine", value as InquiryProductLine)}
           />
           <div className="rounded-lg border border-border bg-soft p-4">
             <p className="font-display text-xs font-700 uppercase tracking-wider text-ink">
-              {inquiryPreparation.label}
+              {preparationCopy.label}
             </p>
             <ul className="mt-2 grid gap-1 text-sm text-steel">
               {preparation.map((item) => <li key={item}>• {item}</li>)}
@@ -495,36 +643,40 @@ export function InquiryForm({
           </div>
           <TextAreaField
             id={fieldId("message")}
-            label={inquiryFormUi.messageLabel}
-            help={inquiryFormUi.messageHelp}
+            label={ui.messageLabel}
+            help={ui.messageHelp}
             value={values.message}
             error={errors.message}
             onChange={(value) => set("message", value)}
           />
           <Field
             id={fieldId("quantity")}
-            label={inquiryFormUi.quantityLabel}
+            label={ui.quantityLabel}
             value={values.quantity}
             error={errors.quantity}
-            placeholder={inquiryFormUi.quantityPlaceholder}
-            optionalLabel={copy.optional ?? inquiryFormUi.optional}
+            placeholder={ui.quantityPlaceholder}
+            optionalLabel={copy.optional ?? ui.optional}
             onChange={(value) => set("quantity", value)}
           />
           <CheckboxGroup
             id={fieldId("inputsAvailable")}
             values={values.inputsAvailable}
+            ui={ui}
             onChange={(next) => set("inputsAvailable", next)}
           />
-          <button type="button" onClick={continueToContact} className="btn-pill-solid w-fit">
-            {inquiryFormUi.continueLabel}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </button>
+          <Button
+            label={ui.continueLabel}
+            type="button"
+            variant="primary"
+            onClick={continueToContact}
+          />
+          </FormLayout>
         </div>
       ) : (
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <Field
             id={fieldId("name")}
-            label={inquiryFormUi.nameLabel}
+            label={ui.nameLabel}
             required
             value={values.name}
             error={errors.name}
@@ -533,7 +685,7 @@ export function InquiryForm({
           />
           <Field
             id={fieldId("email")}
-            label={inquiryFormUi.emailLabel}
+            label={ui.emailLabel}
             type="email"
             required
             value={values.email}
@@ -543,53 +695,35 @@ export function InquiryForm({
           />
           <Field
             id={fieldId("country")}
-            label={inquiryFormUi.countryLabel}
+            label={ui.countryLabel}
             required
             value={values.country}
             error={errors.country}
-            help={inquiryFormUi.countryHelp}
+            help={ui.countryHelp}
             autoComplete="country"
             onChange={(value) => set("country", value.toUpperCase())}
           />
           {values.customerType === "business" ? (
             <Field
               id={fieldId("company")}
-              label={inquiryFormUi.companyLabel}
+              label={ui.companyLabel}
               value={values.company}
               error={errors.company}
-              optionalLabel={copy.optional ?? inquiryFormUi.optional}
+              optionalLabel={copy.optional ?? ui.optional}
               autoComplete="organization"
               onChange={(value) => set("company", value)}
             />
           ) : null}
           <Field
             id={fieldId("whatsapp")}
-            label={inquiryFormUi.phoneLabel}
+            label={ui.phoneLabel}
             value={values.whatsapp}
             error={errors.whatsapp}
-            optionalLabel={copy.optional ?? inquiryFormUi.optional}
+            optionalLabel={copy.optional ?? ui.optional}
             autoComplete="tel"
             className="sm:col-span-2"
             onChange={(value) => set("whatsapp", value)}
           />
-          <div className="sm:col-span-2">
-            <label className="flex items-start gap-3 text-sm leading-relaxed text-ink">
-              <input
-                id={fieldId("privacyConsent")}
-                type="checkbox"
-                checked={values.privacyConsent}
-                onChange={(event) => set("privacyConsent", event.target.checked)}
-                className="mt-1 size-4 accent-forge"
-              />
-              <span>
-                {inquiryFormUi.privacyConsent}{" "}
-                <Link href={inquiryFormUi.privacyHref} className="underline underline-offset-4">
-                  {inquiryFormUi.privacyLinkLabel}
-                </Link>.
-              </span>
-            </label>
-            <FieldError id={errorId("privacyConsent")} message={errors.privacyConsent} />
-          </div>
           <div className="absolute -left-[9999px]" aria-hidden="true">
             <label htmlFor={fieldId("website")}>Website</label>
             <input
@@ -601,28 +735,25 @@ export function InquiryForm({
             />
           </div>
           <div className="flex flex-wrap gap-4 sm:col-span-2">
-            <button
+            <Button
+              label={ui.backLabel}
               type="button"
+              variant="secondary"
+              isDisabled={status === "submitting"}
               onClick={() => {
                 setStep(1);
                 setErrors({});
                 setAttempted(false);
               }}
-              className="btn-pill-outline text-ink"
-            >
-              <ArrowLeft className="size-4" aria-hidden="true" />
-              {inquiryFormUi.backLabel}
-            </button>
-            <button
+            />
+            <Button
+              label={status === "submitting"
+                ? copy.submitting ?? ui.submittingLabel
+                : copy.submit || ui.submitLabel}
               type="submit"
-              disabled={status === "submitting"}
-              className="btn-pill-solid disabled:opacity-60"
-            >
-              {status === "submitting"
-                ? copy.submitting ?? inquiryFormUi.submittingLabel
-                : copy.submit || inquiryFormUi.submitLabel}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </button>
+              variant="primary"
+              isLoading={status === "submitting"}
+            />
           </div>
         </div>
       )}
@@ -630,45 +761,8 @@ export function InquiryForm({
   );
 }
 
-const inputClass = cn(
-  "min-h-[50px] w-full rounded-lg border border-border bg-white px-4 text-[0.95rem] text-ink",
-  "outline-none transition-[border-color,box-shadow] focus:border-forge focus:ring-2 focus:ring-forge/25",
-);
-
-function Label({
-  htmlFor,
-  children,
-  required,
-  optionalLabel,
-}: {
-  htmlFor: string;
-  children: React.ReactNode;
-  required?: boolean;
-  optionalLabel?: string;
-}) {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className="mb-2 flex items-center gap-2 font-display text-xs font-700 uppercase tracking-wider text-ink"
-    >
-      {children}
-      {required ? <span className="text-forge" aria-hidden="true">*</span> : null}
-      {optionalLabel ? (
-        <span className="font-sans font-medium normal-case tracking-normal text-steel">
-          {optionalLabel}
-        </span>
-      ) : null}
-    </label>
-  );
-}
-
-function FieldError({ id, message }: { id: string; message?: string }) {
-  return message ? (
-    <p id={id} className="mt-2 flex items-start gap-1.5 text-xs text-destructive">
-      <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
-      {message}
-    </p>
-  ) : null;
+function errorStatus(message?: string) {
+  return message ? ({ type: "error", message } as const) : undefined;
 }
 
 function Field({
@@ -690,7 +784,7 @@ function Field({
   value: string;
   onChange: (value: string) => void;
   error?: string;
-  type?: string;
+  type?: "text" | "email" | "password";
   required?: boolean;
   optionalLabel?: string;
   placeholder?: string;
@@ -698,25 +792,20 @@ function Field({
   help?: string;
   className?: string;
 }) {
-  const describedBy = [help ? `${id}-help` : "", error ? `${id}-error` : ""]
-    .filter(Boolean)
-    .join(" ") || undefined;
   return (
-    <div className={className}>
-      <Label htmlFor={id} required={required} optionalLabel={optionalLabel}>{label}</Label>
-      <input
-        id={id}
+    <div id={id} className={className}>
+      <TextInput
+        label={optionalLabel ? `${label} (${optionalLabel})` : label}
         type={type}
         value={value}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        aria-invalid={Boolean(error)}
-        aria-describedby={describedBy}
-        onChange={(event) => onChange(event.target.value)}
-        className={cn(inputClass, error && "border-destructive")}
+        description={help}
+        isRequired={required}
+        onChange={onChange}
+        status={errorStatus(error)}
+        width="100%"
       />
-      {help ? <p id={`${id}-help`} className="mt-2 text-xs text-steel">{help}</p> : null}
-      <FieldError id={`${id}-error`} message={error} />
     </div>
   );
 }
@@ -737,23 +826,17 @@ function TextAreaField({
   onChange: (value: string) => void;
 }) {
   return (
-    <div>
-      <Label htmlFor={id} required>{label}</Label>
-      <textarea
-        id={id}
+    <div id={id}>
+      <TextArea
+        label={label}
         rows={5}
         value={value}
-        aria-invalid={Boolean(error)}
-        aria-describedby={`${id}-help${error ? ` ${id}-error` : ""}`}
-        onChange={(event) => onChange(event.target.value)}
-        className={cn(
-          inputClass,
-          "min-h-[130px] resize-y py-3",
-          error && "border-destructive",
-        )}
+        description={help}
+        isRequired
+        onChange={onChange}
+        status={errorStatus(error)}
+        width="100%"
       />
-      <p id={`${id}-help`} className="mt-2 text-xs text-steel">{help}</p>
-      <FieldError id={`${id}-error`} message={error} />
     </div>
   );
 }
@@ -774,70 +857,72 @@ function RadioGroup({
   onChange: (value: string) => void;
 }) {
   return (
-    <fieldset
-      id={id}
-      aria-invalid={Boolean(error)}
-      aria-describedby={error ? `${id}-error` : undefined}
-    >
-      <legend className="mb-2 font-display text-xs font-700 uppercase tracking-wider text-ink">
-        {label} <span className="text-forge">*</span>
-      </legend>
-      <div className="grid grid-cols-2 gap-3">
+    <div id={id}>
+      <RadioList
+        label={label}
+        value={value}
+        onChange={onChange}
+        orientation="horizontal"
+        isRequired
+        status={errorStatus(error)}
+        width="100%"
+      >
         {options.map((option) => (
-          <label
+          <RadioListItem
             key={option.value}
-            className={cn(
-              "rounded-lg border px-4 py-3 text-sm",
-              value === option.value ? "border-forge bg-forge-soft" : "border-border",
-            )}
-          >
-            <input
-              type="radio"
-              name={`${id}-option`}
-              value={option.value}
-              checked={value === option.value}
-              onChange={() => onChange(option.value)}
-              className="mr-2 accent-forge"
-            />
-            {option.label}
-          </label>
+            label={option.label}
+            value={option.value}
+          />
         ))}
-      </div>
-      <FieldError id={`${id}-error`} message={error} />
-    </fieldset>
+      </RadioList>
+    </div>
   );
 }
 
 function SelectField({
+  locale,
   id,
   label,
   value,
   error,
+  ui,
   onChange,
 }: {
+  locale: Locale;
   id: string;
   label: string;
   value: string;
   error?: string;
+  ui: InquiryFormUi;
   onChange: (value: string) => void;
 }) {
   return (
-    <div>
-      <Label htmlFor={id} required>{label}</Label>
-      <select
-        id={id}
+    <div id={id}>
+      <Selector
+        label={label}
+        options={productLines.map((line) => ({
+          value: line.slug,
+          label: locale === "en"
+            ? line.name
+            : translate(
+                DICTIONARIES[locale],
+                {
+                  wheels: "nav.products.wheels",
+                  "ev-components": "nav.products.evComponents",
+                  "custom-aluminum": "nav.products.customAluminum",
+                  "safety-tires": "nav.products.safetyTires",
+                }[line.slug] ?? line.slug,
+              ),
+        }))}
         value={value}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        onChange={(event) => onChange(event.target.value)}
-        className={cn(inputClass, error && "border-destructive")}
-      >
-        <option value="">{inquiryFormUi.productLinePlaceholder}</option>
-        {productLines.map((line) => (
-          <option key={line.slug} value={line.slug}>{line.name}</option>
-        ))}
-      </select>
-      <FieldError id={`${id}-error`} message={error} />
+        placeholder={ui.productLinePlaceholder}
+        onChange={onChange}
+        htmlName="productLine"
+        isRequired
+        status={errorStatus(error)}
+        presentation="adaptive"
+        width="100%"
+      />
     </div>
   );
 }
@@ -845,40 +930,30 @@ function SelectField({
 function CheckboxGroup({
   id,
   values,
+  ui,
   onChange,
 }: {
   id: string;
   values: string[];
+  ui: InquiryFormUi;
   onChange: (values: string[]) => void;
 }) {
-  const toggle = (value: string, checked: boolean) => {
-    if (value === "none-yet" && checked) return onChange([value]);
-    const next = checked
-      ? [...values.filter((item) => item !== "none-yet"), value]
-      : values.filter((item) => item !== value);
-    onChange([...new Set(next)]);
-  };
   return (
-    <fieldset id={id}>
-      <legend className="mb-2 font-display text-xs font-700 uppercase tracking-wider text-ink">
-        {inquiryFormUi.inputsLabel}{" "}
-        <span className="font-sans font-medium normal-case tracking-normal text-steel">
-          {inquiryFormUi.optional}
-        </span>
-      </legend>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {inquiryFormUi.inputs.map((item) => (
-          <label key={item.value} className="text-sm text-ink">
-            <input
-              type="checkbox"
-              checked={values.includes(item.value)}
-              onChange={(event) => toggle(item.value, event.target.checked)}
-              className="mr-2 accent-forge"
-            />
-            {item.label}
-          </label>
+    <div id={id}>
+      <CheckboxList
+        label={`${ui.inputsLabel} (${ui.optional})`}
+        value={values}
+        onChange={(next) => {
+          const selectedNone = next.includes("none-yet") && !values.includes("none-yet");
+          onChange(selectedNone ? ["none-yet"] : next.filter((item) => item !== "none-yet"));
+        }}
+        density="compact"
+        width="100%"
+      >
+        {ui.inputs.map((item) => (
+          <CheckboxListItem key={item.value} label={item.label} value={item.value} />
         ))}
-      </div>
-    </fieldset>
+      </CheckboxList>
+    </div>
   );
 }

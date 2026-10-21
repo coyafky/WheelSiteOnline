@@ -17,6 +17,14 @@ export type InquiryProductLine =
   | "custom-aluminum"
   | "safety-tires";
 
+/** 一次询价中的一条轮毂清单明细。spec 只由服务端补全，客户端字段只是查询线索。 */
+export type InquiryItem = {
+  model: string;
+  productionCode: string;
+  quantity: number;
+  spec?: Record<string, string>;
+};
+
 /** The visitor-facing form payload. */
 export type InquiryInput = {
   customerType: InquiryCustomerType;
@@ -33,9 +41,19 @@ export type InquiryInput = {
   finish?: string;
   quantity?: string;
   inputsAvailable?: string[];
-  /** Approved policy version presented beside the checkbox. */
+  /** Optional legacy policy version retained for backwards-compatible payloads. */
   privacyVersion: string;
+  /**
+   * ISO timestamp of the moment the visitor ticked the consent box.
+   *
+   * Optional because older callers never sent it and the WordPress side treats
+   * it as optional. It is the only field that evidences *when* consent was
+   * given; `privacyVersion` alone records what they agreed to, not when.
+   */
+  consentedAt?: string;
   message: string;
+  /** 新版轮毂清单；缺省/空数组保持旧单产品载荷兼容。 */
+  items?: InquiryItem[];
 };
 
 /**
@@ -94,6 +112,7 @@ export type InquirySnapshot = {
   productionCode?: string;
   spec?: Record<string, string>;
   sourcePage?: string;
+  items?: InquiryItem[];
 };
 
 export type InquiryStatus = "new" | "assigned" | "replied" | "closed";

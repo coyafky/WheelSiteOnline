@@ -1,52 +1,67 @@
 import Link from "next/link";
 import { ArrowDownRight, ArrowRight } from "lucide-react";
 
+import { PageHero } from "@/components/sections/page-hero";
 import type { AboutContent } from "@/content/types";
 
+/**
+ * About opening band.
+ *
+ * ── Why this is warm-light and not the old dark band ───────────────────────
+ * It used to be `bg-hero text-white` under a 55% `.fh-industrial-grid`. There
+ * is no photograph here — measured `imgs=0` — so the dark surface was tone, not
+ * information.
+ *
+ * It was also a measured accessibility failure. The generated theme scopes
+ * heading ink by landmark, not by surface (`site-theme.css:11-14`,
+ * `:where(h1…) { color: var(--color-text-primary) }`), so an `<h1>` that does
+ * not declare its own colour on a dark surface resolves to `--fh-ink`
+ * (#292621) on `--fh-hero` (#302a24): **1.06:1**. On a 390px phone the About
+ * headline was dark-on-dark and effectively unreadable.
+ *
+ * The band now uses the shared warm-light `PageHero` — the same surface as
+ * `/products`, `/capabilities`, `/products/wheels` and `/custom-development`,
+ * so the company/product family opens with one identity band.
+ *
+ * Preserved: `<section id="top">`, the `aria-labelledby` contract, the `<h1>`
+ * id, both Next `<Link>` CTAs (crawlable), and the location/company-name rail —
+ * which moves into `PageHero`'s trailing slot rather than being dropped.
+ */
 export function AboutHero({ hero }: { hero: AboutContent["hero"] }) {
   return (
-    <section
-      id="top"
-      aria-labelledby="about-title"
-      className="relative isolate overflow-hidden bg-hero text-white"
+    <PageHero
+      titleId="about-title"
+      eyebrow={hero.eyebrow}
+      heading={hero.heading}
+      headingMaxWidth="920px"
     >
-      <div className="fh-industrial-grid absolute inset-0 -z-20 opacity-55" aria-hidden="true" />
-      <div className="absolute inset-0 -z-10 bg-linear-to-r from-hero via-hero/96 to-hero/65" aria-hidden="true" />
-      <div className="container-fh grid min-h-[760px] items-end gap-14 pb-18 pt-[132px] lg:grid-cols-[minmax(0,1fr)_320px] lg:pb-24 lg:pt-[168px]">
-        <div data-reveal>
-          <p className="eyebrow">{hero.eyebrow}</p>
-          <h1
-            id="about-title"
-            className="mt-5 max-w-[920px] font-display text-[clamp(3.1rem,7.5vw,7rem)] font-800 uppercase leading-[0.86] tracking-[-0.035em]"
-          >
-            {hero.heading}
-          </h1>
-          <p className="mt-8 max-w-[720px] text-base leading-7 text-white/72 sm:text-lg sm:leading-8">
-            {hero.lead}
-          </p>
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href={hero.primaryAction.href} className="btn-pill-solid">
-              {hero.primaryAction.label}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link href={hero.secondaryAction.href} className="btn-pill-outline text-white">
-              {hero.secondaryAction.label}
-              <ArrowDownRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
+      <p className="w-full max-w-[720px] text-base leading-7 text-steel sm:text-lg sm:leading-8">
+        {hero.lead}
+      </p>
 
-        <aside className="border-l border-white/18 pl-6 lg:mb-2" data-reveal>
-          <p className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-forge">
-            {hero.location}
-          </p>
-          <p className="mt-4 font-display text-2xl font-semibold uppercase leading-tight tracking-[-0.02em] text-white/88">
-            {hero.companyName}
-          </p>
-          <div className="mt-8 h-px w-full bg-white/16" />
-        </aside>
+      {/* The rail used to be a bordered left column on a dark band. On the warm
+          surface a top hairline carries the same "here is the legal entity"
+          separation without inventing a second surface colour. */}
+      <div className="w-full border-t border-border pt-6">
+        <p className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-forge">
+          {hero.location}
+        </p>
+        <p className="mt-3 font-display text-2xl font-semibold uppercase leading-tight tracking-[-0.02em] text-ink">
+          {hero.companyName}
+        </p>
       </div>
-    </section>
+
+      <div className="flex w-full flex-wrap gap-4">
+        <Link href={hero.primaryAction.href} className="btn-pill-solid">
+          {hero.primaryAction.label}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </Link>
+        <Link href={hero.secondaryAction.href} className="btn-pill-outline text-ink">
+          {hero.secondaryAction.label}
+          <ArrowDownRight className="size-4" aria-hidden="true" />
+        </Link>
+      </div>
+    </PageHero>
   );
 }
 

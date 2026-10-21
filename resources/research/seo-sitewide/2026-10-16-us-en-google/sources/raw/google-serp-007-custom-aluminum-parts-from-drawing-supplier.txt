@@ -1,0 +1,382 @@
+QUERY: custom aluminum parts from drawing supplier
+CAPTURED_AT: 2026-10-15T23:43:32.400Z
+URL: https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ%3A1792107810535&ei=ImXRaqCTII-o0PEP8I_bqAs&uact=5&oq=custom+aluminum+parts+from+drawing+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiK2N1c3RvbSBhbHVtaW51bSBwYXJ0cyBmcm9tIGRyYXdpbmcgc3VwcGxpZXIyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABSNUDUABYAHAAeAGQAQCYAZkDoAGZA6oBAzQtMbABALgBA8gBAPgBAZgCAaACnAOYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwM0LTGgB9IEsgcDNC0xuAecA8IHAzAuMcgHAYAIAQ&sclient=gws-wiz-serp
+RESULTS_READY: true
+
+[p1 "custom aluminum parts from drawing supplier - Google Search" | space "sitewide SEO US en-US Google research"(2): 1 managed, 0 untracked — p1* "custom aluminum parts from drawing supplier - Google Search"]
+root
+  link [ref=844]
+    text "Skip to main content"
+  anchor [ref=845, loc=href:https://support.google.com/websearch/answer/181196?hl=en, url=https://support.google.com/websearch/answer/181196?hl=en]
+    text "Accessibility help"
+  container
+    search
+      anchor "Go to Google Home" [ref=846, loc=css:a[aria-label="Go to Google Home"], url=https://www.google.com/webhp?hl=en&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQPHoECAYQBA]
+        svg_root
+      container
+        comboboxgrouping "Search" [ref=847, loc=css:textarea[name="q"]]
+          text "custom aluminum parts from drawing supplier"
+        container
+          button "Clear" [ref=848]
+            svg_root
+          container
+            button "Search by voice" [ref=849, loc=role:button[name="Search by voice"]]
+              svg_root
+            button "Search by image" [ref=850, loc=role:button[name="Search by image"]]
+              svg_root
+    container
+      button "Settings" [ref=851, loc=role:button[name="Settings"]]
+        svg_root
+      button "Share" [ref=852, loc=role:button[name="Share"]]
+        svg_root
+      container
+        button "Google apps" [ref=853, loc=css:a[aria-label="Google apps"], url=https://www.google.com/intl/en/about/products?tab=wh]
+          svg_root
+        anchor "Sign in" [ref=854, loc=css:a[aria-label="Sign in"], url=https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/search%3Fq%3Dcustom%2Baluminum%2Bparts%2Bfrom%2Bdrawing%2Bsupplier%26sca_esv%3Dc6f1483bddd831aa%26hl%3Den%26gl%3Dus%26biw%3D1280%26bih%3D749%26sxsrf%3DAPpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ%253A1792107810535%26ei%3DImXRaqCTII-o0PEP8I_bqAs%26uact%3D5%26oq%3Dcustom%2Baluminum%2Bparts%2Bfrom%2Bdrawing%2Bsupplier%26gs_lp%3DEgxnd3Mtd2l6LXNlcnAiK2N1c3RvbSBhbHVtaW51bSBwYXJ0cyBmcm9tIGRyYXdpbmcgc3VwcGxpZXIyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABSNUDUABYAHAAeAGQAQCYAZkDoAGZA6oBAzQtMbABALgBA8gBAPgBAZgCAaACnAOYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwM0LTGgB9IEsgcDNC0xuAecA8IHAzAuMcgHAYAIAQ%26sclient%3Dgws-wiz-serp&ec=futura_srp_og_si_72236_p]
+          text "Sign in"
+  container
+    navigation [ref=855]
+      list
+        listitem
+          anchor [ref=856, url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ2J8OegQIExAD]
+            text "AI Mode"
+        listitem
+          link [ref=857]
+            text "All"
+        listitem
+          anchor [ref=858, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=28&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&q=custom+aluminum+parts+from+drawing+supplier&ved=1t:220175&ictx=111]
+            text "Shopping"
+        listitem
+          anchor [ref=859, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&q=custom+aluminum+parts+from+drawing+supplier&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQtKgLegQIGBAB]
+            text "Images"
+        listitem
+          anchor [ref=860, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=vids&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&q=custom+aluminum+parts+from+drawing+supplier&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQtKgLegQIFxAB]
+            text "Videos"
+        listitem
+          anchor [ref=861, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&q=custom+aluminum+parts+from+drawing+supplier&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQs6gLegQIFhAB]
+            text "Short videos"
+        listitem
+          anchor [ref=862, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jnxvATrUU2Yg9dwuUGnsUHcXPuOM0_k1dPPnMiKJgy16YDDqH-_iHFiQkOW8hi7RXxbx-p0rrtPynGdM4Y3BzbgasK2jck2RijcHMRNvbjn_f35QtGOxCPNpiN8_uM2f1KfHZZ4ljNFPrvlswpgLP1ETmolpA&q=custom+aluminum+parts+from+drawing+supplier&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQs6gLegQIFRAB]
+            text "Forums"
+        listitem
+          button [ref=863]
+            container "More filters"
+              text "More"
+              svg_root
+      button [ref=864]
+        text "Tools"
+        svg_root
+    heading
+      text "Search Results"
+    container
+      container
+        heading
+          text "Thinking"
+        progressindicator "Generating"
+      main
+        container
+          container
+            heading
+              text "Web results"
+            anchor [ref=865, url=https://www.google.com/goto?url=CAESawHrOzAVRkP5zUSlGZPBlEmo7tkgFobNd0pGn9RGvWf3LwqiN4IjHd9-U1HSflT4_5zw8OzR_qS8HHdJ1mFmnUEsTSiYhWfwn9KBiO25MYQ3FyD1pjObOUbJr-uFVb3h55FHy53NBpmX2em0]
+              heading
+                text "Custom Aluminum Parts"
+              image
+              text "Elimold"
+              text "https://elimold.com"
+              text "› Custom Parts"
+            button "About this result" [ref=866]
+              svg_root
+            text "We"
+            text "customize aluminum parts"
+            text "according to customer"
+            text "drawings"
+            text "and production requirements. Batch size depends on the part's geometry, weight, machining time, and ..."
+          container
+            anchor [ref=867, url=https://www.google.com/goto?url=CAESgAEB6zswFURy6QVY6Ak0rXH7ThcDFZm8gIivnAWRMBmENqFBaQ_R-B2yl3TkhsHzFRU9HSpYKgNS_VG_0fkqrAJq4Vq4SK_cTqlwOHzJo98hUKGOFZYsDtEt3wtT13RJ1ZYWK84ZdtKmFKA7xYGqVnf97qneKovsyE4EsFVXDR2WwA]
+              heading
+                text "Custom CNC Aluminum Machined Components"
+              image
+              text "RallyPrecision"
+              text "https://www.rallyprecision.com"
+              text "› Products"
+            button "About this result" [ref=868]
+              svg_root
+            text "RALLY manufactures"
+            text "custom aluminum machined components"
+            text ". Enjoy high precision, fast CNC prototyping & competitive prices. Get a free quote!"
+          container
+            anchor [ref=869, url=https://www.google.com/goto?url=CAESgQEB6zswFapdpwEG6eSzkBCdZPaBU7bUwYMPzKiTPN1vst28yyu7WUQBFh4US4v1weqHO1LUhLuGuYn3vz6lIRHTkRBhQDfoUwyyvyNQ3QzIJXcfl9dGUofvHWEyF1c5twrSK9uzCKHfd1VtRiB4s7GnXD9L0dx6oFltXeX3VlHpThk]
+              heading
+                text "Custom CNC Machined Aluminum Parts"
+              image
+              text "Ningbo FRIMA Industry Co., Ltd."
+              text "https://www.frimaparts.com"
+              text "› Custom Case"
+            button "About this result" [ref=870]
+              svg_root
+            text "FRIMA specialize in"
+            text "custom CNC machined aluminum parts"
+            text "with full in-house milling, turning, secondary processing and surface finishing capabilities."
+            anchor [ref=871, url=https://www.google.com/goto?url=CAES5QEB6zswFcLxn78uqAfY8-aXr00IfA8Sz6hzZH8d9mlmq8Lo17yNkYnhfRyDhfclHDaT4YZzPRNsspiNBUFQWaXQ2d3wQHQ7lmPDfoZusH5UrkzAF625RUBnGl3SoPBzTqNGgaJrF_fwe8Y_xapP3ETj0qNS0S4-O8CxF-1vbX1x8nAGAmiwF8MSMEZ-ZoY9UG6kAbIkT5Q4-xnpx71-zJwHv7oW8u7C80VVPIoXNko5yqt1C-nR3aLejdnU2tH0ZQvViRWNjJ6ZuQ3Vo62NvTpYF1LUB5NJ7K2pDpR5tjR2EWxd_Ubw]
+              text "Read more"
+            text "5.0"
+            image "Rated 5.0 out of 5,"
+            text "(37)"
+          container
+            anchor [ref=872, url=https://www.google.com/goto?url=CAESoAEB6zswFVL4Q2VEDbcf28VU59DyREE9T_MiMTyphR-gu9a_a0JuAc_rLex4VqkNySMKTC6prlRj1iOHGniYOnCeprwGO1NPIWFg_tITYsUsW2bXKweBB14-MjRMjAMhNWJ22wtJ5SsWXhLgA-H13YEttNJR7XU7CpLDxOHkiRree_UcAvz95FVaR6Ed9-NP7qE3ayDfe--bWUyGuOfuy6bU]
+              heading
+                text "Need a manufacturer for small aluminum parts"
+              image
+              text "Reddit · r/manufacturing"
+              text "120+ comments · 7 months ago"
+            button "About this result" [ref=873]
+              svg_root
+            text "Have you tried send cut send?"
+            text "They machine aluminum and will anodize your parts"
+            text ". I'm not sure what price you consider to be ridiculous, but they ..."
+            anchor [ref=874, url=https://www.google.com/goto?url=CAES5QEB6zswFcV3V4p3UpJj3TqVg2IaF5aKGimDEZrp-tqMmAzqLEAbkjt9fErD6MCsVPP2ZP8GsDsUSV6pqkxUwOCF3PO_lvrhEtH5fgFOfBQJlotKsQ-QiU6MsLyVfvtCAW2wTaNkXe5AgMXuDv-E8caEyQF5QqgneppxwuUJsiCEdiQh5Yhg4WQSCdktD3oZagax3VSHXwtSxnE3LZBaE5FdNHaH6BPI4XkhUbaBSHMmhQ4CkAmvMbqO7_x-fra3Mxeeun9feEuAyTcA6cDdMgy_sB6NsPLNyYr9UERghelXzPH52fO-]
+              text "Read more"
+          container
+            anchor [ref=875, url=https://www.google.com/goto?url=CAESZwHrOzAVQJDYkUZijPLCfzncqS0hkqxEnise1dS5FNEsqmvxXnMHp46TEmlEPhXED3E2Icmnfjg1OVMwKeeMaTQQ9tRB46Ua8g2FMwLzxJra2KW2un49cJUhOFjFIfpcXAOlq1J7zNY]
+              heading
+                text "Custom Parts Gallery - Deep Drawing, Hydroforming, and ..."
+              image
+              text "American Aluminum Company"
+              text "https://www.amalco.com"
+              text "› custom-parts-gallery"
+            button "About this result" [ref=876]
+              svg_root
+            text "Amalco is a leading manufacturer of"
+            text "deep drawn and hydroformed metal parts"
+            text ". CALL CUSTOMER SUPPORT: 908-233-3500. SUPPORT: 908-233-3500 … drawn aluminum. CALL ..."
+          container
+            text "Videos"
+            button "About this result" [ref=877]
+              svg_root
+            container
+              container
+                anchor [ref=878, url=https://www.google.com/goto?url=CAESywEB6zswFa6OKH2U4IVa4UyYVxN-XExbHKe0Jyj5L64UDXPlRI6Heizx-Y-goQtaZnhjSuKuBhQzspVBnU7UsCn5BRElMfrv9TbUw-8Sj986rLez7-TOf8HHkj9kBVvcoU1dSt1tHkhBJxFqGDaseAkmR-bCeZqsdLxOG504Hbq3MdcQ039LFJkBMzfOlggLgjD8rU71p-QmrwjF5eSUWbkAjyWC1H7FNLc9s_gIIc3bi515Aw-RjywL7N8TUgl7L8VrbK2bZ1j0PKySwA]
+                  text "We produce custom aluminum parts with strict dimensional ..."
+                  text "Facebook"
+                  text "·"
+                  text "Shelly RPcnc"
+                  text "Jul 6, 2026"
+                text "Facebook"
+                text "·"
+                text "Shelly RPcnc"
+                button "About this result" [ref=879]
+                  svg_root
+                anchor "We produce custom aluminum parts with strict dimensional ... by Shelly RPcnc on Facebook. Play on Facebook. 0:47" [ref=880, url=https://www.google.com/goto?url=CAESywEB6zswFa6OKH2U4IVa4UyYVxN-XExbHKe0Jyj5L64UDXPlRI6Heizx-Y-goQtaZnhjSuKuBhQzspVBnU7UsCn5BRElMfrv9TbUw-8Sj986rLez7-TOf8HHkj9kBVvcoU1dSt1tHkhBJxFqGDaseAkmR-bCeZqsdLxOG504Hbq3MdcQ039LFJkBMzfOlggLgjD8rU71p-QmrwjF5eSUWbkAjyWC1H7FNLc9s_gIIc3bi515Aw-RjywL7N8TUgl7L8VrbK2bZ1j0PKySwA]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        text "0:47"
+              container
+                anchor [ref=881, url=https://www.google.com/goto?url=CAESxgEB6zswFV1pD570ucGhWOy8W42kgeeSuLS-wdkvWrLDJqetx8a6yw8_ooUBbOVFR8mEFbagu2xRYkn8bqap7AC1o1XkIEPdMXD3DEC_syViFekrEjYRs7o2UN2XVUNKjfrfH72Cw7yJOjtEHjSiM5xAif7XJehGHLBcb_vXVjcjm6mVsz7Fs8IUqmnaY2IpafF-u6D4F16gCaGxex-GQy3mBtj2DMplpsxjFYsNV0klC_gJ19L02Yq4KOq-x049abcaj4YIdWQ]
+                  text "Complex aluminum CNC parts are easy to prototype—but can ..."
+                  text "Facebook"
+                  text "·"
+                  text "Shenzhen VMT Metal Products Co., Limited"
+                  text "2 weeks ago"
+                text "Facebook"
+                text "·"
+                text "Shenzhen VMT Metal Products Co., Limited"
+                button "About this result" [ref=882]
+                  svg_root
+                anchor "Complex aluminum CNC parts are easy to prototype—but can ... by Shenzhen VMT Metal Products Co., Limited on Facebook. Play on Facebook. 0:08" [ref=883, url=https://www.google.com/goto?url=CAESxgEB6zswFV1pD570ucGhWOy8W42kgeeSuLS-wdkvWrLDJqetx8a6yw8_ooUBbOVFR8mEFbagu2xRYkn8bqap7AC1o1XkIEPdMXD3DEC_syViFekrEjYRs7o2UN2XVUNKjfrfH72Cw7yJOjtEHjSiM5xAif7XJehGHLBcb_vXVjcjm6mVsz7Fs8IUqmnaY2IpafF-u6D4F16gCaGxex-GQy3mBtj2DMplpsxjFYsNV0klC_gJ19L02Yq4KOq-x049abcaj4YIdWQ]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        text "0:08"
+              container
+                anchor [ref=884, url=https://www.google.com/goto?url=CAEStgEB6zswFcAltTyzAda11W-LsANJLvyv65YEGjMzBkLOt2NL8F_WDdIYIfwik7S7Kb7cjkFgnZQXZPU2WWNtf_o53J8Q77RVbXggP2EYJ0r3kQGZ7vbzcKR0pcisEd_lM2Rzpk5J62WNCyzEV0EWgYvE1Ycwg-V3fml9A4HV4YWNr7hkN_CiYmrTRqVSPqXrQfqZa21bmzttaBk-livtIoXU_lL_Le_Jy3zdXEv-MTa-sayqtnDN_A]
+                  text "China CNC Machining Services | Custom Aluminum ..."
+                  text "Facebook"
+                  text "·"
+                  text "AT‑Machining CNC Machining Shop in China"
+                  text "4 weeks ago"
+                text "Facebook"
+                text "·"
+                text "AT‑Machining CNC Machining Shop in China"
+                button "About this result" [ref=885]
+                  svg_root
+                anchor "China CNC Machining Services | Custom Aluminum ... by AT‑Machining CNC Machining Shop in China on Facebook. Play on Facebook. 0:20" [ref=886, url=https://www.google.com/goto?url=CAEStgEB6zswFcAltTyzAda11W-LsANJLvyv65YEGjMzBkLOt2NL8F_WDdIYIfwik7S7Kb7cjkFgnZQXZPU2WWNtf_o53J8Q77RVbXggP2EYJ0r3kQGZ7vbzcKR0pcisEd_lM2Rzpk5J62WNCyzEV0EWgYvE1Ycwg-V3fml9A4HV4YWNr7hkN_CiYmrTRqVSPqXrQfqZa21bmzttaBk-livtIoXU_lL_Le_Jy3zdXEv-MTa-sayqtnDN_A]
+                  table
+                    table_row
+                      table_cell
+                        image
+                        svg_root
+                        text "0:20"
+            anchor "View all videos" [ref=887, loc=css:a[aria-label="View all videos"], url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&udm=vids&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=custom+aluminum+parts+from+drawing+supplier&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8ccDKAJ6BAhUEAU]
+              container
+                text "View all"
+                svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=888, url=https://www.google.com/goto?url=CAESggEB6zswFWNqwlm0pgzJonl1lDdvrEBRgm6IqiMge8IEla6VG2jCs1oSJgWa6-ipMuE7ayrv6GK4jP7NkOTsER4FrTZq6jgVyiGPgK3if2gBOobunrV_Kkg0SNA25n4tDgi68hDT2cfJjSaFn_ue-qxUiG_bOWgSEi9g3R6mMj6b7miF]
+              heading
+                text "Custom CNC aluminum parts with anodized colors available"
+              image
+              text "Facebook · Purchasing and Procurement Group PH"
+              text "3 weeks ago"
+            button "About this result" [ref=889]
+              svg_root
+            text "We make precision CNC aluminum parts with different anodized colors."
+            text "OEM & custom drawings accepted"
+            text ". Send your drawing for best quote."
+          container
+            anchor [ref=890, url=https://www.google.com/goto?url=CAESYQHrOzAVtxVZ8q1cRR9tio9M-8dIn8t7qWfKfVdItV25MVVLcJdVi8f3AQa8JGTiCDVPslP--SCO9lt9sdYGeO9e5Zvs2Rj2U6s66RZxoApXl7Ufi6m0BAkH8kevGWRq2FU]
+              heading
+                text "Custom CNC Aluminum Parts"
+              image
+              text "eMachineShop"
+              text "https://www.emachineshop.com"
+              text "› aluminum"
+            button "About this result" [ref=891]
+              svg_root
+            text "eMachineShop has machined aluminum parts for over 15 years"
+            text ". You can design and order your parts with our free CAD software or upload your own CAD file for a ..."
+            anchor [ref=892, url=https://www.google.com/goto?url=CAEStgEB6zswFWWNwh2SfcXEM9mOgX9prMKwI8eCp4GkT0kD66CleqbKaLNrzJUkUW1gxgs7zJOAatAeUzqur4XbrPL-T_YrmQvwC_3CmYYEaz6ChEzBVsV3V4ZD63qrR-PzoXsNUB8CNTs2Sth6lOrtbAj-HG1pR1-oyJwASMG59CbNElAd0ItVOJIBNJm3OC5PrjHFRBaa3y6ScpUUsGIUJwfa-E8nW-dV_MrzKhm3glEhcTgtTktJVg]
+              text "Read more"
+            text "Missing:"
+            text "drawing"
+            text "supplier"
+          container
+            text "People also ask"
+            button [ref=893]
+              text "Where can I find custom aluminum parts?"
+              svg_root
+            button [ref=894]
+              text "How much does it cost to CNC machine aluminum?"
+              svg_root
+            button [ref=895]
+              text "Where can I find machined parts online?"
+              svg_root
+            button [ref=896]
+              text "Where can I buy aluminum blanks?"
+              svg_root
+          container
+            heading
+              text "Web results"
+            anchor [ref=897, url=https://www.google.com/goto?url=CAESyQEB6zswFUkZW13R1VDDcFovchy-5IDQqKtpBdWIVTwnFLD2RkIsmw0xj8Zi98GIwCnhXoS-2roKxf93CfCwVUHdrNovFdA23i-ITwCb5GCggZM5wkC4q1sHrIynnvZFEv8ww2Ho5G9vVIHJGbmwyw5zjhb6IO5Ccn8-rMKwPvHXG-Q5DK4RkUdAMv4HAHQjfiWoAKjyzUDPaxm4ezTI734uwjF6WU9RyJ7lBSc3d88nTnaxt-mwHkw8fjzzj__PrdWg5QEPCh3dsv0]
+              heading
+                text "Custom CNC Milled Aluminum Parts | Made to Drawing"
+              svg_root
+              text "BOLTTE"
+              text "https://boltte.com"
+              text "› Custom order"
+            button "About this result" [ref=898]
+              svg_root
+            text "This made-to-order service covers"
+            text "aluminum brackets, plates, housings, fixtures, mounting blocks"
+            text "and other non-standard milled components."
+            text "$0.45"
+            text " · "
+            text "Free delivery over $99.99"
+            text " · "
+            text "14-day returns"
+        container
+          container
+            text "People also search for"
+            anchor [ref=899, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Custom+aluminum+parts+from+drawing+supplier+usa&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAg1EAE]
+              container
+                text "Custom aluminum parts from drawing supplier"
+                text "usa"
+              svg_root
+            anchor [ref=900, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Custom+aluminum+parts+from+drawing+supplier+near+me&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAhXEAE]
+              container
+                text "Custom aluminum parts from drawing supplier"
+                text "near me"
+              svg_root
+            anchor [ref=901, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Deep+draw+aluminum&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAhQEAE]
+              container
+                text "Deep draw"
+                text "aluminum"
+              svg_root
+            anchor [ref=902, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Deep+drawn+Aluminum+Cans&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAhLEAE]
+              container
+                text "Deep drawn"
+                text "Aluminum"
+                text "Cans"
+              svg_root
+            anchor [ref=903, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Amalco&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAhEEAE]
+              text "Amalco"
+              svg_root
+            anchor [ref=904, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=American+made+Aluminum&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAhBEAE]
+              container
+                text "American made"
+                text "Aluminum"
+              svg_root
+            anchor [ref=905, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Hydroforming+companies&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAg-EAE]
+              text "Hydroforming companies"
+              svg_root
+            anchor [ref=906, url=https://www.google.com/search?sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&q=Hydroforming+aluminum&sa=X&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ1QJ6BAg5EAE]
+              container
+                text "Hydroforming"
+                text "aluminum"
+              svg_root
+          navigation
+            heading
+              text "Page Navigation"
+            table
+              table_row
+                table_cell
+                table_cell
+                  text "1"
+                table_cell
+                  anchor "Page 2" [ref=907, loc=css:a[aria-label="Page 2"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=10&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAE]
+                    text "2"
+                table_cell
+                  anchor "Page 3" [ref=908, loc=css:a[aria-label="Page 3"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=20&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAG]
+                    text "3"
+                table_cell
+                  anchor "Page 4" [ref=909, loc=css:a[aria-label="Page 4"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=30&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAI]
+                    text "4"
+                table_cell
+                  anchor "Page 5" [ref=910, loc=css:a[aria-label="Page 5"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=40&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAK]
+                    text "5"
+                table_cell
+                  anchor "Page 6" [ref=911, loc=css:a[aria-label="Page 6"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=50&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAM]
+                    text "6"
+                table_cell
+                  anchor "Page 7" [ref=912, loc=css:a[aria-label="Page 7"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=60&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAO]
+                    text "7"
+                table_cell
+                  anchor "Page 8" [ref=913, loc=css:a[aria-label="Page 8"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=70&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAQ]
+                    text "8"
+                table_cell
+                  anchor "Page 9" [ref=914, loc=css:a[aria-label="Page 9"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=80&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAS]
+                    text "9"
+                table_cell
+                  anchor "Page 10" [ref=915, loc=css:a[aria-label="Page 10"], url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=90&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8tMDegQIXhAU]
+                    text "10"
+                heading
+                  anchor [ref=916, url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQnsJB2MhLAu5o9_PI5YIz51-b8Ct-w:1792107811942&ei=I2XRarCKOd6j0PEP0_WQwQ4&start=10&sa=N&sstk=AS6-VmKeG9UyDjgio8kDpgwRj660sjAmIFFbLsqUNRq7JaQp2ln5sSntv8jxoyPrtXZYlEptrb9VOycj1xdhLH72S646TlJjYNh4Pw&ved=2ahUKEwjwp57smb2XAxXeETQIHdM6JOgQ8NMDegQIXhAW]
+                    text "Next"
+        navigation
+    contentinfo
+      heading
+        text "Footer Links"
+      button [ref=917, url=https://www.google.com/search?q=custom+aluminum+parts+from+drawing+supplier&sca_esv=c6f1483bddd831aa&hl=en&gl=us&biw=1280&bih=749&sxsrf=APpeQntVXJx55EK0EqbxUlpGBS69PbKhnQ%3A1792107810535&ei=ImXRaqCTII-o0PEP8I_bqAs&uact=5&oq=custom+aluminum+parts+from+drawing+supplier&gs_lp=Egxnd3Mtd2l6LXNlcnAiK2N1c3RvbSBhbHVtaW51bSBwYXJ0cyBmcm9tIGRyYXdpbmcgc3VwcGxpZXIyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABSNUDUABYAHAAeAGQAQCYAZkDoAGZA6oBAzQtMbABALgBA8gBAPgBAZgCAaACnAOYAwDiAwQYACBd4gMEGAAgXuIDBBgAIF_iAwQYACBg4gMEGAAgYeIDBBgAIGKSBwM0LTGgB9IEsgcDNC0xuAecA8IHAzAuMcgHAYAIAQ&sclient=gws-wiz-serp#]
+        text "United States"
+        text " - "
+        text "From your IP address"
+      text " - "
+      button [ref=918]
+        text "Update location"
+      container
+        anchor [ref=919, loc=href:https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1, url=https://support.google.com/websearch/?p=ws_results_help&hl=en&fg=1]
+          text "Help"
+        button [ref=920]
+          text "Send feedback"
+        anchor [ref=921, loc=href:https://policies.google.com/privacy?hl=en&fg=1, url=https://policies.google.com/privacy?hl=en&fg=1]
+          text "Privacy"
+        anchor [ref=922, loc=href:https://policies.google.com/terms?hl=en&fg=1, url=https://policies.google.com/terms?hl=en&fg=1]
+          text "Terms"
+

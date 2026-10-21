@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { ProductLine } from "@/content/types";
+import { getTranslator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
@@ -32,13 +33,16 @@ import { cn } from "@/lib/utils";
  * DEC-013 (no image, no listing) is why `hasRender` exists at all. All four
  * lines currently pass it; the fallback stays because the fifth line will not.
  */
-export function FamilyCard({
+export async function FamilyCard({
   line,
   className,
 }: {
   line: ProductLine;
   className?: string;
 }) {
+  // 服务端组件：卡片脚注是界面文案（chrome），走字典而非 WordPress 内容。
+  const { t } = await getTranslator();
+
   return (
     <Link
       href={line.href}
@@ -95,7 +99,7 @@ export function FamilyCard({
         {/* mt-auto pins the arrow row to the bottom edge, so all four line up
             even when the summaries wrap to different line counts. */}
         <span className="mt-auto flex items-center gap-2 pt-5 font-display text-[0.72rem] font-700 uppercase tracking-[0.1em] text-forge">
-          Explore
+          {t("catalogue.card.explore")}
           <ArrowRight
             className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
             aria-hidden="true"

@@ -5,6 +5,7 @@ import { useSyncExternalStore, useState } from "react";
 import { cn } from "@/lib/utils";
 import { WheelFilterOption } from "./wheel-filter-option";
 import type { FacetOption } from "@/lib/wheels";
+import type { WheelCatalogueCopy } from "@/lib/i18n/wheel-catalogue-copy";
 
 /**
  * 孔距（PCD）筛选组 —— 带搜索。
@@ -50,6 +51,7 @@ export function PcdSearchGroup({
   idPrefix,
   collapseAfter = 5,
   columns = 2,
+  copy,
 }: {
   legend: string;
   name: string;
@@ -73,6 +75,7 @@ export function PcdSearchGroup({
    * 16 个值从 16 行压到 8 行，**零信息损失**（对比「滚动盒」是把内容藏起来）。
    */
   columns?: 1 | 2;
+  copy: WheelCatalogueCopy["pcdUi"];
 }) {
   const [query, setQuery] = useState("");
 
@@ -143,11 +146,16 @@ export function PcdSearchGroup({
 
   return (
     <fieldset className="mt-6 border-t border-border pt-5">
-      <legend className="eyebrow !text-ink">
+      <legend className="eyebrow flex items-center gap-2 !text-ink">
+        {/* 品牌色小标记：与 CheckboxGroup 的分组标题保持同一视觉语言 */}
+        <span
+          aria-hidden="true"
+          className="inline-block h-[3px] w-4 shrink-0 rounded-full bg-forge"
+        />
         {legend}
         {selectedCount > 0 ? (
-          <span className="ml-2 font-600 text-forge normal-case tracking-normal">
-            · {selectedCount} selected
+          <span className="rounded-full bg-forge-soft px-2 py-0.5 text-[0.68rem] font-600 normal-case tracking-normal text-forge-deep">
+            {copy.selected.replace("{count}", String(selectedCount))}
           </span>
         ) : null}
       </legend>
@@ -161,8 +169,8 @@ export function PcdSearchGroup({
               /* ⚠️ 故意不给 `name`：它只过滤眼前的列表，不参与提交。 */
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="e.g. 5x114 or 112"
-              aria-label={`Search ${legend}`}
+              placeholder={copy.searchPlaceholder}
+              aria-label={copy.searchAria.replace("{group}", legend)}
               autoComplete="off"
               className="w-full border-0 border-b border-ink/24 bg-transparent px-0 py-2 pr-8 text-[0.85rem] text-foreground placeholder:text-muted-foreground focus-visible:border-forge focus-visible:outline-none"
             />
@@ -170,7 +178,7 @@ export function PcdSearchGroup({
               <button
                 type="button"
                 onClick={() => setQuery("")}
-                aria-label="Clear search"
+                aria-label={copy.clearSearch}
                 className="absolute right-0 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center text-muted-foreground transition-colors hover:text-forge focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-forge"
               >
                 ×
@@ -187,8 +195,11 @@ export function PcdSearchGroup({
           {needle !== "" ? (
             <p aria-live="polite" className="mt-2 text-[0.72rem] text-muted-foreground">
               {hiddenCount === 0
-                ? `Showing all ${options.length}`
-                : `${matched.length} of ${options.length} — ${hiddenCount} hidden`}
+                ? copy.showingAll.replace("{total}", String(options.length))
+                : copy.showingSome
+                    .replace("{matched}", String(matched.length))
+                    .replace("{total}", String(options.length))
+                    .replace("{hidden}", String(hiddenCount))}
             </p>
           ) : null}
         </>
@@ -213,8 +224,8 @@ export function PcdSearchGroup({
             >
               +
             </span>
-            <span className="group-open:hidden">Show {rare.length} more</span>
-            <span className="hidden group-open:inline">Show fewer</span>
+            <span className="group-open:hidden">{copy.showMore.replace("{count}", String(rare.length))}</span>
+            <span className="hidden group-open:inline">{copy.showFewer}</span>
           </summary>
           <div
             className={cn(
@@ -230,8 +241,7 @@ export function PcdSearchGroup({
       {/* 搜不到任何东西时给一条出口，而不是只留一个空盒子。 */}
       {needle !== "" && matched.length === 0 ? (
         <p className="mt-2 text-[0.78rem] text-muted-foreground">
-          No bolt pattern matches “{query}”. Clear the search to see all{" "}
-          {options.length}.
+          {copy.noMatches.replace("{query}", query).replace("{total}", String(options.length))}
         </p>
       ) : null}
     </fieldset>

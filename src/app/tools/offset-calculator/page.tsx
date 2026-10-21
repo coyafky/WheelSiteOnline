@@ -8,6 +8,10 @@ import {
 } from "@/content/tools";
 import { OffsetCalculator } from "@/components/offset-calculator";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
 
 export const metadata: Metadata = {
   title: "Wheel Offset Calculator — Compare Inner & Outer Clearance",
@@ -23,63 +27,42 @@ export const metadata: Metadata = {
  * offset types → FAQ → CTA. The honesty notice sits above the tool, not below
  * it, so no one reads a number before reading the caveat.
  */
-export default function OffsetCalculatorPage() {
+export default async function OffsetCalculatorPage() {
+  const locale = await getLocale();
   const copy = offsetCalculatorCopy;
 
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. The calculator itself — its formula
+          and its negative/decimal inputs — is untouched below. */}
+      <PageHero
         id="top"
-        aria-labelledby="tool-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="tool-title"
+        tone="dark"
+        breadcrumb={
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Tools", href: localizedPath("/tools", locale) },
+              { label: "Offset calculator" },
+            ]}
+          />
+        }
+        eyebrow={copy.eyebrow}
+        heading={copy.heading}
+        lede={copy.lede}
+        supporting={copy.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_76%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link href="/tools" className="transition-colors hover:!text-forge">
-              Tools
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">Offset calculator</span>
-          </nav>
-
-          <p className="eyebrow mt-6 !text-forge">{copy.eyebrow}</p>
-          <h1
-            id="tool-title"
-            className="mt-5 max-w-[900px] font-display text-[clamp(2.4rem,7vw,5rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            {copy.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {copy.lede}
-          </p>
-          <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-white/55">
-            {copy.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="#calculator" className="btn-pill-solid">
-              Use the calculator
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/contact" className="btn-pill-outline !text-white">
-              Send your vehicle details
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="#calculator" className="btn-pill-solid">
+          Use the calculator
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/contact" className="btn-pill-outline !text-white">
+          Send your vehicle details
+        </Link>
+      </PageHero>
 
       {/* B. What offset is -------------------------------------------------- */}
       <section
@@ -175,7 +158,7 @@ export default function OffsetCalculatorPage() {
           </div>
 
           <div className="min-w-0">
-            <pre className="max-w-full overflow-x-auto rounded-xl border border-border bg-ink p-6 font-mono text-[0.8rem] leading-relaxed text-white/85">
+            <pre tabIndex={0} className="max-w-full overflow-x-auto rounded-xl border border-border bg-ink p-6 font-mono text-[0.8rem] leading-relaxed text-white/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forge">
               <code>
                 {copy.formulaLines.map((line) => (
                   <span key={line} className="block">

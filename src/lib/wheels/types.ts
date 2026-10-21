@@ -152,6 +152,8 @@ export type WheelCatalogueCard = {
   pcdsTotal: number;
   approvedVariantCount: number;
   approvedFinishCount: number;
+  /** 第一条已批准配置，供目录快速加入询价清单；详情页可选择任意配置。 */
+  defaultVariant: Pick<PublicWheelVariant, "productionCode" | "size" | "pcd" | "offset" | "centerBore"> | null;
 };
 
 /* ============================================================================

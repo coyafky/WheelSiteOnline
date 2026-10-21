@@ -1,15 +1,17 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import { isLocale } from "@/lib/i18n/types";
+import { cacheTagFor } from "@/lib/wordpress/cache-tags";
 import {
-  INSIGHTS_CACHE_TAG,
   insightRevalidationPaths,
   validInsightPreviewSlug,
 } from "@/lib/wordpress/insights-contract";
+import { wheelRevalidationPaths } from "@/lib/wordpress/wheels-contract";
 import {
-  WHEEL_PUBLICATION_TAG,
-  wheelRevalidationPaths,
-} from "@/lib/wordpress/wheels-contract";
+  sitePageRevalidationPaths,
+  validSitePageKey,
+} from "@/lib/wordpress/pages-contract";
 
 function validSignature(body: string, provided: string | null): boolean {
   const expected = process.env.WP_REVALIDATE_SECRET?.trim();
@@ -28,24 +30,34 @@ export async function POST(request: Request) {
   }
   const body = (() => {
     try {
-      return JSON.parse(rawBody) as { type?: unknown; slug?: unknown };
+      return JSON.parse(rawBody) as { type?: unknown; slug?: unknown; locale?: unknown; revision?: unknown };
     } catch {
       return null;
     }
   })() as {
     type?: unknown;
     slug?: unknown;
+    locale?: unknown;
+    revision?: unknown;
   } | null;
-  const type = body?.type === "wheels" ? "wheels" : body?.type === "insights" ? "insights" : null;
+  const type = body?.type === "wheels" ? "wheels" : body?.type === "insights" ? "insights" : body?.type === "pages" ? "pages" : null;
   if (!type) {
     return NextResponse.json({ ok: false, error: "Invalid content type." }, { status: 422 });
   }
-  const slug = validInsightPreviewSlug(typeof body?.slug === "string" ? body.slug : null);
-  const tag = type === "wheels" ? WHEEL_PUBLICATION_TAG : INSIGHTS_CACHE_TAG;
+  const rawSlug = typeof body?.slug === "string" ? body.slug : null;
+  const slug = type === "pages" ? validSitePageKey(rawSlug) : validInsightPreviewSlug(rawSlug);
+  const locale = type === "pages" && isLocale(body?.locale) ? body.locale : undefined;
+  const revision = type === "pages" && typeof body?.revision === "string"
+    ? body.revision.slice(0, 80)
+    : undefined;
+  // Tag comes from the register, so it can never drift from `type`.
+  const tag = cacheTagFor(type);
   const paths = type === "wheels"
     ? wheelRevalidationPaths(slug ?? undefined)
-    : insightRevalidationPaths(slug ?? undefined);
+    : type === "insights"
+    ? insightRevalidationPaths(slug ?? undefined)
+    : sitePageRevalidationPaths(slug ?? undefined);
   revalidateTag(tag, { expire: 0 });
   for (const path of paths) revalidatePath(path);
-  return NextResponse.json({ ok: true, type, tag, paths });
+  return NextResponse.json({ ok: true, type, tag, paths, ...(locale ? { locale } : {}), ...(revision ? { revision } : {}) });
 }

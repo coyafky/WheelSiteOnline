@@ -13,29 +13,145 @@ if (!defined('ABSPATH')) {
 }
 
 const FH_GUIDE_AUTHORING_POST_TYPE = 'fh_guide';
+const FH_GUIDE_AUTHORING_NATIVE_POST_TYPE = 'post';
+
+const FH_GUIDE_ACF_GROUP_KEY = 'group_fh_insights_structured';
+
+/** @return string[] */
+function fh_guide_acf_field_names(): array
+{
+    if (!function_exists('acf_get_fields') || !function_exists('acf_get_local_field_group')) return [];
+    $group = acf_get_local_field_group(FH_GUIDE_ACF_GROUP_KEY);
+    if (!is_array($group)) return [];
+    $fields = acf_get_fields($group);
+    if (!is_array($fields)) return [];
+    return array_values(array_filter(array_map(
+        static fn($field): ?string => is_array($field) && isset($field['name']) ? (string) $field['name'] : null,
+        $fields
+    )));
+}
+
+function fh_guide_acf_group_registered(): bool
+{
+    return function_exists('acf_get_local_field_group')
+        && is_array(acf_get_local_field_group(FH_GUIDE_ACF_GROUP_KEY));
+}
+
+function fh_guide_acf_group_post_only(): bool
+{
+    if (!fh_guide_acf_group_registered()) return false;
+    $group = acf_get_local_field_group(FH_GUIDE_ACF_GROUP_KEY);
+    $locations = $group['location'] ?? [];
+    foreach ($locations as $ruleGroup) {
+        foreach ($ruleGroup as $rule) {
+            if (($rule['param'] ?? '') === 'post_type'
+                && ($rule['operator'] ?? '') === '=='
+                && ($rule['value'] ?? '') === FH_GUIDE_AUTHORING_NATIVE_POST_TYPE) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function fh_guide_acf_repeater_available(): bool
+{
+    return function_exists('acf_get_field_type') && is_object(acf_get_field_type('repeater'));
+}
+
+/** @return array<int,array<string,mixed>> */
+function fh_guide_acf_repeater_fields(): array
+{
+    return [
+        [
+            'key' => 'field_fh_detail', 'label' => '列表页短版', 'name' => 'fh_detail', 'type' => 'repeater', 'layout' => 'block', 'button_label' => '新增短版段落',
+            'sub_fields' => [
+                ['key' => 'field_fh_detail_heading', 'label' => '小标题', 'name' => 'heading', 'type' => 'text'],
+                [
+                    'key' => 'field_fh_detail_paragraphs', 'label' => '段落', 'name' => 'paragraphs', 'type' => 'repeater', 'layout' => 'table', 'button_label' => '新增段落',
+                    'sub_fields' => [['key' => 'field_fh_detail_paragraph', 'label' => '段落内容', 'name' => 'paragraph', 'type' => 'textarea', 'rows' => 3],],
+                ],
+            ],
+        ],
+        [
+            'key' => 'field_fh_sections', 'label' => '正文分段', 'name' => 'fh_sections', 'type' => 'repeater', 'layout' => 'block', 'button_label' => '新增正文分段',
+            'sub_fields' => [
+                ['key' => 'field_fh_sections_heading', 'label' => '小标题', 'name' => 'heading', 'type' => 'text'],
+                [
+                    'key' => 'field_fh_sections_body', 'label' => '段落', 'name' => 'body', 'type' => 'repeater', 'layout' => 'table', 'button_label' => '新增段落',
+                    'sub_fields' => [['key' => 'field_fh_sections_paragraph', 'label' => '段落内容', 'name' => 'paragraph', 'type' => 'textarea', 'rows' => 3],],
+                ],
+            ],
+        ],
+    ];
+}
+
+add_action('acf/init', 'fh_guide_authoring_register_acf_fields');
+function fh_guide_authoring_register_acf_fields(): void
+{
+    if (!function_exists('acf_add_local_field_group')) return;
+
+    $fields = [
+        ['key' => 'field_fh_publication_status', 'label' => '编辑发布状态', 'name' => 'fh_publication_status', 'type' => 'select', 'choices' => ['draft' => '草稿 / 待审', 'approved' => '已批准', 'withdrawn' => '已撤回'], 'default_value' => 'draft', 'return_format' => 'value'],
+        ['key' => 'field_fh_summary', 'label' => '摘要', 'name' => 'fh_summary', 'type' => 'textarea', 'rows' => 3],
+        ['key' => 'field_fh_category', 'label' => '分类', 'name' => 'fh_category', 'type' => 'text'],
+        ['key' => 'field_fh_reading_time', 'label' => '阅读时长', 'name' => 'fh_reading_time', 'type' => 'text'],
+        ['key' => 'field_fh_answer', 'label' => '直接回答', 'name' => 'fh_answer', 'type' => 'textarea', 'rows' => 3],
+        // Defaults to 1 (needs verification). Unverified figures must never be
+        // published as fact by default; an editor has to actively clear this.
+        ['key' => 'field_fh_needs_verification', 'label' => '需要工程确认', 'name' => 'fh_needs_verification', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1],
+        ['key' => 'field_fh_seo_title', 'label' => 'SEO 标题', 'name' => 'fh_seo_title', 'type' => 'text'],
+        ['key' => 'field_fh_seo_description', 'label' => 'SEO 描述', 'name' => 'fh_seo_description', 'type' => 'textarea', 'rows' => 3],
+        ['key' => 'field_fh_featured_media_id', 'label' => '文章图片', 'name' => 'fh_featured_media_id', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium', 'library' => 'all'],
+    ];
+    if (fh_guide_acf_repeater_available()) {
+        $fields = array_merge($fields, fh_guide_acf_repeater_fields());
+    }
+
+    acf_add_local_field_group([
+        'key' => FH_GUIDE_ACF_GROUP_KEY,
+        'title' => 'Insights 结构化文章字段',
+        'fields' => $fields,
+        'location' => [[['param' => 'post_type', 'operator' => '==', 'value' => FH_GUIDE_AUTHORING_NATIVE_POST_TYPE]]],
+        'position' => 'normal',
+        'style' => 'default',
+        'active' => true,
+        'show_in_rest' => 0,
+    ]);
+}
 
 add_action('init', 'fh_guide_authoring_register_meta', 20);
 function fh_guide_authoring_register_meta(): void
 {
-    register_post_meta(FH_GUIDE_AUTHORING_POST_TYPE, 'fh_featured_media_id', [
-        'type' => 'integer',
-        'single' => true,
-        'default' => 0,
-        'show_in_rest' => false,
-        'auth_callback' => static fn(): bool => current_user_can('edit_posts'),
-        'sanitize_callback' => static fn($value): int => absint($value),
-    ]);
+    // Legacy fh_guide metadata remains readable during migration, but only the
+    // native Post editor owns this authoring field going forward.
+    foreach ([FH_GUIDE_AUTHORING_NATIVE_POST_TYPE] as $postType) {
+        register_post_meta($postType, 'fh_featured_media_id', [
+            'type' => 'integer',
+            'single' => true,
+            'default' => 0,
+            'show_in_rest' => false,
+            'auth_callback' => static fn(): bool => current_user_can('edit_posts'),
+            'sanitize_callback' => static fn($value): int => absint($value),
+        ]);
+    }
 }
 
-add_action('add_meta_boxes_' . FH_GUIDE_AUTHORING_POST_TYPE, 'fh_guide_authoring_replace_meta_box', 50);
+add_action('add_meta_boxes_' . FH_GUIDE_AUTHORING_NATIVE_POST_TYPE, 'fh_guide_authoring_replace_meta_box', 50);
 function fh_guide_authoring_replace_meta_box(): void
 {
-    remove_meta_box('fh-guide-fields', FH_GUIDE_AUTHORING_POST_TYPE, 'normal');
+    $screen = get_current_screen();
+    if (!$screen || $screen->post_type !== FH_GUIDE_AUTHORING_NATIVE_POST_TYPE) return;
+    remove_meta_box('fh-guide-fields', $screen->post_type, 'normal');
+    // ACF Free can render scalar fields but has no Repeater UI; keep the
+    // project editor visible until ACF Pro (or an equivalent repeater field)
+    // is actually available.
+    if (fh_guide_acf_group_registered() && fh_guide_acf_repeater_available()) return;
     add_meta_box(
         'fh-guide-structured-fields',
         'Insights 结构化文章字段',
         'fh_guide_authoring_render_meta_box',
-        FH_GUIDE_AUTHORING_POST_TYPE,
+        $screen->post_type,
         'normal',
         'high'
     );
@@ -84,6 +200,11 @@ function fh_guide_authoring_render_meta_box(WP_Post $post): void
         <label for="<?php echo esc_attr($name); ?>"><?php echo esc_html($label); ?></label>
         <div><?php if ($type === 'textarea') : ?><textarea rows="3" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>"><?php echo esc_textarea($value); ?></textarea><?php else : ?><input type="text" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>"><?php endif; ?></div>
       <?php endforeach; ?>
+
+      <label for="fh_translations_json">多语言正文 JSON</label>
+      <div><textarea rows="8" id="fh_translations_json" name="fh_translations_json"><?php echo esc_textarea((string) get_post_meta($post->ID, 'fh_translations_json', true)); ?></textarea><p class="fh-guide-help">格式：{"zh":{"title":"...","summary":"...","detail":[...],"sections":[...]},"es":{...},"th":{...}}。</p></div>
+      <label for="fh_translation_status_json">多语言发布状态 JSON</label>
+      <div><textarea rows="3" id="fh_translation_status_json" name="fh_translation_status_json"><?php echo esc_textarea((string) get_post_meta($post->ID, 'fh_translation_status_json', true)); ?></textarea><p class="fh-guide-help">只有 approved 的语言正文会进入公开 REST；draft/withdrawn 只在编辑预览可见。</p></div>
 
       <label>列表页短版</label>
       <div><div class="fh-guide-blocks" id="fh-guide-detail-blocks" data-array-key="paragraphs"><?php fh_guide_authoring_render_blocks($detail, 'paragraphs'); ?></div><button type="button" class="button fh-guide-add-block" data-target="fh-guide-detail-blocks">新增短版段落</button><input type="hidden" id="fh_detail_json" name="fh_detail_json" value=""></div>
@@ -142,7 +263,7 @@ function fh_guide_authoring_render_blocks(array $rows, string $arrayKey): void
     }
 }
 
-add_action('save_post_' . FH_GUIDE_AUTHORING_POST_TYPE, 'fh_guide_authoring_save_media', 20);
+add_action('save_post_' . FH_GUIDE_AUTHORING_NATIVE_POST_TYPE, 'fh_guide_authoring_save_media', 20);
 function fh_guide_authoring_save_media(int $postId): void
 {
     if (!isset($_POST['fh_guide_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['fh_guide_nonce'])), 'fh_guide_save')) return;

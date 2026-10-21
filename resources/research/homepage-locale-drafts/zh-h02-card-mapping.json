@@ -1,0 +1,17 @@
+{
+  "draftMeta": {
+    "pageKey": "home",
+    "locale": "zh",
+    "module": "H02",
+    "translationStatus": "review-reference",
+    "publicationStatus": "unapproved",
+    "indexing": "noindex",
+    "reviewNote": "供首页 H02 产品卡核对使用；沿用现有稳定 slug、图片路径与 href，未写入 WordPress。"
+  },
+  "items": [
+    {"slug": "wheels", "name": "轮毂", "subtitle": "已记录型号 · 旋压成形 · 定制锻造", "summary": "浏览已批准的轮毂规格，查看已记录的旋压成形路线，或启动定制锻造轮毂项目。", "highlights": [], "hasRender": true, "image": "/images/cards/card-wheels.webp", "href": "/products/wheels"},
+    {"slug": "ev-components", "name": "电驱铝制壳体", "subtitle": "电机 · 控制器 · 逆变器", "summary": "为水冷电机、压铸电机，以及控制器或逆变器壳体项目提供工程评估。", "highlights": [], "hasRender": true, "image": "/images/cards/card-ev.webp", "href": "/products/ev-components"},
+    {"slug": "custom-aluminum", "name": "定制铝制品开发", "subtitle": "2D 图纸 · 3D 数据 · 实物样件", "summary": "针对定义的轮毂和电驱壳体类别之外的铝制部件，从图纸或样件评估开始。", "highlights": [], "hasRender": true, "image": "/images/cards/card-aluminum.webp", "href": "/products/custom-aluminum"},
+    {"slug": "safety-tires", "name": "自密封轮胎", "subtitle": "技术 · 测试 · 供货评估", "summary": "查看自密封概念、已有记录的测试条件，以及讨论适用轮胎项目所需的信息。", "highlights": [], "hasRender": true, "image": "/images/cards/card-tires.webp", "href": "/products/safety-tires"}
+  ]
+}

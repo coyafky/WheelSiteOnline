@@ -53,7 +53,7 @@ H02 与 H03 不得互相重复：H02 回答“做什么”，H03 回答“凭什
 
 **Lead**
 
-`Fenghuai integrates wheel, EV housing, custom aluminum and self-sealing tyre manufacturing for overseas buyers—from requirement review and engineering input to production documentation.`
+`Fenghuai coordinates overseas projects across wheels, EV housings, custom aluminum components and self-sealing tires—from requirement review and engineering input to production documentation.`
 
 **Relationship disclosure**
 
@@ -318,7 +318,7 @@ type HomepageContent = {
 
 **Title**
 
-`Fenghuai | Wheels, EV Housings, Custom Aluminum & Safety Tires`
+`Fenghuai | Wheels, EV Housings, Custom Aluminum & Self-Sealing Tires`
 
 **Description**
 

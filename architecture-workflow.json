@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Fenghuai Wheel Site — System Architecture",
+    "subtitle": "Static-first Next.js 16 + Headless WordPress + Inquiry Pipeline",
+    "output": "architecture.html",
+    "viewBox": [1300, 1000]
+  },
+  "lanes": [
+    { "id": "visitor", "label": "Visitor / Buyer" },
+    { "id": "delivery", "label": "Delivery Layer" },
+    { "id": "nextjs", "label": "Next.js 16 Application" },
+    { "id": "contentBackend", "label": "Content Backend (WordPress)" },
+    { "id": "leadBackend", "label": "Inquiry Backend" },
+    { "id": "evidence", "label": "Evidence / Assets (Read-Only)" }
+  ],
+  "nodes": [
+    {
+      "id": "visitor",
+      "lane": "visitor",
+      "col": 0,
+      "type": "external",
+      "label": "Overseas B/C Visitor",
+      "sublabel": "Browser → HTTPS"
+    },
+    {
+      "id": "editor",
+      "lane": "visitor",
+      "col": 5,
+      "type": "external",
+      "label": "Content Editor",
+      "sublabel": "WordPress Admin"
+    },
+    {
+      "id": "cdn",
+      "lane": "delivery",
+      "col": 0,
+      "type": "cloud",
+      "label": "CDN + OpenNext Runtime",
+      "sublabel": "Static + ISR + API routes"
+    },
+    {
+      "id": "pages",
+      "lane": "nextjs",
+      "col": 0,
+      "type": "frontend",
+      "label": "App Router Pages & SEO",
+      "sublabel": "Server Components"
+    },
+    {
+      "id": "content",
+      "lane": "nextjs",
+      "col": 2,
+      "type": "backend",
+      "label": "Typed Content Seam",
+      "sublabel": "src/content/*.ts"
+    },
+    {
+      "id": "catalogue",
+      "lane": "nextjs",
+      "col": 3,
+      "type": "backend",
+      "label": "Wheel Catalogue & Publish Gate",
+      "sublabel": "publishedWheelModels"
+    },
+    {
+      "id": "inquiry",
+      "lane": "nextjs",
+      "col": 5,
+      "type": "backend",
+      "label": "Inquiry Domain & API",
+      "sublabel": "POST /api/inquiries"
+    },
+    {
+      "id": "wp",
+      "lane": "contentBackend",
+      "col": 0,
+      "type": "backend",
+      "label": "Headless WordPress",
+      "sublabel": "REST API + Auth"
+    },
+    {
+      "id": "mysql",
+      "lane": "contentBackend",
+      "col": 5,
+      "type": "database",
+      "label": "WordPress MySQL",
+      "sublabel": "Pages, Posts, CPTs, Media"
+    },
+    {
+      "id": "pg",
+      "lane": "leadBackend",
+      "col": 0,
+      "type": "database",
+      "label": "Inquiry CPT (fh_inquiry)",
+      "sublabel": "Same DB as WP"
+    },
+    {
+      "id": "outbox",
+      "lane": "leadBackend",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Transactional Outbox",
+      "sublabel": "HMAC-SHA256 webhook"
+    },
+    {
+      "id": "mail",
+      "lane": "leadBackend",
+      "col": 4,
+      "type": "external",
+      "label": "Mail Service + Callbacks",
+      "sublabel": "accepted/delivered/bounced"
+    },
+    {
+      "id": "sales",
+      "lane": "leadBackend",
+      "col": 5,
+      "type": "external",
+      "label": "Sales / Project Owner",
+      "sublabel": "Receives notifications"
+    },
+    {
+      "id": "evidence",
+      "lane": "evidence",
+      "col": 0,
+      "type": "database",
+      "label": "assets/ (Read-Only)",
+      "sublabel": "1349 models / 2757 images"
+    }
+  ],
+  "edges": [
+    { "from": "visitor", "to": "cdn", "variant": "default" },
+    { "from": "cdn", "to": "pages", "variant": "default" },
+    { "from": "pages", "to": "content", "variant": "default" },
+    { "from": "pages", "to": "catalogue", "variant": "default" },
+    { "from": "pages", "to": "inquiry", "variant": "default" },
+    { "from": "editor", "to": "wp", "variant": "default" },
+    { "from": "wp", "to": "mysql", "variant": "default" },
+    { "from": "wp", "to": "content", "variant": "default", "route": "drop-right" },
+    { "from": "evidence", "to": "catalogue", "variant": "default", "route": "drop-right" },
+    { "from": "inquiry", "to": "pg", "variant": "emphasis", "route": "drop-right" },
+    { "from": "pg", "to": "outbox", "variant": "emphasis" },
+    { "from": "outbox", "to": "mail", "variant": "emphasis" },
+    { "from": "mail", "to": "sales", "variant": "default" },
+    { "from": "mail", "to": "pg", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "title": "Content Seam (src/content/)",
+      "color": "cyan",
+      "items": [
+        "Stable TypeScript interfaces",
+        "HomepageContent, AboutContent, WheelCatalogue",
+        "InsightGuideDocument, ConversionQuoteBody",
+        "Adapters return same view models — pages unchanged"
+      ]
+    },
+    {
+      "title": "Publish Qualification (Fail-Closed)",
+      "color": "emerald",
+      "items": [
+        "hasImage = true",
+        "publicationStatus = approved",
+        "imageRightsStatus = approved",
+        "supplyStatus = confirmed",
+        "specificationStatus = verified",
+        "≥ 1 approved variant"
+      ]
+    },
+    {
+      "title": "Inquiry Pipeline",
+      "color": "violet",
+      "items": [
+        "Browser → POST /api/inquiries",
+        "Server validates + catalogue re-check",
+        "Single TX: CPT + idempotency + consent + outbox",
+        "Worker → Mail → Callbacks → PG",
+        "DB commit = only success condition"
+      ]
+    }
+  ]
+}

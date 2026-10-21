@@ -17,17 +17,12 @@ import type { InquiryContext } from "@/lib/inquiry/types";
  */
 
 /** Human labels for the `selectedSpec` snapshot keys, in display order. */
-const SPEC_LABELS: { key: string; label: string }[] = [
-  { key: "size", label: "Size" },
-  { key: "pcd", label: "PCD" },
-  { key: "offset", label: "Offset" },
-  { key: "centerBore", label: "Bore" },
-  { key: "finish", label: "Finish" },
-];
+const SPEC_KEYS = ["size", "pcd", "offset", "centerBore", "finish"] as const;
 
 export function QuoteContextBar({
   context,
   copy,
+  specLabels,
 }: {
   /** The same context object handed to `<InquiryForm>` — one source of truth. */
   context: InquiryContext;
@@ -38,15 +33,21 @@ export function QuoteContextBar({
     changeModel: string;
     changeHref: string;
   };
+  specLabels: Record<string, string>;
 }) {
-  const specs = SPEC_LABELS.flatMap(({ key, label }) => {
+  const specs = SPEC_KEYS.flatMap((key) => {
     const value = context.selectedSpec?.[key];
-    return value ? [{ label, value }] : [];
+    return value ? [{ label: specLabels[key] ?? key, value }] : [];
   });
 
   return (
     <section
       data-reveal
+      data-inquiry-context
+      data-product-line={context.productLine}
+      data-inquiry-intent={context.intent}
+      data-input-type={context.inputType}
+      data-inquiry-source={context.from}
       aria-label={copy.eyebrow}
       className="border-b border-border bg-soft py-10 lg:py-12"
     >

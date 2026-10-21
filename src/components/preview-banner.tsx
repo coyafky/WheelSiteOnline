@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 export function PreviewBanner({
   enabled,
   status,
+  exitHref = "/insights",
 }: {
   enabled: boolean;
   status?: string;
+  exitHref?: string;
 }) {
   const router = useRouter();
   if (!enabled) return null;
@@ -16,7 +18,7 @@ export function PreviewBanner({
     event.preventDefault();
     const response = await fetch("/api/preview/exit", { method: "POST" });
     if (!response.ok) return;
-    router.replace("/insights");
+    router.replace(exitHref);
     router.refresh();
   }
 

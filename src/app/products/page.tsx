@@ -1,24 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import {
-  catalogueFitmentSupport,
-  catalogueGuidance,
-  catalogueIntro,
-  catalogueResourceLinks,
-  catalogueRoutes,
-  catalogueSkuCallout,
-} from "@/content/products";
-import { productLines } from "@/content/product-lines";
-import { faqs } from "@/content/faq";
 import { ProductFamilyGrid } from "@/components/product-family-grid";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { getProductLinesContent } from "@/lib/wordpress/product-lines";
+import { getWordpressPageDocument } from "@/lib/wordpress/pages";
+import { getTranslator } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Products — Wheels, EV Components, Aluminum Parts & Tires",
-  description:
-    "Fenghuai manufactures across four product lines — forged wheels, EV powertrain housings, custom aluminum parts and self-healing safety tires.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getWordpressPageDocument("product-lines");
+  return {
+    title: page?.seoTitle || "Products | Wheels, EV Housings, Custom Aluminum & Self-Sealing Tires",
+    description:
+      page?.seoDescription ||
+      "Explore Fenghuai's four automotive product lines: wheels, EV aluminum housings, custom aluminum components and self-sealing tires. Review project categories and the information needed to start an assessment.",
+  };
+}
 
 /**
  * Product hub — four parallel lines.
@@ -36,7 +33,12 @@ export const metadata: Metadata = {
  * guidance, fitment, resources, FAQ) and merging one into viewport 02. That has
  * not happened yet — this edit is scoped to the first module only.
  */
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const { t } = await getTranslator();
+  const content = await getProductLinesContent();
+  const productLines = content.lines;
+  const { intro, guidance, skuCallout, routes, fitmentSupport, resourceLinks } =
+    content.catalogue;
   return (
     <>
       {/* A. Hero ---------------------------------------------------------- */}
@@ -44,30 +46,30 @@ export default function ProductsPage() {
         id="top"
         aria-labelledby="products-title"
         data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        className="relative isolate overflow-hidden border-b border-border bg-background"
       >
         <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_82%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_82%_0%,var(--fh-forge-soft)_0%,transparent_58%)]"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.15] [background-image:repeating-linear-gradient(115deg,var(--fh-muted)_0_1px,transparent_1px_64px)]"
           aria-hidden="true"
         />
 
         <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <p className="eyebrow !text-forge">{catalogueIntro.eyebrow}</p>
+          <p className="eyebrow !text-forge">{intro.eyebrow}</p>
           <h1
             id="products-title"
-            className="mt-5 font-display text-[clamp(2.6rem,8vw,5.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
+            className="mt-5 font-display text-[clamp(2.6rem,8vw,5.6rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-ink"
           >
-            {catalogueIntro.heading}
+            {intro.heading}
           </h1>
-          <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-white/75">
-            {catalogueIntro.lede}
+          <p className="mt-7 max-w-[680px] text-[1.05rem] leading-relaxed text-steel">
+            {intro.lede}
           </p>
-          <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-white/55">
-            {catalogueIntro.supporting}
+          <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-steel/85">
+            {intro.supporting}
           </p>
         </div>
       </section>
@@ -79,17 +81,15 @@ export default function ProductsPage() {
       >
         <div className="container-fh-wide">
           <div data-reveal className="max-w-[720px] px-4">
-            <p className="eyebrow">Four product lines</p>
+            <p className="eyebrow">{t("catalogue.families.eyebrow")}</p>
             <h2
               id="families-title"
               className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
             >
-              Four lines, one factory
+              {t("catalogue.families.heading")}
             </h2>
             <p className="mt-5 text-[1rem] leading-relaxed text-steel">
-              Wheels, EV components, custom aluminum and self-healing tires —
-              manufactured in the same facility, to the same specification
-              discipline.
+              {t("catalogue.families.lede")}
             </p>
           </div>
 
@@ -112,23 +112,23 @@ export default function ProductsPage() {
       >
         <div className="container-fh grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div>
-            <p className="eyebrow">{catalogueSkuCallout.eyebrow}</p>
+            <p className="eyebrow">{skuCallout.eyebrow}</p>
             <h2
               id="sku-callout-title"
               className="mt-4 max-w-[640px] font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              {catalogueSkuCallout.heading}
+              {skuCallout.heading}
             </h2>
             <p className="mt-5 max-w-[620px] text-[1.02rem] leading-relaxed text-steel">
-              {catalogueSkuCallout.body}
+              {skuCallout.body}
             </p>
           </div>
 
           <Link
-            href={catalogueSkuCallout.cta.href}
+            href={skuCallout.cta.href}
             className="btn-pill-solid lg:justify-self-end"
           >
-            {catalogueSkuCallout.cta.label}
+            {skuCallout.cta.label}
             <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -142,15 +142,15 @@ export default function ProductsPage() {
       >
         <div className="container-fh">
           <div className="max-w-[720px]">
-            <p className="eyebrow">{catalogueGuidance.eyebrow}</p>
+            <p className="eyebrow">{guidance.eyebrow}</p>
             <h2
               id="guidance-title"
               className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
             >
-              {catalogueGuidance.heading}
+              {guidance.heading}
             </h2>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-steel">
-              {catalogueGuidance.lede}
+              {guidance.lede}
             </p>
           </div>
 
@@ -158,7 +158,7 @@ export default function ProductsPage() {
             data-reveal-group
             className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
           >
-            {catalogueRoutes.map((route) => (
+            {routes.map((route) => (
               <li
                 key={route.step}
                 className="flex flex-col bg-white p-7 transition-colors hover:bg-forge-soft"
@@ -193,23 +193,23 @@ export default function ProductsPage() {
       >
         <div className="container-fh grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <p className="eyebrow">{catalogueFitmentSupport.eyebrow}</p>
+            <p className="eyebrow">{fitmentSupport.eyebrow}</p>
             <h2
               id="fitment-title"
               className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
             >
-              {catalogueFitmentSupport.heading}
+              {fitmentSupport.heading}
             </h2>
             <p className="mt-5 max-w-[520px] text-[1.02rem] leading-relaxed text-steel">
-              {catalogueFitmentSupport.lede}
+              {fitmentSupport.lede}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-pill-solid">
-                Request a quote
+                {t("cta.requestQuote")}
                 <ArrowRight className="size-4" />
               </Link>
               <Link href="/insights" className="btn-pill-outline text-ink">
-                Fitment resources
+                {t("catalogue.fitmentLink")}
               </Link>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function ProductsPage() {
             data-reveal-group
             className="grid content-start gap-5 rounded-xl border border-border bg-soft p-8"
           >
-            {catalogueFitmentSupport.points.map((point) => (
+            {fitmentSupport.points.map((point) => (
               <li key={point} className="flex items-start gap-3.5">
                 <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-forge/12 text-forge">
                   <Check className="size-3.5" strokeWidth={3} />
@@ -240,12 +240,12 @@ export default function ProductsPage() {
       >
         <div className="container-fh">
           <div className="max-w-[640px]">
-            <p className="eyebrow">Keep exploring</p>
+            <p className="eyebrow">{t("catalogue.resources.eyebrow")}</p>
             <h2
               id="resources-title"
               className="mt-4 font-display text-[clamp(1.7rem,3.8vw,2.5rem)] font-800 uppercase leading-[0.98] tracking-[-0.01em] text-ink"
             >
-              Related resources
+              {t("catalogue.resources.heading")}
             </h2>
           </div>
 
@@ -253,7 +253,7 @@ export default function ProductsPage() {
             data-reveal-group
             className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {catalogueResourceLinks.map((resource) => (
+            {resourceLinks.map((resource) => (
               <Link
                 key={resource.href}
                 href={resource.href}
@@ -276,42 +276,9 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* F. FAQ ------------------------------------------------------------ */}
-      <section
-        aria-labelledby="faq-title"
-        data-reveal
-        className="border-b border-border bg-white py-20 lg:py-28"
-      >
-        <div className="container-fh grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-          <div>
-            <p className="eyebrow">Questions</p>
-            <h2
-              id="faq-title"
-              className="mt-4 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-800 uppercase leading-[0.96] tracking-[-0.01em] text-ink"
-            >
-              Ordering questions, answered
-            </h2>
-            <p className="mt-5 max-w-[420px] text-[1.02rem] leading-relaxed text-steel">
-              The questions dealers ask before the first order. If yours is not
-              here, ask us directly — we would rather answer it early than
-              discover it at order stage.
-            </p>
-          </div>
-
-          <div data-reveal-group className="divide-y divide-border border-y border-border">
-            {faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h3 className="font-display text-[1.1rem] font-700 uppercase leading-snug tracking-[0.01em] text-ink">
-                  {faq.question}
-                </h3>
-                <p className="mt-3 text-[0.96rem] leading-relaxed text-steel">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* F. FAQ — withdrawn until MOQ, lead time, warranty length and shipping
+          incoterms are confirmed. These are commercial commitments; the previous
+          copy was placeholder text and must not ship as fact. */}
 
       <DealerCta />
     </>

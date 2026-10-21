@@ -1,0 +1,172 @@
+{
+ "generatedAt": "2026-10-11T09:25:23.502Z",
+ "method": "real Chrome, DOM-walk bg compositing incl. pseudo-elements",
+ "findings": [
+  {
+   "route": "/contact",
+   "selector": ".rounded-xl.p-7.bg-ink > p.eyebrow",
+   "note": "axe: 'Before you send' eyebrow on bg-ink panel",
+   "text": "Before you send",
+   "color": "rgb(155, 75, 29)",
+   "colorHex": "#9b4b1d",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 5.89,
+   "fontSizePx": 12.16,
+   "fontWeight": 600,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": true,
+   "layers": [
+    {
+     "node": "div.rounded-xl.border",
+     "color": "rgb(41, 38, 33)"
+    },
+    {
+     "node": "section.border-b.border-border",
+     "color": "rgb(244, 241, 235)"
+    },
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "p",
+   "viewport": "1440x900"
+  },
+  {
+   "route": "/insights",
+   "selector": "p.eyebrow",
+   "note": "axe: 'Insights' eyebrow on bg-hero",
+   "text": "Insights",
+   "color": "rgb(199, 124, 69)",
+   "colorHex": "#c77c45",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 3.14,
+   "fontSizePx": 12.16,
+   "fontWeight": 600,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": false,
+   "layers": [
+    {
+     "node": "section#top.relative.isolate",
+     "color": "rgb(48, 42, 36)"
+    },
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "p",
+   "viewport": "1440x900"
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "selector": "p.text-forge",
+   "note": "axe: text-forge on dark surface",
+   "text": "Flow Formed",
+   "color": "rgb(155, 75, 29)",
+   "colorHex": "#9b4b1d",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 5.89,
+   "fontSizePx": 10.88,
+   "fontWeight": 400,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": true,
+   "layers": [
+    {
+     "node": "figure.border.border-white/16",
+     "color": "rgb(48, 42, 36)"
+    },
+    {
+     "node": "section#top.relative.isolate",
+     "color": "rgb(41, 38, 33)"
+    },
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "p",
+   "viewport": "1440x900"
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "selector": "a.text-forge",
+   "note": "axe: CTA link text-forge on dark",
+   "text": "获取报价",
+   "color": "rgb(155, 75, 29)",
+   "colorHex": "#9b4b1d",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 5.89,
+   "fontSizePx": 11.52,
+   "fontWeight": 400,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": true,
+   "layers": [
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "a",
+   "viewport": "1440x900"
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "selector": "p.font-mono.text-forge",
+   "note": "axe: step number text-forge on dark",
+   "text": "01",
+   "color": "rgb(155, 75, 29)",
+   "colorHex": "#9b4b1d",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 5.89,
+   "fontSizePx": 10.88,
+   "fontWeight": 400,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": true,
+   "layers": [
+    {
+     "node": "section#wff03.scroll-mt-[96px].bg-ink",
+     "color": "rgb(41, 38, 33)"
+    },
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "p",
+   "viewport": "1440x900"
+  },
+  {
+   "route": "/products/wheels/flow-formed",
+   "selector": "span.font-mono.text-forge",
+   "note": "axe: WFF code text-forge on dark",
+   "text": "WFF02",
+   "color": "rgb(155, 75, 29)",
+   "colorHex": "#9b4b1d",
+   "effectiveBg": "#fbfaf7",
+   "ratio": 5.89,
+   "fontSizePx": 10.24,
+   "fontWeight": 700,
+   "isLargeText": false,
+   "required": 4.5,
+   "passes": true,
+   "layers": [
+    {
+     "node": "section#wff02.scroll-mt-[96px].border-b",
+     "color": "rgb(244, 241, 235)"
+    },
+    {
+     "node": "body.flex.min-h-full",
+     "color": "rgb(251, 250, 247)"
+    }
+   ],
+   "tag": "span",
+   "viewport": "1440x900"
+  }
+ ]
+}

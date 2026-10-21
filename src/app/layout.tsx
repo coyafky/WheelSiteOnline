@@ -1,14 +1,27 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { draftMode, headers } from "next/headers";
+import { Barlow_Condensed, Figtree } from "next/font/google";
 import { SiteMotion } from "@/components/site-motion";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { FloatingQuote } from "@/components/floating-quote";
 import { getLocale } from "@/lib/i18n";
-import { siteUrl } from "@/lib/site-url";
+import {
+  localizedPath,
+  stripLocalePrefix,
+  type Locale,
+} from "@/lib/i18n/types";
+import { getPublicLocalesForPath, getRoutePublicationDecision } from "@/lib/i18n/publication";
+import {
+  jsonLdGraph,
+  organizationJsonLd,
+  serializeJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/structured-data";
+import { siteUrl, siteUrlIsConfigured } from "@/lib/site-url";
+import { site } from "@/content/site";
 import "./globals.css";
 
-const inter = Inter({
+const figtree = Figtree({
   variable: "--font-text",
   subsets: ["latin"],
   display: "swap",
@@ -38,15 +51,47 @@ const barlow = Barlow_Condensed({
  * ⚠️ `metadataBase` is still the placeholder domain in `content/site.ts`
  * (`fenghuai.com`) — confirm before launch along with the contact details.
  */
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: {
-    default: "Fenghuai | Aluminum Component Manufacturer",
+    default: "Fenghuai | Automotive Components",
     template: "%s | Fenghuai",
   },
   description:
-    "Fenghuai manufactures aluminium components across four product lines — forged wheels, EV powertrain housings, custom aluminium parts and self-healing safety tires — for dealers, Tier 1 suppliers and OEM programmes.",
+    "Fenghuai coordinates projects across four automotive lines: wheels, EV housings, custom aluminum components and self-sealing tires. Scope and supporting records are confirmed for each project.",
   metadataBase: siteUrl,
 };
+
+/** 为当前开放索引的语言输出自 canonical 与 hreflang。 */
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const locale = await getLocale();
+  const publicPath = requestHeaders.get("x-fh-public-path") || "/";
+  const basePath = stripLocalePrefix(publicPath);
+  if ((await draftMode()).isEnabled || !siteUrlIsConfigured) {
+    return { ...baseMetadata, robots: { index: false, follow: true }, alternates: {} };
+  }
+  const readyLocales = await getPublicLocalesForPath(basePath);
+  if (!readyLocales.includes(locale)) {
+    return {
+      ...baseMetadata,
+      robots: { index: false, follow: true },
+      alternates: { languages: {} },
+    };
+  }
+  const languages = Object.fromEntries(
+    readyLocales.map((locale) => [locale, localizedPath(basePath, locale)]),
+  );
+  return {
+    ...baseMetadata,
+    alternates: {
+      canonical: localizedPath(basePath, locale),
+      languages: {
+        ...languages,
+        ...(readyLocales.includes("en") ? { "x-default": localizedPath(basePath, "en") } : {}),
+      },
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -54,22 +99,76 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  const requestHeaders = await headers();
+  const basePath = stripLocalePrefix(requestHeaders.get("x-fh-public-path") || "/");
+  const decision = await getRoutePublicationDecision(basePath, locale, (await draftMode()).isEnabled);
+  const availableLocales = decision.publicLocales;
 
+  /**
+   * Site-level entities. Emitted from the layout because Organization and
+   * WebSite describe the publisher, not the page — every page needs them once.
+   *
+   * Skipped entirely when no site URL is configured: the fallback is
+   * localhost:3000, and publishing that as the Organization's `@id` would teach
+   * search engines a wrong identity that outlives the preview.
+   */
+  const publisher = {
+    name: site.name,
+    description: site.description,
+    contact: {
+      confirmed: site.contact.confirmed,
+      email: site.contact.email,
+      phone: site.contact.phone,
+    },
+  };
+  const siteStructuredData = siteUrlIsConfigured
+    ? jsonLdGraph([
+        organizationJsonLd(siteUrl.toString(), publisher),
+        websiteJsonLd(siteUrl.toString(), availableLocales, publisher),
+      ])
+    : null;
+
+  /**
+   * Withheld translations are rejected earlier by `proxy.ts`, which answers a
+   * real 404 with an explicit noindex. `notFound()` is not allowed inside the
+   * root layout (Next 16), so this component must not try to enforce that here.
+   *
+   * A route that does not exist at all is a different case: it is left to Next's
+   * not-found surface.
+   */
   return (
     <html
-      lang={locale === "zh" ? "zh-CN" : "en"}
+      lang={htmlLanguage(locale)}
+      data-theme="light"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${barlow.variable} h-full antialiased`}
+      className={`${figtree.variable} ${barlow.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {siteStructuredData ? (
+          <script
+            type="application/ld+json"
+            // Read by crawlers, never executed as script. The serializer escapes
+            // `<`, so CMS content embedded here cannot close the tag early.
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteStructuredData) }}
+          />
+        ) : null}
+        {/* No <Providers> here on purpose.
+            Astryx is scoped to the sub-trees that render its components, via a
+            segment layout per sub-tree. Mounting it at the root charged every
+            route — including the homepage and /about, which render no Astryx
+            component at all — for ~39 KB gzip of JS. See
+            src/components/astryx-scope.tsx. */}
         <SiteMotion />
-        <SiteHeader locale={locale} />
+        <SiteHeader locale={locale} availableLocales={availableLocales} />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <SiteFooter locale={locale} />
-        <FloatingQuote locale={locale} />
+        <SiteFooter locale={locale} availableLocales={availableLocales} />
       </body>
     </html>
   );
+}
+
+function htmlLanguage(locale: Locale): string {
+  return locale === "zh" ? "zh-CN" : locale === "th" ? "th-TH" : locale === "es" ? "es-ES" : "en";
 }

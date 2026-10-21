@@ -135,6 +135,12 @@ export function buildSnapshot(
     productionCode: context.productionCode,
     spec: context.selectedSpec,
     sourcePage: context.pageUrl,
+    items: input.items?.map((item) => ({
+      model: item.model,
+      productionCode: item.productionCode,
+      quantity: item.quantity,
+      ...(item.spec ? { spec: item.spec } : {}),
+    })),
   };
 }
 
@@ -216,7 +222,9 @@ function buildWpPayload(
     company: input.company,
     whatsapp: input.whatsapp,
     privacyVersion: input.privacyVersion,
-    consentedAt: new Date().toISOString(),
+    // No consent checkbox is required on the current enquiry path. Do not
+    // fabricate a consent timestamp when the client did not provide consent.
+    consentedAt: undefined,
     context: {
       model: context.model ?? input.model,
       productionCode: context.productionCode,
@@ -226,6 +234,12 @@ function buildWpPayload(
       intent: context.intent ?? context.inputType,
       variantPending: context.variantPending === true,
     },
+    items: input.items?.map((item) => ({
+      model: item.model,
+      productionCode: item.productionCode,
+      quantity: item.quantity,
+      ...(item.spec ? { spec: item.spec } : {}),
+    })) ?? [],
   };
 }
 
@@ -352,17 +366,6 @@ function generateIdempotencyKey(): string {
   const bytes = new Uint8Array(24);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-export async function markDelivered(
-  id: string,
-  delivered: boolean,
-  error?: string,
-): Promise<void> {
-  const rec = memory.get(id);
-  if (!rec) return;
-  rec.emailDelivered = delivered;
-  rec.emailError = error;
 }
 
 /**

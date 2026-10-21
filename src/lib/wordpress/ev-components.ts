@@ -2,8 +2,11 @@ import "server-only";
 
 import { evHousingPage } from "@/content/ev-components";
 import type { EvHousingPageContent, MediaAsset } from "@/content/types";
+import { getLocale } from "@/lib/i18n";
+import { resolveLocalized } from "@/lib/i18n/localized-page";
 
 import { resolveWordpressMediaCollection } from "./media";
+import { getWordpressPageDocument } from "./pages";
 
 /**
  * Server-side media adapter for `/products/ev-components`.
@@ -45,8 +48,23 @@ function restoreBoundaryCopy(resolved: MediaAsset, original: MediaAsset): MediaA
   return { ...resolved, alt: original.alt, caption: original.caption };
 }
 
+function isEvHousingPage(value: unknown): value is EvHousingPageContent {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Record<string, unknown>;
+  return ["slug", "hero", "categories", "engineeringConcerns", "processRoutes", "evidenceMatrix", "inquiry"]
+    .every((key) => candidate[key] !== undefined);
+}
+
 export async function getEvHousingPage(): Promise<EvHousingPageContent> {
-  const originals = heroAndCategories(evHousingPage);
+  const locale = await getLocale();
+  const native = await getWordpressPageDocument<EvHousingPageContent>("ev-components", { locale });
+  const { content: source } = resolveLocalized<EvHousingPageContent>({
+    requested: native && isEvHousingPage(native.content) ? native.content : null,
+    default: evHousingPage,
+    locale,
+    scope: "ev-components",
+  });
+  const originals = heroAndCategories(source);
   const resolved = await resolveWordpressMediaCollection(originals);
   const byId = new Map(
     resolved.flatMap((asset) => (asset.wordpressId ? [[asset.wordpressId, asset] as const] : [])),
@@ -59,11 +77,11 @@ export async function getEvHousingPage(): Promise<EvHousingPageContent> {
   };
 
   return {
-    ...evHousingPage,
-    hero: { ...evHousingPage.hero, media: resolveMedia(evHousingPage.hero.media) },
+    ...source,
+    hero: { ...source.hero, media: resolveMedia(source.hero.media) },
     categories: {
-      ...evHousingPage.categories,
-      items: evHousingPage.categories.items.map((item) => ({
+      ...source.categories,
+      items: source.categories.items.map((item) => ({
         ...item,
         media: resolveMedia(item.media),
       })),

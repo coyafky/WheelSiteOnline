@@ -1,5 +1,5 @@
 import { DICTIONARIES } from "./dictionaries";
-import { translate, type Locale } from "./types";
+import { translateStrict, type Locale } from "./types";
 
 /**
  * Client-safe translation helper.
@@ -12,7 +12,10 @@ import { translate, type Locale } from "./types";
 /** Returns a bound translator for a locale known at render time. */
 export function createT(locale: Locale) {
   const dict = DICTIONARIES[locale];
-  return (key: string) => translate(dict, key);
+  // UI keys must exist in every locale. Returning the key makes a missing
+  // translation visible in development and test output instead of silently
+  // presenting English to visitors on another locale URL.
+  return (key: string) => translateStrict(dict, key);
 }
 
 export type { Locale };

@@ -6,20 +6,38 @@ import type {
   SelfSealingTirePage,
   TireViewport,
 } from "@/content/types";
+import { getLocale } from "@/lib/i18n";
+import { resolveLocalized } from "@/lib/i18n/localized-page";
 
 import { resolveWordpressMediaCollection } from "./media";
+import { getWordpressPageDocument } from "./pages";
 
 function viewportMedia(viewport: TireViewport): MediaAsset[] {
   return viewport.items.flatMap((item) => (item.media ? [item.media] : []));
 }
 
+function isSelfSealingTirePage(value: unknown): value is SelfSealingTirePage {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Record<string, unknown>;
+  return ["slug", "hero", "painPoint", "definition", "mechanism", "punctureValidation", "evidenceSystem", "applicationAndInquiry"]
+    .every((key) => candidate[key] !== undefined);
+}
+
 export async function getSelfSealingTirePage(): Promise<SelfSealingTirePage> {
+  const locale = await getLocale();
+  const native = await getWordpressPageDocument<SelfSealingTirePage>("safety-tires", { locale });
+  const { content: source } = resolveLocalized<SelfSealingTirePage>({
+    requested: native && isSelfSealingTirePage(native.content) ? native.content : null,
+    default: selfSealingTirePage,
+    locale,
+    scope: "safety-tires",
+  });
   const viewports = [
-    selfSealingTirePage.painPoint,
-    selfSealingTirePage.definition,
-    selfSealingTirePage.mechanism,
-    selfSealingTirePage.punctureValidation,
-    selfSealingTirePage.evidenceSystem,
+    source.painPoint,
+    source.definition,
+    source.mechanism,
+    source.punctureValidation,
+    source.evidenceSystem,
   ];
   const resolvedAssets = await resolveWordpressMediaCollection(
     viewports.flatMap(viewportMedia),
@@ -41,12 +59,14 @@ export async function getSelfSealingTirePage(): Promise<SelfSealingTirePage> {
     })),
   });
 
+  // 必须从 `source` 读，不能从 `selfSealingTirePage`（本地英文常量）读。
+  // 否则即使 WordPress 返回了已批准的译文，这五个视口仍会渲染英文正本。
   return {
-    ...selfSealingTirePage,
-    painPoint: resolveViewport(selfSealingTirePage.painPoint),
-    definition: resolveViewport(selfSealingTirePage.definition),
-    mechanism: resolveViewport(selfSealingTirePage.mechanism),
-    punctureValidation: resolveViewport(selfSealingTirePage.punctureValidation),
-    evidenceSystem: resolveViewport(selfSealingTirePage.evidenceSystem),
+    ...source,
+    painPoint: resolveViewport(source.painPoint),
+    definition: resolveViewport(source.definition),
+    mechanism: resolveViewport(source.mechanism),
+    punctureValidation: resolveViewport(source.punctureValidation),
+    evidenceSystem: resolveViewport(source.evidenceSystem),
   };
 }

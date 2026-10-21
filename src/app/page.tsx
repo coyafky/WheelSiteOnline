@@ -1,31 +1,46 @@
+import { Fragment } from "react";
 import type { Metadata } from "next";
-import { HomeClosing } from "@/components/home/home-closing";
-import { HomeHero } from "@/components/home/hero/home-hero";
-import { ProjectRouteSection } from "@/components/home/project-route-section";
-import { ProductShowcase } from "@/components/sections/product-showcase";
-import { TrustStrip } from "@/components/sections/trust-strip";
-import { getHomepageContent } from "@/lib/wordpress/homepage";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
+import { renderHomeModule } from "@/components/home/home-module-registry";
+import { getHomepagePageView, getHomepagePublicLocales } from "@/lib/wordpress/homepage";
+import { getLocale } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/i18n/types";
+import { siteUrlIsConfigured } from "@/lib/site-url";
 
-export const metadata: Metadata = {
-  title: {
-    absolute:
-      "Fenghuai | Wheels, EV Housings, Custom Aluminum & Safety Tires",
-  },
-  description:
-    "Explore Fenghuai's four automotive product lines, manufacturing capabilities, project process and inquiry entry point for global B2B programs.",
-  alternates: { canonical: "/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const { isEnabled: preview } = await draftMode();
+  const result = await getHomepagePageView({ locale, preview });
+  if (result.status !== "ready") {
+    return {
+      title: "Fenghuai",
+      robots: { index: false, follow: true },
+    };
+  }
+  const publicLocales = preview ? [] : await getHomepagePublicLocales();
+  const indexable = siteUrlIsConfigured && publicLocales.includes(locale);
+  return {
+    title: { absolute: result.page.seo.title },
+    description: result.page.seo.description,
+    robots: { index: indexable, follow: true },
+    alternates: indexable
+      ? localizedAlternates(result.page.seo.canonicalPath, locale, publicLocales)
+      : {},
+  };
+}
 
 export default async function HomePage() {
-  const content = await getHomepageContent();
+  const locale = await getLocale();
+  const { isEnabled: preview } = await draftMode();
+  const result = await getHomepagePageView({ locale, preview });
+  if (result.status !== "ready") notFound();
 
   return (
     <>
-      <HomeHero hero={content.hero} />
-      <ProductShowcase copy={content.productLines} />
-      <TrustStrip capabilities={content.capabilities} />
-      <ProjectRouteSection delivery={content.delivery} />
-      <HomeClosing closing={content.closing} />
+      {result.page.modules.map((module) => (
+        <Fragment key={module.id}>{renderHomeModule(module, locale)}</Fragment>
+      ))}
     </>
   );
 }

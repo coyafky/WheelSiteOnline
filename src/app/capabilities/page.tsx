@@ -9,24 +9,29 @@ import {
   ValidationCapability,
 } from "@/components/capabilities/wheel-capabilities";
 import { getWheelManufacturingCapabilities } from "@/lib/wordpress/wheel-capabilities";
+import { getWordpressPageDocument } from "@/lib/wordpress/pages";
 
-export const metadata: Metadata = {
-  title: "Wheel Manufacturing & Quality Capabilities",
-  description:
-    "Review Fenghuai wheel engineering, forming-route selection, process inspection, validation equipment and the evidence required for an approved wheel program.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getWordpressPageDocument("capabilities");
+  return {
+    title: page?.seoTitle || "Wheel Manufacturing & Quality Capabilities",
+    description:
+      page?.seoDescription ||
+      "Review Fenghuai wheel engineering, forming-route selection, process inspection, validation equipment and the evidence required for an approved wheel program.",
+  };
+}
 
 export default async function CapabilitiesPage() {
   const content = await getWheelManufacturingCapabilities();
 
   return (
-    <main id={content.anchor}>
+    <div id={content.anchor}>
       <CapabilitiesHero hero={content.hero} />
       <EngineeringCapability section={content.engineering} />
       <FormingRoutesCapability section={content.formingRoutes} />
       <InspectionCapability section={content.processInspection} />
       <ValidationCapability section={content.validationTests} />
       <DocumentedEvidence section={content.documentedEvidence} />
-    </main>
+    </div>
   );
 }

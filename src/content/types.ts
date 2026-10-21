@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n/types";
+
 /**
  * Shared content contracts.
  *
@@ -163,6 +165,46 @@ export type HomepageContent = {
     primaryAction: CtaLink;
     secondaryAction: CtaLink;
   };
+};
+
+/** Stable homepage PageView contract consumed by the route and SEO layer. */
+export type HomepageProductLineCard = Pick<
+  ProductLine,
+  "slug" | "name" | "subtitle" | "summary" | "highlights" | "hasRender" | "image" | "hoverImage" | "href"
+>;
+
+export type HomepageModuleView =
+  | { type: "home.hero"; id: "H01"; order: number; required: true; content: HomepageContent["hero"] }
+  | {
+      type: "home.product-lines";
+      id: "H02";
+      order: number;
+      required: true;
+      content: HomepageContent["productLines"] & { items: HomepageProductLineCard[] };
+    }
+  | { type: "home.capabilities"; id: "H03"; order: number; required: true; content: HomepageContent["capabilities"] }
+  | { type: "home.delivery"; id: "H04"; order: number; required: true; content: HomepageContent["delivery"] }
+  | { type: "home.closing"; id: "H05"; order: number; required: true; content: HomepageContent["closing"] };
+
+export type HomepagePageView = {
+  pageKey: "home";
+  locale: Locale;
+  revision: string;
+  seo: { title: string; description: string; canonicalPath: string };
+  modules: HomepageModuleView[];
+};
+
+export type HomepagePageResult =
+  | { status: "ready"; page: HomepagePageView }
+  | { status: "missing-locale" | "unpublished" | "withdrawn" | "temporarily-unavailable" };
+
+export type HomepageCmsDocument = {
+  schemaVersion: 1;
+  pageKey: "home";
+  locale: Locale;
+  modules: Array<{ id: string; type: string; order: number; enabled: boolean; data: unknown }>;
+  seo_title?: string;
+  seo_description?: string;
 };
 
 export type AboutWorkshop = {
@@ -654,6 +696,64 @@ export type ResourceLink = {
   linkLabel: string;
 };
 
+/** Header copy for the `/products` catalogue hub (viewport 01). */
+export type CatalogueIntro = {
+  eyebrow: string;
+  /** Rendered as the page `<h1 id="products-title">`. */
+  heading: string;
+  lede: string;
+  supporting: string;
+};
+
+/** "How to specify your order" header — the numbered route list is `RouteStep[]`. */
+export type CatalogueGuidance = {
+  eyebrow: string;
+  heading: string;
+  lede: string;
+};
+
+/** SKU index callout on the catalogue hub. */
+export type CatalogueSkuCallout = {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  cta: CtaLink;
+};
+
+/** Fitment-support block — heading copy plus the bulleted points. */
+export type CatalogueFitmentSupport = {
+  eyebrow: string;
+  heading: string;
+  lede: string;
+  points: string[];
+};
+
+/**
+ * The localizable body of the `/products` catalogue hub.
+ *
+ * ⚠️ This is the `catalogue` half of the WordPress `product-lines` page content
+ * (the `lines` half is `ProductLine[]`). It exists because that page used to be
+ * a hybrid: the four cards came from WordPress while ~86% of the body copy was
+ * read from local constants, so `/zh/products` rendered a half-translated page.
+ * Both halves now travel through the same localized content seam.
+ */
+export type ProductCatalogueContent = {
+  intro: CatalogueIntro;
+  guidance: CatalogueGuidance;
+  skuCallout: CatalogueSkuCallout;
+  routes: RouteStep[];
+  fitmentSupport: CatalogueFitmentSupport;
+  resourceLinks: ResourceLink[];
+  faqs: FaqEntry[];
+};
+
+/** Full localized content of the WordPress `product-lines` page. */
+export type ProductLinesContent = {
+  /** The company's four parallel product lines, rendered as the card grid. */
+  lines: ProductLine[];
+  catalogue: ProductCatalogueContent;
+};
+
 /** A note block used in product "answer" / explainer sections. */
 export type AnswerBlock = {
   eyebrow: string;
@@ -716,14 +816,26 @@ export type GuideEntry = {
    * heading plus paragraphs; this is the canonical article, while `detail`
    * stays as the short in-place preview on the hub.
    */
-  sections: GuideSection[];
+  sections: GuideArticleSection[];
   /** One-line takeaway shown as an answer-first standfirst on the article. */
   answer: string;
   /** Whether the copy contains figures that still need engineering sign-off. */
   needsVerification: boolean;
 };
 
-/** A heading + paragraphs block inside a long-form guide article. */
+/** A WordPress media block embedded in a long-form guide article. */
+export type GuideBodyImage = {
+  kind: "image";
+  media: MediaAsset;
+};
+
+/** A heading + body blocks inside a WordPress-backed long-form guide article. */
+export type GuideArticleSection = {
+  heading: string;
+  body: Array<string | GuideBodyImage>;
+};
+
+/** A heading + paragraphs block used by local fitment/reference content. */
 export type GuideSection = {
   heading: string;
   body: string[];
@@ -1071,6 +1183,15 @@ export type WheelModel = {
    */
   hasImage: boolean;
   /**
+   * Shape version of this record, written by the WordPress importer.
+   *
+   * Absent means the record predates the field; treated as current, because the
+   * WordPress side defaults new records to the same number. It exists so a
+   * record written by a *newer* importer is refused rather than parsed under the
+   * old assumption — see `hasReadableShape()` in `lib/wheels/publication.ts`.
+   */
+  schema_version?: number;
+  /**
    * 该型号的全部图片路径（webp，相对于 `public/`）。
    * ⚠️ 详情页**只取第一张**展示（DEC-014 单图展示）；
    * 其余图片保留供画廊等场景使用。
@@ -1360,12 +1481,21 @@ export type FlowFormedWheelsPage = {
     id: "WFF01";
     /** Rendered as a breadcrumb trail; the last entry is the current page. */
     breadcrumb: CtaLink[];
+    breadcrumbLabel: string;
     eyebrow: string;
     heading: string;
     lead: string;
     boundary: string;
     primaryCta: CtaLink;
     secondaryCta: CtaLink;
+    noApprovedModel: string;
+    featuredLabels: {
+      imageAlt: string;
+      diameters: string;
+      configurations: string;
+      process: string;
+      viewSpecifications: string;
+    };
   };
   processDefinition: {
     id: "WFF02";
@@ -1373,6 +1503,7 @@ export type FlowFormedWheelsPage = {
     heading: string;
     body: string;
     cards: FlowFormedProcessBoundaryCard[];
+    forgedProjectCtaLabel: string;
     /** Mandatory evidence sentence — forbids a universal improvement figure. */
     evidenceNote: string;
   };
@@ -1392,6 +1523,12 @@ export type FlowFormedWheelsPage = {
     /** Verbatim empty-result wording; rendered head + body. */
     emptyResultHeading: string;
     emptyResultBody: string;
+    clearFiltersLabel: string;
+    sendSpecificationLabel: string;
+    resultSearch: string;
+    resultFiltered: string;
+    resultAll: string;
+    disclosure: string;
   };
   inquiry: {
     id: "WFF05";
@@ -1401,6 +1538,8 @@ export type FlowFormedWheelsPage = {
     heading: string;
     checklist: string[];
     primaryCta: CtaLink;
+    scopeLabel: string;
+    filterSnapshotLabel: string;
   };
   seo: {
     title: string;

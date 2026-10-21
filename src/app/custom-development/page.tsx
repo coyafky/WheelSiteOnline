@@ -64,7 +64,7 @@ export default function CustomDevelopmentPage() {
         </Link>
         <Link
           href={customDevHeroActions.secondary.href}
-          className="btn-pill-outline !text-white"
+          className="btn-pill-outline text-ink"
         >
           {customDevHeroActions.secondary.label}
         </Link>

@@ -10,13 +10,21 @@ import {
   boltPatternsIndexCopy,
 } from "@/content/bolt-patterns";
 import { DealerCta } from "@/components/sections/dealer-cta";
+import { PageHero } from "@/components/sections/page-hero";
+import { SiteBreadcrumbs } from "@/components/site-breadcrumbs";
+import { getLocale } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n/types";
+import { buildRouteMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Bolt Pattern Guides — 5x112, 5x114.3, 5x120",
-  description:
-    "What the two numbers in a bolt pattern mean, how to measure the pattern yourself, and why a vehicle list is a starting point rather than a fitment authority.",
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Bolt Pattern Guides — 5x112, 5x114.3, 5x120",
+    description:
+      "What the two numbers in a bolt pattern mean, how to measure the pattern yourself, and why a vehicle list is a starting point rather than a fitment authority.",
+    ...(await buildRouteMetadata("/insights/bolt-patterns", locale)),
+  };
+}
 
 /**
  * Bolt-pattern guides index (`/insights/bolt-patterns`).
@@ -26,66 +34,40 @@ export const metadata: Metadata = {
  * reference, and the measuring method as the primary content rather than the
  * vehicle list.
  */
-export default function BoltPatternsIndexPage() {
+export default async function BoltPatternsIndexPage() {
+  const locale = await getLocale();
   return (
     <>
-      {/* A. Hero ----------------------------------------------------------- */}
-      <section
+      {/* A. Hero -----------------------------------------------------------
+          Shared identity band, ink tone. The bolt-pattern guides remain
+          parallel server-rendered sections below — no tab semantics. */}
+      <PageHero
         id="top"
-        aria-labelledby="bolt-patterns-title"
-        data-reveal
-        className="relative isolate overflow-hidden bg-ink"
+        titleId="bolt-patterns-title"
+        tone="dark"
+        breadcrumb={
+          <SiteBreadcrumbs
+            label="Breadcrumb"
+            tone="dark"
+            items={[
+              { label: "Insights", href: localizedPath("/insights", locale) },
+              { label: "Bolt patterns" },
+            ]}
+          />
+        }
+        eyebrow={boltPatternsIndexCopy.eyebrow}
+        heading={boltPatternsIndexCopy.heading}
+        lede={boltPatternsIndexCopy.lede}
+        supporting={boltPatternsIndexCopy.supporting}
       >
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_20%_0%,rgba(194,101,10,0.26)_0%,rgba(11,15,22,0)_58%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:repeating-linear-gradient(115deg,#fff_0_1px,transparent_1px_64px)]"
-          aria-hidden="true"
-        />
-
-        <div className="container-fh pb-16 pt-[140px] lg:pb-20 lg:pt-[168px]">
-          <nav aria-label="Breadcrumb" className="eyebrow !text-white/45">
-            <Link
-              href="/insights"
-              className="transition-colors hover:!text-forge"
-            >
-              Insights
-            </Link>
-            <span aria-hidden="true" className="px-2">
-              /
-            </span>
-            <span className="!text-forge">Bolt patterns</span>
-          </nav>
-
-          <p className="eyebrow mt-6 !text-forge">
-            {boltPatternsIndexCopy.eyebrow}
-          </p>
-          <h1
-            id="bolt-patterns-title"
-            className="mt-5 font-display text-[clamp(2.4rem,7vw,5rem)] font-800 uppercase leading-[0.9] tracking-[-0.02em] text-white"
-          >
-            {boltPatternsIndexCopy.heading}
-          </h1>
-          <p className="mt-7 max-w-[700px] text-[1.05rem] leading-relaxed text-white/75">
-            {boltPatternsIndexCopy.lede}
-          </p>
-          <p className="mt-4 max-w-[640px] text-sm leading-relaxed text-white/55">
-            {boltPatternsIndexCopy.supporting}
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="#patterns" className="btn-pill-solid">
-              Open a pattern guide
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link href="/contact" className="btn-pill-outline !text-white">
-              Send your vehicle details
-            </Link>
-          </div>
-        </div>
-      </section>
+        <Link href="#patterns" className="btn-pill-solid">
+          Open a pattern guide
+          <ArrowRight className="size-4" />
+        </Link>
+        <Link href="/contact" className="btn-pill-outline !text-white">
+          Send your vehicle details
+        </Link>
+      </PageHero>
 
       {/* B. Standing honesty notice ---------------------------------------- */}
       <section

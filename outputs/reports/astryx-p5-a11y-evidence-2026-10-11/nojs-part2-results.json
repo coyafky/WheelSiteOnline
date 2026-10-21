@@ -1,0 +1,817 @@
+{
+ "generatedAt": "2026-10-11T09:23:17.909Z",
+ "jsEnabled": false,
+ "note": "javaScriptEnabled:false context",
+ "faq": {
+  "/products/wheels": {
+   "detailCount": 5,
+   "openCount": 0,
+   "entries": [
+    {
+     "summary": "Filter wheelsAll models+",
+     "bodyChars": 619,
+     "bodyHead": "Filter by specification138 availableApply filtersClear filtersHow filters combineSelect one or more values in each group",
+     "open": false
+    },
+    {
+     "summary": "+Show 6 moreShow fewer",
+     "bodyChars": 48,
+     "bodyHead": "✓4×1082✓5×113.14✓5×1151✓6×1701✓10×1003✓10×114.33",
+     "open": false
+    },
+    {
+     "summary": "›Show 4 moreShow fewer",
+     "bodyChars": 24,
+     "bodyHead": "✓6\"2✓6.6\"1✓8.25\"1✓10.5\"3",
+     "open": false
+    },
+    {
+     "summary": "+Show 6 moreShow fewer",
+     "bodyChars": 48,
+     "bodyHead": "✓4×1082✓5×113.14✓5×1151✓6×1701✓10×1003✓10×114.33",
+     "open": false
+    },
+    {
+     "summary": "›Show 4 moreShow fewer",
+     "bodyChars": 24,
+     "bodyHead": "✓6\"2✓6.6\"1✓8.25\"1✓10.5\"3",
+     "open": false
+    }
+   ],
+   "totalFaqChars": 875
+  },
+  "/tools/offset-calculator": {
+   "detailCount": 1,
+   "openCount": 0,
+   "entries": [
+    {
+     "summary": "Working, in millimetres",
+     "bodyChars": 110,
+     "bodyHead": "Original backspace136.6 mmReplacement backspace149.3 mmOriginal frontspace66.6 mmReplacement frontspace79.3 mm",
+     "open": false
+    }
+   ],
+   "totalFaqChars": 133
+  }
+ },
+ "outline": {
+  "/support/returns": {
+   "anchorCount": 8,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "1. Custom-manufactured goods",
+     "targetExists": true,
+     "targetChars": 391
+    },
+    {
+     "href": "#section-2",
+     "label": "2. Cancellation before production",
+     "targetExists": true,
+     "targetChars": 314
+    },
+    {
+     "href": "#section-3",
+     "label": "3. Returning goods that are defective or",
+     "targetExists": true,
+     "targetChars": 410
+    },
+    {
+     "href": "#section-4",
+     "label": "4. Returns for non-defect reasons",
+     "targetExists": true,
+     "targetChars": 403
+    },
+    {
+     "href": "#section-5",
+     "label": "5. Condition requirements",
+     "targetExists": true,
+     "targetChars": 466
+    },
+    {
+     "href": "#section-6",
+     "label": "6. Refunds and credits",
+     "targetExists": true,
+     "targetChars": 469
+    },
+    {
+     "href": "#section-7",
+     "label": "7. Who bears the freight",
+     "targetExists": true,
+     "targetChars": 277
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 5623
+  },
+  "/support/privacy": {
+   "anchorCount": 11,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "1. Who is responsible for your data",
+     "targetExists": true,
+     "targetChars": 445
+    },
+    {
+     "href": "#section-2",
+     "label": "2. What we collect",
+     "targetExists": true,
+     "targetChars": 571
+    },
+    {
+     "href": "#section-3",
+     "label": "3. Why we process it",
+     "targetExists": true,
+     "targetChars": 601
+    },
+    {
+     "href": "#section-4",
+     "label": "4. Who we share it with",
+     "targetExists": true,
+     "targetChars": 483
+    },
+    {
+     "href": "#section-5",
+     "label": "5. International transfers",
+     "targetExists": true,
+     "targetChars": 384
+    },
+    {
+     "href": "#section-6",
+     "label": "6. How long we keep it",
+     "targetExists": true,
+     "targetChars": 484
+    },
+    {
+     "href": "#section-7",
+     "label": "7. Your rights",
+     "targetExists": true,
+     "targetChars": 558
+    },
+    {
+     "href": "#section-8",
+     "label": "8. Cookies",
+     "targetExists": true,
+     "targetChars": 354
+    },
+    {
+     "href": "#section-9",
+     "label": "9. Security",
+     "targetExists": true,
+     "targetChars": 403
+    },
+    {
+     "href": "#section-10",
+     "label": "10. Changes to this policy",
+     "targetExists": true,
+     "targetChars": 239
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "privacy-template-title",
+     "text": "询盘隐私版本与同意文本"
+    },
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 7774
+  },
+  "/support/terms": {
+   "anchorCount": 12,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "1. Scope and who these terms apply to",
+     "targetExists": true,
+     "targetChars": 535
+    },
+    {
+     "href": "#section-2",
+     "label": "2. Quotations and orders",
+     "targetExists": true,
+     "targetChars": 518
+    },
+    {
+     "href": "#section-3",
+     "label": "3. Specifications and fitment",
+     "targetExists": true,
+     "targetChars": 549
+    },
+    {
+     "href": "#section-4",
+     "label": "4. Price and payment",
+     "targetExists": true,
+     "targetChars": 525
+    },
+    {
+     "href": "#section-5",
+     "label": "5. Lead time and delay",
+     "targetExists": true,
+     "targetChars": 493
+    },
+    {
+     "href": "#section-6",
+     "label": "6. Delivery and risk",
+     "targetExists": true,
+     "targetChars": 417
+    },
+    {
+     "href": "#section-7",
+     "label": "7. Intellectual property and private lab",
+     "targetExists": true,
+     "targetChars": 558
+    },
+    {
+     "href": "#section-8",
+     "label": "8. Confidentiality",
+     "targetExists": true,
+     "targetChars": 359
+    },
+    {
+     "href": "#section-9",
+     "label": "9. Warranty and liability",
+     "targetExists": true,
+     "targetChars": 457
+    },
+    {
+     "href": "#section-10",
+     "label": "10. Termination",
+     "targetExists": true,
+     "targetChars": 360
+    },
+    {
+     "href": "#section-11",
+     "label": "11. Changes to these terms",
+     "targetExists": true,
+     "targetChars": 263
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 7993
+  },
+  "/support/shipping": {
+   "anchorCount": 8,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "1. Packaging",
+     "targetExists": true,
+     "targetChars": 579
+    },
+    {
+     "href": "#section-2",
+     "label": "2. Incoterms",
+     "targetExists": true,
+     "targetChars": 394
+    },
+    {
+     "href": "#section-3",
+     "label": "3. Where risk transfers",
+     "targetExists": true,
+     "targetChars": 445
+    },
+    {
+     "href": "#section-4",
+     "label": "4. Freight and lead time",
+     "targetExists": true,
+     "targetChars": 547
+    },
+    {
+     "href": "#section-5",
+     "label": "5. Documentation",
+     "targetExists": true,
+     "targetChars": 488
+    },
+    {
+     "href": "#section-6",
+     "label": "6. Damage in transit",
+     "targetExists": true,
+     "targetChars": 715
+    },
+    {
+     "href": "#section-7",
+     "label": "7. Split shipments and part orders",
+     "targetExists": true,
+     "targetChars": 485
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 6425
+  },
+  "/support/warranty": {
+   "anchorCount": 8,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "1. What this warranty covers",
+     "targetExists": true,
+     "targetChars": 719
+    },
+    {
+     "href": "#section-2",
+     "label": "2. Warranty period",
+     "targetExists": true,
+     "targetChars": 371
+    },
+    {
+     "href": "#section-3",
+     "label": "3. What is not covered",
+     "targetExists": true,
+     "targetChars": 762
+    },
+    {
+     "href": "#section-4",
+     "label": "4. Cosmetic and dimensional variation",
+     "targetExists": true,
+     "targetChars": 431
+    },
+    {
+     "href": "#section-5",
+     "label": "5. How to make a claim",
+     "targetExists": true,
+     "targetChars": 632
+    },
+    {
+     "href": "#section-6",
+     "label": "6. What we will do",
+     "targetExists": true,
+     "targetChars": 580
+    },
+    {
+     "href": "#section-7",
+     "label": "7. Statutory rights",
+     "targetExists": true,
+     "targetChars": 330
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "draft-notice-title",
+     "text": "These terms are provisional"
+    },
+    {
+     "id": "document-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "other-docs-title",
+     "text": "Other policies"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 6776
+  },
+  "/insights/how-to-measure-fitment": {
+   "anchorCount": 6,
+   "allResolve": true,
+   "secAnchors": [
+    {
+     "href": "#section-1",
+     "label": "The five numbers a wheel order is built ",
+     "targetExists": true,
+     "targetChars": 998
+    },
+    {
+     "href": "#section-2",
+     "label": "Why a tape measure alone is not enough",
+     "targetExists": true,
+     "targetChars": 858
+    },
+    {
+     "href": "#section-3",
+     "label": "Reading offset off a wheel you have in f",
+     "targetExists": true,
+     "targetChars": 597
+    },
+    {
+     "href": "#section-4",
+     "label": "PCD and centre bore: measure, do not gue",
+     "targetExists": true,
+     "targetChars": 611
+    },
+    {
+     "href": "#section-5",
+     "label": "What we need from you to confirm a fitme",
+     "targetExists": true,
+     "targetChars": 682
+    }
+   ],
+   "unresolved": [],
+   "h2WithId": [
+    {
+     "id": "verification-notice-title",
+     "text": "Check figures with us before you rely on"
+    },
+    {
+     "id": "article-body-title",
+     "text": "本页内容"
+    },
+    {
+     "id": "related-title",
+     "text": "Keep reading"
+    },
+    {
+     "id": "dealer-cta-title",
+     "text": "Tell us what the part has to do"
+    }
+   ],
+   "bodyTextLen": 6183
+  }
+ },
+ "catalogue": {
+  "before": {
+   "formCount": 3,
+   "forms": [
+    {
+     "i": 0,
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": [
+      "input[name=q] type=search (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=pcd] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=diameter] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=width] type=checkbox (hidden)",
+      "input[name=process] type=checkbox (hidden)",
+      "input[name=process] type=checkbox (hidden)",
+      "input[name=process] type=checkbox (hidden)",
+      "input[name=process] type=checkbox (hidden)",
+      "input[name=process] type=checkbox (hidden)"
+     ],
+     "submit": [
+      {
+       "type": "submit",
+       "text": "Apply filters"
+      },
+      {
+       "type": "submit",
+       "text": "Apply filters"
+      }
+     ]
+    },
+    {
+     "i": 1,
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": [
+      "input[name=q] type=search",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=pcd] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=diameter] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=width] type=checkbox",
+      "input[name=process] type=checkbox",
+      "input[name=process] type=checkbox",
+      "input[name=process] type=checkbox",
+      "input[name=process] type=checkbox",
+      "input[name=process] type=checkbox"
+     ],
+     "submit": [
+      {
+       "type": "submit",
+       "text": "Apply filters"
+      }
+     ]
+    },
+    {
+     "i": 2,
+     "method": "get",
+     "action": "/products/wheels",
+     "controls": [
+      "select[name=sort] type=select-one"
+     ],
+     "submit": [
+      {
+       "type": "submit",
+       "text": "Apply"
+      }
+     ]
+    }
+   ],
+   "results": 26,
+   "url": "http://127.0.0.1:3210/zh/products/wheels"
+  },
+  "submitButtonVisibility": [
+   {
+    "text": "Apply filters",
+    "formIndex": 0,
+    "visible": false,
+    "rect": {
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   {
+    "text": "Apply filters",
+    "formIndex": 0,
+    "visible": false,
+    "rect": {
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   {
+    "text": "Apply filters",
+    "formIndex": 1,
+    "visible": true,
+    "rect": {
+     "x": 16,
+     "y": 523,
+     "w": 117,
+     "h": 44
+    }
+   },
+   {
+    "text": "Apply",
+    "formIndex": 2,
+    "visible": true,
+    "rect": {
+     "x": 1360,
+     "y": 494,
+     "w": 64,
+     "h": 44
+    }
+   }
+  ],
+  "submitPlan": {
+   "formIndex": 1,
+   "name": "q",
+   "tag": "input"
+  },
+  "afterSubmit": {
+   "plan": {
+    "formIndex": 1,
+    "name": "q",
+    "tag": "input"
+   },
+   "after": null
+  },
+  "urlDriven": {
+   "url": "http://127.0.0.1:3210/zh/products/wheels?q=dx&sort=name-asc",
+   "results": 17,
+   "pagination": 0,
+   "activeFilters": [
+    "=zh",
+    "=zh",
+    "sort=model-asc",
+    "=zh"
+   ]
+  },
+  "paginationLink": null
+ },
+ "articles": {
+  "/insights/how-to-measure-fitment": {
+   "status": "ok",
+   "h1": "How to measure your fitment",
+   "paragraphs": 28,
+   "bodyChars": 4820,
+   "totalText": 6183,
+   "headings": 12,
+   "tables": 0,
+   "lists": 2
+  },
+  "/insights/bolt-patterns/5x120": {
+   "status": "ok",
+   "h1": "5x120",
+   "paragraphs": 53,
+   "bodyChars": 8085,
+   "totalText": 10024,
+   "headings": 22,
+   "tables": 0,
+   "lists": 2
+  },
+  "/insights/offset-and-backspacing": {
+   "status": "ok",
+   "h1": "Understanding offset and backspacing",
+   "paragraphs": 27,
+   "bodyChars": 4115,
+   "totalText": 5359,
+   "headings": 11,
+   "tables": 0,
+   "lists": 2
+  }
+ },
+ "hiddenCensus": {
+  "/": {
+   "revealCount": 21,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 5330
+  },
+  "/about": {
+   "revealCount": 33,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 8283
+  },
+  "/capabilities": {
+   "revealCount": 27,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 5432
+  },
+  "/products": {
+   "revealCount": 28,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 5486
+  },
+  "/products/wheels": {
+   "revealCount": 1,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 5432
+  },
+  "/insights": {
+   "revealCount": 12,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 4754
+  },
+  "/insights/how-to-measure-fitment": {
+   "revealCount": 13,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 6183
+  },
+  "/support/returns": {
+   "revealCount": 16,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 5623
+  },
+  "/request-a-quote": {
+   "revealCount": 3,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 1986
+  },
+  "/tools/offset-calculator": {
+   "revealCount": 31,
+   "hiddenCount": 0,
+   "hidden": [],
+   "motionReady": false,
+   "armed": false,
+   "bodyText": 10172
+  }
+ }
+}

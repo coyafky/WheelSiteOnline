@@ -1,0 +1,931 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-18T00:00:00+08:00",
+  "last_sync_date": "2026-10-19",
+  "project": {
+    "id": "PRJ-001",
+    "repository": "WheelSiteOnline",
+    "path": "/Users/fkycoya/Documents/Code/WordpressWheelSIte",
+    "git_commit": "961762efd27767697b59d5b7039a1fcd1159c811",
+    "working_tree_dirty": true
+  },
+  "notion": {
+    "home": {
+      "page_id": "3fd8de6e-e7d2-8116-8c1e-e7e93ce7615a",
+      "url": "https://app.notion.com/p/3fd8de6ee7d281168c1ee7e93ce7615a"
+    },
+    "management_report": {
+      "page_id": "3fd8de6e-e7d2-81fb-98e7-c19a6212e5ee",
+      "url": "https://app.notion.com/p/3fd8de6ee7d281fb98e7c19a6212e5ee"
+    },
+    "architecture_article": {
+      "page_id": "3fe8de6e-e7d2-8177-b86b-d454700482e6",
+      "url": "https://app.notion.com/p/3fe8de6ee7d28177b86bd454700482e6"
+    },
+    "page_screenshot_index": {
+      "page_id": "3fe8de6e-e7d2-81a4-9650-e0f9805c2e6a",
+      "url": "https://app.notion.com/p/3fe8de6ee7d281a49650e0f9805c2e6a"
+    },
+    "whiteboard_bundle": {
+      "local_drawio": "outputs/project-audit/whiteboards/project-core-lessons.drawio",
+      "local_zip": "outputs/project-audit/whiteboards/project-core-lessons-drawio.zip",
+      "notion_zip_file_upload_id": "3fe8de6e-e7d2-814e-99a7-00b2fc47da4d",
+      "image_file_upload_ids": [
+        "3fe8de6e-e7d2-818d-8bd1-00b2bcb8c627",
+        "3fe8de6e-e7d2-8111-8725-00b2988c5829",
+        "3fe8de6e-e7d2-816a-adcb-00b249440c5d"
+      ]
+    },
+    "page_screenshot_manifest": "docs/project-audit/page-screenshot-manifest-2026-10-19.json",
+    "mobile_interaction_acceptance": {
+      "local_report": "docs/project-audit/mobile-interaction-acceptance-2026-10-19.md",
+      "route_records_updated": 33,
+      "key_mobile_images_uploaded": 8,
+      "not_found_image_uploaded": true,
+      "image_file_upload_ids": {
+        "home": "3fe8de6e-e7d2-81d5-9f3b-00b22470f8d6",
+        "wheel_catalogue": "3fe8de6e-e7d2-8110-bd85-00b2986c7aca",
+        "wheel_detail": "3fe8de6e-e7d2-8105-8f21-00b2ebda1f3f",
+        "insights": "3fe8de6e-e7d2-81e7-bfdc-00b2de1fc28a",
+        "contact": "3fe8de6e-e7d2-81bb-942d-00b2a9d64f1d",
+        "quote": "3fe8de6e-e7d2-812f-b650-00b298482e57",
+        "privacy": "3fe8de6e-e7d2-81f5-a769-00b24a86f4f3",
+        "offset_calculator": "3fe8de6e-e7d2-8156-8e84-00b2023dba3d",
+        "not_found": "3fe8de6e-e7d2-81b5-96f0-00b2e73805ac"
+      }
+    },
+    "release_gates_infographic": {
+      "file_upload_id": "3fe8de6e-e7d2-8118-9495-00b211b0288e",
+      "local_png": "outputs/project-audit/release-gates-2026-10-19.png",
+      "local_svg": "outputs/project-audit/release-gates-2026-10-19.svg"
+    },
+    "management_dashboard": {
+      "page_id": "3fd8de6e-e7d2-81b5-96c3-c622dffa1fc9",
+      "url": "https://app.notion.com/p/3fd8de6ee7d281b596c3c622dffa1fc9",
+      "views": [
+        {
+          "name": "01｜页面开发进度",
+          "view_id": "view://3fd8de6e-e7d2-8163-8671-000c75a7ec6d"
+        },
+        {
+          "name": "02｜功能测试情况",
+          "view_id": "view://3fd8de6e-e7d2-8168-92f6-000c93254fae"
+        },
+        {
+          "name": "03｜当前问题与阻塞",
+          "view_id": "view://3fd8de6e-e7d2-815d-8fa8-000cbcb3dd81"
+        },
+        {
+          "name": "04｜等待领导审批",
+          "view_id": "view://3fd8de6e-e7d2-810b-82d7-000c866456b5"
+        },
+        {
+          "name": "05｜SEO 与后续增长",
+          "view_id": "view://3fd8de6e-e7d2-81c2-bf62-000cdbce5cb7"
+        }
+      ]
+    },
+    "databases": [
+      {
+        "i": 1,
+        "db": "https://app.notion.com/p/8f670a1ad5b24cef8ec6447bab277b13",
+        "ds": "collection://434ecec2-4048-49e5-90ab-f1451540cb84",
+        "isError": false
+      },
+      {
+        "i": 2,
+        "db": "https://app.notion.com/p/841a05e0dda44e32b27a053db959c077",
+        "ds": "collection://afe1a9c7-72f4-42de-839c-e78370086c34",
+        "isError": false
+      },
+      {
+        "i": 3,
+        "db": "https://app.notion.com/p/8370023dd3104cecb121e2c767145ed1",
+        "ds": "collection://6c1db4ef-d984-4728-bf2b-22ab7b496b99",
+        "isError": false
+      },
+      {
+        "i": 4,
+        "db": "https://app.notion.com/p/678fe5daacb543b3aa9a1d2f52642a79",
+        "ds": "collection://2ecd2a4e-b0c9-4491-8c5f-0c6f10b83308",
+        "isError": false
+      },
+      {
+        "i": 5,
+        "db": "https://app.notion.com/p/53dd9f06070d404b9f1ab394204b78d6",
+        "ds": "collection://2b1a2e09-311b-4bb1-a459-4aab08de5284",
+        "isError": false
+      },
+      {
+        "i": 6,
+        "db": "https://app.notion.com/p/f0ab7df6c2e3432ca7fc5407da009e44",
+        "ds": "collection://b0982fa1-6908-41c1-9b0e-9b81086471c6",
+        "isError": false
+      },
+      {
+        "i": 7,
+        "db": "https://app.notion.com/p/86f31b433df149e1a40da0f9cdb5b939",
+        "ds": "collection://6ec41df2-bd0a-410f-bfaf-537a048a9757",
+        "isError": false
+      },
+      {
+        "i": 8,
+        "db": "https://app.notion.com/p/addf17cee0c2403cb7cca2f303bffdca",
+        "ds": "collection://07b4e2b7-ddb0-4a58-8278-3f5c2159448c",
+        "isError": false
+      }
+    ]
+  },
+  "records": {
+    "core_code_modules": {
+      "CORE-CONTENT-TYPES": {"page_id": "3fe8de6e-e7d2-8192-9a09-d5e042c663dd", "url": "https://app.notion.com/p/3fe8de6ee7d281929a09d5e042c663dd"},
+      "CORE-WP-CLIENT": {"page_id": "3fe8de6e-e7d2-817c-aacd-d3eb9b340299", "url": "https://app.notion.com/p/3fe8de6ee7d2817caacdd3eb9b340299"},
+      "CORE-WP-HOMEPAGE": {"page_id": "3fe8de6e-e7d2-811c-be62-f8cd3a01bde2", "url": "https://app.notion.com/p/3fe8de6ee7d2811cbe62f8cd3a01bde2"},
+      "CORE-WP-INSIGHTS": {"page_id": "3fe8de6e-e7d2-8122-8401-f59962c8b6fc", "url": "https://app.notion.com/p/3fe8de6ee7d281228401f59962c8b6fc"},
+      "CORE-WP-PAGES": {"page_id": "3fe8de6e-e7d2-8137-afc7-f29ecf8324bd", "url": "https://app.notion.com/p/3fe8de6ee7d28137afc7f29ecf8324bd"},
+      "CORE-WP-PAGE-SCHEMA": {"page_id": "3fe8de6e-e7d2-8198-8f27-e6383dc1bf63", "url": "https://app.notion.com/p/3fe8de6ee7d281988f27e6383dc1bf63"},
+      "CORE-LOCALE-PUBLICATION": {"page_id": "3fe8de6e-e7d2-8114-93f4-cd264cd872d2", "url": "https://app.notion.com/p/3fe8de6ee7d2811493f4cd264cd872d2"},
+      "CORE-LOCALE-PROXY": {"page_id": "3fe8de6e-e7d2-8143-8f24-f7b86b2bc541", "url": "https://app.notion.com/p/3fe8de6ee7d281438f24f7b86b2bc541"},
+      "CORE-SEO-METADATA": {"page_id": "3fe8de6e-e7d2-8128-b2cb-c36d3d907633", "url": "https://app.notion.com/p/3fe8de6ee7d28128b2cbc36d3d907633?pvs=204"},
+      "CORE-WHEEL-PUBLICATION": {"page_id": "3fe8de6e-e7d2-8164-8f40-cc04847c1a2c", "url": "https://app.notion.com/p/3fe8de6ee7d281648f40cc04847c1a2c?pvs=204"},
+      "CORE-WHEEL-CATALOGUE": {"page_id": "3fe8de6e-e7d2-8181-abd9-dfd8356270a7", "url": "https://app.notion.com/p/3fe8de6ee7d28181abd9dfd8356270a7?pvs=204"},
+      "CORE-INQUIRY-GUARD": {"page_id": "3fe8de6e-e7d2-816c-8e16-fd225996b26c", "url": "https://app.notion.com/p/3fe8de6ee7d2816c8e16fd225996b26c?pvs=204"},
+      "CORE-INQUIRY-SCHEMA": {"page_id": "3fe8de6e-e7d2-8185-8b56-c7bd5c7c46e0", "url": "https://app.notion.com/p/3fe8de6ee7d281858b56c7bd5c7c46e0?pvs=204"},
+      "CORE-INQUIRY-API": {"page_id": "3fe8de6e-e7d2-8114-a92c-f6fbca8eb6a6", "url": "https://app.notion.com/p/3fe8de6ee7d28114a92cf6fbca8eb6a6"},
+      "CORE-WHEEL-BINDING": {"page_id": "3fe8de6e-e7d2-8140-b266-cf64328d8bad", "url": "https://app.notion.com/p/3fe8de6ee7d28140b266cf64328d8bad?pvs=204"},
+      "CORE-WP-INQUIRIES": {"page_id": "3fe8de6e-e7d2-8114-82ac-cf1d1c59584d", "url": "https://app.notion.com/p/3fe8de6ee7d2811482accf1d1c59584d?pvs=204"},
+      "CORE-WP-WHEEL-AUTHORING": {"page_id": "3fe8de6e-e7d2-8138-a3b4-f0b56cd56de7", "url": "https://app.notion.com/p/3fe8de6ee7d28138a3b4f0b56cd56de7?pvs=204"},
+      "CORE-CONTRACT-PARITY": {"page_id": "3fe8de6e-e7d2-81da-b26c-cac26407352b", "url": "https://app.notion.com/p/3fe8de6ee7d281dab26ccac26407352b?pvs=204"},
+      "CORE-BACKUP": {"page_id": "3fe8de6e-e7d2-8122-b229-e5252516ecde", "url": "https://app.notion.com/p/3fe8de6ee7d28122b229e5252516ecde?pvs=204"},
+      "CORE-UPTIME-PROBE": {"page_id": "3fe8de6e-e7d2-81de-89f7-dfba51fb6b93", "url": "https://app.notion.com/p/3fe8de6ee7d281de89f7dfba51fb6b93?pvs=204"}
+    },
+    "project": {
+      "PRJ-001": {
+        "page_id": "3fd8de6e-e7d2-8147-8972-fd7fe0742a2b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281478972fd7fe0742a2b"
+      }
+    },
+    "page_modules": {
+      "PAGE-HOME": {
+        "page_id": "3fd8de6e-e7d2-8195-bb93-cf90d7bd339f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28195bb93cf90d7bd339f?pvs=204"
+      },
+      "PAGE-ABOUT": {
+        "page_id": "3fd8de6e-e7d2-810a-a15e-decbd88f377f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810aa15edecbd88f377f?pvs=204"
+      },
+      "PAGE-CAPABILITIES": {
+        "page_id": "3fd8de6e-e7d2-81c2-8b91-f62ed7050ff8",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c28b91f62ed7050ff8?pvs=204"
+      },
+      "PAGE-CONTACT": {
+        "page_id": "3fd8de6e-e7d2-815b-85b6-d2b73eb044a4",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815b85b6d2b73eb044a4?pvs=204"
+      },
+      "PAGE-CUSTOM-DEVELOPMENT": {
+        "page_id": "3fd8de6e-e7d2-81a3-8e3c-d0757a89cd22",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a38e3cd0757a89cd22?pvs=204"
+      },
+      "PAGE-DEALERS": {
+        "page_id": "3fd8de6e-e7d2-815f-a505-e5f0004758cb",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815fa505e5f0004758cb?pvs=204"
+      },
+      "PAGE-DEALERS-PRIVATE-LABEL": {
+        "page_id": "3fd8de6e-e7d2-81cf-a1cd-df8e288b1847",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281cfa1cddf8e288b1847?pvs=204"
+      },
+      "PAGE-INSIGHTS": {
+        "page_id": "3fd8de6e-e7d2-81a7-8767-c87de76eb86c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a78767c87de76eb86c?pvs=204"
+      },
+      "PAGE-INSIGHTS-SLUG": {
+        "page_id": "3fd8de6e-e7d2-8117-9e53-d4c0f727a9b1",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281179e53d4c0f727a9b1?pvs=204"
+      },
+      "PAGE-INSIGHTS-BOLT-PATTERNS": {
+        "page_id": "3fd8de6e-e7d2-8112-a36c-e94744baa3f3",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28112a36ce94744baa3f3?pvs=204"
+      },
+      "PAGE-INSIGHTS-BOLT-PATTERNS-PATTERN": {
+        "page_id": "3fd8de6e-e7d2-81e1-a418-f6c06087fc49",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e1a418f6c06087fc49?pvs=204"
+      },
+      "PAGE-MANUFACTURING": {
+        "page_id": "3fd8de6e-e7d2-8191-b27d-e2d8171ea559",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28191b27de2d8171ea559?pvs=204"
+      },
+      "PAGE-PRODUCTS": {
+        "page_id": "3fd8de6e-e7d2-810d-b3dd-fd8eee7ad3bb",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810db3ddfd8eee7ad3bb?pvs=204"
+      },
+      "PAGE-PRODUCTS-CUSTOM-ALUMINUM": {
+        "page_id": "3fd8de6e-e7d2-811d-b98c-d27297785beb",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811db98cd27297785beb?pvs=204"
+      },
+      "PAGE-PRODUCTS-EV-COMPONENTS": {
+        "page_id": "3fd8de6e-e7d2-81ad-bc65-cc0edd00739f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281adbc65cc0edd00739f?pvs=204"
+      },
+      "PAGE-PRODUCTS-SAFETY-TIRES": {
+        "page_id": "3fd8de6e-e7d2-8155-bae3-c2cc3ac1a4c4",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28155bae3c2cc3ac1a4c4?pvs=204"
+      },
+      "PAGE-PRODUCTS-WHEELS": {
+        "page_id": "3fd8de6e-e7d2-8149-86b1-e3ee2fa7f1d6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814986b1e3ee2fa7f1d6?pvs=204"
+      },
+      "PAGE-PRODUCTS-WHEELS-MODEL": {
+        "page_id": "3fd8de6e-e7d2-815d-9289-ca64e98c42bd",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815d9289ca64e98c42bd?pvs=204"
+      },
+      "PAGE-PRODUCTS-WHEELS-FLOW-FORMED": {
+        "page_id": "3fd8de6e-e7d2-8147-a40d-ede7027fa4c9",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28147a40dede7027fa4c9?pvs=204"
+      },
+      "PAGE-PRODUCTS-WHEELS-FORGED": {
+        "page_id": "3fd8de6e-e7d2-81fa-8b62-e199f3d01362",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281fa8b62e199f3d01362?pvs=204"
+      },
+      "PAGE-REQUEST-A-QUOTE": {
+        "page_id": "3fd8de6e-e7d2-81c8-a62d-f7605e83c8e4",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c8a62df7605e83c8e4?pvs=204"
+      },
+      "PAGE-RESOURCES": {
+        "page_id": "3fd8de6e-e7d2-8161-82a0-d4a14e72e0e6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2816182a0d4a14e72e0e6?pvs=204"
+      },
+      "PAGE-RESOURCES-SLUG": {
+        "page_id": "3fd8de6e-e7d2-81e6-a879-d32934c0c37d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e6a879d32934c0c37d?pvs=204"
+      },
+      "PAGE-RESOURCES-BOLT-PATTERNS": {
+        "page_id": "3fd8de6e-e7d2-817c-9c9e-ea0541ef7319",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817c9c9eea0541ef7319?pvs=204"
+      },
+      "PAGE-RESOURCES-BOLT-PATTERNS-PATTERN": {
+        "page_id": "3fd8de6e-e7d2-811b-9825-f1499d8b4ad2",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811b9825f1499d8b4ad2?pvs=204"
+      },
+      "PAGE-SUPPORT-PRIVACY": {
+        "page_id": "3fd8de6e-e7d2-8142-8182-f1ac6c9ebe62",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281428182f1ac6c9ebe62?pvs=204"
+      },
+      "PAGE-SUPPORT-RETURNS": {
+        "page_id": "3fd8de6e-e7d2-8179-8023-e611d4daba25",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281798023e611d4daba25?pvs=204"
+      },
+      "PAGE-SUPPORT-SHIPPING": {
+        "page_id": "3fd8de6e-e7d2-8129-985c-ec6beb7b0e0a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28129985cec6beb7b0e0a?pvs=204"
+      },
+      "PAGE-SUPPORT-TERMS": {
+        "page_id": "3fd8de6e-e7d2-810c-be97-e68f8f11b750",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810cbe97e68f8f11b750?pvs=204"
+      },
+      "PAGE-SUPPORT-WARRANTY": {
+        "page_id": "3fd8de6e-e7d2-819d-bbf9-de9af5ad0ccd",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2819dbbf9de9af5ad0ccd?pvs=204"
+      },
+      "PAGE-THANK-YOU": {
+        "page_id": "3fd8de6e-e7d2-818b-b907-d438d9e4328f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818bb907d438d9e4328f?pvs=204"
+      },
+      "PAGE-TOOLS": {
+        "page_id": "3fd8de6e-e7d2-8172-9e3f-cabf4570c76c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281729e3fcabf4570c76c?pvs=204"
+      },
+      "PAGE-TOOLS-OFFSET-CALCULATOR": {
+        "page_id": "3fd8de6e-e7d2-8111-8ead-cbb828368fa2",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281118eadcbb828368fa2?pvs=204"
+      },
+      "MOD-ABOUT-ABOUT-CLOSING": {
+        "page_id": "3fd8de6e-e7d2-81f8-822e-e6d434062991",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281f8822ee6d434062991?pvs=204"
+      },
+      "MOD-ABOUT-ABOUT-INTRO": {
+        "page_id": "3fd8de6e-e7d2-813a-a13b-d00dfe9fe9b7",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2813aa13bd00dfe9fe9b7?pvs=204"
+      },
+      "MOD-ABOUT-TIRE-FACTORY": {
+        "page_id": "3fd8de6e-e7d2-81c4-a49f-f887a9c7ee5f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c4a49ff887a9c7ee5f?pvs=204"
+      },
+      "MOD-ABOUT-WHEEL-FACTORY": {
+        "page_id": "3fd8de6e-e7d2-81d3-8e9e-f82a070cb278",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d38e9ef82a070cb278?pvs=204"
+      },
+      "MOD-ASTRYX-SCOPE": {
+        "page_id": "3fd8de6e-e7d2-8130-b4ea-c4c4257d752d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28130b4eac4c4257d752d?pvs=204"
+      },
+      "MOD-AUTOMOTIVE-BACKDROP": {
+        "page_id": "3fd8de6e-e7d2-812f-88f6-fe55fa59d07c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2812f88f6fe55fa59d07c?pvs=204"
+      },
+      "MOD-BOUNDARY-TABLE": {
+        "page_id": "3fd8de6e-e7d2-81d9-8613-ee6b6fcd333e",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d98613ee6b6fcd333e?pvs=204"
+      },
+      "MOD-CAPABILITIES-WHEEL-CAPABILITIES": {
+        "page_id": "3fd8de6e-e7d2-81a0-b9e1-c7d735eaa27c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a0b9e1c7d735eaa27c?pvs=204"
+      },
+      "MOD-CAPABILITY-GRID": {
+        "page_id": "3fd8de6e-e7d2-814e-bd8c-fcdd62928e77",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814ebd8cfcdd62928e77?pvs=204"
+      },
+      "MOD-CAPACITY-STATS": {
+        "page_id": "3fd8de6e-e7d2-8138-bfd3-e532695ec690",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28138bfd3e532695ec690?pvs=204"
+      },
+      "MOD-CROSS-LINK": {
+        "page_id": "3fd8de6e-e7d2-8142-892a-dad29834f7a6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28142892adad29834f7a6?pvs=204"
+      },
+      "MOD-CUSTOM-ALUMINUM-CUSTOM-ALUMINUM-PAGE": {
+        "page_id": "3fd8de6e-e7d2-8113-88a1-d4f1c305dda5",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811388a1d4f1c305dda5?pvs=204"
+      },
+      "MOD-DATA-NOTICE": {
+        "page_id": "3fd8de6e-e7d2-8172-852b-f95615f29c3e",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28172852bf95615f29c3e?pvs=204"
+      },
+      "MOD-EV-COMPONENTS-EV-COMPONENTS-PAGE": {
+        "page_id": "3fd8de6e-e7d2-8101-80df-ea43017892a6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810180dfea43017892a6?pvs=204"
+      },
+      "MOD-FAMILY-CARD": {
+        "page_id": "3fd8de6e-e7d2-8111-af64-eeed7747f60a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28111af64eeed7747f60a?pvs=204"
+      },
+      "MOD-FAQ-ACCORDION": {
+        "page_id": "3fd8de6e-e7d2-8119-b503-cab7d07e033c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28119b503cab7d07e033c?pvs=204"
+      },
+      "MOD-FLOW-STEP-ROW": {
+        "page_id": "3fd8de6e-e7d2-8189-aa1c-ee5c4ce134f5",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28189aa1cee5c4ce134f5?pvs=204"
+      },
+      "MOD-FORGED-WHEEL-FORGED-WHEEL-PAGE": {
+        "page_id": "3fd8de6e-e7d2-8193-815d-e6feedb61f52",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28193815de6feedb61f52?pvs=204"
+      },
+      "MOD-GUIDES-ACCORDION": {
+        "page_id": "3fd8de6e-e7d2-812a-ac3c-deabad7e0b19",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2812aac3cdeabad7e0b19?pvs=204"
+      },
+      "MOD-HOME-HERO-HERO-MEDIA": {
+        "page_id": "3fd8de6e-e7d2-818d-8d01-e9a111218127",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818d8d01e9a111218127?pvs=204"
+      },
+      "MOD-HOME-HERO-HOME-HERO": {
+        "page_id": "3fd8de6e-e7d2-8184-aad3-cbe73053c2f6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28184aad3cbe73053c2f6?pvs=204"
+      },
+      "MOD-HOME-HOME-CLOSING": {
+        "page_id": "3fd8de6e-e7d2-8176-81c3-eb822ea319e3",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817681c3eb822ea319e3?pvs=204"
+      },
+      "MOD-HOME-HOME-MODULE-REGISTRY": {
+        "page_id": "3fd8de6e-e7d2-8163-b320-ccbfff3468fe",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28163b320ccbfff3468fe?pvs=204"
+      },
+      "MOD-HOME-PROJECT-ROUTE-SECTION": {
+        "page_id": "3fd8de6e-e7d2-8123-8121-de17a674700c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281238121de17a674700c?pvs=204"
+      },
+      "MOD-INPUT-TYPE-CARDS": {
+        "page_id": "3fd8de6e-e7d2-8192-abd4-ee8e5f65ab8a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28192abd4ee8e5f65ab8a?pvs=204"
+      },
+      "MOD-INQUIRY-FORM": {
+        "page_id": "3fd8de6e-e7d2-8191-baad-e8a74bde99d9",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28191baade8a74bde99d9?pvs=204"
+      },
+      "MOD-LANGUAGE-SWITCHER": {
+        "page_id": "3fd8de6e-e7d2-814d-94cf-fb02a46c1043",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814d94cffb02a46c1043?pvs=204"
+      },
+      "MOD-LEGAL-DOCUMENT": {
+        "page_id": "3fd8de6e-e7d2-8126-877f-f2e2812c9393",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28126877ff2e2812c9393?pvs=204"
+      },
+      "MOD-LONGFORM-OUTLINE": {
+        "page_id": "3fd8de6e-e7d2-81c3-951b-f7fd63af2992",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c3951bf7fd63af2992?pvs=204"
+      },
+      "MOD-MECHANISM-STEPS": {
+        "page_id": "3fd8de6e-e7d2-8134-859d-d7a6667cfffd",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28134859dd7a6667cfffd?pvs=204"
+      },
+      "MOD-OFFSET-CALCULATOR": {
+        "page_id": "3fd8de6e-e7d2-81d9-bfc0-e873ec628483",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d9bfc0e873ec628483?pvs=204"
+      },
+      "MOD-PARAM-TABLE": {
+        "page_id": "3fd8de6e-e7d2-819c-804c-d77d4b610140",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2819c804cd77d4b610140?pvs=204"
+      },
+      "MOD-PART-GROUP-CARDS": {
+        "page_id": "3fd8de6e-e7d2-8191-a8a3-d2aad2c38339",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28191a8a3d2aad2c38339?pvs=204"
+      },
+      "MOD-PREVIEW-BANNER": {
+        "page_id": "3fd8de6e-e7d2-817e-932d-df79496d4b0a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817e932ddf79496d4b0a?pvs=204"
+      },
+      "MOD-PROCESS-DIAGRAM": {
+        "page_id": "3fd8de6e-e7d2-81de-aabb-c96eaea57e0d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281deaabbc96eaea57e0d?pvs=204"
+      },
+      "MOD-PROCESS-EXPLORER": {
+        "page_id": "3fd8de6e-e7d2-81f8-9326-ff46a664456b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281f89326ff46a664456b?pvs=204"
+      },
+      "MOD-PRODUCT-CARD": {
+        "page_id": "3fd8de6e-e7d2-817b-991c-d98a9d6a275b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817b991cd98a9d6a275b?pvs=204"
+      },
+      "MOD-PRODUCT-FAMILY-GRID": {
+        "page_id": "3fd8de6e-e7d2-81cf-b0a5-e9bc60ba0c30",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281cfb0a5e9bc60ba0c30?pvs=204"
+      },
+      "MOD-PROSE-ARTICLE": {
+        "page_id": "3fd8de6e-e7d2-8190-a2e1-fbcc332edbfb",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28190a2e1fbcc332edbfb?pvs=204"
+      },
+      "MOD-QUALITY-EVIDENCE": {
+        "page_id": "3fd8de6e-e7d2-81a2-9e12-d17e868a55fa",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a29e12d17e868a55fa?pvs=204"
+      },
+      "MOD-QUOTE-CONTEXT-BAR": {
+        "page_id": "3fd8de6e-e7d2-810a-acaf-fbbc5b8b6da8",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810aacaffbbc5b8b6da8?pvs=204"
+      },
+      "MOD-ROUTE-BLOCK": {
+        "page_id": "3fd8de6e-e7d2-814e-953f-dd655ece4472",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814e953fdd655ece4472?pvs=204"
+      },
+      "MOD-SAFETY-TIRES-SELF-SEALING-TIRE-PAGE": {
+        "page_id": "3fd8de6e-e7d2-812e-815c-d7b666c13c63",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2812e815cd7b666c13c63?pvs=204"
+      },
+      "MOD-SECTIONS-DEALER-CTA": {
+        "page_id": "3fd8de6e-e7d2-8148-a710-e8ae1e8e3f83",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28148a710e8ae1e8e3f83?pvs=204"
+      },
+      "MOD-SECTIONS-PAGE-HERO": {
+        "page_id": "3fd8de6e-e7d2-81dd-942d-ee820620c9f4",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281dd942dee820620c9f4?pvs=204"
+      },
+      "MOD-SECTIONS-PRODUCT-SHOWCASE": {
+        "page_id": "3fd8de6e-e7d2-81d7-8ce1-dcde0149a786",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d78ce1dcde0149a786?pvs=204"
+      },
+      "MOD-SECTIONS-TRUST-STRIP": {
+        "page_id": "3fd8de6e-e7d2-8107-ae7c-ccf9734ab1a3",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28107ae7cccf9734ab1a3?pvs=204"
+      },
+      "MOD-SELF-IDENTIFY-BLOCK": {
+        "page_id": "3fd8de6e-e7d2-81b5-af0c-eb4479608aa7",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b5af0ceb4479608aa7?pvs=204"
+      },
+      "MOD-SITE-BREADCRUMBS": {
+        "page_id": "3fd8de6e-e7d2-8114-b183-e46472f52d5d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28114b183e46472f52d5d?pvs=204"
+      },
+      "MOD-SITE-FOOTER": {
+        "page_id": "3fd8de6e-e7d2-81d3-bce0-eacbacf3a3df",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d3bce0eacbacf3a3df?pvs=204"
+      },
+      "MOD-SITE-HEADER": {
+        "page_id": "3fd8de6e-e7d2-810b-b0b9-c92873ca544d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810bb0b9c92873ca544d?pvs=204"
+      },
+      "MOD-SITE-MOTION": {
+        "page_id": "3fd8de6e-e7d2-8105-8d4b-d63bc0332fb2",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281058d4bd63bc0332fb2?pvs=204"
+      },
+      "MOD-WHEEL-CARD": {
+        "page_id": "3fd8de6e-e7d2-8159-8034-f60cf59cbeb2",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281598034f60cf59cbeb2?pvs=204"
+      },
+      "MOD-WHEELS-DIRECT-WHEEL-INQUIRY-DIALOG": {
+        "page_id": "3fd8de6e-e7d2-816b-8c4d-c4d818fe743e",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2816b8c4dc4d818fe743e?pvs=204"
+      },
+      "MOD-WHEELS-FLOW-FORMED-PAGE": {
+        "page_id": "3fd8de6e-e7d2-81c3-92e7-d846b505dcef",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c392e7d846b505dcef?pvs=204"
+      },
+      "MOD-WHEELS-INQUIRY-CART-SUMMARY": {
+        "page_id": "3fd8de6e-e7d2-81d9-9894-fac27fc6ed91",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d99894fac27fc6ed91?pvs=204"
+      },
+      "MOD-WHEELS-MOBILE-WHEEL-FILTER-DRAWER": {
+        "page_id": "3fd8de6e-e7d2-813c-aad2-f874e587a1c6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2813caad2f874e587a1c6?pvs=204"
+      },
+      "MOD-WHEELS-PCD-SEARCH-GROUP": {
+        "page_id": "3fd8de6e-e7d2-8186-befa-dfd1bf29851c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28186befadfd1bf29851c?pvs=204"
+      },
+      "MOD-WHEELS-SPEC-FORMAT": {
+        "page_id": "3fd8de6e-e7d2-811d-af92-c5abd75cabab",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811daf92c5abd75cabab?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-CATALOGUE-CARD": {
+        "page_id": "3fd8de6e-e7d2-8187-95a6-e3d02a8dfecc",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818795a6e3d02a8dfecc?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-CATALOGUE-EMPTY": {
+        "page_id": "3fd8de6e-e7d2-810c-87b8-cc21c3ab7078",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810c87b8cc21c3ab7078?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-CATALOGUE-FILTERS": {
+        "page_id": "3fd8de6e-e7d2-811a-86a4-e34f868717bc",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811a86a4e34f868717bc?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-CATALOGUE-PAGINATION": {
+        "page_id": "3fd8de6e-e7d2-814e-b732-f8c46e6ed3ad",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814eb732f8c46e6ed3ad?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-DETAIL-INTERACTIVE": {
+        "page_id": "3fd8de6e-e7d2-81b6-b308-d0f385f1761c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b6b308d0f385f1761c?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-DETAIL-SECTIONS": {
+        "page_id": "3fd8de6e-e7d2-81e6-92dc-e2ab55b17ba0",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e692dce2ab55b17ba0?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-FILTER-OPTION": {
+        "page_id": "3fd8de6e-e7d2-8146-9a1a-f8c247969890",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281469a1af8c247969890?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-INQUIRY-PANEL": {
+        "page_id": "3fd8de6e-e7d2-81d3-95d8-cb07b50e9514",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d395d8cb07b50e9514?pvs=204"
+      },
+      "MOD-WHEELS-WHEEL-VARIANT-SELECTOR": {
+        "page_id": "3fd8de6e-e7d2-81d6-9e63-e29a4ff132ce",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d69e63e29a4ff132ce?pvs=204"
+      }
+    },
+    "features": {
+      "FEAT-HOME": {
+        "page_id": "3fd8de6e-e7d2-81b8-a3b4-f1bf60cdff67",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b8a3b4f1bf60cdff67?pvs=204"
+      },
+      "FEAT-PRODUCTS": {
+        "page_id": "3fd8de6e-e7d2-81b4-9cf7-c01494b464b5",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b49cf7c01494b464b5?pvs=204"
+      },
+      "FEAT-WHEEL-CATALOGUE": {
+        "page_id": "3fd8de6e-e7d2-81b4-9916-c4bbf756be2d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b49916c4bbf756be2d?pvs=204"
+      },
+      "FEAT-WHEEL-DETAIL": {
+        "page_id": "3fd8de6e-e7d2-813b-a04a-d5ebb5b6e246",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2813ba04ad5ebb5b6e246?pvs=204"
+      },
+      "FEAT-PRODUCT-LINES": {
+        "page_id": "3fd8de6e-e7d2-81e5-bcda-c616309533c8",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e5bcdac616309533c8?pvs=204"
+      },
+      "FEAT-DEALER": {
+        "page_id": "3fd8de6e-e7d2-8175-98c7-f2ffdf341236",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817598c7f2ffdf341236?pvs=204"
+      },
+      "FEAT-INSIGHTS": {
+        "page_id": "3fd8de6e-e7d2-81c9-89bd-ec09938fb769",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c989bdec09938fb769?pvs=204"
+      },
+      "FEAT-BOLT-PATTERN": {
+        "page_id": "3fd8de6e-e7d2-8140-a51d-c3476793bbad",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28140a51dc3476793bbad?pvs=204"
+      },
+      "FEAT-INQUIRY": {
+        "page_id": "3fd8de6e-e7d2-8146-ac90-f4262dc9b67c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28146ac90f4262dc9b67c?pvs=204"
+      },
+      "FEAT-PREVIEW": {
+        "page_id": "3fd8de6e-e7d2-815d-8a5c-ca83bbea00ab",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815d8a5cca83bbea00ab?pvs=204"
+      },
+      "FEAT-PUBLICATION": {
+        "page_id": "3fd8de6e-e7d2-812e-bf8c-cde09c113f3f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2812ebf8ccde09c113f3f?pvs=204"
+      },
+      "FEAT-I18N": {
+        "page_id": "3fd8de6e-e7d2-81d1-86c6-ee20577a69c1",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d186c6ee20577a69c1?pvs=204"
+      },
+      "FEAT-SEO": {
+        "page_id": "3fd8de6e-e7d2-8102-ad0e-e33af0b7f62d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28102ad0ee33af0b7f62d?pvs=204"
+      },
+      "FEAT-LEGAL": {
+        "page_id": "3fd8de6e-e7d2-81b3-970d-d88b45566fcf",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b3970dd88b45566fcf?pvs=204"
+      },
+      "FEAT-TOOLS": {
+        "page_id": "3fd8de6e-e7d2-8151-a06b-f3abf84eacf0",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28151a06bf3abf84eacf0?pvs=204"
+      },
+      "FEAT-OPERATIONS": {
+        "page_id": "3fd8de6e-e7d2-810d-ba2e-df91cb63d748",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810dba2edf91cb63d748?pvs=204"
+      }
+    },
+    "api_data_models": {
+      "API-HEALTH": {
+        "page_id": "3fd8de6e-e7d2-813a-9e74-d2a9cd5f09ba",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2813a9e74d2a9cd5f09ba?pvs=204"
+      },
+      "API-INQUIRY-CREATE": {
+        "page_id": "3fd8de6e-e7d2-8165-b612-d37967f5e95e",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28165b612d37967f5e95e?pvs=204"
+      },
+      "API-INQUIRY-LIST-DENY": {
+        "page_id": "3fd8de6e-e7d2-81a8-86c7-ee45dab8ed8b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a886c7ee45dab8ed8b?pvs=204"
+      },
+      "API-PREVIEW-ENTER": {
+        "page_id": "3fd8de6e-e7d2-81ff-8e60-dcda6730e535",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281ff8e60dcda6730e535?pvs=204"
+      },
+      "API-PREVIEW-EXIT": {
+        "page_id": "3fd8de6e-e7d2-8103-a76d-eeba3a3324c4",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28103a76deeba3a3324c4?pvs=204"
+      },
+      "API-PUBLICATION": {
+        "page_id": "3fd8de6e-e7d2-81fc-b51f-e1b2d6d65280",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281fcb51fe1b2d6d65280?pvs=204"
+      },
+      "API-REVALIDATE": {
+        "page_id": "3fd8de6e-e7d2-8176-96b0-c4672bf4f561",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817696b0c4672bf4f561?pvs=204"
+      },
+      "API-LLMS": {
+        "page_id": "3fd8de6e-e7d2-81d4-a954-c8383647ad09",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281d4a954c8383647ad09?pvs=204"
+      },
+      "WP-PAGES-V1": {
+        "page_id": "3fd8de6e-e7d2-81bc-84a2-e48eb44260ef",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281bc84a2e48eb44260ef?pvs=204"
+      },
+      "WP-PAGES-V2": {
+        "page_id": "3fd8de6e-e7d2-8165-8133-c866ca17922f",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281658133c866ca17922f?pvs=204"
+      },
+      "WP-WHEELS": {
+        "page_id": "3fd8de6e-e7d2-811e-b8a4-fed40fb17202",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2811eb8a4fed40fb17202?pvs=204"
+      },
+      "WP-GUIDES": {
+        "page_id": "3fd8de6e-e7d2-81b4-a4ca-da3a24e98f71",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b4a4cada3a24e98f71?pvs=204"
+      },
+      "WP-INQUIRIES": {
+        "page_id": "3fd8de6e-e7d2-81cf-8bf0-d20e1c0ca410",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281cf8bf0d20e1c0ca410?pvs=204"
+      },
+      "WP-EMAIL-EVENTS": {
+        "page_id": "3fd8de6e-e7d2-81c2-9bce-ec07db7f4637",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c29bceec07db7f4637?pvs=204"
+      },
+      "CMS-PAGE": {
+        "page_id": "3fd8de6e-e7d2-81ea-9f66-df4752c9cea6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281ea9f66df4752c9cea6?pvs=204"
+      },
+      "CMS-POST": {
+        "page_id": "3fd8de6e-e7d2-8196-871f-c95ec879d76a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28196871fc95ec879d76a?pvs=204"
+      },
+      "CMS-WHEEL": {
+        "page_id": "3fd8de6e-e7d2-812c-b2da-fd95a13d5400",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2812cb2dafd95a13d5400?pvs=204"
+      },
+      "CMS-GUIDE": {
+        "page_id": "3fd8de6e-e7d2-8144-9a10-dbd260576e16",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281449a10dbd260576e16?pvs=204"
+      },
+      "CMS-INQUIRY": {
+        "page_id": "3fd8de6e-e7d2-81e6-8330-f651fb8e4678",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e68330f651fb8e4678?pvs=204"
+      },
+      "DB-INQUIRY-KEY": {
+        "page_id": "3fd8de6e-e7d2-814b-809d-d5c1e2a6ac40",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2814b809dd5c1e2a6ac40?pvs=204"
+      },
+      "DB-INQUIRY-OUTBOX": {
+        "page_id": "3fd8de6e-e7d2-81a2-99c5-d06eb1933774",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a299c5d06eb1933774?pvs=204"
+      },
+      "DB-INQUIRY-EVENT": {
+        "page_id": "3fd8de6e-e7d2-8133-878a-db269ae35b5c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28133878adb269ae35b5c?pvs=204"
+      },
+      "EXT-SMTP": {
+        "page_id": "3fd8de6e-e7d2-810f-ad91-f3106455f678",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810fad91f3106455f678?pvs=204"
+      },
+      "EXT-RESEND": {
+        "page_id": "3fd8de6e-e7d2-81c7-be41-f31eb9fabe5c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c7be41f31eb9fabe5c?pvs=204"
+      }
+    },
+    "tests": {
+      "TEST-UNIT-001": {
+        "page_id": "3fd8de6e-e7d2-81ab-8d4e-c46319fb981b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281ab8d4ec46319fb981b?pvs=204"
+      },
+      "TEST-TYPE-001": {
+        "page_id": "3fd8de6e-e7d2-816f-89cc-f55c4722011d",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2816f89ccf55c4722011d?pvs=204"
+      },
+      "TEST-CONTRACT-001": {
+        "page_id": "3fd8de6e-e7d2-8179-9586-c5fff9a90208",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281799586c5fff9a90208?pvs=204"
+      },
+      "TEST-THEME-001": {
+        "page_id": "3fd8de6e-e7d2-818d-834b-e90bfbe676ae",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818d834be90bfbe676ae?pvs=204"
+      },
+      "TEST-BUILD-001": {
+        "page_id": "3fd8de6e-e7d2-81e2-8698-f30128d29f50",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e28698f30128d29f50?pvs=204"
+      },
+      "TEST-AUDIT-001": {
+        "page_id": "3fd8de6e-e7d2-81fe-8902-c9778bdac1ca",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281fe8902c9778bdac1ca?pvs=204"
+      },
+      "TEST-LINT-001": {
+        "page_id": "3fd8de6e-e7d2-8126-a3fb-eb367582df59",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28126a3fbeb367582df59?pvs=204"
+      },
+      "TEST-E2E-001": {
+        "page_id": "3fd8de6e-e7d2-81a8-b62f-f96d94be7f0a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a8b62ff96d94be7f0a?pvs=204"
+      },
+      "TEST-HEALTH-001": {
+        "page_id": "3fd8de6e-e7d2-8158-92d9-e3f03b3dd39c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815892d9e3f03b3dd39c?pvs=204"
+      },
+      "TEST-BACKUP-001": {
+        "page_id": "3fd8de6e-e7d2-8126-a7de-e6229ccb8d13",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28126a7dee6229ccb8d13?pvs=204"
+      }
+    },
+    "tasks": {
+      "AUD-TASK-001": {
+        "page_id": "3fd8de6e-e7d2-81dd-a64b-f09abc41eae6",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281dda64bf09abc41eae6?pvs=204"
+      },
+      "AUD-TASK-002": {
+        "page_id": "3fd8de6e-e7d2-81ff-84a0-ce5e05b53ea1",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281ff84a0ce5e05b53ea1?pvs=204"
+      },
+      "AUD-TASK-003": {
+        "page_id": "3fd8de6e-e7d2-8114-bd83-de53eab18a07",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28114bd83de53eab18a07?pvs=204"
+      },
+      "AUD-TASK-004": {
+        "page_id": "3fd8de6e-e7d2-8113-b2c0-ceb7aa61323e",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28113b2c0ceb7aa61323e?pvs=204"
+      },
+      "AUD-TASK-005": {
+        "page_id": "3fd8de6e-e7d2-8111-9911-f018413efa57",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281119911f018413efa57?pvs=204"
+      },
+      "AUD-TASK-006": {
+        "page_id": "3fd8de6e-e7d2-81ee-a539-c9cc843d94fd",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281eea539c9cc843d94fd?pvs=204"
+      },
+      "AUD-TASK-007": {
+        "page_id": "3fd8de6e-e7d2-818a-9ef5-f9d31de4dd02",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818a9ef5f9d31de4dd02?pvs=204"
+      },
+      "AUD-TASK-008": {
+        "page_id": "3fd8de6e-e7d2-81e8-8642-ff952d64d299",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281e88642ff952d64d299?pvs=204"
+      },
+      "AUD-TASK-009": {
+        "page_id": "3fd8de6e-e7d2-81f4-814f-cc6293b555e5",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281f4814fcc6293b555e5?pvs=204"
+      },
+      "AUD-TASK-010": {
+        "page_id": "3fd8de6e-e7d2-8146-b6b2-ea75754808ae",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28146b6b2ea75754808ae?pvs=204"
+      },
+      "AUD-TASK-011": {
+        "page_id": "3fd8de6e-e7d2-81f0-b8e7-d087968c3eda",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281f0b8e7d087968c3eda?pvs=204"
+      },
+      "AUD-TASK-012": {
+        "page_id": "3fd8de6e-e7d2-81c2-abc8-db2d9ea20a17",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c2abc8db2d9ea20a17?pvs=204"
+      },
+      "AUD-TASK-013": {
+        "page_id": "3fe8de6e-e7d2-81e6-84d5-c4552ff89c7a",
+        "url": "https://app.notion.com/p/3fe8de6ee7d281e684d5c4552ff89c7a?pvs=204"
+      },
+      "AUD-TASK-014": {
+        "page_id": "3fe8de6e-e7d2-818e-ae6d-e5ac7c12ff01",
+        "url": "https://app.notion.com/p/3fe8de6ee7d2818eae6de5ac7c12ff01?pvs=204"
+      }
+    },
+    "approvals": {
+      "APR-001": {
+        "page_id": "3fd8de6e-e7d2-81a8-879d-f14b7cca5c65",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a8879df14b7cca5c65?pvs=204"
+      },
+      "APR-002": {
+        "page_id": "3fd8de6e-e7d2-81ff-9870-e8ac04538148",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281ff9870e8ac04538148?pvs=204"
+      },
+      "APR-003": {
+        "page_id": "3fd8de6e-e7d2-8113-a11f-e7f7022183ed",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28113a11fe7f7022183ed?pvs=204"
+      },
+      "APR-004": {
+        "page_id": "3fd8de6e-e7d2-8185-98aa-e7837c743e4a",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2818598aae7837c743e4a?pvs=204"
+      },
+      "APR-005": {
+        "page_id": "3fd8de6e-e7d2-81a1-a397-e063949f9dde",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281a1a397e063949f9dde?pvs=204"
+      },
+      "APR-006": {
+        "page_id": "3fd8de6e-e7d2-8110-8f6b-f07fee459ee8",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281108f6bf07fee459ee8?pvs=204"
+      },
+      "APR-007": {
+        "page_id": "3fd8de6e-e7d2-81b7-9fa1-e9417379b04c",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281b79fa1e9417379b04c?pvs=204"
+      }
+    },
+    "plans": {
+      "DEPLOY-001": {
+        "page_id": "3fd8de6e-e7d2-810f-bc7d-c7a27e39b2aa",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2810fbc7dc7a27e39b2aa?pvs=204"
+      },
+      "DEPLOY-002": {
+        "page_id": "3fd8de6e-e7d2-815f-889f-cc9ad5e0a310",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2815f889fcc9ad5e0a310?pvs=204"
+      },
+      "DEPLOY-003": {
+        "page_id": "3fd8de6e-e7d2-8192-b8e1-ef3961dbfb36",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28192b8e1ef3961dbfb36?pvs=204"
+      },
+      "DEPLOY-004": {
+        "page_id": "3fd8de6e-e7d2-8172-970c-c7ad3b03fca9",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28172970cc7ad3b03fca9?pvs=204"
+      },
+      "DEPLOY-005": {
+        "page_id": "3fd8de6e-e7d2-8195-b7bc-c0e50cf95549",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28195b7bcc0e50cf95549?pvs=204"
+      },
+      "DEPLOY-006": {
+        "page_id": "3fd8de6e-e7d2-8169-822d-ea991e513621",
+        "url": "https://app.notion.com/p/3fd8de6ee7d28169822dea991e513621?pvs=204"
+      },
+      "DEPLOY-007": {
+        "page_id": "3fd8de6e-e7d2-81f5-a07a-fa4484344b28",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281f5a07afa4484344b28?pvs=204"
+      },
+      "DEPLOY-008": {
+        "page_id": "3fd8de6e-e7d2-817d-9276-eaf959b8f212",
+        "url": "https://app.notion.com/p/3fd8de6ee7d2817d9276eaf959b8f212?pvs=204"
+      },
+      "DEPLOY-009": {
+        "page_id": "3fd8de6e-e7d2-81fb-9ac7-d81f504d9815",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281fb9ac7d81f504d9815?pvs=204"
+      },
+      "DEPLOY-010": {
+        "page_id": "3fd8de6e-e7d2-81af-b777-e7ef194fd4df",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281afb777e7ef194fd4df?pvs=204"
+      },
+      "DEPLOY-011": {
+        "page_id": "3fd8de6e-e7d2-81c3-bfdb-f85957c9c82b",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281c3bfdbf85957c9c82b?pvs=204"
+      },
+      "DEPLOY-012": {
+        "page_id": "3fd8de6e-e7d2-81df-b22e-ddb23ba8b4b9",
+        "url": "https://app.notion.com/p/3fd8de6ee7d281dfb22eddb23ba8b4b9?pvs=204"
+      }
+    }
+  },
+  "sync_policy": {
+    "identity": "稳定业务 ID",
+    "change_detection": "源内容哈希 + Git Commit",
+    "preserve_manual_fields": [
+      "审批结论",
+      "审批状态",
+      "负责人",
+      "管理层优先级",
+      "正式验收结果"
+    ],
+    "missing_entity_policy": "标记待确认废弃，不自动删除"
+  }
+}
