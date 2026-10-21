@@ -8,6 +8,79 @@
 
 ---
 
+## 2026-10-20 新加坡服务器部署
+
+执行顺序、拓扑、验收与回滚以 [`../architecture/DEPLOYMENT.md`](../architecture/DEPLOYMENT.md) 为正本；
+本节仅跟踪阶段状态。前端运行形态按
+[`../adr/2026-10-20-single-server-runtime-choice.md`](../adr/2026-10-20-single-server-runtime-choice.md)
+选择，不再以 OpenNext 为强制门槛。
+
+| 任务 | 状态 | 下一步与完成信号 |
+|---|---|---|
+| DEP-01 公司 GitHub 仓库同步 | 阻塞 | `infofenghuai-cmd/fenghuai-website` 对当前 `coyafky` 账号返回 404；公司账号确认地址并授予写入权限后，比较历史、审查当前未提交改动，再同步经过验证的提交，禁止强推 |
+| DEP-02 新服务器只读盘点 | 完成 | 用户绑定 SSH 公钥后，以 `root` 登录确认 OpenCloudOS 9.6、2 核、约 3.6 GiB 内存、60 GB 系统盘；原有宝塔面板保留，未发现已部署网站 |
+| DEP-03 WordPress/MySQL、备份与 HTTPS | 进行中 | Docker/Compose 已安装；回环端口部署 WordPress/MySQL，迁入 1053 条非询盘内容记录与媒体，历史 54 条询盘及其 Outbox 未迁移；数据库和媒体隔离恢复演练通过。`cms` HTTPS 已公开，后台强密码实际登录成功，REST 与媒体公网 200，`xmlrpc.php` 为 403。下一步异地备份与进一步的后台登录防护 |
+| DEP-04 Next.js 生产镜像和 SEO 验收 | 进行中 | 本机 `npm run check` 已通过（144 项单测）；服务器 Linux/amd64 镜像运行且健康。公网首页、联系页、健康检查为 200，目标域名 canonical 正确；公网询盘 `INQ-20261020-0160` 入库并被 SMTP 接受。用户明确要求先展示、后调整，`/dealers`、`/insights` 及原先屏蔽的子页已恢复 200；全站仍暂不收录。下一步清理页面待核实文案、验证预览/失效、完整 SEO 和回滚，并制作可追溯正式镜像 |
+| DEP-05 Gmail 过渡测试与企业邮箱迁移 | 进行中 | 本地与新加坡服务器 Gmail SMTP 均已验收（2026-10-20）：服务器独立邮件与合成询盘 `INQ-20261020-0158` 的通知均到达收件箱；询盘入库，Outbox `accepted`、尝试 1 次。下一步决定企业邮箱与 Resend 配置，授权 DNS 记录，核对 SPF/DKIM/DMARC、重试与告警；SMTP 失败自动切换需另行实现与验收 |
+| DEP-06 正式发布与运维 | 进行中 | 用户已授权并完成临时公开：Caddy 将主站与 CMS 接入 HTTPS，`www` 301 到主域名。2026-10-20 按用户“先展示、后调整”要求解除 `/dealers`、`/insights` 屏蔽；待核实文案仍可见。正式收录前完成内容、图权、法律、隐私、后台登录防护、监控、异地备份和续费安排，再撤除 `noindex` 并恢复合格 sitemap |
+
+---
+
+## 2026-10-18 全量审计增量
+
+本组来自 [`../project-audit/`](../project-audit/project-overview.md) 对当前工作树的实际检查；
+不覆盖下方既有任务。Notion 管理镜像使用 `AUD-TASK-*` 稳定 ID，仓库正本仍是本文件。
+
+### AUD-TASK-001 修复当前 lint 错误（P0，完成）
+
+- **模块**：M18
+- **证据**：`npm run lint` 实际失败，10 error / 8 warning，集中在 `qa-audit/perf/*.cjs` 的 `require()`
+- **验收**：`npm run lint` 0 error；不得通过全局关闭规则掩盖问题
+- **结果**：仅为 `qa-audit/perf/**/*.cjs` 的 CommonJS 审计脚本关闭 TypeScript `no-require-imports` 规则；2026-10-20 `npm run check` 通过，保留原有 8 条非阻断警告
+
+### AUD-TASK-002 修复两项定向 E2E 失败（P0，待办）
+
+- **模块**：M05 / M18
+- **证据**：`e2e/publication-qualification.spec.ts:55` 预期 200、实际 307；
+  `e2e/site-contract.spec.ts:89` 退出预览后仍停留详情页
+- **验收**：定向 22/22 通过，且 WebServer 日志无新异常
+
+### AUD-TASK-003 收紧询盘客户端 IP 信任链（P0，待办）
+
+- **模块**：M10 / M14
+- **证据**：`src/lib/inquiry/guard.ts:112-118` 信任转发头；
+  `deploy/frontend/nginx-9080.conf:25-27` 未明确清空客户端提供的 `CF-Connecting-IP`
+- **验收**：在批准的代理拓扑下，伪造转发头不能改变限流身份
+
+### AUD-TASK-004～012 生产与增长门槛（P1/P2，待办）
+
+- WordPress 后台保护、TLS 与目标服务器 Caddy 配置校验
+- 正式域名构建变量及 canonical / OG / robots / sitemap 核对
+- 真实备份恢复、uptime/告警送达、真实邮件收件与失败重放
+- 法律/产品事实/图权审批、hreflang-sitemap 一致性、可验证的前端运行形态与可回滚 CD
+- 完整清单与验收见 [`../project-audit/backlog.md`](../project-audit/backlog.md)
+
+### AUD-TASK-013 核对偏距计算器几何定义与展示公式（P1，待办）
+
+- **模块**：M18 / 产品工具
+- **证据**：[`移动端与关键交互核验`](../project-audit/mobile-interaction-acceptance-2026-10-19.md)；`src/content/tools.ts:101-106` 的展示公式未写直径项，`src/lib/wheels/offset-calculator.ts:36-52` 的实际计算加入 `diameterShift`。
+- **验收**：工程负责人确认“内侧间隙/外侧凸出”的物理定义；算法、页面公式、解释文案和单测采用同一口径，至少覆盖只改变直径而宽度/ET 不变的用例。未确认前不把结果表述为车辆适配批准。
+
+### AUD-TASK-014 消除 Insights 固定篇数文案（P2，待办）
+
+- **模块**：M09 / 内容
+- **证据**：`/insights` 页面写“Six working guides”，同页显示 9 篇；固定文案源于 `src/content/resources.ts:23`。
+- **验收**：篇数随已公开文章数量生成，或使用不包含固定数量的文案；增减文章后页面标题、计数与说明不矛盾。
+
+### AUD-TASK-015 审定已公开页面的商业表达与发布资格（P0，待办）
+
+- **模块**：内容运营 / 产品 / 法务 / SEO
+- **证据**：[`2026-10-21 已公开网站商业表达问题台账`](../../outputs/project-audit/2026-10-21-live-commercial-copy-register.md)；本次只读核对 175 个公开 URL，发现政策假设文本、内部测试文章、10 个含 `PLACEHOLDER` 的页面，以及 35 个显示“名称待批准”的轮毂详情页。
+- **下一步**：由业务、法务、产品及图权负责人逐项确认；事实无法确认的内容按发布资格流程撤回，先处理台账 BC-01～09，再统一交易口径和转化文案。
+- **验收**：台账中的 P0 项均有批准、改写或撤回记录；公开页面及推荐位不再显示内部测试文章和待核实指令；正式收录仍须独立发布审批，不因本任务完成自动解除全站暂不收录设置。
+
+---
+
 ## P0 · 止血
 
 ### T-01 裁决 sitemap 与 e2e 矛盾 ✅ 完成

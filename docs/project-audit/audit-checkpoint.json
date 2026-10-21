@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-10-18",
+  "repository": "WheelSiteOnline",
+  "git_commit": "961762efd27767697b59d5b7039a1fcd1159c811",
+  "branch": "codex/full-site-current-20261012",
+  "working_tree_dirty": true,
+  "coverage": {
+    "route_templates": {
+      "covered": 33,
+      "total": 33,
+      "percent": 100
+    },
+    "component_assets": {
+      "covered": 68,
+      "total": 68,
+      "percent": 100
+    },
+    "business_domains": {
+      "covered": 16,
+      "total": 16,
+      "percent": 100
+    },
+    "next_http_handlers": {
+      "covered": 8,
+      "total": 8,
+      "percent": 100
+    },
+    "wordpress_custom_rest_paths": {
+      "covered": 6,
+      "total": 6,
+      "percent": 100
+    },
+    "inquiry_tables": {
+      "covered": 3,
+      "total": 3,
+      "percent": 100
+    }
+  },
+  "quality": {
+    "unit_tests": {
+      "passed": 144,
+      "total": 144
+    },
+    "lint": {
+      "status": "failed",
+      "errors": 10,
+      "warnings": 8
+    },
+    "targeted_e2e": {
+      "passed": 20,
+      "failed": 2,
+      "total": 22
+    },
+    "typecheck": "passed",
+    "contract_check": "passed",
+    "theme_check": "passed",
+    "build": "passed",
+    "production_dependency_audit": "passed"
+  },
+  "notion_sync": {
+    "records_created": 202,
+    "records_with_actionable_page_content": 202,
+    "content_enrichment_date": "2026-10-19",
+    "content_enrichment_breakdown": {
+      "project": 1,
+      "pages_and_modules": 118,
+      "features": 16,
+      "api_and_data_models": 24,
+      "tests": 10,
+      "tasks": 14,
+      "approvals": 7,
+      "deployment_and_growth": 12
+    },
+    "core_code_modules_added_within_pages_and_modules": 17,
+    "records_failed": 0,
+    "conflicts": 0,
+    "relations_schema_created": true,
+    "representative_relations_populated": 11,
+    "rollups_created": 3,
+    "views_created": 10,
+    "management_dashboard_views_created": 5,
+    "home_verified": true,
+    "databases_verified": 8,
+    "management_report_verified": true,
+    "management_dashboard_verified": true,
+    "architecture_article_created": true,
+    "mermaid_diagrams_added": 6,
+    "management_infographic_uploaded": true,
+    "whiteboard_diagrams_uploaded": 3,
+    "page_full_screenshots_uploaded_and_verified": 33,
+    "page_screenshot_index_created": true,
+    "mobile_route_smoke_checks": 33,
+    "mobile_route_records_updated": 33,
+    "mobile_key_screenshots_uploaded": 8,
+    "mobile_not_found_screenshot_uploaded": true
+  },
+  "uncovered": [
+    "生产 WordPress 数据实例数量",
+    "真实客户数据",
+    "正式 DNS/TLS",
+    "真实邮件收件箱可见性",
+    "生产备份恢复与异地加密",
+    "外部 uptime 与告警送达",
+    "完整人工业务验收"
+  ],
+  "caveat": "覆盖率表示审计对象被检查并建档，不代表产品完成率。"
+}

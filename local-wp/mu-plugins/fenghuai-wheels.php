@@ -30,6 +30,21 @@ if (!defined('ABSPATH')) {
 const FH_WHEEL_POST_TYPE    = 'wheel_model';
 const FH_WHEEL_TAX_DIAMETER = 'wheel_diameter';
 const FH_WHEEL_TAX_PROCESS  = 'wheel_process';
+/**
+ * PCD / 宽度的**候选值字典**（分类法）。
+ *
+ * 这两个分类法不是事实层 —— 事实仍然是 `variants_json` 里的 `pcd` / `width`。
+ * 它们只做两件事：① 给编辑页提供可维护的下拉候选 ② 承接「JSON 里出现过、
+ * 但字典里没有」的脏值对照，让运营在后台看得见并逐步收敛。
+ *
+ * 增删候选值走后台「轮毂型号 → PCD / 宽度」页面，不要改 `variants_json`。
+ */
+const FH_WHEEL_TAX_PCD   = 'wheel_pcd';
+const FH_WHEEL_TAX_WIDTH = 'wheel_width';
+
+/** 字典播种标记；两个分类法各一个，互不牵连。 */
+const FH_WHEEL_PCD_SEEDED_OPTION   = 'fh_wheel_pcd_terms_seeded';
+const FH_WHEEL_WIDTH_SEEDED_OPTION = 'fh_wheel_width_terms_seeded';
 
 /** 事实快照字段的前缀：由导入脚本写入，后台只读。 */
 const FH_WHEEL_FACT_PREFIX = 'fact_';
@@ -239,6 +254,8 @@ function fh_wheel_register_taxonomies(): void
         'hierarchical'      => false,
     ]);
 
+    fh_wheel_register_dictionary_taxonomies();
+
     // 尺寸术语固定为 12–20 寸 + 越野款；只建一次。
     if (!get_option('fh_wheel_terms_seeded')) {
         foreach (['12', '13', '14', '15', '16', '17', '18', '19', '20'] as $d) {
@@ -254,6 +271,285 @@ function fh_wheel_register_taxonomies(): void
         }
         update_option('fh_wheel_terms_seeded', 1);
     }
+}
+
+/* ============================================================================
+ * PCD / 宽度字典（候选值分类法）
+ * ========================================================================== */
+
+/**
+ * 注册 PCD / 宽度两个**候选值字典**。
+ *
+ * 两者都不是事实层：事实仍是 `variants_json` 里的 `pcd` / `width`。字典只提供
+ * 编辑页的下拉候选，并让「JSON 里出现过但字典里没有」的脏值在后台可见。
+ */
+function fh_wheel_register_dictionary_taxonomies(): void
+{
+    register_taxonomy(FH_WHEEL_TAX_PCD, [FH_WHEEL_POST_TYPE], [
+        'labels' => [
+            'name'          => 'PCD',
+            'singular_name' => 'PCD',
+            'menu_name'     => 'PCD',
+            'all_items'     => '全部 PCD',
+            'edit_item'     => '编辑 PCD',
+            'add_new_item'  => '新增 PCD',
+            'search_items'  => '搜索 PCD',
+        ],
+        'public'            => false,
+        'show_ui'           => true,
+        'show_admin_column' => false,
+        'show_in_rest'      => true,
+        'rest_base'         => 'wheel-pcds',
+        'hierarchical'      => false,
+    ]);
+
+    register_taxonomy(FH_WHEEL_TAX_WIDTH, [FH_WHEEL_POST_TYPE], [
+        'labels' => [
+            'name'          => '宽度',
+            'singular_name' => '宽度',
+            'menu_name'     => '宽度',
+            'all_items'     => '全部宽度',
+            'edit_item'     => '编辑宽度',
+            'add_new_item'  => '新增宽度',
+            'search_items'  => '搜索宽度',
+        ],
+        'public'            => false,
+        'show_ui'           => true,
+        'show_admin_column' => false,
+        'show_in_rest'      => true,
+        'rest_base'         => 'wheel-widths',
+        'hierarchical'      => false,
+    ]);
+
+    fh_wheel_seed_dictionary_terms();
+}
+
+/**
+ * 取某个型号的规格行（`variants_json`）。
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function fh_wheel_variants_of(int $postId): array
+{
+    $raw = (string) get_post_meta($postId, 'variants_json', true);
+    if ($raw === '') return [];
+    $decoded = json_decode($raw, true);
+    return is_array($decoded) ? array_values($decoded) : [];
+}
+
+/**
+ * 把一条 PCD 记录展开成它实际提供的全部规范孔距。
+ *
+ * 与 `src/lib/wheels/normalize.ts` 的 `normalizePcds()` **同语义**：
+ *
+ *   `"5*114.3"`        → ["5x114.3"]
+ *   `"5*112, 5*114.3"` → ["5x112","5x114.3"]
+ *   `"4/5*100"`        → ["4x100","5x100"]
+ *   `"5*112（）"`       → ["5x112"]     空括号是脏字符
+ *   `"5*112??"`        → []            无法识别，**不返回原文**（避免脏值污染候选）
+ *
+ * @return string[]
+ */
+function fh_wheel_pcd_normalize(string $raw): array
+{
+    if ($raw === '') return [];
+
+    $s = strtolower(trim($raw));
+    if ($s === '') return [];
+
+    // 脏字符：中文/英文空括号
+    $s = str_replace(['（', '）', '(', ')'], '', $s);
+    // 全角与异形分隔统一
+    $s = str_replace(['×', '*'], 'x', $s);
+    $s = str_replace(['，', '、'], ',', $s);
+    $s = preg_replace('/\s+/u', '', $s);
+
+    // 拆并列组：逗号分隔，以及 `-` 后紧跟新组（`5*112-5*114.3`）
+    $parts = [];
+    foreach (explode(',', (string) $s) as $part) {
+        foreach (preg_split('/-(?=\d{1,2}x)/', $part) as $sub) {
+            $parts[] = $sub;
+        }
+    }
+
+    $out = [];
+    foreach ($parts as $part) {
+        if ($part === '') continue;
+        if (!preg_match('~^(\d{1,2}(?:/\d{1,2})?)x(\d{2,3}(?:\.\d+)?(?:/\d{2,3}(?:\.\d+)?)*)$~', $part, $m)) {
+            continue;
+        }
+        foreach (explode('/', $m[1]) as $lug) {
+            foreach (explode('/', $m[2]) as $bore) {
+                $lugNum = (int) $lug;
+                if ($lugNum < 3 || $lugNum > 10) continue;
+                $key = $lugNum . 'x' . $bore;
+                if (!in_array($key, $out, true)) $out[] = $key;
+            }
+        }
+    }
+
+    return $out;
+}
+
+/** 宽度是否落在 0.5 英寸的常规网格上（4–14 之间）。 */
+function fh_wheel_width_is_canonical(float $width): bool
+{
+    if ($width < 4 || $width > 14) return false;
+    return abs($width * 2 - round($width * 2)) < 0.001;
+}
+
+/** 宽度的字典键：`6.5` 而不是 `6.50`。 */
+function fh_wheel_width_key(float $width): string
+{
+    $s = rtrim(rtrim(number_format($width, 2, '.', ''), '0'), '.');
+    return $s === '' ? '0' : $s;
+}
+
+/**
+ * 遍历已存在的规格行，汇总「字典候选」与「字典外脏值」。
+ *
+ * @return array{pcds:array<string,bool>, widths:array<string,bool>, strays:array<string,array<string,int>>}
+ */
+function fh_wheel_collect_dictionary_values(): array
+{
+    $ids = get_posts([
+        'post_type'      => FH_WHEEL_POST_TYPE,
+        'post_status'    => 'any',
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+        'no_found_rows'  => true,
+    ]);
+
+    $pcds = [];
+    $widths = [];
+    $strays = ['pcd' => [], 'width' => []];
+
+    foreach ($ids as $id) {
+        foreach (fh_wheel_variants_of((int) $id) as $row) {
+            $rawPcd = trim((string) ($row['pcd'] ?? ''));
+            if ($rawPcd !== '') {
+                $keys = fh_wheel_pcd_normalize($rawPcd);
+                if ($keys) {
+                    foreach ($keys as $k) $pcds[$k] = true;
+                } else {
+                    // 规范化后一个都认不出 → 记成字典外脏值
+                    $strays['pcd'][$rawPcd] = ($strays['pcd'][$rawPcd] ?? 0) + 1;
+                }
+            }
+
+            $w = $row['width'] ?? null;
+            if (is_numeric($w)) {
+                $f = (float) $w;
+                if (fh_wheel_width_is_canonical($f)) {
+                    $widths[fh_wheel_width_key($f)] = true;
+                } else {
+                    $strays['width'][fh_wheel_width_key($f)] =
+                        ($strays['width'][fh_wheel_width_key($f)] ?? 0) + 1;
+                }
+            }
+        }
+    }
+
+    return ['pcds' => $pcds, 'widths' => $widths, 'strays' => $strays];
+}
+
+/**
+ * 首次播种两个字典。
+ *
+ * ⚠️ 刻意**只播种能规范化的值**：无法解析的 PCD（如 `5*112??`）与脱离 0.5 网格的
+ * 宽度（如 `6.6` / `8.25`）不进字典，而是留在 `strays` 里由后台提示、人工裁决。
+ * 这样脏值不会被「合法化」并扩散 —— 正是把它们做成下拉的目的。
+ */
+function fh_wheel_seed_dictionary_terms(): void
+{
+    $pcdDone   = get_option(FH_WHEEL_PCD_SEEDED_OPTION) === '1';
+    $widthDone = get_option(FH_WHEEL_WIDTH_SEEDED_OPTION) === '1';
+    if ($pcdDone && $widthDone) return;
+
+    $collected = fh_wheel_collect_dictionary_values();
+
+    if (!$pcdDone) {
+        foreach (array_keys($collected['pcds']) as $key) {
+            if (!term_exists($key, FH_WHEEL_TAX_PCD)) {
+                wp_insert_term($key, FH_WHEEL_TAX_PCD);
+            }
+        }
+        update_option(FH_WHEEL_PCD_SEEDED_OPTION, '1', false);
+    }
+
+    if (!$widthDone) {
+        foreach (array_keys($collected['widths']) as $key) {
+            if (!term_exists($key, FH_WHEEL_TAX_WIDTH)) {
+                wp_insert_term($key, FH_WHEEL_TAX_WIDTH);
+            }
+        }
+        update_option(FH_WHEEL_WIDTH_SEEDED_OPTION, '1', false);
+    }
+}
+
+/** 某个型号用到的、字典里没有的 PCD / 宽度（用于列表页提示）。 */
+function fh_wheel_model_strays(int $postId): array
+{
+    $knownPcd = [];
+    foreach (get_terms(['taxonomy' => FH_WHEEL_TAX_PCD, 'hide_empty' => false, 'fields' => 'names']) as $n) {
+        $knownPcd[$n] = true;
+    }
+    $knownWidth = [];
+    foreach (get_terms(['taxonomy' => FH_WHEEL_TAX_WIDTH, 'hide_empty' => false, 'fields' => 'names']) as $n) {
+        $knownWidth[$n] = true;
+    }
+
+    $strayPcd = [];
+    $strayWidth = [];
+    foreach (fh_wheel_variants_of($postId) as $row) {
+        $raw = trim((string) ($row['pcd'] ?? ''));
+        if ($raw !== '') {
+            $keys = fh_wheel_pcd_normalize($raw);
+            if (!$keys) {
+                $strayPcd[$raw] = true;
+            }
+        }
+        $w = $row['width'] ?? null;
+        if (is_numeric($w)) {
+            $key = fh_wheel_width_key((float) $w);
+            if (!isset($knownWidth[$key])) $strayWidth[$key] = true;
+        }
+    }
+
+    return ['pcd' => array_keys($strayPcd), 'width' => array_keys($strayWidth)];
+}
+
+/**
+ * 取某个字典分类法的候选值，排好序给编辑页做下拉。
+ *
+ * PCD 按「孔数 → 孔径」排（`4x100` 在 `5x112` 前）；宽度按数值排。
+ * 只返回 term 名 —— 字典是候选集，实际取值仍写进 `variants_json`。
+ *
+ * @return string[]
+ */
+function fh_wheel_dictionary_options(string $taxonomy): array
+{
+    $terms = get_terms([
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false,
+        'fields'     => 'names',
+    ]);
+    if (is_wp_error($terms) || !$terms) return [];
+
+    $values = array_values(array_unique(array_map('strval', $terms)));
+
+    usort($values, static function (string $a, string $b) use ($taxonomy): int {
+        if ($taxonomy === FH_WHEEL_TAX_PCD) {
+            $pa = sscanf($a, '%dx%f');
+            $pb = sscanf($b, '%dx%f');
+            if (is_array($pa) && is_array($pb) && count($pa) === 2 && count($pb) === 2) {
+                return [$pa[0], $pa[1]] <=> [$pb[0], $pb[1]];
+            }
+        }
+        return (float) $a <=> (float) $b;
+    });
+
+    return $values;
 }
 
 /* ============================================================================
@@ -558,15 +854,85 @@ function fh_wheel_admin_columns(array $columns): array
     $new = [];
     $new['cb']    = $columns['cb'] ?? '<input type="checkbox" />';
     $new['title'] = '型号';
+    $new['fh_thumb']    = '图片';
     $new['fh_status']   = '发布状态';
     $new['fh_image']    = '图权';
     $new['fh_supply']   = '供货';
     $new['fh_spec']     = '规格核验';
     $new['fh_score']    = '候选分';
     $new['fh_counts']   = '规格/图片';
+    $new['fh_pcd']      = 'PCD';
+    $new['fh_width']    = '宽度';
     $new['fh_risk']     = '商标';
     $new['date']        = $columns['date'] ?? '日期';
     return $new;
+}
+
+/**
+ * 该型号的主图附件 ID（`hero_media_id`，回退 `gallery_media_ids` 首项）。
+ */
+function fh_wheel_admin_hero_media_id(int $postId): int
+{
+    $hero = absint(get_post_meta($postId, 'hero_media_id', true));
+    if ($hero > 0) return $hero;
+
+    $raw = (string) get_post_meta($postId, 'gallery_media_ids', true);
+    if ($raw === '') return 0;
+    $ids = array_filter(array_map('absint', explode(',', $raw)));
+    return $ids ? (int) reset($ids) : 0;
+}
+
+/**
+ * 汇总该型号规格行里的 PCD / 宽度，供列表页展示。
+ *
+ * @return array{pcd:array<int,string>, width:array<int,string>, total:int}
+ */
+function fh_wheel_admin_spec_summary(int $postId): array
+{
+    $pcd = [];
+    $width = [];
+    $rows = 0;
+
+    foreach (fh_wheel_variants_of($postId) as $row) {
+        $rows++;
+        $raw = trim((string) ($row['pcd'] ?? ''));
+        if ($raw !== '') {
+            $keys = fh_wheel_pcd_normalize($raw);
+            foreach ($keys ? $keys : [$raw] as $k) {   // 无法规范化时原样展示，便于人工发现
+                if (!in_array($k, $pcd, true)) $pcd[] = $k;
+            }
+        }
+        $w = $row['width'] ?? null;
+        if (is_numeric($w)) {
+            $key = fh_wheel_width_key((float) $w);
+            if (!in_array($key, $width, true)) $width[] = $key;
+        }
+    }
+
+    usort($width, static fn($a, $b) => (float) $a <=> (float) $b);
+
+    return ['pcd' => $pcd, 'width' => $width, 'total' => $rows];
+}
+
+/** 把一组值渲染成列表页单元格：最多 3 个，其余折叠成 `+N`。 */
+function fh_wheel_admin_datalist(array $values, string $suffix = ''): string
+{
+    if (!$values) return '<span style="color:#8c8f94">—</span>';
+
+    $shown = array_slice($values, 0, 3);
+    $rest  = count($values) - count($shown);
+    $html  = implode(', ', array_map(
+        static fn($v) => esc_html($v . $suffix),
+        $shown
+    ));
+    if ($rest > 0) {
+        $html .= sprintf(
+            ' <span style="color:#8c8f94" title="%s">+%d</span>',
+            esc_attr(implode(', ', array_slice($values, 3))),
+            $rest
+        );
+    }
+    return '<span style="font-size:12px">' . $html . '</span>';
 }
 
 add_action('manage_' . FH_WHEEL_POST_TYPE . '_posts_custom_column', 'fh_wheel_admin_column_content', 10, 2);
@@ -582,6 +948,28 @@ function fh_wheel_admin_column_content(string $column, int $postId): void
     };
 
     switch ($column) {
+        case 'fh_thumb':
+            $mediaId = fh_wheel_admin_hero_media_id($postId);
+            if ($mediaId <= 0 || !wp_attachment_is_image($mediaId)) {
+                echo '<span style="color:#8c8f94">—</span>';
+                break;
+            }
+            $img = wp_get_attachment_image($mediaId, 'thumbnail', false, [
+                'style' => 'width:56px;height:56px;object-fit:contain;background:#f6f7f7;border:1px solid #dcdcde;border-radius:3px;display:block',
+                'alt'   => '',
+            ]);
+            if ($img === '') {
+                echo '<span style="color:#8c8f94">—</span>';
+                break;
+            }
+            // 图库里有多张时给个角标，提示「不止一张」
+            $gallery = array_filter(array_map('absint', explode(',', (string) get_post_meta($postId, 'gallery_media_ids', true))));
+            $extra = count($gallery) > 1
+                ? sprintf('<span style="color:#646970;font-size:11px">+%d</span>', count($gallery) - 1)
+                : '';
+            printf('<div style="display:flex;align-items:center;gap:6px">%s%s</div>', $img, $extra);
+            break;
+
         case 'fh_status':
             echo $badge((string) get_post_meta($postId, 'publication_status', true), [
                 'approved'  => ['已批准', '#00a32a'],
@@ -627,6 +1015,30 @@ function fh_wheel_admin_column_content(string $column, int $postId): void
             );
             break;
 
+        case 'fh_pcd':
+        case 'fh_width':
+            $summary = fh_wheel_admin_spec_summary($postId);
+            $strays  = fh_wheel_model_strays($postId);
+
+            if ($column === 'fh_pcd') {
+                echo fh_wheel_admin_datalist($summary['pcd']);
+                if ($strays['pcd']) {
+                    printf(
+                        ' <span style="color:#d63638" title="%s">⚠ 待裁决</span>',
+                        esc_attr('这些 PCD 无法规范化，未进入字典：' . implode(' / ', $strays['pcd']))
+                    );
+                }
+            } else {
+                echo fh_wheel_admin_datalist($summary['width'], '"');
+                if ($strays['width']) {
+                    printf(
+                        ' <span style="color:#d63638" title="%s">⚠ 待裁决</span>',
+                        esc_attr('这些宽度脱离 0.5 网格，未进入字典：' . implode(' / ', $strays['width']))
+                    );
+                }
+            }
+            break;
+
         case 'fh_risk':
             $hits = (string) get_post_meta($postId, 'fact_trademark_hits', true);
             if ($hits === '') {
@@ -636,6 +1048,61 @@ function fh_wheel_admin_column_content(string $column, int $postId): void
             }
             break;
     }
+}
+
+/**
+ * 收掉编辑页上 PCD / 宽度 的分类法 metabox。
+ *
+ * 这两个分类法是**候选值字典**，不是型号的分类：实际取值写在 `variants_json` 里，
+ * 在 metabox 里勾选既不会保存也不会生效（只会让人误以为「我标了却没生效」）。
+ * 维护入口统一留在左侧菜单的「PCD」「宽度」两个字典页。
+ */
+add_action('add_meta_boxes_' . FH_WHEEL_POST_TYPE, 'fh_wheel_remove_dictionary_meta_boxes', 99);
+function fh_wheel_remove_dictionary_meta_boxes(): void
+{
+    remove_meta_box('tagsdiv-' . FH_WHEEL_TAX_PCD, FH_WHEEL_POST_TYPE, 'side');
+    remove_meta_box('tagsdiv-' . FH_WHEEL_TAX_WIDTH, FH_WHEEL_POST_TYPE, 'side');
+}
+
+/* ----------------------------------------------------------------------------
+ * 字典页的脏值提示（只报告，不改数据）
+ * -------------------------------------------------------------------------- */
+
+/**
+ * 在 PCD / 宽度字典页顶部列出「规格里出现过、但无法进入字典」的值。
+ *
+ * 刻意**只提示不自动写入**：这些值会直接影响前台筛选结果，需要人工裁决
+ * （清洗成规范值，还是确认它确实是一个合法取值）。
+ */
+add_action('admin_notices', 'fh_wheel_dictionary_stray_notice');
+function fh_wheel_dictionary_stray_notice(): void
+{
+    if (!function_exists('get_current_screen')) return;
+    $screen = get_current_screen();
+    if (!$screen || $screen->base !== 'edit-tags') return;
+
+    $tax = (string) $screen->taxonomy;
+    if ($tax !== FH_WHEEL_TAX_PCD && $tax !== FH_WHEEL_TAX_WIDTH) return;
+    if (!current_user_can('manage_categories')) return;
+
+    $collected = fh_wheel_collect_dictionary_values();
+    $kind = $tax === FH_WHEEL_TAX_PCD ? 'pcd' : 'width';
+    $strays = $collected['strays'][$kind];
+    if (!$strays) return;
+
+    $items = [];
+    foreach ($strays as $value => $count) {
+        $items[] = sprintf('%s（%d 条规格）', $value, $count);
+    }
+
+    printf(
+        '<div class="notice notice-warning"><p><strong>%s</strong></p><p>%s</p><p style="margin-bottom:0">%s</p></div>',
+        esc_html($tax === FH_WHEEL_TAX_PCD
+            ? '有 PCD 值无法规范化，未进入字典'
+            : '有宽度的值脱离 0.5 英寸网格，未进入字典'),
+        esc_html('这些值仍存在各型号的规格里，前台会按自己的规则解析它们；这里只做提示，不会自动改写数据。'),
+        esc_html(implode('；', $items))
+    );
 }
 
 add_action('restrict_manage_posts', 'fh_wheel_admin_filters');

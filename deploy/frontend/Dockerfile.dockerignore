@@ -1,0 +1,15 @@
+**
+!package.json
+!package-lock.json
+!next.config.ts
+!next-env.d.ts
+!tsconfig.json
+!postcss.config.mjs
+!components.json
+!src/
+!src/**
+!public/
+!public/**
+!deploy/
+!deploy/frontend/
+!deploy/frontend/Dockerfile

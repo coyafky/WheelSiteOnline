@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getWpConfig } from "@/lib/wordpress/client";
+import { getWpConfig, getWpRestRoot } from "@/lib/wordpress/client";
 import { SITE_PAGES_CACHE_TAG } from "@/lib/wordpress/cache-tags";
 
 /**
@@ -103,7 +103,7 @@ export async function GET() {
     checkSiteUrl(),
     checkInquiryServiceKey(),
     checkRevalidateSecret(),
-    await checkCms(config.mode, config.baseUrl),
+    await checkCms(config.mode, getWpRestRoot()),
   ];
 
   const failed = checks.filter((check) => check.status === "fail");

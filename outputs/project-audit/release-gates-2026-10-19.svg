@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">商业化上线五道门槛</title>
+  <desc id="desc">截至 2026 年 10 月 19 日，质量、内容、询盘、基础设施和运维五个方面均有待闭环事项，因此不建议正式上线。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0B1220"/><stop offset="1" stop-color="#162B43"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#030913" flood-opacity="0.22"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1460" cy="-20" r="250" fill="#183C57" opacity=".5"/>
+  <circle cx="140" cy="835" r="210" fill="#153549" opacity=".42"/>
+  <text x="96" y="92" fill="#80D8D0" font-family="PingFang SC, Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" letter-spacing="3">丰怀轮毂独立站 · 项目审计</text>
+  <text x="96" y="168" fill="#F5FAFF" font-family="PingFang SC, Noto Sans CJK SC, sans-serif" font-size="58" font-weight="700">商业化上线五道门槛</text>
+  <text x="98" y="218" fill="#AABBD0" font-family="PingFang SC, Noto Sans CJK SC, sans-serif" font-size="25">代码能力已形成 ≠ 已具备对外发布资格</text>
+  <g font-family="PingFang SC, Noto Sans CJK SC, sans-serif" filter="url(#shadow)">
+    <rect x="80" y="267" width="1440" height="92" rx="20" fill="#FFFFFF"/>
+    <rect x="80" y="267" width="12" height="92" rx="6" fill="#E35561"/>
+    <text x="115" y="325" fill="#1A2940" font-size="27" font-weight="700">01　质量门禁</text>
+    <text x="425" y="325" fill="#51617A" font-size="23">lint 10 个错误；定向 E2E 仍有 2 项失败</text>
+    <rect x="1326" y="291" width="160" height="45" rx="22" fill="#FCE7EA"/><text x="1357" y="321" fill="#B5293A" font-size="22" font-weight="700">阻塞</text>
+    <rect x="80" y="373" width="1440" height="92" rx="20" fill="#FFFFFF"/>
+    <rect x="80" y="373" width="12" height="92" rx="6" fill="#E9A13A"/>
+    <text x="115" y="431" fill="#1A2940" font-size="27" font-weight="700">02　内容与合规</text>
+    <text x="425" y="431" fill="#51617A" font-size="23">真实产品资料、图权、法律文案仍须确认</text>
+    <rect x="1326" y="397" width="160" height="45" rx="22" fill="#FFF0D9"/><text x="1344" y="427" fill="#A66B17" font-size="22" font-weight="700">待审批</text>
+    <rect x="80" y="479" width="1440" height="92" rx="20" fill="#FFFFFF"/>
+    <rect x="80" y="479" width="12" height="92" rx="6" fill="#E9A13A"/>
+    <text x="115" y="537" fill="#1A2940" font-size="27" font-weight="700">03　询盘交付</text>
+    <text x="425" y="537" fill="#51617A" font-size="23">事务持久化已实现；真实邮件与故障重试待验</text>
+    <rect x="1326" y="503" width="160" height="45" rx="22" fill="#FFF0D9"/><text x="1344" y="533" fill="#A66B17" font-size="22" font-weight="700">待实测</text>
+    <rect x="80" y="585" width="1440" height="92" rx="20" fill="#FFFFFF"/>
+    <rect x="80" y="585" width="12" height="92" rx="6" fill="#E9A13A"/>
+    <text x="115" y="643" fill="#1A2940" font-size="27" font-weight="700">04　生产基础设施</text>
+    <text x="425" y="643" fill="#51617A" font-size="23">OpenNext 平台、正式域名及 TLS 尚未定案</text>
+    <rect x="1326" y="609" width="160" height="45" rx="22" fill="#FFF0D9"/><text x="1344" y="639" fill="#A66B17" font-size="22" font-weight="700">待决策</text>
+    <rect x="80" y="691" width="1440" height="92" rx="20" fill="#FFFFFF"/>
+    <rect x="80" y="691" width="12" height="92" rx="6" fill="#E9A13A"/>
+    <text x="115" y="749" fill="#1A2940" font-size="27" font-weight="700">05　运维恢复</text>
+    <text x="425" y="749" fill="#51617A" font-size="23">备份 dry-run 通过；真实恢复与告警送达待验</text>
+    <rect x="1326" y="715" width="160" height="45" rx="22" fill="#FFF0D9"/><text x="1344" y="745" fill="#A66B17" font-size="22" font-weight="700">待实测</text>
+  </g>
+  <text x="96" y="850" fill="#F7B7BE" font-family="PingFang SC, Noto Sans CJK SC, sans-serif" font-size="28" font-weight="700">当前结论：不建议直接正式上线</text>
+  <text x="1010" y="850" fill="#AABBD0" font-family="PingFang SC, Noto Sans CJK SC, sans-serif" font-size="19">审计快照：2026-10-18 · 更新：2026-10-19</text>
+</svg>

@@ -586,7 +586,27 @@ function fh_inquiry_rate_limit_exceeded(string $ip): bool
         return false;
     }
 
-    $limit  = (int) apply_filters('fh_inquiry_rate_limit', 20);
+    /*
+     * Defaults to 60 per 10 minutes per IP — deliberately generous.
+     *
+     * This is the *second* rate limiter: src/lib/inquiry/guard.ts already counts
+     * in the Next process. Two independent limits means whichever is smaller
+     * wins, so raising only one of them changes nothing. Keep the two in step:
+     * change this constant and INQUIRY_RATE_LIMIT_IP together.
+     *
+     * 20 was too tight for a shared egress IP: a trade-show booth or one office
+     * NAT puts every visitor behind a single address, and the ~80 submissions
+     * made by scripts/verify-inquiry-backend.py from one host already tripped
+     * it 12 times (see the exemption note above).
+     *
+     * Overridable per environment via the FH_INQUIRY_RATE_LIMIT constant or the
+     * fh_inquiry_rate_limit filter, so tuning does not need a code change.
+     * A non-positive value disables the check (existing behaviour, unchanged).
+     */
+    $limit  = (int) apply_filters(
+        'fh_inquiry_rate_limit',
+        (int) fh_inquiry_config('FH_INQUIRY_RATE_LIMIT', 'fh_inquiry_rate_limit', '60')
+    );
     $window = (int) apply_filters('fh_inquiry_rate_window', 10 * MINUTE_IN_SECONDS);
     if ($limit <= 0 || $window <= 0) return false;
 

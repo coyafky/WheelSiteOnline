@@ -30,28 +30,33 @@
 ## 2. 目标部署形态
 
 **保持"模块化单体"，一台云服务器 + Docker Compose，不引入 K8s / Redis / ES / 队列服务。**
+2026-10-20 起，目标实例为腾讯云新加坡轻量应用服务器；前端优先验证
+Next.js Node/standalone 自托管，OpenNext 为可选适配器，不构成上线前置条件。
+运行时必须保留 `/api/inquiries`、预览及按需失效，禁止静态导出。
+取舍见 [`2026-10-20-single-server-runtime-choice.md`](../adr/2026-10-20-single-server-runtime-choice.md)，
+执行步骤见 [`DEPLOYMENT.md`](DEPLOYMENT.md)。
 
 ```
 公网
  │
- ├── HTTPS 443 ──► Nginx（TLS 终结 + 安全头 + 限流）
+ ├── HTTPS 443 ──► Caddy（自动签发/续期证书 + TLS 终结）
  │                   │
- │                   ▼ 127.0.0.1:9081
+ │                   ▼ 127.0.0.1:3000（生产绑定端口，最终以配置为准）
  │              Next.js standalone 容器
  │                   │
- │                   ├─ 只读 GET ──► WordPress 容器 127.0.0.1:7081
+ │                   ├─ 只读 GET ──► WordPress 容器（Docker 私有网络）
  │                   │                  │
  │                   └─ 写 POST ───────┤
  │                                      ▼
  │                                MySQL 8.0（命名卷）
  │
- └── 后台 7080 ──► **必须 HTTPS**（当前仅 HTTP，是 M14 的高风险项）
+ └── cms.fenghuaitech.store:443 ──► Caddy ──► WordPress 后台/API/媒体
 ```
 
 **变化点（相对现状）**：
-1. 前端与 WP 后台全部走 HTTPS（当前全 HTTP）
+1. 前端与 WP 后台全部走 HTTPS（旧 9080/7080 联调入口仍为 HTTP，不作为生产入口）
 2. 前端镜像 tag 改为 git SHA
-3. Nginx 增加限流区（`limit_req`）作为进程内限流的兜底
+3. 公网切流前核验 Caddy 转发头边界、前端询盘限流与 WordPress 后台防护；边缘限流若需要，另选受支持的实现并验证
 4. 增加 uptime 探活 + 备份 cron
 
 **明确不做**：V3.0 提到的 Docker Compose 多容器只是现状确认；不引入 Kubernetes、Kafka、RabbitMQ、Elasticsearch。

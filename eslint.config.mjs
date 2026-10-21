@@ -17,6 +17,13 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  // 性能审计脚本由 Node 直接执行，文件格式是 CommonJS；仅对这些文件允许 require。
+  {
+    files: ["qa-audit/perf/**/*.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

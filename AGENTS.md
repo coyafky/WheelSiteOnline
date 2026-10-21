@@ -171,18 +171,20 @@ IntersectionObserver。** 两个效果都必须保持挂在 JS 添加的 `motion
 媒体须按当前内容契约检查批准状态和可渲染 URL；缺失或未批准时使用已有兜底，
 不请求不存在的文件、不产生破图。素材到位后更新对应内容状态，**不要删掉兜底逻辑**。
 
-### 7.6 部署走 OpenNext，且不得改成静态导出
+### 7.6 部署必须保留服务端运行时，不得改成静态导出
 
-- **部署层是 OpenNext**（见 DEC-009）。具体目标平台待定。
+- **当前部署目标是腾讯云新加坡轻量应用服务器**；前端运行形态由部署验证选择。
+  自托管 Next.js Node/standalone 可用，OpenNext 也可评估，**不再强制使用 OpenNext**。
+  这项调整见 `docs/adr/2026-10-20-single-server-runtime-choice.md`；历史 DEC-009
+  中的 OpenNext 单选结论已被该决定取代。
 - **严禁把 `next.config.ts` 改成 `output: "export"`。** 纯静态导出下
   `/api/inquiries` 完全不可用 —— 那等于物理上废掉询盘系统，与本项目的业务
   定位直接冲突。
 - 根 `Dockerfile` / `docker-compose.yml` / `Dockerfile.dev` / `.dockerignore`
   已**归档**到 `archive/2026-10-06-template-scaffold-retired/`（DEC-060）——
   它们是克隆模板的默认值（镜像名 `ai-website-cloner:latest`），与本项目无关。
-  生产部署文件需在 OpenNext 平台确定后**新写**，不要照抄归档件。
-- 仓库里**目前没有任何 OpenNext 依赖或配置**（`@opennextjs/*`、`wrangler`
-  均不存在）。
+  生产部署文件须按选定运行形态**新写**，不要照抄归档件或将 9080 联调配置
+  当成生产配置。
 
 ### 7.7 `NEXT_PUBLIC_APP_URL` 是静默陷阱
 

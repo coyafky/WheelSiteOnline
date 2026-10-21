@@ -6,7 +6,7 @@ import {
   validate,
 } from "@/lib/inquiry";
 import { bindWheelEnquiry, bindWheelEnquiryItems } from "@/lib/wheels/inquiry-binding";
-import { automationTrap, originAllowed, rateLimit } from "@/lib/inquiry/guard";
+import { automationTrap, originAllowed, rateLimit, refundRateLimit } from "@/lib/inquiry/guard";
 import { issueInquiryReceipt } from "@/lib/inquiry/receipt";
 
 /**
@@ -133,6 +133,19 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     return persistenceFailureResponse(error);
+  }
+
+  // 2b · 幂等重放退还它刚才消耗的额度。
+  //
+  //      重放不是一次新的提交意图 —— 数据库里没新增任何东西，返回的还是同一个
+  //      询盘号。让重放消耗额度，等于把「网络抖动重试」记成用户行为：一次点击
+  //      的重试风暴会把真实买家自己封掉（实测同一幂等键并发 15 次 → 9 个 429，
+  //      而用户意图只有 1 次）。
+  //
+  //      放在 save 之后是因为**只有 save 才知道这是不是重放**；放在返回之前，
+  //      所以它只覆盖真的重放了的那一次请求。
+  if (saved.replayed) {
+    refundRateLimit(request, parsed.input.email);
   }
 
   saved.assignedTo = assignOwner(input, context);

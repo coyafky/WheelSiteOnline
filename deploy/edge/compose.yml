@@ -1,0 +1,26 @@
+name: fenghuai-edge
+
+services:
+  caddy:
+    image: caddy:2.11.7-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf:/etc/caddy:ro
+      - edge_data:/data
+      - edge_config:/config
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - application
+
+volumes:
+  edge_data:
+  edge_config:
+
+networks:
+  application:
+    external: true
+    name: fenghuai-wordpress_default

@@ -107,8 +107,27 @@ function fh_wheel_authoring_render_meta_box(WP_Post $post): void
         .fh-wheel-media img{display:block;width:104px;height:104px;object-fit:contain;background:#f6f7f7}
         .fh-wheel-media .fh-media-actions{display:flex;justify-content:space-between;margin-top:6px}.fh-wheel-help{color:#646970}
     </style>
+    <?php
+    // PCD / 宽度的候选值来自后台「轮毂型号 → PCD / 宽度」两个字典页。
+    // 这里用 <datalist> 而不是 <select>：既给候选，又保留手输 —— 运营遇到字典里
+    // 还没有的新规格时不会被挡住，加完值再去字典页登记即可。
+    $pcdOptions   = function_exists('fh_wheel_dictionary_options')
+        ? fh_wheel_dictionary_options(FH_WHEEL_TAX_PCD) : [];
+    $widthOptions = function_exists('fh_wheel_dictionary_options')
+        ? fh_wheel_dictionary_options(FH_WHEEL_TAX_WIDTH) : [];
+    ?>
     <div class="fh-wheel-editor">
         <p><strong>型号：</strong>使用页面顶部标题字段填写，例如 <code>FH-002</code>。规格每行必须保持为一个真实组合。</p>
+        <datalist id="fh-pcd-options">
+            <?php foreach ($pcdOptions as $option) : ?>
+                <option value="<?php echo esc_attr($option); ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
+        <datalist id="fh-width-options">
+            <?php foreach ($widthOptions as $option) : ?>
+                <option value="<?php echo esc_attr($option); ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
         <table class="widefat striped" id="fh-wheel-variants">
             <thead><tr>
                 <th>公开</th><th>SKU / productionCode</th><th>直径</th><th>宽度</th><th>PCD</th><th>ET</th><th>中心孔</th><th>表面处理</th><th>排序</th>
@@ -150,15 +169,25 @@ function fh_wheel_authoring_render_meta_box(WP_Post $post): void
         <td><input type="checkbox" name="fh_variants[${i}][approved]" value="1" ${value.approved ? 'checked' : ''}></td>
         <td><input required type="text" name="fh_variants[${i}][production_code]" value="${esc(value.production_code)}"></td>
         <td><input required type="number" min="10" max="26" step="0.1" name="fh_variants[${i}][diameter]" value="${esc(value.diameter)}"></td>
-        <td><input required type="number" min="4" max="14" step="0.1" name="fh_variants[${i}][width]" value="${esc(value.width)}"></td>
-        <td><input required type="text" name="fh_variants[${i}][pcd]" value="${esc(value.pcd)}" placeholder="5x112"></td>
+        <td><input required type="number" min="4" max="14" step="0.1" list="fh-width-options" name="fh_variants[${i}][width]" value="${esc(value.width)}"></td>
+        <td><input required type="text" list="fh-pcd-options" name="fh_variants[${i}][pcd]" value="${esc(value.pcd)}" placeholder="5x112"></td>
         <td><input required type="number" min="-100" max="100" step="0.1" name="fh_variants[${i}][offset]" value="${esc(value.offset)}"></td>
         <td><input required type="number" min="1" max="250" step="0.1" name="fh_variants[${i}][center_bore]" value="${esc(value.center_bore)}"></td>
         <td><input type="text" name="fh_variants[${i}][finish]" value="${esc(value.finish)}"></td>
         <td><span class="fh-actions"><button type="button" class="button-link fh-row-up">↑</button><button type="button" class="button-link fh-row-down">↓</button><button type="button" class="button-link-delete fh-row-remove">删除</button></span></td>
       </tr>`;
       const renumber = () => [...table.rows].forEach((tr, index) => tr.querySelectorAll('[name]').forEach((el) => el.name = el.name.replace(/fh_variants\[\d+\]/, `fh_variants[${index}]`)));
-      document.querySelector('#fh-add-variant')?.addEventListener('click', () => { table.insertAdjacentHTML('beforeend', row(table.rows.length)); });
+      document.querySelector('#fh-add-variant')?.addEventListener('click', () => {
+        const index = table.rows.length;
+        table.insertAdjacentHTML('beforeend', row(index));
+        // 加固：长表里刚加的行常在视口之外，插完滚过去并聚焦第一个输入框，
+        // 否则点了「新增规格」看起来像没反应。
+        const added = table.rows[index];
+        if (added) {
+          added.scrollIntoView({ block: 'center' });
+          added.querySelector('input[type="text"]')?.focus();
+        }
+      });
       table.addEventListener('click', (event) => {
         const button = event.target.closest('button'); if (!button) return;
         const tr = button.closest('tr'); if (!tr) return;
@@ -199,20 +228,23 @@ function fh_wheel_authoring_render_variant_row(int $index, array $variant): void
     $fields = [
         'production_code' => ['text', '', ''],
         'diameter' => ['number', '10', '26'],
-        'width' => ['number', '4', '14'],
-        'pcd' => ['text', '', ''],
+        'width' => ['number', '4', '14', 'fh-width-options'],
+        'pcd' => ['text', '', '', 'fh-pcd-options'],
         'offset' => ['number', '-100', '100'],
         'center_bore' => ['number', '1', '250'],
         'finish' => ['text', '', ''],
     ];
     echo '<tr><td><input type="checkbox" name="fh_variants[' . esc_attr((string) $index) . '][approved]" value="1" ' . checked(!empty($variant['approved']), true, false) . '></td>';
-    foreach ($fields as $key => [$type, $min, $max]) {
+    foreach ($fields as $key => $spec) {
+        [$type, $min, $max] = $spec;
+        $listId = $spec[3] ?? '';
         printf(
-            '<td><input %s type="%s" %s %s step="%s" name="fh_variants[%d][%s]" value="%s"></td>',
+            '<td><input %s type="%s" %s %s %s step="%s" name="fh_variants[%d][%s]" value="%s"></td>',
             $key === 'finish' ? '' : 'required',
             esc_attr($type),
             $min !== '' ? 'min="' . esc_attr($min) . '"' : '',
             $max !== '' ? 'max="' . esc_attr($max) . '"' : '',
+            $listId !== '' ? 'list="' . esc_attr($listId) . '"' : '',
             $type === 'number' ? '0.1' : '1',
             $index,
             esc_attr($key),

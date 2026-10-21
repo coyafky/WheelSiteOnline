@@ -1,6 +1,6 @@
 # 文档地图（docs/README.md）
 
-最后更新：2026-10-17（V3.0 重构）
+最后更新：2026-10-21（补充已公开页面商业表达问题台账入口）
 
 > 本页是**唯一文档入口**。新增或移动文档前先看这里，判断它属于哪一类。
 > 原则：**维护正本，不并列造第二份"最新版"**。
@@ -23,6 +23,12 @@
 | 先做什么、后做什么？ | [`implementation/ROADMAP.md`](implementation/ROADMAP.md) |
 | 具体任务是什么？ | [`implementation/TASKS.md`](implementation/TASKS.md) |
 | 怎么验收？ | [`implementation/TEST_PLAN.md`](implementation/TEST_PLAN.md) |
+| 2026-10-18 全量审计与 Notion 同步交付？ | [`project-audit/project-overview.md`](project-audit/project-overview.md) |
+| 核心代码模块及架构图解索引？ | [`project-audit/core-module-inventory-2026-10-19.md`](project-audit/core-module-inventory-2026-10-19.md) |
+| 每个页面的本地长图和教学白板在哪？ | [`project-audit/page-screenshot-index-2026-10-19.md`](project-audit/page-screenshot-index-2026-10-19.md) |
+| 移动端烟测、关键交互与异常状态核验？ | [`project-audit/mobile-interaction-acceptance-2026-10-19.md`](project-audit/mobile-interaction-acceptance-2026-10-19.md) |
+| 已公开页面有哪些待审定的商业表达、测试内容和内部占位？ | [`../outputs/project-audit/2026-10-21-live-commercial-copy-register.md`](../outputs/project-audit/2026-10-21-live-commercial-copy-register.md) |
+| 第二阶段代码、线上与商业发布深度审计结论在哪？ | [`project-audit/deep-dive/DEEP_DIVE_EXECUTIVE_SUMMARY.md`](project-audit/deep-dive/DEEP_DIVE_EXECUTIVE_SUMMARY.md)（证据、问题、发布门禁与实施建议由该页进入） |
 | 为什么这么决策？ | [`adr/`](adr/) + `architecture/TARGET_ARCHITECTURE.md` §7 |
 | 历史文档在哪？ | [`../archive/2026-10-17-pre-v3-docs/README.md`](../archive/2026-10-17-pre-v3-docs/README.md) |
 | 页面施工规格？ | [`../PAGE-SPECS/`](../PAGE-SPECS/README.md) |
@@ -53,6 +59,7 @@ docs/
 ├── adr/                       架构决策记录（YYYY-MM-DD-<slug>.md）
 ├── research/                  调研输入（关键词、SEO 知识库）— 是证据不是规则
 ├── runbooks/                  运维手册（备份恢复、故障处理）
+├── project-audit/             2026-10-18 有日期的审计交付快照（不替代正本）
 ├── api/                       接口契约文档
 ├── assets/                    文档用图
 └── design-references/         设计参考

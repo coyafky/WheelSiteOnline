@@ -59,7 +59,7 @@ export const inquiryFormUi = {
   formUnavailableBody:
     "The enquiry service is temporarily unavailable. Please try again later.",
   rateLimited:
-    "Too many attempts were received. Please wait a few minutes before trying again.",
+    "Too many attempts in a short time. If you just pressed submit, we may already have your enquiry — please check your inbox before sending it again.",
   referenceLabel: "Reference",
   notSpecified: "Not specified",
   privacyConsentChanged:

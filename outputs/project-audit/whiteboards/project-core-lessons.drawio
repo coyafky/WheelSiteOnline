@@ -1,0 +1,116 @@
+<mxfile host="localhost" pages="3">
+  <diagram id="so2v4vl6-msn9" name="01 三本账：职责边界">
+    <mxGraphModel dx="1226" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;fontSize=26;fontStyle=1;fontColor=#12243a;align=left;whiteSpace=wrap;html=1;" value="第一课：三本账，谁管什么？" vertex="1">
+          <mxGeometry height="40" width="730" x="34" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;fontSize=15;fontColor=#55708a;align=left;whiteSpace=wrap;html=1;" value="记住：网站运行时只靠代码与内容；Notion 管的是决策和证据。" vertex="1">
+          <mxGeometry height="40" width="728" x="36" y="82" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;fillColor=#eaf2ff;strokeColor=#3f7edb;strokeWidth=2;fontSize=18;fontColor=#14365d;spacing=16;whiteSpace=wrap;html=1;" value="&lt;b&gt;① Git / 源代码&lt;/b&gt;&lt;br&gt;&lt;br&gt;页面组件&lt;br&gt;业务逻辑&lt;br&gt;API 与测试&lt;br&gt;&lt;br&gt;改网站怎么工作" vertex="1">
+          <mxGeometry height="255" width="220" x="35" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;fillColor=#e9f8f3;strokeColor=#2f9b75;strokeWidth=2;fontSize=18;fontColor=#155c46;spacing=16;whiteSpace=wrap;html=1;" value="&lt;b&gt;② WordPress&lt;/b&gt;&lt;br&gt;&lt;br&gt;页面正文与媒体&lt;br&gt;产品资料&lt;br&gt;内容批准状态&lt;br&gt;&lt;br&gt;改网站展示什么" vertex="1">
+          <mxGeometry height="255" width="220" x="290" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=1;fillColor=#fff2e5;strokeColor=#d88a36;strokeWidth=2;fontSize=18;fontColor=#744317;spacing=16;whiteSpace=wrap;html=1;" value="&lt;b&gt;③ Notion&lt;/b&gt;&lt;br&gt;&lt;br&gt;需求与任务&lt;br&gt;测试证据&lt;br&gt;人工审批与汇报&lt;br&gt;&lt;br&gt;决定做什么、何时发" vertex="1">
+          <mxGeometry height="255" width="220" x="545" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=1;fillColor=#f6f8fa;strokeColor=#9eb2c3;fontSize=15;fontStyle=1;fontColor=#203b56;spacing=12;whiteSpace=wrap;html=1;" value="一句话：Git 管实现，WordPress 管内容，Notion 管管理闭环；三处不抢同一份事实。" vertex="1">
+          <mxGeometry height="70" width="730" x="35" y="470" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="rpdm8bit-9sg9" name="02 内容发布：双重门槛">
+    <mxGraphModel dx="1226" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;fontSize=26;fontStyle=1;fontColor=#12243a;align=left;whiteSpace=wrap;html=1;" value="第二课：为什么有些内容不能公开？" vertex="1">
+          <mxGeometry height="40" width="740" x="30" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;fontSize=15;fontColor=#55708a;align=left;whiteSpace=wrap;html=1;" value="发布是两道门：人工负责事实与权利，机器负责结构与规则。" vertex="1">
+          <mxGeometry height="35" width="730" x="32" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;fillColor=#eaf2ff;strokeColor=#3f7edb;strokeWidth=2;fontSize=16;fontColor=#14365d;spacing=10;whiteSpace=wrap;html=1;" value="① 编辑提交&lt;br&gt;页面 / 产品 / 图片" vertex="1">
+          <mxGeometry height="90" width="150" x="25" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rhombus;fillColor=#fff2e5;strokeColor=#d88a36;strokeWidth=2;fontSize=16;fontColor=#744317;spacing=8;whiteSpace=wrap;html=1;" value="② 人工批准？&lt;br&gt;真实、图权、法律" vertex="1">
+          <mxGeometry height="120" width="160" x="220" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rhombus;fillColor=#fff2e5;strokeColor=#d88a36;strokeWidth=2;fontSize=16;fontColor=#744317;spacing=8;whiteSpace=wrap;html=1;" value="③ 机器校验？&lt;br&gt;字段、规格、语言" vertex="1">
+          <mxGeometry height="120" width="160" x="425" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=1;fillColor=#e9f8f3;strokeColor=#2f9b75;strokeWidth=2;fontSize=16;fontColor=#155c46;spacing=9;whiteSpace=wrap;html=1;" value="④ 进入公开页面&lt;br&gt;目录与搜索索引" vertex="1">
+          <mxGeometry height="90" width="150" x="630" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="任一门未通过：保持非公开；不进入目录、筛选或 sitemap。" style="rounded=1;fillColor=#fff0f1;strokeColor=#dd5e6a;strokeWidth=2;fontSize=15;fontColor=#803c45;spacing=10;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="390" width="520" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="text;fontSize=17;fontStyle=1;fontColor=#1d4057;align=center;whiteSpace=wrap;html=1;" value="记住：代码写好了 ≠ 资料可以公开；正式上线仍要人工批准。" vertex="1">
+          <mxGeometry height="35" width="660" x="70" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="10" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="6" value="通过">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="12" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="7" value="通过">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="13" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=0.5;exitY=1;entryX=0.3;entryY=0;html=1;" target="8" value="未通过">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=0.5;exitY=1;entryX=0.7;entryY=0;html=1;" target="8" value="未通过">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ww28nr43-73n5" name="03 询盘：先保存再通知">
+    <mxGraphModel dx="1226" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;fontSize=26;fontStyle=1;fontColor=#12243a;align=left;whiteSpace=wrap;html=1;" value="第三课：询盘为什么要先保存再发信？" vertex="1">
+          <mxGeometry height="40" width="740" x="30" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;fontSize=15;fontColor=#55708a;align=left;whiteSpace=wrap;html=1;" value="给客户的承诺是“收到询盘”；邮件只是通知销售的一种方式。" vertex="1">
+          <mxGeometry height="35" width="730" x="32" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;fillColor=#eaf2ff;strokeColor=#3f7edb;strokeWidth=2;fontSize=16;fontColor=#14365d;spacing=10;whiteSpace=wrap;html=1;" value="① 访客提交&lt;br&gt;联系方式与需求" vertex="1">
+          <mxGeometry height="95" width="160" x="20" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;fillColor=#eaf2ff;strokeColor=#3f7edb;strokeWidth=2;fontSize=16;fontColor=#14365d;spacing=10;whiteSpace=wrap;html=1;" value="② Next 校验&lt;br&gt;来源、格式、限流&lt;br&gt;重查产品规格" vertex="1">
+          <mxGeometry height="115" width="170" x="215" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=1;fillColor=#e9f8f3;strokeColor=#2f9b75;strokeWidth=2;fontSize=16;fontColor=#155c46;spacing=10;whiteSpace=wrap;html=1;" value="③ WordPress 事务&lt;br&gt;询盘 + 幂等键&lt;br&gt;+ 邮件发件箱" vertex="1">
+          <mxGeometry height="115" width="170" x="420" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=1;fillColor=#fff2e5;strokeColor=#d88a36;strokeWidth=2;fontSize=16;fontColor=#744317;spacing=10;whiteSpace=wrap;html=1;" value="④ 尝试发邮件&lt;br&gt;记录成功或失败&lt;br&gt;保留重试线索" vertex="1">
+          <mxGeometry height="115" width="170" x="625" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=1;fillColor=#f6f8fa;strokeColor=#9eb2c3;fontSize=16;fontColor=#203b56;spacing=12;whiteSpace=wrap;html=1;" value="关键点：保存成功 ≠ 邮件投递成功。邮件失败时，不能把已保存的询盘当成丢失。" vertex="1">
+          <mxGeometry height="82" width="620" x="90" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="text;fontSize=16;fontStyle=1;fontColor=#1d4057;align=center;whiteSpace=wrap;html=1;" value="上线前仍要实测：真实收件、重复提交、失败重试、告警和隐私权限。" vertex="1">
+          <mxGeometry height="35" width="690" x="55" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="10" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="12" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
